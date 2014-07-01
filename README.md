@@ -4,6 +4,7 @@ strictly-hash
 A strict Hash implementation allowing key restriction and virtualization
 
 [![Build Status](https://travis-ci.org/vancarney/sparse.png)](https://travis-ci.org/vancarney/strictly-hash)
+[![NPM Version](http://img.shields.io/npm/v/strictly-hash.svg)](https://www.npmjs.org/package/strictly-hash)
 
 Installation
 -----------
