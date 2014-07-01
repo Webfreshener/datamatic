@@ -1,0 +1,30 @@
+{
+  "author": "Van Carney <carney.van@gmail.com>",
+  "name": "strictly-hash",
+  "description": "A strict Hash implementation allowing key restriction and virtualization",
+  "keywords": [ "hash", "design patterns", "freeze", "frozen", "seal", "sealed", "virtual object", "object oriented", "coffeescript"],
+  "version": "0.0.1",
+  "main":"./index.js",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://www.opensource.org/licenses/MIT"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "github.com/vancarney/strictly-hash.git"
+  },
+  "dependencies": {
+  },
+  "devDependencies": {
+    "coffee-script": ">=1.7.1",
+    "mocha": ">=1.12.0",
+    "chai": ">=1.7.2",
+    "docco": ">=0.6.2"
+  },
+  "homepage": "https://github.com/vancarney/strictly-hash",
+  "scripts": {
+    "test": "cake test"
+  }
+}
