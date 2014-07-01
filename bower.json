@@ -6,6 +6,7 @@
     ".jshintrc",
     "**/*.txt",
     "./index.js",
+    "./.travis.yml",
     "test",
     "package.json",
     "src"
