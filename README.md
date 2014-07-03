@@ -96,6 +96,21 @@ console.log "#{inst.get 'param_one'}#{inst.get 'param_two'}"
 }).call(this);
 ```
 
+Constructor
+-----------
+
+
+### Hash([object, restricted_keys])
+
+Creates new hash instance
+
+#### Arguments
+
+Object **object**: (optional) Sets initial contents of Hash
+
+Array **restricted_keys**: (optional) If present, restricts the hash keys to the provided values
+
+
 
 Methods
 -----------
