@@ -11,13 +11,13 @@ class global.Hash
     # unescapes unsafe key
     unescapeKey = (key) ->
       if key.length > 2 and key.charCodeAt(0) is 95 and key.charCodeAt(1) is 95 then "#{key.substr 0, key.length - 1}" else "#{key}"
-    #### Hash::get(key)
+    #### @get(key)
     #> gets key/value from virtualized object
-    Hash::get = (key)=>
+    @get = (key)=>
       object[escapeKey key]
-    #### Hash::set(key, value)
+    #### @set(key, value)
     #> sets key/value to virtualized object
-    Hash::set = (key, value)=>
+    @set = (key, value)=>
       # tests if key is string
       if typeof key is 'string'
         # returns if restricted and key is not in  list
@@ -31,80 +31,80 @@ class global.Hash
           @set k, v
       # returns self for chaining
       @
-    #### Hash::has(key)
+    #### @has(key)
     #> tests for key existance
-    Hash::has = (key) =>
+    @has = (key) =>
       object.hasOwnProperty escapeKey key
-    #### Hash::del(key)
+    #### @del(key)
     #> removes key from hash
-    Hash::del = (key)=>
+    @del = (key)=>
       delete object[escapeKey key] if @has key
-    #### Hash::forEach(iterator, scope)
+    #### @forEach(iterator, scope)
     #> traverses hash, calling iterator on each node
-    Hash::forEach = (iterator, scope) =>
+    @forEach = (iterator, scope) =>
       _results = []
       for key of object
         continue unless object.hasOwnProperty key
         _results.push iterator.call scope, object[key], unescapeKey key
       _results
-    #### Hash::keys()
+    #### @keys()
     #> returns object keys
-    Hash::keys = =>
+    @keys = =>
       keys = []
       @forEach (value, key) =>
         keys.push key
       keys
-    #### Hash::valueOf()
+    #### @valueOf()
     #> returns object
-    Hash::valueOf = => object
-    #### Hash::toJSON()
+    @valueOf = => object
+    #### @toJSON()
     #> returns object
-    Hash::toJSON  = => object
-    #### Hash::toString(pretty)
+    @toJSON  = => object
+    #### @toString(pretty)
     #> returns string representation of hash, if pretty is `true` will format the string for readability
-    Hash::toString = (pretty=false) =>
+    @toString = (pretty=false) =>
       JSON.stringify @toJSON(), null, (if pretty then 2 else undefined)
-    #### Hash::canFreeze()
+    #### @canFreeze()
     #> returns true if environment supports Object.freeze
-    Hash::canFreeze = =>
+    @canFreeze = =>
       typeof Object.freeze is 'function'
-    #### Hash::freeze()
+    #### @freeze()
     #> freezes Hash object if feature supported by environment
-    Hash::freeze = =>
+    @freeze = =>
       if @canFreeze()
         Object.freeze @
         Object.freeze object
       @
-    #### Hash::isFrozen()
+    #### @isFrozen()
     #> returns true if Hash is frozen
-    Hash::isFrozen = =>
+    @isFrozen = =>
       if @canFreeze() then Object.isFrozen object else false
-    #### Hash::canSeal()
+    #### @canSeal()
     #> returns true if environment supports Object.seal
-    Hash::canSeal = =>
+    @canSeal = =>
       typeof Object.seal is 'function'
-    #### Hash::seal()
+    #### @seal()
     #> seals Hash object if feature supported by environment
-    Hash::seal = =>
+    @seal = =>
       if @canSeal()
         Object.seal @
         Object.seal object
       @
-    #### Hash::isSealed()
+    #### @isSealed()
     #> returns true if Hash is sealed
-    Hash::isSealed = =>
+    @isSealed = =>
       if @canSeal() then Object.isSealed object else false
-    #### Hash::canPreventExtensions()
+    #### @canPreventExtensions()
     #> returns true if environment supports Object.canPreventExtensions
-    Hash::canPreventExtensions = =>
+    @canPreventExtensions = =>
       typeof Object.preventExtensions is 'function'
-    #### Hash::isExtensible()
+    #### @isExtensible()
     #> returns false if Hash is not Extensible
-    Hash::isExtensible = =>
+    @isExtensible = =>
       if @canPreventExtensions() then Object.isExtensible object else true
-    #### Hash::preventExtensions()
+    #### @preventExtensions()
     #> prevent Extensability for Hash object if feature supported by environment
-    Hash::preventExtensions = =>
+    @preventExtensions = =>
       if @canPreventExtensions()
         Object.preventExtensions @
         Object.preventExtensions object

@@ -30,3 +30,8 @@ describe 'Hash Class Test Suite', ->
     (new Hash {value:'test'},['value']).toJSON().value.should.equal 'test'
   it "should provide toString", =>
     (new Hash {value:'test'},['value']).toString().should.be.a 'string'
+  it 'should keep hashes discrete', =>
+    one = new Hash {value:"foo"}
+    two = new Hash {value:"bar"}
+    one.get('value').should.equal 'foo'
+    two.get('value').should.equal 'bar'
