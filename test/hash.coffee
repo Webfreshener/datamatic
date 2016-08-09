@@ -1,6 +1,6 @@
-(chai     = require 'chai').should()
-expect    = chai.expect
-{Hash}    = require '../src/strictly-hash'
+{should, expect}  = require 'chai'
+{Hash}  = require '../src/strictly-hash'
+should()
 describe 'Hash Class Test Suite', ->
   it 'should get values from an object', =>
     (new Hash value:'test').get('value').should.equal 'test'
@@ -14,9 +14,18 @@ describe 'Hash Class Test Suite', ->
     expect(hash.get 'invalid').to.equal undefined
   it 'should restrict values based on array', =>
     expect((new Hash {},['value']).set('illegal', true).get('illegal')).to.equal undefined
+  it 'should restrict values based on type', =>
+    expect((new Hash {value:1},[], {value:"typeof:string"}).get('value')).to.equal undefined
+    expect((new Hash {value:1},[], {value:"typeof:object"}).get('value')).to.equal undefined
+    expect((new Hash {value:1},[], {value:"typeof:number"}).get('value')).to.equal 1
+  it 'should cast values to a type', =>
+    expect((new Hash {value:1},[], {value:"cast:String"}).get('value')).to.equal '1'
+  it 'should create class from values', =>
+    _h = new Hash {value:{foo:'bar'}}, [], {value:'class:Hash'}
+    expect(_h.get('value').get 'foo').to.equal 'bar'
   it 'should freeze', =>
     (hash = new Hash value:'you can\'t touch this').freeze().isFrozen().should.equal  true
-    expect((=>hash.set 'value','it\'s Hammer Time!')).to.throw "Cannot assign to read only property 'value' of #<Object>"
+    expect((=>hash.set 'value','it\'s Hammer Time!')).to.throw "Cannot assign to read only property 'value' of object '#<Object>'"
     hash.get('value').should.equal 'you can\'t touch this'
   it 'should seal', =>
     (hash = new Hash value:'you can\'t touch this').seal().isSealed().should.equal  true
