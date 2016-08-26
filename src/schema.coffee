@@ -186,6 +186,7 @@ class Schema
               if _elems.length then _elems else null
             value = (new Schema _schema).set new Vector getKinds() || '*', value
         return false unless _validate key, value
+        _object[key] = value
       # recurses if 'key 'is an _object (batch setting)
       else if typeof key is 'object'
         return false unless _hasRequiredFields Object.assign {}, _object, key

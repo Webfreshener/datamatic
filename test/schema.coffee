@@ -16,15 +16,14 @@ describe 'Schema Class Test Suite', ->
     _S = new Schema value:'String'
     (_S.set(value:1) instanceof Schema).should.be.false
     (_S.set(value:"A String") instanceof Schema).should.be.true
-    
-  # it 'should only allow valid types', =>
-    # expect(-> new Schema value:type:'Number').to.throw "invalid schema element 'type' requires one of [String,Function,Object] type was \'<Number>\'"
-  # it 'should init with valid schema', =>
-    # expect(-> new Schema value:type:'String').to.not.throw "invalid schema element 'type' requires one of [String,Function,Object] type was \'<String>\'"
-  # it 'should allow a function type', =>
-    # expect(-> new Schema( value:type:->)).to.not.throw "invalid schema element 'type' requires one of [String,Function,Object] type was \'<Function>\'"
-  # it 'should validate values', =>
-    # (new Schema value:type:'String').set('value', 'test').get('value').should.equal 'test'
+  it 'should only allow valid types', =>
+    expect(-> new Schema value:type:'Number').to.throw "invalid schema element 'value' requires type 'String,Function,Object' type was '<Number>'"
+  it 'should init with valid schema', =>
+    expect(-> new Schema value:type:'String').to.not.throw "invalid schema element 'value' requires type 'String,Function,Object' type was '<String>'"
+  it 'should allow a function type', =>
+    expect(-> new Schema( value:type:->)).to.not.throw "invalid schema element 'type' requires one of [String,Function,Object] type was \'<Function>\'"
+  it 'should validate values', =>
+    (new Schema value:type:'String').set('value', 'test').get('value').should.equal 'test'
 
 
   # it 'should set list keys in the Hash', =>
