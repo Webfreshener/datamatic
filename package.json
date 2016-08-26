@@ -1,7 +1,7 @@
 {
   "author": "Van Carney <carney.van@gmail.com>",
-  "name": "schemeroller",
-  "description": "A strict Hash implementation allowing key restriction and virtualization",
+  "name": "schemaroller",
+  "description": "Schema Generation and Data Validation with object virtualization",
   "keywords": [
     "schema",
     "validation",
@@ -21,7 +21,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "github.com/vancarney/schemeroller.git"
+    "url": "github.com/vancarney/schemaroller.git"
   },
   "dependencies": {
     "obj-utils": "0.0.2",
@@ -33,7 +33,7 @@
     "docco": "^0.7.0",
     "mocha": "^3.0.2"
   },
-  "homepage": "https://github.com/vancarney/schemeroller",
+  "homepage": "https://github.com/vancarney/schemaroller",
   "scripts": {
     "test": "cake test"
   }
