@@ -1,0 +1,19 @@
+{
+  "name": "obj-utils",
+  "version": "0.0.1",
+  "main": "lib/fun-utils.js",
+  "ignore": [
+    ".jshintrc",
+    "**/*.txt",
+    "./index.js",
+    "./.travis.yml",
+    "test",
+    "package.json",
+    "src"
+  ],
+  "dependencies": {
+    "fun-utils": ">=0.0.1"
+  },
+  "devDependencies": {
+  }
+}

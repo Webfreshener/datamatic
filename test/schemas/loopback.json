@@ -1,0 +1,281 @@
+{
+	"name": {
+		"type": "String",
+		"required": true,
+		"restrict": "/^[a-zA-Z-0-9_]+$/"
+	},
+	"description": {
+		"type": "String",
+		"required": true,
+		"restrict": "/^((?!\"|\\|\/|\b|\f|\n|\r|\t|\u).)*$/"
+	},
+	"plural": {
+		"type": "String",
+		"required": false,
+		"restrict": "/^[a-zA-Z-0-9_]+$/"
+	},
+	"base": {
+		"type": "String",
+		"required": true,
+		"restrict": "/^[a-zA-Z-0-9_]+$/"
+	},
+	"idInjection": {
+		"type": "Boolean",
+		"required": true,
+		"default": true
+	},
+	"http": {
+		"type": "Object",
+		"required": false,
+		"elements": {
+			"path": {
+				"type": "String",
+				"required": true,
+				"restrict": "/^[a-zA-Z-0-9_]+$/"
+			}
+		}
+	},
+	"strict": {
+		"type": ["Boolean", "String"],
+		"required": true,
+		"default": false,
+		"restrict": "/^(throw|validate)+$/"
+	},
+	"options": {
+		"type": "Object",
+		"required": true,
+		"extensible": true,
+		"elements": {
+			"idInjection": "Boolean",
+			"validateUpsert": {
+				"type": "Boolean",
+				"required": false,
+				"default": false
+			},
+			"relations": {
+				"type": "Object",
+				"required": true,
+				"extensible": true,
+				"elements": {
+				  "*": {
+					"type": "Object",
+					"required": false,
+					"elements": {
+						"type": {
+							"type": "String",
+							"required": true,
+							"restrict": "/^(belongsTo|hasMany|hasManyThrough|hasAndBelongsToMany)+$/"
+						},
+						"model": {
+							"type": "String",
+							"required": true,
+							"restrict": "/^[a-zA-Z-0-9_]+$/"
+						},
+						"foreignKey": {
+							"type": "String",
+							"required": true,
+							"restrict": "/^[a-zA-Z-0-9_]+$/"
+						},
+						"polymorphic": [{
+								"type": "String",
+								"required": false,
+								"restrict": "/^[a-zA-Z-0-9_]+$/"
+							},
+							{
+								"type": "Object",
+								"required": false,
+								"elements": {
+									"as": {
+										"type": "String",
+										"required": true,
+										"restrict": "/^[a-zA-Z-0-9_]+$/"
+									},
+									"foreignKey": {
+										"type": "String",
+										"required": "true",
+										"restrict": "/^[a-zA-Z-0-9_]+$/"
+									},
+									"discriminator": {
+										"type": "String",
+										"required": true,
+										"restrict": "/^[a-zA-Z-0-9_]+$/"
+									}
+								}
+						}]
+					}
+				  }
+				}
+				}
+			}
+		},
+		"properties": {
+			"type": "Object",
+			"required": true,
+			"extensible": true,
+			"elements": {
+				"*": {
+					"type": "Object",
+					"required": false,
+					"extensible": true,
+					"elements": {
+						"default": {
+							"type": "Boolean",
+							"required": true
+						},
+						"defaultFn": {
+							"type": "String",
+							"required": false,
+							"restrict": "/^(guid|uuid|uuidv4|now)+$/"
+						},
+						"description": {
+							"type": "String",
+							"required": true,
+							"restrict": "/^((?!\"|\\|\/|\b|\f|\n|\r|\t|\u).)*$/"
+						},
+						"id": {
+							"type": ["Boolean", "Object"],
+							"required": false,
+							"elements": [{
+								"type": {
+									"type": "String",
+									"required": true,
+									"restrict": "/^(String|Number)+$/"
+								},
+								"id": {
+									"type": "Boolean",
+									"required": true
+								},
+								"generated": {
+									"type": "Boolean",
+									"required": false
+								},
+							}]
+						},
+						"index": {
+							"type": "Boolean",
+							"required": false
+						},
+						"type": {
+							"type": "String",
+							"required": true,
+							"restrict": "/^(\*|any|Array|Boolean|Buffer|Date|GeoPoint|Number|Object|String|[a-zA-Z-0-9_])+$/"
+						},
+						"required": {
+							"type": "Boolean",
+							"required": true,
+							"default": false
+						},
+						"length": {
+							"type": ["Number",null],
+							"required": true,
+							"default": null
+						},
+						"precision": {
+							"type": ["Number",null],
+							"required": true,
+							"default": null
+						},
+						"scale": {
+							"type": ["Number",null],
+							"required": true,
+							"default": null
+					}
+				}
+			}
+		}
+	},
+	"validations": {
+		"type": "Array",
+		"required": true,
+		"default": [],
+		"elements": [{
+			"type": "Object",
+			"required": false,
+			"elements": {
+				"default": {
+					"type": "*",
+					"required": true
+				},
+				"required": {
+					"type": "Boolean",
+					"required": false
+				},
+				"pattern": {
+					"type": "String",
+					"required": false
+				},
+				"min": {
+					"type": "Number",
+					"required": false
+				},
+				"max": {
+					"type": "Number",
+					"required": false
+				},
+				"length": {
+					"type": "Number",
+					"required": false
+				}
+				
+			}
+		}]
+	},
+	"scope": {
+		"type": "Object",
+		"required": false,
+		"extensible": false,
+		"elements": [{
+			"type": "Object",
+			"required": false
+		}]
+	},
+	"scopes": {
+		"type": "Object",
+		"required": true,
+		"default": {},
+		"extensible": true,
+		"elements": [{
+			"type": "Object",
+			"required": false
+		}]
+	},
+	"acls": {
+		"type": "Object",
+		"required": true,
+		"default": {},
+		"extensible": false,
+		"elements": {
+			"accessType": {
+				"type": "String",
+				"required": true,
+				"default": "*",
+				"restrict": "/^(\*|READ|WRITE|EXECUTE)+$/"
+			},
+			"permission": {
+				"type": "String",
+				"required": true,
+				"default": "ALLOW",
+				"restrict": "/^(ALLOW|DENY)+$/"
+			},
+			"principalId": {
+				"type": "*",
+				"required": true
+			},
+			"principalType": {
+				"type": "String",
+				"required": true,
+				"restrict": "/^(Application|User|Role)+$/"
+			},
+			"principalType": {
+				"type": "Array",
+				"required": false,
+				"default": [],
+				"elements": [{
+					"type": "String",
+					"required": false,
+					"restrict": "/^[a-zA-Z-0-9_]+$/"
+				}]
+			}
+		}
+	}
+}

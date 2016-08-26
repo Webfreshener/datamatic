@@ -1,1 +1,1 @@
-module.exports = require('./lib/strictly-hash').Hash;
+module.exports = require('./lib/schemeroller').Schema;
