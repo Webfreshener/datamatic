@@ -1,8 +1,5 @@
 {Fun}  = require 'fun-utils'
 Vector = require './vector'
-String::ucfirst = ->
-  @charAt(0).toUpperCase() + @substr 1
-
 if `typeof Object.assign != 'function'`
   Object.assign = (target) ->
     'use strict'
@@ -31,13 +28,14 @@ class Schema
       extensible: 'Boolean'
       restrict: 'String'
       validate: 'Function'
+      default: 'Boolean'
+      elements: ['Array','Object']
     # escapes keys that append __
     escapeKey = (key) ->
       if key.length > 2 and key.charCodeAt(0) is 95 and key.charCodeAt(1) is 95 then "#{key}%" else "#{key}"
     # unescapes unsafe key
     unescapeKey = (key) ->
       if key.length > 2 and key.charCodeAt(0) is 95 and key.charCodeAt(1) is 95 then "#{key.substr 0, key.length - 1}" else "#{key}"
-
     _validators = {}
     ## _buildValidator
     # accepts: 
@@ -67,7 +65,7 @@ class Schema
     # traverses elements of schema
     if _o.elements?
       for _oE in Object.keys _o.elements
-        _required_elements.push _oE if _o.elements[_oE].required? and _o.elements[_oE].required    
+        _required_elements.push _oE if _o.elements[_oE].required? and _o.elements[_oE].required
     ##> helper method to test if field requirements are met
     _hasRequiredFields = (obj)=>
       oKeys = Object.keys obj
@@ -86,9 +84,13 @@ class Schema
       return _validateTypeString key, params if typeof params == 'string'
       if typeof params == 'object'
         unless params.hasOwnProperty "type"
-          throw "value for schema element '#{key}' was malformed. Property 'type' was missing"
-        _c = SchemaRoller.getClass params.type.ucfirst()
-        unless (_c = SchemaRoller.getClass params.type.ucfirst())?
+          if (keyPath = key.split '.').pop() != 'elements' 
+            throw "value for schema element '#{key}' was malformed. Property 'type' was missing"
+          else
+            for param in Object.keys params
+              _validateSchemaEntry "#{keyPath.join '.'}.#{param}", params[param]
+              return
+        unless (SchemaRoller.getClass params.type)?
           throw "value for schema element '#{key}' has invalid type '<#{params.type}>'"
         for sKey in Object.keys params
           throw "schema element '#{key}.#{sKey}' is not allowed" unless _schemaKeys[sKey]? or opts.extensible
@@ -100,11 +102,16 @@ class Schema
               unless Array.isArray _type
                 throw "invalid schema element '#{key}' requires type '#{_type}' type was '<#{_kind}>'" unless _type == _kind
               else
+                _kind = _kind.ucfirst()
                 throw "invalid schema element '#{key}' requires type '#{_type}' type was '<#{_kind}>'" unless 0 <= _type.indexOf _kind
             else
               _validateSchemaEntry "#{key}.#{sKey}", params[sKey]
           else
-            _validateSchemaEntry "#{key}.#{sKey}", params[sKey]
+            if Array.isArray params[sKey]
+              for _k in params[sKey]
+                _validateSchemaEntry "#{key}.#{sKey}", _k
+            else
+              _validateSchemaEntry "#{key}.#{sKey}", params[sKey]
       else
         _t = typeof params
         unless _t == 'function'

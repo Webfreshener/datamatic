@@ -9,9 +9,10 @@ describe 'Schema Class Test Suite', ->
     expect(-> new Schema value:type:'String').to.not.throw "value for schema element 'value' was malformed. Property 'type' was missing"
     o = value: {type:'String', foo: 'test'}
     expect(-> new Schema o).to.throw "schema element 'value.foo' is not allowed"
-    expect(-> new Schema o, extensible:true).to.throw "type '<test>' for schema element \'value.foo\' was invalid"
+    expect(=> new Schema o, extensible:true).to.throw "type '<test>' for schema element \'value.foo\' was invalid"
     o.value.foo = 'String'
     expect(-> new Schema o, extensible:true).to.not.throw "schema element 'value.foo' is not allowed"
+
   it 'should validate data set to it', ->
     _S = new Schema value:'String'
     (_S.set(value:1) instanceof Schema).should.be.false
@@ -24,7 +25,10 @@ describe 'Schema Class Test Suite', ->
     expect(-> new Schema( value:type:->)).to.not.throw "invalid schema element 'type' requires one of [String,Function,Object] type was \'<Function>\'"
   it 'should validate values', =>
     (new Schema value:type:'String').set('value', 'test').get('value').should.equal 'test'
-
+    
+  it 'should initialize from schema file', =>
+    _s = require "./schemas/loopback.json"
+    expect(=> new Schema _s).to.not.throw "invalid schema"
 
   # it 'should set list keys in the Hash', =>
     # (hash = new Hash).set('value', 'test')
