@@ -1,0 +1,7 @@
+{
+	"name": {
+		"type": "String",
+		"required": true,
+		"restrict": "^[a-zA-Z-0-9_]+$"
+	}
+}
