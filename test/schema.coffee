@@ -30,7 +30,16 @@ describe 'Schema Class Test Suite', ->
     _s = require "./schemas/simple.json"
     expect(=> new Schema name: {type: "String", restrict: "^((?:(?:[^?+*{}()[\]\\|]+))$"}).to.throw "Regular Expression provided for 'name.restrict' was invalid"
     expect(=> new Schema _s).to.not.throw "type '<^[a-zA-Z-0-9_]+$>' for schema element 'name.restrict' was invalid"
+    
+  it 'should set a value to the schema', =>
+    _s = require "./schemas/simple.json"
+    @schema = new Schema _s
+    ((@schema.set 'name', 'Test') instanceof Schema).should.be.true
 
+  it 'should get a value from the schema', =>
+    (@schema.get 'name').should.equal 'Test'
+    
+        
   # it 'should set list keys in the Hash', =>
     # (hash = new Hash).set('value', 'test')
     # hash.keys()[0].should.equal 'value'

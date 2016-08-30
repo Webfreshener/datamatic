@@ -50,7 +50,7 @@ class Schema
           switch typeof value
             when 'string'
               return false unless vItm.type.match /^string$/i
-              return false if vItm.restrict? and (new RegExp vItm.restrict).exec value
+              return ((new RegExp vItm.restrict).exec value)? if vItm.restrict? and vItm.restrict is true
               return true
             when 'function'
               _x = if typeof vItm is 'string' then vItm else Fun.getConstructorName vItm
@@ -153,8 +153,8 @@ class Schema
         _buildValidator obj[_k], _k 
         _walkSchema obj[_k].elements if obj[_k].hasOwnProperty "elements" and typeof obj[_k].elements is "object"
     ) _o
-    _validate = (key, value)->   
-      return false unless _validators.hasOwnProperty key
+    _validate = (key, value)-> 
+      return "#{key} is not a valid schema property" unless _validators.hasOwnProperty key
       return msg unless (msg = _validators[key] value)
       true  
     validValue = (val, restrict)->
