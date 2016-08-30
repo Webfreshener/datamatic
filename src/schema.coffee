@@ -76,7 +76,12 @@ class Schema
     _sKeys = Object.keys _schemaKeys
     rx = new RegExp "^((#{_sKeys.join '|'})+,?){#{_sKeys.length}}$"
     _validateTypeString = (key, _type)=>
-      unless (SchemaRoller.getClass _type.ucfirst())?
+      if key.match /\.restrict+$/
+        throw 'restrict requires a Regular Expression String' unless typeof _type is 'string'
+        try "text".match new RegExp _type
+        catch e
+          throw "Regular Expression provided for '#{key}' was invalid" unless _type.match rx
+      else if (SchemaRoller.getClass _type.ucfirst())? is false
         throw "type '<#{_type}>' for schema element '#{key}' was invalid"
       true
     _validateSchemaEntry = (key, params)=>
