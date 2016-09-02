@@ -12,6 +12,12 @@ class Vector
       _type = '*' unless typeof _type is 'function'
     _check = (item)->
       return true if _type is '*'
+      console.log '\n\n--- _check ---'
+      console.log 'item:'
+      console.log item
+      console.log '\n_type:'
+      console.log _type
+      console.log '------------'
       objUtil.isOfType item, _type
     @getItemAt = (idx)=>
       if _list.length = (idx + 1) then _list[idx] else null

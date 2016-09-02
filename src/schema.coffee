@@ -1,5 +1,7 @@
 {Fun}  = require 'fun-utils'
 Vector = require './vector'
+SchemaValidator = require './_schemaValidator'
+ValidatorBuilder = (require './_validatorBuilder').getInstance()
 if `typeof Object.assign != 'function'`
   Object.assign = (target) ->
     'use strict'
@@ -19,17 +21,6 @@ class Schema
   constructor:(_o={}, opts=extensible:false) ->
     _object = {}
     _required_elements = []
-    _schemaKeys = 
-      type: {
-        type: ['String', 'Function', 'Object']
-        required: true
-      }
-      required: 'Boolean'
-      extensible: 'Boolean'
-      restrict: 'String'
-      validate: 'Function'
-      default: 'Boolean'
-      elements: ['Array','Object']
     # escapes keys that append __
     escapeKey = (key) ->
       if key.length > 2 and key.charCodeAt(0) is 95 and key.charCodeAt(1) is 95 then "#{key}%" else "#{key}"
@@ -37,31 +28,7 @@ class Schema
     unescapeKey = (key) ->
       if key.length > 2 and key.charCodeAt(0) is 95 and key.charCodeAt(1) is 95 then "#{key.substr 0, key.length - 1}" else "#{key}"
     _validators = {}
-    ## _buildValidator
-    # accepts: 
-    _buildValidator = (_ref, _path)=>
-      _v = [_ref]
-      if Array.isArray _ref
-        _v = _ref.map (_s) => _buildValidator _s, path
-      _validators[_path] = (value)=>
-        for vItm in _v
-          if vItm.required and !(value?)
-            return false
-          switch typeof value
-            when 'string'
-              return false unless vItm.type.match /^string$/i
-              return ((new RegExp vItm.restrict).exec value)? if vItm.restrict? and vItm.restrict is true
-              return true
-            when 'function'
-              _x = if typeof vItm is 'string' then vItm else Fun.getConstructorName vItm
-              return _x == Fun.getConstructorName value
-            when 'object'
-              return false unless value.validate?()
-            else
-              _x = if typeof vItm.type is 'string' then SchemaRoller.getClass vItm.type else vItm.type
-              return _x? and value instanceof _x
-        # should not be here
-        false
+
     # traverses elements of schema
     if _o.elements?
       for _oE in Object.keys _o.elements
@@ -70,92 +37,22 @@ class Schema
     _hasRequiredFields = (obj)=>
       oKeys = Object.keys obj
       for key in _required_elements
-        return false unless 0 <= oKeys.indexOf key
+        return "required property '#{key}' is missing" unless 0 <= oKeys.indexOf key
       true
-    _allowed_keys = Object.keys _o
-    _sKeys = Object.keys _schemaKeys
-    rx = new RegExp "^((#{_sKeys.join '|'})+,?){#{_sKeys.length}}$"
-    _validateTypeString = (key, _type)=>
-      if key.match /\.restrict+$/
-        throw 'restrict requires a Regular Expression String' unless typeof _type is 'string'
-        try "text".match new RegExp _type
-        catch e
-          throw "Regular Expression provided for '#{key}' was invalid" unless _type.match rx
-      else if (SchemaRoller.getClass _type.ucfirst())? is false
-        throw "type '<#{_type}>' for schema element '#{key}' was invalid"
-      true
-    _validateSchemaEntry = (key, params)=>
-      throw "#{key} was null or undefined" unless params?
-      return _validateTypeString key, params if typeof params == 'string'
-      if typeof params == 'object'
-        unless params.hasOwnProperty "type"
-          if (keyPath = key.split '.').pop() != 'elements' 
-            throw "value for schema element '#{key}' was malformed. Property 'type' was missing"
-          else
-            for param in Object.keys params
-              _validateSchemaEntry "#{keyPath.join '.'}.#{param}", params[param]
-              return
-        unless (SchemaRoller.getClass params.type)?
-          throw "value for schema element '#{key}' has invalid type '<#{params.type}>'"
-        for sKey in Object.keys params
-          throw "schema element '#{key}.#{sKey}' is not allowed" unless _schemaKeys[sKey]? or opts.extensible
-          if typeof params[sKey] == "string"
-            _kind = params[sKey].ucfirst()
-            throw "schema element '#{key}.#{sKey}' is not allowed" unless _schemaKeys[sKey]? or opts.extensible
-            if typeof _schemaKeys[sKey] == 'object'
-              _type = _schemaKeys[sKey].type
-              unless Array.isArray _type
-                throw "invalid schema element '#{key}' requires type '#{_type}' type was '<#{_kind}>'" unless _type == _kind
-              else
-                _kind = _kind.ucfirst()
-                throw "invalid schema element '#{key}' requires type '#{_type}' type was '<#{_kind}>'" unless 0 <= _type.indexOf _kind
-            else
-              _validateSchemaEntry "#{key}.#{sKey}", params[sKey]
-          else
-            if Array.isArray params[sKey]
-              for _k in params[sKey]
-                _validateSchemaEntry "#{key}.#{sKey}", _k
-            else
-              _validateSchemaEntry "#{key}.#{sKey}", params[sKey]
-      else
-        _t = typeof params
-        unless _t == 'function'
-          # tests for everything that's not a string, _object or function
-          throw "value for schema element '#{key}' has invalid type '<#{_t}>'" unless _schemaKeys[key.split('.').pop()] == _t.ucfirst()
-        else
-          # tests for function's constructor name
-          throw "value for schema element '#{key}' has invalid class or method '<#{_fn}>'" unless (_fn = Fun.getConstructorName params) == _schemaKeys[key] 
-    # validates SCHEMA ENTRIES
-    for _oKey in Object.keys _o
-      switch typeof _o[_oKey]
-        when "string"
-          obj = {}
-          obj[_oKey] = {
-            type: _o[_oKey].ucfirst(), 
-            required: false
-          }
-          _o = Object.assign _o, obj
-          _validateSchemaEntry _oKey, _o[_oKey]
-        when "object"
-          unless Array.isArray _o[_oKey]
-            _validateSchemaEntry _oKey, _o[_oKey]
-          else
-            for _s in _o[_oKey]
-              if typeof _o[_oKey][_s] is 'string'
-                _validateTypeString _oKey, _o[_oKey][_s]
-              else
-                _validateSchemaEntry _oKey, _o[_oKey][_s] 
-        else
-          throw "value for schema element '#{_oKey}' was invalid"
+    # attempts to validate provided `schema` entries
+    _schema_validator = new SchemaValidator _o, opts
+    # throws error if error messagereturned
+    throw eMsg if typeof (eMsg = _schema_validator.isValid()) is 'string'
+    
     # builds validations from SCHEMA ENTRIES
     (_walkSchema = (obj)=>
       for _k in (if (Array.isArray obj) then obj else Object.keys obj)
-        _buildValidator obj[_k], _k 
+        ValidatorBuilder.create obj[_k], _k
         _walkSchema obj[_k].elements if obj[_k].hasOwnProperty "elements" and typeof obj[_k].elements is "object"
-    ) _o
-    _validate = (key, value)-> 
-      return "#{key} is not a valid schema property" unless _validators.hasOwnProperty key
-      return msg unless (msg = _validators[key] value)
+    ) _o.elements || {}
+    _validate = (key, value)->
+      return "'#{key}' is not a valid schema property" unless 0 <= ValidatorBuilder.list()?.indexOf key
+      return "validator for '#{key}' failed. #{msg}" if typeof (msg = ValidatorBuilder.exec key, value) is 'string'
       true  
     validValue = (val, restrict)->
       if typeof restrict is 'string'
@@ -180,31 +77,32 @@ class Schema
     #### @set(key, value)
     #> sets key/value to virtualized _object
     @set = (key, value)=>
-      # tests if key is string
-      if typeof key is 'string'
-        _schema = _o
+      # recurses if 'key 'is an _object (batch setting)
+      if typeof key is 'object'
+        return _f if typeof (_f = _hasRequiredFields Object.assign {}, _object, key) is 'string'
+        # calls set with nested key value pair
+        for k,v of key
+          return eMsg if typeof (eMsg = @set k, v) is 'string'
+      else
+        _schema = _o.elements ? _o
         for k in key.split '.'
-          _schema = _schema[k]
+          _schema = if _schema.elements? then _schema.elements[k] else _schema[k]
+          return "element '#{k}' is not a valid element" unless _schema?
         if typeof value is 'object'
           unless Array.isArray value
-            throw e unless (e = (s = new Schema _schema).set value) instanceof Schema
+            throw e unless (e = (s = new Schema _schema.elements ? _schema).set value) instanceof Schema
             value = s
           else
             getKinds = =>
-              _elems = _schema.elements
+              _elems = [] #_schema
               unless Array.isArray _elems
-                _elems = Object.keys(_schema.elements).map (key)=> _schema.elements[key]
+                _elems = Object.keys(_schema).map (key)=> _schema[key]
               _elems.map (el)-> el.type
               if _elems.length then _elems else null
             value = (new Schema _schema).set new Vector getKinds() || '*', value
-        return false unless _validate key, value
+        else
+          return eMsg if (typeof (eMsg = _validate key, value)) == 'string'
         _object[key] = value
-      # recurses if 'key 'is an _object (batch setting)
-      else if typeof key is 'object'
-        return false unless _hasRequiredFields Object.assign {}, _object, key
-        # calls set with nested key value pair
-        for k,v of key
-          return false unless @set k, v
       # returns self for chaining
       @
     @validate = (cB)=>

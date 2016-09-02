@@ -18,7 +18,7 @@ class SchemaRoller
       Number:Number
       Object:Object
       String:String
-      Function:Function
+      Function:Function     
     @getClass = (classesOrNames...)=>
       for arg in classesOrNames
         if typeof arg is 'object'
@@ -40,6 +40,21 @@ class SchemaRoller
       _kinds[name] = clazz
     @unregisterClass = (name)->
       delete _kinds[name] if _kinds.hasOwnProperty name
+    @listClasses = ->
+      Object.keys _kinds
+    _schemaRef = 
+      type: {
+        type: @listClasses()
+        required: true
+      }
+      required: 'Boolean'
+      extensible: 'Boolean'
+      restrict: 'String'
+      validate: 'Function'
+      default: 'Boolean'
+      elements: ['Array','Object']
+    @getSchemaRef = ->
+      _schemaRef
 module.exports.SchemaRoller = new SchemaRoller
 module.exports.SchemaRoller.Vector = require './vector'
 module.exports.SchemaRoller.Schema = require './schema'
