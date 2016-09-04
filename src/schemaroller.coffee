@@ -18,7 +18,7 @@ class SchemaRoller
       Number:Number
       Object:Object
       String:String
-      Function:Function     
+      Function:Function  
     @getClass = (classesOrNames...)=>
       for arg in classesOrNames
         if typeof arg is 'object'
@@ -43,10 +43,9 @@ class SchemaRoller
     @listClasses = ->
       Object.keys _kinds
     _schemaRef = 
-      type: {
+      type:
         type: @listClasses()
         required: true
-      }
       required: 'Boolean'
       extensible: 'Boolean'
       restrict: 'String'
@@ -55,6 +54,11 @@ class SchemaRoller
       elements: ['Array','Object']
     @getSchemaRef = ->
       _schemaRef
+    @getDefaults = ->
+      _def =
+        type: '*'
+        required: false
+        extensible: false
 module.exports.SchemaRoller = new SchemaRoller
 module.exports.SchemaRoller.Vector = require './vector'
 module.exports.SchemaRoller.Schema = require './schema'

@@ -43,7 +43,7 @@ describe 'Schema Class Test Suite', ->
   it 'should initialize from complex schema file', =>
     _s = require "./schemas/_loopback.json"
     (@schema = new Schema _s)
-#     
+    
   it 'should check for required fields', =>
     _d =       
       name: 'Test'
@@ -51,28 +51,30 @@ describe 'Schema Class Test Suite', ->
     
   it 'should check for valid properties', =>
     _d =       
-      name: 'Test',
+      name: 'Test'
       properties: []
       foo: {}
-    expect((@schema.set _d) instanceof Schema).to.be.false
-    expect(@schema.set _d).to.eq "element 'foo' is not a valid element"
+    expect(@schema.set(_d) instanceof Schema).to.be.false
+    expect(@schema.set(_d)).to.eq "element 'foo' is not a valid element"
     
   it 'should check for required fields on elements', =>
     _d =       
       name: 'Test'
       options:
         idInjection: true
-      properties: {}
-      acls: {}
-    expect(=> @schema.set _d).to.throw "required property 'type' is missing"
-    _d = Object.assign _d, properties:
-      type: "Boolean"
-      name: "Test"
-    expect(=> @schema.set _d).to.not.throw "required property 'type' is missing"
-
-  it 'should set values on elements', =>
-    (typeof (_opts = @schema.get 'options') == 'object').should.be.true
-    (_opts.get 'idInjection').should.be.true
+      properties:
+        foo:
+          type: "String"
+          required: true
+    expect(@schema.set(_d) instanceof Schema).to.be.true
+    # _d = Object.assign _d, properties:
+      # type: "Boolean"
+      # name: "Test"
+    # expect(=> @schema.set _d).to.not.throw "required property 'type' is missing"
+# 
+  # it 'should set values on elements', =>
+    # (typeof (_opts = @schema.get 'options') == 'object').should.be.true
+    # (_opts.get 'idInjection').should.be.true
 
 #         
   # it 'should set a value to the schema', =>

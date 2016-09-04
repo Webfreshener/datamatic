@@ -3,35 +3,41 @@
 #### A strict Hash implementation allowing key restriction and virtualization
 global = exports ? window
 objUtil = require 'obj-utils'
+{Fun}  = require 'fun-utils'
 class Vector
   'use strict'
   constructor:(_type, items...) ->
     _list = []
     unless Array.isArray _type
-      _type = [_type] if typeof _type is 'string'
-      _type = '*' unless typeof _type is 'function'
+      _t = typeof _type
+      _type = [_type] if _t is 'string'
+      _type = [_type] if _t.match /^(function|object)$/
+      _type = ['*'] if _t is null or _t is 'Function'
     _check = (item)->
-      return true if _type is '*'
-      console.log '\n\n--- _check ---'
-      console.log 'item:'
-      console.log item
-      console.log '\n_type:'
-      console.log _type
-      console.log '------------'
-      objUtil.isOfType item, _type
+      for _t in _type
+        return true if (typeof _t is 'string') and _t.match /^(\*|ALL)$/
+        return false unless _t = SchemaRoller.getClass _t
+        return false unless objUtil.isOfType item, _t
+      true
     @getItemAt = (idx)=>
       if _list.length = (idx + 1) then _list[idx] else null
     @setItemAt = (idx, item)=>
       return false unless _check item
       _list.splice idx, 0, item
-      true
+      @
     @removeItemAt = (idx, item)=>
       return false unless  idx <= _list.length
       _list.splice idx, 1, item
+    @replaceAll = (array)=>
+      @reset()
+      for itm in array
+        @addItem itm
+      @
     @replaceItemAt = (idx, item)=>
       return false unless _check item
       return false unless  idx <= _list.length
       _list.splice idx, 1 if idx <= _list.length
+      @
     @addItem = (item)=>
       @setItemAt _list.length, item
     @shift = =>
@@ -39,17 +45,21 @@ class Vector
     @unshift = (items...)=>
       items.forEach (item)=> 
          @setItemAt 0, item
+      @
     @pop = =>
       _list.shift()
     @push = (items...)=>
       items.forEach (item)=> 
          @addItem item
+      @
     @reset = =>
-      _list = []       
+      _list = []
+      @     
     @length = =>
       _list.length
     @sort = (func)=>
       _list.sort func
+      @
     @values = =>
       _list.values()
     @toString = =>

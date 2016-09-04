@@ -43,33 +43,24 @@ class Schema
     _schema_validator = new SchemaValidator _o, opts
     # throws error if error messagereturned
     throw eMsg if typeof (eMsg = _schema_validator.isValid()) is 'string'
-    
     # builds validations from SCHEMA ENTRIES
     (_walkSchema = (obj)=>
       for _k in (if (Array.isArray obj) then obj else Object.keys obj)
         ValidatorBuilder.create obj[_k], _k
-        _walkSchema obj[_k].elements if obj[_k].hasOwnProperty "elements" and typeof obj[_k].elements is "object"
+        if obj[_k].hasOwnProperty "elements" and typeof obj[_k].elements is "object"
+          _walkSchema obj[_k].elements
     ) _o.elements || {}
     _validate = (key, value)->
-      return "'#{key}' is not a valid schema property" unless 0 <= ValidatorBuilder.list()?.indexOf key
+      unless 0 <= ValidatorBuilder.list()?.indexOf key
+        return "'#{key}' is not a valid schema property" unless opts.extensible
       return "validator for '#{key}' failed. #{msg}" if typeof (msg = ValidatorBuilder.exec key, value) is 'string'
       true  
-    validValue = (val, restrict)->
-      if typeof restrict is 'string'
-        # tests for type match
-        if restrict.match /^(typeof|cast)+:+/
-          return typeof val == (restrict.split(':')[1] || "").toLowerCase()
-        if restrict.match /^class:+/
-          return typeof val is 'object'
-        else
-          # tests string comparison
-          return val is restrict
-      else
-        # tests enumeration
-        if typeof restrict is 'object' and restrict.length
-          return 0 <= restrict.indexOf val 
-      # unknown restriction
-      false
+    _getKinds = (_s) =>
+      _elems = Object.keys(_s).map (key)=>
+        if _s[key].type? then _s[key].type else null
+      _elems = _elems.filter (elem)-> 
+        elem != null
+      if _elems.length then _elems else null
     #### @get(key)
     #> gets key/value from virtualized _object
     @get = (key)=>
@@ -85,21 +76,34 @@ class Schema
           return eMsg if typeof (eMsg = @set k, v) is 'string'
       else
         _schema = _o.elements ? _o
+        _extensible = if _o.extensible? then _o.extensible else opts.extensible || false
         for k in key.split '.'
-          _schema = if _schema.elements? then _schema.elements[k] else _schema[k]
-          return "element '#{k}' is not a valid element" unless _schema?
+          _extensible = _schema[k].extensible if _schema[k]? and _schema[k].hasOwnProperty 'extensible'
+          _schema = if _schema.elements? then _schema.elements[k] else _schema[k] 
+          unless _schema?
+            return "element '#{k}' is not a valid element" unless _extensible
+            _schema = 
+              type: '*'
+              required: true
+              extensible: false
         if typeof value is 'object'
-          unless Array.isArray value
-            throw e unless (e = (s = new Schema _schema.elements ? _schema).set value) instanceof Schema
-            value = s
-          else
-            getKinds = =>
-              _elems = [] #_schema
-              unless Array.isArray _elems
-                _elems = Object.keys(_schema).map (key)=> _schema[key]
-              _elems.map (el)-> el.type
-              if _elems.length then _elems else null
-            value = (new Schema _schema).set new Vector getKinds() || '*', value
+          if _schema?
+            unless Array.isArray value
+              _s = new Schema (_schema.elements ? _schema), extensible: _extensible
+            else
+              if Array.isArray (_kinds = _getKinds _schema)
+                _kinds = _kinds.map (itm)->
+                  switch (typeof itm)
+                    when 'string'
+                      return itm
+                    when 'object'
+                      return itm.type if itm.hasOwnProperty 'type'
+                _kinds = _kinds.filter (itm)-> itm?
+                _kinds = if _kinds.length then _kinds else '*'
+              _s = new Vector (_kinds || '*')
+          return "'#{key}' was invalid" unless _schema?
+          value = _s[if (_s instanceof Vector) then 'replaceAll' else 'set'] value
+          return value if (typeof value) is 'string'
         else
           return eMsg if (typeof (eMsg = _validate key, value)) == 'string'
         _object[key] = value
