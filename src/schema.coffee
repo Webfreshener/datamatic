@@ -21,12 +21,6 @@ class Schema
   constructor:(_o={}, opts=extensible:false) ->
     _object = {}
     _required_elements = []
-    # escapes keys that append __
-    escapeKey = (key) ->
-      if key.length > 2 and key.charCodeAt(0) is 95 and key.charCodeAt(1) is 95 then "#{key}%" else "#{key}"
-    # unescapes unsafe key
-    unescapeKey = (key) ->
-      if key.length > 2 and key.charCodeAt(0) is 95 and key.charCodeAt(1) is 95 then "#{key.substr 0, key.length - 1}" else "#{key}"
     _validators = {}
 
     # traverses elements of schema
@@ -64,7 +58,7 @@ class Schema
     #### @get(key)
     #> gets key/value from virtualized _object
     @get = (key)=>
-      _object[escapeKey key]
+      _object[key]
     #### @set(key, value)
     #> sets key/value to virtualized _object
     @set = (key, value)=>
@@ -114,18 +108,18 @@ class Schema
     #### @has(key)
     #> tests for key existance
     @has = (key) =>
-      _object.hasOwnProperty escapeKey key
+      _object.hasOwnProperty key
     #### @del(key)
     #> removes key from Schema
     @del = (key)=>
-      delete _object[escapeKey key] if @has key
+      delete _object[key] if @has key
     #### @forEach(iterator, scope)
     #> traverses Schema, calling iterator on each node
     @forEach = (iterator, scope) =>
       _results = []
       for key of _object
         continue unless _object.hasOwnProperty key
-        _results.push iterator.call scope, _object[key], unescapeKey key
+        _results.push iterator.call scope, _object[key], key
       _results
     #### @keys()
     #> returns _object keys

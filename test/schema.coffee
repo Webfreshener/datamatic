@@ -71,10 +71,10 @@ describe 'Schema Class Test Suite', ->
       # type: "Boolean"
       # name: "Test"
     # expect(=> @schema.set _d).to.not.throw "required property 'type' is missing"
-# 
-  # it 'should set values on elements', =>
-    # (typeof (_opts = @schema.get 'options') == 'object').should.be.true
-    # (_opts.get 'idInjection').should.be.true
+
+  it 'should set values on elements', =>
+    (typeof (_opts = @schema.get 'options') == 'object').should.be.true
+    (_opts.get 'idInjection').should.be.true
 
 #         
   # it 'should set a value to the schema', =>
