@@ -44,7 +44,7 @@ class ValidatorBuilder
     @create = (_ref, _path)->
       _buildValidator.apply @, arguments
     @exec = (_path, value)->
-      _validators[_path]? value ? "validator for '#{path}' does not exist"
+      _validators[_path]? value ? "validator for '#{_path}' does not exist"
   @getInstance: ->
     @__instance ?= new @
 module.exports = ValidatorBuilder
