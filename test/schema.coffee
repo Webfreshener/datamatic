@@ -76,7 +76,20 @@ describe 'Schema Class Test Suite', ->
     (typeof (_opts = @schema.get 'options') == 'object').should.be.true
     (_opts.get 'idInjection').should.be.true
 
-#         
+  it 'should handle defaults and restrictions', =>
+    _s = 
+      elements:
+        foo:
+          type: 'String'
+          restrict: '^[a-zA-Z0-9\\\s\\\.]{1,}$'
+          # default: 'Hello World'
+          required: false
+    @schema = new Schema _s
+    @schema.set foo:'Goodnight Moon?'
+    expect(@schema.get 'foo').to.not.exist
+    @schema.set foo:'Goodnight Moon'
+    expect(@schema.get 'foo').to.eq 'Goodnight Moon'
+#
   # it 'should set a value to the schema', =>
     # _s = require "./schemas/simple.json"
     # @schema = new Schema _s

@@ -10,13 +10,14 @@ class ValidatorBuilder
         _v = _ref.map (_s) => _buildValidator _s, _path
       _validators[_path] = (value)=>
         for vItm in _v
-          return false if vItm.required and !(value?)
+          return "'#{_path}' is reuqired" if vItm.required and !(value?)
           switch typeof value
             when 'string'
               _x = vItm.type ? null if typeof vItm is 'object'
               _x ?= vItm
               return "#{_path} requires #{_x} type was 'String'" unless vItm is 'String' or _x.match /^string$/i
-              return ((new RegExp vItm.restrict).exec value)? if vItm.restrict? and vItm.restrict is true
+              if vItm.restrict?
+                return "value '#{value}' for #{_path} did not match required expression" unless ((new RegExp vItm.restrict).exec value)?
               return true
             when 'function'
               _x = if typeof vItm is 'string' then vItm else Fun.getConstructorName vItm
