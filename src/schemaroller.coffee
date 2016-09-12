@@ -2,6 +2,7 @@
 # (c)2014 Van Carney
 #### A strict Schema implementation allowing key restriction and virtualization
 global = module.exports ? window
+
 String::ucfirst = ->
   @charAt(0).toUpperCase() + @substr 1
 GeoPoint = {lat:0, lng:0}
@@ -11,6 +12,7 @@ class SchemaRoller
   constructor: ->
     _kinds =
       Array:Array
+      ArrayBuffer:ArrayBuffer
       Boolean:Boolean
       Buffer:ArrayBuffer
       Date:Date
@@ -18,7 +20,7 @@ class SchemaRoller
       Number:Number
       Object:Object
       String:String
-      Function:Function  
+      Function:Function
     @getClass = (classesOrNames...)=>
       for arg in classesOrNames
         if typeof arg is 'object'
@@ -42,6 +44,13 @@ class SchemaRoller
       delete _kinds[name] if _kinds.hasOwnProperty name
     @listClasses = ->
       Object.keys _kinds
+    @fromJSON = (json)->
+      switch typeof json
+        when 'string'
+          return new Schema JSON.parse json
+        when 'object'
+          return new Schema json
+       throw new Error "json must be either JSON formatted string or object"
     _schemaRef = 
       type:
         type: @listClasses()
@@ -59,6 +68,12 @@ class SchemaRoller
         type: '*'
         required: false
         extensible: false
-module.exports.SchemaRoller = new SchemaRoller
-module.exports.SchemaRoller.Vector = require './vector'
-module.exports.SchemaRoller.Schema = require './schema'
+module.exports = ->
+  _s = new SchemaRoller
+  _s.Schema = Schema
+  _s.Vector = Vector
+  _s.registerClass 'Schema', Schema
+  _s.registerClass 'Vector', Vector
+  _s
+Schema = require './schema'
+Vector = require './vector'

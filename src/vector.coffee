@@ -1,9 +1,9 @@
 ## Vector
 # (c)2016 Van Carney
 #### A strict Hash implementation allowing key restriction and virtualization
-global = exports ? window
+global  = exports ? window
 objUtil = require 'obj-utils'
-{Fun}  = require 'fun-utils'
+{Fun}   = require 'fun-utils'
 class Vector
   'use strict'
   constructor:(_type, items...) ->
@@ -65,6 +65,5 @@ class Vector
     @toString = =>
       _list.toString()
     @push items if items?
-SchemaRoller = if module?.parent.exports then module.parent.exports.SchemaRoller else require 'schemaroller'
-SchemaRoller.registerClass "Vector", Vector
+SchemaRoller = (require './schemaroller')()
 module.exports = Vector 

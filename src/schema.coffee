@@ -183,6 +183,5 @@ class Schema
         Object.preventExtensions @
         Object.preventExtensions _object
       @
-SchemaRoller = if module?.parent.exports then module.parent.exports.SchemaRoller else require 'schemaroller'
-SchemaRoller.registerClass "Schema", Schema
+SchemaRoller = (require './schemaroller')()
 module.exports = Schema

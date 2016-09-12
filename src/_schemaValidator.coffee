@@ -89,7 +89,7 @@ class SchemaValidator
     # should not have gotten here -- so flag it as error
     "unable to process schema element '#{key}'"
 module.exports = SchemaValidator
-{SchemaRoller} =  require './schemaroller'
+SchemaRoller = (require './schemaroller')()
 # _allowed_keys = Object.keys _o
 _sKeys = Object.keys SchemaRoller.getSchemaRef()
 rx = new RegExp "^((#{_sKeys.join '|'})+,?){#{_sKeys.length}}$"

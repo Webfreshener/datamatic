@@ -1,5 +1,5 @@
 {should, expect}  = require 'chai'
-{Schema}  = require( '../src/schemaroller' ).SchemaRoller
+{Schema}          = require( '../src/schemaroller' )()
 should()
 describe 'Schema Class Test Suite', ->
   it 'should only allow elements for a schema object', =>

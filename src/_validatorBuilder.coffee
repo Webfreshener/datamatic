@@ -49,4 +49,4 @@ class ValidatorBuilder
   @getInstance: ->
     @__instance ?= new @
 module.exports = ValidatorBuilder
-{SchemaRoller} =  require './schemaroller'
+SchemaRoller = (require './schemaroller')()
