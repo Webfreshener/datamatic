@@ -1,14 +1,25 @@
-## Schema
-# (c)2014 Van Carney
+## SchemaRoller
+# (c)2016 Van Carney
 #### A strict Schema implementation allowing key restriction and virtualization
-global = module.exports ? window
-
-String::ucfirst = ->
-  @charAt(0).toUpperCase() + @substr 1
-GeoPoint = {lat:0, lng:0}
+'use strict'
+_global = exports ? window
+if `typeof Object.assign != 'function'`
+  Object.assign = (target) ->
+    throw new TypeError('Cannot convert undefined or null to object') unless target?
+    target = Object target
+    index  = 1
+    while index < arguments.length
+      source = arguments[index]
+      if source?
+        for key of source
+          if Object::hasOwnProperty.call source, key
+            target[key] = source[key]
+      index = index + 1
+    target
+unless _global? and _global.hasOwnProperty 'wfUtils'
+  '{{wfUtils}}'
 _kinds = {}
 class SchemaRoller
-  'use strict'
   constructor: ->
     _kinds =
       Array:Array
@@ -16,7 +27,6 @@ class SchemaRoller
       Boolean:Boolean
       Buffer:ArrayBuffer
       Date:Date
-      GeoPoint:GeoPoint
       Number:Number
       Object:Object
       String:String
@@ -68,12 +78,11 @@ class SchemaRoller
         type: '*'
         required: false
         extensible: false
-module.exports = ->
-  _s = new SchemaRoller
-  _s.Schema = Schema
-  _s.Vector = Vector
-  _s.registerClass 'Schema', Schema
-  _s.registerClass 'Vector', Vector
-  _s
-Schema = require './schema'
-Vector = require './vector'
+(module?.exports ? window)['SchemaRoller'] = ->
+  '{{classes}}'
+  _schemaroller_ = new SchemaRoller
+  _schemaroller_.registerClass 'Schema', _schemaroller_.Schema = Schema
+  _schemaroller_.registerClass 'Vector', _schemaroller_.Vector = Vector
+  _sKeys = Object.keys _schemaroller_.getSchemaRef()
+  _schemaroller_.rx ?= new RegExp "^((#{_sKeys.join '|'})+,?){#{_sKeys.length}}$"
+  _schemaroller_

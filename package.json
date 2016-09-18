@@ -23,15 +23,14 @@
     "type": "git",
     "url": "github.com/vancarney/schemaroller.git"
   },
-  "dependencies": {
-    "obj-utils": "0.0.2",
-    "strictly-hash": "^0.1.0"
-  },
+  "dependencies": {},
   "devDependencies": {
     "chai": "^3.5.0",
     "coffee-script": "^1.10.0",
     "docco": "^0.7.0",
-    "mocha": "^3.0.2"
+    "lodash": "^4.15.0",
+    "mocha": "^3.0.2",
+    "wf-utils": "git+https://github.com/webfreshener/wf-utils.git"
   },
   "homepage": "https://github.com/vancarney/schemaroller",
   "scripts": {

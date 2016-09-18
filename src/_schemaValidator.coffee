@@ -9,7 +9,7 @@ class SchemaValidator
         when "string"
           obj = {}
           obj[_oKey] = {
-            type: _schema[_oKey].ucfirst(), 
+            type: _global.wfUtils.Str.capitalize _schema[_oKey], 
             required: false
           }
           _o = Object.assign _schema, obj
@@ -32,13 +32,13 @@ class SchemaValidator
       return 'restrict requires a Regular Expression String' unless typeof _type is 'string'
       try "text".match new RegExp _type
       catch e
-        return "Regular Expression provided for '#{key}' was invalid" unless _type.match rx
-    else if (SchemaRoller.getClass _type.ucfirst())? is false
+        return "Regular Expression provided for '#{key}' was invalid" unless _type.match _schemaroller_.rx
+    else if (_schemaroller_.getClass _global.wfUtils.Str.capitalize _type)? is false
       return "type '<#{_type}>' for schema element '#{key}' was invalid"
     true
   validateSchemaEntry: (key, params, opts)->
     opts ?= @opts
-    _schemaKeys = SchemaRoller.getSchemaRef()
+    _schemaKeys = _schemaroller_.getSchemaRef()
     return "#{key} was null or undefined" unless params?
     return @validateTypeString "#{key}.#{sKey}", params if typeof params == 'string'
     if typeof params == 'object'
@@ -50,14 +50,14 @@ class SchemaValidator
           for param in Object.keys params
             @validateSchemaEntry "#{keyPath.join '.'}.#{param}", params[param]
             return
-      unless (SchemaRoller.getClass params.type)?
+      unless (_schemaroller_.getClass params.type)?
         return true if Object.keys(params).length == 0
         return @validateSchemaEntry key, params.type if typeof params.type is 'object'
         return "value for schema element '#{key}' has invalid type '<#{params.type}>'"
       for sKey in Object.keys params
         return "schema element '#{key}.#{sKey}' is not allowed" unless _schemaKeys[sKey]? or opts.extensible
         if typeof params[sKey] == "string"
-          _kind = params[sKey].ucfirst()
+          _kind = _global.wfUtils.Str.capitalize params[sKey]
           return "schema element '#{key}.#{sKey}' is not allowed" unless _schemaKeys[sKey]? or opts.extensible
           return eMsg if typeof (eMsg = @validateTypeString "#{key}.#{sKey}", params[sKey]) is 'string'
         if typeof _schemaKeys[sKey] == 'object'
@@ -81,15 +81,10 @@ class SchemaValidator
       _t = typeof params
       unless _t == 'function'
         # tests for everything that's not a string, _object or function
-        return "value for schema element '#{key}' has invalid type '<#{_t}>'" unless _schemaKeys[key.split('.').pop()] == _t.ucfirst()
+        return "value for schema element '#{key}' has invalid type '<#{_t}>'" unless _schemaKeys[key.split('.').pop()] == _global.wfUtils.Str.capitalize _t
       else
         # tests for function's constructor name
-        return "value for schema element '#{key}' has invalid class or method '<#{_fn}>'" unless (_fn = Fun.getConstructorName params) == _schemaKeys[key]
+        return "value for schema element '#{key}' has invalid class or method '<#{_fn}>'" unless (_fn = _global.wfUtils.Fun.getConstructorName params) == _schemaKeys[key]
       return true
     # should not have gotten here -- so flag it as error
     "unable to process schema element '#{key}'"
-module.exports = SchemaValidator
-SchemaRoller = (require './schemaroller')()
-# _allowed_keys = Object.keys _o
-_sKeys = Object.keys SchemaRoller.getSchemaRef()
-rx = new RegExp "^((#{_sKeys.join '|'})+,?){#{_sKeys.length}}$"

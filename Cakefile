@@ -1,5 +1,8 @@
 # require Node::FS
 fs = require 'fs'
+{_} = require 'lodash'
+_.templateSettings =
+  interpolate: /'\{\{(.+?)\}\}';/g
 # require Node::Util
 # connect = require 'connect'
 {debug, error, log, print} = require 'util'
@@ -33,23 +36,31 @@ exts='coffee|jade'
 # Begin Callback Handlers
 # Callback From 'coffee'
 coffeeCallback=()->
-  # exec 'cp lib/sparse.js ../sparse-demo/src/assets/javascript'
-  # minify()
+  _t = _.template fs.readFileSync '/tmp/schemaroller.js', 'utf8'
+  str = fs.readFileSync '/tmp/classes.js', 'utf8'
+  str = str.substr(str.indexOf('\n')+1, str.length-1).replace /\n/g, "\n        "
+  utils = fs.readFileSync './node_modules/wf-utils/lib/wf-utils.js', 'utf8'
+  utils = utils.substr(utils.indexOf('\n')+1, utils.length-1).replace /\n/g, "\n        "
+  # console.log require('wf-utils').toSource()
+  fs.writeFileSync 'lib/schemaroller.js',  _t wfUtils:utils, classes:str
+  minify()
+  
 # Callback From 'docco'
 doccoCallback=()->
   # exec "rm -rf ../sparse-pages/docs; mv docs ../sparse-pages"
+
+manifest = require "./src/manifest.json"
 # Begin Tasks
 # ## *build*
 # Compiles Sources
 task 'build', 'Compiles Sources', ()-> build -> log ':)', green
 build = ()->
-  # From Module 'coffee'
-  
-  # Enable coffee-script compiling
-  #launch 'coffee', (['-j','lib/sparse.js', '-c', 'src/sparse.coffee', 'src/classes/*']), coffeeCallback
-
-  # console.log "coffee --join lib/api.js --compile #{apiFiles.files.join(' ').replace(/('|\")/g, '')}"
-  exec "coffee -b -c -o lib src", coffeeCallback
+  # console.log "coffee --join lib/schemaroller.js --compile #{manifest.files.join(' ').replace(/('|\")/g, '')}"
+  # exec "coffee --join lib/rikki-tikki-client.js --compile #{manifest.files.join(' ').replace(/('|\")/g, '')}", coffeeCallback
+  exec "coffee -o /tmp -c src/schemaroller.coffee", =>
+    # console.log "#{manifest.files.join(' ').replace(/('|\")/g, '')}"
+    exec "coffee --join /tmp/classes.js -b --compile #{manifest.files.join(' ').replace(/('|\")/g, '')}", coffeeCallback
+  # exec "coffee --join lib/schemaroller.js -b --compile #{manifest.files.join(' ').replace(/('|\")/g, '')}", minify
 # ## *watch*
 # watch project src folders and build on change
 task 'watch', 'watch project src folders and build on change', ()-> watch -> log ':)', green

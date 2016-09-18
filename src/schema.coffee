@@ -1,21 +1,3 @@
-{Fun}  = require 'fun-utils'
-Vector = require './vector'
-SchemaValidator = require './_schemaValidator'
-ValidatorBuilder = (require './_validatorBuilder').getInstance()
-if `typeof Object.assign != 'function'`
-  Object.assign = (target) ->
-    'use strict'
-    throw new TypeError('Cannot convert undefined or null to object') unless target?
-    target = Object target
-    index  = 1
-    while index < arguments.length
-      source = arguments[index]
-      if source?
-        for key of source
-          if Object::hasOwnProperty.call source, key
-            target[key] = source[key]
-      index = index + 1
-    target
 class Schema
   'use strict'
   constructor:(_o={}, opts=extensible:false) ->
@@ -40,14 +22,14 @@ class Schema
     # builds validations from SCHEMA ENTRIES
     (_walkSchema = (obj)=>
       for _k in (if (Array.isArray obj) then obj else Object.keys obj)
-        ValidatorBuilder.create obj[_k], _k
+        ValidatorBuilder.getInstance().create obj[_k], _k
         if obj[_k].hasOwnProperty "elements" and typeof obj[_k].elements is "object"
           _walkSchema obj[_k].elements
     ) _o.elements || {}
     _validate = (key, value)->
-      unless 0 <= ValidatorBuilder.list()?.indexOf key
+      unless 0 <= ValidatorBuilder.getInstance().list()?.indexOf key
         return "'#{key}' is not a valid schema property" unless opts.extensible
-      return "validator for '#{key}' failed. #{msg}" if typeof (msg = ValidatorBuilder.exec key, value) is 'string'
+      return "validator for '#{key}' failed. #{msg}" if typeof (msg = ValidatorBuilder.getInstance().exec key, value) is 'string'
       true  
     _getKinds = (_s) =>
       _elems = Object.keys(_s).map (key)=>
@@ -183,5 +165,3 @@ class Schema
         Object.preventExtensions @
         Object.preventExtensions _object
       @
-SchemaRoller = (require './schemaroller')()
-module.exports = Schema

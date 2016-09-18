@@ -1,9 +1,6 @@
 ## Vector
 # (c)2016 Van Carney
 #### A strict Hash implementation allowing key restriction and virtualization
-global  = exports ? window
-objUtil = require 'obj-utils'
-{Fun}   = require 'fun-utils'
 class Vector
   'use strict'
   constructor:(_type, items...) ->
@@ -16,8 +13,8 @@ class Vector
     _check = (item)->
       for _t in _type
         return true if (typeof _t is 'string') and _t.match /^(\*|ALL)$/
-        return false unless _t = SchemaRoller.getClass _t
-        return false unless objUtil.isOfType item, _t
+        return false unless _t = _schemaroller_.getClass _t
+        return false unless _global.wfUtils.Obj.isOfType item, _t
       true
     @getItemAt = (idx)=>
       if _list.length = (idx + 1) then _list[idx] else null
@@ -64,6 +61,4 @@ class Vector
       _list.values()
     @toString = =>
       _list.toString()
-    @push items if items?
-SchemaRoller = (require './schemaroller')()
-module.exports = Vector 
+    @push items if items? 
