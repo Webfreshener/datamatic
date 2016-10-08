@@ -39,8 +39,8 @@ coffeeCallback=()->
   _t = _.template fs.readFileSync '/tmp/schemaroller.js', 'utf8'
   str = fs.readFileSync '/tmp/classes.js', 'utf8'
   str = str.substr(str.indexOf('\n')+1, str.length-1).replace /\n/g, "\n        "
-  utils = fs.readFileSync './node_modules/wf-utils/lib/wf-utils.js', 'utf8'
-  utils = utils.substr(utils.indexOf('\n')+1, utils.length-1).replace /\n/g, "\n        "
+  utils = fs.readFileSync './src/wfUtils.js', 'utf8'
+  # utils = utils.substr(utils.indexOf('\n')+1, utils.length-1).replace /\n/g, "\n        "
   # console.log require('wf-utils').toSource()
   fs.writeFileSync 'lib/schemaroller.js',  _t wfUtils:utils, classes:str
   minify()

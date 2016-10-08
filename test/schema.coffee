@@ -1,6 +1,7 @@
 {should, expect}  = require 'chai'
 {Schema}          = require( '../lib/schemaroller' ).SchemaRoller()
 should()
+
 describe 'Schema Class Test Suite', ->
   it 'should only allow elements for a schema object', =>
     expect(-> new Schema value:'test').to.throw "value for schema element 'value' has invalid type '<Test>'" #"type '<Test>' for schema element 'value.type' was invalid"
@@ -71,6 +72,8 @@ describe 'Schema Class Test Suite', ->
       type: "Boolean"
       name: "Test"
     expect(=> @schema.set _d).to.not.throw "required property 'type' is missing"
+    
+
 
   # it 'should set values on elements', =>
     # (typeof (_opts = @schema.get 'options') == 'object').should.be.true

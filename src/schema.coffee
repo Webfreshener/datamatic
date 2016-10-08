@@ -4,7 +4,6 @@ class Schema
     _object = {}
     _required_elements = []
     _validators = {}
-
     # traverses elements of schema
     if _o.elements?
       for _oE in Object.keys _o.elements

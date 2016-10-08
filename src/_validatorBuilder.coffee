@@ -19,15 +19,15 @@ class ValidatorBuilder
                 return "value '#{value}' for #{_path} did not match required expression" unless ((new RegExp vItm.restrict).exec value)?
               return true
             when 'function'
-              _x = if typeof vItm is 'string' then vItm else _global.wfUtils.Fun.getConstructorName vItm
-              return _x == _global.wfUtils.Fun.getConstructorName value
+              _x = if typeof vItm is 'string' then vItm else _global.wf.wfUtils.Fun.getConstructorName vItm
+              return _x == _global.wf.wfUtils.Fun.getConstructorName value
             when 'object'
               return false unless value.validate?()
             when 'number'
               _x = if vItm.type? and typeof vItm.type is 'string' then _schemaroller_.getClass vItm.type else vItm.type
               _x ?= vItm
               return true if _x is 'Number'
-              return "'#{_path}' expected #{fName}, type was '<Number>'" unless (fName = _global.wfUtils.Fun.getFunctionName _x) == 'Number'
+              return "'#{_path}' expected #{fName}, type was '<Number>'" unless (fName = _global.wf.wfUtils.Fun.getFunctionName _x) == 'Number'
               return !isNaN new _x value
             else
               _x = if typeof vItm.type is 'string' then _schemaroller_.getClass vItm.type else vItm.type

@@ -14,7 +14,7 @@ class Vector
       for _t in _type
         return true if (typeof _t is 'string') and _t.match /^(\*|ALL)$/
         return false unless _t = _schemaroller_.getClass _t
-        return false unless _global.wfUtils.Obj.isOfType item, _t
+        return false unless _global.wf.wfUtils.Obj.isOfType item, _t
       true
     @getItemAt = (idx)=>
       if _list.length = (idx + 1) then _list[idx] else null

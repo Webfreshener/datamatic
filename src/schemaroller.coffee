@@ -16,8 +16,8 @@ if `typeof Object.assign != 'function'`
             target[key] = source[key]
       index = index + 1
     target
-unless _global? and _global.hasOwnProperty 'wfUtils'
-  '{{wfUtils}}'
+# unless _global? and _global.hasOwnProperty 'wfUtils'
+'{{wfUtils}}'
 _kinds = {}
 class SchemaRoller
   constructor: ->

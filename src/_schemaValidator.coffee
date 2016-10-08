@@ -9,7 +9,7 @@ class SchemaValidator
         when "string"
           obj = {}
           obj[_oKey] = {
-            type: _global.wfUtils.Str.capitalize _schema[_oKey], 
+            type: _global.wf.wfUtils.Str.capitalize _schema[_oKey], 
             required: false
           }
           _o = Object.assign _schema, obj
@@ -33,7 +33,7 @@ class SchemaValidator
       try "text".match new RegExp _type
       catch e
         return "Regular Expression provided for '#{key}' was invalid" unless _type.match _schemaroller_.rx
-    else if (_schemaroller_.getClass _global.wfUtils.Str.capitalize _type)? is false
+    else if (_schemaroller_.getClass _global.wf.wfUtils.Str.capitalize _type)? is false
       return "type '<#{_type}>' for schema element '#{key}' was invalid"
     true
   validateSchemaEntry: (key, params, opts)->
@@ -57,7 +57,7 @@ class SchemaValidator
       for sKey in Object.keys params
         return "schema element '#{key}.#{sKey}' is not allowed" unless _schemaKeys[sKey]? or opts.extensible
         if typeof params[sKey] == "string"
-          _kind = _global.wfUtils.Str.capitalize params[sKey]
+          _kind = _global.wf.wfUtils.Str.capitalize params[sKey]
           return "schema element '#{key}.#{sKey}' is not allowed" unless _schemaKeys[sKey]? or opts.extensible
           return eMsg if typeof (eMsg = @validateTypeString "#{key}.#{sKey}", params[sKey]) is 'string'
         if typeof _schemaKeys[sKey] == 'object'
@@ -81,10 +81,10 @@ class SchemaValidator
       _t = typeof params
       unless _t == 'function'
         # tests for everything that's not a string, _object or function
-        return "value for schema element '#{key}' has invalid type '<#{_t}>'" unless _schemaKeys[key.split('.').pop()] == _global.wfUtils.Str.capitalize _t
+        return "value for schema element '#{key}' has invalid type '<#{_t}>'" unless _schemaKeys[key.split('.').pop()] == _global.wf.wfUtils.Str.capitalize _t
       else
         # tests for function's constructor name
-        return "value for schema element '#{key}' has invalid class or method '<#{_fn}>'" unless (_fn = _global.wfUtils.Fun.getConstructorName params) == _schemaKeys[key]
+        return "value for schema element '#{key}' has invalid class or method '<#{_fn}>'" unless (_fn = _global.wf.wfUtils.Fun.getConstructorName params) == _schemaKeys[key]
       return true
     # should not have gotten here -- so flag it as error
     "unable to process schema element '#{key}'"
