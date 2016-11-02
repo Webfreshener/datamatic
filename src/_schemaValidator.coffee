@@ -50,15 +50,20 @@ class SchemaValidator
     return @validateTypeString "#{key}", params if typeof params == 'string'
     if typeof params == 'object'
       unless params.hasOwnProperty "type"
-        unless (_p = (keyPath = key.split '.').pop()) == 'elements' 
-          return true if _p is 'default'
-          return "value for schema element '#{key}' was malformed. Property 'type' was missing"
+        if Array.isArray params
+          for item in params
+            return _res if typeof (_res = @validateSchemaEntry key, item) is 'string'
         else
-          for param in Object.keys params
-            _keys = [].concat( keyPath ).concat param
-            return _res if typeof (_res = @validateSchemaEntry "#{_keys.join '.'}", params[param]) is 'string'
-          return true
+          unless (_p = (keyPath = key.split '.').pop()) == 'elements' 
+            return true if _p is 'default'
+            return "value for schema element '#{key}' was malformed. Property 'type' was missing"
+          else
+            for param in Object.keys params
+              _keys = [].concat( keyPath ).concat param
+              return _res if typeof (_res = @validateSchemaEntry "#{_keys.join '.'}", params[param]) is 'string'
+        return true
       unless (_schemaroller_.getClass params.type)?
+        return true if params.type is '*'
         return true if Object.keys(params).length == 0
         return @validateSchemaEntry key, params.type if typeof params.type is 'object'
         if key.split('.').pop() == 'default'

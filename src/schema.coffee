@@ -25,7 +25,11 @@ class Schema
         objPath = if path? and 1 <= path.length then"#{path}.#{_k}" else _k
         ValidatorBuilder.getInstance().create obj[_k], objPath
         if (obj[_k].hasOwnProperty 'elements') and (typeof obj[_k].elements is 'object')
-          _walkSchema obj[_k].elements, objPath
+          unless Array.isArray obj[_k].elements
+            _walkSchema obj[_k].elements, objPath
+          else
+            for item in obj[_k].elements
+              _walkSchema item, objPath
     ) _o.elements || {}
     _validate = (key, value)->
       unless 0 <= ValidatorBuilder.getInstance().list()?.indexOf key

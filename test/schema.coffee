@@ -46,37 +46,37 @@ describe 'Schema Class Test Suite', ->
     (@schema = new Schema _s)
     # _s = require "./schemas/client.json"
     expect((_client = new Schema require "./schemas/client.json") instanceof Schema).to.be.true
-    console.log _client.get '__OPTIONS__'
-  # it 'should check for required fields', =>
-    # _d =       
-      # name: 'Test'
-    # expect(@schema.set _d).to.eq "required property 'properties' is missing"
-#     
-  # it 'should check for valid properties', =>
-    # _d =       
-      # name: 'Test'
-      # properties: []
-      # foo: {}
-    # expect(@schema.set(_d) instanceof Schema).to.be.false
-    # expect(@schema.set(_d)).to.eq "element 'foo' is not a valid element"
-#     
-  # it 'should check for required fields on elements', =>
-    # _d =       
-      # name: 'Test'
-      # options:
-        # idInjection: true
-      # properties:
-        # foo:
-          # type: "String"
-          # required: true
-    # expect(@schema.set(_d) instanceof Schema).to.be.true
-    # _d = Object.assign _d, properties:
-      # type: "Boolean"
-      # name: "Test"
-    # expect(=> @schema.set _d).to.not.throw "required property 'type' is missing"
-# 
+  it 'should check for required fields', =>
+    _d =       
+      name: 'Test'
+    expect(@schema.set _d).to.eq "required property 'properties' is missing"
+    
+  it 'should check for valid properties', =>
+    _d =       
+      name: 'Test'
+      properties: []
+      foo: {}
+    expect(@schema.set(_d) instanceof Schema).to.be.false
+    expect(@schema.set(_d)).to.eq "'foo' is not a valid schema property"
+    
+  it 'should check for required fields on elements', =>
+    _d =       
+      name: 'Test'
+      options:
+        idInjection: true
+      properties:
+        foo:
+          type: "String"
+          required: true
+    expect(@schema.set(_d) instanceof Schema).to.be.true
+    _d = Object.assign _d, properties:
+      type: "Boolean"
+      name: "Test"
+    expect(=> @schema.set _d).to.not.throw "required property 'type' is missing"
+
   # it 'should set values on elements', =>
     # (typeof (_opts = @schema.get 'options') == 'object').should.be.true
+    # console.log _opts
     # (_opts.get 'idInjection').should.be.true
     
   it 'should handle deep object nesting', =>
