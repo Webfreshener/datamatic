@@ -1,0 +1,15 @@
+{
+	"NestedObjects": {
+		"anArray": ["string 1", "string 2"],
+		"anObject": {
+			"aString": "TEST",
+			"aObject": {},
+			"aDeepObject": {
+				"aDeepParam": "testing 123",
+				"aDeeperObject": {
+					"aDeepParam": "a deep param"
+				}
+			}
+		}
+	}
+}

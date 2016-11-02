@@ -113,6 +113,8 @@
     if (string == null) {
       return '';
     }
+	if (typeof string != 'string')
+		string = string.toString();
     return "" + (string.charAt(0).toUpperCase()) + (string.slice(1));
   };
   

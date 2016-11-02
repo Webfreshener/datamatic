@@ -59,6 +59,7 @@ build = ()->
   # exec "coffee --join lib/rikki-tikki-client.js --compile #{manifest.files.join(' ').replace(/('|\")/g, '')}", coffeeCallback
   exec "coffee -o /tmp -c src/schemaroller.coffee", =>
     # console.log "#{manifest.files.join(' ').replace(/('|\")/g, '')}"
+    console.log "coffee --join /tmp/classes.js -b --compile #{manifest.files.join(' ').replace(/('|\")/g, '')}"
     exec "coffee --join /tmp/classes.js -b --compile #{manifest.files.join(' ').replace(/('|\")/g, '')}", coffeeCallback
   # exec "coffee --join lib/schemaroller.js -b --compile #{manifest.files.join(' ').replace(/('|\")/g, '')}", minify
 # ## *watch*

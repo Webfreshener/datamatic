@@ -16,7 +16,11 @@ class SchemaValidator
           _errorMsg = @validateSchemaEntry _oKey, _schema[_oKey]
         when "object"
           unless Array.isArray _schema[_oKey]
-            _errorMsg = @validateSchemaEntry _oKey, _schema[_oKey]
+            unless _oKey == 'elements'
+              _errorMsg = @validateSchemaEntry _oKey, _schema[_oKey]
+            else
+              for xKey in Object.keys _schema[_oKey]
+                return _errorMsg if typeof (_errorMsg = @validateSchemaEntry xKey, _schema[_oKey][xKey]) is 'string'
           else
             for _s in _schema[_oKey]
               if typeof _schema[_oKey][_s] is 'string'
@@ -26,8 +30,10 @@ class SchemaValidator
         when "boolean"
           _errorMsg = @validateSchemaEntry _oKey, _schema[_oKey]
         else
-          _errorMsg = "value for schema element '#{_oKey}' was invalid"    
+          _errorMsg = "value for schema element '#{_oKey}' was invalid"
+    _errorMsg   
   validateTypeString: (key, _type)->
+    return true if key.match /\.?default+$/
     if key.match /\.restrict+$/
       return 'restrict requires a Regular Expression String' unless typeof _type is 'string'
       try "text".match new RegExp _type
@@ -40,42 +46,46 @@ class SchemaValidator
     opts ?= @opts
     _schemaKeys = _schemaroller_.getSchemaRef()
     return "#{key} was null or undefined" unless params?
-    return @validateTypeString "#{key}.#{sKey}", params if typeof params == 'string'
+    return true if typeof params == 'boolean'
+    return @validateTypeString "#{key}", params if typeof params == 'string'
     if typeof params == 'object'
       unless params.hasOwnProperty "type"
-        if (_p = (keyPath = key.split '.').pop()) != 'elements' 
-          unless _p is 'default'
-            return "value for schema element '#{key}' was malformed. Property 'type' was missing"
+        unless (_p = (keyPath = key.split '.').pop()) == 'elements' 
+          return true if _p is 'default'
+          return "value for schema element '#{key}' was malformed. Property 'type' was missing"
         else
           for param in Object.keys params
-            @validateSchemaEntry "#{keyPath.join '.'}.#{param}", params[param]
-            return
+            _keys = [].concat( keyPath ).concat param
+            return _res if typeof (_res = @validateSchemaEntry "#{_keys.join '.'}", params[param]) is 'string'
+          return true
       unless (_schemaroller_.getClass params.type)?
         return true if Object.keys(params).length == 0
         return @validateSchemaEntry key, params.type if typeof params.type is 'object'
+        if key.split('.').pop() == 'default'
+          @_defaults ?= {}
+          @_defaults[key] = params
+          return true
         return "value for schema element '#{key}' has invalid type '<#{params.type}>'"
       for sKey in Object.keys params
         return "schema element '#{key}.#{sKey}' is not allowed" unless _schemaKeys[sKey]? or opts.extensible
         if typeof params[sKey] == "string"
           _kind = _global.wf.wfUtils.Str.capitalize params[sKey]
+          if sKey == 'restrict'
+            try
+              new RegExp params[sKey]
+            catch e
+              return e
+            return true
           return "schema element '#{key}.#{sKey}' is not allowed" unless _schemaKeys[sKey]? or opts.extensible
           return eMsg if typeof (eMsg = @validateTypeString "#{key}.#{sKey}", params[sKey]) is 'string'
         if typeof _schemaKeys[sKey] == 'object'
-          _type = _schemaKeys[sKey].type
-          unless Array.isArray _type
-            return "invalid schema element '#{key}' requires type '#{_type}' type was '<#{_kind}>'" unless _type == _kind
-        else
-          if Array.isArray params[sKey]
-            for _k in params[sKey]
-              return eMsg if typeof (eMsg = @validateSchemaEntry "#{key}.#{sKey}", _k) is 'string'
-          else
-            unless sKey == 'elements'
-              return eMsg if typeof (eMsg = @validateSchemaEntry "#{key}.#{sKey}",  params[sKey]) is 'string'
-            else
-              for xKey in params[sKey]
-                return eMsg if typeof (eMsg = @validateSchemaEntry "#{key}.#{xKey}",  params[sKey][xKey]) is 'string'
-            return eMsg if typeof (eMsg = @validateSchemaEntry "#{key}.#{sKey}", params[sKey]) is 'string'
+          if sKey == "elements"
+            for xKey in Object.keys params.elements
+              return eMsg if typeof (eMsg = @validateSchemaEntry "#{key}.#{xKey}", params.elements[xKey]) is 'string'
             return true
+          else
+            return "type attribute was not defined for #{key}" unless (_type = _schemaKeys[sKey]?.type)?
+            _type = _type.type unless Array.isArray _type
       return true
     else
       _t = typeof params

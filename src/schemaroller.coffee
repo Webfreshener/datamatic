@@ -69,7 +69,7 @@ class SchemaRoller
       extensible: 'Boolean'
       restrict: 'String'
       validate: 'Function'
-      default: 'Boolean'
+      default: '*'
       elements: ['Array','Object']
     @getSchemaRef = ->
       _schemaRef

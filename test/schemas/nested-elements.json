@@ -1,0 +1,73 @@
+{
+	"extensible": true,
+	"elements": {
+		"NestedObjects": {
+			"type": "Object",
+			"required": false,
+			"extensible": true,
+			"elements": {
+				"anArray": {
+					"type": "Array",
+					"required": false,
+					"elements": {
+						"type": "String",
+						"required": false
+					}
+				},
+				"anObject": {
+					"type": "Object",
+					"required": false,
+					"extensible": false,
+					"default": {
+						"aString": "TEST",
+						"aObject": {
+							"someValue": 0
+						},
+						"aDeepObject": {
+							"aDeepParam": "string1",
+							"aDeeperObject": {
+								"aDeepParam": "string2"
+							}
+						}
+					},
+					"elements": {
+						"aString": {
+							"type": "String",
+							"required": false,
+							"restrict": "/^TEST+$/"
+						},
+						"aObject": {
+							"type": "Object",
+							"required": false,
+							"extensible": true
+						},
+						"aDeepObject": {
+							"type": "Object",
+							"required": false,
+							"extensible": false,
+							"elements": {
+								"aDeepParam": {
+									"type": "String",
+									"required": false,
+									"restrict": "/^[a-zA-Z0-9]+$/"
+								},
+								"aDeeperObject": {
+									"type": "Object",
+									"required": false,
+									"extensible": false,
+									"elements": {
+										"aDeepParam": {
+											"type": "String",
+											"required": false,
+											"restrict": "/^[a-zA-Z0-9]+$/"
+										}
+									}
+								}
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}

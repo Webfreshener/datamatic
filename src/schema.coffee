@@ -19,11 +19,13 @@ class Schema
     # throws error if error messagereturned
     throw eMsg if typeof (eMsg = _schema_validator.isValid()) is 'string'
     # builds validations from SCHEMA ENTRIES
-    (_walkSchema = (obj)=>
+    (_walkSchema = (obj, path)=>
+      
       for _k in (if (Array.isArray obj) then obj else Object.keys obj)
-        ValidatorBuilder.getInstance().create obj[_k], _k
-        if obj[_k].hasOwnProperty "elements" and typeof obj[_k].elements is "object"
-          _walkSchema obj[_k].elements
+        objPath = if path? and 1 <= path.length then"#{path}.#{_k}" else _k
+        ValidatorBuilder.getInstance().create obj[_k], objPath
+        if (obj[_k].hasOwnProperty 'elements') and (typeof obj[_k].elements is 'object')
+          _walkSchema obj[_k].elements, objPath
     ) _o.elements || {}
     _validate = (key, value)->
       unless 0 <= ValidatorBuilder.getInstance().list()?.indexOf key
@@ -43,44 +45,13 @@ class Schema
     #### @set(key, value)
     #> sets key/value to virtualized _object
     @set = (key, value)=>
-      # recurses if 'key 'is an _object (batch setting)
       if typeof key is 'object'
         return _f if typeof (_f = _hasRequiredFields Object.assign {}, _object, key) is 'string'
         # calls set with nested key value pair
         for k,v of key
           return eMsg if typeof (eMsg = @set k, v) is 'string'
       else
-        _schema = _o.elements ? _o
-        _extensible = if _o.extensible? then _o.extensible else opts.extensible || false
-        for k in key.split '.'
-          _extensible = _schema[k].extensible if _schema[k]? and _schema[k].hasOwnProperty 'extensible'
-          _schema = if _schema.elements? then _schema.elements[k] else _schema[k] 
-          unless _schema?
-            return "element '#{k}' is not a valid element" unless _extensible
-            _schema = 
-              type: '*'
-              required: true
-              extensible: false
-        if typeof value is 'object'
-          if _schema?
-            unless Array.isArray value
-              _s = new Schema (_schema.elements ? _schema), extensible: _extensible
-            else
-              if Array.isArray (_kinds = _getKinds _schema)
-                _kinds = _kinds.map (itm)->
-                  switch (typeof itm)
-                    when 'string'
-                      return itm
-                    when 'object'
-                      return itm.type if itm.hasOwnProperty 'type'
-                _kinds = _kinds.filter (itm)-> itm?
-                _kinds = if _kinds.length then _kinds else '*'
-              _s = new Vector (_kinds || '*')
-          return "'#{key}' was invalid" unless _schema?
-          value = _s[if (_s instanceof Vector) then 'replaceAll' else 'set'] value
-          return value if (typeof value) is 'string'
-        else
-          return eMsg if (typeof (eMsg = _validate key, value)) == 'string'
+        return eMsg if (typeof (eMsg = _validate key, value)) == 'string'
         _object[key] = value
       # returns self for chaining
       @

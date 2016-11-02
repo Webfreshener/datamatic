@@ -1,0 +1,41 @@
+{
+  "__COLLECTIONS__": {},
+  "__OPTIONS__": {
+    "ALLOWED": [
+      "APP_ID",
+      "REST_KEY",
+      "HOST",
+      "PORT",
+      "BASE_PATH",
+      "MAX_BATCH_SIZE",
+      "DEFAULT_FETCH_LIMIT_OVERRIDE",
+      "UNDEFINED_CLASSNAME"
+    ],
+    "VERSION": "0.1.1-alpha",
+    "APP_ID": "null",
+    "APP_ID_PARAM_NAME": "APP_ID",
+    "REST_KEY": "null",
+    "REST_KEY_PARAM_NAME": "REST_KEY",
+    "SESSION_TOKEN": "null",
+    "SESSION_KEY": "AUTHORIZATION",
+    "CSRF_TOKEN": "null",
+    "API_VERSION": "1",
+    "MAX_BATCH_SIZE": 50,
+    "DEFAULT_FETCH_LIMIT_OVERRIDE": 200000,
+    "UNDEFINED_CLASSNAME": "__UNDEFINED_CLASSNAME__",
+    "API_URI": "null",
+    "CORS": true,
+    "PROTOCOL": "HTTP",
+    "HOST": "0.0.0.0",
+    "PORT": 80,
+    "BASE_PATH": "/api",
+    "CAPITALIZE_CLASSNAMES": false,
+    "CRUD_METHODS": {
+      "create": "POST",
+      "read": "GET",
+      "update": "PUT",
+      "destroy": "DELETE"
+    },
+    "QUERY_PARAM": "filter"
+  }
+}

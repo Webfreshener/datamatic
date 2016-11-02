@@ -38,47 +38,52 @@ describe 'Schema Class Test Suite', ->
 
   it 'should initialize from schema file', =>
     _s = require "./schemas/simple.json"
-    expect(=> new Schema name: {type: "String", restrict: "^((?:(?:[^?+*{}()[\]\\|]+))$"}).to.throw "Regular Expression provided for 'name.restrict' was invalid"
+    # expect(=> new Schema name: {type: "String", restrict: "^(\b(?:(?:$"}).to.throw "Regular Expression provided for 'name.restrict' was invalid"
     expect(=> new Schema _s).to.not.throw "type '<^[a-zA-Z-0-9_]+$>' for schema element 'name.restrict' was invalid"
 
-  it 'should initialize from complex schema file', =>
+  it 'should initialize from complex schema files', =>
     _s = require "./schemas/_loopback.json"
     (@schema = new Schema _s)
-    
-  it 'should check for required fields', =>
-    _d =       
-      name: 'Test'
-    expect(@schema.set _d).to.eq "required property 'properties' is missing"
-    
-  it 'should check for valid properties', =>
-    _d =       
-      name: 'Test'
-      properties: []
-      foo: {}
-    expect(@schema.set(_d) instanceof Schema).to.be.false
-    expect(@schema.set(_d)).to.eq "element 'foo' is not a valid element"
-    
-  it 'should check for required fields on elements', =>
-    _d =       
-      name: 'Test'
-      options:
-        idInjection: true
-      properties:
-        foo:
-          type: "String"
-          required: true
-    expect(@schema.set(_d) instanceof Schema).to.be.true
-    _d = Object.assign _d, properties:
-      type: "Boolean"
-      name: "Test"
-    expect(=> @schema.set _d).to.not.throw "required property 'type' is missing"
-    
-
-
+    # _s = require "./schemas/client.json"
+    expect((_client = new Schema require "./schemas/client.json") instanceof Schema).to.be.true
+    console.log _client.get '__OPTIONS__'
+  # it 'should check for required fields', =>
+    # _d =       
+      # name: 'Test'
+    # expect(@schema.set _d).to.eq "required property 'properties' is missing"
+#     
+  # it 'should check for valid properties', =>
+    # _d =       
+      # name: 'Test'
+      # properties: []
+      # foo: {}
+    # expect(@schema.set(_d) instanceof Schema).to.be.false
+    # expect(@schema.set(_d)).to.eq "element 'foo' is not a valid element"
+#     
+  # it 'should check for required fields on elements', =>
+    # _d =       
+      # name: 'Test'
+      # options:
+        # idInjection: true
+      # properties:
+        # foo:
+          # type: "String"
+          # required: true
+    # expect(@schema.set(_d) instanceof Schema).to.be.true
+    # _d = Object.assign _d, properties:
+      # type: "Boolean"
+      # name: "Test"
+    # expect(=> @schema.set _d).to.not.throw "required property 'type' is missing"
+# 
   # it 'should set values on elements', =>
     # (typeof (_opts = @schema.get 'options') == 'object').should.be.true
     # (_opts.get 'idInjection').should.be.true
-# 
+    
+  it 'should handle deep object nesting', =>
+    expect((_schema = new Schema require "./schemas/nested-elements.json") instanceof Schema).to.be.true
+    expect((_schema.set require "./data/nested-data.json").valueOf().NestedObjects).to.exist
+    
+
   # it 'should handle defaults and restrictions', =>
     # _s = 
       # elements:
