@@ -11,8 +11,13 @@ class Schema
     ##> helper method to test if field requirements are met
     _hasRequiredFields = (obj)=>
       oKeys = Object.keys obj
+      
       for key in _required_elements
-        return "required property '#{key}' is missing" unless 0 <= oKeys.indexOf key
+        _path = if (_path = @path()).length then _path else 'root element'
+        unless 0 <= oKeys.indexOf key
+          console.log _required_elements
+          console.log obj
+          return "required property '#{key}' is missing for '#{_path}'"
       true
     # attempts to validate provided `schema` entries
     _schema_validator = new SchemaValidator _o, opts
@@ -20,7 +25,6 @@ class Schema
     throw eMsg if typeof (eMsg = _schema_validator.isValid()) is 'string'
     # builds validations from SCHEMA ENTRIES
     (_walkSchema = (obj, path)=>
-      
       for _k in (if (Array.isArray obj) then obj else Object.keys obj)
         objPath = if path? and 1 <= path.length then"#{path}.#{_k}" else _k
         ValidatorBuilder.getInstance().create obj[_k], objPath
@@ -31,10 +35,22 @@ class Schema
             for item in obj[_k].elements
               _walkSchema item, objPath
     ) _o.elements || {}
+    # console.log ValidatorBuilder.getInstance().list()
     _validate = (key, value)->
+      # key = if value instanceof _metaData then value.get( '_path' ) else value.getPath()
+      # return "object provided was not a valid subclass of Schema" unless value instanceof Schema
+      # return "object provided was malformed" unless typeof (key = value.getPath?()) is 'string'
       unless 0 <= ValidatorBuilder.getInstance().list()?.indexOf key
-        return "'#{key}' is not a valid schema property" unless opts.extensible
-      return "validator for '#{key}' failed. #{msg}" if typeof (msg = ValidatorBuilder.getInstance().exec key, value) is 'string'
+        _l = ValidatorBuilder.getInstance().list()
+        _path = []
+        for k,i in key.split '.'
+          _path[i] = k
+          _p = _path.join '.'
+          _path[i] = '*' unless 0 <= _l.indexOf _p       
+        unless _ref =  ValidatorBuilder.getInstance().get _p
+          return "'#{key}' is not a valid schema property" unless opts.extensible
+        ValidatorBuilder.getInstance().set key, _ref 
+      return msg if typeof (msg = ValidatorBuilder.getInstance().exec key, value) is 'string'
       true  
     _getKinds = (_s) =>
       _elems = Object.keys(_s).map (key)=>
@@ -55,12 +71,51 @@ class Schema
         for k,v of key
           return eMsg if typeof (eMsg = @set k, v) is 'string'
       else
-        return eMsg if (typeof (eMsg = _validate key, value)) == 'string'
-        _object[key] = value
+        _schema = _o.elements ? _o
+        _extensible = if _o.extensible? then _o.extensible else opts.extensible || false
+        for k in key.split '.'
+          _extensible = _schema[k].extensible if _schema[k]? and _schema[k].hasOwnProperty 'extensible'
+          _schema = if _schema.elements? then _schema.elements[k] else _schema[k]
+          _key = if @parent().path()?.length then "#{@parent().path()}.#{k}" else k
+          unless _schema?
+            return "element '#{k}' is not a valid element" unless _extensible
+            _schema = 
+              type: '*'
+              required: true
+              extensible: false
+          if typeof value is 'object'
+            unless Array.isArray value
+              _opts = {extensible: _extensible}
+              _md = new _metaData @, _path: _key, _root: @root()
+              _s = new Schema (_schema.elements ? _schema), _opts, _md
+            else
+              if Array.isArray (_kinds = _getKinds _schema)
+                _kinds = _kinds.map (itm)->
+                  switch (typeof itm)
+                    when 'string'
+                      return itm
+                    when 'object'
+                      return itm.type if itm.hasOwnProperty 'type'
+                _kinds = _kinds.filter (itm)-> itm?
+                _kinds = if _kinds.length then _kinds else '*'
+                _s = new Vector (_kinds || '*'), new _metaData @, _path:key
+            return "'#{key}' was invalid" unless _schema? and _s? and typeof _s is 'object'
+            value = _s[if (_s instanceof Vector) then 'replaceAll' else 'set'] value
+            return value if (typeof value) is 'string'
+          else
+            unless key is "_root" # and @ instanceof _metaData
+            
+              return eMsg if (typeof (eMsg = _validate _key, value)) == 'string'
+          _object[key] = value
       # returns self for chaining
       @
-    @validate = (cB)=>
-      _validate cB
+    @validate = ()=>
+      _path = @path()
+      # return true
+      for _k in ValidatorBuilder.getInstance().list()
+        _path = if _path.length > 0 then "#{_path}.#{_k}" else _k
+        return e if typeof (e = _validate _k, @root().get _k) is 'string'
+      true       
     #### @has(key)
     #> tests for key existance
     @has = (key) =>
@@ -86,10 +141,24 @@ class Schema
       keys
     #### @valueOf()
     #> returns _object
-    @valueOf = => _object
+    @valueOf = =>
+      _object
     #### @toJSON()
     #> returns _object
-    @toJSON  = => _object
+    @toJSON  = =>
+      _o = {}
+      _derive = (itm)->
+        if itm instanceof Schema
+          return _derive itm.toJSON()
+        if itm instanceof Vector
+          _arr = []
+          for k,val of itm.valueOf()
+            _arr.push _derive val
+          return _arr
+        itm
+      for k,v of _object
+        _o[k] = _derive v
+      _o 
     #### @toString(pretty)
     #> returns string representation of Schema, if pretty is `true` will format the string for readability
     @toString = (pretty=false) =>
@@ -139,3 +208,21 @@ class Schema
         Object.preventExtensions @
         Object.preventExtensions _object
       @
+    _mdRef = {}
+    unless @ instanceof _metaData 
+      unless (arguments.length > 2) # and (_mdRef = arguments[2])? instanceof _metaData
+        _mdRef = new _metaData @, {
+          _path: ""
+          _root: @
+        }
+      else
+        _mdRef = arguments[2]
+      @objectID = =>
+        _mdRef.get '_id'
+      @root = =>
+        _mdRef.root() ? @
+      @path = =>
+        _mdRef.path()
+      @parent = =>
+        _mdRef.parent() ? @
+ 

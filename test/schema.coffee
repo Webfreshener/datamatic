@@ -49,7 +49,7 @@ describe 'Schema Class Test Suite', ->
   it 'should check for required fields', =>
     _d =       
       name: 'Test'
-    expect(@schema.set _d).to.eq "required property 'properties' is missing"
+    expect(@schema.set _d).to.eq "required property 'properties' is missing for 'root element'"
     
   it 'should check for valid properties', =>
     _d =       
@@ -57,7 +57,7 @@ describe 'Schema Class Test Suite', ->
       properties: []
       foo: {}
     expect(@schema.set(_d) instanceof Schema).to.be.false
-    expect(@schema.set(_d)).to.eq "'foo' is not a valid schema property"
+    expect(@schema.set(_d)).to.eq "'properties' was invalid"
     
   it 'should check for required fields on elements', =>
     _d =       
@@ -68,20 +68,23 @@ describe 'Schema Class Test Suite', ->
         foo:
           type: "String"
           required: true
-    expect(@schema.set(_d) instanceof Schema).to.be.true
+    res = @schema.set _d
+    expect(res instanceof Schema).to.be.true
+    
     _d = Object.assign _d, properties:
       type: "Boolean"
       name: "Test"
     expect(=> @schema.set _d).to.not.throw "required property 'type' is missing"
 
-  # it 'should set values on elements', =>
-    # (typeof (_opts = @schema.get 'options') == 'object').should.be.true
-    # console.log _opts
-    # (_opts.get 'idInjection').should.be.true
+  it 'should set values on elements', =>
+    (typeof (_opts = @schema.get 'options') == 'object').should.be.true
+    console.log _opts
+    (_opts.get 'idInjection').should.be.true
     
   it 'should handle deep object nesting', =>
     expect((_schema = new Schema require "./schemas/nested-elements.json") instanceof Schema).to.be.true
-    expect((_schema.set require "./data/nested-data.json").valueOf().NestedObjects).to.exist
+    expect((_schema.set _d = require "./data/nested-data.json").valueOf().NestedObjects).to.exist
+    expect(JSON.stringify _d).to.equal _schema.toString()
     
 
   # it 'should handle defaults and restrictions', =>

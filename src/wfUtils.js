@@ -124,3 +124,11 @@
     }
     return string.replace(/\0/g, '');
   };
+  
+  _global.wf.wfUtils.Str.regsafe = function(string) {
+    if (typeof string === 'undefined') {
+      return '';
+    }
+    console.log( "string: "+string );
+    return string.replace(/(\.|\!|\{|\}|\(|\)|\-|\$|\!|\*|\?\[|\])+/g, '\\$&');
+  };

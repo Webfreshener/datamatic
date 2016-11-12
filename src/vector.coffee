@@ -16,6 +16,14 @@ class Vector
         return false unless _t = _schemaroller_.getClass _t
         return false unless _global.wf.wfUtils.Obj.isOfType item, _t
       true
+    @validate = ()=>
+      _path = @path()
+      _validator = ValidatorBuilder.getInstance()
+      console.log ValidatorBuilder.getInstance().list()
+      # return true
+      _list.forEach (itm)=>
+        return e if typeof (e = _validator.exec _path, itm) is 'string'
+      true 
     @getItemAt = (idx)=>
       if _list.length = (idx + 1) then _list[idx] else null
     @setItemAt = (idx, item)=>
@@ -57,8 +65,24 @@ class Vector
     @sort = (func)=>
       _list.sort func
       @
-    @values = =>
-      _list.values()
+    @valueOf = =>
+      _list
     @toString = =>
       _list.toString()
+    if items[items.length - 1] instanceof _metaData
+      _mdRef = items[items.length - 1]
+      items.splice items.length - 1, 1
+      # items = items[0] if items.length is 1 and Array.isArray items[0]
+    else
+      _mdRef = new _metaData @, _path:'', _root: @
+    @objectID = =>
+      _mdRef.get '_id'
+    @root = =>
+       _mdRef.get '_root'
+    @path = =>
+      _mdRef.get '_path'
+    @parent = =>
+      return null unless (_root = @root())? instanceof Schema or _root instanceof Vector
+      _root.get @path().split('.').pop().join '.'
+    # add all items into collection
     @push items if items? 

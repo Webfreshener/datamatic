@@ -1,4 +1,5 @@
 {
+	"type": "Object",
 	"elements": {
 		"name": {
 			"type": "String",
@@ -117,67 +118,73 @@
 			"required": true,
 			"extensible": true,
 			"elements": {
-				"default": {
-					"type": "Boolean",
-					"required": false
-				},
-				"defaultFn": {
-					"type": "String",
-					"required": false,
-					"restrict": "^(guid|uuid|uuidv4|now)+$"
-				},
-				"description": {
-					"type": "String",
-					"required": false,
-					"restrict": "^((?!\"|\b|\\f|\\n|\\r|\\t|\\u).)*$"
-				},
-				"id": {
-					"type": ["Boolean", "Object"],
+				"*": {
+					"type": "Object",
 					"required": false,
 					"elements": {
+						"default": {
+							"type": "Boolean",
+							"required": false
+						},
+						"defaultFn": {
+							"type": "String",
+							"required": false,
+							"restrict": "^(guid|uuid|uuidv4|now)+$"
+						},
+						"description": {
+							"type": "String",
+							"required": false,
+							"restrict": "^((?!\"|\b|\\f|\\n|\\r|\\t|\\u).)*$"
+						},
+						"id": {
+							"type": ["Boolean", "Object"],
+							"required": false,
+							"elements": {
+								"type": {
+									"type": "String",
+									"required": true,
+									"restrict": "^(String|Number)+$"
+								},
+								"id": {
+									"type": "Boolean",
+									"required": true
+								},
+								"generated": {
+									"type": "Boolean",
+									"required": false
+								}
+							}
+						},
+						"index": {
+							"type": "Boolean",
+							"required": false
+						},
 						"type": {
 							"type": "String",
 							"required": true,
-							"restrict": "^(String|Number)+$"
+							"restrict": "^(\\*|any|Array|Boolean|Buffer|Date|GeoPoint|Number|Object|String|[a-zA-Z-0-9_])+$"
 						},
-						"id": {
+						"required": {
 							"type": "Boolean",
-							"required": true
+							"required": false,
+							"default": false
 						},
-						"generated": {
-							"type": "Boolean",
-							"required": false
+						"length": {
+							"type": "Number",
+							"required": false,
+							"default": null
+						},
+						"precision": {
+							"type": "Number",
+							"required": false,
+							"default": null
+						},
+						"scale": {
+							"type": "Number",
+							"required": false,
+							"default": null
 						}
 					}
-				},
-				"index": {
-					"type": "Boolean",
-					"required": false
-				},
-				"type": {
-					"type": "String",
-					"required": true,
-					"restrict": "^(\\*|any|Array|Boolean|Buffer|Date|GeoPoint|Number|Object|String|[a-zA-Z-0-9_])+$"
-				},
-				"required": {
-					"type": "Boolean",
-					"required": false,
-					"default": false
-				},
-				"length": {
-					"type": "Number",
-					"required": false,
-					"default": null
-				},
-				"precision": {
-					"type": "Number",
-					"required": false,
-					"default": null
-				},
-				"scale": {
-					"type": "Number",
-					"required": false,
-					"default": null
 				}
 			}
 		},
@@ -185,37 +192,39 @@
 			"type": "Array",
 			"required": false,
 			"default": [],
-			"elements": [{
-				"type": "Object",
-				"required": false,
-				"elements": {
-					"default": {
-						"type": "*",
-						"required": true
-					},
-					"required": {
-						"type": "Boolean",
-						"required": false
-					},
-					"pattern": {
-						"type": "String",
-						"required": false
-					},
-					"min": {
-						"type": "Number",
-						"required": false
-					},
-					"max": {
-						"type": "Number",
-						"required": false
-					},
-					"length": {
-						"type": "Number",
-						"required": false
+			"elements": {
+				"*": {
+					"type": "Object",
+					"required": false,
+					"elements": {
+						"default": {
+							"type": "*",
+							"required": true
+						},
+						"required": {
+							"type": "Boolean",
+							"required": false
+						},
+						"pattern": {
+							"type": "String",
+							"required": false
+						},
+						"min": {
+							"type": "Number",
+							"required": false
+						},
+						"max": {
+							"type": "Number",
+							"required": false
+						},
+						"length": {
+							"type": "Number",
+							"required": false
+						}
+		
 					}
-	
 				}
-			}]
+			}
 		},
 		"scope": {
 			"type": "Object",
@@ -264,14 +273,10 @@
 					"restrict": "^(Application|User|Role)+$"
 				},
 				"property": {
-					"type": "Array",
+					"type": ["Array", "String"],
 					"required": false,
 					"default": [],
-					"elements": [{
-						"type": "String",
-						"required": false,
-						"restrict": "^[a-zA-Z-0-9_]+$"
-					}]
+					"restrict": "^[a-zA-Z-0-9_]+$"
 				}
 			}
 		}

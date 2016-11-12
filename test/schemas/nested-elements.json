@@ -24,7 +24,6 @@
 							"someValue": 0
 						},
 						"aDeepObject": {
-							"aDeepParam": "string1",
 							"aDeeperObject": {
 								"aDeepParam": "string2"
 							}
@@ -33,23 +32,23 @@
 					"elements": {
 						"aString": {
 							"type": "String",
-							"required": false,
-							"restrict": "/^TEST+$/"
+							"required": true,
+							"restrict": "^TEST+$"
 						},
 						"aObject": {
 							"type": "Object",
-							"required": false,
+							"required": true,
 							"extensible": true
 						},
 						"aDeepObject": {
 							"type": "Object",
-							"required": false,
+							"required": true,
 							"extensible": false,
 							"elements": {
 								"aDeepParam": {
 									"type": "String",
-									"required": false,
-									"restrict": "/^[a-zA-Z0-9]+$/"
+									"required": true,
+									"restrict": "^[0-9]+$"
 								},
 								"aDeeperObject": {
 									"type": "Object",
@@ -58,8 +57,8 @@
 									"elements": {
 										"aDeepParam": {
 											"type": "String",
-											"required": false,
-											"restrict": "/^[a-zA-Z0-9]+$/"
+											"required": true,
+											"restrict": "^[0-9]+$"
 										}
 									}
 								}
