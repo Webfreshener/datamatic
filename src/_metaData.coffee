@@ -22,10 +22,9 @@ class _metaData extends Schema
           required: true
     }
     _cName = _global.wf.wfUtils.Fun.getConstructorName _oRef
+    @set _data
     @objectID = =>
       @get '_id'
-    @get = (key) =>
-      _data[key] ? null
     @set = ()=>
       return "not implemented"    
     @objectID = =>
