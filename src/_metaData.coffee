@@ -1,30 +1,18 @@
-class _metaData extends Schema
-  constructor: (_oRef, _data)->
-    super {
-      elements:
-        _id:
-          type: "String"
-          required: true
-          restrict: "[a-z0-9_\$]{2,}"
-        _className:
-          type: "String"
-          required: true
-          restrict: "[a-z0-9_\$]{2,}"
-        _path:
-          type: "String"
-          required: true
-          restrict: "^[a-z0-9_\$\.]*$"
-        _root:
-          type: "Object"
-          required: true
-        _created:
-          type: "Number"
-          required: true
-    }
+class _metaData
+  constructor:  (_oRef, _data)->
     _cName = _global.wf.wfUtils.Fun.getConstructorName _oRef
-    @set _data
-    @objectID = =>
-      @get '_id'
+    unless @_createID?
+      _id = 0
+      _metaData::_createID = ->
+        @__objID = "#{_cName}#{_id + 1}" unless @__objID?
+        @__objID
+    Object.assign _data, {
+      _id: @_createID()
+      _className: _cName
+      _created: Date.now()
+    }
+    @get = (key) =>
+      _data[key] ? null
     @set = ()=>
       return "not implemented"    
     @objectID = =>

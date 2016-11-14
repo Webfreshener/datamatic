@@ -15,8 +15,6 @@ class Schema
       for key in _required_elements
         _path = if (_path = @path()).length then _path else 'root element'
         unless 0 <= oKeys.indexOf key
-          console.log _required_elements
-          console.log obj
           return "required property '#{key}' is missing for '#{_path}'"
       true
     # attempts to validate provided `schema` entries
@@ -69,7 +67,8 @@ class Schema
         return _f if typeof (_f = _hasRequiredFields Object.assign {}, _object, key) is 'string'
         # calls set with nested key value pair
         for k,v of key
-          return eMsg if typeof (eMsg = @set k, v) is 'string'
+          eMsg = @set k, v
+          return eMsg if typeof eMsg  is 'string'
       else
         _schema = _o.elements ? _o
         _extensible = if _o.extensible? then _o.extensible else opts.extensible || false
@@ -104,7 +103,6 @@ class Schema
             return value if (typeof value) is 'string'
           else
             unless key is "_root" # and @ instanceof _metaData
-            
               return eMsg if (typeof (eMsg = _validate _key, value)) == 'string'
           _object[key] = value
       # returns self for chaining
@@ -209,8 +207,8 @@ class Schema
         Object.preventExtensions _object
       @
     _mdRef = {}
-    unless @ instanceof _metaData 
-      unless (arguments.length > 2) # and (_mdRef = arguments[2])? instanceof _metaData
+    unless @ instanceof _metaData
+      unless (arguments.length > 2) and (_mdRef = arguments[2])? instanceof _metaData
         _mdRef = new _metaData @, {
           _path: ""
           _root: @
