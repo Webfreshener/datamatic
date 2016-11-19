@@ -25,15 +25,33 @@
   },
   "dependencies": {},
   "devDependencies": {
+    "babel": "^6.5.2",
+    "babel-core": "^6.18.2",
+    "babel-plugin-transform-remove-strict-mode": "0.0.2",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-register": "^6.18.0",
     "chai": "^3.5.0",
-    "coffee-script": "^1.10.0",
-    "docco": "^0.7.0",
-    "lodash": "^4.15.0",
+    "es6-weak-map": "^2.0.1",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-browserify": "^0.5.1",
+    "gulp-clean": "^0.3.2",
+    "gulp-concat": "^2.6.1",
+    "gulp-documentation": "^3.0.0",
+    "gulp-inject-file": "0.0.18",
+    "gulp-insert": "^0.5.0",
+    "gulp-jshint": "^2.0.4",
+    "gulp-mocha": "^3.0.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-sourcemaps": "^2.2.0",
+    "jshint": "^2.9.4",
     "mocha": "^3.0.2",
+    "run-sequence": "^1.2.2",
+    "weakmap": "0.0.6",
     "wf-utils": "git+https://github.com/webfreshener/wf-utils.git"
   },
   "homepage": "https://github.com/vancarney/schemaroller",
   "scripts": {
-    "test": "cake test"
+    "test": "gulp build ; gulp test"
   }
 }

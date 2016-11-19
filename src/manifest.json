@@ -1,9 +1,0 @@
-{
-  "files":[
-  	"src/_schemaValidator.coffee",
-  	"src/_validatorBuilder.coffee",
-  	"src/Vector.coffee",
-  	"src/Schema.coffee",
-  	"src/_metaData.coffee"
-  ]
-}
