@@ -48,7 +48,7 @@ gulp.task('clean', ['clean-js', 'clean-tests']);
  */
 gulp.task('jshint', () => {  
   gulp.src( './lib/*.js' )
-	.pipe( jshint() )
+	.pipe( jshint()
 	.pipe( jshint.reporter( 'default' ) )
 //	.pipe( jshint.reporter( 'fail' ) )
 	.pipe(gulp.dest( './lint.txt' ));
@@ -97,5 +97,5 @@ gulp.task('build-js', ['clean-js'], () => {
 });
 
 gulp.task('build', ['package'], done=> {
-	runSequence( 'build-js', 'docs', done );
+	runSequence( 'build-js', done );
 });
