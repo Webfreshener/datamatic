@@ -1,0 +1,11 @@
+const _global = (typeof exports !== 'undefined') && (exports !== null) ? exports : window;
+_global.wf = require('wf-utils');
+var WeakMap = require('es6-weak-map');
+const _exists = _global.wf.wfUtils.exists
+let _kinds = new WeakMap() || {};
+// holds references to registered JS Objects
+//-- inject:../../src/classes/SchemaRoller.js
+const _schemaroller_ = new SchemaRoller();
+//-- inject:../../src/classes/_validatorBuilder.js
+;
+export {ValidatorBuilder};

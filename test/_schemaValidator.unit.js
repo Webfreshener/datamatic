@@ -2,7 +2,7 @@ import { should, expect } from "chai";
 import {SchemaValidator} from "./src/_schemaValidator.js";
 should();
 
-describe.only( "SchemaValidator Unit Test Suite", ()=> {
+describe( "SchemaValidator Unit Test Suite", ()=> {
 	var validator = new SchemaValidator();
 	describe( "String Type Validation", ()=> {
 		it( "should validate String Type", function() {
