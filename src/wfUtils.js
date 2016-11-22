@@ -3,7 +3,8 @@
       Fun: {},
       Obj: {},
       Str: {},
-      exists: val=> typeof value !== 'undefined' && value !== null
+      exists: val=> {
+    	  return ((typeof value !== 'undefined') && value !== null);	}
     }
   };
 

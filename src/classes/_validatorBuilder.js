@@ -28,7 +28,7 @@ class ValidatorBuilder {
               if (vItm !== 'String' && !_x.match(/^string$/i)) { 
             	  return `${_path} requires ${_x} type 'String'`; }
               if (vItm.restrict != null) {
-                if (((new RegExp(vItm.restrict)).exec(value)) == null) { 
+                if (!_exists(new RegExp(vItm.restrict).exec(value))) { 
                 	return `value '${value}' for ${_path} did not match required expression`; } }
               return true;
               break;
@@ -40,11 +40,13 @@ class ValidatorBuilder {
               if (!Array.isArray(vItm)) {
                 return _validators[`${_path}`](val);
                 return _validators[_path](val);
-              } else {
+              }
+              else {
                 for (var val = 0; val < value.length; val++) {
                   let e;
-                  let k = value[val];
-                  if (typeof (e = _validators[_path](val)) === 'string') { return e; } }
+                  k = value[val];
+                  if (typeof (e = _validators[_path](val)) === 'string') { 
+                	  return e; } }
                 return true; }
               break;
             case 'number':
@@ -84,7 +86,8 @@ class ValidatorBuilder {
      * @param func
      */
     this.set = function(_path, func){
-      if ((func == null) || typeof func !== 'function') { return "2nd argument expects a function"; }
+      if ((func == null) || typeof func !== 'function') { 
+    	  return "2nd argument expects a function"; }
       return _validators[_path] = func;
     };
     /**

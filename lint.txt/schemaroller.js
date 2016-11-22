@@ -12,7 +12,6 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 // (c)2015-2016 Van Carney <carney.van@gmail.com>
 /////////////////////////////////////////////////
 // references the global scope of our environment
-/* jshint esnext: true */
 var _global = typeof exports !== 'undefined' && exports !== null ? exports : window;
 /**
  * @private
