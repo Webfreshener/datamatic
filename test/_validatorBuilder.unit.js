@@ -5,7 +5,7 @@ should();
 describe( "ValidatorBuilder Unit Test Suite", ()=> {
 	var builder = new ValidatorBuilder();
 	describe( "Builder Methods", ()=> {
-		it( "should  `create` a validator", function() {
+		it( "should `create` a validator", function() {
 			expect(typeof builder.create({type:"Number"}, "key")).to.equal( "function" );
 		});
 		it( "should `list` it's validators", function() {
