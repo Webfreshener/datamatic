@@ -9,15 +9,14 @@ class Schema {
    */
   constructor(_o={}, opts={extensible:false}) {
     var eMsg;
-    for (let _k of [_object, _mdRef, _required_elements, _validators]) {
-    	console.log(_k);
+    for (let _k of [_object, _mdRef, _validators]) {
     	_k.set(this, {}); }
-    	
+    _required_elements.set( this, [] );
     // traverses elements of schema
     if (_exists( _o.elements )) {
       for (let _oE of Object.keys( _o.elements )) {
         if (_exists( _o.elements[_oE].required )) {
-          _required_elements.push(_oE); }
+          _required_elements.get(this).push(_oE); }
       }
     }
     
@@ -40,7 +39,7 @@ class Schema {
         let result = [];
         for (let _k of ((Array.isArray(obj)) ? obj : Object.keys(obj))) {
           let item1;
-          let objPath = (path !== null) && 1 <= path.length ? `${path}.${_k}` : _k;
+          let objPath = _exists(path) && 1 <= path.length ? `${path}.${_k}` : _k;
           ValidatorBuilder.getInstance().create(obj[_k], objPath);
           if ((obj[_k].hasOwnProperty('elements')) && (typeof obj[_k].elements === 'object')) {
             if (!Array.isArray(obj[_k].elements)) {
@@ -177,148 +176,6 @@ class Schema {
     return true;       
   };
   /**
-   * @param {string} key
-   * @returns {boolean}
-   */
-  has(key) {
-	let __o = _object.get(this);
-    return __o.hasOwnProperty(key);
-  }
-  /**
-   * removes key from Schema
-   * @param {string} key
-   */
-  del(key) {
-    if (this.has(key)) { 
-    	return delete _object.get(this)[key]; }
-  }
-//  /**
-//   * traverses Schema, calling iterator on each node
-//   * @param {function} iterator
-//   * @param {object} scope
-//   * @returns {array} array of results
-//   */
-//  forEach = (iterator, scope=this) => {
-//    let _results = [];
-//    for (let key in Object.keys( _object.get(this) )) {
-//      if (!__o.hasOwnProperty(key)) { 
-//    	  continue; }
-//      _results.push( iterator.call(scope, __o[key], key) );
-//    }
-//    return _results;
-//  };
-  /**
-   * @returns {array} array of keys on Schema Object
-   */
-  keys() {
-    return Object.keys( _object.get(this) );
-  }
-  /**
-   * @returns {Schema}
-   */
-  valueOf(){
-    return _object.get(this);
-  }
-  /**
-   * @returns {object} Schema content as JSON
-   */
-  toJSON() {
-    _o = {};
-    let _derive = function(itm){
-      if (itm instanceof Schema) {
-        return _derive(itm.toJSON());
-      }
-      if (itm instanceof Vector) {
-        let _arr = [];
-        let object = itm.valueOf();
-        for (let k in object) {
-          let val = object[k];
-          _arr.push(_derive(val));
-        }
-        return _arr;
-      }
-      return itm;
-    };
-    for (let k in _object) {
-      let v = _object[k];
-      _o[k] = _derive(v);
-    }
-    return _o; 
-  }
-  /**
-   * @param {boolean} pretty - toggle pretty formatting
-   * @returns string representation of Schema, if pretty is `true` will format the string for readability
-   */
-  toString(pretty=false) {
-    return JSON.stringify(this.toJSON(), null, (pretty ? 2 : undefined));
-  }
-  /**
-   * returns true if environment supports Object.freeze
-   * @returns {boolean}
-   */
-  canFreeze() {
-    return typeof Object.freeze === 'function';
-  }
-  /**
-   * freezes Schema _object if feature supported by environment
-   * @returns {Schema}
-   */
-  freeze() {
-    if (this.canFreeze()) {
-      Object.freeze(_object);
-    }
-    return this;
-  }
-  /**
-   * @returns returns true if Schema is frozen
-   */
-  isFrozen() {
-    return this.canFreeze() ? Object.isFrozen(_object) : false
-  }
-  /**
-   * @returns returns true if environment supports Object.seal
-   */
-  canSeal() {
-    return typeof Object.seal === 'function';
-  }
-  /**
-   * seals Schema _object if feature supported by environment
-   * @returns {Schema}
-   */
-  seal() {
-    if (this.canSeal()) {
-      Object.seal(_object);
-    }
-    return this;
-  };
-  /**
-   * returns true if Schema is sealed
-   * @returns {boolean}
-   */
-  isSealed() {
-    return this.canSeal() ? Object.isSealed(_object) : false;
-  }
-  /**
-   * @returns true if environment supports Object.canPreventExtensions
-   */
-  canPreventExtensions() {
-    return typeof Object.preventExtensions === 'function';
-  }
-  /**
-   * @returns false if Schema is not Extensible
-   */
-  isExtensible() {
-	  return this.canPreventExtensions() ? Object.isExtensible(_object) : true;
-  }
-  /**
-   * @returns {Schema}
-   */
-  preventExtensions() {
-    if (this.canPreventExtensions()) {
-      Object.preventExtensions(_object); }
-    return this;
-  }
-  /**
    * @returns {string} Object ID for Schema
    */
   get objectID() {
@@ -341,5 +198,18 @@ class Schema {
    */
   get parent() {
 	  return _mdRef.parent || this;
+  }
+  /**
+   * @returns list of required elements on this Schema
+   */
+  get requiredFields() {
+	  return _required_elements.get( this );
+  }
+  /**
+   * indicates if Schema will accept arbitrary keys
+   * @returns {boolean}
+   */
+  get isExtensible() {
+	  return _schemaOptions.get(this).extensible;
   }
 }

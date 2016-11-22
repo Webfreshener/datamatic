@@ -5,8 +5,10 @@ class SchemaHelpers {
 	/**
 	 * @constructor
 	 */
-	constructor() {
-		
+	constructor(_ref) {
+		if (!_exists(_ref) || !(_ref instanceof Schema)) {
+			throw "arguments[0] must be type 'Schema'"; }
+		this._ref = _ref;
 	}
 	/**
 	 * @param {Object} itm
@@ -17,8 +19,8 @@ class SchemaHelpers {
 	      case 'string':
 	        return itm;
 	      case 'object':
-	        if (itm.hasOwnProperty('type')) { 
-	        	return itm.type; }
+	        if (itm.hasOwnProperty('type')) {
+	        	return this.ensureKindIsString( itm.type ); }
 	        break;
 	    }
 	    return false;
@@ -31,9 +33,9 @@ class SchemaHelpers {
     // helper method to test if field requirements are met
     hasRequiredFields(obj) {
       let oKeys = Object.keys( obj );
-      for (let key of _required_elements) {
-//        _path = (_path = this.path()).length ? _path : 'root element';
-        if (0 > oKeys.indexOf(key)) {
+      for (let key of this._ref.requiredFields) {
+    	// _path = (_path = this.path()).length ? _path : 'root element';
+        if (0 > oKeys.indexOf( key )) {
           return `required property '${key}' is missing`;}}
       return true;
     };

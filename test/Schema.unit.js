@@ -7,9 +7,9 @@ describe('Schema Class Test Suite', function() {
     expect(() => new Schema({value:'test'})).to.throw("value for schema element 'value' has invalid type '<Test>'"); //"type '<Test>' for schema element 'value.type' was invalid"
     expect(() => new Schema({value:'String'})).to.not.throw("schema element was malformed");
     expect(() => new Schema({value: {foo:'test'
-  }}) ).to.throw("value for schema element 'value' was malformed. Property 'type' was missing");
+    	}}) ).to.throw("value for schema element 'value' was malformed. Property 'type' was missing");
     expect(() => new Schema({value: {type:'String'
-  }}) ).to.not.throw("value for schema element 'value' was malformed. Property 'type' was missing");
+    	}}) ).to.not.throw("value for schema element 'value' was malformed. Property 'type' was missing");
     let o = {value: {type:'String', foo: 'test'}};
     expect(() => new Schema(o)).to.throw("schema element 'value.foo' is not allowed");
     expect(() => new Schema(o, {extensible:true})).to.throw("type '<test>' for schema element \'value.foo\' was invalid");
