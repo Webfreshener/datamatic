@@ -126,6 +126,5 @@
     if (typeof string === 'undefined') {
       return '';
     }
-    console.log( `string: ${string}` );
     return string.replace(/(\.|\!|\{|\}|\(|\)|\-|\$|\!|\*|\?\[|\])+/g, '\\$&');
   };

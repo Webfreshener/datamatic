@@ -9,23 +9,38 @@ class Vector {
 	 */
 	constructor(_type, ...items) {
 		_object.set(this,  []);
-		if (!Array.isArray(_type)) {
-	      let _t = typeof _type;
-	      if (_t === 'string') { _type = [_type]; }
-	      if (_t.match(/^(function|object)$/)) { _type = [_type]; }
-	      if (_t === null || _t === 'Function') { _type = ['*']; }
-	    }
-	    let _check = function(item){
-	      for (let _t of _type) {
-	        if ((typeof _t === 'string') && _t.match(/^(\*|ALL)$/)) { return true; }
-	        if (!(_t = _schemaroller_.getClass(_t))) { return false; }
-	        if (!_global.wf.wfUtils.Obj.isOfType(item, _t)) { return false; }
-	      }
-	      return true;
-	    };
+		if (!_exists(_type)) {
+			 _type = ['*'];	}
+		else {
+			if (!Array.isArray(_type)) {
+		      let _t = typeof _type;
+		      if (_t === 'string') { 
+		    	  _type = [_type]; }
+		      if (_t.match(/^(function|object)$/)) { 
+		    	  _type = [_type]; }
+		      if ((!_exists(_t)) || _t === 'Function') { 
+		    	  _type = ['*']; }
+		    }
+		}
+		type = _type;
 	    // add all items into collection
-	    if (items != null) { this.push(items); }
-	 }
+		if (items != null) { 
+	    	this.push(items); }
+	}
+	/**
+	 * tests item to see if it conforms to expected item type
+	 */
+	_typeCheck(item) {
+		for (let _t of this.type) {
+		    if ((typeof _t === 'string') && _t.match(/^(\*|ALL)$/)) { 
+		    	return true; }
+		    if (!(_t = _schemaroller_.getClass(_t))) { 
+		    	return false; }
+		    if (!_global.wf.wfUtils.Obj.isOfType(item, _t)) { 
+		    	return false; }
+		}
+		return true;
+	}
 	/**
 	 * validates items in Vector list
 	 * @returns {boolean}
@@ -54,10 +69,10 @@ class Vector {
 	* @returns {Vector} reference to self
 	*/
 	setItemAt(idx, item) {
-	  if (!_check(item)) { 
-	  return false; }
-	  _object.get(this).splice(idx, 0, item);
-	  return this;
+		if (!this._typeCheck( item )) {
+			return false; }
+		_object.get(this).splice( idx, 0, item );
+		return this;
 	}
 	/**
 	 * @param {number} idx
@@ -85,7 +100,7 @@ class Vector {
 	 * @returns {Vector} reference to self
 	 */
 	replaceItemAt(idx, item) {
-	  if (!_check(item)) { 
+	  if (!this._typeCheck(item)) { 
 	  return false; }
 	  if  (idx > _object.get(this).length) { 
 	  return false; }
@@ -99,7 +114,7 @@ class Vector {
 	 */
 	addItem(item) {
 	  return this.setItemAt(_object.get(this).length, item);
-	};
+	}
 	/**
 	 * @returns {any} item removed from start of list
 	 */
@@ -114,7 +129,7 @@ class Vector {
 	  items.forEach(item=> { 
 	 return this.setItemAt(0, item); });
 	  return this;
-	};
+	}
 	/**
 	 * @returns {any} items removed from end of list
 	 */
@@ -137,7 +152,7 @@ class Vector {
 	reset() {
 	  _object.set(this, []);
 	  return this;
-	};
+	}
 	/**
 	 * @param {function} func - sorrting function
 	 * @returns {Vector} reference to self
@@ -145,19 +160,26 @@ class Vector {
 	sort(func) {
 	  _object.get(this).sort(func);
 	  return this;
-	};
+	}
 	/**
 	 * @returns primitive value of list
 	 */
 	valueOf() {
 	  return _object.get(this);
-	};
+	}
 	/**
 	 * @returns stringified representation of list
 	 */
 	toString() {
 	  return _object.get(this).toString();
-	};
+	}
+	/**
+	 * getter for Vector type
+	 * @returns 
+	 */
+	get type() {
+		return type;
+	}
 	/**
 	 * @returns Unique ObjectID
 	 */
@@ -169,13 +191,13 @@ class Vector {
 	 */
 	get root() {
 	   return _mdRef.get(this).get('_root');
-	 };
+	 }
 	/**
 	 * 
 	 */
 	get path() {
 	  return _mdRef.get(this).path;
-	};
+	}
 	/**
 	 * 
 	 */
@@ -184,11 +206,13 @@ class Vector {
 	  if (!(((_root = this.root()) != null) instanceof Schema) && !(_root instanceof Vector)) { 
 		  return null; }
 	  return _root.get(this.path().split('.').pop().join('.'));
-	};
+	}
 	/**
 	 * @returns {number} number of elements in list
 	 */
 	get length() {
 		return this.valueOf().length;
 	}
+
 }
+

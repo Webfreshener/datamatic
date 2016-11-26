@@ -23,74 +23,102 @@ var _required_elements = new WeakMap();
  * @private
  */
 
-var _metaData =
-/**
- * @constructor
- * @param {Schema|Vector} _oRef
- * @param {object} _data
- */
-function _metaData(_oRef, _data) {
-  var _this = this;
+var _metaData = function () {
+  /**
+   * @constructor
+   * @param {Schema|Vector} _oRef - Object Reference to item being described
+   * @param {object} _data -- Initial Data {parent:Schema|Vector}
+   */
+  function _metaData(_oRef) {
+    var _data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
 
-  _classCallCheck(this, _metaData);
+    _classCallCheck(this, _metaData);
 
-  var _cName = _global.wf.wfUtils.Fun.getConstructorName(_oRef);
-  if (this._createID == null) {
-    (function () {
-      var _id = 0;
-      _metaData.prototype._createID = function () {
-        if (this.__objID == null) {
-          this.__objID = '' + _cName + (_id + 1);
-        }
-        return this.__objID;
-      };
-    })();
+    var _cName = _global.wf.wfUtils.Fun.getConstructorName(_oRef);
+    if (!(_oRef instanceof Schema || _oRef instanceof Vector)) {
+      throw 'new _metaData() argument 1 requires subclass Schema or Vector. Was subclass of \'<' + _cName + '>\'';
+    }
+    if (this._createID == null) {
+      (function () {
+        var _id = 0;
+        _metaData.prototype._createID = function () {
+          if (this.__objID == null) {
+            this.__objID = '' + _cName + (_id + 1);
+          }
+          return this.__objID;
+        };
+      })();
+    }
+    Object.assign(_data, {
+      _id: this._createID(),
+      _className: _cName,
+      _created: Date.now()
+    });
+    _mdRef.set(this, _data);
   }
-  Object.assign(_data, {
-    _id: this._createID(),
-    _className: _cName,
-    _created: Date.now()
-  });
-  console.log('_data: ' + JSON.stringify(_data, null, 2));
   /**
    * @param {string} key
    */
-  this.get = function (key) {
-    return _data.hasOwnProperty(key) ? _data[key] : null;
-  };
-  /**
-   * not implemented
-   */
-  this.set = function () {
-    return "not implemented";
-  };
-  /**
-   * @returns {string} Unique ObjectID
-   */
-  this.objectID = function () {
-    return _this.get('_id');
-  };
-  /**
-   * @returns {Schema|Vector} root Schema Element
-   */
-  this.root = function () {
-    return _this.get('_root');
-  };
-  /**
-  * @returns {string} path to Element
-   */
-  this.path = function () {
-    return _this.get('_path');
-  };
-  /**
-  * @returns {string} path to Element
-   */
-  this.parent = function () {
-    var _p = _this.path().split('.');
-    _p = _p.length > 1 ? _p.slice(0, _p.length - 2).join('.') : _p[0];
-    return _p.length > 0 ? _this.root().get(_p) : _this;
-  };
-};
+
+
+  _createClass(_metaData, [{
+    key: 'get',
+    value: function get(key) {
+      var _ = _mdRef.get(this);
+      return _.hasOwnProperty(key) ? _[key] : null;
+    }
+    /**
+     * not implemented
+     */
+
+  }, {
+    key: 'set',
+    value: function set() {
+      return this;
+    }
+    /**
+     * @returns {string} Unique ObjectID
+     */
+
+  }, {
+    key: 'objectID',
+    get: function get() {
+      return this.get('_id');
+    }
+    /**
+     * @returns {Schema|Vector} root Schema Element
+     */
+
+  }, {
+    key: 'root',
+    get: function get() {
+      return this.get('_root');
+    }
+    /**
+     * @returns {string} path to Element
+     */
+
+  }, {
+    key: 'path',
+    get: function get() {
+      return this.get('_path');
+    }
+    /**
+     * @returns {string} path to Element
+     */
+
+  }, {
+    key: 'parent',
+    get: function get() {
+      var _ = this.path || "";
+      var _p = _.split('.');
+      _p = _p.length > 1 ? _p.slice(0, _p.length - 2).join('.') : _p[0];
+      return _p.length > 0 ? this.root.get(_p) : this.root;
+    }
+  }]);
+
+  return _metaData;
+}();
 /**
  * Strict JS Objects and Collections created from JSON Schema Defintions
  * @class SchemaRoller
@@ -754,7 +782,7 @@ var ValidatorBuilder = function () {
   }, {
     key: 'create',
     value: function create(_ref, _path) {
-      var _this2 = this;
+      var _this = this;
 
       var _v = [_ref];
       if (!_exists(__vBuilder)) {
@@ -763,7 +791,7 @@ var ValidatorBuilder = function () {
       var __validators = _validators.get(this);
       if (Array.isArray(_ref)) {
         _v = _ref.map(function (_s) {
-          return _this2.create(_s, _path);
+          return _this.create(_s, _path);
         });
       }
       return __validators[_path] = function (value) {
