@@ -2,7 +2,7 @@ import { should, expect } from "chai";
 import { Schema, SchemaHelpers } from "./src/_schemaHelpers.js";
 should();
 
-describe.only( "SchemaHelpers Unit Test Suite", ()=> {
+describe( "SchemaHelpers Unit Test Suite", ()=> {
 	var helpers;
 	let _schema = new Schema({
 			myKey: {

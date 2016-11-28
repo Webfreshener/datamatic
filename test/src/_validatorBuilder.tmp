@@ -6,6 +6,7 @@ let _kinds = new WeakMap() || {};
 // holds references to registered JS Objects
 //-- inject:../../src/classes/SchemaRoller.js
 const _schemaroller_ = new SchemaRoller();
+const _validators = new WeakMap();
 //-- inject:../../src/classes/_validatorBuilder.js
 ;
 export {ValidatorBuilder};

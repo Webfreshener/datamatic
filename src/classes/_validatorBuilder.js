@@ -2,7 +2,6 @@
  * @private
  */
 let __vBuilder = null;
-const _validators = new WeakMap();
 /**
  * @private
  */
@@ -12,10 +11,9 @@ class ValidatorBuilder {
 	 */
   constructor() {
 	if (!_exists( __vBuilder )) {
-		_validators.set(__vBuilder = this, {}); }
-	// holds validation methods
+		_validators.set( (__vBuilder = this), {}); }
     return __vBuilder;
-  } // - end constructor
+  }
   /**
    * @return list of validator paths
    */
@@ -48,16 +46,17 @@ class ValidatorBuilder {
    */
   create(_ref, _path) {
 	  let _v = [_ref];
-	  if (!_exists(__vBuilder)) {
+	  if (!_exists( __vBuilder )) {
 		  throw "ValidatorBuilder not properly initialized";	}
 	  let __validators = _validators.get( this );
-	  if (Array.isArray(_ref)) {
-	    _v = _ref.map(_s => this.create(_s, _path));
-	  }
+	  if (Array.isArray( _ref )) {
+		  console.log(`${_path} is array`);
+		  _v = _ref.map(_s => this.create(_s, _path));	}
 	  return __validators[_path] = value=> {
 	    for (let vItm of _v) {
 	      let fName;
-	      if (vItm.required && (value == null)) { 
+	      var _x;
+	      if (vItm.required && !_exists(value)) { 
 	    	  return `value for '${_path}' is required`; }
 	      switch (typeof value) {
 	        case 'string':
@@ -73,7 +72,7 @@ class ValidatorBuilder {
 	          return true;
 	          break;
 	        case 'function':
-	          var _x = typeof vItm === 'string' ? vItm : _global.wf.wfUtils.Fun.getConstructorName(vItm);
+	          _x = typeof vItm === 'string' ? vItm : _global.wf.wfUtils.Fun.getConstructorName(vItm);
 	          return _x === _global.wf.wfUtils.Fun.getConstructorName(value);
 	          break;
 	        case 'object':
@@ -99,6 +98,12 @@ class ValidatorBuilder {
 	          break;
 	        default:
 	          _x = typeof vItm.type === 'string' ? _schemaroller_.getClass(vItm.type) : vItm.type;
+	          if (Array.isArray(_x)) {
+	        	let _ = _x.map( itm=> {
+	        		let _clazz = _schemaroller_.getClass(itm);
+	        		return (_exists(itm) && _exists(_clazz) && value instanceof _clazz);
+	        	});
+	        	return ( 0 <= _.indexOf(false) );	}
 	          return (_exists(_x) && value instanceof _x);	}	}
 	    // should have returned in the switch statement
 	    return `unable to validate ${_path}`;

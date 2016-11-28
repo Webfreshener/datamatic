@@ -99,7 +99,22 @@ class SchemaRoller {
 		    restrict: 'String',
 		    validate: 'Function',
 		    default: '*',
-		    elements: ['Array','Object']
+		    elements: ['Array','Object'],
+		    signature: {
+		    	type: ['Object','Array'],
+		    	required: false,
+		    	elements: {
+		    		type: {
+		    			type: this.listClasses(),
+		    			required: true
+		 		    },
+		 		    extensible: 'Boolean',
+		 		    restrict: 'String',
+		 		    validate: 'Function',
+		 		    default: '*',
+		 		    elements: ['Array','Object']
+		    	}
+		    }
 		};
 	}
 	/**

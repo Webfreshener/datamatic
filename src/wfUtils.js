@@ -4,7 +4,7 @@
       Obj: {},
       Str: {},
       exists: val=> {
-    	  return ((typeof value !== 'undefined') && value !== null);	}
+    	  return ((typeof val !== 'undefined') && val !== null);	}
     }
   };
 
@@ -24,8 +24,8 @@
       fun = (ref = fun()) != null ? ref : new fun;
     }
     if ((name = this.getFunctionName(fun.constructor)) != null) {
-      return name;
-    } else {
+      return name; } 
+    else {
       return null;
     }
   };

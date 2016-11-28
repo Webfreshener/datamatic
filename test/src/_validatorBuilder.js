@@ -219,11 +219,11 @@ var SchemaRoller = function () {
 }();
 
 var _schemaroller_ = new SchemaRoller();
+var _validators = new WeakMap();
 /**
  * @private
  */
 var __vBuilder = null;
-var _validators = new WeakMap();
 /**
  * @private
  */

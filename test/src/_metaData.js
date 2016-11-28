@@ -19,6 +19,7 @@ var _kinds = new WeakMap() || {};
 var _schemaKeys = new WeakMap();
 var _schemaOptions = new WeakMap();
 var _required_elements = new WeakMap();
+var _validators = new WeakMap();
 /**
  * @private
  */
@@ -437,7 +438,7 @@ var Schema = function () {
 				return result;
 			}();
 		};
-		_walkSchema(_o.elements || {});
+		_walkSchema(_o.elements || _o);
 		/**
    * @private
    */
@@ -1087,7 +1088,6 @@ var Vector = function () {
 
 
 var __vBuilder = null;
-var _validators = new WeakMap();
 /**
  * @private
  */

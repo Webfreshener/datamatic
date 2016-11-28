@@ -120,7 +120,7 @@ gulp.task('package', () =>{
  * - uses babel to compile to es5
  */
 gulp.task('build', ['clean-js'], () => {
-	gulp.src(`src/${_APP_NAME_}.js`)
+	gulp.src(`src/index.js`)
 	.pipe(inject({
 		pattern: '//--\\s*inject:\\s*<filename>'
 	}))

@@ -78,7 +78,7 @@ describe( "SchemaValidator Unit Test Suite", ()=> {
 		it( "should accept no type on `default` param", function() {
 			expect( validator.validateUntypedMembers("default", {something:"String"}) ).to.equal( true );
 		});
-		it( "should NOT accept typeless `key` param", function() {
+		it( "should *not* accept typeless `key` param", function() {
 			expect( validator.validateUntypedMembers("key", {something:"String"}) ).to.equal( 
 					"value for schema element \'key\' was malformed. Property \'type\' was missing");
 		});
@@ -92,5 +92,17 @@ describe( "SchemaValidator Unit Test Suite", ()=> {
 			expect( validator.validateUntypedMembers("key", [{type:"String"},{type:"Non-Type"}] ) ).to.equal( 
 					"value for schema element 'key' has invalid type '<Non-Type>'" );
 		})
+	});
+	describe( "Schema Type Validation", ()=> {
+		it( "should restrict type based on spec", function() {
+			let _schema = {
+			    	elements: { 
+			    		value:'String' }};
+			let _opts = {
+					extensible:true	};
+			let _validator = new SchemaValidator(_schema, _opts);
+			_validator.isValid().should.eq( true );
+//			expect( _validator.validateSchemaParamString("key", "newAttr", {newAttr:"String"}) ).to.equal( true );
+		});	
 	});
 });

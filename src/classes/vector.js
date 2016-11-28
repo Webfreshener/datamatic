@@ -22,7 +22,10 @@ class Vector {
 		    	  _type = ['*']; }
 		    }
 		}
-		type = _type;
+		// when we no longer need babel...
+		// type = _type;
+		// for now we use Weakmap
+		_vectorTypes.set(this, _type);
 	    // add all items into collection
 		if (items != null) { 
 	    	this.push(items); }
@@ -178,7 +181,9 @@ class Vector {
 	 * @returns 
 	 */
 	get type() {
-		return type;
+		// for when we no longer need babel
+		// return type;
+		return _vectorTypes.get(this);
 	}
 	/**
 	 * @returns Unique ObjectID

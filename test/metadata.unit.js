@@ -2,7 +2,7 @@ import { should, expect } from "chai";
 import {Schema, Vector, _metaData} from "./src/_metaData.js";
 should();
 
-describe.only( "MetaData Unit Test Suite", ()=> {
+describe( "MetaData Unit Test Suite", ()=> {
 	var _md = null;
 	describe( "SubClass Validation", ()=> {
 		it( "should not accept objects that are not subclasses of Schema or Vector", function() {

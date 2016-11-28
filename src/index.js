@@ -9,12 +9,14 @@ const _global = (typeof exports !== 'undefined') && (exports !== null) ? exports
  */
 _global.SchemaRoller = ()=> {
   'use strict';
-  const _object = new WeakMap();
-  const _mdRef  = new WeakMap();
-  const _required_elements = new WeakMap();
-  const _validators = new WeakMap();
-  const _singletons = new Weakmap();
-  const _schemaOptions = new WeakMap();
+  const _object				= new WeakMap();
+  const _mdRef				= new WeakMap();
+  const _required_elements	= new WeakMap();
+  const _validators			= new WeakMap();
+  const _singletons			= new WeakMap();
+  const _vectorTypes		= new WeakMap();
+  const _schemaOptions		= new WeakMap();
+  const _schemaSignatures	= new WeakMap();
   // injects base classes
   //-- inject:./classes/_schemaValidator.js
   //-- inject:./classes/_validatorBuilder.js
@@ -54,3 +56,4 @@ let _kinds = new WeakMap() || {};
 //-- inject:./classes/SchemaRoller.js
 //injects NPM Modules
 //-- inject:../include/index.js
+
