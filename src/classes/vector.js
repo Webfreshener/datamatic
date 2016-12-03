@@ -93,8 +93,8 @@ class Vector {
 	 */
 	replaceAll(array) {
 	  this.reset();
-	  for (let itm of array) {
-	this.addItem(itm); }
+	  for (let itm in array) {
+		  this.addItem(array[itm]); }
 	  return this;
 	}
 	/**

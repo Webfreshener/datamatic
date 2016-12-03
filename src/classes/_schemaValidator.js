@@ -89,8 +89,8 @@ class SchemaValidator {
 			if ((_p = (keyPath = key.split(".")).pop()) !== "elements") { 
 				if (_p === "default") {
 					return true; }
-				if (params.hasOwnProperty('signature')) {
-					return this.validateSchemaEntry(key, params.signature);	}
+				if (params.hasOwnProperty('polymorphic')) {
+					return this.validateSchemaEntry(key, params.polymorphic);	}
 				return `value for schema element '${key}' was malformed. Property 'type' was missing`;	} 
 			else {
 				for (let param of Object.keys( params )) {
@@ -133,7 +133,6 @@ class SchemaValidator {
 	 * @param {object} params
 	 */
 	validateSchemaParamString(key, sKey, params) {
-		var eMsg;
 		let _kind = _global.wf.wfUtils.Str.capitalize( params[sKey] );
 		let _schemaKeys = _schemaroller_.schemaRef;
 		let opts = _schemaOptions.get(this);
@@ -148,7 +147,8 @@ class SchemaValidator {
 		// rejects values for keys not found in Schema
 		if (!_exists(_schemaKeys[sKey]) && opts.extensible === false) {
 			return `schema element '${key}.${sKey}' is not allowed`; }
-		if (typeof ( eMsg = this.validateTypeString( `${key}.${sKey}`, params[sKey] )) === "string") {
+		let eMsg = this.validateTypeString( `${key}.${sKey}`, params[sKey] );
+		if (typeof eMsg === "string") {
 			return eMsg; }
 		return true;
 		}
@@ -204,8 +204,8 @@ class SchemaValidator {
 	    	return this.validateTypeString(`${key}`, params); }
 	    if (typeof params === "object") {
 	      if (!params.hasOwnProperty("type")) {
-	    	  if (params.hasOwnProperty('signature')) {
-	    		  return this.validateSchemaEntry(key, params.signature, opts);	}
+	    	  if (params.hasOwnProperty('polymorphic')) {
+	    		  return this.validateSchemaEntry(key, params.polymorphic, opts);	}
 	    	  return this.validateUntypedMembers(key, params); }
 	      // handles Classes/Functions
 	      if ((_schemaroller_.getClass(params.type)) == null) {

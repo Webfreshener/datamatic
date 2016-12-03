@@ -80,7 +80,6 @@ describe.only("Schema Class Test Suite", function() {
   });
 
   it("should validate values", () => {
-    let _getter;
     let _S = new Schema({
     		elements: { 
     			value: "String"	}});
@@ -94,8 +93,8 @@ describe.only("Schema Class Test Suite", function() {
     expect(() => new Schema(_s)).to.not.throw("type '<^[a-zA-Z-0-9_]+$>' for schema element 'name.restrict' was invalid");
   });
 
-  it("should initialize from complex schema files", () => {
-    let _s = require("./fixtures/client_collection.schema.json");
+  it.only("should initialize from polymorphic schema fixture", () => {
+	  let _s = require("./fixtures/polymorphic.schema.json");
     this.schema = new Schema(_s);
     expect(this.schema instanceof Schema).to.be.true;
   });
@@ -107,6 +106,21 @@ describe.only("Schema Class Test Suite", function() {
     		"required property 'description' is missing for 'root element'");
   });
     
+  it.only("should check for polymorphic properties", () => {
+	let _d = {
+			anItem: "should be valid"
+	}
+    expect(this.schema.set(_d) instanceof Schema).to.be.false;
+    expect(this.schema.set(_d)).to.eq(
+    		"element 'foo' is not a valid element");
+  });
+  
+  it("should initialize from client_collection schema fixture", () => {
+    let _s = require("./fixtures/client_collection.schema.json");
+    this.schema = new Schema(_s);
+    expect(this.schema instanceof Schema).to.be.true;
+  });
+  
   it("should check for valid properties", () => {
     let _d = {       
       name: "Test",
@@ -115,10 +129,18 @@ describe.only("Schema Class Test Suite", function() {
       base: "foo",
       http: false,
       strict: false,
-      options: {},
+      options: {
+    	  idInjection: true,
+    	  validateUpsert: false
+      },
       validations: {},
       relations: {
-    	polymorphic: "testing"  
+    	  myRelation: {
+    		  type: "foo",
+    		  polymorphic: "testing",
+    		  model:"",
+    		  foreignKey: "name"
+    	  }
       },
       scope: {},
       scopes: {},

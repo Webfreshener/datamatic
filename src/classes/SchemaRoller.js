@@ -100,7 +100,7 @@ class SchemaRoller {
 		    validate: 'Function',
 		    default: '*',
 		    elements: ['Array','Object'],
-		    signature: {
+		    polymorphic: {
 		    	type: ['Object','Array'],
 		    	required: false,
 		    	elements: {

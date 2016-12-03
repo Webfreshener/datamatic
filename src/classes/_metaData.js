@@ -20,12 +20,14 @@ class _metaData {
 	        return this.__objID;
 	      };
 	    }
-	    Object.assign(_data, {
+	    _data = Object.assign(_data, {
 	      _id: this._createID(),
 	      _className: _cName,
 	      _created: Date.now()
 	    });
-		_mdRef.set(this, _data);
+//	    console.log(_data);
+	    _mdRef.set(this, _data);
+		_mdRef.set(_oRef, _data);
 	}
 	/**
 	 * @param {string} key

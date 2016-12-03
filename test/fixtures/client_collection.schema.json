@@ -42,9 +42,6 @@
 			"type": "Object",
 			"required": false,
 			"extensible": true,
-			"default": {
-				"idInjection": false
-			},
 			"elements": {
 				"idInjection": {
 					"type": "Boolean",
@@ -63,67 +60,72 @@
 			"required": true,
 			"extensible": true,
 			"elements": {
-				"default": {
-					"type": "Boolean",
-					"required": false
-				},
-				"defaultFn": {
-					"type": "String",
-					"required": false,
-					"restrict": "^(guid|uuid|uuidv4|now)+$"
-				},
-				"description": {
-					"type": "String",
-					"required": false,
-					"restrict": "^((?!\"|\b|\\f|\\n|\\r|\\t|\\u).)*$"
-				},
-				"id": {
-					"type": ["Boolean", "Object"],
-					"required": false,
+				"*": {
+					"type": "Object",
 					"elements": {
+						"default": {
+							"type": "Boolean",
+							"required": false
+						},
+						"defaultFn": {
+							"type": "String",
+							"required": false,
+							"restrict": "^(guid|uuid|uuidv4|now)+$"
+						},
+						"description": {
+							"type": "String",
+							"required": false,
+							"restrict": "^((?!\"|\b|\\f|\\n|\\r|\\t|\\u).)*$"
+						},
+						"id": {
+							"type": ["Boolean", "Object"],
+							"required": false,
+							"elements": {
+								"type": {
+									"type": "String",
+									"required": true,
+									"restrict": "^(String|Number)+$"
+								},
+								"id": {
+									"type": "Boolean",
+									"required": true
+								},
+								"generated": {
+									"type": "Boolean",
+									"required": false
+								}
+							}
+						},
+						"index": {
+							"type": "Boolean",
+							"required": false
+						},
 						"type": {
 							"type": "String",
 							"required": true,
-							"restrict": "^(String|Number)+$"
+							"restrict": "^(\\*|any|Array|Boolean|Buffer|Date|GeoPoint|Number|Object|String|[a-zA-Z-0-9_])+$"
 						},
-						"id": {
+						"required": {
 							"type": "Boolean",
-							"required": true
+							"required": false,
+							"default": false
 						},
-						"generated": {
-							"type": "Boolean",
-							"required": false
+						"length": {
+							"type": "Number",
+							"required": false,
+							"default": null
+						},
+						"precision": {
+							"type": "Number",
+							"required": false,
+							"default": null
+						},
+						"scale": {
+							"type": "Number",
+							"required": false,
+							"default": null
 						}
 					}
-				},
-				"index": {
-					"type": "Boolean",
-					"required": false
-				},
-				"type": {
-					"type": "String",
-					"required": true,
-					"restrict": "^(\\*|any|Array|Boolean|Buffer|Date|GeoPoint|Number|Object|String|[a-zA-Z-0-9_])+$"
-				},
-				"required": {
-					"type": "Boolean",
-					"required": false,
-					"default": false
-				},
-				"length": {
-					"type": "Number",
-					"required": false,
-					"default": null
-				},
-				"precision": {
-					"type": "Number",
-					"required": false,
-					"default": null
-				},
-				"scale": {
-					"type": "Number",
-					"required": false,
-					"default": null
 				}
 			}
 		},
@@ -171,46 +173,59 @@
 			"extensible": true,
 			"default": {},
 			"elements":{
-				"type": {
-					"type": "String",
-					"required": true,
-					"restrict": "^(belongsTo|hasMany|hasManyThrough|hasAndBelongsToMany)+$"
-				},
-				"model": {
-					"type": "String",
-					"required": true,
-					"restrict": "^[a-zA-Z-0-9_]+$"
-				},
-				"foreignKey": {
-					"type": "String",
-					"required": true,
-					"restrict": "^[a-zA-Z-0-9_]+$"
-				},
-				"polymorphic": {
-					"required": false,
-					"signature": [{
-						"type": "String",
-						"restrict": "^[a-zA-Z-0-9_]+$"
+				"*": {
+					"type": "Object",
+					"elements": {
+						"type": {
+							"type": "String",
+							"required": true,
+							"restrict": "^(belongsTo|hasMany|hasManyThrough|hasAndBelongsToMany)+$"
 						},
-						{
-						"type": "Object",
-						"elements": {
-							"as": {
-								"type": "String",
-								"required": true,
-								"restrict": "^[a-zA-Z-0-9_]+$"
+						"model": {
+							"type": "String",
+							"required": true,
+							"restrict": "^[a-zA-Z-0-9_]+$"
+						},
+						"foreignKey": {
+							"type": "String",
+							"required": true,
+							"restrict": "^[a-zA-Z-0-9_]+$"
+						},
+						"keyThrough": {
+							"type": "String",
+							"required": false
 							},
-							"foreignKey": {
-								"type": "String",
-								"required": true,
-								"restrict": "^[a-zA-Z-0-9_]+$"
+						"through": {
+							"type": "String",
+							"required": false
 							},
-							"discriminator": {
+						"polymorphic": {
+							"required": false,
+							"polymorphic": [{
 								"type": "String",
 								"restrict": "^[a-zA-Z-0-9_]+$"
-							}
+								},
+								{
+								"type": "Object",
+								"elements": {
+									"as": {
+										"type": "String",
+										"required": true,
+										"restrict": "^[a-zA-Z-0-9_]+$"
+									},
+									"foreignKey": {
+										"type": "String",
+										"required": true,
+										"restrict": "^[a-zA-Z-0-9_]+$"
+									},
+									"discriminator": {
+										"type": "String",
+										"restrict": "^[a-zA-Z-0-9_]+$"
+									}
+								}
+							}]
 						}
-					}]
+					}
 				}
 			}
 		},
