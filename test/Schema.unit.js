@@ -94,7 +94,7 @@ describe.only("Schema Class Test Suite", function() {
   });
 
   it.only("should initialize from polymorphic schema fixture", () => {
-	  let _s = require("./fixtures/polymorphic.schema.json");
+	let _s = require("./fixtures/polymorphic.schema.json");
     this.schema = new Schema(_s);
     expect(this.schema instanceof Schema).to.be.true;
   });
@@ -108,11 +108,33 @@ describe.only("Schema Class Test Suite", function() {
     
   it.only("should check for polymorphic properties", () => {
 	let _d = {
-			anItem: "should be valid"
+//			aString: "a string",
+//			aBool: false,
+//			aNumber: 2,
+//			objType1: {
+//				id: 0,
+//				name: "myName",
+//				desc: "some text"
+//			},
+//			objType2: {
+//				id: 0,
+//				active: true
+//			},
+			badObj: {
+				id: "0",
+				name: "myName",
+				desc: "some text",
+				bad: "bad"
+			}
 	}
-    expect(this.schema.set(_d) instanceof Schema).to.be.false;
-    expect(this.schema.set(_d)).to.eq(
-    		"element 'foo' is not a valid element");
+    
+//    expect(this.schema.set(_d)).to.eq(
+//    		"'aNumber' expected String, type was '<Number>'");
+	delete _d.aNumber;
+//    expect(this.schema.set(_d)).to.eq(
+//	"'aNumber' expected String, type was '<Number>'");
+	console.log( this.schema.set(_d) )
+//	expect(this.schema.set(_d) instanceof Schema).to.be.true;
   });
   
   it("should initialize from client_collection schema fixture", () => {

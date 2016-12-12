@@ -16,12 +16,14 @@ _global.SchemaRoller = ()=> {
   const _singletons			= new WeakMap();
   const _vectorTypes		= new WeakMap();
   const _schemaOptions		= new WeakMap();
+  const _schemaHelpers		= new WeakMap();
   const _schemaSignatures	= new WeakMap();
   // injects base classes
   //-- inject:./classes/_schemaValidator.js
+  //-- inject:./classes/_validators.js
   //-- inject:./classes/_validatorBuilder.js
   //-- inject:./classes/Vector.js
-  //-- inject:./classes/_schemaHelper.js
+  //-- inject:./classes/_schemaHelpers.js
   //-- inject:./classes/Schema.js
   //-- inject:./classes/_metaData.js
   let _schemaroller_ = new SchemaRoller;

@@ -1,0 +1,15 @@
+{
+	"elements":{
+		"*": {
+			"type": "Object",
+			"required": true,
+			"elements": {
+				"*": {
+					"type": "Object",
+					"required": true
+				}
+			}
+		}
+	}
+}
+			
