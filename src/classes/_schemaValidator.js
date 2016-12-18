@@ -89,7 +89,7 @@ class SchemaValidator {
 			if ((_p = (keyPath = key.split(".")).pop()) !== "elements") { 
 				if (_p === "default") {
 					return true; }
-				if (params.hasOwnProperty('polymorphic')) {
+				if (params.hasOwnProperty("polymorphic")) {
 					return this.validateSchemaEntry(key, params.polymorphic);	}
 				return `value for schema element '${key}' was malformed. Property 'type' was missing`;	} 
 			else {
@@ -203,18 +203,17 @@ class SchemaValidator {
 	    if (typeof params === "string") { 
 	    	return this.validateTypeString(`${key}`, params); }
 	    if (typeof params === "object") {
+	      // handled Objects with no `type` element
 	      if (!params.hasOwnProperty("type")) {
-	    	  if (params.hasOwnProperty('polymorphic')) {
-	    		  return this.validateSchemaEntry(key, params.polymorphic, opts);	}
 	    	  return this.validateUntypedMembers(key, params); }
 	      // handles Classes/Functions
 	      if ((_schemaroller_.getClass(params.type)) == null) {
 	    	  return this.validateSchemaClass(key, params); }
+	      // handles child elements
 	      for (let sKey of Object.keys( params )) {
 	    	  let _ = this.validateSchemaParam( key, sKey, _schemaKeys, params );
 	    	  if (typeof _ === "string") {
-	    		  return _;	}
-	    	  }
+	    		  return _;	}	}
 	      return true;
 	      }
 	    // handles non-object entries (Function, String, Number, Boolean, ...)

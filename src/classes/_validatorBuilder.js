@@ -46,14 +46,22 @@ class ValidatorBuilder {
   create(ref, path) {
 	  if (!_exists(ref)) {
 		  throw "create requires object reference at arguments[0]";	}
-	  let _signatures = _exists(ref.polymorphic) ? ref.polymorphic : [ref];
-//	  console.log(`create on ${path} ${JSON.stringify(_signatures)}`);
-//	  console.log(this.list());
-	  return _validators.get( this )[path] = value=> {
-		  let _typeof	= _global.wf.wfUtils.Str.capitalize(typeof value);
+	  let _signatures = _exists(ref.polymorphic) ? ref.polymorphic : (Array.isArray(ref) ? ref : [ref]);
+	  let _functs = _signatures.map(_sig=> {
+		  let _typeof	= _global.wf.wfUtils.Str.capitalize(_sig.type);
 		  let _hasKey	= (0 <= Object.keys(Validator).indexOf( _typeof ));
-		  let _validator = new Validator[ _hasKey ? _typeof : "Default"](path, _signatures);
-	      return _validator.exec(value);
+//		  console.log(`creating Validator.${_typeof} for ${path}`);
+		  return new Validator[ _hasKey ? _typeof : "Default"](path, [_sig]);
+	  });
+	  return _validators.get( this )[path] = value=> {
+		  var _result;
+		  for (let idx in _functs) {
+			  _result = _functs[idx].exec(value);
+//			  console.log(`result for ${path}: ${_result}`);
+			  if (typeof _result === "boolean") {
+				  return _result; }
+		  }
+	      return _result;
 	  };
 	}
 	  
@@ -79,5 +87,15 @@ class ValidatorBuilder {
    */
   static getValidators() {
 	  return _validators.get( ValidatorBuilder.getInstance() );
+  }
+  /**
+   * 
+   */
+  static getPolymorphic(signature, path) {
+  	let _attr = path.split(".").pop();
+	// tests for element as child element on polymorphic object signature
+	if (_exists(signature.elements[_attr])) {
+		ValidatorBuilder.getInstance().create(signature.elements[_attr], this.path);
+	}
   }
 }

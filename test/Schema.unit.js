@@ -108,9 +108,8 @@ describe.only("Schema Class Test Suite", function() {
     
   it.only("should check for polymorphic properties", () => {
 	let _d = {
-//			aString: "a string",
-//			aBool: false,
-//			aNumber: 2,
+			badParam: false//,
+
 //			objType1: {
 //				id: 0,
 //				name: "myName",
@@ -120,20 +119,20 @@ describe.only("Schema Class Test Suite", function() {
 //				id: 0,
 //				active: true
 //			},
-			badObj: {
-				id: "0",
-				name: "myName",
-				desc: "some text",
-				bad: "bad"
-			}
 	}
-    
+//    
 //    expect(this.schema.set(_d)).to.eq(
-//    		"'aNumber' expected String, type was '<Number>'");
-	delete _d.aNumber;
+//    		"'badParam' expected Object, type was '<boolean>'");
+//	_d.badParam = 1;
 //    expect(this.schema.set(_d)).to.eq(
-//	"'aNumber' expected String, type was '<Number>'");
-	console.log( this.schema.set(_d) )
+//    		"'badParam' expected Object, type was '<number>'");
+	_d.badParam = {
+		id: "0",
+		name: "myName",
+		desc: "sometext"//,
+//		bad: "bad"
+	}
+	console.log(`res: ${this.schema.set(_d)}`);
 //	expect(this.schema.set(_d) instanceof Schema).to.be.true;
   });
   

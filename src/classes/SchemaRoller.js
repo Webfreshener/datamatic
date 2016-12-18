@@ -25,7 +25,7 @@ class SchemaRoller {
 	  // traverses arguemtns
 	  for (let arg of classesOrNames) {
 		// operates on object
-	    if (typeof arg === 'object') {
+	    if (typeof arg === "object") {
 	      //- operates on arrays
 	      if (Array.isArray(arg)) {
 	    	//- holds the results set
@@ -35,12 +35,12 @@ class SchemaRoller {
 	          //- tests elements
 	          switch (typeof n) {
 	            //- operates on string
-	            case 'string':
+	            case "string":
 	              // sets reference onto results
 	              _r.push(this.getClass( n ));
 	              break;
 	            //-- operates on functions/classes
-	            case 'function':
+	            case "function":
 	              //- sets function/class on results
 	              _r.push(n);
 	              break;
@@ -81,9 +81,10 @@ class SchemaRoller {
 	 * @returns Schema
 	 */
 	fromJSON(json) {
-	  if (_r = (typeof json).match( /^(string|object)+$/)) {
-	    return new Schema( (_r[1] === 'string') ? JSON.parse(json) : json ); }
-	  throw new Error("json must be either JSON formatted string or object");
+		let _;
+		if (_ = (typeof json).match( /^(string|object)+$/)) {
+			return new Schema( (_[1] === "string") ? JSON.parse( json ) : json ); }
+		throw new Error("json must be either JSON formatted string or object");
 	}
 	/**
 	 * @returns {object} base schema element signature
@@ -94,25 +95,25 @@ class SchemaRoller {
 		      type: this.listClasses(),
 		      required: true
 		    },
-		    required: 'Boolean',
-		    extensible: 'Boolean',
-		    restrict: 'String',
-		    validate: 'Function',
-		    default: '*',
-		    elements: ['Array','Object'],
+		    required: "Boolean",
+		    extensible: "Boolean",
+		    restrict: "String",
+		    validate: "Function",
+		    default: "*",
+		    elements: ["Array","Object"],
 		    polymorphic: {
-		    	type: ['Object','Array'],
+		    	type: ["Object","Array"],
 		    	required: false,
 		    	elements: {
 		    		type: {
 		    			type: this.listClasses(),
 		    			required: true
 		 		    },
-		 		    extensible: 'Boolean',
-		 		    restrict: 'String',
-		 		    validate: 'Function',
-		 		    default: '*',
-		 		    elements: ['Array','Object']
+		 		    extensible: "Boolean",
+		 		    restrict: "String",
+		 		    validate: "Function",
+		 		    default: "*",
+		 		    elements: ["Array","Object"]
 		    	}
 		    }
 		};
@@ -128,7 +129,7 @@ class SchemaRoller {
 	 */
 	get defaults() {
 		return {
-			type: '*',
+			type: "*",
 			required: false,
 			extensible: false
 		 };

@@ -9,14 +9,16 @@ class Schema {
 	 */
 	constructor(_signature, opts={extensible:false}) {
 		var eMsg;
+		if (!_exists(_signature)) {
+			return `Schema requires JSON object at arguments[0]. Got '${typeof _signature}'`; }
 		_object.set(this, {});
 		_schemaOptions.set( this, opts );
 		_validators.set( this, {} );
 		_required_elements.set( this, [] );
 		
-		// traverses elements of schema
+		// traverses elements of schema checking for elements marked as reqiured
 		if (_exists( _signature.elements )) {
-			for (let _sigEl of Object.keys( _signature.elements )) {
+			for (let _sigEl of Object.keys( _signature.elements)) {
 				// -- tests for element `required`
 				let _req = _signature.elements[_sigEl].required
 				if ( _req ) {
@@ -79,8 +81,12 @@ class Schema {
 	    if (typeof key === 'object') {
 	      return _sH.setObject( key );	}
 	    else {
+//	      console.log(`setting: ${key}`);
+//	      console.log( this.signature );
+//	      console.log("--------\n")
 	      let _childSigs  = this.signature.elements || this.signature;
 	      let _pathKeys = key.split(".");
+	      console.log(`_pathKeys for ${key}: ${_pathKeys}`);
 	      for (let _ in _pathKeys) {
 	    	let k = _pathKeys[_];
 	    	let _schema;
@@ -91,10 +97,13 @@ class Schema {
 	        	// attempts to find wildcard element name
 		        if (_exists(_childSigs["*"])) {
 		        	// applies schema
-		        	_schema = _childSigs["*"];
+		        	_schema = _childSigs["*"];//.polymorphic || _childSigs["*"];
 		        	// derives path for wildcard element
 		        	let _pKey = this.path.length > 1 ? `${this.path}.${key}` : key;
 		        	// creates Validator for path
+//		        	console.log(`_pKey: ${_pKey}`);
+//		        	console.log(_schema);
+//		        	console.log("--------\n");
 		        	ValidatorBuilder.getInstance().create(_schema, _pKey);
 		        }
 		    }
@@ -107,6 +116,13 @@ class Schema {
 	        }
 	        // hanldes child objects
 	        if (typeof value === "object") {
+	        	console.log(`value for ${_key} is object.\nschema:`);
+	        	_schema = _schema["*"] || _schema;
+	        	_schema = !_exists( _schema.polymorphic ) ? _schema : _schema.polymorphic;
+	        	if (Array.isArray(_schema)) {
+	        		_schema = _schema.filter(_s=> { 
+	        			return _exists( _s.type.match(/object/i) ) });
+	        	}
 	        	return _sH.setChildObject( _key, _schema, value );	}
 	        // handles absolute vaues (strings, numbers, booleans...)
 	        else {
