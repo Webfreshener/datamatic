@@ -79,15 +79,11 @@ class Schema {
     set(key, value) {
     	let _sH = _schemaHelpers.get(this);
 	    if (typeof key === 'object') {
-	      return _sH.setObject( key );	}
+	    	return _sH.setObject( key );	}
 	    else {
-//	      console.log(`setting: ${key}`);
-//	      console.log( this.signature );
-//	      console.log("--------\n")
 	      let _childSigs  = this.signature.elements || this.signature;
 	      let _pathKeys = key.split(".");
-	      console.log(`_pathKeys for ${key}: ${_pathKeys}`);
-	      for (let _ in _pathKeys) {
+	      for (let _ in _pathKeys) { 
 	    	let k = _pathKeys[_];
 	    	let _schema;
 	    	let _key = this.path.length > 0 ? `${this.path}.${k}` : k;
@@ -101,9 +97,6 @@ class Schema {
 		        	// derives path for wildcard element
 		        	let _pKey = this.path.length > 1 ? `${this.path}.${key}` : key;
 		        	// creates Validator for path
-//		        	console.log(`_pKey: ${_pKey}`);
-//		        	console.log(_schema);
-//		        	console.log("--------\n");
 		        	ValidatorBuilder.getInstance().create(_schema, _pKey);
 		        }
 		    }
@@ -116,7 +109,6 @@ class Schema {
 	        }
 	        // hanldes child objects
 	        if (typeof value === "object") {
-	        	console.log(`value for ${_key} is object.\nschema:`);
 	        	_schema = _schema["*"] || _schema;
 	        	_schema = !_exists( _schema.polymorphic ) ? _schema : _schema.polymorphic;
 	        	if (Array.isArray(_schema)) {

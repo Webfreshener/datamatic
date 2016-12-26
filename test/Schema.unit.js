@@ -1,5 +1,5 @@
 import { should, expect } from "chai";
-let {Schema} = require( "../lib/schemaroller" ).SchemaRoller();
+let {Schema} = require( "./src/schema.js" );
 should();
 
 describe.only("Schema Class Test Suite", function() {
@@ -82,7 +82,9 @@ describe.only("Schema Class Test Suite", function() {
   it("should validate values", () => {
     let _S = new Schema({
     		elements: { 
-    			value: "String"	}});
+    			value: {
+    				type:"String"	}}
+    			});
     expect( _S.set("value", "test") instanceof Schema ).to.be.true;
     (_S.get("value")).should.equal("test");
   });
@@ -93,18 +95,25 @@ describe.only("Schema Class Test Suite", function() {
     expect(() => new Schema(_s)).to.not.throw("type '<^[a-zA-Z-0-9_]+$>' for schema element 'name.restrict' was invalid");
   });
 
+  it("should check for required fields", () => {
+	  	let _schema = new Schema({
+	  		elements: {
+		  		name: {type: "String", required:true},
+		  		description:{type: "String", required:true}
+	  		}});
+	    let _d = {
+	    		name: "Test"};
+	    expect(_schema.set(_d)).to.eq(
+	    		"required property 'description' is missing for 'root element'");
+	  });
+
+  
   it.only("should initialize from polymorphic schema fixture", () => {
 	let _s = require("./fixtures/polymorphic.schema.json");
     this.schema = new Schema(_s);
     expect(this.schema instanceof Schema).to.be.true;
   });
-  
-  it("should check for required fields", () => {
-    let _d = {
-    		name: "Test"};
-    expect(this.schema.set(_d)).to.eq(
-    		"required property 'description' is missing for 'root element'");
-  });
+
     
   it.only("should check for polymorphic properties", () => {
 	let _d = {
@@ -121,18 +130,18 @@ describe.only("Schema Class Test Suite", function() {
 //			},
 	}
 //    
-//    expect(this.schema.set(_d)).to.eq(
-//    		"'badParam' expected Object, type was '<boolean>'");
+    expect(this.schema.set(_d)).to.eq(
+    		"'badParam' expected Object, type was '<boolean>'");
 //	_d.badParam = 1;
 //    expect(this.schema.set(_d)).to.eq(
 //    		"'badParam' expected Object, type was '<number>'");
-	_d.badParam = {
-		id: "0",
-		name: "myName",
-		desc: "sometext"//,
-//		bad: "bad"
-	}
-	console.log(`res: ${this.schema.set(_d)}`);
+//	_d.badParam = {
+//		id: "0",
+//		name: "myName",
+//		desc: "sometext"//,
+////		bad: "bad"
+//	}
+//	console.log(`res: ${this.schema.set(_d)}`);
 //	expect(this.schema.set(_d) instanceof Schema).to.be.true;
   });
   
@@ -146,7 +155,7 @@ describe.only("Schema Class Test Suite", function() {
     let _d = {       
       name: "Test",
       description: "some text here",
-      plural: false,
+      plural: "false",
       base: "foo",
       http: false,
       strict: false,
@@ -204,7 +213,6 @@ describe.only("Schema Class Test Suite", function() {
 
   it("should set values on elements", () => {
     let _opts = this.schema.get( "options" );
-    console.log(`schema obj keys: ${Object.keys(this.schema.valueOf())}`);
     (typeof _opts === "object").should.be.true;
     (_opts.get("idInjection")).should.be.true;
   });

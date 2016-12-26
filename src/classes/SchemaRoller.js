@@ -6,24 +6,30 @@
 class SchemaRoller {
   constructor() {
     _kinds.set(this, {
-      Array,
-      ArrayBuffer,
-      Boolean,
-      Buffer:ArrayBuffer,
-      Date,
-      Number,
-      Object,
-      String,
-      Function
+      "Array": Array,
+      "ArrayBuffer": ArrayBuffer,
+      "Boolean": Boolean,
+      "Buffer": ArrayBuffer,
+      "Date": Date,
+      "Number": Number,
+      "Object": Object,
+      "String": String,
+      "Function": Function
     });
   }
   /**
    * @param {string|function} classesOrNames
    * @returns {function}
    */
-   getClass(...classesOrNames) {
+   getClass(classesOrNames) {
+	  let _k = _kinds.get(this);
+	  if (!Array.isArray(classesOrNames)) {
+		  classesOrNames = [classesOrNames]; }
 	  // traverses arguemtns
 	  for (let arg of classesOrNames) {
+		if (typeof arg === "string") {
+			return (0 <= Object.keys(_k).indexOf(arg)) ? arg.toLowerCase() : null;
+			}
 		// operates on object
 	    if (typeof arg === "object") {
 	      //- operates on arrays
@@ -50,8 +56,10 @@ class SchemaRoller {
 	            } } //- end for/switch
 	        return (0 <= _r.indexOf(null)) ? {_r : null} : undefined; } //- ends array handling
 	      return null; } //- end typrof arg is object
-	    let _k = _kinds.get(this);
-	    return _exists(_k[arg]) ? _k[arg] : null; } //- end args in classesOrNames
+	    if (typeof arg === "function") {
+	    	let _ = _global.wf.wfUtils.Fun.getConstructorName( arg );
+	    	return this.getClass( _ );  }
+	    } //- end args in classesOrNames
 	  return null;
 	}
 	/**

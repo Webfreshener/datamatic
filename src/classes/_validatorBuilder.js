@@ -47,17 +47,16 @@ class ValidatorBuilder {
 	  if (!_exists(ref)) {
 		  throw "create requires object reference at arguments[0]";	}
 	  let _signatures = _exists(ref.polymorphic) ? ref.polymorphic : (Array.isArray(ref) ? ref : [ref]);
+	  _validators.get( this )[path] = {};
 	  let _functs = _signatures.map(_sig=> {
 		  let _typeof	= _global.wf.wfUtils.Str.capitalize(_sig.type);
 		  let _hasKey	= (0 <= Object.keys(Validator).indexOf( _typeof ));
-//		  console.log(`creating Validator.${_typeof} for ${path}`);
-		  return new Validator[ _hasKey ? _typeof : "Default"](path, [_sig]);
+		  return new Validator[ _hasKey ? _typeof : "Default"](path, _sig);
 	  });
 	  return _validators.get( this )[path] = value=> {
 		  var _result;
 		  for (let idx in _functs) {
 			  _result = _functs[idx].exec(value);
-//			  console.log(`result for ${path}: ${_result}`);
 			  if (typeof _result === "boolean") {
 				  return _result; }
 		  }
@@ -91,11 +90,17 @@ class ValidatorBuilder {
   /**
    * 
    */
+  static create(signature, path) {
+	  ValidatorBuilder.getInstance().create(signature, path); 
+  }
+  /**
+   * 
+   */
   static getPolymorphic(signature, path) {
   	let _attr = path.split(".").pop();
 	// tests for element as child element on polymorphic object signature
 	if (_exists(signature.elements[_attr])) {
-		ValidatorBuilder.getInstance().create(signature.elements[_attr], this.path);
+		ValidatorBuilder.create(signature.elements[_attr], path);
 	}
   }
 }

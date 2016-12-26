@@ -23,7 +23,6 @@ var _kinds = new WeakMap() || {};
 var _schemaKeys = new WeakMap();
 var _schemaOptions = new WeakMap();
 var _schemaSignatures = new WeakMap();
-var _schemaHelpers = new WeakMap();
 var _required_elements = new WeakMap();
 var _validators = new WeakMap();
 /**
@@ -1861,5 +1860,6 @@ var SchemaHelpers = function () {
 }();
 
 ;
-exports.Schema = Schema;
-exports.SchemaHelpers = SchemaHelpers;
+exports.BaseValidator = BaseValidator;
+exports.Validator = Validator;
+exports.ValidatorBuilder = ValidatorBuilder;

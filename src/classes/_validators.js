@@ -10,15 +10,15 @@ class BaseValidator {
 		this.path = path;
 //		this.polymorphic = _exists(signature.polymorphic);
 		this.signature = signature;
-		this.__v = ValidatorBuilder.getValidators();
+//		this.__v = ValidatorBuilder.getValidators();
 	}
 	/**
 	 * 
 	 */
 	call(path,value) {
-		let ___v = this.__v[this.path];
-		if (_exists(___v)) {
-			return ___v(value);	}
+		let _ = ValidatorBuilder.getValidators()[path];
+		if (_exists(_) && typeof _ === "function") {
+			return _(value);	}
 		return `'${path}' has no validator defined`;
 	}
 	/**
@@ -36,16 +36,12 @@ class BaseValidator {
 	 * 
 	 */
 	checkType(type, value) {
-		return
         if (_exists(type)) {
-        	let _x = (typeof type !== "string") ? _schemaroller_.getClass(type) : type;
-        	if (!_exists(_x.match(new RegExp(`^${typeof value}$`, "i")))) {
-        		return `'${this.path}' expected ${type}, type was '<${typeof value}>'`
-        	}
-        }
+        	let _x = (typeof type !== "string") ? _schemaroller_.getClass([type]) : type;
+        	if (_x.match(new RegExp(`^${typeof value}$`, "i")) === null) {
+        		return `'${this.path}' expected ${type}, type was '<${typeof value}>'`	} }
         else {
-        	return `type for ${this.path} was undefined`;
-        }
+        	return `type for ${this.path} was undefined`;	}
         return true;
 	}
 	/**
@@ -53,7 +49,6 @@ class BaseValidator {
 	 */
 	exec( value ) {
 //		throw `${wf.utils.Fun.getClassName( this )} requires override of 'exec'`;
-		
 	}
 }
 /**
@@ -61,11 +56,27 @@ class BaseValidator {
  */
 Validator.Object = class Obj extends BaseValidator {
 	exec( value ) {
+		let _iterate = (key, _val)=>{
+			let _p = `${this.path}.${key}`;
+			let _v = ValidatorBuilder.getValidators();
+			if (!_v.hasOwnProperty(_p)) {
+				ValidatorBuilder.create(this.signature.elements[key], _p);
+			}
+			let _ = this.call( _p, _val );
+			if (typeof _ === "string") {
+				return _;	}
+		}
 		if ( !Array.isArray( value ) ) {
-			return this.call( this.path, this.value ); }
+			for (let _k in value) {
+				let _res = _iterate(_k, value[_k]);
+				if (typeof _res === "string") {
+					return _res;
+				}
+			}
+		}
 		else {
-			for (let _ in this.value) {
-				let e = this.call( this.path, this.value[_] );
+			for (let _ in value) {
+				let e = this.call( this.path, value[_] );
 				if (typeof e === 'string') {
 					return e; } }
 		}
@@ -85,7 +96,6 @@ Validator.Boolean = class Bool extends BaseValidator {
  */
 Validator.String = class Str extends BaseValidator {
 	exec( value ) {
-		console.log(arguments)
 		let _;
         if (typeof (_ = this.checkType("string", value)) === "string") {
         	return _; }
@@ -100,12 +110,11 @@ Validator.String = class Str extends BaseValidator {
  */
 Validator.Number = class Num extends BaseValidator {
 	exec( value ) {
-		console.log(arguments)
 		let _ = this.checkType("number", value);
         if (typeof _ === "string") {
         	return _; }
         // attempts to cast to number
-        return !isNaN( new _x( value ) ) ? true : `${this.path} was unable to process '${value}' as Number`;
+        return !isNaN( new Number( value ) ) ? true : `${this.path} was unable to process '${value}' as Number`;
 	}
 }
 /**

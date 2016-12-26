@@ -9,7 +9,6 @@ let _kinds = new WeakMap() || {};
 let _schemaKeys = new WeakMap();
 let _schemaOptions = new WeakMap();
 let _schemaSignatures = new WeakMap();
-let _schemaHelpers = new WeakMap();
 let _required_elements = new WeakMap();
 let _validators = new WeakMap();
 //-- inject:../../src/classes/_metaData.js
@@ -21,4 +20,4 @@ let _validators = new WeakMap();
 const _schemaroller_ = new SchemaRoller();
 //-- inject:../../src/classes/_schemaHelpers.js
 ;
-export {Schema, SchemaHelpers};
+export {BaseValidator, Validator, ValidatorBuilder};

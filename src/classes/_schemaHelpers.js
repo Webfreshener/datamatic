@@ -14,16 +14,29 @@ class SchemaHelpers {
 	 * 
 	 */
 	setObject( obj ) {
-		let _ = this.hasRequiredFields( Object.assign({}, _object, obj) );
-		if (typeof _ === "string") {
+		let _ = this.hasRequiredFields( Object.assign({}, this._ref.signature, obj) );
+		if (typeof _ === 'string') {
 			return _; }
 		// calls set with nested key value pair
 		for (var k in obj) {
 			let eMsg = this._ref.set(k, obj[k]);
-			if (typeof eMsg  === "string") { 
+			if (typeof eMsg  === 'string') { 
 				return eMsg; }
 		}
 		return this._ref;
+	}
+	/**
+	 * 
+	 */
+	setChildObject(key, schema, value) {
+        let _mdData = {
+      		  _path: key,
+      		  _root: this._ref.root
+      		  };
+        let _s = this.createSchemaChild(key, schema, this._ref.options, _mdData);
+        if (!_exists(schema) || !_exists(_s) || typeof _s !== "object") {
+      	  return `'${key}' was invalid`; }
+        return _s[(_s instanceof Vector) ? "replaceAll" : "set"](value);
 	}
 	/**
 	 * @param {Object} itm
@@ -31,10 +44,10 @@ class SchemaHelpers {
 	 */
 	ensureKindIsString(itm) {
 	    switch (typeof itm) {
-	      case "string":
+	      case 'string':
 	        return itm;
-	      case "object":
-	        if (itm.hasOwnProperty("type")) {
+	      case 'object':
+	        if (itm.hasOwnProperty('type')) {
 	        	return this.ensureKindIsString( itm.type ); }
 	        break;
 	    }
@@ -59,84 +72,50 @@ class SchemaHelpers {
 	 * @param {Object} value
 	 * @param {_metaData} metaData
 	 */
-	createSchemaChild(key, opts, metaData) {
+	createSchemaChild(key, value, opts, metaData) {
 	  var _kinds;
-//	  console.log(`this._ref.signature for ${key}:\n${JSON.stringify( this._ref.signature , null, 2)}`);
-	  let _schemaDef = _exists( this._ref.signature.elements ) ? this._ref.signature.elements : this._ref.signature["*"] || this._ref.signature
-	  console.log(`_schemaDef ${key}: ${JSON.stringify(_schemaDef)}`);
 	  // tests if value is not Array
-//	  if (!Array.isArray(value)) {
-//		  console.log(`${key} is object`)
-//	      let _md = new _metaData(this._ref, {
-//	    	  _path: key,
-//	    	  _root: this._ref.root
-//	      });
-//	      
-//	      
-//	      console.log(`_schemaDef ${key}: ${JSON.stringify(_schemaDef)}`);
-//	      return new Schema( _schemaDef, opts, metaData); }
-//	  else {
-//		  console.log(`createSchemaChild: ${key}`);
-//		  let _sig = this._ref.signature[key] || this._ref.signature["*"] || this._ref.signature;
-//		  console.log(`_sig: ${JSON.stringify(_sig)}`);
-//		  _kinds = this.getKinds(_sig);//( this._ref.signature[key] || this._ref.signature );
-//		  console.log(`_kinds: ${JSON.stringify(_kinds)}`);
-//	      if (Array.isArray(_kinds)) {
-////	        _kinds = _kinds.map( this.ensureKindIsString( value ) );
-//	        _kinds = _kinds.filter( itm=> itm !== null );
-//	        _kinds = _kinds.length ? _kinds : "*";
-//	        return new Vector((_kinds || "*"), metaData); }
-//	  }
+	  if (!Array.isArray(value)) {
+	      let _md = new _metaData(this._ref, {
+	    	  _path: key,
+	    	  _root: this._ref.root
+	      });
+	      let _schemaDef = _exists( this._ref.signature.elements ) ? this._ref.signature.elements : this._ref.signature
+	      return new Schema( _schemaDef, opts, metaData); }
+	  else {
+		  _kinds = this.getKinds( this._ref.signature[key] || this._ref.signature );
+	      if (Array.isArray(_kinds)) {
+	        _kinds = _kinds.map( this.ensureKindIsString( value ) );
+	        _kinds = _kinds.filter( itm=> itm !== null );
+	        _kinds = _kinds.length ? _kinds : '*';
+	        return new Vector((_kinds || '*'), metaData); }
+	  }
 	  return "unable to process value";
-	}
-	/**
-	 * 
-	 */
-	setChildObject(key, schema, value) {
-        let _mdData = {
-      		  _path: key,
-      		  _root: this._ref.root
-      		  };
-        console.log(`setChildObject for ${key}`);
-        let _schema = schema["*"] || schema;
-        // _schema.polymorphic || _schema ?????
-        let _s = this.createSchemaChild(key, this._ref.options, _mdData);
-        if (typeof _s === "string") {
-        	return _s }
-        if (!_exists(schema) || !_exists(_s) || typeof _s !== "object") {
-      	  return `child object '${key}' was invalid`; }
-        return _s[(_s instanceof Vector) ? "replaceAll" : "set"](value);
 	}
 	/**
 	 * builds validations from SCHEMA ENTRIES
 	 * @private
 	 */
-	walkSchema(schema, path) {
+	walkSchema(obj, path) {
+		//console.log(obj);
 		let result = [];
-		let _map = (_schema, _path)=> {
-			return this.walkSchema(_schema, _path);	};
-		let _elements = Array.isArray(schema) ? schema : Object.keys(schema);
+		let _map = function(itm,objPath) {
+			return _walkSchema(itm, objPath);	};
+		let _elements = Array.isArray(obj) ? obj : Object.keys(obj);
 	    for (let _i in _elements) {
-	      let _key = _elements[_i];
-	      let _signature = schema[_key];
-	      let schemaPath = _exists(path) ? (path.length ? `${path}.${_key}` : _key) : _key || "";
-	      console.log(`_key: ${_key} schemaPath: ${schemaPath}\n_signature: ${JSON.stringify(_signature.polymorphic || _signature)}`);
-	      if (_signature.polymorphic) {
-	    	  let _polySig = _signature.polymorphic;
-	    	  ValidatorBuilder.getInstance().create( _polySig, schemaPath );
-	    	  for (let _ in _polySig) {
-	    		  result.push( _map(_polySig[_], schemaPath) );
-	    	  }
-	      } else {
-		      ValidatorBuilder.getInstance().create( _signature, schemaPath );
-		      // tests for nested elements
-		      if (_exists(_signature.elements) && typeof _signature.elements === "object") {
-		        if (!Array.isArray(_signature.elements)) {
-		        	result.push( this.walkSchema(_signature.elements, schemaPath) ); } 
-		        else {
-		        	result.push( _map(_signature.elements, schemaPath) ); }
-		        }
-	      } }
+	      let _k = _elements[_i];
+	      let itm;
+	      let objPath = _exists(path) ? (path.length ? `${path}.${_k}` : _k) : _k || "";
+	      ValidatorBuilder.getInstance().create( obj[_k], objPath );
+	      // tests for nested elements
+	      if (_exists(obj[_k]) && typeof obj[_k].elements === "object") {
+	    	  
+	        if (!Array.isArray(obj[_k].elements)) {
+	        	result.push( this.walkSchema(obj[_k].elements, objPath) ); } 
+	        else {
+	        	result.push( _map(obj[_k].elements, objPath) ); } 
+	        }
+	    }
 	    return result;
 	}
 	/**
@@ -151,15 +130,15 @@ class SchemaHelpers {
 					  		return itm;
 					  		break;
 					  	case "object":
-					  		if (itm.hasOwnProperty("type")) {
+					  		if (itm.hasOwnProperty('type')) {
 					  			return itm.type;	}
 					  		break;
 					  }
 					  return null;
 					});
 			_kinds = _kinds.filter( itm=> _exists(itm) );
-			_kinds = _kinds.length ? _kinds : "*";
-			return new Vector(_kinds || "*");
+			_kinds = _kinds.length ? _kinds : '*';
+			return new Vector(_kinds || '*');
 		}
 		return null;
 	}
@@ -175,17 +154,17 @@ class SchemaHelpers {
   		return `invalid path '${key}'`;	}
 	  // key = if value instanceof _metaData then value.get( '_path' ) else value.getpath
 	  // return "object provided was not a valid subclass of Schema" unless value instanceof Schema
-	  // return "object provided was malformed" unless typeof (key = value.getPath?()) is "string"
+	  // return "object provided was malformed" unless typeof (key = value.getPath?()) is 'string'
 	  let msg;
 	  if (0 <= _list.indexOf(key)) {
 	    let _path = [];
-	    let iterable = key.split(".");
+	    let iterable = key.split('.');
 	    var _p;
 	    for (let _k of iterable) {
 	      _path.push(_k);
-	      _p = _path.join(".");
+	      _p = _path.join('.');
 	      if (0 > _list.indexOf(_p)) { 
-	    	  _path.push("*"); }
+	    	  _path.push('*'); }
 	    }
 	    if (!(_ref =  ValidatorBuilder.getInstance().get(_p))) {
 	      if (!this.options.extensible) { 
@@ -193,7 +172,7 @@ class SchemaHelpers {
 	    }
 	    ValidatorBuilder.getInstance().set(key, _ref); 
 	  }
-	  if (typeof (msg = ValidatorBuilder.getInstance().exec(key, value)) === "string") { 
+	  if (typeof (msg = ValidatorBuilder.getInstance().exec(key, value)) === 'string') { 
 		  return msg; }
 	  return true;  
 	}
@@ -201,9 +180,7 @@ class SchemaHelpers {
 	 * @returns {array} list of types decalred by object
 	 */
 	getKinds(_s) {
-	  var _elems;
-	  _s = !_exists(_s.polymorphic) ? _s : _s.polymorphic;
-	  _elems = Object.keys(_s).map(key=> {
+	  var _elems = Object.keys(_s).map(key=> {
 		  return (key === "type") ? _s.type : _exists( _s[key].type ) ? _s[key].type : null; });
 	  _elems = _elems.filter(elem=> elem !== null );
 	  return _elems.length ? _elems : null;

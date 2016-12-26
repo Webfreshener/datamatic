@@ -2,7 +2,7 @@ Object.defineProperty(exports, "__esModule", {
 	value: true
 });
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+var _typeof2 = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -18,6 +18,8 @@ var _mdRef = new WeakMap();
 var _kinds = new WeakMap() || {};
 var _schemaKeys = new WeakMap();
 var _schemaOptions = new WeakMap();
+var _schemaHelpers = new WeakMap();
+var _schemaSignatures = new WeakMap();
 var _required_elements = new WeakMap();
 var _validators = new WeakMap();
 /**
@@ -50,12 +52,14 @@ var _metaData = function () {
 				};
 			})();
 		}
-		Object.assign(_data, {
+		_data = Object.assign(_data, {
 			_id: this._createID(),
 			_className: _cName,
 			_created: Date.now()
 		});
+		//	    console.log(_data);
 		_mdRef.set(this, _data);
+		_mdRef.set(_oRef, _data);
 	}
 	/**
   * @param {string} key
@@ -132,15 +136,15 @@ var SchemaRoller = function () {
 		_classCallCheck(this, SchemaRoller);
 
 		_kinds.set(this, {
-			Array: Array,
-			ArrayBuffer: ArrayBuffer,
-			Boolean: Boolean,
-			Buffer: ArrayBuffer,
-			Date: Date,
-			Number: Number,
-			Object: Object,
-			String: String,
-			Function: Function
+			"Array": Array,
+			"ArrayBuffer": ArrayBuffer,
+			"Boolean": Boolean,
+			"Buffer": ArrayBuffer,
+			"Date": Date,
+			"Number": Number,
+			"Object": Object,
+			"String": String,
+			"Function": Function
 		});
 	}
 	/**
@@ -151,11 +155,11 @@ var SchemaRoller = function () {
 
 	_createClass(SchemaRoller, [{
 		key: 'getClass',
-		value: function getClass() {
-			for (var _len = arguments.length, classesOrNames = Array(_len), _key2 = 0; _key2 < _len; _key2++) {
-				classesOrNames[_key2] = arguments[_key2];
+		value: function getClass(classesOrNames) {
+			var _k = _kinds.get(this);
+			if (!Array.isArray(classesOrNames)) {
+				classesOrNames = [classesOrNames];
 			}
-
 			// traverses arguemtns
 			var _iteratorNormalCompletion = true;
 			var _didIteratorError = false;
@@ -165,12 +169,15 @@ var SchemaRoller = function () {
 				for (var _iterator = classesOrNames[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
 					var arg = _step.value;
 
+					if (typeof arg === "string") {
+						return 0 <= Object.keys(_k).indexOf(arg) ? arg.toLowerCase() : null;
+					}
 					// operates on object
-					if ((typeof arg === 'undefined' ? 'undefined' : _typeof(arg)) === 'object') {
+					if ((typeof arg === 'undefined' ? 'undefined' : _typeof2(arg)) === "object") {
 						//- operates on arrays
 						if (Array.isArray(arg)) {
 							//- holds the results set
-							var _r2 = [];
+							var _r = [];
 							// traverses array elements
 							var _iteratorNormalCompletion2 = true;
 							var _didIteratorError2 = false;
@@ -181,20 +188,20 @@ var SchemaRoller = function () {
 									var n = _step2.value;
 
 									//- tests elements
-									switch (typeof n === 'undefined' ? 'undefined' : _typeof(n)) {
+									switch (typeof n === 'undefined' ? 'undefined' : _typeof2(n)) {
 										//- operates on string
-										case 'string':
+										case "string":
 											// sets reference onto results
-											_r2.push(this.getClass(n));
+											_r.push(this.getClass(n));
 											break;
 										//-- operates on functions/classes
-										case 'function':
+										case "function":
 											//- sets function/class on results
-											_r2.push(n);
+											_r.push(n);
 											break;
 										default:
 											//- handles nested arrays
-											_r2.push(Array.isArray(n) ? this.getClass.apply(this, n) : null);
+											_r.push(Array.isArray(n) ? this.getClass.apply(this, n) : null);
 									}
 								} //- end for/switch
 							} catch (err) {
@@ -212,12 +219,14 @@ var SchemaRoller = function () {
 								}
 							}
 
-							return 0 <= _r2.indexOf(null) ? { _r: null } : undefined;
+							return 0 <= _r.indexOf(null) ? { _r: null } : undefined;
 						} //- ends array handling
 						return null;
 					} //- end typrof arg is object
-					var _k = _kinds.get(this);
-					return _exists(_k[arg]) ? _k[arg] : null;
+					if (typeof arg === "function") {
+						var _ = _global.wf.wfUtils.Fun.getConstructorName(arg);
+						return this.getClass(_);
+					}
 				} //- end args in classesOrNames
 			} catch (err) {
 				_didIteratorError = true;
@@ -276,8 +285,9 @@ var SchemaRoller = function () {
 	}, {
 		key: 'fromJSON',
 		value: function fromJSON(json) {
-			if (_r = (typeof json === 'undefined' ? 'undefined' : _typeof(json)).match(/^(string|object)+$/)) {
-				return new Schema(_r[1] === 'string' ? JSON.parse(json) : json);
+			var _ = void 0;
+			if (_ = (typeof json === 'undefined' ? 'undefined' : _typeof2(json)).match(/^(string|object)+$/)) {
+				return new Schema(_[1] === "string" ? JSON.parse(json) : json);
 			}
 			throw new Error("json must be either JSON formatted string or object");
 		}
@@ -293,12 +303,27 @@ var SchemaRoller = function () {
 					type: this.listClasses(),
 					required: true
 				},
-				required: 'Boolean',
-				extensible: 'Boolean',
-				restrict: 'String',
-				validate: 'Function',
-				default: '*',
-				elements: ['Array', 'Object']
+				required: "Boolean",
+				extensible: "Boolean",
+				restrict: "String",
+				validate: "Function",
+				default: "*",
+				elements: ["Array", "Object"],
+				polymorphic: {
+					type: ["Object", "Array"],
+					required: false,
+					elements: {
+						type: {
+							type: this.listClasses(),
+							required: true
+						},
+						extensible: "Boolean",
+						restrict: "String",
+						validate: "Function",
+						default: "*",
+						elements: ["Array", "Object"]
+					}
+				}
 			};
 		}
 		/**
@@ -315,7 +340,7 @@ var SchemaRoller = function () {
 		key: 'defaults',
 		get: function get() {
 			return {
-				type: '*',
+				type: "*",
 				required: false,
 				extensible: false
 			};
@@ -335,32 +360,35 @@ var Schema = function () {
   * @param {Object} _o - schema definition object
   * @param {Object} opts - schema options
   */
-	function Schema() {
-		var _o = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
-
+	function Schema(_signature) {
 		var opts = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : { extensible: false };
 
 		_classCallCheck(this, Schema);
 
 		var eMsg;
-		var _arr = [_object, _mdRef, _validators];
-		for (var _i = 0; _i < _arr.length; _i++) {
-			var _k = _arr[_i];
-			_k.set(this, {});
+		if (!_exists(_signature)) {
+			return 'Schema requires JSON object at arguments[0]. Got \'' + (typeof _signature === 'undefined' ? 'undefined' : _typeof2(_signature)) + '\'';
 		}
+		_object.set(this, {});
+		_schemaOptions.set(this, opts);
+		_validators.set(this, {});
 		_required_elements.set(this, []);
-		// traverses elements of schema
-		if (_exists(_o.elements)) {
+
+		// traverses elements of schema checking for elements marked as reqiured
+		if (_exists(_signature.elements)) {
 			var _iteratorNormalCompletion3 = true;
 			var _didIteratorError3 = false;
 			var _iteratorError3 = undefined;
 
 			try {
-				for (var _iterator3 = Object.keys(_o.elements)[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
-					var _oE = _step3.value;
+				for (var _iterator3 = Object.keys(_signature.elements)[Symbol.iterator](), _step3; !(_iteratorNormalCompletion3 = (_step3 = _iterator3.next()).done); _iteratorNormalCompletion3 = true) {
+					var _sigEl = _step3.value;
 
-					if (_exists(_o.elements[_oE].required)) {
-						_required_elements.get(this).push(_oE);
+					// -- tests for element `required`
+					var _req = _signature.elements[_sigEl].required;
+					if (_req) {
+						// -- adds required element to list
+						_required_elements.get(this).push(_sigEl);
 					}
 				}
 			} catch (err) {
@@ -378,146 +406,54 @@ var Schema = function () {
 				}
 			}
 		}
-
+		// tests for metadata
+		//		if (!(this instanceof _metaData)) {
+		//			if (_exists( arguments[2] ) && arguments[2] instanceof _metaData) {
+		//				console.log(arguments[2]);
+		//				_mdRef.set( this, arguments[2]);	}
+		//			else {
+		//				_mdRef.set( this, new _metaData(this, { 
+		//					_path: "", 
+		//					_root: this
+		//				}) ); 
+		//			}}
 		if (!(this instanceof _metaData)) {
-			if (arguments.length <= 2 || _exists(arguments[2]) && arguments[2] instanceof _metaData) {
-				_mdRef.set(this, new _metaData(this, { _path: "", _root: this }));
+			var _ = void 0;
+			if (!_exists(arguments[2])) {
+				_ = new _metaData(this, {
+					_path: "",
+					_root: this });
 			} else {
-				_mdRef.set(this, arguments[2]);
+				_ = arguments[2] instanceof _metaData ? arguments[2] : new _metaData(this, arguments[2]);
 			}
+			_mdRef.set(this, _);
 		}
-
+		//		console.log(_mdRef.get( this ));
 		// attempts to validate provided `schema` entries
-		var _schema_validator = new SchemaValidator(_o, opts);
+		var _schema_validator = new SchemaValidator(_signature, this.options);
 		// throws error if error messagereturned
 		if (typeof (eMsg = _schema_validator.isValid()) === 'string') {
 			throw eMsg;
 		}
-		// builds validations from SCHEMA ENTRIES
-		var _walkSchema = function _walkSchema(obj, path) {
-			var _map = function _map(itm, objPath) {
-				return _walkSchema(item, objPath);
-			};
-			return function () {
-				var result = [];
-				var _iteratorNormalCompletion4 = true;
-				var _didIteratorError4 = false;
-				var _iteratorError4 = undefined;
-
-				try {
-					for (var _iterator4 = (Array.isArray(obj) ? obj : Object.keys(obj))[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
-						var _k = _step4.value;
-
-						var item1 = void 0;
-						var objPath = _exists(path) && 1 <= path.length ? path + '.' + _k : _k;
-						ValidatorBuilder.getInstance().create(obj[_k], objPath);
-						if (obj[_k].hasOwnProperty('elements') && _typeof(obj[_k].elements) === 'object') {
-							if (!Array.isArray(obj[_k].elements)) {
-								item1 = _walkSchema(obj[_k].elements, objPath);
-							} else {
-								item1 = obj[_k].elements.map(_map(item, objPath));
-							}
-						}
-						result.push(item1);
-					}
-				} catch (err) {
-					_didIteratorError4 = true;
-					_iteratorError4 = err;
-				} finally {
-					try {
-						if (!_iteratorNormalCompletion4 && _iterator4.return) {
-							_iterator4.return();
-						}
-					} finally {
-						if (_didIteratorError4) {
-							throw _iteratorError4;
-						}
-					}
-				}
-
-				return result;
-			}();
-		};
-		_walkSchema(_o.elements || _o);
-		/**
-   * @private
-   */
-		var _validate = function _validate(key, value) {
-			var _list = ValidatorBuilder.getInstance().list();
-			var _ref;
-			// key = if value instanceof _metaData then value.get( '_path' ) else value.getpath
-			// return "object provided was not a valid subclass of Schema" unless value instanceof Schema
-			// return "object provided was malformed" unless typeof (key = value.getPath?()) is 'string'
-			var msg = void 0;
-			if (0 <= _list.indexOf(key)) {
-				var _path = [];
-				var iterable = key.split('.');
-				var _p;
-				var _iteratorNormalCompletion5 = true;
-				var _didIteratorError5 = false;
-				var _iteratorError5 = undefined;
-
-				try {
-					for (var _iterator5 = iterable[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
-						var _k = _step5.value;
-
-						_path[i] = _k;
-						_p = _path.join('.');
-						if (0 > _l.indexOf(_p)) {
-							_path[i] = '*';
-						}
-					}
-				} catch (err) {
-					_didIteratorError5 = true;
-					_iteratorError5 = err;
-				} finally {
-					try {
-						if (!_iteratorNormalCompletion5 && _iterator5.return) {
-							_iterator5.return();
-						}
-					} finally {
-						if (_didIteratorError5) {
-							throw _iteratorError5;
-						}
-					}
-				}
-
-				if (!(_ref = ValidatorBuilder.getInstance().get(_p))) {
-					if (!opts.extensible) {
-						return '\'' + key + '\' is not a valid schema property';
-					}
-				}
-				ValidatorBuilder.getInstance().set(key, _ref);
-			}
-			if (typeof (msg = ValidatorBuilder.getInstance().exec(key, value)) === 'string') {
-				return msg;
-			}
-			return true;
-		};
-		/**
-   * @private
-   */
-		var _getKinds = function _getKinds(_s) {
-			var _elems = Object.keys(_s).map(function (key) {
-				return _exists(_s[key].type) ? _s[key].type : null;
-			});
-			_elems = _elems.filter(function (elem) {
-				return elem !== null;
-			});
-			return _elems.length ? _elems : null;
-		};
-	} // - end @constructor
+		_schemaSignatures.set(this, _signature);
+		_schemaHelpers.set(this, new SchemaHelpers(this));
+		_schemaHelpers.get(this).walkSchema(_signature.elements || _signature || {});
+	}
 	/**
-  * @param {string} key
-  * @returns {any}
+  * @returns schema signature object
   */
 
 
 	_createClass(Schema, [{
 		key: 'get',
+
+		/**
+   * @param {string} key
+   * @returns {any}
+   */
 		value: function get(key) {
-			var __o = _object.get(this);
-			return __o[key] || null;
+			var _ = _object.get(this);
+			return _[key] || null;
 		}
 		/**
    * sets value to schema key
@@ -528,90 +464,61 @@ var Schema = function () {
 	}, {
 		key: 'set',
 		value: function set(key, value) {
-			var k;
-			// -- handles objects passed in as key
-			if ((typeof key === 'undefined' ? 'undefined' : _typeof(key)) === 'object') {
-				var _f = _hasRequiredFields(Object.assign({}, _object, key));
-				if (typeof _f === 'string') {
-					return _f;
-				}
-				// calls set with nested key value pair
-				for (k in key) {
-					var _eMsg = this.set(key[k], v);
-					if (typeof _eMsg === 'string') {
-						return _eMsg;
+			var _sH = _schemaHelpers.get(this);
+			if ((typeof key === 'undefined' ? 'undefined' : _typeof2(key)) === 'object') {
+				return _sH.setObject(key);
+			} else {
+				var _childSigs = this.signature.elements || this.signature;
+				var _pathKeys = key.split(".");
+				for (var _ in _pathKeys) {
+					var k = _pathKeys[_];
+					var _schema = void 0;
+					var _key = this.path.length > 0 ? this.path + '.' + k : k;
+					if (_exists(_childSigs[k])) {
+						_schema = _childSigs[k];
+					} else {
+						// attempts to find wildcard element name
+						if (_exists(_childSigs["*"])) {
+							// applies schema
+							_schema = _childSigs["*"]; //.polymorphic || _childSigs["*"];
+							// derives path for wildcard element
+							var _pKey = this.path.length > 1 ? this.path + '.' + key : key;
+							// creates Validator for path
+							ValidatorBuilder.getInstance().create(_schema, _pKey);
+						}
 					}
+					// handles missing schema signatures
+					if (!_exists(_schema)) {
+						// rejects non-members of non-extensible schemas
+						if (!this.isExtensible) {
+							return 'element \'' + _key + '\' is not a valid element';
+						}
+						_schema = Schema.defaultSignature;
+					}
+					// hanldes child objects
+					if ((typeof value === 'undefined' ? 'undefined' : _typeof2(value)) === "object") {
+						_schema = _schema["*"] || _schema;
+						_schema = !_exists(_schema.polymorphic) ? _schema : _schema.polymorphic;
+						if (Array.isArray(_schema)) {
+							_schema = _schema.filter(function (_s) {
+								return _exists(_s.type.match(/object/i));
+							});
+						}
+						return _sH.setChildObject(_key, _schema, value);
+					}
+					// handles absolute vaues (strings, numbers, booleans...)
+					else {
+							var eMsg = _sH.validate(_key, value);
+							if (typeof eMsg === "string") {
+								return eMsg;
+							}
+						}
+					// applies value to schema
+					var _o = _object.get(this);
+					_o[key] = value;
+					_object.set(this, _o);
 				}
 			}
-			// handles strings passed as key
-			else {
-					var _parent = this.parent;
-					var _parentPath = _parent.path;
-					var _schema2 = exists(_o.elements) ? _o.elements : _o;
-					var _extensible2 = exists(_o.extensible) ? _o.extensible : opts.extensible || false;
-					var _elSchema;
-					var _iteratorNormalCompletion6 = true;
-					var _didIteratorError6 = false;
-					var _iteratorError6 = undefined;
-
-					try {
-						for (var _iterator6 = key.split('.')[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
-							k = _step6.value;
-
-							if (_exists(_elSchema[k]) && _elSchema[k].hasOwnProperty('extensible')) {
-								_extensible2 = _elSchema[k].extensible;
-							}
-							_elSchema = _exists(_elSchema.elements) ? _elSchema.elements[k] : _elSchema[k];
-							var _key3 = _exists(_parentPath) && _parentPath.length ? _parentPath + '.' + k : k;
-							if (!_exists(_elSchema)) {
-								if (!_extensible2) {
-									return 'element \'' + k + '\' is not a valid element';
-								}
-								_elSchema = {
-									type: '*',
-									required: true,
-									extensible: false
-								};
-							}
-							if ((typeof value === 'undefined' ? 'undefined' : _typeof(value)) === 'object') {
-								var _s = _objHelper(value);
-								if (typeof _s === 'string') {
-									return s + ' at \'' + key + '\'';
-								}
-								if (!_exists(_elSchema) || !_exists(_s) || (typeof _s === 'undefined' ? 'undefined' : _typeof(_s)) !== 'object') {
-									return '\'' + key + '\' was invalid';
-								}
-								value = _s[_s instanceof Vector ? 'replaceAll' : 'set'](value);
-								if (typeof value === 'string') {
-									return value;
-								}
-							} else {
-								if (key !== "_root") {
-									// and @ instanceof _metaData
-									if (typeof (eMsg = _validate(_key3, value)) === 'string') {
-										return eMsg;
-									}
-								}
-							}
-							var __o = {};
-							__o[key] = value;
-							_object.set(this, __o);
-						}
-					} catch (err) {
-						_didIteratorError6 = true;
-						_iteratorError6 = err;
-					} finally {
-						try {
-							if (!_iteratorNormalCompletion6 && _iterator6.return) {
-								_iterator6.return();
-							}
-						} finally {
-							if (_didIteratorError6) {
-								throw _iteratorError6;
-							}
-						}
-					}
-				}
 			// returns self for chaining
 			return this;
 		}
@@ -624,13 +531,13 @@ var Schema = function () {
 		value: function validate() {
 			var _path = this.path;
 			// return true
-			var _iteratorNormalCompletion7 = true;
-			var _didIteratorError7 = false;
-			var _iteratorError7 = undefined;
+			var _iteratorNormalCompletion4 = true;
+			var _didIteratorError4 = false;
+			var _iteratorError4 = undefined;
 
 			try {
-				for (var _iterator7 = ValidatorBuilder.getInstance().list()[Symbol.iterator](), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
-					var _k = _step7.value;
+				for (var _iterator4 = ValidatorBuilder.getInstance().list()[Symbol.iterator](), _step4; !(_iteratorNormalCompletion4 = (_step4 = _iterator4.next()).done); _iteratorNormalCompletion4 = true) {
+					var _k = _step4.value;
 
 					var e = void 0;
 					_path = _path.length > 0 ? _path + '.' + _k : _k;
@@ -639,28 +546,110 @@ var Schema = function () {
 					}
 				}
 			} catch (err) {
-				_didIteratorError7 = true;
-				_iteratorError7 = err;
+				_didIteratorError4 = true;
+				_iteratorError4 = err;
 			} finally {
 				try {
-					if (!_iteratorNormalCompletion7 && _iterator7.return) {
-						_iterator7.return();
+					if (!_iteratorNormalCompletion4 && _iterator4.return) {
+						_iterator4.return();
 					}
 				} finally {
-					if (_didIteratorError7) {
-						throw _iteratorError7;
+					if (_didIteratorError4) {
+						throw _iteratorError4;
 					}
 				}
 			}
 
 			return true;
 		}
-	}, {
-		key: 'objectID',
+		/**
+   * 
+   */
 
+	}, {
+		key: 'valueOf',
+		value: function valueOf() {
+			return _object.get(this);
+		}
+		/**
+   * 
+   */
+
+	}, {
+		key: 'toJSON',
+		value: function toJSON() {
+			var _o = {};
+			var _derive = function _derive(itm) {
+				if (itm instanceof Schema) {
+					return _derive(itm.toJSON());
+				}
+				if (itm instanceof Vector) {
+					var _arr = [];
+					var _iteratorNormalCompletion5 = true;
+					var _didIteratorError5 = false;
+					var _iteratorError5 = undefined;
+
+					try {
+						for (var _iterator5 = itm.valueOf()[Symbol.iterator](), _step5; !(_iteratorNormalCompletion5 = (_step5 = _iterator5.next()).done); _iteratorNormalCompletion5 = true) {
+							var k = _step5.value;
+
+							_arr.push(_derive(itm[k]));
+							return _arr;
+						}
+					} catch (err) {
+						_didIteratorError5 = true;
+						_iteratorError5 = err;
+					} finally {
+						try {
+							if (!_iteratorNormalCompletion5 && _iterator5.return) {
+								_iterator5.return();
+							}
+						} finally {
+							if (_didIteratorError5) {
+								throw _iteratorError5;
+							}
+						}
+					}
+				}
+				return itm;
+			};
+			var _obj = _object.get(this);
+			for (var k in _obj) {
+				_o[k] = _derive(_obj[k]);
+			}
+			return _o;
+		}
+		/**
+   * 
+   */
+
+	}, {
+		key: 'toString',
+		value: function toString() {
+			var pretty = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
+			return JSON.stringify(this.toJSON(), null, pretty ? 2 : void 0);
+		}
+		/**
+   * 
+   */
+
+	}, {
+		key: 'signature',
+		get: function get() {
+			return _schemaSignatures.get(this);
+		}
+	}, {
+		key: 'options',
+		get: function get() {
+			return _schemaOptions.get(this);
+		}
 		/**
    * @returns {string} Object ID for Schema
    */
+
+	}, {
+		key: 'objectID',
 		get: function get() {
 			return _mdRef.get(this)._id;
 		}
@@ -671,7 +660,8 @@ var Schema = function () {
 	}, {
 		key: 'root',
 		get: function get() {
-			return _mdRef.get(this).root || this;
+			var _ = _mdRef.get(this).root;
+			return _exists(_) ? _ : this;
 		}
 		/**
    * @returns {string} path to current Schema
@@ -680,7 +670,8 @@ var Schema = function () {
 	}, {
 		key: 'path',
 		get: function get() {
-			return _mdRef.path;
+			var _ = _mdRef.get(this).path;
+			return _exists(_) ? _ : "";
 		}
 		/**
    * @returns {Schema} parent Schema element
@@ -689,7 +680,8 @@ var Schema = function () {
 	}, {
 		key: 'parent',
 		get: function get() {
-			return _mdRef.parent || this;
+			var _ = _mdRef.get(this).root;
+			return _exists(_) ? _ : this;
 		}
 		/**
    * @returns list of required elements on this Schema
@@ -708,16 +700,31 @@ var Schema = function () {
 	}, {
 		key: 'isExtensible',
 		get: function get() {
-			return _schemaOptions.get(this).extensible;
+			//		return this.options.extensible;
+			return _exists(this.signature.extensible) ? this.signature.extensible : this.options.extensible || false;
+		}
+		/**
+   * 
+   */
+
+	}], [{
+		key: 'defaultSignature',
+		value: function defaultSignature() {
+			return {
+				type: "*",
+				required: true,
+				extensible: false
+			};
 		}
 	}]);
 
 	return Schema;
 }();
+
+;
 /**
  * @class Vector
  */
-
 
 var Vector = function () {
 	/**
@@ -733,7 +740,7 @@ var Vector = function () {
 			_type = ['*'];
 		} else {
 			if (!Array.isArray(_type)) {
-				var _t = typeof _type === 'undefined' ? 'undefined' : _typeof(_type);
+				var _t = typeof _type === 'undefined' ? 'undefined' : _typeof2(_type);
 				if (_t === 'string') {
 					_type = [_type];
 				}
@@ -745,11 +752,14 @@ var Vector = function () {
 				}
 			}
 		}
-		type = _type;
+		// when we no longer need babel...
+		// type = _type;
+		// for now we use Weakmap
+		_vectorTypes.set(this, _type);
 		// add all items into collection
 
-		for (var _len2 = arguments.length, items = Array(_len2 > 1 ? _len2 - 1 : 0), _key4 = 1; _key4 < _len2; _key4++) {
-			items[_key4 - 1] = arguments[_key4];
+		for (var _len = arguments.length, items = Array(_len > 1 ? _len - 1 : 0), _key2 = 1; _key2 < _len; _key2++) {
+			items[_key2 - 1] = arguments[_key2];
 		}
 
 		if (items != null) {
@@ -764,13 +774,13 @@ var Vector = function () {
 	_createClass(Vector, [{
 		key: '_typeCheck',
 		value: function _typeCheck(item) {
-			var _iteratorNormalCompletion8 = true;
-			var _didIteratorError8 = false;
-			var _iteratorError8 = undefined;
+			var _iteratorNormalCompletion6 = true;
+			var _didIteratorError6 = false;
+			var _iteratorError6 = undefined;
 
 			try {
-				for (var _iterator8 = this.type[Symbol.iterator](), _step8; !(_iteratorNormalCompletion8 = (_step8 = _iterator8.next()).done); _iteratorNormalCompletion8 = true) {
-					var _t = _step8.value;
+				for (var _iterator6 = this.type[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
+					var _t = _step6.value;
 
 					if (typeof _t === 'string' && _t.match(/^(\*|ALL)$/)) {
 						return true;
@@ -783,16 +793,16 @@ var Vector = function () {
 					}
 				}
 			} catch (err) {
-				_didIteratorError8 = true;
-				_iteratorError8 = err;
+				_didIteratorError6 = true;
+				_iteratorError6 = err;
 			} finally {
 				try {
-					if (!_iteratorNormalCompletion8 && _iterator8.return) {
-						_iterator8.return();
+					if (!_iteratorNormalCompletion6 && _iterator6.return) {
+						_iterator6.return();
 					}
 				} finally {
-					if (_didIteratorError8) {
-						throw _iteratorError8;
+					if (_didIteratorError6) {
+						throw _iteratorError6;
 					}
 				}
 			}
@@ -865,31 +875,9 @@ var Vector = function () {
 		key: 'replaceAll',
 		value: function replaceAll(array) {
 			this.reset();
-			var _iteratorNormalCompletion9 = true;
-			var _didIteratorError9 = false;
-			var _iteratorError9 = undefined;
-
-			try {
-				for (var _iterator9 = array[Symbol.iterator](), _step9; !(_iteratorNormalCompletion9 = (_step9 = _iterator9.next()).done); _iteratorNormalCompletion9 = true) {
-					var itm = _step9.value;
-
-					this.addItem(itm);
-				}
-			} catch (err) {
-				_didIteratorError9 = true;
-				_iteratorError9 = err;
-			} finally {
-				try {
-					if (!_iteratorNormalCompletion9 && _iterator9.return) {
-						_iterator9.return();
-					}
-				} finally {
-					if (_didIteratorError9) {
-						throw _iteratorError9;
-					}
-				}
+			for (var itm in array) {
+				this.addItem(array[itm]);
 			}
-
 			return this;
 		}
 		/**
@@ -941,8 +929,8 @@ var Vector = function () {
 		value: function unshift() {
 			var _this = this;
 
-			for (var _len3 = arguments.length, items = Array(_len3), _key5 = 0; _key5 < _len3; _key5++) {
-				items[_key5] = arguments[_key5];
+			for (var _len2 = arguments.length, items = Array(_len2), _key3 = 0; _key3 < _len2; _key3++) {
+				items[_key3] = arguments[_key3];
 			}
 
 			items.forEach(function (item) {
@@ -969,8 +957,8 @@ var Vector = function () {
 		value: function push() {
 			var _this2 = this;
 
-			for (var _len4 = arguments.length, items = Array(_len4), _key6 = 0; _key6 < _len4; _key6++) {
-				items[_key6] = arguments[_key6];
+			for (var _len3 = arguments.length, items = Array(_len3), _key4 = 0; _key4 < _len3; _key4++) {
+				items[_key4] = arguments[_key4];
 			}
 
 			items.forEach(function (item) {
@@ -1026,7 +1014,9 @@ var Vector = function () {
 	}, {
 		key: 'type',
 		get: function get() {
-			return type;
+			// for when we no longer need babel
+			// return type;
+			return _vectorTypes.get(this);
 		}
 		/**
    * @returns Unique ObjectID
@@ -1102,11 +1092,10 @@ var ValidatorBuilder = function () {
 		if (!_exists(__vBuilder)) {
 			_validators.set(__vBuilder = this, {});
 		}
-		// holds validation methods
 		return __vBuilder;
-	} // - end constructor
+	}
 	/**
-  * @return list of validator paths
+  * @returns list of validation paths
   */
 
 
@@ -1118,7 +1107,7 @@ var ValidatorBuilder = function () {
 		}
 		/**
    * @param path
-   * @return item at path reference
+   * @returns item at path reference
    */
 
 	}, {
@@ -1138,8 +1127,7 @@ var ValidatorBuilder = function () {
 			if (!_exists(func) || typeof func !== 'function') {
 				return "2nd argument expects a function";
 			}
-			var _v = _validators.get(this);
-			_v[_path] = func;
+			_validators.get(this)[_path] = func;
 			return this;
 		}
 		/**
@@ -1149,123 +1137,83 @@ var ValidatorBuilder = function () {
 
 	}, {
 		key: 'create',
-		value: function create(_ref, _path) {
-			var _this3 = this;
-
-			var _v = [_ref];
-			if (!_exists(__vBuilder)) {
-				throw "ValidatorBuilder not properly initialized";
+		value: function create(ref, path) {
+			if (!_exists(ref)) {
+				throw "create requires object reference at arguments[0]";
 			}
-			var __validators = _validators.get(this);
-			if (Array.isArray(_ref)) {
-				_v = _ref.map(function (_s) {
-					return _this3.create(_s, _path);
-				});
-			}
-			return __validators[_path] = function (value) {
-				var _iteratorNormalCompletion10 = true;
-				var _didIteratorError10 = false;
-				var _iteratorError10 = undefined;
-
-				try {
-					for (var _iterator10 = _v[Symbol.iterator](), _step10; !(_iteratorNormalCompletion10 = (_step10 = _iterator10.next()).done); _iteratorNormalCompletion10 = true) {
-						var vItm = _step10.value;
-
-						var fName = void 0;
-						if (vItm.required && value == null) {
-							return 'value for \'' + _path + '\' is required';
-						}
-						switch (typeof value === 'undefined' ? 'undefined' : _typeof(value)) {
-							case 'string':
-								if ((typeof vItm === 'undefined' ? 'undefined' : _typeof(vItm)) === 'object') {
-									var _x = vItm.type != null ? vItm.type : null;
-								}
-								if (typeof _x === 'undefined' || !_exists(_x)) {
-									var _x = vItm;
-								}
-								if (vItm !== 'String' && !_x.match(/^string$/i)) {
-									return _path + ' requires ' + _x + ' type was \'<String>\'';
-								}
-								if (_exists(vItm.restrict)) {
-									if (!_exists(new RegExp(vItm.restrict).exec(value))) {
-										return 'value \'' + value + '\' for ' + _path + ' did not match required expression';
-									}
-								}
-								return true;
-								break;
-							case 'function':
-								var _x = typeof vItm === 'string' ? vItm : _global.wf.wfUtils.Fun.getConstructorName(vItm);
-								return _x === _global.wf.wfUtils.Fun.getConstructorName(value);
-								break;
-							case 'object':
-								if (!Array.isArray(vItm)) {
-									return __validators[_path](val);
-								} else {
-									for (var val = 0; val < value.length; val++) {
-										var e = void 0;
-										k = value[val];
-										if (typeof (e = __validators[_path](val)) === 'string') {
-											return e;
-										}
-									}
-									return true;
-								}
-								break;
-							case 'number':
-								_x = vItm.type != null && typeof vItm.type === 'string' ? _schemaroller_.getClass(vItm.type) : vItm.type;
-								if (!_exists(_x)) {
-									_x = vItm;
-								}
-								if (_x === 'Number') {
-									return true;
-								}
-								if ((fName = _global.wf.wfUtils.Fun.getFunctionName(_x)) !== 'Number') {
-									return '\'' + _path + '\' expected ' + fName + ', type was \'<Number>\'';
-								}
-								return !isNaN(new _x(value));
-								break;
-							default:
-								_x = typeof vItm.type === 'string' ? _schemaroller_.getClass(vItm.type) : vItm.type;
-								return _exists(_x) && value instanceof _x;}
-					}
-					// should have returned in the switch statement
-				} catch (err) {
-					_didIteratorError10 = true;
-					_iteratorError10 = err;
-				} finally {
-					try {
-						if (!_iteratorNormalCompletion10 && _iterator10.return) {
-							_iterator10.return();
-						}
-					} finally {
-						if (_didIteratorError10) {
-							throw _iteratorError10;
-						}
+			var _signatures = _exists(ref.polymorphic) ? ref.polymorphic : Array.isArray(ref) ? ref : [ref];
+			_validators.get(this)[path] = {};
+			var _functs = _signatures.map(function (_sig) {
+				var _typeof = _global.wf.wfUtils.Str.capitalize(_sig.type);
+				var _hasKey = 0 <= Object.keys(Validator).indexOf(_typeof);
+				return new Validator[_hasKey ? _typeof : "Default"](path, _sig);
+			});
+			return _validators.get(this)[path] = function (value) {
+				var _result;
+				for (var idx in _functs) {
+					_result = _functs[idx].exec(value);
+					if (typeof _result === "boolean") {
+						return _result;
 					}
 				}
-
-				return 'unable to validate ' + _path;
+				return _result;
 			};
 		}
+
 		/**
    * executes validator `value` with validator at `path` 
-   * @param _path
+   * @param path
    * @param value
    */
 
 	}, {
 		key: 'exec',
-		value: function exec(_path, value) {
+		value: function exec(path, value) {
 			var _v = _validators.get(this);
-			if (!_v.hasOwnProperty(_path)) {
-				return 'validator for \'' + _path + '\' does not exist';
+			if (!_v.hasOwnProperty(path)) {
+				return 'validator for \'' + path + '\' does not exist';
 			}
-			return _v[_path](value);
+			return _v[path](value);
 		}
+		/**
+   * @returns singleton ValidatorBuilder reference
+   */
+
 	}], [{
 		key: 'getInstance',
 		value: function getInstance() {
 			return new this();
+		}
+		/**
+   * @returns validators WeakMap
+   */
+
+	}, {
+		key: 'getValidators',
+		value: function getValidators() {
+			return _validators.get(ValidatorBuilder.getInstance());
+		}
+		/**
+   * 
+   */
+
+	}, {
+		key: 'create',
+		value: function create(signature, path) {
+			ValidatorBuilder.getInstance().create(signature, path);
+		}
+		/**
+   * 
+   */
+
+	}, {
+		key: 'getPolymorphic',
+		value: function getPolymorphic(signature, path) {
+			var _attr = path.split(".").pop();
+			// tests for element as child element on polymorphic object signature
+			if (_exists(signature.elements[_attr])) {
+				ValidatorBuilder.create(signature.elements[_attr], path);
+			}
 		}
 	}]);
 
@@ -1296,22 +1244,23 @@ var SchemaValidator = function () {
 			return _errorMsg || true;
 		};
 		// validates SCHEMA ENTRIES
-		var _iteratorNormalCompletion11 = true;
-		var _didIteratorError11 = false;
-		var _iteratorError11 = undefined;
+		var _iterate = Array.isArray(_schema) ? _schema : Object.keys(_schema);
+		var _iteratorNormalCompletion7 = true;
+		var _didIteratorError7 = false;
+		var _iteratorError7 = undefined;
 
 		try {
-			for (var _iterator11 = Object.keys(_schema)[Symbol.iterator](), _step11; !(_iteratorNormalCompletion11 = (_step11 = _iterator11.next()).done); _iteratorNormalCompletion11 = true) {
-				var _oKey = _step11.value;
+			for (var _iterator7 = _iterate[Symbol.iterator](), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
+				var _oKey = _step7.value;
 
-				switch (_typeof(_schema[_oKey])) {
+				switch (_typeof2(_schema[_oKey])) {
 					case "string":
 						var obj = {};
 						obj[_oKey] = {
 							type: _global.wf.wfUtils.Str.capitalize(_schema[_oKey]),
 							required: false
 						};
-						var _o2 = Object.assign(_schema, obj);
+						var _o = Object.assign(_schema, obj);
 						_errorMsg = this.validateSchemaEntry(_oKey, _schema[_oKey]);
 						break;
 					case "object":
@@ -1319,41 +1268,41 @@ var SchemaValidator = function () {
 							if (_oKey !== "elements") {
 								_errorMsg = this.validateSchemaEntry(_oKey, _schema[_oKey]);
 							} else {
-								var _iteratorNormalCompletion12 = true;
-								var _didIteratorError12 = false;
-								var _iteratorError12 = undefined;
+								var _iteratorNormalCompletion8 = true;
+								var _didIteratorError8 = false;
+								var _iteratorError8 = undefined;
 
 								try {
-									for (var _iterator12 = Object.keys(_schema[_oKey])[Symbol.iterator](), _step12; !(_iteratorNormalCompletion12 = (_step12 = _iterator12.next()).done); _iteratorNormalCompletion12 = true) {
-										var xKey = _step12.value;
+									for (var _iterator8 = Object.keys(_schema[_oKey])[Symbol.iterator](), _step8; !(_iteratorNormalCompletion8 = (_step8 = _iterator8.next()).done); _iteratorNormalCompletion8 = true) {
+										var _x = _step8.value;
 
-										if (typeof (_errorMsg = this.validateSchemaEntry(xKey, _schema[_oKey][xKey])) === "string") {
+										if (typeof (_errorMsg = this.validateSchemaEntry(_x, _schema[_oKey][_x])) === "string") {
 											return _errorMsg;
 										}
 									}
 								} catch (err) {
-									_didIteratorError12 = true;
-									_iteratorError12 = err;
+									_didIteratorError8 = true;
+									_iteratorError8 = err;
 								} finally {
 									try {
-										if (!_iteratorNormalCompletion12 && _iterator12.return) {
-											_iterator12.return();
+										if (!_iteratorNormalCompletion8 && _iterator8.return) {
+											_iterator8.return();
 										}
 									} finally {
-										if (_didIteratorError12) {
-											throw _iteratorError12;
+										if (_didIteratorError8) {
+											throw _iteratorError8;
 										}
 									}
 								}
 							}
 						} else {
-							var _iteratorNormalCompletion13 = true;
-							var _didIteratorError13 = false;
-							var _iteratorError13 = undefined;
+							var _iteratorNormalCompletion9 = true;
+							var _didIteratorError9 = false;
+							var _iteratorError9 = undefined;
 
 							try {
-								for (var _iterator13 = _schema[_oKey][Symbol.iterator](), _step13; !(_iteratorNormalCompletion13 = (_step13 = _iterator13.next()).done); _iteratorNormalCompletion13 = true) {
-									var _s = _step13.value;
+								for (var _iterator9 = _schema[_oKey][Symbol.iterator](), _step9; !(_iteratorNormalCompletion9 = (_step9 = _iterator9.next()).done); _iteratorNormalCompletion9 = true) {
+									var _s = _step9.value;
 
 									if (typeof _schema[_oKey][_s] === "string") {
 										_errorMsg = this.validateTypeString(_oKey, _schema[_oKey][_s]);
@@ -1362,16 +1311,16 @@ var SchemaValidator = function () {
 									}
 								}
 							} catch (err) {
-								_didIteratorError13 = true;
-								_iteratorError13 = err;
+								_didIteratorError9 = true;
+								_iteratorError9 = err;
 							} finally {
 								try {
-									if (!_iteratorNormalCompletion13 && _iterator13.return) {
-										_iterator13.return();
+									if (!_iteratorNormalCompletion9 && _iterator9.return) {
+										_iterator9.return();
 									}
 								} finally {
-									if (_didIteratorError13) {
-										throw _iteratorError13;
+									if (_didIteratorError9) {
+										throw _iteratorError9;
 									}
 								}
 							}
@@ -1381,27 +1330,26 @@ var SchemaValidator = function () {
 						_errorMsg = this.validateSchemaEntry(_oKey, _schema[_oKey]);
 						break;
 					default:
-						_errorMsg = 'value for schema element \'' + _oKey + '\' was invalid';
-				}
+						_errorMsg = 'value for schema element \'' + _oKey + '\' was invalid';}
 			}
 		} catch (err) {
-			_didIteratorError11 = true;
-			_iteratorError11 = err;
+			_didIteratorError7 = true;
+			_iteratorError7 = err;
 		} finally {
 			try {
-				if (!_iteratorNormalCompletion11 && _iterator11.return) {
-					_iterator11.return();
+				if (!_iteratorNormalCompletion7 && _iterator7.return) {
+					_iterator7.return();
 				}
 			} finally {
-				if (_didIteratorError11) {
-					throw _iteratorError11;
+				if (_didIteratorError7) {
+					throw _iteratorError7;
 				}
 			}
 		}
 	}
 	/**
-  * @param {string} key
-  * @param {string} _type
+  *  @param {string} key
+  *  @param {string} _type
   */
 
 
@@ -1441,30 +1389,30 @@ var SchemaValidator = function () {
 		key: 'validateUntypedMembers',
 		value: function validateUntypedMembers(key, params) {
 			if (Array.isArray(params)) {
-				var _iteratorNormalCompletion14 = true;
-				var _didIteratorError14 = false;
-				var _iteratorError14 = undefined;
+				var _iteratorNormalCompletion10 = true;
+				var _didIteratorError10 = false;
+				var _iteratorError10 = undefined;
 
 				try {
-					for (var _iterator14 = params[Symbol.iterator](), _step14; !(_iteratorNormalCompletion14 = (_step14 = _iterator14.next()).done); _iteratorNormalCompletion14 = true) {
-						var _item = _step14.value;
+					for (var _iterator10 = params[Symbol.iterator](), _step10; !(_iteratorNormalCompletion10 = (_step10 = _iterator10.next()).done); _iteratorNormalCompletion10 = true) {
+						var item = _step10.value;
 
 						var _res;
-						if (typeof (_res = this.validateSchemaEntry(key, _item)) === "string") {
+						if (typeof (_res = this.validateSchemaEntry(key, item)) === "string") {
 							return _res;
 						}
 					}
 				} catch (err) {
-					_didIteratorError14 = true;
-					_iteratorError14 = err;
+					_didIteratorError10 = true;
+					_iteratorError10 = err;
 				} finally {
 					try {
-						if (!_iteratorNormalCompletion14 && _iterator14.return) {
-							_iterator14.return();
+						if (!_iteratorNormalCompletion10 && _iterator10.return) {
+							_iterator10.return();
 						}
 					} finally {
-						if (_didIteratorError14) {
-							throw _iteratorError14;
+						if (_didIteratorError10) {
+							throw _iteratorError10;
 						}
 					}
 				}
@@ -1475,15 +1423,18 @@ var SchemaValidator = function () {
 					if (_p === "default") {
 						return true;
 					}
+					if (params.hasOwnProperty("polymorphic")) {
+						return this.validateSchemaEntry(key, params.polymorphic);
+					}
 					return 'value for schema element \'' + key + '\' was malformed. Property \'type\' was missing';
 				} else {
-					var _iteratorNormalCompletion15 = true;
-					var _didIteratorError15 = false;
-					var _iteratorError15 = undefined;
+					var _iteratorNormalCompletion11 = true;
+					var _didIteratorError11 = false;
+					var _iteratorError11 = undefined;
 
 					try {
-						for (var _iterator15 = Object.keys(params)[Symbol.iterator](), _step15; !(_iteratorNormalCompletion15 = (_step15 = _iterator15.next()).done); _iteratorNormalCompletion15 = true) {
-							var param = _step15.value;
+						for (var _iterator11 = Object.keys(params)[Symbol.iterator](), _step11; !(_iteratorNormalCompletion11 = (_step11 = _iterator11.next()).done); _iteratorNormalCompletion11 = true) {
+							var param = _step11.value;
 
 							var _res;
 							var _keys = [].concat(keyPath).concat(param);
@@ -1492,16 +1443,16 @@ var SchemaValidator = function () {
 							}
 						}
 					} catch (err) {
-						_didIteratorError15 = true;
-						_iteratorError15 = err;
+						_didIteratorError11 = true;
+						_iteratorError11 = err;
 					} finally {
 						try {
-							if (!_iteratorNormalCompletion15 && _iterator15.return) {
-								_iterator15.return();
+							if (!_iteratorNormalCompletion11 && _iterator11.return) {
+								_iterator11.return();
 							}
 						} finally {
-							if (_didIteratorError15) {
-								throw _iteratorError15;
+							if (_didIteratorError11) {
+								throw _iteratorError11;
 							}
 						}
 					}
@@ -1521,13 +1472,13 @@ var SchemaValidator = function () {
 				throw "key was undefined";
 			}
 			if (typeof key !== "string") {
-				throw 'string expected for argument \'key\'. Type was \'<' + (typeof key === 'undefined' ? 'undefined' : _typeof(key)) + '>\'';
+				throw 'string expected for argument \'key\'. Type was \'<' + (typeof key === 'undefined' ? 'undefined' : _typeof2(key)) + '>\'';
 			}
 			if (!_exists(params)) {
 				throw "params was undefined";
 			}
-			if ((typeof params === 'undefined' ? 'undefined' : _typeof(params)) !== "object") {
-				throw 'object expected for argument \'params\'. Type was \'<' + (typeof params === 'undefined' ? 'undefined' : _typeof(params)) + '>\'';
+			if ((typeof params === 'undefined' ? 'undefined' : _typeof2(params)) !== "object") {
+				throw 'object expected for argument \'params\'. Type was \'<' + (typeof params === 'undefined' ? 'undefined' : _typeof2(params)) + '>\'';
 			}
 			if (params.type === "*") {
 				return true;
@@ -1535,7 +1486,7 @@ var SchemaValidator = function () {
 			if (Object.keys(params).length === 0) {
 				return true;
 			}
-			if (_typeof(params.type) === "object") {
+			if (_typeof2(params.type) === "object") {
 				return this.validateSchemaEntry(key, params.type);
 			}
 			if (key.split(".").pop() === "default") {
@@ -1556,7 +1507,6 @@ var SchemaValidator = function () {
 	}, {
 		key: 'validateSchemaParamString',
 		value: function validateSchemaParamString(key, sKey, params) {
-			var eMsg;
 			var _kind = _global.wf.wfUtils.Str.capitalize(params[sKey]);
 			var _schemaKeys = _schemaroller_.schemaRef;
 			var opts = _schemaOptions.get(this);
@@ -1573,10 +1523,78 @@ var SchemaValidator = function () {
 			if (!_exists(_schemaKeys[sKey]) && opts.extensible === false) {
 				return 'schema element \'' + key + '.' + sKey + '\' is not allowed';
 			}
-			if (typeof (eMsg = this.validateTypeString(key + '.' + sKey, params[sKey])) === "string") {
+			var eMsg = this.validateTypeString(key + '.' + sKey, params[sKey]);
+			if (typeof eMsg === "string") {
 				return eMsg;
 			}
 			return true;
+		}
+		/**
+   * @param {string} 
+   */
+
+	}, {
+		key: 'validateSchemaParam',
+		value: function validateSchemaParam(key, sKey, _schemaKeys, params) {
+			var _type;
+			// rejects unknown element if schema non-extensible
+			if (!_exists(_schemaKeys[sKey]) && !_schemaOptions.get(this).extensible) {
+				return 'schema element \'' + key + '.' + sKey + '\' is not allowed';
+			}
+			// returns result of Params String Valdiation
+			if (typeof params[sKey] === "string") {
+				var _ = this.validateSchemaParamString(key, sKey, params);
+				if (typeof _ === "string") {
+					return _;
+				}
+			}
+			// returns result of
+			if (_typeof2(_schemaKeys[sKey]) === "object") {
+				// handles `elements` object
+				if (sKey === "elements") {
+					var _iterate2 = Array.isArray(params.elements) ? params.elements : Object.keys(params.elements);
+					var _iteratorNormalCompletion12 = true;
+					var _didIteratorError12 = false;
+					var _iteratorError12 = undefined;
+
+					try {
+						for (var _iterator12 = _iterate2[Symbol.iterator](), _step12; !(_iteratorNormalCompletion12 = (_step12 = _iterator12.next()).done); _iteratorNormalCompletion12 = true) {
+							var xKey = _step12.value;
+
+							var eMsg = this.validateSchemaEntry(key + '.' + xKey, params.elements[xKey]);
+							if (typeof eMsg === "string") {
+								return eMsg;
+							}
+						}
+					} catch (err) {
+						_didIteratorError12 = true;
+						_iteratorError12 = err;
+					} finally {
+						try {
+							if (!_iteratorNormalCompletion12 && _iterator12.return) {
+								_iterator12.return();
+							}
+						} finally {
+							if (_didIteratorError12) {
+								throw _iteratorError12;
+							}
+						}
+					}
+
+					return true;
+				}
+				// attempts to handle Native Types
+				else {
+						_type = _schemaKeys[sKey].type;
+						if (!_exists(_type)) {
+							return 'type attribute was not defined for ' + key;
+						}
+						if (!Array.isArray(_type)) {
+							_type = _type.type;
+						}
+					}
+			}
+			return;
 		}
 		/**
    * @param {string} key
@@ -1591,7 +1609,7 @@ var SchemaValidator = function () {
 			if (!_exists(opts)) {
 				opts = _schemaOptions.get(this);
 			}
-			if (params == null) {
+			if (!_exists(params)) {
 				return key + ' was null or undefined';
 			}
 			if (typeof params === "boolean") {
@@ -1600,7 +1618,8 @@ var SchemaValidator = function () {
 			if (typeof params === "string") {
 				return this.validateTypeString('' + key, params);
 			}
-			if ((typeof params === 'undefined' ? 'undefined' : _typeof(params)) === "object") {
+			if ((typeof params === 'undefined' ? 'undefined' : _typeof2(params)) === "object") {
+				// handled Objects with no `type` element
 				if (!params.hasOwnProperty("type")) {
 					return this.validateUntypedMembers(key, params);
 				}
@@ -1608,80 +1627,31 @@ var SchemaValidator = function () {
 				if (_schemaroller_.getClass(params.type) == null) {
 					return this.validateSchemaClass(key, params);
 				}
-				var _iteratorNormalCompletion16 = true;
-				var _didIteratorError16 = false;
-				var _iteratorError16 = undefined;
+				// handles child elements
+				var _iteratorNormalCompletion13 = true;
+				var _didIteratorError13 = false;
+				var _iteratorError13 = undefined;
 
 				try {
-					for (var _iterator16 = Object.keys(params)[Symbol.iterator](), _step16; !(_iteratorNormalCompletion16 = (_step16 = _iterator16.next()).done); _iteratorNormalCompletion16 = true) {
-						var sKey = _step16.value;
+					for (var _iterator13 = Object.keys(params)[Symbol.iterator](), _step13; !(_iteratorNormalCompletion13 = (_step13 = _iterator13.next()).done); _iteratorNormalCompletion13 = true) {
+						var sKey = _step13.value;
 
-						var _type;
-						// rejects unknown element if schema non-extensible
-						if (_schemaKeys[sKey] == null && !opts.extensible) {
-							return 'schema element \'' + key + '.' + sKey + '\' is not allowed';
-						}
-						// returns result of Params String Valdiation
-						if (typeof params[sKey] === "string") {
-							return this.validateSchemaParamString(key, sKey, params);
-						}
-						// returns result of
-						if (_typeof(_schemaKeys[sKey]) === "object") {
-							// handles `elements` object
-							if (sKey === "elements") {
-								var _iteratorNormalCompletion17 = true;
-								var _didIteratorError17 = false;
-								var _iteratorError17 = undefined;
-
-								try {
-									for (var _iterator17 = Object.keys(params.elements)[Symbol.iterator](), _step17; !(_iteratorNormalCompletion17 = (_step17 = _iterator17.next()).done); _iteratorNormalCompletion17 = true) {
-										var xKey = _step17.value;
-
-										var _eMsg2 = this.validateSchemaEntry(key + '.' + xKey, params.elements[xKey]);
-										if (typeof _eMsg2 === "string") {
-											return _eMsg2;
-										}
-									}
-								} catch (err) {
-									_didIteratorError17 = true;
-									_iteratorError17 = err;
-								} finally {
-									try {
-										if (!_iteratorNormalCompletion17 && _iterator17.return) {
-											_iterator17.return();
-										}
-									} finally {
-										if (_didIteratorError17) {
-											throw _iteratorError17;
-										}
-									}
-								}
-
-								return true;
-							}
-							// attempts to handle Native Types
-							else {
-									_type = _schemaKeys[sKey].type;
-									if (!_exists(_type)) {
-										return 'type attribute was not defined for ' + key;
-									}
-									if (!Array.isArray(_type)) {
-										_type = _type.type;
-									}
-								}
+						var _ = this.validateSchemaParam(key, sKey, _schemaKeys, params);
+						if (typeof _ === "string") {
+							return _;
 						}
 					}
 				} catch (err) {
-					_didIteratorError16 = true;
-					_iteratorError16 = err;
+					_didIteratorError13 = true;
+					_iteratorError13 = err;
 				} finally {
 					try {
-						if (!_iteratorNormalCompletion16 && _iterator16.return) {
-							_iterator16.return();
+						if (!_iteratorNormalCompletion13 && _iterator13.return) {
+							_iterator13.return();
 						}
 					} finally {
-						if (_didIteratorError16) {
-							throw _iteratorError16;
+						if (_didIteratorError13) {
+							throw _iteratorError13;
 						}
 					}
 				}
@@ -1690,18 +1660,18 @@ var SchemaValidator = function () {
 			}
 			// handles non-object entries (Function, String, Number, Boolean, ...)
 			else {
-					var _t = typeof params === 'undefined' ? 'undefined' : _typeof(params);
+					var _t = typeof params === 'undefined' ? 'undefined' : _typeof2(params);
 					if (_t !== "function") {
-						var _ = _schemaKeys[key.split(".").pop()];
+						var _2 = _schemaKeys[key.split(".").pop()];
 						// tests for everything that"s not a string, _object or function
-						if (_ !== _global.wf.wfUtils.Str.capitalize(_t)) {
-							return 'value for schema element \'' + key + '\' has invalid type \'<' + _t + '>\'';
+						if (_2 !== _global.wf.wfUtils.Str.capitalize(_t)) {
+							return 'value for schema element \'' + key + '\' has invalid type :: \'<' + _t + '>\'';
 						}
 					} else {
-						var _2 = _global.wf.wfUtils.Fun.getConstructorName(params);
+						var _3 = _global.wf.wfUtils.Fun.getConstructorName(params);
 						// tests for function"s constructor name
-						if (_2 !== _schemaKeys[key]) {
-							return 'value for schema element \'' + key + '\' has invalid class or method \'<' + _2 + '>\'';
+						if (_3 !== _schemaKeys[key]) {
+							return 'value for schema element \'' + key + '\' has invalid class or method \'<' + _3 + '>\'';
 						}
 					}
 					return true;
@@ -1726,21 +1696,57 @@ var SchemaHelpers = function () {
 	function SchemaHelpers(_ref) {
 		_classCallCheck(this, SchemaHelpers);
 
-		if (!_exists(_ref) || !(_ref instanceof Schema)) {
-			throw "arguments[0] must be type 'Schema'";
-		}
+		//		if (!_exists(ref) || !(ref instanceof Schema)) {
+		//			throw "arguments[0] must be type 'Schema'"; }
 		this._ref = _ref;
 	}
 	/**
-  * @param {Object} itm
-  * @returns {String|false}
+  * 
   */
 
 
 	_createClass(SchemaHelpers, [{
+		key: 'setObject',
+		value: function setObject(obj) {
+			var _ = this.hasRequiredFields(Object.assign({}, this._ref.signature, obj));
+			if (typeof _ === 'string') {
+				return _;
+			}
+			// calls set with nested key value pair
+			for (var k in obj) {
+				var eMsg = this._ref.set(k, obj[k]);
+				if (typeof eMsg === 'string') {
+					return eMsg;
+				}
+			}
+			return this._ref;
+		}
+		/**
+   * 
+   */
+
+	}, {
+		key: 'setChildObject',
+		value: function setChildObject(key, schema, value) {
+			var _mdData = {
+				_path: key,
+				_root: this._ref.root
+			};
+			var _s = this.createSchemaChild(key, schema, this._ref.options, _mdData);
+			if (!_exists(schema) || !_exists(_s) || (typeof _s === 'undefined' ? 'undefined' : _typeof2(_s)) !== "object") {
+				return '\'' + key + '\' was invalid';
+			}
+			return _s[_s instanceof Vector ? "replaceAll" : "set"](value);
+		}
+		/**
+   * @param {Object} itm
+   * @returns {String|false}
+   */
+
+	}, {
 		key: 'ensureKindIsString',
 		value: function ensureKindIsString(itm) {
-			switch (typeof itm === 'undefined' ? 'undefined' : _typeof(itm)) {
+			switch (typeof itm === 'undefined' ? 'undefined' : _typeof2(itm)) {
 				case 'string':
 					return itm;
 				case 'object':
@@ -1751,67 +1757,45 @@ var SchemaHelpers = function () {
 			}
 			return false;
 		}
-	}, {
-		key: 'hasRequiredFields',
-
 		/**
    * tests if required fields exist on object
    * @param {Object} obj
    * @returns {true|string} - returns true or error string
    */
-		// helper method to test if field requirements are met
+
+	}, {
+		key: 'hasRequiredFields',
 		value: function hasRequiredFields(obj) {
 			var oKeys = Object.keys(obj);
-			var _iteratorNormalCompletion18 = true;
-			var _didIteratorError18 = false;
-			var _iteratorError18 = undefined;
-
-			try {
-				for (var _iterator18 = this._ref.requiredFields[Symbol.iterator](), _step18; !(_iteratorNormalCompletion18 = (_step18 = _iterator18.next()).done); _iteratorNormalCompletion18 = true) {
-					var key = _step18.value;
-
-					// _path = (_path = this.path()).length ? _path : 'root element';
-					if (0 > oKeys.indexOf(key)) {
-						return 'required property \'' + key + '\' is missing';
-					}
-				}
-			} catch (err) {
-				_didIteratorError18 = true;
-				_iteratorError18 = err;
-			} finally {
-				try {
-					if (!_iteratorNormalCompletion18 && _iterator18.return) {
-						_iterator18.return();
-					}
-				} finally {
-					if (_didIteratorError18) {
-						throw _iteratorError18;
-					}
+			var _required = this._ref.requiredFields;
+			for (var _ in _required) {
+				var _key = _required[_];
+				var _path = this._ref.path.length ? this._ref.path : "root element";
+				if (0 > oKeys.indexOf(_key)) {
+					return 'required property \'' + _key + '\' is missing for \'' + _path + '\'';
 				}
 			}
-
 			return true;
 		}
-	}, {
-		key: 'createSchemaChild',
-
 		/**
    * @param {Object} value
    * @param {_metaData} metaData
    */
-		value: function createSchemaChild(value, metaData) {
+
+	}, {
+		key: 'createSchemaChild',
+		value: function createSchemaChild(key, value, opts, metaData) {
 			var _kinds;
 			// tests if value is not Array
 			if (!Array.isArray(value)) {
-				var _opts = { extensible: _extensible };
-				var _md = new _metaData(this, {
-					_path: _key,
-					_root: this.root()
+				var _md = new _metaData(this._ref, {
+					_path: key,
+					_root: this._ref.root
 				});
-				var _schemaDef = _exists(_schema.elements) ? _schema.elements : _schema;
-				return new Schema(_schemaDef, _opts, metaData);
+				var _schemaDef = _exists(this._ref.signature.elements) ? this._ref.signature.elements : this._ref.signature;
+				return new Schema(_schemaDef, opts, metaData);
 			} else {
-				_kinds = _getKinds(_schema);
+				_kinds = this.getKinds(this._ref.signature[key] || this._ref.signature);
 				if (Array.isArray(_kinds)) {
 					_kinds = _kinds.map(this.ensureKindIsString(value));
 					_kinds = _kinds.filter(function (itm) {
@@ -1822,6 +1806,146 @@ var SchemaHelpers = function () {
 				}
 			}
 			return "unable to process value";
+		}
+		/**
+   * builds validations from SCHEMA ENTRIES
+   * @private
+   */
+
+	}, {
+		key: 'walkSchema',
+		value: function walkSchema(obj, path) {
+			//console.log(obj);
+			var result = [];
+			var _map = function _map(itm, objPath) {
+				return _walkSchema(itm, objPath);
+			};
+			var _elements = Array.isArray(obj) ? obj : Object.keys(obj);
+			for (var _i in _elements) {
+				var _k = _elements[_i];
+				var itm = void 0;
+				var objPath = _exists(path) ? path.length ? path + '.' + _k : _k : _k || "";
+				ValidatorBuilder.getInstance().create(obj[_k], objPath);
+				// tests for nested elements
+				if (_exists(obj[_k]) && _typeof2(obj[_k].elements) === "object") {
+
+					if (!Array.isArray(obj[_k].elements)) {
+						result.push(this.walkSchema(obj[_k].elements, objPath));
+					} else {
+						result.push(_map(obj[_k].elements, objPath));
+					}
+				}
+			}
+			return result;
+		}
+		/**
+   * @private
+   */
+
+	}, {
+		key: 'objHelper',
+		value: function objHelper(_schema, opts) {
+			var _kinds = this.getKinds(_schema);
+			if (Array.isArray(_kinds)) {
+				_kinds = _kinds.map(function (itm) {
+					switch (typeof itm === 'undefined' ? 'undefined' : _typeof2(itm)) {
+						case "string":
+							return itm;
+							break;
+						case "object":
+							if (itm.hasOwnProperty('type')) {
+								return itm.type;
+							}
+							break;
+					}
+					return null;
+				});
+				_kinds = _kinds.filter(function (itm) {
+					return _exists(itm);
+				});
+				_kinds = _kinds.length ? _kinds : '*';
+				return new Vector(_kinds || '*');
+			}
+			return null;
+		}
+		/**
+   * @param {string} key
+   * @param {object} object to validate
+   */
+
+	}, {
+		key: 'validate',
+		value: function validate(key, value) {
+			var _list = ValidatorBuilder.getInstance().list();
+			var _ref;
+			//-- attempts to validate
+			if (!key.length) {
+				// and @ instanceof _metaData
+				return 'invalid path \'' + key + '\'';
+			}
+			// key = if value instanceof _metaData then value.get( '_path' ) else value.getpath
+			// return "object provided was not a valid subclass of Schema" unless value instanceof Schema
+			// return "object provided was malformed" unless typeof (key = value.getPath?()) is 'string'
+			var msg = void 0;
+			if (0 <= _list.indexOf(key)) {
+				var _path = [];
+				var iterable = key.split('.');
+				var _p;
+				var _iteratorNormalCompletion14 = true;
+				var _didIteratorError14 = false;
+				var _iteratorError14 = undefined;
+
+				try {
+					for (var _iterator14 = iterable[Symbol.iterator](), _step14; !(_iteratorNormalCompletion14 = (_step14 = _iterator14.next()).done); _iteratorNormalCompletion14 = true) {
+						var _k = _step14.value;
+
+						_path.push(_k);
+						_p = _path.join('.');
+						if (0 > _list.indexOf(_p)) {
+							_path.push('*');
+						}
+					}
+				} catch (err) {
+					_didIteratorError14 = true;
+					_iteratorError14 = err;
+				} finally {
+					try {
+						if (!_iteratorNormalCompletion14 && _iterator14.return) {
+							_iterator14.return();
+						}
+					} finally {
+						if (_didIteratorError14) {
+							throw _iteratorError14;
+						}
+					}
+				}
+
+				if (!(_ref = ValidatorBuilder.getInstance().get(_p))) {
+					if (!this.options.extensible) {
+						return '\'' + key + '\' is not a valid schema property';
+					}
+				}
+				ValidatorBuilder.getInstance().set(key, _ref);
+			}
+			if (typeof (msg = ValidatorBuilder.getInstance().exec(key, value)) === 'string') {
+				return msg;
+			}
+			return true;
+		}
+		/**
+   * @returns {array} list of types decalred by object
+   */
+
+	}, {
+		key: 'getKinds',
+		value: function getKinds(_s) {
+			var _elems = Object.keys(_s).map(function (key) {
+				return key === "type" ? _s.type : _exists(_s[key].type) ? _s[key].type : null;
+			});
+			_elems = _elems.filter(function (elem) {
+				return elem !== null;
+			});
+			return _elems.length ? _elems : null;
 		}
 	}]);
 
