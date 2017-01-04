@@ -12,13 +12,15 @@ let _schemaHelpers = new WeakMap();
 let _schemaSignatures = new WeakMap();
 let _required_elements = new WeakMap();
 let _validators = new WeakMap();
+let _vectorTypes = new WeakMap();
 //-- inject:../../src/classes/_metaData.js
 //-- inject:../../src/classes/SchemaRoller.js
 //-- inject:../../src/classes/schema.js
 //-- inject:../../src/classes/vector.js
+//-- inject:../../src/classes/_validators.js
 //-- inject:../../src/classes/_validatorBuilder.js
 //-- inject:../../src/classes/_schemaValidator.js
 const _schemaroller_ = new SchemaRoller();
 //-- inject:../../src/classes/_schemaHelpers.js
 ;
-export {Schema, Vector, _metaData};
+export {Schema, Vector, BaseValidator, _metaData};

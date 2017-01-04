@@ -36,10 +36,20 @@ class BaseValidator {
 	 * 
 	 */
 	checkType(type, value) {
+		_eval = (type, value)=> {
+			let _x = (typeof type !== "string") ? _schemaroller_.getClass([type]) : type;
+			if (_x.match(new RegExp(`^${typeof value}$`, "i")) === null) {
+				return `'${this.path}' expected ${type}, type was '<${typeof value}>'`	}
+			return true;
+		}
         if (_exists(type)) {
-        	let _x = (typeof type !== "string") ? _schemaroller_.getClass([type]) : type;
-        	if (_x.match(new RegExp(`^${typeof value}$`, "i")) === null) {
-        		return `'${this.path}' expected ${type}, type was '<${typeof value}>'`	} }
+        	if (Array.isArray(type)) {
+        		var _ = null;
+        		for (k in type) {
+        			if (typeof (_ = _eval(type[k], value)) === "boolean") {
+        				return _;	}}
+        		return _; }
+        	return _eval(type, value);	}
         else {
         	return `type for ${this.path} was undefined`;	}
         return true;
@@ -66,21 +76,27 @@ Validator.Object = class Obj extends BaseValidator {
 			if (typeof _ === "string") {
 				return _;	}
 		}
-		if ( !Array.isArray( value ) ) {
-			for (let _k in value) {
-				let _res = _iterate(_k, value[_k]);
-				if (typeof _res === "string") {
-					return _res;
+		if (typeof value === "object") {
+			if ( !Array.isArray( value ) ) {
+				for (let _k in value) {
+					let _res = _iterate(_k, value[_k]);
+					if (typeof _res === "string") {
+						return _res;
+					}
 				}
 			}
+			else {
+				for (let _ in value) {
+					let e = this.call( this.path, value[_] );
+					if (typeof e === 'string') {
+						return e; } }
+			}
+			return true;
 		}
 		else {
-			for (let _ in value) {
-				let e = this.call( this.path, value[_] );
-				if (typeof e === 'string') {
-					return e; } }
-		}
-		return true;
+			return `${this.path} expected value of type 'Object'. Type was '<${typeof value}>'`; }
+		// should never hit this
+		return `${this.path} was unable to be processed`;
 	}
 }
 /**
@@ -132,6 +148,13 @@ Validator.Function = class Fun extends BaseValidator {
  */
 Validator.Default = class Def extends BaseValidator {
 	exec( value ) {
+		_testValidator = (type, value) => {
+			let _val = Validator[ _global.wf.wfUtils.Str.capitalize(type) ];
+			if (!_exists(_val)) {
+				return `'${this.path}' was unable to obtain validator for type '<${type}>'`; }
+			let _ = new _val(this.path, this.signature);
+			return _.exec(value);
+		}
 	    var _x = typeof this.signature.type === 'string' ? _schemaroller_.getClass(this.signature.type) : this.signature.type;
         let _tR = this.checkType(_x, value);
         if (typeof _tR === "string") {
@@ -139,9 +162,10 @@ Validator.Default = class Def extends BaseValidator {
 	    if (Array.isArray(_x)) {
 	      	let _ = _x.map( itm=> {
 	      		let _clazz = _schemaroller_.getClass(itm);
-	      		return (_exists(itm) && _exists(_clazz) && value instanceof _clazz);
+	      		return _testValidator(_clazz, value);
 	      	});
-	      	return ( 0 <= _.indexOf(false) );	}
-	    return (_exists(_x) && value instanceof _x);
+	      	return (0 <= _.indexOf(true)) ? true : _[ _.length - 1 ];
+	    }
+	    return _testValidator(type, value);
     }
 }

@@ -15,28 +15,22 @@ class Schema {
 		_schemaOptions.set( this, opts );
 		_validators.set( this, {} );
 		_required_elements.set( this, [] );
-		
+		if (_exists(_signature.polymorphic)) {
+			_signature = _signature.polymorphic;
+		}
 		// traverses elements of schema checking for elements marked as reqiured
 		if (_exists( _signature.elements )) {
-			for (let _sigEl of Object.keys( _signature.elements)) {
-				// -- tests for element `required`
-				let _req = _signature.elements[_sigEl].required
-				if ( _req ) {
-					// -- adds required element to list
-					_required_elements.get(this).push( _sigEl ); }
-			}	
+			_signature = _signature.elements;
+		}
+		
+		for (let _sigEl of Object.keys( _signature)) {
+			// -- tests for element `required`
+			let _req = _signature[_sigEl].required
+			if ( _req ) {
+				// -- adds required element to list
+				_required_elements.get(this).push( _sigEl ); }
 		}
 		// tests for metadata
-//		if (!(this instanceof _metaData)) {
-//			if (_exists( arguments[2] ) && arguments[2] instanceof _metaData) {
-//				console.log(arguments[2]);
-//				_mdRef.set( this, arguments[2]);	}
-//			else {
-//				_mdRef.set( this, new _metaData(this, { 
-//					_path: "", 
-//					_root: this
-//				}) ); 
-//			}}
 		if (!(this instanceof _metaData)) {
 			let _;
 			if ( !_exists( arguments[2] ) ) {
@@ -47,7 +41,6 @@ class Schema {
 				_ = (arguments[2] instanceof _metaData) ? arguments[2] : new _metaData( this, arguments[2] ); }
 			_mdRef.set( this, _ );
 		}
-//		console.log(_mdRef.get( this ));
 		// attempts to validate provided `schema` entries
 		let _schema_validator = new SchemaValidator(_signature, this.options);
 		// throws error if error messagereturned
@@ -55,7 +48,7 @@ class Schema {
 			throw eMsg; }
 		_schemaSignatures.set( this, _signature );
 		_schemaHelpers.set(this, new SchemaHelpers(this) );
-		_schemaHelpers.get(this).walkSchema( _signature.elements || _signature || {});
+		_schemaHelpers.get(this).walkSchema( _signature || {}, this.path);
 	}
 	/**
 	 * @returns schema signature object
@@ -69,7 +62,7 @@ class Schema {
 	 */
 	get(key) {
 		let _ = _object.get(this);
-		return _[key] || null;
+		return _.hasOwnProperty(key) ? _[key] : null;
 	}
 	/**
 	 * sets value to schema key
@@ -80,10 +73,9 @@ class Schema {
     	let _sH = _schemaHelpers.get(this);
 	    if (typeof key === 'object') {
 	    	return _sH.setObject( key );	}
-	    else {
-	      let _childSigs  = this.signature.elements || this.signature;
-	      let _pathKeys = key.split(".");
-	      for (let _ in _pathKeys) { 
+	    let _childSigs  = this.signature.elements || this.signature;
+	    let _pathKeys = key.split(".");
+	    for (let _ in _pathKeys) { 
 	    	let k = _pathKeys[_];
 	    	let _schema;
 	    	let _key = this.path.length > 0 ? `${this.path}.${k}` : k;
@@ -93,7 +85,7 @@ class Schema {
 	        	// attempts to find wildcard element name
 		        if (_exists(_childSigs["*"])) {
 		        	// applies schema
-		        	_schema = _childSigs["*"];//.polymorphic || _childSigs["*"];
+		        	_schema = _childSigs["*"].polymorphic || _childSigs["*"];
 		        	// derives path for wildcard element
 		        	let _pKey = this.path.length > 1 ? `${this.path}.${key}` : key;
 		        	// creates Validator for path
@@ -109,23 +101,17 @@ class Schema {
 	        }
 	        // hanldes child objects
 	        if (typeof value === "object") {
-	        	_schema = _schema["*"] || _schema;
-	        	_schema = !_exists( _schema.polymorphic ) ? _schema : _schema.polymorphic;
-	        	if (Array.isArray(_schema)) {
-	        		_schema = _schema.filter(_s=> { 
-	        			return _exists( _s.type.match(/object/i) ) });
-	        	}
-	        	return _sH.setChildObject( _key, _schema, value );	}
+	        	value = _sH.setChildObject( _key, value );	}
 	        // handles absolute vaues (strings, numbers, booleans...)
 	        else {
-        		let eMsg = _sH.validate(_key, value);
-        		if (typeof eMsg === "string") { 
-        			return eMsg; }}
+	    		let eMsg = _sH.validate(_key, value);
+	    		if (typeof eMsg === "string") { 
+	    			return eMsg; }}
 	        // applies value to schema
 	        let _o = _object.get(this);
 	        _o[key] = value;
 	        _object.set(this, _o);
-	        }}
+        }
 	    // returns self for chaining
 	    return this;
 	    }

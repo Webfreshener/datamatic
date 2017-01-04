@@ -6,15 +6,15 @@ class SchemaHelpers {
 	 * @constructor
 	 */
 	constructor(_ref) {
-//		if (!_exists(ref) || !(ref instanceof Schema)) {
-//			throw "arguments[0] must be type 'Schema'"; }
+		if (!_exists(_ref) || !(_ref instanceof Schema)) {
+			throw "arguments[0] must be type 'Schema'"; }
 		this._ref = _ref;
 	}
 	/**
 	 * 
 	 */
 	setObject( obj ) {
-		let _ = this.hasRequiredFields( Object.assign({}, this._ref.signature, obj) );
+		let _ = this.hasRequiredFields(obj);
 		if (typeof _ === 'string') {
 			return _; }
 		// calls set with nested key value pair
@@ -28,13 +28,13 @@ class SchemaHelpers {
 	/**
 	 * 
 	 */
-	setChildObject(key, schema, value) {
+	setChildObject(key, value) {
         let _mdData = {
-      		  _path: key,
+      		  _path: key, //`${this._ref.path}.${key}`,
       		  _root: this._ref.root
       		  };
-        let _s = this.createSchemaChild(key, schema, this._ref.options, _mdData);
-        if (!_exists(schema) || !_exists(_s) || typeof _s !== "object") {
+        let _s = this.createSchemaChild(key, value, this._ref.options, _mdData);
+        if (!_exists(_s) || typeof _s !== "object") {
       	  return `'${key}' was invalid`; }
         return _s[(_s instanceof Vector) ? "replaceAll" : "set"](value);
 	}
@@ -76,12 +76,12 @@ class SchemaHelpers {
 	  var _kinds;
 	  // tests if value is not Array
 	  if (!Array.isArray(value)) {
-	      let _md = new _metaData(this._ref, {
-	    	  _path: key,
+	      let _md = new _metaData(this._ref, metaData || {
+	    	  _path: key,//`${this._ref.path}.${key}`,
 	    	  _root: this._ref.root
 	      });
-	      let _schemaDef = _exists( this._ref.signature.elements ) ? this._ref.signature.elements : this._ref.signature
-	      return new Schema( _schemaDef, opts, metaData); }
+	      let _schemaDef = this._ref.signature[key] || this._ref.signature['*'] || this._ref.signature;
+	      return new Schema( _schemaDef, opts, _md); }
 	  else {
 		  _kinds = this.getKinds( this._ref.signature[key] || this._ref.signature );
 	      if (Array.isArray(_kinds)) {
@@ -97,7 +97,6 @@ class SchemaHelpers {
 	 * @private
 	 */
 	walkSchema(obj, path) {
-		//console.log(obj);
 		let result = [];
 		let _map = function(itm,objPath) {
 			return _walkSchema(itm, objPath);	};

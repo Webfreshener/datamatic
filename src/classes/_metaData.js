@@ -25,7 +25,6 @@ class _metaData {
 	      _className: _cName,
 	      _created: Date.now()
 	    });
-//	    console.log(_data);
 	    _mdRef.set(this, _data);
 		_mdRef.set(_oRef, _data);
 	}
