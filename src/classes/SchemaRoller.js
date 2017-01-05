@@ -106,9 +106,8 @@ class SchemaRoller {
 		    required: "Boolean",
 		    extensible: "Boolean",
 		    restrict: "String",
-		    validate: "Function",
 		    default: "*",
-		    elements: ["Array","Object"],
+		    elements: ["Object","Array"],
 		    polymorphic: {
 		    	type: ["Object","Array"],
 		    	required: false,
@@ -121,7 +120,7 @@ class SchemaRoller {
 		 		    restrict: "String",
 		 		    validate: "Function",
 		 		    default: "*",
-		 		    elements: ["Array","Object"]
+		 		    elements: ["Object","Array"]
 		    	}
 		    }
 		};
