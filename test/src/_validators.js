@@ -1075,9 +1075,7 @@ var BaseValidator = function () {
 		_classCallCheck(this, BaseValidator);
 
 		this.path = path;
-		//		this.polymorphic = _exists(signature.polymorphic);
 		this.signature = signature;
-		//		this.__v = ValidatorBuilder.getValidators();
 	}
 	/**
   * 
@@ -1093,17 +1091,6 @@ var BaseValidator = function () {
 			}
 			return '\'' + path + '\' has no validator defined';
 		}
-		/**
-   * 
-   */
-		//	derivePolymorphic(signature, value) {
-		//    	let _attr = this.path.split(".").pop();
-		//    	// tests for element as child element on polymorphic object signature
-		//    	if (_exists(signature.elements[_attr])) {
-		//    		ValidatorBuilder.getInstance().create(signature.elements[_attr], this.path);
-		//        	return this.call(this.path, value);	}
-		//    	return `${this.path} was invalid`;
-		//	}
 		/**
    * 
    */
@@ -1143,7 +1130,7 @@ var BaseValidator = function () {
 	}, {
 		key: 'exec',
 		value: function exec(value) {
-			//		throw `${wf.utils.Fun.getClassName( this )} requires override of 'exec'`;
+			return wf.utils.Fun.getClassName(this) + ' requires override of \'exec\'';
 		}
 	}]);
 
@@ -1984,9 +1971,9 @@ var SchemaHelpers = function () {
 	_createClass(SchemaHelpers, [{
 		key: 'setObject',
 		value: function setObject(obj) {
-			var _ = this.hasRequiredFields(obj);
-			if (typeof _ === 'string') {
-				return _;
+			obj = this.ensureRequiredFields(obj);
+			if (typeof obj === 'string') {
+				return obj;
 			}
 			// calls set with nested key value pair
 			for (var k in obj) {
@@ -2040,18 +2027,22 @@ var SchemaHelpers = function () {
    */
 
 	}, {
-		key: 'hasRequiredFields',
-		value: function hasRequiredFields(obj) {
+		key: 'ensureRequiredFields',
+		value: function ensureRequiredFields(obj) {
 			var oKeys = Object.keys(obj);
 			var _required = this._ref.requiredFields;
 			for (var _ in _required) {
 				var _key = _required[_];
 				var _path = this._ref.path.length ? this._ref.path : "root element";
 				if (0 > oKeys.indexOf(_key)) {
-					return 'required property \'' + _key + '\' is missing for \'' + _path + '\'';
+					if (_exists(this._ref.signature[_key].default)) {
+						obj[_key] = this._ref.signature[_key].default;
+					} else {
+						return 'required property \'' + _key + '\' is missing for \'' + _path + '\'';
+					}
 				}
 			}
-			return true;
+			return obj;
 		}
 		/**
    * @param {Object} value

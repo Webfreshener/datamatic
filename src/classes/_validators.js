@@ -8,9 +8,7 @@ class BaseValidator {
 	 */
 	constructor(path, signature) {
 		this.path = path;
-//		this.polymorphic = _exists(signature.polymorphic);
 		this.signature = signature;
-//		this.__v = ValidatorBuilder.getValidators();
 	}
 	/**
 	 * 
@@ -21,17 +19,6 @@ class BaseValidator {
 			return _(value);	}
 		return `'${path}' has no validator defined`;
 	}
-	/**
-	 * 
-	 */
-//	derivePolymorphic(signature, value) {
-//    	let _attr = this.path.split(".").pop();
-//    	// tests for element as child element on polymorphic object signature
-//    	if (_exists(signature.elements[_attr])) {
-//    		ValidatorBuilder.getInstance().create(signature.elements[_attr], this.path);
-//        	return this.call(this.path, value);	}
-//    	return `${this.path} was invalid`;
-//	}
 	/**
 	 * 
 	 */
@@ -58,7 +45,7 @@ class BaseValidator {
 	 * 
 	 */
 	exec( value ) {
-//		throw `${wf.utils.Fun.getClassName( this )} requires override of 'exec'`;
+		return `${wf.utils.Fun.getClassName( this )} requires override of 'exec'`;
 	}
 }
 /**

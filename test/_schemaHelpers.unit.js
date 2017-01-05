@@ -51,11 +51,11 @@ describe( "SchemaHelpers Unit Test Suite", ()=> {
 		});
 		let helpers = new SchemaHelpers( _schema ); 
 		it( "should fail if required fields not present", function() {
-			helpers.hasRequiredFields({}).should.eq(
+			helpers.ensureRequiredFields({}).should.eq(
 					"required property 'myElem' is missing for 'root element'")
 		});
 		it( "should accept objects with required fields", function() {
-			helpers.hasRequiredFields({myElem:"Foo"}).should.eq(true)
+			(typeof helpers.ensureRequiredFields({myElem:"Foo"})).should.eq("object");
 		});
 	});
 //	describe.only( "createSchemaChild", ()=> {

@@ -14,9 +14,9 @@ class SchemaHelpers {
 	 * 
 	 */
 	setObject( obj ) {
-		let _ = this.hasRequiredFields(obj);
-		if (typeof _ === 'string') {
-			return _; }
+		obj = this.ensureRequiredFields(obj);
+		if (typeof obj === 'string') {
+			return obj; }
 		// calls set with nested key value pair
 		for (var k in obj) {
 			let eMsg = this._ref.set(k, obj[k]);
@@ -58,15 +58,19 @@ class SchemaHelpers {
 	 * @param {Object} obj
 	 * @returns {true|string} - returns true or error string
 	 */
-    hasRequiredFields(obj) {
+    ensureRequiredFields(obj) {
       let oKeys = Object.keys( obj );
       let _required = this._ref.requiredFields
       for (let _ in _required) {
     	let _key = _required[_];
     	let _path = this._ref.path.length ? this._ref.path : "root element";
         if (0 > oKeys.indexOf( _key )) {
-          return `required property '${_key}' is missing for '${_path}'`;}}
-      return true;
+        	if (_exists(this._ref.signature[_key].default)) {
+        		obj[_key] = this._ref.signature[_key].default;
+        	} else {
+        		return `required property '${_key}' is missing for '${_path}'`;	}
+        	}}
+      return obj;
     }
 	/**
 	 * @param {Object} value

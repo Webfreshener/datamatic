@@ -255,6 +255,24 @@ describe("Schema Class Test Suite", function() {
 	  });
 	});
 	
+	describe("Default Values", function() {
+		it("should set default value if exists in JSD", ()=> {
+			let _jsd = {
+					value: {
+						type: "Number",
+						required: true
+					},
+					str: {
+						type: "String",
+						required: true,
+						"default": "DEFAULT VALUE"
+					}
+			};
+			let _ = new Schema(_jsd, {extensible:true});
+			_.set({value:123}).get("str").should.eq("DEFAULT VALUE");
+		});
+	});
+	
 	describe("Deep Object Nesting", function() {
 	  it("should handle deep object nesting", () => {
 	    let _schema = new Schema( require("./fixtures/nested-elements.schema.json") );
