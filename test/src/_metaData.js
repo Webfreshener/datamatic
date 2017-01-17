@@ -310,9 +310,8 @@ var SchemaRoller = function () {
 				required: "Boolean",
 				extensible: "Boolean",
 				restrict: "String",
-				validate: "Function",
 				default: "*",
-				elements: ["Array", "Object"],
+				elements: ["Object", "Array"],
 				polymorphic: {
 					type: ["Object", "Array"],
 					required: false,
@@ -325,7 +324,7 @@ var SchemaRoller = function () {
 						restrict: "String",
 						validate: "Function",
 						default: "*",
-						elements: ["Array", "Object"]
+						elements: ["Object", "Array"]
 					}
 				}
 			};
