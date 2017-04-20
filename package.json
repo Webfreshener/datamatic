@@ -1,6 +1,6 @@
 {
   "author": "Van Carney <carney.van@gmail.com>",
-  "name": "schemaroller",
+  "name": "JSD",
   "description": "Schema Generation and Data Validation with object virtualization",
   "keywords": [
     "schema",
@@ -11,7 +11,7 @@
     "DOM",
     "object model"
   ],
-  "version": "0.0.1",
+  "version": "1.0.0-beta.1",
   "main": "./index.js",
   "licenses": [
     {
@@ -21,7 +21,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "github.com/vancarney/schemaroller.git"
+    "url": "https://github.com/Webfreshener/JSD.git"
   },
   "dependencies": {},
   "devDependencies": {
@@ -50,7 +50,7 @@
     "weakmap": "0.0.6",
     "wf-utils": "git+https://github.com/webfreshener/wf-utils.git"
   },
-  "homepage": "https://github.com/vancarney/schemaroller",
+  "homepage": "https://webfreshener.github.io/JSD/",
   "scripts": {
     "test": "gulp build ; gulp test"
   }
