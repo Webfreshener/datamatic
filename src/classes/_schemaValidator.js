@@ -68,7 +68,7 @@ class SchemaValidator {
 				return `Regular Expression provided for '${key}' was invalid. ${e}`;	}	}
 		//- tests for basic string type declaration {key: {type: "String"} }
 		else {
-			if (!_exists( _schemaroller_.getClass( _global.wf.wfUtils.Str.capitalize(_type)) )) { 
+			if (!_exists( _jsd_.getClass( _global.wf.wfUtils.Str.capitalize(_type)) )) {
 				return `type '<${_type}>' for schema element '${key}' was invalid`; }	}
 		return true;
 		}
@@ -134,7 +134,7 @@ class SchemaValidator {
 	 */
 	validateSchemaParamString(key, sKey, params) {
 		let _kind = _global.wf.wfUtils.Str.capitalize( params[sKey] );
-		let _schemaKeys = _schemaroller_.schemaRef;
+		let _schemaKeys = _jsd_.schemaRef;
 		let opts = _schemaOptions.get(this);
 		// handles special `restrict` key
 		if (sKey === "restrict") {
@@ -193,7 +193,7 @@ class SchemaValidator {
 	 * @param {object} opts
 	 */
 	validateSchemaEntry(key, params, opts) {
-		let _schemaKeys = _schemaroller_.schemaRef;
+		let _schemaKeys = _jsd_.schemaRef;
 	    if (!_exists(opts)) { 
 	    	opts = _schemaOptions.get( this ); }
 	    if (!_exists(params)) { 
@@ -207,7 +207,7 @@ class SchemaValidator {
 	      if (!params.hasOwnProperty("type")) {
 	    	  return this.validateUntypedMembers(key, params); }
 	      // handles Classes/Functions
-	      if ((_schemaroller_.getClass(params.type)) == null) {
+	      if ((_jsd_.getClass(params.type)) == null) {
 	    	  return this.validateSchemaClass(key, params); }
 	      // handles child elements
 	      for (let sKey of Object.keys( params )) {

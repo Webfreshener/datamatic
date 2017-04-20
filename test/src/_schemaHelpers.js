@@ -129,14 +129,14 @@ var _metaData = function () {
 }();
 /**
  * Strict JS Objects and Collections created from JSON Schema Defintions
- * @class SchemaRoller
- * @example let {Schema,Vector} = window.SchemaRoller();
+ * @class JSD
+ * @example let {Schema,Vector} = window.JSD();
  */
 
 
-var SchemaRoller = function () {
-	function SchemaRoller() {
-		_classCallCheck(this, SchemaRoller);
+var JSD = function () {
+	function JSD() {
+		_classCallCheck(this, JSD);
 
 		_kinds.set(this, {
 			"Array": Array,
@@ -156,7 +156,7 @@ var SchemaRoller = function () {
   */
 
 
-	_createClass(SchemaRoller, [{
+	_createClass(JSD, [{
 		key: 'getClass',
 		value: function getClass(classesOrNames) {
 			var _k = _kinds.get(this);
@@ -279,6 +279,7 @@ var SchemaRoller = function () {
 		value: function listClasses() {
 			return Object.keys(_kinds.get(this));
 		}
+
 		/**
    * creates new Schema from JSON data
    * @param {string|object} json
@@ -331,7 +332,7 @@ var SchemaRoller = function () {
 		/**
    * @getter
    * @returns {object} base schema element settings
-   * @example let _schemaRoller = new SchemaRoller();
+   * @example let _schemaRoller = new JSD();
    * var _schemaEl = { myElement: _schemaRoller.defaults }
    * console.log( JSON.stringify( _schemaEl ) );
    * // -> `{ "myElement": { "type": "*", "required": false, "extensible": false } }`
@@ -349,7 +350,7 @@ var SchemaRoller = function () {
 		}
 	}]);
 
-	return SchemaRoller;
+	return JSD;
 }();
 /**
  * @class Schema
@@ -749,7 +750,7 @@ var BaseValidator = function () {
 			var _this = this;
 
 			_eval = function _eval(type, value) {
-				var _x = typeof type !== "string" ? _schemaroller_.getClass([type]) : type;
+				var _x = typeof type !== "string" ? _jsd_.getClass([type]) : type;
 				if (_x.match(new RegExp('^' + (typeof value === 'undefined' ? 'undefined' : _typeof2(value)) + '$', "i")) === null) {
 					return '\'' + _this.path + '\' expected ' + type + ', type was \'<' + (typeof value === 'undefined' ? 'undefined' : _typeof2(value)) + '>\'';
 				}
@@ -966,14 +967,14 @@ Validator.Default = function (_BaseValidator6) {
 				var _ = new _val(_this9.path, _this9.signature);
 				return _.exec(value);
 			};
-			var _x = typeof this.signature.type === 'string' ? _schemaroller_.getClass(this.signature.type) : this.signature.type;
+			var _x = typeof this.signature.type === 'string' ? _jsd_.getClass(this.signature.type) : this.signature.type;
 			var _tR = this.checkType(_x, value);
 			if (typeof _tR === "string") {
 				return _tR;
 			}
 			if (Array.isArray(_x)) {
 				var _ = _x.map(function (itm) {
-					var _clazz = _schemaroller_.getClass(itm);
+					var _clazz = _jsd_.getClass(itm);
 					return _testValidator(_clazz, value);
 				});
 				return 0 <= _.indexOf(true) ? true : _[_.length - 1];
@@ -1284,7 +1285,7 @@ var SchemaValidator = function () {
 			}
 			//- tests for basic string type declaration {key: {type: "String"} }
 			else {
-					if (!_exists(_schemaroller_.getClass(_global.wf.wfUtils.Str.capitalize(_type)))) {
+					if (!_exists(_jsd_.getClass(_global.wf.wfUtils.Str.capitalize(_type)))) {
 						return 'type \'<' + _type + '>\' for schema element \'' + key + '\' was invalid';
 					}
 				}
@@ -1418,7 +1419,7 @@ var SchemaValidator = function () {
 		key: 'validateSchemaParamString',
 		value: function validateSchemaParamString(key, sKey, params) {
 			var _kind = _global.wf.wfUtils.Str.capitalize(params[sKey]);
-			var _schemaKeys = _schemaroller_.schemaRef;
+			var _schemaKeys = _jsd_.schemaRef;
 			var opts = _schemaOptions.get(this);
 			// handles special `restrict` key
 			if (sKey === "restrict") {
@@ -1515,7 +1516,7 @@ var SchemaValidator = function () {
 	}, {
 		key: 'validateSchemaEntry',
 		value: function validateSchemaEntry(key, params, opts) {
-			var _schemaKeys = _schemaroller_.schemaRef;
+			var _schemaKeys = _jsd_.schemaRef;
 			if (!_exists(opts)) {
 				opts = _schemaOptions.get(this);
 			}
@@ -1534,7 +1535,7 @@ var SchemaValidator = function () {
 					return this.validateUntypedMembers(key, params);
 				}
 				// handles Classes/Functions
-				if (_schemaroller_.getClass(params.type) == null) {
+				if (_jsd_.getClass(params.type) == null) {
 					return this.validateSchemaClass(key, params);
 				}
 				// handles child elements
@@ -1594,7 +1595,7 @@ var SchemaValidator = function () {
 	return SchemaValidator;
 }();
 
-var _schemaroller_ = new SchemaRoller();
+var _jsd_ = new JSD();
 /**
  * @private
  */

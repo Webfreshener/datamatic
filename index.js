@@ -1,1 +1,1 @@
-module.exports = require('./lib/schemaroller').SchemaRoller;
+module.exports = require('./lib/schemaroller').JSD;

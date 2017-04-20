@@ -24,7 +24,7 @@ class BaseValidator {
 	 */
 	checkType(type, value) {
 		_eval = (type, value)=> {
-			let _x = (typeof type !== "string") ? _schemaroller_.getClass([type]) : type;
+			let _x = (typeof type !== "string") ? _jsd_.getClass([type]) : type;
 			if (_x.match(new RegExp(`^${typeof value}$`, "i")) === null) {
 				return `'${this.path}' expected ${type}, type was '<${typeof value}>'`	}
 			return true;
@@ -142,13 +142,13 @@ Validator.Default = class Def extends BaseValidator {
 			let _ = new _val(this.path, this.signature);
 			return _.exec(value);
 		}
-	    var _x = typeof this.signature.type === 'string' ? _schemaroller_.getClass(this.signature.type) : this.signature.type;
+	    var _x = typeof this.signature.type === 'string' ? _jsd_.getClass(this.signature.type) : this.signature.type;
         let _tR = this.checkType(_x, value);
         if (typeof _tR === "string") {
         	return _tR; }
 	    if (Array.isArray(_x)) {
 	      	let _ = _x.map( itm=> {
-	      		let _clazz = _schemaroller_.getClass(itm);
+	      		let _clazz = _jsd_.getClass(itm);
 	      		return _testValidator(_clazz, value);
 	      	});
 	      	return (0 <= _.indexOf(true)) ? true : _[ _.length - 1 ];

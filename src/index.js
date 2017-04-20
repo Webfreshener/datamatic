@@ -1,5 +1,5 @@
 /////////////////////////////////////////////////
-// SchemaRoller
+// JSD
 // (c)2015-2016 Van Carney <carney.van@gmail.com>
 /////////////////////////////////////////////////
 // references the global scope of our environment
@@ -7,10 +7,11 @@ const _global = (typeof exports !== "undefined") && (exports !== null) ? exports
 /**
  * @private
  */
-_global.SchemaRoller = ()=> {
+_global.JSD = ()=> {
   "use strict";
   const _object				= new WeakMap();
   const _mdRef				= new WeakMap();
+  const _kinds              = new WeakMap();
   const _required_elements	= new WeakMap();
   const _validators			= new WeakMap();
   const _singletons			= new WeakMap();
@@ -22,17 +23,17 @@ _global.SchemaRoller = ()=> {
   //-- inject:./classes/_schemaValidator.js
   //-- inject:./classes/_validators.js
   //-- inject:./classes/_validatorBuilder.js
-  //-- inject:./classes/Vector.js
+  //-- inject:./classes/vector.js
   //-- inject:./classes/_schemaHelpers.js
-  //-- inject:./classes/Schema.js
+  //-- inject:./classes/schema.js
   //-- inject:./classes/_metaData.js
-  let _schemaroller_ = new SchemaRoller;
-  _schemaroller_.registerClass("Schema", _schemaroller_.Schema = Schema);
-  _schemaroller_.registerClass("Vector", _schemaroller_.Vector = Vector);
-  let _sKeys = Object.keys(_schemaroller_.schemaRef);
-  if (_schemaroller_.rx === null) { 
-	  _schemaroller_.rx = new RegExp( `^((${_sKeys.join("|")})+,?){${_sKeys.length}}$` ); }
-  return _schemaroller_;
+  let _jsd_ = new JSD();
+  _jsd_.registerClass("Schema", _jsd_.Schema = Schema);
+  _jsd_.registerClass("Vector", _jsd_.Vector = Vector);
+  let _sKeys = Object.keys(_jsd_.schemaRef);
+  if (_jsd_.rx === null) { 
+	  _jsd_.rx = new RegExp( `^((${_sKeys.join("|")})+,?){${_sKeys.length}}$` ); }
+  return _jsd_;
 };
 //polyfills Object.assign
 if (typeof Object.assign != "function") {
@@ -54,7 +55,7 @@ if (typeof Object.assign != "function") {
 let _exists = _global.wf.wfUtils.exists
 //== holds references to registered JS Objects
 let _kinds = new WeakMap() || {};
-//injects SchemaRoller Class
-//-- inject:./classes/SchemaRoller.js
+//injects JSD Class
+//-- inject:./classes/jsd.js
 //injects NPM Modules
 //-- inject:../include/index.js

@@ -130,14 +130,14 @@ var _metaData = function () {
 }();
 /**
  * Strict JS Objects and Collections created from JSON Schema Defintions
- * @class SchemaRoller
- * @example let {Schema,Vector} = window.SchemaRoller();
+ * @class JSD
+ * @example let {Schema,Vector} = window.JSD();
  */
 
 
-var SchemaRoller = function () {
-	function SchemaRoller() {
-		_classCallCheck(this, SchemaRoller);
+var JSD = function () {
+	function JSD() {
+		_classCallCheck(this, JSD);
 
 		_kinds.set(this, {
 			"Array": Array,
@@ -157,7 +157,7 @@ var SchemaRoller = function () {
   */
 
 
-	_createClass(SchemaRoller, [{
+	_createClass(JSD, [{
 		key: 'getClass',
 		value: function getClass(classesOrNames) {
 			var _k = _kinds.get(this);
@@ -280,6 +280,7 @@ var SchemaRoller = function () {
 		value: function listClasses() {
 			return Object.keys(_kinds.get(this));
 		}
+
 		/**
    * creates new Schema from JSON data
    * @param {string|object} json
@@ -332,7 +333,7 @@ var SchemaRoller = function () {
 		/**
    * @getter
    * @returns {object} base schema element settings
-   * @example let _schemaRoller = new SchemaRoller();
+   * @example let _schemaRoller = new JSD();
    * var _schemaEl = { myElement: _schemaRoller.defaults }
    * console.log( JSON.stringify( _schemaEl ) );
    * // -> `{ "myElement": { "type": "*", "required": false, "extensible": false } }`
@@ -350,7 +351,7 @@ var SchemaRoller = function () {
 		}
 	}]);
 
-	return SchemaRoller;
+	return JSD;
 }();
 /**
  * @class Schema
@@ -725,38 +726,58 @@ var Vector = function () {
 		_classCallCheck(this, Vector);
 
 		_object.set(this, []);
+		var _types = void 0;
+
 		if (!_exists(_type)) {
 			_type = ['*'];
 		} else {
 			if (!Array.isArray(_type)) {
-				var _t = typeof _type === 'undefined' ? 'undefined' : _typeof2(_type);
-				if (_t === 'string') {
-					_type = [_type];
-				}
-				if (_t.match(/^(function|object)$/)) {
-					_type = [_type];
-				}
-				if (!_exists(_t) || _t === 'Function') {
-					_type = ['*'];
-				}
+				_type = [_type];
 			}
 		}
+		_types = _type.map(function (type) {
+			var _t = typeof type === 'undefined' ? 'undefined' : _typeof2(type);
+
+			if (_t === "string") {
+				if (type === "*") {
+					return type;
+				}
+
+				if (0 <= _jsd_.listClasses().indexOf(type)) {
+					_type = type;
+				} else {
+					throw 'could not determine type <' + type + '>';
+				}
+			} else if (!_exists(_t) || _t === "Function") {
+				type = "*";
+			} else {
+				throw 'could not determine type <' + type + '>';
+			}
+
+			return type;
+		});
+
+		var _ = void 0;
+		if (!_exists(arguments[1])) {
+			_ = new _metaData(this, {
+				_path: "",
+				_root: this });
+		} else {
+			_ = arguments[1] instanceof _metaData ? arguments[1] : new _metaData(this, arguments[1]);
+		}
+		_mdRef.set(this, _);
+
 		// when we no longer need babel...
 		// type = _type;
 		// for now we use Weakmap
-		_vectorTypes.set(this, _type);
-		// add all items into collection
-
-		for (var _len = arguments.length, items = Array(_len > 1 ? _len - 1 : 0), _key2 = 1; _key2 < _len; _key2++) {
-			items[_key2 - 1] = arguments[_key2];
-		}
-
-		if (items != null) {
-			this.push(items);
-		}
+		_vectorTypes.set(this, _types);
 	}
+
 	/**
   * tests item to see if it conforms to expected item type
+  * @param item
+  * @returns {boolean}
+  * @private
   */
 
 
@@ -771,13 +792,16 @@ var Vector = function () {
 				for (var _iterator6 = this.type[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
 					var _t = _step6.value;
 
-					if (typeof _t === 'string' && _t.match(/^(\*|ALL)$/)) {
+					if (typeof _t === "string" && _t.match(/^(\*|ALL)$/)) {
 						return true;
 					}
-					if (!(_t = _schemaroller_.getClass(_t))) {
+
+					if (!(_t = _jsd_.getClass(_t))) {
 						return false;
 					}
-					if (!_global.wf.wfUtils.Obj.isOfType(item, _t)) {
+					if (typeof _t == "string") {
+						return (typeof item === 'undefined' ? 'undefined' : _typeof2(item)) === _t;
+					} else if (!_global.wf.wfUtils.Obj.isOfType(item, _t)) {
 						return false;
 					}
 				}
@@ -798,6 +822,7 @@ var Vector = function () {
 
 			return true;
 		}
+
 		/**
    * validates items in Vector list
    * @returns {boolean}
@@ -816,6 +841,7 @@ var Vector = function () {
 			});
 			return true;
 		}
+
 		/**
    * @param {number} idx
    * @returns {any} element at index if found
@@ -824,13 +850,14 @@ var Vector = function () {
 	}, {
 		key: 'getItemAt',
 		value: function getItemAt(idx) {
-			return (_object.get(this).length = idx + 1) ? _object.get(this)[idx] : null;
+			return _object.get(this).length >= idx ? _object.get(this)[idx] : null;
 		}
+
 		/**
-  * @param {number} idx
-  * @param {any} item
-  * @returns {Vector} reference to self
-  */
+   * @param {number} idx
+   * @param {any} item
+   * @returns {Vector} reference to self
+   */
 
 	}, {
 		key: 'setItemAt',
@@ -841,6 +868,7 @@ var Vector = function () {
 			_object.get(this).splice(idx, 0, item);
 			return this;
 		}
+
 		/**
    * @param {number} idx
    * @param {any} item
@@ -849,12 +877,13 @@ var Vector = function () {
 
 	}, {
 		key: 'removeItemAt',
-		value: function removeItemAt(idx, item) {
+		value: function removeItemAt(idx) {
 			if (idx > _object.get(this).length) {
 				return false;
 			}
-			return _object.get(this).splice(idx, 1, item);
+			return _object.get(this).splice(idx, 1);
 		}
+
 		/**
    * @param {Array} array
    * @returns {Vector} reference to self
@@ -869,6 +898,7 @@ var Vector = function () {
 			}
 			return this;
 		}
+
 		/**
    * @param {number} idx
    * @param {any} item
@@ -885,10 +915,11 @@ var Vector = function () {
 				return false;
 			}
 			if (idx <= _object.get(this).length) {
-				_object.get(this).splice(idx, 1);
+				_object.get(this).splice(idx, 1, item);
 			}
 			return this;
 		}
+
 		/**
    * @param {any} item
    * @returns {Vector} reference to self
@@ -899,6 +930,7 @@ var Vector = function () {
 		value: function addItem(item) {
 			return this.setItemAt(_object.get(this).length, item);
 		}
+
 		/**
    * @returns {any} item removed from start of list
    */
@@ -911,6 +943,7 @@ var Vector = function () {
 	}, {
 		key: 'unshift',
 
+
 		/**
    * @param {any} items to be added
    * @returns {Vector} reference to self
@@ -918,15 +951,17 @@ var Vector = function () {
 		value: function unshift() {
 			var _this = this;
 
-			for (var _len2 = arguments.length, items = Array(_len2), _key3 = 0; _key3 < _len2; _key3++) {
-				items[_key3] = arguments[_key3];
+			for (var _len = arguments.length, items = Array(_len), _key2 = 0; _key2 < _len; _key2++) {
+				items[_key2] = arguments[_key2];
 			}
 
-			items.forEach(function (item) {
+			items.reverse().forEach(function (item) {
 				return _this.setItemAt(0, item);
 			});
+
 			return this;
 		}
+
 		/**
    * @returns {any} items removed from end of list
    */
@@ -934,8 +969,9 @@ var Vector = function () {
 	}, {
 		key: 'pop',
 		value: function pop() {
-			return _object.get(this).shift();
+			return _object.get(this).pop();
 		}
+
 		/**
    * @param {any} items to be added at end of list
    * @returns {Vector} reference to self
@@ -946,8 +982,8 @@ var Vector = function () {
 		value: function push() {
 			var _this2 = this;
 
-			for (var _len3 = arguments.length, items = Array(_len3), _key4 = 0; _key4 < _len3; _key4++) {
-				items[_key4] = arguments[_key4];
+			for (var _len2 = arguments.length, items = Array(_len2), _key3 = 0; _key3 < _len2; _key3++) {
+				items[_key3] = arguments[_key3];
 			}
 
 			items.forEach(function (item) {
@@ -955,6 +991,7 @@ var Vector = function () {
 			});
 			return this;
 		}
+
 		/**
    * resets list to empty array
    * @returns reference to self
@@ -966,6 +1003,7 @@ var Vector = function () {
 			_object.set(this, []);
 			return this;
 		}
+
 		/**
    * @param {function} func - sorrting function
    * @returns {Vector} reference to self
@@ -977,6 +1015,7 @@ var Vector = function () {
 			_object.get(this).sort(func);
 			return this;
 		}
+
 		/**
    * @returns primitive value of list
    */
@@ -986,6 +1025,7 @@ var Vector = function () {
 		value: function valueOf() {
 			return _object.get(this);
 		}
+
 		/**
    * @returns stringified representation of list
    */
@@ -995,9 +1035,10 @@ var Vector = function () {
 		value: function toString() {
 			return _object.get(this).toString();
 		}
+
 		/**
    * getter for Vector type
-   * @returns 
+   * @returns
    */
 
 	}, {
@@ -1007,6 +1048,7 @@ var Vector = function () {
 			// return type;
 			return _vectorTypes.get(this);
 		}
+
 		/**
    * @returns Unique ObjectID
    */
@@ -1016,8 +1058,9 @@ var Vector = function () {
 		get: function get() {
 			return _mdRef.get(this).get('_id');
 		}
+
 		/**
-   * 
+   *
    */
 
 	}, {
@@ -1025,8 +1068,9 @@ var Vector = function () {
 		get: function get() {
 			return _mdRef.get(this).get('_root');
 		}
+
 		/**
-   * 
+   *
    */
 
 	}, {
@@ -1034,8 +1078,9 @@ var Vector = function () {
 		get: function get() {
 			return _mdRef.get(this).path;
 		}
+
 		/**
-   * 
+   *
    */
 
 	}, {
@@ -1047,6 +1092,7 @@ var Vector = function () {
 			}
 			return _root.get(this.path().split('.').pop().join('.'));
 		}
+
 		/**
    * @returns {number} number of elements in list
    */
@@ -1100,7 +1146,7 @@ var BaseValidator = function () {
 			var _this3 = this;
 
 			_eval = function _eval(type, value) {
-				var _x = typeof type !== "string" ? _schemaroller_.getClass([type]) : type;
+				var _x = typeof type !== "string" ? _jsd_.getClass([type]) : type;
 				if (_x.match(new RegExp('^' + (typeof value === 'undefined' ? 'undefined' : _typeof2(value)) + '$', "i")) === null) {
 					return '\'' + _this3.path + '\' expected ' + type + ', type was \'<' + (typeof value === 'undefined' ? 'undefined' : _typeof2(value)) + '>\'';
 				}
@@ -1317,14 +1363,14 @@ Validator.Default = function (_BaseValidator6) {
 				var _ = new _val(_this11.path, _this11.signature);
 				return _.exec(value);
 			};
-			var _x = typeof this.signature.type === 'string' ? _schemaroller_.getClass(this.signature.type) : this.signature.type;
+			var _x = typeof this.signature.type === 'string' ? _jsd_.getClass(this.signature.type) : this.signature.type;
 			var _tR = this.checkType(_x, value);
 			if (typeof _tR === "string") {
 				return _tR;
 			}
 			if (Array.isArray(_x)) {
 				var _ = _x.map(function (itm) {
-					var _clazz = _schemaroller_.getClass(itm);
+					var _clazz = _jsd_.getClass(itm);
 					return _testValidator(_clazz, value);
 				});
 				return 0 <= _.indexOf(true) ? true : _[_.length - 1];
@@ -1635,7 +1681,7 @@ var SchemaValidator = function () {
 			}
 			//- tests for basic string type declaration {key: {type: "String"} }
 			else {
-					if (!_exists(_schemaroller_.getClass(_global.wf.wfUtils.Str.capitalize(_type)))) {
+					if (!_exists(_jsd_.getClass(_global.wf.wfUtils.Str.capitalize(_type)))) {
 						return 'type \'<' + _type + '>\' for schema element \'' + key + '\' was invalid';
 					}
 				}
@@ -1769,7 +1815,7 @@ var SchemaValidator = function () {
 		key: 'validateSchemaParamString',
 		value: function validateSchemaParamString(key, sKey, params) {
 			var _kind = _global.wf.wfUtils.Str.capitalize(params[sKey]);
-			var _schemaKeys = _schemaroller_.schemaRef;
+			var _schemaKeys = _jsd_.schemaRef;
 			var opts = _schemaOptions.get(this);
 			// handles special `restrict` key
 			if (sKey === "restrict") {
@@ -1866,7 +1912,7 @@ var SchemaValidator = function () {
 	}, {
 		key: 'validateSchemaEntry',
 		value: function validateSchemaEntry(key, params, opts) {
-			var _schemaKeys = _schemaroller_.schemaRef;
+			var _schemaKeys = _jsd_.schemaRef;
 			if (!_exists(opts)) {
 				opts = _schemaOptions.get(this);
 			}
@@ -1885,7 +1931,7 @@ var SchemaValidator = function () {
 					return this.validateUntypedMembers(key, params);
 				}
 				// handles Classes/Functions
-				if (_schemaroller_.getClass(params.type) == null) {
+				if (_jsd_.getClass(params.type) == null) {
 					return this.validateSchemaClass(key, params);
 				}
 				// handles child elements
@@ -1945,7 +1991,7 @@ var SchemaValidator = function () {
 	return SchemaValidator;
 }();
 
-var _schemaroller_ = new SchemaRoller();
+var _jsd_ = new JSD();
 /**
  * @private
  */

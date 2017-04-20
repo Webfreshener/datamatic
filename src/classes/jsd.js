@@ -1,9 +1,9 @@
 /**
- * Strict JS Objects and Collections created from JSON Schema Defintions
- * @class SchemaRoller
- * @example let {Schema,Vector} = window.SchemaRoller();
+ * Strict JS Objects and Collections created from JSON Schema Definitions
+ * @class JSD
+ * @example let {Schema,Vector} = window.JSD();
  */
-class SchemaRoller {
+class JSD {
   constructor() {
     _kinds.set(this, {
       "Array": Array,
@@ -83,6 +83,7 @@ class SchemaRoller {
 	listClasses() {
 		return Object.keys( _kinds.get(this) );
 	}
+
 	/**
 	 * creates new Schema from JSON data
 	 * @param {string|object} json
@@ -128,7 +129,7 @@ class SchemaRoller {
 	/**
 	 * @getter
 	 * @returns {object} base schema element settings
-	 * @example let _schemaRoller = new SchemaRoller();
+	 * @example let _schemaRoller = new JSD();
 	 * var _schemaEl = { myElement: _schemaRoller.defaults }
 	 * console.log( JSON.stringify( _schemaEl ) );
 	 * // -> `{ "myElement": { "type": "*", "required": false, "extensible": false } }`

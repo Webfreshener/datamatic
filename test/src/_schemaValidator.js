@@ -18,13 +18,13 @@ var _schemaKeys = new WeakMap();
 var _schemaOptions = new WeakMap();
 /**
  * Strict JS Objects and Collections created from JSON Schema Defintions
- * @class SchemaRoller
- * @example let {Schema,Vector} = window.SchemaRoller();
+ * @class JSD
+ * @example let {Schema,Vector} = window.JSD();
  */
 
-var SchemaRoller = function () {
-	function SchemaRoller() {
-		_classCallCheck(this, SchemaRoller);
+var JSD = function () {
+	function JSD() {
+		_classCallCheck(this, JSD);
 
 		_kinds.set(this, {
 			"Array": Array,
@@ -44,7 +44,7 @@ var SchemaRoller = function () {
   */
 
 
-	_createClass(SchemaRoller, [{
+	_createClass(JSD, [{
 		key: 'getClass',
 		value: function getClass(classesOrNames) {
 			var _k = _kinds.get(this);
@@ -167,6 +167,7 @@ var SchemaRoller = function () {
 		value: function listClasses() {
 			return Object.keys(_kinds.get(this));
 		}
+
 		/**
    * creates new Schema from JSON data
    * @param {string|object} json
@@ -219,7 +220,7 @@ var SchemaRoller = function () {
 		/**
    * @getter
    * @returns {object} base schema element settings
-   * @example let _schemaRoller = new SchemaRoller();
+   * @example let _schemaRoller = new JSD();
    * var _schemaEl = { myElement: _schemaRoller.defaults }
    * console.log( JSON.stringify( _schemaEl ) );
    * // -> `{ "myElement": { "type": "*", "required": false, "extensible": false } }`
@@ -237,10 +238,10 @@ var SchemaRoller = function () {
 		}
 	}]);
 
-	return SchemaRoller;
+	return JSD;
 }();
 
-var _schemaroller_ = new SchemaRoller();
+var _jsd_ = new JSD();
 /**
  * @private
  * @class
@@ -395,7 +396,7 @@ var SchemaValidator = function () {
 			}
 			//- tests for basic string type declaration {key: {type: "String"} }
 			else {
-					if (!_exists(_schemaroller_.getClass(_global.wf.wfUtils.Str.capitalize(_type)))) {
+					if (!_exists(_jsd_.getClass(_global.wf.wfUtils.Str.capitalize(_type)))) {
 						return 'type \'<' + _type + '>\' for schema element \'' + key + '\' was invalid';
 					}
 				}
@@ -529,7 +530,7 @@ var SchemaValidator = function () {
 		key: 'validateSchemaParamString',
 		value: function validateSchemaParamString(key, sKey, params) {
 			var _kind = _global.wf.wfUtils.Str.capitalize(params[sKey]);
-			var _schemaKeys = _schemaroller_.schemaRef;
+			var _schemaKeys = _jsd_.schemaRef;
 			var opts = _schemaOptions.get(this);
 			// handles special `restrict` key
 			if (sKey === "restrict") {
@@ -626,7 +627,7 @@ var SchemaValidator = function () {
 	}, {
 		key: 'validateSchemaEntry',
 		value: function validateSchemaEntry(key, params, opts) {
-			var _schemaKeys = _schemaroller_.schemaRef;
+			var _schemaKeys = _jsd_.schemaRef;
 			if (!_exists(opts)) {
 				opts = _schemaOptions.get(this);
 			}
@@ -645,7 +646,7 @@ var SchemaValidator = function () {
 					return this.validateUntypedMembers(key, params);
 				}
 				// handles Classes/Functions
-				if (_schemaroller_.getClass(params.type) == null) {
+				if (_jsd_.getClass(params.type) == null) {
 					return this.validateSchemaClass(key, params);
 				}
 				// handles child elements

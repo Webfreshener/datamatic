@@ -13,12 +13,12 @@ let _schemaHelpers = new WeakMap();
 let _required_elements = new WeakMap();
 let _validators = new WeakMap();
 //-- inject:../../src/classes/_metaData.js
-//-- inject:../../src/classes/SchemaRoller.js
+//-- inject:../../src/classes/jsd.js
 //-- inject:../../src/classes/Schema.js
 //-- inject:../../src/classes/_validators.js
 //-- inject:../../src/classes/_validatorBuilder.js
 //-- inject:../../src/classes/_schemaValidator.js
-const _schemaroller_ = new SchemaRoller();
+const _jsd_ = new JSD();
 //-- inject:../../src/classes/_schemaHelpers.js
 ;
 export {Schema, SchemaHelpers};
