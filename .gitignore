@@ -1,4 +1,4 @@
-.idea
+.idea/*
 .project
 *.iml
 node_modules/*
