@@ -1,7 +1,7 @@
 /**
- * @class Vector
+ * @class Set
  */
-class Vector {
+class Set {
     /**
      * @constructor
      * @param {any} _type
@@ -82,7 +82,7 @@ class Vector {
     }
 
     /**
-     * validates items in Vector list
+     * validates items in Set list
      * @returns {boolean}
      */
     validate() {
@@ -108,7 +108,7 @@ class Vector {
     /**
      * @param {number} idx
      * @param {any} item
-     * @returns {Vector} reference to self
+     * @returns {Set} reference to self
      */
     setItemAt(idx, item) {
         if (!this._typeCheck(item)) {
@@ -132,7 +132,7 @@ class Vector {
 
     /**
      * @param {Array} array
-     * @returns {Vector} reference to self
+     * @returns {Set} reference to self
      */
     replaceAll(array) {
         this.reset();
@@ -145,7 +145,7 @@ class Vector {
     /**
      * @param {number} idx
      * @param {any} item
-     * @returns {Vector} reference to self
+     * @returns {Set} reference to self
      */
     replaceItemAt(idx, item) {
         if (!this._typeCheck(item)) {
@@ -162,7 +162,7 @@ class Vector {
 
     /**
      * @param {any} item
-     * @returns {Vector} reference to self
+     * @returns {Set} reference to self
      */
     addItem(item) {
         return this.setItemAt(_object.get(this).length, item);
@@ -177,7 +177,7 @@ class Vector {
 
     /**
      * @param {any} items to be added
-     * @returns {Vector} reference to self
+     * @returns {Set} reference to self
      */
     unshift(...items) {
         items.reverse().forEach(item => {
@@ -196,7 +196,7 @@ class Vector {
 
     /**
      * @param {any} items to be added at end of list
-     * @returns {Vector} reference to self
+     * @returns {Set} reference to self
      */
     push(...items) {
         items.forEach(item => {
@@ -216,7 +216,7 @@ class Vector {
 
     /**
      * @param {function} func - sorrting function
-     * @returns {Vector} reference to self
+     * @returns {Set} reference to self
      */
     sort(func) {
         _object.get(this).sort(func);
@@ -238,7 +238,7 @@ class Vector {
     }
 
     /**
-     * getter for Vector type
+     * getter for Set type
      * @returns
      */
     get type() {
@@ -273,7 +273,7 @@ class Vector {
      */
     get parent() {
         let _root;
-        if (!(((_root = this.root()) != null) instanceof Schema) && !(_root instanceof Vector)) {
+        if (!(((_root = this.root()) != null) instanceof Schema) && !(_root instanceof Set)) {
             return null;
         }
         return _root.get(this.path().split('.').pop().join('.'));

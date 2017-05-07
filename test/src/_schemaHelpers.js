@@ -33,8 +33,8 @@ var _validators = new WeakMap();
 var _metaData = function () {
     /**
      * @constructor
-     * @param {Schema|Vector} _oRef - Object Reference to item being described
-     * @param {object} _data -- Initial Data {parent:Schema|Vector}
+     * @param {Schema|Set} _oRef - Object Reference to item being described
+     * @param {object} _data -- Initial Data {parent:Schema|Set}
      */
     function _metaData(_oRef) {
         var _data = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : {};
@@ -42,8 +42,8 @@ var _metaData = function () {
         _classCallCheck(this, _metaData);
 
         var _cName = _global.wf.wfUtils.Fun.getConstructorName(_oRef);
-        if (!(_oRef instanceof Schema || _oRef instanceof Vector)) {
-            throw 'new _metaData() argument 1 requires subclass Schema or Vector. Was subclass of \'<' + _cName + '>\'';
+        if (!(_oRef instanceof Schema || _oRef instanceof Set)) {
+            throw 'new _metaData() argument 1 requires subclass Schema or Set. Was subclass of \'<' + _cName + '>\'';
         }
         if (this._createID == null) {
             (function () {
@@ -94,7 +94,7 @@ var _metaData = function () {
             return this.get('_id');
         }
         /**
-         * @returns {Schema|Vector} root Schema Element
+         * @returns {Schema|Set} root Schema Element
          */
 
     }, {
@@ -579,7 +579,7 @@ var Schema = function () {
                 if (itm instanceof Schema) {
                     return _derive(itm.toJSON());
                 }
-                if (itm instanceof Vector) {
+                if (itm instanceof Set) {
                     var _arr = [];
                     var _iteratorNormalCompletion5 = true;
                     var _didIteratorError5 = false;
@@ -1689,7 +1689,7 @@ var SchemaHelpers = function () {
             if (!_exists(_s) || (typeof _s === 'undefined' ? 'undefined' : _typeof2(_s)) !== "object") {
                 return '\'' + key + '\' was invalid';
             }
-            return _s[_s instanceof Vector ? "replaceAll" : "set"](value);
+            return _s[_s instanceof Set ? "replaceAll" : "set"](value);
         }
 
         /**
@@ -1766,7 +1766,7 @@ var SchemaHelpers = function () {
                         return itm !== false;
                     });
                     _kinds = _kinds.length ? _kinds : '*';
-                    return new Vector(_kinds || '*', metaData);
+                    return new Set(_kinds || '*', metaData);
                 }
             }
             return "unable to process value";
@@ -1829,7 +1829,7 @@ var SchemaHelpers = function () {
                     return _exists(itm);
                 });
                 _kinds = _kinds.length ? _kinds : '*';
-                return new Vector(_kinds || '*');
+                return new Set(_kinds || '*');
             }
             return null;
         }

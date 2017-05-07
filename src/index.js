@@ -23,13 +23,13 @@ _global.JSD = ()=> {
   //-- inject:./classes/_schemaValidator.js
   //-- inject:./classes/_validators.js
   //-- inject:./classes/_validatorBuilder.js
-  //-- inject:./classes/vector.js
+  //-- inject:./classes/set.js
   //-- inject:./classes/_schemaHelpers.js
   //-- inject:./classes/schema.js
   //-- inject:./classes/_metaData.js
   let _jsd_ = new JSD();
   _jsd_.registerClass("Schema", _jsd_.Schema = Schema);
-  _jsd_.registerClass("Vector", _jsd_.Vector = Vector);
+  _jsd_.registerClass("Set", _jsd_.Set = Set);
   let _sKeys = Object.keys(_jsd_.schemaRef);
   if (_jsd_.rx === null) { 
 	  _jsd_.rx = new RegExp( `^((${_sKeys.join("|")})+,?){${_sKeys.length}}$` ); }

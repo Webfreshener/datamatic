@@ -1,23 +1,23 @@
 import { should, expect } from "chai";
-import {Schema, Vector, _metaData} from "./src/_metaData.js";
+import {Schema, Set, _metaData} from "./src/_metaData.js";
 should();
 
 describe( "MetaData Unit Test Suite", ()=> {
 	var _md = null;
 	describe( "SubClass Validation", ()=> {
-		it( "should not accept objects that are not subclasses of Schema or Vector", function() {
+		it( "should not accept objects that are not subclasses of Schema or Set", function() {
 			expect(()=> _md = new _metaData({}, {})).to.throw(
-					"new _metaData() argument 1 requires subclass Schema or Vector. Was subclass of '<Object>'");
+					"new _metaData() argument 1 requires subclass Schema or Set. Was subclass of '<Object>'");
 		});
 		it( "should accept objects that are subclasses of Schema", function() {
 			let _ = new Schema({extensible: true});
 			expect(()=> _md = new _metaData( _, { _path: "", _root: _})).to.not.throw(
-					"new _metaData() argument 1 requires subclass Schema or Vector. Was subclass of '<Object>'");
+					"new _metaData() argument 1 requires subclass Schema or Set. Was subclass of '<Object>'");
 		});
-		it( "should accept objects that are subclasses of Vector", function() {
-			let _ = new Vector();
+		it( "should accept objects that are subclasses of Set", function() {
+			let _ = new Set();
 			expect(()=> _md = new _metaData( _, { _path: "", _root: _})).to.not.throw(
-					"new _metaData() argument 1 requires subclass Schema or Vector. Was subclass of '<Object>'");
+					"new _metaData() argument 1 requires subclass Schema or Set. Was subclass of '<Object>'");
 		});
 	});
 	describe( "Parameter Accessor Validation", ()=> {

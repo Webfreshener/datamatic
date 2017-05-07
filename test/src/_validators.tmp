@@ -16,7 +16,7 @@ let _vectorTypes = new WeakMap();
 //-- inject:../../src/classes/_metaData.js
 //-- inject:../../src/classes/jsd.js
 //-- inject:../../src/classes/schema.js
-//-- inject:../../src/classes/vector.js
+//-- inject:../../src/classes/set.js
 //-- inject:../../src/classes/_validators.js
 //-- inject:../../src/classes/_validatorBuilder.js
 //-- inject:../../src/classes/_schemaValidator.js

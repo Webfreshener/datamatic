@@ -163,7 +163,7 @@ class Schema {
             if (itm instanceof Schema) {
                 return _derive(itm.toJSON());
             }
-            if (itm instanceof Vector) {
+            if (itm instanceof Set) {
                 let _arr = [];
                 for (let k of itm.valueOf()) {
                     _arr.push(_derive(itm[k]));

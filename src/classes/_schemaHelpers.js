@@ -45,7 +45,7 @@ class SchemaHelpers {
         if (!_exists(_s) || typeof _s !== "object") {
             return `'${key}' was invalid`;
         }
-        return _s[(_s instanceof Vector) ? "replaceAll" : "set"](value);
+        return _s[(_s instanceof Set) ? "replaceAll" : "set"](value);
     }
 
     /**
@@ -108,7 +108,7 @@ class SchemaHelpers {
                 _kinds = _kinds.map((val) => this.ensureKindIsString(val));
                 _kinds = _kinds.filter(itm => itm !== false);
                 _kinds = _kinds.length ? _kinds : '*';
-                return new Vector((_kinds || '*'), metaData);
+                return new Set((_kinds || '*'), metaData);
             }
         }
         return "unable to process value";
@@ -164,7 +164,7 @@ class SchemaHelpers {
             });
             _kinds = _kinds.filter(itm => _exists(itm));
             _kinds = _kinds.length ? _kinds : '*';
-            return new Vector(_kinds || '*');
+            return new Set(_kinds || '*');
         }
         return null;
     }

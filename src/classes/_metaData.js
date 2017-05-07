@@ -4,13 +4,13 @@
 class _metaData {
 	/**
 	 * @constructor
-	 * @param {Schema|Vector} _oRef - Object Reference to item being described
-	 * @param {object} _data -- Initial Data {parent:Schema|Vector}
+	 * @param {Schema|Set} _oRef - Object Reference to item being described
+	 * @param {object} _data -- Initial Data {parent:Schema|Set}
 	 */
 	constructor(_oRef, _data={}) {
 		let _cName = _global.wf.wfUtils.Fun.getConstructorName( _oRef );
-		if (!(_oRef instanceof Schema || _oRef instanceof Vector)) {
-	    	throw `new _metaData() argument 1 requires subclass Schema or Vector. Was subclass of '<${_cName}>'`;
+		if (!(_oRef instanceof Schema || _oRef instanceof Set)) {
+	    	throw `new _metaData() argument 1 requires subclass Schema or Set. Was subclass of '<${_cName}>'`;
 	    }
 	    if (this._createID == null) {
 	      let _id = 0;
@@ -48,7 +48,7 @@ class _metaData {
 		return this.get('_id');
 	}
 	/**
-	 * @returns {Schema|Vector} root Schema Element
+	 * @returns {Schema|Set} root Schema Element
 	 */
 	get root() {
 		return this.get('_root');
