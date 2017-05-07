@@ -121,7 +121,21 @@ Validator.String = class Str extends BaseValidator {
             return _;
         }
         if (_exists(this.signature.restrict)) {
-            if (!_exists(new RegExp(this.signature.restrict).exec(value))) {
+            let _rxStr;
+            let _rxFlags;
+            /*
+                Allow restrict to be Array or String
+                if Array, first element is rx string, second element is rx flags
+             */
+            if (Array.isArray(this.signature.restrict)) {
+                _rxStr = this.signature.restrict[0];
+                _rxFlags = this.signature.length > 1 ? this.signature.restrict[1] : "";
+            } else {
+                _rxStr = this.signature.restrict;
+                _rxFlags = "";
+            }
+
+            if (!_exists(new RegExp(_rxStr.replace(/[\\\\]{2,}/g, "\\"), _rxFlags).exec(value))) {
                 return `value '${value}' for ${this.path} did not match required expression`;
             }
         }

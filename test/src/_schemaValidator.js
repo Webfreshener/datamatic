@@ -17,7 +17,7 @@ var _kinds = new WeakMap() || {};
 var _schemaKeys = new WeakMap();
 var _schemaOptions = new WeakMap();
 /**
- * Strict JS Objects and Collections created from JSON Schema Defintions
+ * Strict JS Objects and Collections created from JSON Schema Definitions
  * @class JSD
  * @example let {Schema,Vector} = window.JSD();
  */
