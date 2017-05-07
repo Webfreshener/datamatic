@@ -162,7 +162,7 @@ describe("Schema Class Test Suite", function () {
         });
     });
 
-    describe.only("Client Schema", function () {
+    describe("Client Schema", function () {
         "use strict";
         it("should initialize from client.schema schema fixture", () => {
             let _s = require("./fixtures/client.schema.json");
