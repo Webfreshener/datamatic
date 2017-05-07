@@ -67,7 +67,7 @@ class Vector {
         for (let _t of this.type) {
             if ((typeof _t === "string") && _t.match(/^(\*|ALL)$/)) {
                 return true;
-            }aa
+            }
 
             if (!(_t = _jsd_.getClass(_t))) {
                 return false;
