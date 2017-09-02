@@ -15,7 +15,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var _global = typeof exports !== 'undefined' && exports !== null ? exports : window;
 _global.wf = require('wf-utils');
 var WeakMap = require('es6-weak-map');
-var _exists = _global.wf.wfUtils.exists;
+var _exists = _global.wf.exists;
 // holds references to registered JS Objects
 var _object = new WeakMap();
 var _mdRef = new WeakMap();
@@ -42,20 +42,18 @@ var _metaData = function () {
 
         _classCallCheck(this, _metaData);
 
-        var _cName = _global.wf.wfUtils.Fun.getConstructorName(_oRef);
+        var _cName = _global.wf.Fun.getConstructorName(_oRef);
         if (!(_oRef instanceof Schema || _oRef instanceof Set)) {
             throw 'new _metaData() argument 1 requires subclass Schema or Set. Was subclass of \'<' + _cName + '>\'';
         }
         if (this._createID == null) {
-            (function () {
-                var _id = 0;
-                _metaData.prototype._createID = function () {
-                    if (this.__objID == null) {
-                        this.__objID = '' + _cName + (_id + 1);
-                    }
-                    return this.__objID;
-                };
-            })();
+            var _id = 0;
+            _metaData.prototype._createID = function () {
+                if (this.__objID == null) {
+                    this.__objID = '' + _cName + (_id + 1);
+                }
+                return this.__objID;
+            };
         }
         _data = Object.assign(_data, {
             _id: this._createID(),
@@ -228,7 +226,7 @@ var JSD = function () {
                         return null;
                     } //- end typrof arg is object
                     if (typeof arg === "function") {
-                        var _ = _global.wf.wfUtils.Fun.getConstructorName(arg);
+                        var _ = _global.wf.Fun.getConstructorName(arg);
                         return this.getClass(_);
                     }
                 } //- end args in classesOrNames
@@ -257,6 +255,7 @@ var JSD = function () {
     }, {
         key: 'registerClass',
         value: function registerClass(name, clazz) {
+            this[name] = clazz;
             return _kinds.get(this)[name] = clazz;
         }
         /**
@@ -817,7 +816,7 @@ var Set = function () {
                     }
                     if (typeof _t == "string") {
                         return (typeof item === 'undefined' ? 'undefined' : _typeof2(item)) === _t;
-                    } else if (!_global.wf.wfUtils.Obj.isOfType(item, _t)) {
+                    } else if (!_global.wf.Obj.isOfType(item, _t)) {
                         return false;
                     }
                 }
@@ -1366,8 +1365,8 @@ Validator.Function = function (_BaseValidator5) {
     _createClass(Fun, [{
         key: 'exec',
         value: function exec(value) {
-            var _x = typeof this.signature.type === 'string' ? this.signature.type : _global.wf.wfUtils.Fun.getConstructorName(this.signature.type);
-            var _fn = _global.wf.wfUtils.Fun.getConstructorName(value);
+            var _x = typeof this.signature.type === 'string' ? this.signature.type : _global.wf.Fun.getConstructorName(this.signature.type);
+            var _fn = _global.wf.Fun.getConstructorName(value);
             return _x === _fn ? true : this.path + ' requires \'$_x\' got \'<' + _fn + '>\' instead';
         }
     }]);
@@ -1392,7 +1391,7 @@ Validator.Default = function (_BaseValidator6) {
             var _this11 = this;
 
             _testValidator = function _testValidator(type, value) {
-                var _val = Validator[_global.wf.wfUtils.Str.capitalize(type)];
+                var _val = Validator[_global.wf.Str.capitalize(type)];
                 if (!_exists(_val)) {
                     return '\'' + _this11.path + '\' was unable to obtain validator for type \'<' + type + '>\'';
                 }
@@ -1487,7 +1486,7 @@ var ValidatorBuilder = function () {
             var _signatures = _exists(ref.polymorphic) ? ref.polymorphic : Array.isArray(ref) ? ref : [ref];
             _validators.get(this)[path] = {};
             var _functs = _signatures.map(function (_sig) {
-                var _typeof = _global.wf.wfUtils.Str.capitalize(_sig.type);
+                var _typeof = _global.wf.Str.capitalize(_sig.type);
                 var _hasKey = 0 <= Object.keys(Validator).indexOf(_typeof);
                 return new Validator[_hasKey ? _typeof : "Default"](path, _sig);
             });
@@ -1600,7 +1599,7 @@ var SchemaValidator = function () {
                     case "string":
                         var obj = {};
                         obj[_oKey] = {
-                            type: _global.wf.wfUtils.Str.capitalize(_schema[_oKey]),
+                            type: _global.wf.Str.capitalize(_schema[_oKey]),
                             required: false
                         };
                         var _o = Object.assign(_schema, obj);
@@ -1717,7 +1716,7 @@ var SchemaValidator = function () {
             }
             //- tests for basic string type declaration {key: {type: "String"} }
             else {
-                    if (!_exists(_jsd_.getClass(_global.wf.wfUtils.Str.capitalize(_type)))) {
+                    if (!_exists(_jsd_.getClass(_global.wf.Str.capitalize(_type)))) {
                         return 'type \'<' + _type + '>\' for schema element \'' + key + '\' was invalid';
                     }
                 }
@@ -1850,7 +1849,7 @@ var SchemaValidator = function () {
     }, {
         key: 'validateSchemaParamString',
         value: function validateSchemaParamString(key, sKey, params) {
-            var _kind = _global.wf.wfUtils.Str.capitalize(params[sKey]);
+            var _kind = _global.wf.Str.capitalize(params[sKey]);
             var _schemaKeys = _jsd_.schemaRef;
             var opts = _schemaOptions.get(this);
             // handles special `restrict` key
@@ -2007,11 +2006,11 @@ var SchemaValidator = function () {
                     if (_t !== "function") {
                         var _2 = _schemaKeys[key.split(".").pop()];
                         // tests for everything that"s not a string, _object or function
-                        if (_2 !== _global.wf.wfUtils.Str.capitalize(_t)) {
+                        if (_2 !== _global.wf.Str.capitalize(_t)) {
                             return 'value for schema element \'' + key + '\' has invalid type :: \'<' + _t + '>\'';
                         }
                     } else {
-                        var _3 = _global.wf.wfUtils.Fun.getConstructorName(params);
+                        var _3 = _global.wf.Fun.getConstructorName(params);
                         // tests for function"s constructor name
                         if (_3 !== _schemaKeys[key]) {
                             return 'value for schema element \'' + key + '\' has invalid class or method \'<' + _3 + '>\'';

@@ -8,7 +8,7 @@ class _metaData {
 	 * @param {object} _data -- Initial Data {parent:Schema|Set}
 	 */
 	constructor(_oRef, _data={}) {
-		let _cName = _global.wf.wfUtils.Fun.getConstructorName( _oRef );
+		let _cName = _global.wf.Fun.getConstructorName( _oRef );
 		if (!(_oRef instanceof Schema || _oRef instanceof Set)) {
 	    	throw `new _metaData() argument 1 requires subclass Schema or Set. Was subclass of '<${_cName}>'`;
 	    }

@@ -23,7 +23,9 @@
     "type": "git",
     "url": "https://github.com/Webfreshener/JSD.git"
   },
-  "dependencies": {},
+  "dependencies": {
+    "documentation": "^5.2.2"
+  },
   "devDependencies": {
     "babel": "^6.5.2",
     "babel-core": "^6.18.2",

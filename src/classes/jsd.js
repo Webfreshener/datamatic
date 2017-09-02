@@ -57,7 +57,7 @@ class JSD {
 	        return (0 <= _r.indexOf(null)) ? {_r : null} : undefined; } //- ends array handling
 	      return null; } //- end typrof arg is object
 	    if (typeof arg === "function") {
-	    	let _ = _global.wf.wfUtils.Fun.getConstructorName( arg );
+	    	let _ = _global.wf.Fun.getConstructorName( arg );
 	    	return this.getClass( _ );  }
 	    } //- end args in classesOrNames
 	  return null;
@@ -67,6 +67,7 @@ class JSD {
 	 * @param {function} clazz
 	 */
 	registerClass(name, clazz) {
+		this[name] = clazz;
 		return _kinds.get(this)[name] = clazz;
 	}
 	/**

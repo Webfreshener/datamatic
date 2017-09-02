@@ -160,8 +160,8 @@ Validator.Number = class Num extends BaseValidator {
  */
 Validator.Function = class Fun extends BaseValidator {
     exec(value) {
-        let _x = typeof this.signature.type === 'string' ? this.signature.type : _global.wf.wfUtils.Fun.getConstructorName(this.signature.type);
-        let _fn = _global.wf.wfUtils.Fun.getConstructorName(value);
+        let _x = typeof this.signature.type === 'string' ? this.signature.type : _global.wf.Fun.getConstructorName(this.signature.type);
+        let _fn = _global.wf.Fun.getConstructorName(value);
         return _x === _fn ? true : `${this.path} requires '$_x' got '<${_fn}>' instead`;
     }
 }
@@ -171,7 +171,7 @@ Validator.Function = class Fun extends BaseValidator {
 Validator.Default = class Def extends BaseValidator {
     exec(value) {
         _testValidator = (type, value) => {
-            let _val = Validator[_global.wf.wfUtils.Str.capitalize(type)];
+            let _val = Validator[_global.wf.Str.capitalize(type)];
             if (!_exists(_val)) {
                 return `'${this.path}' was unable to obtain validator for type '<${type}>'`;
             }

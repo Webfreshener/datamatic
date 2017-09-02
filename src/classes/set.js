@@ -74,7 +74,7 @@ class Set {
             }
             if (typeof _t == "string") {
                 return typeof item === _t;
-            } else if (!_global.wf.wfUtils.Obj.isOfType(item, _t)) {
+            } else if (!_global.wf.Obj.isOfType(item, _t)) {
                 return false;
             }
         }

@@ -49,7 +49,7 @@ class ValidatorBuilder {
 	  let _signatures = _exists(ref.polymorphic) ? ref.polymorphic : (Array.isArray(ref) ? ref : [ref]);
 	  _validators.get( this )[path] = {};
 	  let _functs = _signatures.map(_sig=> {
-		  let _typeof	= _global.wf.wfUtils.Str.capitalize(_sig.type);
+		  let _typeof	= _global.wf.Str.capitalize(_sig.type);
 		  let _hasKey	= (0 <= Object.keys(Validator).indexOf( _typeof ));
 		  return new Validator[ _hasKey ? _typeof : "Default"](path, _sig);
 	  });

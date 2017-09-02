@@ -28,8 +28,8 @@ _global.JSD = ()=> {
   //-- inject:./classes/schema.js
   //-- inject:./classes/_metaData.js
   let _jsd_ = new JSD();
-  _jsd_.registerClass("Schema", _jsd_.Schema = Schema);
-  _jsd_.registerClass("Set", _jsd_.Set = Set);
+  _jsd_.registerClass("Schema", Schema);
+  _jsd_.registerClass("Set", Set);
   let _sKeys = Object.keys(_jsd_.schemaRef);
   if (_jsd_.rx === null) { 
 	  _jsd_.rx = new RegExp( `^((${_sKeys.join("|")})+,?){${_sKeys.length}}$` ); }
@@ -51,8 +51,8 @@ if (typeof Object.assign != "function") {
       index = index + 1; }
     return target; }
 }
-//-- inject:./wfUtils.js
-let _exists = _global.wf.wfUtils.exists
+//-- inject:..js
+let _exists = _global.wf.exists
 //== holds references to registered JS Objects
 let _kinds = new WeakMap() || {};
 //injects JSD Class

@@ -11,7 +11,7 @@ function _classCallCheck(instance, Constructor) { if (!(instance instanceof Cons
 var _global = typeof exports !== 'undefined' && exports !== null ? exports : window;
 _global.wf = require('wf-utils');
 var WeakMap = require('es6-weak-map');
-var _exists = _global.wf.wfUtils.exists;
+var _exists = _global.wf.exists;
 // holds references to registered JS Objects
 var _kinds = new WeakMap() || {};
 var _schemaKeys = new WeakMap();
@@ -115,7 +115,7 @@ var JSD = function () {
 						return null;
 					} //- end typrof arg is object
 					if (typeof arg === "function") {
-						var _ = _global.wf.wfUtils.Fun.getConstructorName(arg);
+						var _ = _global.wf.Fun.getConstructorName(arg);
 						return this.getClass(_);
 					}
 				} //- end args in classesOrNames
@@ -144,6 +144,7 @@ var JSD = function () {
 	}, {
 		key: 'registerClass',
 		value: function registerClass(name, clazz) {
+			this[name] = clazz;
 			return _kinds.get(this)[name] = clazz;
 		}
 		/**
@@ -279,7 +280,7 @@ var SchemaValidator = function () {
 					case "string":
 						var obj = {};
 						obj[_oKey] = {
-							type: _global.wf.wfUtils.Str.capitalize(_schema[_oKey]),
+							type: _global.wf.Str.capitalize(_schema[_oKey]),
 							required: false
 						};
 						var _o = Object.assign(_schema, obj);
@@ -396,7 +397,7 @@ var SchemaValidator = function () {
 			}
 			//- tests for basic string type declaration {key: {type: "String"} }
 			else {
-					if (!_exists(_jsd_.getClass(_global.wf.wfUtils.Str.capitalize(_type)))) {
+					if (!_exists(_jsd_.getClass(_global.wf.Str.capitalize(_type)))) {
 						return 'type \'<' + _type + '>\' for schema element \'' + key + '\' was invalid';
 					}
 				}
@@ -529,7 +530,7 @@ var SchemaValidator = function () {
 	}, {
 		key: 'validateSchemaParamString',
 		value: function validateSchemaParamString(key, sKey, params) {
-			var _kind = _global.wf.wfUtils.Str.capitalize(params[sKey]);
+			var _kind = _global.wf.Str.capitalize(params[sKey]);
 			var _schemaKeys = _jsd_.schemaRef;
 			var opts = _schemaOptions.get(this);
 			// handles special `restrict` key
@@ -686,11 +687,11 @@ var SchemaValidator = function () {
 					if (_t !== "function") {
 						var _2 = _schemaKeys[key.split(".").pop()];
 						// tests for everything that"s not a string, _object or function
-						if (_2 !== _global.wf.wfUtils.Str.capitalize(_t)) {
+						if (_2 !== _global.wf.Str.capitalize(_t)) {
 							return 'value for schema element \'' + key + '\' has invalid type :: \'<' + _t + '>\'';
 						}
 					} else {
-						var _3 = _global.wf.wfUtils.Fun.getConstructorName(params);
+						var _3 = _global.wf.Fun.getConstructorName(params);
 						// tests for function"s constructor name
 						if (_3 !== _schemaKeys[key]) {
 							return 'value for schema element \'' + key + '\' has invalid class or method \'<' + _3 + '>\'';
