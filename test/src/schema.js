@@ -1486,6 +1486,10 @@ var ValidatorBuilder = function () {
             var _signatures = _exists(ref.polymorphic) ? ref.polymorphic : Array.isArray(ref) ? ref : [ref];
             _validators.get(this)[path] = {};
             var _functs = _signatures.map(function (_sig) {
+                if ((typeof _sig === 'undefined' ? 'undefined' : _typeof2(_sig)) !== 'object') {
+                    return new Validator["Default"](path, _sig);
+                }
+
                 var _typeof = _global.wf.Str.capitalize(_sig.type);
                 var _hasKey = 0 <= Object.keys(Validator).indexOf(_typeof);
                 return new Validator[_hasKey ? _typeof : "Default"](path, _sig);
