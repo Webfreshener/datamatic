@@ -12,7 +12,6 @@ class Schema {
         if (!_exists(_signature)) {
             return `Schema requires JSON object at arguments[0]. Got '${typeof _signature}'`;
         }
-        _object.set(this, {});
         _schemaOptions.set(this, opts);
         _validators.set(this, {});
         _required_elements.set(this, []);
@@ -26,7 +25,8 @@ class Schema {
 
         for (let _sigEl of Object.keys(_signature)) {
             // -- tests for element `required`
-            let _req = _signature[_sigEl].required
+            let _req = _signature[_sigEl].required;
+            // let _default = _signature[_sigEl].default;
             if (_req) {
                 // -- adds required element to list
                 _required_elements.get(this).push(_sigEl);
@@ -55,6 +55,77 @@ class Schema {
         _schemaSignatures.set(this, _signature);
         _schemaHelpers.set(this, new SchemaHelpers(this));
         _schemaHelpers.get(this).walkSchema(_signature || {}, this.path);
+        // creates model
+        _object.set(this, new Proxy({}, this.handler));
+        // attempts to set default value
+        for (let _sigEl of Object.keys(_signature)) {
+            // -- tests for element `default`
+            let _default = _signature[_sigEl].default;
+            if (_default) {
+                // sets default value for key on model
+                let _p = _sigEl.split('.');
+                this.model[_sigEl] = _default;
+            }
+        }
+    }
+
+    get handler() {
+        return {
+            get: (t, key) => {
+                const _m = t[key];
+                return _m instanceof Schema ? _m.model : _m;
+            },
+            set: (t, key, value) => {
+                let _sH = _schemaHelpers.get(this);
+                if (typeof key === 'object') {
+                    _sH.setObject(key);
+                    return true;
+                }
+                let _childSigs = this.signature.elements || this.signature;
+                let _pathKeys = key.split(".");
+                for (let _ in _pathKeys) {
+                    let k = _pathKeys[_];
+                    let _schema;
+                    let _key = this.path.length > 0 ? `${this.path}.${k}` : k;
+                    if (_exists(_childSigs[`${k}`])) {
+                        _schema = _childSigs[k];
+                    }
+                    else {
+                        // attempts to find wildcard element name
+                        if (_exists(_childSigs["*"])) {
+                            // applies schema
+                            _schema = _childSigs["*"].polymorphic || _childSigs["*"];
+                            // derives path for wildcard element
+                            let _pKey = this.path.length > 1 ? `${this.path}.${key}` : key;
+                            // creates Validator for path
+                            ValidatorBuilder.getInstance().create(_schema, _pKey);
+                        }
+                    }
+                    // handles missing schema signatures
+                    if (!_exists(_schema)) {
+                        // rejects non-members of non-extensible schemas
+                        if (!this.isExtensible) {
+                            throw new Error(`element '${_key}' is not a valid element`);
+                            // return false;
+                        }
+                        _schema = Schema.defaultSignature;
+                    }
+                    // handles child objects
+                    if (typeof value === "object") {
+                        value = _sH.setChildObject(_key, value);
+                    }
+                    // handles absolute values (strings, numbers, booleans...)
+                    else {
+                        let eMsg = _sH.validate(_key, value);
+                        if (typeof eMsg === "string") {
+                            throw new Error(eMsg);
+                            // return false;
+                        }
+                    }
+                    t[key] = value;
+                }
+            }
+        };
     }
 
     /**
@@ -64,13 +135,16 @@ class Schema {
         return _schemaSignatures.get(this);
     }
 
+    get model() {
+        return _object.get(this);
+    }
+
     /**
      * @param {string} key
      * @returns {any}
      */
     get(key) {
-        let _ = _object.get(this);
-        return _.hasOwnProperty(key) ? _[key] : null;
+        return this.model[key];
     }
 
     /**
@@ -79,55 +153,13 @@ class Schema {
      * @param {any} value
      */
     set(key, value) {
-        let _sH = _schemaHelpers.get(this);
-        if (typeof key === 'object') {
-            return _sH.setObject(key);
+        if (typeof key === 'string') {
+            this.model[key] = value;
+        } else {
+            Object.keys(key).forEach((_k) => {
+                this.model[_k] = key[_k];
+            });
         }
-        let _childSigs = this.signature.elements || this.signature;
-        let _pathKeys = key.split(".");
-        for (let _ in _pathKeys) {
-            let k = _pathKeys[_];
-            let _schema;
-            let _key = this.path.length > 0 ? `${this.path}.${k}` : k;
-            if (_exists(_childSigs[`${k}`])) {
-                _schema = _childSigs[k];
-            }
-            else {
-                // attempts to find wildcard element name
-                if (_exists(_childSigs["*"])) {
-                    // applies schema
-                    _schema = _childSigs["*"].polymorphic || _childSigs["*"];
-                    // derives path for wildcard element
-                    let _pKey = this.path.length > 1 ? `${this.path}.${key}` : key;
-                    // creates Validator for path
-                    ValidatorBuilder.getInstance().create(_schema, _pKey);
-                }
-            }
-            // handles missing schema signatures
-            if (!_exists(_schema)) {
-                // rejects non-members of non-extensible schemas
-                if (!this.isExtensible) {
-                    return `element '${_key}' is not a valid element`;
-                }
-                _schema = Schema.defaultSignature;
-            }
-            // handles child objects
-            if (typeof value === "object") {
-                value = _sH.setChildObject(_key, value);
-            }
-            // handles absolute vaues (strings, numbers, booleans...)
-            else {
-                let eMsg = _sH.validate(_key, value);
-                if (typeof eMsg === "string") {
-                    return eMsg;
-                }
-            }
-            // applies value to schema
-            let _o = _object.get(this);
-            _o[key] = value;
-            _object.set(this, _o);
-        }
-        // returns self for chaining
         return this;
     }
 
@@ -236,8 +268,8 @@ class Schema {
      * @returns {boolean}
      */
     get isExtensible() {
-//		return this.options.extensible;
-        return _exists(this.signature.extensible) ? this.signature.extensible : this.options.extensible || false;
+        return _exists(this.signature.extensible) ?
+            this.signature.extensible : this.options.extensible || false;
     }
 
     /**

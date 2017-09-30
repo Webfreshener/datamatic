@@ -88,7 +88,8 @@ class SchemaValidator {
 			let keyPath;
 			if ((_p = (keyPath = key.split(".")).pop()) !== "elements") { 
 				if (_p === "default") {
-					return true; }
+					return true;
+				}
 				if (params.hasOwnProperty("polymorphic")) {
 					return this.validateSchemaEntry(key, params.polymorphic);	}
 				return `value for schema element '${key}' was malformed. Property 'type' was missing`;	} 
@@ -121,7 +122,7 @@ class SchemaValidator {
 		if (typeof params.type === "object") { 
 			return this.validateSchemaEntry(key, params.type); }
 		if (key.split(".").pop() === "default") {
-			if (this._defaults == null) { 
+			if (this._defaults == null) {
 				this._defaults = {}; }
 			this._defaults[key] = params;
 			return true; }

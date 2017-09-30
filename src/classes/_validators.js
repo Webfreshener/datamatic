@@ -97,7 +97,8 @@ Validator.Object = class Obj extends BaseValidator {
             return true;
         }
         else {
-            return `${this.path} expected value of type 'Object'. Type was '<${typeof value}>'`;
+            let _e = `${this.path} expected value of type 'Object'. Type was '<${typeof value}>'`;
+            return _e;
         }
         // should never hit this
         return `${this.path} was unable to be processed`;
@@ -129,7 +130,7 @@ Validator.String = class Str extends BaseValidator {
              */
             if (Array.isArray(this.signature.restrict)) {
                 _rxStr = this.signature.restrict[0];
-                _rxFlags = this.signature.length > 1 ? this.signature.restrict[1] : "";
+                _rxFlags = this.signature.restrict.length > 1 ? this.signature.restrict[1] : "";
             } else {
                 _rxStr = this.signature.restrict;
                 _rxFlags = "";

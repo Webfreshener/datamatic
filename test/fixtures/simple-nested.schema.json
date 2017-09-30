@@ -1,0 +1,24 @@
+{
+  "elements": {
+    "aObject": {
+      "type": "Object",
+      "required": true,
+      "extensible": true,
+      "elements": {
+        "someValue": {
+          "type": "Object",
+          "elements": {
+            "deepValue": {
+              "type": "Number"
+            }
+          }
+        }
+      },
+      "default": {
+        "someValue": {
+          "deepValue": 0
+        }
+      }
+    }
+  }
+}
