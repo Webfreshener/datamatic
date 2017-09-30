@@ -54,6 +54,6 @@
   },
   "homepage": "https://webfreshener.github.io/JSD/",
   "scripts": {
-    "test": "gulp build ; gulp test"
+    "test": "gulp build; gulp build-tests ; gulp test"
   }
 }

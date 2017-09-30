@@ -15,8 +15,10 @@ class _metaData {
 	    if (this._createID == null) {
 	      let _id = 0;
 	      _metaData.prototype._createID = function() {
-	        if (this.__objID == null) { 
-	        	this.__objID = `${_cName}${_id + 1}`; }
+	        if (this.__objID == null) {
+                _id = _id + 1;
+	        	this.__objID = `${_cName}${_id}`;
+	        }
 	        return this.__objID;
 	      };
 	    }

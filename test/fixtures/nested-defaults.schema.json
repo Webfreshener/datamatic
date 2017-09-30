@@ -28,7 +28,7 @@
         "restrict": [
           "\\\\bv?(?:0|[1-9]\\\\d*)\\\\.(?:0|[1-9]\\\\d*)\\\\.(?:0|[1-9]\\\\d*)(?:-[\\\\da-z\\\\-]+(?:\\\\.[\\\\da-z\\\\-]+)*)?(?:\\\\+[\\\\da-z\\\\-]+(?:\\\\.[\\\\da-z\\\\-]+)*)?\\\\b",
           "ig"
-          ]
+        ]
       },
       "APP_ID": {
         "type": "String",
@@ -158,6 +158,41 @@
             "restrict": "^DELETE+$"
           }
         }
+      }
+    },
+    "default": {
+      "ALLOWED": [
+        "APP_ID",
+        "REST_KEY",
+        "HOST",
+        "PORT",
+        "BASE_PATH",
+        "MAX_BATCH_SIZE",
+        "DEFAULT_FETCH_LIMIT_OVERRIDE",
+        "UNDEFINED_CLASSNAME"
+      ],
+      "VERSION": "0.1.1-alpha",
+      "APP_ID": "LOCAL",
+      "APP_ID_PARAM_NAME": "APP_ID",
+      "REST_KEY_PARAM_NAME": "REST_KEY",
+      "SESSION_KEY": "AUTHORIZATION",
+      "API_VERSION": "1",
+      "MAX_BATCH_SIZE": 50,
+      "DEFAULT_FETCH_LIMIT_OVERRIDE": 200000,
+      "UNDEFINED_CLASSNAME": "__UNDEFINED_CLASSNAME__",
+      "API_URI": "/api/1",
+      "CORS": true,
+      "PROTOCOL": "HTTP",
+      "HOST": "0.0.0.0",
+      "PORT": 80,
+      "BASE_PATH": "/api",
+      "CAPITALIZE_CLASSNAMES": false,
+      "QUERY_PARAM": "filter",
+      "CRUD_METHODS": {
+        "create": "POST",
+        "read": "GET",
+        "update": "PUT",
+        "destroy": "DELETE"
       }
     }
   }

@@ -35,8 +35,9 @@ class ValidatorBuilder {
    */
   set(_path, func) {
     if (!_exists(func) || typeof func !== 'function') { 
-  	  return "2nd argument expects a function"; }
-    _validators.get(this)[_path] = func;
+  	  return "2nd argument expects a function";
+    }
+    _validators.get( this )[_path] = func;
     return this;
   }
   /**
@@ -46,8 +47,11 @@ class ValidatorBuilder {
   create(ref, path) {
 	  if (!_exists(ref)) {
 		  throw "create requires object reference at arguments[0]";	}
-	  let _signatures = _exists(ref.polymorphic) ? ref.polymorphic : (Array.isArray(ref) ? ref : [ref]);
-	  _validators.get( this )[path] = {};
+	  let _signatures = _exists(ref.polymorphic) ?
+          ref.polymorphic : (
+              Array.isArray(ref) ? ref : [ref]
+          );
+	  let _v = _validators.get( this );
 	  let _functs = _signatures.map(_sig=> {
           if (typeof _sig !== 'object') {
               return new Validator["Default"](path, _sig);
@@ -57,7 +61,7 @@ class ValidatorBuilder {
 		  let _hasKey	= (0 <= Object.keys(Validator).indexOf( _typeof ));
 		  return new Validator[ _hasKey ? _typeof : "Default"](path, _sig);
 	  });
-	  return _validators.get( this )[path] = value=> {
+	  return _validators.get( this )[path] = (value) => {
 		  var _result;
 		  for (let idx in _functs) {
 			  _result = _functs[idx].exec(value);
@@ -74,9 +78,10 @@ class ValidatorBuilder {
    * @param value
    */
   exec(path, value) {
-	  let _v = _validators.get(this);
+	  let _v = ValidatorBuilder.getValidators();
 	  if (!_v.hasOwnProperty( path )) {
-		  return `validator for '${path}' does not exist`; }
+		  return `validator for '${path}' does not exist`;
+	  }
 	  return _v[path]( value );
   }
   /**

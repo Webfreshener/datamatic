@@ -7,7 +7,7 @@ class SchemaHelpers {
      */
     constructor(_ref) {
         if (!_exists(_ref) || !(_ref instanceof Schema)) {
-            throw "arguments[0] must be type 'Schema'";
+            throw new Error("arguments[0] must be type 'Schema'");
         }
         this._ref = _ref;
     }
@@ -24,7 +24,7 @@ class SchemaHelpers {
         for (var k in obj) {
             let eMsg = this._ref.set(k, obj[k]);
             if (typeof eMsg === 'string') {
-                return eMsg;
+                throw new Error( eMsg );
             }
         }
         return this._ref;
@@ -140,6 +140,7 @@ class SchemaHelpers {
                 }
             }
         }
+
         return result;
     }
 
