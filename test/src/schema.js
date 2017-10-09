@@ -12,7 +12,7 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var _global = typeof exports !== 'undefined' && exports !== null ? exports : window;
+var _global = {}; // (typeof exports !== 'undefined') && (exports !== null) ? exports : window;
 _global.wf = require('wf-utils');
 var WeakMap = require('es6-weak-map');
 var _exists = _global.wf.exists;

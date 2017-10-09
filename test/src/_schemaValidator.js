@@ -8,7 +8,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var _global = typeof exports !== 'undefined' && exports !== null ? exports : window;
+var _global = {}; // (typeof exports !== 'undefined') && (exports !== null) ? exports : window;
 _global.wf = require('wf-utils');
 var WeakMap = require('es6-weak-map');
 var _exists = _global.wf.exists;
