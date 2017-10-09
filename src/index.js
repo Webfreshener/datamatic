@@ -51,8 +51,8 @@ if (typeof Object.assign != "function") {
       index = index + 1; }
     return target; }
 }
-//-- inject:..js
-let _exists = _global.wf.exists
+//-- inject:./wfUtils.js
+let _exists = _global.wf.exists;
 //== holds references to registered JS Objects
 let _kinds = new WeakMap() || {};
 //injects JSD Class

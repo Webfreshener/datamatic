@@ -1,4 +1,4 @@
-const _global = (typeof exports !== 'undefined') && (exports !== null) ? exports : window;
+const _global = {}; // (typeof exports !== 'undefined') && (exports !== null) ? exports : window;
 _global.wf = require('wf-utils');
 var WeakMap = require('es6-weak-map');
 const _exists = _global.wf.exists
