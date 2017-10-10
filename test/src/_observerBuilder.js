@@ -12,7 +12,8 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-var _global = {}; // (typeof exports !== 'undefined') && (exports !== null) ? exports : window;
+var Rx = require('rxjs/Rx');
+var _global = typeof exports !== 'undefined' && exports !== null ? exports : window;
 _global.wf = require('wf-utils');
 var WeakMap = require('es6-weak-map');
 var _exists = _global.wf.exists;
@@ -27,6 +28,7 @@ var _schemaSignatures = new WeakMap();
 var _required_elements = new WeakMap();
 var _validators = new WeakMap();
 var _vectorTypes = new WeakMap();
+var _observers = new WeakMap();
 /**
  * @private
  */
@@ -2121,6 +2123,107 @@ var SchemaValidator = function () {
 
     return SchemaValidator;
 }();
+/**
+ * Created by van on 10/9/17.
+ */
+
+
+var __oBuilder = null;
+
+var ObserverBuilder = function () {
+    /**
+     * @constructor
+     */
+    function ObserverBuilder() {
+        _classCallCheck(this, ObserverBuilder);
+
+        if (!_exists(__oBuilder)) {
+            _observers.set(__oBuilder = this, {});
+        }
+        return __oBuilder;
+    }
+
+    /**
+     * @returns list of validation paths
+     */
+
+
+    _createClass(ObserverBuilder, [{
+        key: 'list',
+        value: function list() {
+            var _v = _observers.get(this);
+            return object.keys(_v);
+        }
+
+        /**
+         * @param path
+         * @returns item at path reference
+         */
+
+    }, {
+        key: 'get',
+        value: function get(path) {
+            var _o = _observers.get(this);
+            return _exists(_o[path]) ? _o[path] : null;
+        }
+    }, {
+        key: 'create',
+        value: function create(forPath, oRef) {
+            if (!(oRef instanceof Schema || oRef instanceof Set)) {
+                throw 'oRef must be instance of Schema or Set';
+            }
+            var _o = _observers.get(this);
+            _o[forPath] = new Rx.Subject();
+        }
+    }, {
+        key: 'next',
+        value: function next(path, value) {
+            var _o = this.get(path);
+            if (_o) {
+                _o.next(value);
+            }
+        }
+    }, {
+        key: 'complete',
+        value: function complete(path, value) {
+            var _o = this.get(path);
+            if (_o) {
+                _o.complete(value);
+            }
+        }
+
+        /**
+         * @returns singleton ObserverBuilder reference
+         */
+
+    }], [{
+        key: 'getInstance',
+        value: function getInstance() {
+            return new this();
+        }
+
+        /**
+         * @returns validators WeakMap
+         */
+
+    }, {
+        key: 'getObservers',
+        value: function getObservers() {
+            return _observers.get(ObserverBuilder.getInstance());
+        }
+        /**
+         *
+         */
+
+    }, {
+        key: 'create',
+        value: function create(path, oRef) {
+            return ObserverBuilder.getInstance().create(path, oRef);
+        }
+    }]);
+
+    return ObserverBuilder;
+}();
 
 var _jsd_ = new JSD();
 /**
@@ -2413,6 +2516,4 @@ var SchemaHelpers = function () {
 
 ;
 exports.Schema = Schema;
-exports.Set = Set;
-exports.BaseValidator = BaseValidator;
-exports._metaData = _metaData;
+exports.ObserverBuilder = ObserverBuilder;
