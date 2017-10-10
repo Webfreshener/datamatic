@@ -296,9 +296,12 @@ describe("Schema Class Test Suite", function () {
                     default: "DEFAULT VALUE"
                 }
             };
-            let _ = new Schema(_jsd, {extensible: true});
-            _.set({value: 123});
-            _.get("str").should.eq("DEFAULT VALUE");
+            let _ = new Schema(_jsd);
+            _.model = {value: 123};
+            // _.model.value = 123;
+            console.log(_.model);
+            _.model.value.should.eq(123);
+            _.model.str.should.eq("DEFAULT VALUE");
         });
     });
 

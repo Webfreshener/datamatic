@@ -123,6 +123,7 @@ class Schema {
                         }
                     }
                     t[key] = value;
+                    ObserverBuilder.getInstance().next(key, value);
                 }
             }
         };
@@ -138,6 +139,18 @@ class Schema {
     get model() {
         return _object.get(this);
     }
+
+    set model(value) {
+        if (typeof value === 'object') {
+            Object.keys(value).forEach((k) => {
+                this.model[k] = value[k];
+            });
+        }
+        else {
+            throw `unable to set scalar value on model at ${this.path.length ? this.path : '.'}`;
+        }
+    }
+
 
     /**
      * @param {string} key
@@ -164,11 +177,28 @@ class Schema {
     }
 
     /**
+     * subscribes handler method to property observer
+     * @param func
+     */
+    subscribe(path, func) {
+        if (typeof func !== 'function') {
+            throw new Error('subscribe requires function');
+        }
+
+        let _o = ObserverBuilder.getInstance().get(path);
+        if (!_o || _o === null) {
+            ObserverBuilder.getInstance().create(path, this);
+            _o = ObserverBuilder.getInstance().get(path);
+        }
+
+        _o.subscribe(func);
+    }
+
+    /**
      * @returns {true|string} returns error string or true
      */
     validate() {
         var _path = this.path;
-        // return true
         for (let _k of ValidatorBuilder.getInstance().list()) {
             let e;
             _path = _path.length > 0 ? `${_path}.${_k}` : _k;
@@ -180,7 +210,7 @@ class Schema {
     }
 
     /**
-     *
+     * gets raw value of this model
      */
     valueOf() {
         return _object.get(this);
@@ -204,7 +234,7 @@ class Schema {
             }
             return itm;
         };
-        let _obj = _object.get(this);
+        let _obj = this.valueOf();
         for (let k in _obj) {
             _o[k] = _derive(_obj[k]);
         }
@@ -212,14 +242,14 @@ class Schema {
     }
 
     /**
-     *
+     * JSON stringifies primitive value
      */
     toString(pretty = false) {
         return JSON.stringify(this.toJSON(), null, (pretty ? 2 : void(0)));
     }
 
     /**
-     *
+     * get options (if any) for this model's schema
      */
     get options() {
         return _schemaOptions.get(this);
@@ -273,7 +303,7 @@ class Schema {
     }
 
     /**
-     *
+     * Base Signature for all Schema Objects
      */
     static defaultSignature() {
         return {
