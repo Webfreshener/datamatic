@@ -99,8 +99,16 @@ class SchemaHelpers {
                     _path: key,//`${this._ref.path}.${key}`,
                     _root: this._ref.root
                 });
-            let _schemaDef = this._ref.signature[key.split(".").pop()] || this._ref.signature['*'] || this._ref.signature;
-            return new Schema(_schemaDef, opts, _md);
+            // _kinds = this.getKinds(this._ref.signature[key] || this._ref.signature);
+            let _schemaDef = this._ref.signature[key.split(".").pop()] ||
+                this._ref.signature['*'] ||
+                this._ref.signature;
+            try {
+                var _s = new Schema(_schemaDef, opts, _md);
+            } catch (e) {
+                return e;
+            }
+            return _s;
         }
         else {
             _kinds = this.getKinds(this._ref.signature[key] || this._ref.signature);

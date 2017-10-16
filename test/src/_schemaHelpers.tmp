@@ -10,6 +10,7 @@ let _schemaKeys = new WeakMap();
 let _schemaOptions = new WeakMap();
 let _schemaSignatures = new WeakMap();
 let _schemaHelpers = new WeakMap();
+let _observers = new WeakMap();
 let _required_elements = new WeakMap();
 let _validators = new WeakMap();
 //-- inject:../../src/classes/_metaData.js
@@ -18,6 +19,7 @@ let _validators = new WeakMap();
 //-- inject:../../src/classes/_validators.js
 //-- inject:../../src/classes/_validatorBuilder.js
 //-- inject:../../src/classes/_schemaValidator.js
+//-- inject:../../src/classes/_observerBuilder.js
 const _jsd_ = new JSD();
 //-- inject:../../src/classes/_schemaHelpers.js
 ;

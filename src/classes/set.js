@@ -112,9 +112,13 @@ class Set {
      */
     setItemAt(idx, item) {
         if (!this._typeCheck(item)) {
+            // return false;
+            var eMsg = `item at index ${idx} had wrong type`;
+            ObserverBuilder.getInstance().error(this.path, eMsg);
             return false;
         }
         _object.get(this).splice(idx, 0, item);
+        ObserverBuilder.getInstance().error(this.path, this);
         return this;
     }
 
@@ -286,5 +290,22 @@ class Set {
         return this.valueOf().length;
     }
 
+    /**
+     * subscribes handler method to property observer for path
+     * @param path
+     * @param func
+     */
+    subscribe(path, func) {
+        if ((typeof func).match(/^(function|object)$/) === null) {
+            throw new Error('subscribe requires function');
+        }
+        let _o = ObserverBuilder.getInstance().get(path);
+        if (!_o || _o === null) {
+            ObserverBuilder.getInstance().create(path, this);
+            _o = ObserverBuilder.getInstance().get(path);
+        }
+
+        _o.subscribe(func);
+    }
 }
 

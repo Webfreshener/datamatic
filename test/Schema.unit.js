@@ -54,21 +54,21 @@ describe("Schema Class Test Suite", function () {
     });
     describe("Schema Data Validation Methods", function () {
         /*
-        it("should validate data set to it", function () {
-            var _S = new Schema({
-                elements: {
-                    value: "String"
-                }
-            });
-            (_S.set({value: 1}) instanceof Schema).should.be.false;
-            //    (_S.set( {value:"1"} ) instanceof Schema).should.be.true;
-            //    _S = new Schema({
-            //    	elements: {
-            //    		value:"Number" }});
-            //    (_S.set({value:1}) instanceof Schema).should.be.true;
-            //    (_S.set({value:"A String"}) instanceof Schema).should.be.false;
-        });
-        */
+         it("should validate data set to it", function () {
+         var _S = new Schema({
+         elements: {
+         value: "String"
+         }
+         });
+         (_S.set({value: 1}) instanceof Schema).should.be.false;
+         //    (_S.set( {value:"1"} ) instanceof Schema).should.be.true;
+         //    _S = new Schema({
+         //    	elements: {
+         //    		value:"Number" }});
+         //    (_S.set({value:1}) instanceof Schema).should.be.true;
+         //    (_S.set({value:"A String"}) instanceof Schema).should.be.false;
+         });
+         */
         it("should only allow valid types", () => {
             return expect(() => new Schema({value: {type: "Nada"}})).to.throw(
                 "value for schema element 'value' has invalid type '<Nada>'");
@@ -121,9 +121,39 @@ describe("Schema Class Test Suite", function () {
             };
             _schema.set(_d);
             expect(_schema.model.hasOwnProperty('name')).to.eq(true);
-            // expect(_schema.set(_d)).to.eq(
-                // "required property 'description' is missing for 'root element'");
         });
+    });
+
+    describe("Wildcards", function () {
+        it("should initialize from wildcard schema fixture", () => {
+            let _s = require("./fixtures/wildcard.schema.json");
+            this.schema = new Schema(_s);
+            expect(this.schema instanceof Schema).to.be.true;
+        });
+        it("should validate arbitrary wildcard elements", (done) => {
+            const _h = {
+                next: () => {
+                    // console.log(this.schema.model.foo.bar);
+                    done("should have dispatched an error");
+                },
+                error: (e) => {
+                    // console.log(`e: ${e}`);
+                    done();
+                }
+            };
+            this.schema.subscribe('foo.bar.active', _h);
+            this.schema.model = {
+                foo: {
+                    bar: {
+                        active: {
+                            foo: "bar"
+                        },
+                        // name: 123,
+                        name: "Foo 1"
+                    }
+                }
+            };
+        })
     });
 
     describe("Polymorphism", function () {
@@ -133,36 +163,23 @@ describe("Schema Class Test Suite", function () {
             expect(this.schema instanceof Schema).to.be.true;
         });
 
-
-        it("should check for polymorphic properties", () => {
+        it("should check for polymorphic properties", (done) => {
             let _d = {
-                badParam: false//,
-
-                //			objType1: {
-                //				id: 0,
-                //				name: "myName",
-                //				desc: "some text"
-                //			},
-                //			objType2: {
-                //				id: 0,
-                //				active: true
-                //			},
+                badParam: false
             };
-            // expect(this.schema.set(_d)).to.eq(void(0));
-            //
-            expect(() => this.schema.set(_d)).to.throw(
-                "badParam expected value of type 'Object'. Type was '<boolean>'");
-            //	_d.badParam = 1;
-            //    expect(this.schema.set(_d)).to.eq(
-            //    		"'badParam' expected Object, type was '<number>'");
-            //	_d.badParam = {
-            //		id: "0",
-            //		name: "myName",
-            //		desc: "sometext"//,
-            ////		bad: "bad"
-            //	}
-            //	console.log(`res: ${this.schema.set(_d)}`);
-            //	expect(this.schema.set(_d) instanceof Schema).to.be.true;
+
+            let _f = {
+                next: () => {
+                    done("did not fail badParam as expected");
+                },
+                error: (e) => {
+                    expect(e).to.eq("badParam expected value of type 'Object'. Type was '<boolean>'");
+                    done();
+                }
+            };
+
+            let _sub = this.schema.subscribe('badParam', _f);
+            this.schema.model = _d;
         });
     });
 
@@ -183,7 +200,7 @@ describe("Schema Class Test Suite", function () {
             expect(this.schema instanceof Schema).to.be.true;
         });
 
-        it("should check for valid properties", () => {
+        it("should check for valid properties", (done) => {
             let _d = {
                 name: "Test",
                 description: "some text here",
@@ -206,22 +223,22 @@ describe("Schema Class Test Suite", function () {
                 },
                 scope: {},
                 scopes: {},
-                properties: {},
-                foo: {}
+                properties: {}
             };
-            expect(() => this.schema.set(_d))
-                .to.throw("http expected value of type 'Object'. Type was '<boolean>'");
-            _d.http = {
-                path: "/api"
-            };
-            _d.relations.myRelation.type = "belongsTo";
-            _d.relations.myRelation.model = "ModelName";
-            delete _d.foo;
-            _ = this.schema.set(_d);
-            expect(_ instanceof Schema).to.be.true;
+            const _h = {
+                next: () => {
+                    throw "expected to broadcast error message instead";
+                },
+                error: (e) => {
+                    e.should.eq("http expected value of type 'Object'. Type was '<boolean>'");
+                    done();
+                }
+            }
+            this.schema.subscribe('http', _h);
+            this.schema.model = _d;
         });
 
-        it("should check for required fields on elements", () => {
+        it("should check for required fields on elements", (done) => {
             let _d = {
                 name: "Test",
                 description: "some text here",
@@ -241,14 +258,33 @@ describe("Schema Class Test Suite", function () {
             let res = this.schema.set(_d);
             expect(res instanceof Schema).to.be.true;
 
-            _d = Object.assign(_d, {
-                properties: {
-                    type: "Boolean",
-                    name: "Test"
+            // _d = Object.assign(_d, {
+            //     properties: {
+            //         // type: "Boolean",
+            //         name: "Test"
+            //     }
+            // });
+
+            let _f = {
+                next: () => {
+                    // console.log(this.schema.model.properties.badProperty);
+                    done("expected to fail with missing 'type' property");
+                },
+                error: (e) => {
+                    expect(e).to.eq("required property 'type' is missing for properties.badProperty");
+                    done();
                 }
-            });
-            return expect(() => this.schema.set(_d)).to.not.throw(
-                "required property 'type' is missing");
+            };
+
+            this.schema.subscribe('properties.badProperty', _f);
+            this.schema.model.properties = {
+                badProperty: {
+                    // type: "Boolean",
+                    name: "Test",
+                    index: true,
+                }
+            };
+
         });
     });
 
@@ -298,8 +334,6 @@ describe("Schema Class Test Suite", function () {
             };
             let _ = new Schema(_jsd);
             _.model = {value: 123};
-            // _.model.value = 123;
-            console.log(_.model);
             _.model.value.should.eq(123);
             _.model.str.should.eq("DEFAULT VALUE");
         });
@@ -314,26 +348,3 @@ describe("Schema Class Test Suite", function () {
         });
     })
 });
-
-// # TO-DO:
-// it "should handle defaults and restrictions", =>
-// _s =
-// elements:
-// foo:
-// type: "String"
-// restrict: "^[a-zA-Z0-9\\\s\\\.]{1,}$"
-// # default: "Hello World"
-// required: false
-// @schema = new Schema _s
-// @schema.set foo:"Goodnight Moon?"
-// expect(@schema.get "foo").to.not.exist
-// @schema.set foo:"Goodnight Moon"
-// expect(@schema.get "foo").to.eq "Goodnight Moon"
-// 
-// it "should set a value to the schema", =>
-// _s = require "./schemas/simple.json"
-// @schema = new Schema _s
-// ((@schema.set "name", "Test") instanceof Schema).should.be.true
-// 
-// it "should get a value from the schema", =>
-// (@schema.get "name").should.equal "Test"
