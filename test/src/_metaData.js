@@ -887,7 +887,6 @@ var Set = function () {
     function Set(_type) {
         _classCallCheck(this, Set);
 
-        _object.set(this, []);
         var _types = void 0;
 
         if (!_exists(_type)) {
@@ -923,7 +922,8 @@ var Set = function () {
         if (!_exists(arguments[1])) {
             _ = new _metaData(this, {
                 _path: "",
-                _root: this });
+                _root: this
+            });
         } else {
             _ = arguments[1] instanceof _metaData ? arguments[1] : new _metaData(this, arguments[1]);
         }
@@ -933,18 +933,24 @@ var Set = function () {
         // type = _type;
         // for now we use Weakmap
         _vectorTypes.set(this, _types);
+        _object.set(this, new Proxy([], this.handler));
     }
 
     /**
-     * tests item to see if it conforms to expected item type
-     * @param item
-     * @returns {boolean}
-     * @private
+     * getter for object model
      */
 
 
     _createClass(Set, [{
         key: '_typeCheck',
+
+
+        /**
+         * tests item to see if it conforms to expected item type
+         * @param item
+         * @returns {boolean}
+         * @private
+         */
         value: function _typeCheck(item) {
             var _iteratorNormalCompletion7 = true;
             var _didIteratorError7 = false;
@@ -995,7 +1001,7 @@ var Set = function () {
         value: function validate() {
             var _path = this.path();
             var _validator = ValidatorBuilder.getInstance();
-            _object.get(this).forEach(function (itm) {
+            this.model.forEach(function (itm) {
                 var e = void 0;
                 if (typeof (e = _validator.exec(_path, itm)) === 'string') {
                     return e;
@@ -1012,7 +1018,7 @@ var Set = function () {
     }, {
         key: 'getItemAt',
         value: function getItemAt(idx) {
-            return _object.get(this).length >= idx ? _object.get(this)[idx] : null;
+            return this.model[idx];
         }
 
         /**
@@ -1024,14 +1030,7 @@ var Set = function () {
     }, {
         key: 'setItemAt',
         value: function setItemAt(idx, item) {
-            if (!this._typeCheck(item)) {
-                // return false;
-                var eMsg = 'item at index ' + idx + ' had wrong type';
-                ObserverBuilder.getInstance().error(this.path, eMsg);
-                return false;
-            }
-            _object.get(this).splice(idx, 0, item);
-            ObserverBuilder.getInstance().error(this.path, this);
+            this.model[idx] = item;
             return this;
         }
 
@@ -1044,10 +1043,8 @@ var Set = function () {
     }, {
         key: 'removeItemAt',
         value: function removeItemAt(idx) {
-            if (idx > _object.get(this).length) {
-                return false;
-            }
-            return _object.get(this).splice(idx, 1);
+            delete this.model[idx];
+            return this;
         }
 
         /**
@@ -1077,11 +1074,11 @@ var Set = function () {
             if (!this._typeCheck(item)) {
                 return false;
             }
-            if (idx > _object.get(this).length) {
+            if (idx > this.model.length) {
                 return false;
             }
-            if (idx <= _object.get(this).length) {
-                _object.get(this).splice(idx, 1, item);
+            if (idx <= this.model.length) {
+                this.model[idx] = item;
             }
             return this;
         }
@@ -1094,7 +1091,8 @@ var Set = function () {
     }, {
         key: 'addItem',
         value: function addItem(item) {
-            return this.setItemAt(_object.get(this).length, item);
+            this.setItemAt(this.model.length, item);
+            return this;
         }
 
         /**
@@ -1104,7 +1102,7 @@ var Set = function () {
     }, {
         key: 'shift',
         value: function shift() {
-            return _object.get(this).shift();
+            return Reflect.apply(Array.prototype.shift, this.model, []);
         }
     }, {
         key: 'unshift',
@@ -1115,16 +1113,11 @@ var Set = function () {
          * @returns {Set} reference to self
          */
         value: function unshift() {
-            var _this4 = this;
-
             for (var _len = arguments.length, items = Array(_len), _key2 = 0; _key2 < _len; _key2++) {
                 items[_key2] = arguments[_key2];
             }
 
-            items.reverse().forEach(function (item) {
-                return _this4.setItemAt(0, item);
-            });
-
+            Reflect.apply(Array.prototype.unshift, this.model, arguments);
             return this;
         }
 
@@ -1135,7 +1128,9 @@ var Set = function () {
     }, {
         key: 'pop',
         value: function pop() {
-            return _object.get(this).pop();
+            var v = this.model[this.model.length - 1];
+            delete this.model[this.model.length - 1];
+            return v;
         }
 
         /**
@@ -1146,14 +1141,14 @@ var Set = function () {
     }, {
         key: 'push',
         value: function push() {
-            var _this5 = this;
+            var _this4 = this;
 
             for (var _len2 = arguments.length, items = Array(_len2), _key3 = 0; _key3 < _len2; _key3++) {
                 items[_key3] = arguments[_key3];
             }
 
             items.forEach(function (item) {
-                return _this5.addItem(item);
+                return _this4.addItem(item);
             });
             return this;
         }
@@ -1166,7 +1161,7 @@ var Set = function () {
     }, {
         key: 'reset',
         value: function reset() {
-            _object.set(this, []);
+            _object.set(this, new Proxy([], this.handler));
             return this;
         }
 
@@ -1178,7 +1173,7 @@ var Set = function () {
     }, {
         key: 'sort',
         value: function sort(func) {
-            _object.get(this).sort(func);
+            this.model.sort(func);
             return this;
         }
 
@@ -1189,7 +1184,7 @@ var Set = function () {
     }, {
         key: 'valueOf',
         value: function valueOf() {
-            return _object.get(this);
+            return this.model;
         }
 
         /**
@@ -1199,7 +1194,7 @@ var Set = function () {
     }, {
         key: 'toString',
         value: function toString() {
-            return _object.get(this).toString();
+            return this.model.toString();
         }
 
         /**
@@ -1216,17 +1211,88 @@ var Set = function () {
          * @param path
          * @param func
          */
-        value: function subscribe(path, func) {
+        value: function subscribe(func) {
             if ((typeof func === 'undefined' ? 'undefined' : _typeof2(func)).match(/^(function|object)$/) === null) {
                 throw new Error('subscribe requires function');
             }
-            var _o = ObserverBuilder.getInstance().get(path);
+            var _o = ObserverBuilder.getInstance().get(this.path);
             if (!_o || _o === null) {
-                ObserverBuilder.getInstance().create(path, this);
-                _o = ObserverBuilder.getInstance().get(path);
+                ObserverBuilder.getInstance().create(this.path, this);
+                _o = ObserverBuilder.getInstance().get(this.path);
             }
 
             _o.subscribe(func);
+        }
+    }, {
+        key: 'model',
+        get: function get() {
+            return _object.get(this);
+        }
+
+        /**
+         * setter for object model
+         * @param value
+         */
+        ,
+        set: function set(value) {
+            if (Array.isArray(value)) {
+                var _m = _object.get(this);
+                _m = value;
+                return;
+            } else {
+                ObserverBuilder.getInstance().error(this.path, this.path + ' requires Array');
+            }
+        }
+    }, {
+        key: 'handler',
+        get: function get() {
+            var _this5 = this;
+
+            return {
+                get: function get(t, idx) {
+                    if ((typeof idx === 'undefined' ? 'undefined' : _typeof2(idx)) === 'symbol') {
+                        console.log('got symbol as idx value');
+                        idx = '' + String(idx);
+                    }
+
+                    if (idx === 'length') {
+                        return t.length;
+                    }
+
+                    if (idx in Array.prototype) {
+                        return t[idx];
+                    }
+                    if (parseInt(idx) !== NaN) {
+                        if (t[idx] instanceof Schema || t[idx] instanceof Set) {
+                            return t[idx].model;
+                        }
+                        return t[idx];
+                    }
+
+                    return null;
+                },
+                set: function set(t, idx, value) {
+                    if (!_this5._typeCheck(value)) {
+                        // return false;
+                        var eMsg = 'item at index ' + idx + ' had wrong type';
+                        ObserverBuilder.getInstance().error(_this5.path, eMsg);
+                        return false;
+                    }
+                    t[idx] = value;
+                    ObserverBuilder.getInstance().next(_this5.path, t);
+                    return true;
+                },
+                deleteProperty: function deleteProperty(t, idx) {
+                    if (idx >= t.length) {
+                        var e = 'index ' + idx + ' is out of bounds on ' + _this5.path;
+                        ObserverBuilder.getInstance().error(_this5.path, e);
+                        return false;
+                    }
+                    t.splice(idx, 1);
+                    ObserverBuilder.getInstance().next(_this5.path, t);
+                    return true;
+                }
+            };
         }
     }, {
         key: 'type',
@@ -1287,7 +1353,7 @@ var Set = function () {
     }, {
         key: 'length',
         get: function get() {
-            return this.valueOf().length;
+            return this.model.length;
         }
     }]);
 

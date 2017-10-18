@@ -96,12 +96,30 @@ describe('Set Class Test Suite', function() {
 
         it("should insert items to the beginning of the list with unshift", function() {
             _set.unshift("four potato", "five potato");
-            _set.getItemAt(1).should.equal("five potato");
+            _set.model[1].should.equal("five potato");
             _set.length.should.equal(4);
         });
         it("should reset list to an empty array with reset", function() {
             _set.reset();
             _set.length.should.equal(0);
+        });
+    });
+
+    describe("rxjs tests", ()=> {
+        it("should subscribe observers", (done)=> {
+            let _set = new Set("Number");
+            _set.subscribe({
+                next: (v) => {
+                    v.length.should.eq(1);
+                    v[0].should.eq(123);
+                },
+                error: (e) => {
+                    e.should.eq("item at index 1 had wrong type");
+                    done()
+                }
+            });
+            _set.addItem(123);
+            _set.addItem("fail");
         });
     });
 
