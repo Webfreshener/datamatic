@@ -141,7 +141,7 @@ describe("Schema Class Test Suite", function () {
                     done();
                 }
             };
-            this.schema.subscribe('foo.bar.active', _h);
+            this.schema.subscribeTo('foo.bar.active', _h);
             this.schema.model = {
                 foo: {
                     bar: {
@@ -178,7 +178,7 @@ describe("Schema Class Test Suite", function () {
                 }
             };
 
-            let _sub = this.schema.subscribe('badParam', _f);
+            let _sub = this.schema.subscribeTo('badParam', _f);
             this.schema.model = _d;
         });
     });
@@ -187,7 +187,14 @@ describe("Schema Class Test Suite", function () {
         "use strict";
         it("should initialize from client.schema schema fixture", () => {
             let _s = require("./fixtures/client.schema.json");
-            this.schema = new Schema(_s);
+            this.schema = new Schema(_s).subscribeTo('__OPTIONS__.ALLOWED', {
+                next: (v) => {
+                    console.log(`next: ${JSON.stringify(v)}`);
+                },
+                error: (e) => {
+                    console.log(`e ${e}`);
+                }
+            });
             expect(this.schema instanceof Schema).to.be.true;
             this.schema.model.__OPTIONS__.CRUD_METHODS.create.should.eq('POST');
         });
@@ -234,7 +241,7 @@ describe("Schema Class Test Suite", function () {
                     done();
                 }
             }
-            this.schema.subscribe('http', _h);
+            this.schema.subscribeTo('http', _h);
             this.schema.model = _d;
         });
 
@@ -271,12 +278,12 @@ describe("Schema Class Test Suite", function () {
                     done("expected to fail with missing 'type' property");
                 },
                 error: (e) => {
-                    expect(e).to.eq("required property 'type' is missing for properties.badProperty");
+                    expect(e).to.eq("required property 'type' is missing for 'properties.badProperty'");
                     done();
                 }
             };
 
-            this.schema.subscribe('properties.badProperty', _f);
+            this.schema.subscribeTo('properties.badProperty', _f);
             this.schema.model.properties = {
                 badProperty: {
                     // type: "Boolean",
@@ -284,7 +291,6 @@ describe("Schema Class Test Suite", function () {
                     index: true,
                 }
             };
-
         });
     });
 

@@ -22,7 +22,7 @@ class SchemaHelpers {
         }
         // calls set with nested key value pair
         for (var k in obj) {
-            let eMsg = this._ref.set(k, obj[k]);
+            let eMsg = this._ref.model[k] = obj[k];
             if (typeof eMsg === 'string') {
                 throw new Error( eMsg );
             }
@@ -72,7 +72,7 @@ class SchemaHelpers {
      */
     ensureRequiredFields(obj) {
         let oKeys = Object.keys(obj);
-        let _required = this._ref.requiredFields
+        let _required = this._ref.requiredFields;
         for (let _ in _required) {
             let _key = _required[_];
             let _path = this._ref.path.length ? this._ref.path : "root element";

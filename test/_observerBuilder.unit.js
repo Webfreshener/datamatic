@@ -31,7 +31,7 @@ describe( "ObserverBuilder Unit Test Suite", ()=> {
                 o.should.eq(true);
                 done();
             };
-            _schema.subscribe('active', _f);
+            _schema.subscribeTo('active', _f);
             _schema.model = {
                 name: "item-A",
                 active: true

@@ -500,6 +500,11 @@ var Schema = function () {
             if (typeof key === 'string') {
                 this.model[key] = value;
             } else {
+                var _sH = _schemaHelpers.get(this);
+                var e = _sH.ensureRequiredFields(key);
+                if (typeof e === 'string') {
+                    ObserverBuilder.getInstance().error(this.path, e);
+                }
                 Object.keys(key).forEach(function (_k) {
                     _this.model[_k] = key[_k];
                 });
@@ -515,9 +520,31 @@ var Schema = function () {
 
     }, {
         key: 'subscribe',
-        value: function subscribe(path, func) {
+        value: function subscribe(func) {
             if ((typeof func === 'undefined' ? 'undefined' : _typeof2(func)).match(/^(function|object)$/) === null) {
                 throw new Error('subscribe requires function');
+            }
+            var _o = ObserverBuilder.getInstance().get(this.path);
+            if (!_o || _o === null) {
+                ObserverBuilder.getInstance().create(this.path, this);
+                _o = ObserverBuilder.getInstance().get(this.path);
+            }
+
+            _o.subscribe(func);
+            return this;
+        }
+
+        /**
+         * subscribes handler method to property observer for path
+         * @param path
+         * @param func
+         */
+
+    }, {
+        key: 'subscribeTo',
+        value: function subscribeTo(path, func) {
+            if ((typeof func === 'undefined' ? 'undefined' : _typeof2(func)).match(/^(function|object)$/) === null) {
+                throw new Error('subscribeTo requires function');
             }
             var _o = ObserverBuilder.getInstance().get(path);
             if (!_o || _o === null) {
@@ -526,6 +553,7 @@ var Schema = function () {
             }
 
             _o.subscribe(func);
+            return this;
         }
 
         /**
@@ -661,19 +689,22 @@ var Schema = function () {
                 set: function set(t, key, value) {
                     var _sH = _schemaHelpers.get(_this2);
                     if ((typeof key === 'undefined' ? 'undefined' : _typeof2(key)) === 'object') {
-                        _sH.setObject(key);
+                        var e = _sH.setObject(key);
+                        if (typeof e === 'string') {
+                            ObserverBuilder.getInstance().error(key, e);
+                            return false;
+                        }
                         return true;
                     }
                     var _childSigs = _this2.signature.elements || _this2.signature;
                     var _pathKeys = key.split(".");
-
-                    var _loop = function _loop(_) {
-                        var k = _pathKeys[_];
+                    for (var _ in _pathKeys) {
+                        var _k4 = _pathKeys[_];
                         var _schema = void 0;
                         // derives path for element
-                        var _key = _this2.path.length > 0 ? _this2.path + '.' + k : k;
-                        if (_exists(_childSigs['' + k])) {
-                            _schema = _childSigs[k];
+                        var _key = _this2.path.length > 0 ? _this2.path + '.' + _k4 : _k4;
+                        if (_exists(_childSigs['' + _k4])) {
+                            _schema = _childSigs[_k4];
                         } else {
                             // attempts to find wildcard element name
                             if (_exists(_childSigs["*"])) {
@@ -687,37 +718,25 @@ var Schema = function () {
                         if (!_exists(_schema)) {
                             // rejects non-members of non-extensible schemas
                             if (!_this2.isExtensible) {
-                                var e = 'element \'' + _key + '\' is not a valid element';
-                                ObserverBuilder.getInstance().error(key, e);
-                                return {
-                                    v: void 0
-                                };
+                                var _e2 = 'element \'' + _key + '\' is not a valid element';
+                                ObserverBuilder.getInstance().error(key, _e2);
+                                return;
                             }
                             _schema = Schema.defaultSignature;
                         }
                         // handles child objects
                         if ((typeof value === 'undefined' ? 'undefined' : _typeof2(value)) === "object") {
                             var tVal = value;
+                            var _valKeys = Object.keys(tVal);
+
                             if (typeof (value = _sH.setChildObject(_key, value)) === 'string') {
                                 ObserverBuilder.getInstance().error(_key, value);
-                            } else {
-                                if (value instanceof Schema) {
-                                    var _valKeys = Object.keys(tVal);
-                                    value.requiredFields.forEach(function (el) {
-                                        if (_valKeys.indexOf(el) === -1) {
-                                            var _e2 = 'required property \'' + el + '\' is missing for ' + _key;
-                                            console.log(_e2);
-                                            console.log('k: ' + k + ' value.path: ' + value.path);
-                                            ObserverBuilder.getInstance().error(value.path, _e2);
-                                            return;
-                                        }
-                                    });
-                                }
+                                return;
                             }
                         }
                         // handles absolute values (strings, numbers, booleans...)
                         else {
-                                _this2.subscribe(_key, {
+                                _this2.subscribeTo(_key, {
                                     next: function next(value) {
                                         ObserverBuilder.getInstance().next(_this2.path, value);
                                     },
@@ -728,19 +747,11 @@ var Schema = function () {
                                 var eMsg = _sH.validate(_key, value);
                                 if (typeof eMsg === "string") {
                                     ObserverBuilder.getInstance().error(_key, eMsg);
-                                    return {
-                                        v: void 0
-                                    };
+                                    return;
                                 }
                             }
                         t[key] = value;
                         ObserverBuilder.getInstance().next(key, value);
-                    };
-
-                    for (var _ in _pathKeys) {
-                        var _ret = _loop(_);
-
-                        if ((typeof _ret === 'undefined' ? 'undefined' : _typeof2(_ret)) === "object") return _ret.v;
                     }
                 }
             };
@@ -1001,7 +1012,7 @@ var Set = function () {
     }, {
         key: 'validate',
         value: function validate() {
-            var _path = this.path();
+            var _path = this.path;
             var _validator = ValidatorBuilder.getInstance();
             this.model.forEach(function (itm) {
                 var e = void 0;
@@ -1013,12 +1024,18 @@ var Set = function () {
         }
 
         /**
-         * @param {number} idx
-         * @returns {any} element at index if found
+         *
+         * @returns {boolean}
          */
 
     }, {
         key: 'getItemAt',
+
+
+        /**
+         * @param {number} idx
+         * @returns {any} element at index if found
+         */
         value: function getItemAt(idx) {
             return this.model[idx];
         }
@@ -1222,8 +1239,30 @@ var Set = function () {
                 ObserverBuilder.getInstance().create(this.path, this);
                 _o = ObserverBuilder.getInstance().get(this.path);
             }
+            _o.subscribe(func);
+            return this;
+        }
+
+        /**
+         * subscribes handler method to property observer for path
+         * @param path
+         * @param func
+         */
+
+    }, {
+        key: 'subscribeTo',
+        value: function subscribeTo(path, func) {
+            if ((typeof func === 'undefined' ? 'undefined' : _typeof2(func)).match(/^(function|object)$/) === null) {
+                throw new Error('subscribeTo requires function');
+            }
+            var _o = ObserverBuilder.getInstance().get(path);
+            if (!_o || _o === null) {
+                ObserverBuilder.getInstance().create(path, this);
+                _o = ObserverBuilder.getInstance().get(path);
+            }
 
             _o.subscribe(func);
+            return this;
         }
     }, {
         key: 'model',
@@ -1253,7 +1292,6 @@ var Set = function () {
             return {
                 get: function get(t, idx) {
                     if ((typeof idx === 'undefined' ? 'undefined' : _typeof2(idx)) === 'symbol') {
-                        console.log('got symbol as idx value');
                         idx = '' + String(idx);
                     }
 
@@ -1295,6 +1333,11 @@ var Set = function () {
                     return true;
                 }
             };
+        }
+    }, {
+        key: 'isValid',
+        get: function get() {
+            return this.validate() === true;
         }
     }, {
         key: 'type',
@@ -2431,7 +2474,7 @@ var SchemaHelpers = function () {
             }
             // calls set with nested key value pair
             for (var k in obj) {
-                var eMsg = this._ref.set(k, obj[k]);
+                var eMsg = this._ref.model[k] = obj[k];
                 if (typeof eMsg === 'string') {
                     throw new Error(eMsg);
                 }
@@ -2492,13 +2535,13 @@ var SchemaHelpers = function () {
             var oKeys = Object.keys(obj);
             var _required = this._ref.requiredFields;
             for (var _ in _required) {
-                var _key4 = _required[_];
+                var _key = _required[_];
                 var _path = this._ref.path.length ? this._ref.path : "root element";
-                if (0 > oKeys.indexOf(_key4)) {
-                    if (_exists(this._ref.signature[_key4].default)) {
-                        obj[_key4] = this._ref.signature[_key4].default;
+                if (0 > oKeys.indexOf(_key)) {
+                    if (_exists(this._ref.signature[_key].default)) {
+                        obj[_key] = this._ref.signature[_key].default;
                     } else {
-                        return 'required property \'' + _key4 + '\' is missing for \'' + _path + '\'';
+                        return 'required property \'' + _key + '\' is missing for \'' + _path + '\'';
                     }
                 }
             }

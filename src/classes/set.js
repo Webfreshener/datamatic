@@ -86,7 +86,6 @@ class Set {
         return {
             get: (t, idx) => {
                 if (typeof idx === 'symbol') {
-                    console.log('got symbol as idx value');
                     idx = `${String(idx)}`;
                 }
 
@@ -161,7 +160,7 @@ class Set {
      * @returns {boolean}
      */
     validate() {
-        let _path = this.path();
+        let _path = this.path;
         let _validator = ValidatorBuilder.getInstance();
         this.model.forEach(itm => {
             let e;
@@ -170,6 +169,14 @@ class Set {
             }
         });
         return true;
+    }
+
+    /**
+     *
+     * @returns {boolean}
+     */
+    get isValid() {
+        return this.validate() === true;
     }
 
     /**
@@ -371,6 +378,26 @@ class Set {
             _o = ObserverBuilder.getInstance().get(this.path);
         }
         _o.subscribe(func);
+        return this;
+    }
+
+    /**
+     * subscribes handler method to property observer for path
+     * @param path
+     * @param func
+     */
+    subscribeTo(path, func) {
+        if ((typeof func).match(/^(function|object)$/) === null) {
+            throw new Error('subscribeTo requires function');
+        }
+        let _o = ObserverBuilder.getInstance().get(path);
+        if (!_o || _o === null) {
+            ObserverBuilder.getInstance().create(path, this);
+            _o = ObserverBuilder.getInstance().get(path);
+        }
+
+        _o.subscribe(func);
+        return this;
     }
 }
 

@@ -78,7 +78,11 @@ class Schema {
             set: (t, key, value) => {
                 let _sH = _schemaHelpers.get(this);
                 if (typeof key === 'object') {
-                    _sH.setObject(key);
+                    const e = _sH.setObject(key);
+                    if (typeof e === 'string') {
+                        ObserverBuilder.getInstance().error(key, e);
+                        return false;
+                    }
                     return true;
                 }
                 let _childSigs = this.signature.elements || this.signature;
@@ -113,26 +117,16 @@ class Schema {
                     // handles child objects
                     if (typeof value === "object") {
                         const tVal = value;
+                        const _valKeys = Object.keys(tVal);
+
                         if (typeof (value = _sH.setChildObject(_key, value)) === 'string') {
                             ObserverBuilder.getInstance().error(_key, value);
-                        } else {
-                            if (value instanceof Schema) {
-                                const _valKeys = Object.keys(tVal);
-                                value.requiredFields.forEach((el) => {
-                                    if (_valKeys.indexOf(el) === -1) {
-                                        const e = `required property '${el}' is missing for ${_key}`;
-                                        console.log(e);
-                                        console.log(`k: ${k} value.path: ${value.path}`);
-                                        ObserverBuilder.getInstance().error(value.path, e);
-                                        return;
-                                    }
-                                });
-                            }
+                            return;
                         }
                     }
                     // handles absolute values (strings, numbers, booleans...)
                     else {
-                        this.subscribe(_key, {
+                        this.subscribeTo(_key, {
                             next: (value) => {
                                 ObserverBuilder.getInstance().next(this.path, value);
                             },
@@ -201,6 +195,11 @@ class Schema {
         if (typeof key === 'string') {
             this.model[key] = value;
         } else {
+            const _sH = _schemaHelpers.get(this);
+            let e = _sH.ensureRequiredFields(key);
+            if (typeof e === 'string') {
+                ObserverBuilder.getInstance().error(this.path, e);
+            }
             Object.keys(key).forEach((_k) => {
                 this.model[_k] = key[_k];
             });
@@ -213,9 +212,28 @@ class Schema {
      * @param path
      * @param func
      */
-    subscribe(path, func) {
+    subscribe(func) {
         if ((typeof func).match(/^(function|object)$/) === null) {
             throw new Error('subscribe requires function');
+        }
+        let _o = ObserverBuilder.getInstance().get(this.path);
+        if (!_o || _o === null) {
+            ObserverBuilder.getInstance().create(this.path, this);
+            _o = ObserverBuilder.getInstance().get(this.path);
+        }
+
+        _o.subscribe(func);
+        return this;
+    }
+
+    /**
+     * subscribes handler method to property observer for path
+     * @param path
+     * @param func
+     */
+    subscribeTo(path, func) {
+        if ((typeof func).match(/^(function|object)$/) === null) {
+            throw new Error('subscribeTo requires function');
         }
         let _o = ObserverBuilder.getInstance().get(path);
         if (!_o || _o === null) {
@@ -224,6 +242,7 @@ class Schema {
         }
 
         _o.subscribe(func);
+        return this;
     }
 
     /**

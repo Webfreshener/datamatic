@@ -12,11 +12,13 @@
     "type": "Object",
     "required": true,
     "extensible": true,
-    "default": {},
+    "default": {
+      "SESSION_KEY": "AUTHORIZATION"
+    },
     "elements": {
       "ALLOWED": {
         "type": "Array",
-        "required": true,
+        "required": false,
         "elements": {
           "type": "String",
           "required": false
