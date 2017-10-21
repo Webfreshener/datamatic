@@ -2,19 +2,19 @@
 <html>
 <head>
   <meta charset='utf-8' />
-  <title>  | Documentation</title>
+  <title>jsd 1.0.0-beta.1 | Documentation</title>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
   <link href='assets/bass.css' type='text/css' rel='stylesheet' />
   <link href='assets/style.css' type='text/css' rel='stylesheet' />
   <link href='assets/github.css' type='text/css' rel='stylesheet' />
+  <link href='assets/split.css' type='text/css' rel='stylesheet' />
 </head>
-<body class='documentation'>
-  <div class='max-width-4 mx-auto'>
-    <div class='clearfix md-mxn2'>
-      <div class='fixed xs-hide fix-3 overflow-auto max-height-100'>
+<body class='documentation m0'>
+    <div class='flex'>
+      <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
         <div class='py1 px2'>
-          <h3 class='mb0 no-anchor'></h3>
-          <div class='mb1'><code></code></div>
+          <h3 class='mb0 no-anchor'>jsd</h3>
+          <div class='mb1'><code>1.0.0-beta.1</code></div>
           <input
             placeholder='Filter'
             id='filter-input'
@@ -22,6 +22,76 @@
             type='text' />
           <div id='toc'>
             <ul class='list-reset h5 py1-ul'>
+              
+                
+                <li><a
+                  href='#__obuilder'
+                  class="">
+                  __oBuilder
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#constructor'
+                  class="">
+                  constructor
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#list'
+                  class="">
+                  list
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#get'
+                  class="">
+                  get
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#getinstance'
+                  class="">
+                  getInstance
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#getobservers'
+                  class="">
+                  getObservers
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#create'
+                  class="">
+                  create
+                  
+                </a>
+                
+                </li>
               
                 
                 <li><a
@@ -38,48 +108,49 @@
                       <li class='h5'><span>Instance members</span></li>
                       
                       <li><a
-                        href='#JSD#getClass'
+                        href='#jsdgetclass'
                         class='regular pre-open'>
                         #getClass
                       </a></li>
                       
                       <li><a
-                        href='#JSD#registerClass'
+                        href='#jsdregisterclass'
                         class='regular pre-open'>
                         #registerClass
                       </a></li>
                       
                       <li><a
-                        href='#JSD#unregisterClass'
+                        href='#jsdunregisterclass'
                         class='regular pre-open'>
                         #unregisterClass
                       </a></li>
                       
                       <li><a
-                        href='#JSD#listClasses'
+                        href='#jsdlistclasses'
                         class='regular pre-open'>
                         #listClasses
                       </a></li>
                       
                       <li><a
-                        href='#JSD#fromJSON'
+                        href='#jsdfromjson'
                         class='regular pre-open'>
                         #fromJSON
                       </a></li>
                       
                       <li><a
-                        href='#JSD#schemaRef'
+                        href='#jsdschemaref'
                         class='regular pre-open'>
                         #schemaRef
                       </a></li>
                       
                       <li><a
-                        href='#JSD#defaults'
+                        href='#jsddefaults'
                         class='regular pre-open'>
                         #defaults
                       </a></li>
                       
                     </ul>
+                  
                   
                   
                 </div>
@@ -100,7 +171,7 @@
                     <li class='h5'><span>Static members</span></li>
                     
                       <li><a
-                        href='#Schema.defaultSignature'
+                        href='#schemadefaultsignature'
                         class='regular pre-open'>
                         .defaultSignature
                       </a></li>
@@ -112,96 +183,115 @@
                       <li class='h5'><span>Instance members</span></li>
                       
                       <li><a
-                        href='#Schema#constructor'
+                        href='#schemaconstructor'
                         class='regular pre-open'>
                         #constructor
                       </a></li>
                       
                       <li><a
-                        href='#Schema#signature'
+                        href='#schemasignature'
                         class='regular pre-open'>
                         #signature
                       </a></li>
                       
                       <li><a
-                        href='#Schema#get'
+                        href='#schemamodel'
+                        class='regular pre-open'>
+                        #model
+                      </a></li>
+                      
+                      <li><a
+                        href='#schemamodel'
+                        class='regular pre-open'>
+                        #model
+                      </a></li>
+                      
+                      <li><a
+                        href='#schemaget'
                         class='regular pre-open'>
                         #get
                       </a></li>
                       
                       <li><a
-                        href='#Schema#set'
+                        href='#schemaset'
                         class='regular pre-open'>
                         #set
                       </a></li>
                       
                       <li><a
-                        href='#Schema#validate'
+                        href='#schemasubscribe'
+                        class='regular pre-open'>
+                        #subscribe
+                      </a></li>
+                      
+                      <li><a
+                        href='#schemavalidate'
                         class='regular pre-open'>
                         #validate
                       </a></li>
                       
                       <li><a
-                        href='#Schema#valueOf'
+                        href='#schemavalueof'
                         class='regular pre-open'>
                         #valueOf
                       </a></li>
                       
                       <li><a
-                        href='#Schema#toJSON'
+                        href='#schematojson'
                         class='regular pre-open'>
                         #toJSON
                       </a></li>
                       
                       <li><a
-                        href='#Schema#toString'
+                        href='#schematostring'
                         class='regular pre-open'>
                         #toString
                       </a></li>
                       
                       <li><a
-                        href='#Schema#options'
+                        href='#schemaoptions'
                         class='regular pre-open'>
                         #options
                       </a></li>
                       
                       <li><a
-                        href='#Schema#objectID'
+                        href='#schemaobjectid'
                         class='regular pre-open'>
                         #objectID
                       </a></li>
                       
                       <li><a
-                        href='#Schema#root'
+                        href='#schemaroot'
                         class='regular pre-open'>
                         #root
                       </a></li>
                       
                       <li><a
-                        href='#Schema#path'
+                        href='#schemapath'
                         class='regular pre-open'>
                         #path
                       </a></li>
                       
                       <li><a
-                        href='#Schema#parent'
+                        href='#schemaparent'
                         class='regular pre-open'>
                         #parent
                       </a></li>
                       
                       <li><a
-                        href='#Schema#requiredFields'
+                        href='#schemarequiredfields'
                         class='regular pre-open'>
                         #requiredFields
                       </a></li>
                       
                       <li><a
-                        href='#Schema#isExtensible'
+                        href='#schemaisextensible'
                         class='regular pre-open'>
                         #isExtensible
                       </a></li>
                       
                     </ul>
+                  
                   
                   
                 </div>
@@ -223,138 +313,139 @@
                       <li class='h5'><span>Instance members</span></li>
                       
                       <li><a
-                        href='#Set#constructor'
+                        href='#setconstructor'
                         class='regular pre-open'>
                         #constructor
                       </a></li>
                       
                       <li><a
-                        href='#Set#validate'
+                        href='#setvalidate'
                         class='regular pre-open'>
                         #validate
                       </a></li>
                       
                       <li><a
-                        href='#Set#getItemAt'
+                        href='#setgetitemat'
                         class='regular pre-open'>
                         #getItemAt
                       </a></li>
                       
                       <li><a
-                        href='#Set#setItemAt'
+                        href='#setsetitemat'
                         class='regular pre-open'>
                         #setItemAt
                       </a></li>
                       
                       <li><a
-                        href='#Set#removeItemAt'
+                        href='#setremoveitemat'
                         class='regular pre-open'>
                         #removeItemAt
                       </a></li>
                       
                       <li><a
-                        href='#Set#replaceAll'
+                        href='#setreplaceall'
                         class='regular pre-open'>
                         #replaceAll
                       </a></li>
                       
                       <li><a
-                        href='#Set#replaceItemAt'
+                        href='#setreplaceitemat'
                         class='regular pre-open'>
                         #replaceItemAt
                       </a></li>
                       
                       <li><a
-                        href='#Set#addItem'
+                        href='#setadditem'
                         class='regular pre-open'>
                         #addItem
                       </a></li>
                       
                       <li><a
-                        href='#Set#shift'
+                        href='#setshift'
                         class='regular pre-open'>
                         #shift
                       </a></li>
                       
                       <li><a
-                        href='#Set#unshift'
+                        href='#setunshift'
                         class='regular pre-open'>
                         #unshift
                       </a></li>
                       
                       <li><a
-                        href='#Set#pop'
+                        href='#setpop'
                         class='regular pre-open'>
                         #pop
                       </a></li>
                       
                       <li><a
-                        href='#Set#push'
+                        href='#setpush'
                         class='regular pre-open'>
                         #push
                       </a></li>
                       
                       <li><a
-                        href='#Set#reset'
+                        href='#setreset'
                         class='regular pre-open'>
                         #reset
                       </a></li>
                       
                       <li><a
-                        href='#Set#sort'
+                        href='#setsort'
                         class='regular pre-open'>
                         #sort
                       </a></li>
                       
                       <li><a
-                        href='#Set#valueOf'
+                        href='#setvalueof'
                         class='regular pre-open'>
                         #valueOf
                       </a></li>
                       
                       <li><a
-                        href='#Set#toString'
+                        href='#settostring'
                         class='regular pre-open'>
                         #toString
                       </a></li>
                       
                       <li><a
-                        href='#Set#type'
+                        href='#settype'
                         class='regular pre-open'>
                         #type
                       </a></li>
                       
                       <li><a
-                        href='#Set#objectID'
+                        href='#setobjectid'
                         class='regular pre-open'>
                         #objectID
                       </a></li>
                       
                       <li><a
-                        href='#Set#root'
+                        href='#setroot'
                         class='regular pre-open'>
                         #root
                       </a></li>
                       
                       <li><a
-                        href='#Set#path'
+                        href='#setpath'
                         class='regular pre-open'>
                         #path
                       </a></li>
                       
                       <li><a
-                        href='#Set#parent'
+                        href='#setparent'
                         class='regular pre-open'>
                         #parent
                       </a></li>
                       
                       <li><a
-                        href='#Set#length'
+                        href='#setlength'
                         class='regular pre-open'>
                         #length
                       </a></li>
                       
                     </ul>
+                  
                   
                   
                 </div>
@@ -368,7 +459,396 @@
           </div>
         </div>
       </div>
-      <div class='fix-margin-3'>
+      <div id='split-right' class='relative overflow-auto height-viewport-100'>
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='__obuilder'>
+      __oBuilder
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>Created by van on 10/9/17.</p>
+
+
+  <div class='pre p1 fill-light mt0'>__oBuilder</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='constructor'>
+      constructor
+    </h3>
+    
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>new constructor()</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='list'>
+      list
+    </h3>
+    
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>list(): any</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code>any</code>:
+        list of validation paths
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='get'>
+      get
+    </h3>
+    
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>get(path: any): any</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>path</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code>any</code>:
+        item at path reference
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='getinstance'>
+      getInstance
+    </h3>
+    
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>getInstance(): any</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code>any</code>:
+        singleton ObserverBuilder reference
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='getobservers'>
+      getObservers
+    </h3>
+    
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>getObservers(): any</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code>any</code>:
+        validators WeakMap
+
+      
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='create'>
+      create
+    </h3>
+    
+    
+  </div>
+  
+
+  
+
+  <div class='pre p1 fill-light mt0'>create(path: any, oRef: any)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>path</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>oRef</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
         
           
             <section class='p2 mb2 clearfix bg-white minishadow'>
@@ -388,9 +868,10 @@
 
 
   <div class='pre p1 fill-light mt0'>new JSD()</div>
-
+  
   
 
+  
   
   
   
@@ -419,7 +900,7 @@
     <div class='py1 quiet mt1 prose-big'>Instance Members</div>
     <div class="clearfix">
   
-    <div class='border-bottom' id='JSD#getClass'>
+    <div class='border-bottom' id='jsdgetclass'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
@@ -434,9 +915,10 @@
   
 
   <div class='pre p1 fill-light mt0'>getClass(classesOrNames: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">function</a>)): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">function</a></div>
-
+  
   
 
+  
   
   
   
@@ -449,7 +931,8 @@
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>classesOrNames</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">function</a>))</code> 
+            <span class='code bold'>classesOrNames</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">function</a>))</code>
+	    
           </div>
           
         </div>
@@ -483,7 +966,7 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='JSD#registerClass'>
+    <div class='border-bottom' id='jsdregisterclass'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
@@ -498,9 +981,10 @@
   
 
   <div class='pre p1 fill-light mt0'>registerClass(name: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, clazz: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">function</a>)</div>
-
+  
   
 
+  
   
   
   
@@ -513,14 +997,16 @@
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code> 
+            <span class='code bold'>name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+	    
           </div>
           
         </div>
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>clazz</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">function</a>)</code> 
+            <span class='code bold'>clazz</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">function</a>)</code>
+	    
           </div>
           
         </div>
@@ -546,7 +1032,7 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='JSD#unregisterClass'>
+    <div class='border-bottom' id='jsdunregisterclass'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
@@ -561,9 +1047,10 @@
   
 
   <div class='pre p1 fill-light mt0'>unregisterClass(name: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</div>
-
+  
   
 
+  
   
   
   
@@ -576,7 +1063,8 @@
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code> 
+            <span class='code bold'>name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+	    
           </div>
           
         </div>
@@ -602,7 +1090,7 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='JSD#listClasses'>
+    <div class='border-bottom' id='jsdlistclasses'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
@@ -617,9 +1105,10 @@
   
 
   <div class='pre p1 fill-light mt0'>listClasses(): any</div>
-
+  
   
 
+  
   
   
   
@@ -654,7 +1143,7 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='JSD#fromJSON'>
+    <div class='border-bottom' id='jsdfromjson'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
@@ -670,9 +1159,10 @@
 
 
   <div class='pre p1 fill-light mt0'>fromJSON(json: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>)): any</div>
-
+  
   
 
+  
   
   
   
@@ -685,7 +1175,8 @@
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>json</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>))</code> 
+            <span class='code bold'>json</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>))</code>
+	    
           </div>
           
         </div>
@@ -719,7 +1210,7 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='JSD#schemaRef'>
+    <div class='border-bottom' id='jsdschemaref'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
@@ -734,9 +1225,10 @@
   
 
   <div class='pre p1 fill-light mt0'>schemaRef</div>
-
+  
   
 
+  
   
   
   
@@ -771,7 +1263,7 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='JSD#defaults'>
+    <div class='border-bottom' id='jsddefaults'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
@@ -786,9 +1278,10 @@
   
 
   <div class='pre p1 fill-light mt0'>defaults</div>
-
+  
   
 
+  
   
   
   
@@ -857,16 +1350,39 @@
 
   
 
-  <div class='pre p1 fill-light mt0'>new Schema()</div>
-
-  
-
-  
-  
-  
+  <div class='pre p1 fill-light mt0'>new Schema(_signature: any, opts: any)</div>
   
   
 
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>_signature</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>opts</span> <code class='quiet'>(any
+            = <code>{extensible:false}</code>)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
   
 
   
@@ -881,7 +1397,7 @@
     <div class='py1 quiet mt1 prose-big'>Static Members</div>
     <div class="clearfix">
   
-    <div class='border-bottom' id='Schema.defaultSignature'>
+    <div class='border-bottom' id='schemadefaultsignature'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
@@ -893,12 +1409,14 @@
 
   
 
-  
+  <p>Base Signature for all Schema Objects</p>
+
 
   <div class='pre p1 fill-light mt0'>defaultSignature()</div>
-
+  
   
 
+  
   
   
   
@@ -933,11 +1451,11 @@
     <div class='py1 quiet mt1 prose-big'>Instance Members</div>
     <div class="clearfix">
   
-    <div class='border-bottom' id='Schema#constructor'>
+    <div class='border-bottom' id='schemaconstructor'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>new constructor(_o, [opts], _signature)</span>
+            <span class='code strong strong truncate'>new constructor(_signature, opts, _o)</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -947,10 +1465,11 @@
 
   
 
-  <div class='pre p1 fill-light mt0'>new constructor(_o: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, opts: [<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>](default g;if (!_ex), _signature: any)</div>
-
+  <div class='pre p1 fill-light mt0'>new constructor(_signature: any, opts: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, _o: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
   
 
+  
   
   
   
@@ -963,7 +1482,17 @@
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>_o</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code> schema definition object
+            <span class='code bold'>_signature</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>opts</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
+            = <code>{extensible:false}</code>)</code>
+	    schema options
 
           </div>
           
@@ -971,15 +1500,9 @@
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>opts</span> <code class='quiet'>([<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>](default g;if (!_ex))</code> schema options
+            <span class='code bold'>_o</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    schema definition object
 
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>_signature</span> <code class='quiet'>(any)</code> 
           </div>
           
         </div>
@@ -1005,7 +1528,7 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='Schema#signature'>
+    <div class='border-bottom' id='schemasignature'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
@@ -1020,9 +1543,10 @@
   
 
   <div class='pre p1 fill-light mt0'>signature</div>
-
+  
   
 
+  
   
   
   
@@ -1057,7 +1581,112 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='Schema#get'>
+    <div class='border-bottom' id='schemamodel'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>model</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>getter for object model</p>
+
+
+  <div class='pre p1 fill-light mt0'>model</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='schemamodel'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>model</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>setter for object model</p>
+
+
+  <div class='pre p1 fill-light mt0'>model</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>value</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='schemaget'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
@@ -1072,9 +1701,10 @@
   
 
   <div class='pre p1 fill-light mt0'>get(key: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>): any</div>
-
+  
   
 
+  
   
   
   
@@ -1087,7 +1717,8 @@
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>key</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code> 
+            <span class='code bold'>key</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+	    
           </div>
           
         </div>
@@ -1121,7 +1752,7 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='Schema#set'>
+    <div class='border-bottom' id='schemaset'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
@@ -1137,9 +1768,10 @@
 
 
   <div class='pre p1 fill-light mt0'>set(key: (<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>), value: any)</div>
-
+  
   
 
+  
   
   
   
@@ -1152,14 +1784,16 @@
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>key</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>))</code> 
+            <span class='code bold'>key</span> <code class='quiet'>((<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>))</code>
+	    
           </div>
           
         </div>
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>value</span> <code class='quiet'>(any)</code> 
+            <span class='code bold'>value</span> <code class='quiet'>(any)</code>
+	    
           </div>
           
         </div>
@@ -1185,7 +1819,74 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='Schema#validate'>
+    <div class='border-bottom' id='schemasubscribe'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>subscribe(path, func)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>subscribes handler method to property observer for path</p>
+
+
+  <div class='pre p1 fill-light mt0'>subscribe(path: any, func: any)</div>
+  
+  
+
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>path</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>func</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+      </div>
+    </div>
+  
+    <div class='border-bottom' id='schemavalidate'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
@@ -1200,9 +1901,10 @@
   
 
   <div class='pre p1 fill-light mt0'>validate(): (<code>true</code> | <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</div>
-
+  
   
 
+  
   
   
   
@@ -1237,7 +1939,7 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='Schema#valueOf'>
+    <div class='border-bottom' id='schemavalueof'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
@@ -1249,12 +1951,14 @@
 
   
 
-  
+  <p>gets raw value of this model</p>
+
 
   <div class='pre p1 fill-light mt0'>valueOf()</div>
-
+  
   
 
+  
   
   
   
@@ -1281,7 +1985,7 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='Schema#toJSON'>
+    <div class='border-bottom' id='schematojson'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
@@ -1296,9 +2000,10 @@
   
 
   <div class='pre p1 fill-light mt0'>toJSON()</div>
-
+  
   
 
+  
   
   
   
@@ -1325,7 +2030,7 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='Schema#toString'>
+    <div class='border-bottom' id='schematostring'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
@@ -1337,12 +2042,14 @@
 
   
 
-  
+  <p>JSON stringifies primitive value</p>
+
 
   <div class='pre p1 fill-light mt0'>toString(pretty: any)</div>
-
+  
   
 
+  
   
   
   
@@ -1356,8 +2063,8 @@
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>pretty</span> <code class='quiet'>(any
-            (default <code>(this</code>)
-            )</code> 
+            = <code>false</code>)</code>
+	    
           </div>
           
         </div>
@@ -1383,7 +2090,7 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='Schema#options'>
+    <div class='border-bottom' id='schemaoptions'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
@@ -1395,12 +2102,14 @@
 
   
 
-  
+  <p>get options (if any) for this model's schema</p>
+
 
   <div class='pre p1 fill-light mt0'>options</div>
-
+  
   
 
+  
   
   
   
@@ -1427,7 +2136,7 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='Schema#objectID'>
+    <div class='border-bottom' id='schemaobjectid'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
@@ -1442,9 +2151,10 @@
   
 
   <div class='pre p1 fill-light mt0'>objectID</div>
-
+  
   
 
+  
   
   
   
@@ -1479,7 +2189,7 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='Schema#root'>
+    <div class='border-bottom' id='schemaroot'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
@@ -1494,9 +2204,10 @@
   
 
   <div class='pre p1 fill-light mt0'>root</div>
-
+  
   
 
+  
   
   
   
@@ -1531,7 +2242,7 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='Schema#path'>
+    <div class='border-bottom' id='schemapath'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
@@ -1546,9 +2257,10 @@
   
 
   <div class='pre p1 fill-light mt0'>path</div>
-
+  
   
 
+  
   
   
   
@@ -1583,7 +2295,7 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='Schema#parent'>
+    <div class='border-bottom' id='schemaparent'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
@@ -1598,9 +2310,10 @@
   
 
   <div class='pre p1 fill-light mt0'>parent</div>
-
+  
   
 
+  
   
   
   
@@ -1635,7 +2348,7 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='Schema#requiredFields'>
+    <div class='border-bottom' id='schemarequiredfields'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
@@ -1650,9 +2363,10 @@
   
 
   <div class='pre p1 fill-light mt0'>requiredFields</div>
-
+  
   
 
+  
   
   
   
@@ -1687,7 +2401,7 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='Schema#isExtensible'>
+    <div class='border-bottom' id='schemaisextensible'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
@@ -1703,9 +2417,10 @@
 
 
   <div class='pre p1 fill-light mt0'>isExtensible</div>
-
+  
   
 
+  
   
   
   
@@ -1765,16 +2480,30 @@
 
   
 
-  <div class='pre p1 fill-light mt0'>new Set()</div>
-
-  
-
-  
-  
-  
+  <div class='pre p1 fill-light mt0'>new Set(_type: any)</div>
   
   
 
+  
+  
+  
+  
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>_type</span> <code class='quiet'>(any)</code>
+	    
+          </div>
+          
+        </div>
+      
+    </div>
   
 
   
@@ -1791,7 +2520,7 @@
     <div class='py1 quiet mt1 prose-big'>Instance Members</div>
     <div class="clearfix">
   
-    <div class='border-bottom' id='Set#constructor'>
+    <div class='border-bottom' id='setconstructor'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
@@ -1806,9 +2535,10 @@
   
 
   <div class='pre p1 fill-light mt0'>new constructor(_type: any, items: any)</div>
-
+  
   
 
+  
   
   
   
@@ -1821,14 +2551,16 @@
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>_type</span> <code class='quiet'>(any)</code> 
+            <span class='code bold'>_type</span> <code class='quiet'>(any)</code>
+	    
           </div>
           
         </div>
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>items</span> <code class='quiet'>(any)</code> 
+            <span class='code bold'>items</span> <code class='quiet'>(any)</code>
+	    
           </div>
           
         </div>
@@ -1854,7 +2586,7 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='Set#validate'>
+    <div class='border-bottom' id='setvalidate'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
@@ -1870,9 +2602,10 @@
 
 
   <div class='pre p1 fill-light mt0'>validate(): <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></div>
-
+  
   
 
+  
   
   
   
@@ -1907,7 +2640,7 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='Set#getItemAt'>
+    <div class='border-bottom' id='setgetitemat'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
@@ -1922,9 +2655,10 @@
   
 
   <div class='pre p1 fill-light mt0'>getItemAt(idx: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>): any</div>
-
+  
   
 
+  
   
   
   
@@ -1937,7 +2671,8 @@
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>idx</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code> 
+            <span class='code bold'>idx</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+	    
           </div>
           
         </div>
@@ -1971,7 +2706,7 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='Set#setItemAt'>
+    <div class='border-bottom' id='setsetitemat'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
@@ -1986,9 +2721,10 @@
   
 
   <div class='pre p1 fill-light mt0'>setItemAt(idx: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, item: any): <a href="#set">Set</a></div>
-
+  
   
 
+  
   
   
   
@@ -2001,14 +2737,16 @@
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>idx</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code> 
+            <span class='code bold'>idx</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+	    
           </div>
           
         </div>
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>item</span> <code class='quiet'>(any)</code> 
+            <span class='code bold'>item</span> <code class='quiet'>(any)</code>
+	    
           </div>
           
         </div>
@@ -2042,7 +2780,7 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='Set#removeItemAt'>
+    <div class='border-bottom' id='setremoveitemat'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
@@ -2057,9 +2795,10 @@
   
 
   <div class='pre p1 fill-light mt0'>removeItemAt(idx: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, item: any): any</div>
-
+  
   
 
+  
   
   
   
@@ -2072,14 +2811,16 @@
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>idx</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code> 
+            <span class='code bold'>idx</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+	    
           </div>
           
         </div>
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>item</span> <code class='quiet'>(any)</code> 
+            <span class='code bold'>item</span> <code class='quiet'>(any)</code>
+	    
           </div>
           
         </div>
@@ -2113,7 +2854,7 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='Set#replaceAll'>
+    <div class='border-bottom' id='setreplaceall'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
@@ -2128,9 +2869,10 @@
   
 
   <div class='pre p1 fill-light mt0'>replaceAll(array: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>): <a href="#set">Set</a></div>
-
+  
   
 
+  
   
   
   
@@ -2143,7 +2885,8 @@
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>array</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code> 
+            <span class='code bold'>array</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>)</code>
+	    
           </div>
           
         </div>
@@ -2177,7 +2920,7 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='Set#replaceItemAt'>
+    <div class='border-bottom' id='setreplaceitemat'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
@@ -2192,9 +2935,10 @@
   
 
   <div class='pre p1 fill-light mt0'>replaceItemAt(idx: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>, item: any): <a href="#set">Set</a></div>
-
+  
   
 
+  
   
   
   
@@ -2207,14 +2951,16 @@
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>idx</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code> 
+            <span class='code bold'>idx</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a>)</code>
+	    
           </div>
           
         </div>
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>item</span> <code class='quiet'>(any)</code> 
+            <span class='code bold'>item</span> <code class='quiet'>(any)</code>
+	    
           </div>
           
         </div>
@@ -2248,7 +2994,7 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='Set#addItem'>
+    <div class='border-bottom' id='setadditem'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
@@ -2263,9 +3009,10 @@
   
 
   <div class='pre p1 fill-light mt0'>addItem(item: any): <a href="#set">Set</a></div>
-
+  
   
 
+  
   
   
   
@@ -2278,7 +3025,8 @@
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>item</span> <code class='quiet'>(any)</code> 
+            <span class='code bold'>item</span> <code class='quiet'>(any)</code>
+	    
           </div>
           
         </div>
@@ -2312,7 +3060,7 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='Set#shift'>
+    <div class='border-bottom' id='setshift'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
@@ -2327,9 +3075,10 @@
   
 
   <div class='pre p1 fill-light mt0'>shift(): any</div>
-
+  
   
 
+  
   
   
   
@@ -2364,7 +3113,7 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='Set#unshift'>
+    <div class='border-bottom' id='setunshift'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
@@ -2379,9 +3128,10 @@
   
 
   <div class='pre p1 fill-light mt0'>unshift(items: any): <a href="#set">Set</a></div>
-
+  
   
 
+  
   
   
   
@@ -2394,7 +3144,8 @@
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>items</span> <code class='quiet'>(any)</code> to be added
+            <span class='code bold'>items</span> <code class='quiet'>(any)</code>
+	    to be added
 
           </div>
           
@@ -2429,7 +3180,7 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='Set#pop'>
+    <div class='border-bottom' id='setpop'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
@@ -2444,9 +3195,10 @@
   
 
   <div class='pre p1 fill-light mt0'>pop(): any</div>
-
+  
   
 
+  
   
   
   
@@ -2481,7 +3233,7 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='Set#push'>
+    <div class='border-bottom' id='setpush'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
@@ -2496,9 +3248,10 @@
   
 
   <div class='pre p1 fill-light mt0'>push(items: any): <a href="#set">Set</a></div>
-
+  
   
 
+  
   
   
   
@@ -2511,7 +3264,8 @@
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>items</span> <code class='quiet'>(any)</code> to be added at end of list
+            <span class='code bold'>items</span> <code class='quiet'>(any)</code>
+	    to be added at end of list
 
           </div>
           
@@ -2546,7 +3300,7 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='Set#reset'>
+    <div class='border-bottom' id='setreset'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
@@ -2562,9 +3316,10 @@
 
 
   <div class='pre p1 fill-light mt0'>reset(): any</div>
-
+  
   
 
+  
   
   
   
@@ -2599,7 +3354,7 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='Set#sort'>
+    <div class='border-bottom' id='setsort'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
@@ -2614,9 +3369,10 @@
   
 
   <div class='pre p1 fill-light mt0'>sort(func: <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">function</a>): <a href="#set">Set</a></div>
-
+  
   
 
+  
   
   
   
@@ -2629,7 +3385,8 @@
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>func</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">function</a>)</code> sorrting function
+            <span class='code bold'>func</span> <code class='quiet'>(<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/function">function</a>)</code>
+	    sorrting function
 
           </div>
           
@@ -2664,7 +3421,7 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='Set#valueOf'>
+    <div class='border-bottom' id='setvalueof'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
@@ -2679,9 +3436,10 @@
   
 
   <div class='pre p1 fill-light mt0'>valueOf(): any</div>
-
+  
   
 
+  
   
   
   
@@ -2716,7 +3474,7 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='Set#toString'>
+    <div class='border-bottom' id='settostring'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
@@ -2731,9 +3489,10 @@
   
 
   <div class='pre p1 fill-light mt0'>toString(): any</div>
-
+  
   
 
+  
   
   
   
@@ -2768,7 +3527,7 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='Set#type'>
+    <div class='border-bottom' id='settype'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
@@ -2784,9 +3543,10 @@
 
 
   <div class='pre p1 fill-light mt0'>type</div>
-
+  
   
 
+  
   
   
   
@@ -2813,7 +3573,7 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='Set#objectID'>
+    <div class='border-bottom' id='setobjectid'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
@@ -2828,9 +3588,10 @@
   
 
   <div class='pre p1 fill-light mt0'>objectID</div>
-
+  
   
 
+  
   
   
   
@@ -2865,7 +3626,7 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='Set#root'>
+    <div class='border-bottom' id='setroot'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
@@ -2880,9 +3641,10 @@
   
 
   <div class='pre p1 fill-light mt0'>root</div>
-
+  
   
 
+  
   
   
   
@@ -2909,7 +3671,7 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='Set#path'>
+    <div class='border-bottom' id='setpath'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
@@ -2924,9 +3686,10 @@
   
 
   <div class='pre p1 fill-light mt0'>path</div>
-
+  
   
 
+  
   
   
   
@@ -2953,7 +3716,7 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='Set#parent'>
+    <div class='border-bottom' id='setparent'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
@@ -2968,9 +3731,10 @@
   
 
   <div class='pre p1 fill-light mt0'>parent</div>
-
+  
   
 
+  
   
   
   
@@ -2997,7 +3761,7 @@
       </div>
     </div>
   
-    <div class='border-bottom' id='Set#length'>
+    <div class='border-bottom' id='setlength'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
@@ -3012,9 +3776,10 @@
   
 
   <div class='pre p1 fill-light mt0'>length</div>
-
+  
   
 
+  
   
   
   
@@ -3060,8 +3825,8 @@
         
       </div>
     </div>
-  </div>
   <script src='assets/anchor.js'></script>
+  <script src='assets/split.js'></script>
   <script src='assets/site.js'></script>
 </body>
 </html>

@@ -10,7 +10,7 @@ class Schema {
     constructor(_signature, opts = {extensible: false}) {
         var eMsg;
         if (!_exists(_signature)) {
-            return `Schema requires JSON object at arguments[0]. Got '${typeof _signature}'`;
+            throw `Schema requires JSON object at arguments[0]. Got '${typeof _signature}'`;
         }
         _schemaOptions.set(this, opts);
         _validators.set(this, {});
@@ -48,7 +48,7 @@ class Schema {
         }
         // attempts to validate provided `schema` entries
         let _schema_validator = new SchemaValidator(_signature, this.options);
-        // throws error if error messagereturned
+        // throws error if error message returned
         if (typeof (eMsg = _schema_validator.isValid()) === 'string') {
             throw eMsg;
         }
@@ -78,7 +78,11 @@ class Schema {
             set: (t, key, value) => {
                 let _sH = _schemaHelpers.get(this);
                 if (typeof key === 'object') {
-                    _sH.setObject(key);
+                    const e = _sH.setObject(key);
+                    if (typeof e === 'string') {
+                        ObserverBuilder.getInstance().error(key, e);
+                        return false;
+                    }
                     return true;
                 }
                 let _childSigs = this.signature.elements || this.signature;
@@ -86,6 +90,7 @@ class Schema {
                 for (let _ in _pathKeys) {
                     let k = _pathKeys[_];
                     let _schema;
+                    // derives path for element
                     let _key = this.path.length > 0 ? `${this.path}.${k}` : k;
                     if (_exists(_childSigs[`${k}`])) {
                         _schema = _childSigs[k];
@@ -95,31 +100,44 @@ class Schema {
                         if (_exists(_childSigs["*"])) {
                             // applies schema
                             _schema = _childSigs["*"].polymorphic || _childSigs["*"];
-                            // derives path for wildcard element
-                            let _pKey = this.path.length > 1 ? `${this.path}.${key}` : key;
                             // creates Validator for path
-                            ValidatorBuilder.getInstance().create(_schema, _pKey);
+                            ValidatorBuilder.getInstance().create(_schema, _key);
                         }
                     }
                     // handles missing schema signatures
                     if (!_exists(_schema)) {
                         // rejects non-members of non-extensible schemas
                         if (!this.isExtensible) {
-                            throw new Error(`element '${_key}' is not a valid element`);
-                            // return false;
+                            const e = `element '${_key}' is not a valid element`;
+                            ObserverBuilder.getInstance().error(key, e);
+                            return;
                         }
                         _schema = Schema.defaultSignature;
                     }
                     // handles child objects
                     if (typeof value === "object") {
-                        value = _sH.setChildObject(_key, value);
+                        const tVal = value;
+                        const _valKeys = Object.keys(tVal);
+
+                        if (typeof (value = _sH.setChildObject(_key, value)) === 'string') {
+                            ObserverBuilder.getInstance().error(_key, value);
+                            return;
+                        }
                     }
                     // handles absolute values (strings, numbers, booleans...)
                     else {
+                        this.subscribeTo(_key, {
+                            next: (value) => {
+                                ObserverBuilder.getInstance().next(this.path, value);
+                            },
+                            error: (e) => {
+                                ObserverBuilder.getInstance().error(this.path, e);
+                            }
+                        });
                         let eMsg = _sH.validate(_key, value);
                         if (typeof eMsg === "string") {
-                            throw new Error(eMsg);
-                            // return false;
+                            ObserverBuilder.getInstance().error(_key, eMsg);
+                            return;
                         }
                     }
                     t[key] = value;
@@ -136,10 +154,17 @@ class Schema {
         return _schemaSignatures.get(this);
     }
 
+    /**
+     * getter for object model
+     */
     get model() {
         return _object.get(this);
     }
 
+    /**
+     * setter for object model
+     * @param value
+     */
     set model(value) {
         if (typeof value === 'object') {
             Object.keys(value).forEach((k) => {
@@ -147,7 +172,8 @@ class Schema {
             });
         }
         else {
-            throw `unable to set scalar value on model at ${this.path.length ? this.path : '.'}`;
+            const e = `unable to set scalar value on model at ${this.path.length ? this.path : '.'}`;
+            ObserverBuilder.getInstance().error(this.path, e);
         }
     }
 
@@ -169,6 +195,11 @@ class Schema {
         if (typeof key === 'string') {
             this.model[key] = value;
         } else {
+            const _sH = _schemaHelpers.get(this);
+            let e = _sH.ensureRequiredFields(key);
+            if (typeof e === 'string') {
+                ObserverBuilder.getInstance().error(this.path, e);
+            }
             Object.keys(key).forEach((_k) => {
                 this.model[_k] = key[_k];
             });
@@ -177,14 +208,33 @@ class Schema {
     }
 
     /**
-     * subscribes handler method to property observer
+     * subscribes handler method to property observer for path
+     * @param path
      * @param func
      */
-    subscribe(path, func) {
-        if (typeof func !== 'function') {
+    subscribe(func) {
+        if ((typeof func).match(/^(function|object)$/) === null) {
             throw new Error('subscribe requires function');
         }
+        let _o = ObserverBuilder.getInstance().get(this.path);
+        if (!_o || _o === null) {
+            ObserverBuilder.getInstance().create(this.path, this);
+            _o = ObserverBuilder.getInstance().get(this.path);
+        }
 
+        _o.subscribe(func);
+        return this;
+    }
+
+    /**
+     * subscribes handler method to property observer for path
+     * @param path
+     * @param func
+     */
+    subscribeTo(path, func) {
+        if ((typeof func).match(/^(function|object)$/) === null) {
+            throw new Error('subscribeTo requires function');
+        }
         let _o = ObserverBuilder.getInstance().get(path);
         if (!_o || _o === null) {
             ObserverBuilder.getInstance().create(path, this);
@@ -192,6 +242,7 @@ class Schema {
         }
 
         _o.subscribe(func);
+        return this;
     }
 
     /**
@@ -210,6 +261,13 @@ class Schema {
     }
 
     /**
+     * @returns {boolean}
+     */
+    get isValid() {
+        return (typeof this.validate() != 'string');
+    }
+
+    /**
      * gets raw value of this model
      */
     valueOf() {
@@ -223,7 +281,7 @@ class Schema {
         let _o = {};
         let _derive = function (itm) {
             if (itm instanceof Schema) {
-                return _derive(itm.toJSON());
+                return _derive(itm);
             }
             if (itm instanceof Set) {
                 let _arr = [];
@@ -313,4 +371,3 @@ class Schema {
         };
     }
 }
-;

@@ -8,7 +8,6 @@ class Set {
      * @param {any} items
      */
     constructor(_type) {
-        _object.set(this, []);
         let _types;
 
         if (!_exists(_type)) {
@@ -43,19 +42,94 @@ class Set {
         });
 
         let _;
-        if ( !_exists( arguments[1] ) ) {
+        if (!_exists(arguments[1])) {
             _ = new _metaData(this, {
                 _path: "",
-                _root: this });	}
+                _root: this
+            });
+        }
         else {
-            _ = (arguments[1] instanceof _metaData) ? arguments[1] : new _metaData( this, arguments[1] ); }
-        _mdRef.set( this, _ );
+            _ = (arguments[1] instanceof _metaData) ? arguments[1] : new _metaData(this, arguments[1]);
+        }
+        _mdRef.set(this, _);
 
         // when we no longer need babel...
         // type = _type;
         // for now we use Weakmap
         _vectorTypes.set(this, _types);
+        _object.set(this, new Proxy([], this.handler));
     }
+
+    /**
+     * getter for object model
+     */
+    get model() {
+        return _object.get(this);
+    }
+
+    /**
+     * setter for object model
+     * @param value
+     */
+    set model(value) {
+        if (Array.isArray(value)) {
+            let _m = _object.get(this);
+            _m = value;
+            return;
+        }
+        else {
+            ObserverBuilder.getInstance().error(this.path, `${this.path} requires Array`);
+        }
+    }
+
+    get handler() {
+        return {
+            get: (t, idx) => {
+                if (typeof idx === 'symbol') {
+                    idx = `${String(idx)}`;
+                }
+
+                if (idx === 'length') {
+                    return t.length;
+                }
+
+                if (idx in Array.prototype) {
+                    return t[idx];
+                }
+                if (parseInt(idx) !== NaN) {
+                    if (t[idx] instanceof Schema ||
+                        t[idx] instanceof Set) {
+                        return t[idx].model;
+                    }
+                    return t[idx];
+                }
+
+                return null;
+            },
+            set: (t, idx, value) => {
+                if (!this._typeCheck(value)) {
+                    // return false;
+                    var eMsg = `item at index ${idx} had wrong type`;
+                    ObserverBuilder.getInstance().error(this.path, eMsg);
+                    return false;
+                }
+                t[idx] = value;
+                ObserverBuilder.getInstance().next(this.path, t);
+                return true;
+            },
+            deleteProperty: (t, idx) => {
+                if (idx >= t.length) {
+                    const e = `index ${idx} is out of bounds on ${this.path}`;
+                    ObserverBuilder.getInstance().error(this.path, e);
+                    return false;
+                }
+                t.splice(idx, 1);
+                ObserverBuilder.getInstance().next(this.path, t);
+                return true;
+            }
+        };
+    }
+
 
     /**
      * tests item to see if it conforms to expected item type
@@ -86,9 +160,9 @@ class Set {
      * @returns {boolean}
      */
     validate() {
-        let _path = this.path();
+        let _path = this.path;
         let _validator = ValidatorBuilder.getInstance();
-        _object.get(this).forEach(itm => {
+        this.model.forEach(itm => {
             let e;
             if (typeof (e = _validator.exec(_path, itm)) === 'string') {
                 return e;
@@ -98,11 +172,19 @@ class Set {
     }
 
     /**
+     *
+     * @returns {boolean}
+     */
+    get isValid() {
+        return this.validate() === true;
+    }
+
+    /**
      * @param {number} idx
      * @returns {any} element at index if found
      */
     getItemAt(idx) {
-        return (_object.get(this).length >= idx ) ? _object.get(this)[idx] : null;
+        return this.model[idx];
     }
 
     /**
@@ -111,10 +193,7 @@ class Set {
      * @returns {Set} reference to self
      */
     setItemAt(idx, item) {
-        if (!this._typeCheck(item)) {
-            return false;
-        }
-        _object.get(this).splice(idx, 0, item);
+        this.model[idx] = item;
         return this;
     }
 
@@ -124,10 +203,8 @@ class Set {
      * @returns {any} item removed
      */
     removeItemAt(idx) {
-        if (idx > _object.get(this).length) {
-            return false;
-        }
-        return _object.get(this).splice(idx, 1);
+        delete this.model[idx];
+        return this;
     }
 
     /**
@@ -151,11 +228,11 @@ class Set {
         if (!this._typeCheck(item)) {
             return false;
         }
-        if (idx > _object.get(this).length) {
+        if (idx > this.model.length) {
             return false;
         }
-        if (idx <= _object.get(this).length) {
-            _object.get(this).splice(idx, 1, item);
+        if (idx <= this.model.length) {
+            this.model[idx] = item;
         }
         return this;
     }
@@ -165,14 +242,15 @@ class Set {
      * @returns {Set} reference to self
      */
     addItem(item) {
-        return this.setItemAt(_object.get(this).length, item);
+        this.setItemAt(this.model.length, item);
+        return this;
     }
 
     /**
      * @returns {any} item removed from start of list
      */
     shift() {
-        return _object.get(this).shift();
+        return Reflect.apply(Array.prototype.shift, this.model, []);
     };
 
     /**
@@ -180,10 +258,7 @@ class Set {
      * @returns {Set} reference to self
      */
     unshift(...items) {
-        items.reverse().forEach(item => {
-            return this.setItemAt(0, item);
-        });
-
+        Reflect.apply(Array.prototype.unshift, this.model, arguments);
         return this;
     }
 
@@ -191,7 +266,9 @@ class Set {
      * @returns {any} items removed from end of list
      */
     pop() {
-        return _object.get(this).pop();
+        const v = this.model[this.model.length - 1];
+        delete this.model[this.model.length - 1];
+        return v
     }
 
     /**
@@ -210,7 +287,7 @@ class Set {
      * @returns reference to self
      */
     reset() {
-        _object.set(this, []);
+        _object.set(this, new Proxy([], this.handler));
         return this;
     }
 
@@ -219,7 +296,7 @@ class Set {
      * @returns {Set} reference to self
      */
     sort(func) {
-        _object.get(this).sort(func);
+        this.model.sort(func);
         return this;
     }
 
@@ -227,14 +304,14 @@ class Set {
      * @returns primitive value of list
      */
     valueOf() {
-        return _object.get(this);
+        return this.model;
     }
 
     /**
      * @returns stringified representation of list
      */
     toString() {
-        return _object.get(this).toString();
+        return this.model.toString();
     }
 
     /**
@@ -283,8 +360,44 @@ class Set {
      * @returns {number} number of elements in list
      */
     get length() {
-        return this.valueOf().length;
+        return this.model.length;
     }
 
+    /**
+     * subscribes handler method to property observer for path
+     * @param path
+     * @param func
+     */
+    subscribe(func) {
+        if ((typeof func).match(/^(function|object)$/) === null) {
+            throw new Error('subscribe requires function');
+        }
+        let _o = ObserverBuilder.getInstance().get(this.path);
+        if (!_o || _o === null) {
+            ObserverBuilder.getInstance().create(this.path, this);
+            _o = ObserverBuilder.getInstance().get(this.path);
+        }
+        _o.subscribe(func);
+        return this;
+    }
+
+    /**
+     * subscribes handler method to property observer for path
+     * @param path
+     * @param func
+     */
+    subscribeTo(path, func) {
+        if ((typeof func).match(/^(function|object)$/) === null) {
+            throw new Error('subscribeTo requires function');
+        }
+        let _o = ObserverBuilder.getInstance().get(path);
+        if (!_o || _o === null) {
+            ObserverBuilder.getInstance().create(path, this);
+            _o = ObserverBuilder.getInstance().get(path);
+        }
+
+        _o.subscribe(func);
+        return this;
+    }
 }
 

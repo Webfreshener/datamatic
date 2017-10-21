@@ -373,7 +373,7 @@ var Schema = function () {
 
         var eMsg;
         if (!_exists(_signature)) {
-            return 'Schema requires JSON object at arguments[0]. Got \'' + (typeof _signature === 'undefined' ? 'undefined' : _typeof2(_signature)) + '\'';
+            throw 'Schema requires JSON object at arguments[0]. Got \'' + (typeof _signature === 'undefined' ? 'undefined' : _typeof2(_signature)) + '\'';
         }
         _schemaOptions.set(this, opts);
         _validators.set(this, {});
@@ -432,7 +432,7 @@ var Schema = function () {
         }
         // attempts to validate provided `schema` entries
         var _schema_validator = new SchemaValidator(_signature, this.options);
-        // throws error if error messagereturned
+        // throws error if error message returned
         if (typeof (eMsg = _schema_validator.isValid()) === 'string') {
             throw eMsg;
         }
@@ -500,6 +500,11 @@ var Schema = function () {
             if (typeof key === 'string') {
                 this.model[key] = value;
             } else {
+                var _sH = _schemaHelpers.get(this);
+                var e = _sH.ensureRequiredFields(key);
+                if (typeof e === 'string') {
+                    ObserverBuilder.getInstance().error(this.path, e);
+                }
                 Object.keys(key).forEach(function (_k) {
                     _this.model[_k] = key[_k];
                 });
@@ -508,17 +513,39 @@ var Schema = function () {
         }
 
         /**
-         * subscribes handler method to property observer
+         * subscribes handler method to property observer for path
+         * @param path
          * @param func
          */
 
     }, {
         key: 'subscribe',
-        value: function subscribe(path, func) {
-            if (typeof func !== 'function') {
+        value: function subscribe(func) {
+            if ((typeof func === 'undefined' ? 'undefined' : _typeof2(func)).match(/^(function|object)$/) === null) {
                 throw new Error('subscribe requires function');
             }
+            var _o = ObserverBuilder.getInstance().get(this.path);
+            if (!_o || _o === null) {
+                ObserverBuilder.getInstance().create(this.path, this);
+                _o = ObserverBuilder.getInstance().get(this.path);
+            }
 
+            _o.subscribe(func);
+            return this;
+        }
+
+        /**
+         * subscribes handler method to property observer for path
+         * @param path
+         * @param func
+         */
+
+    }, {
+        key: 'subscribeTo',
+        value: function subscribeTo(path, func) {
+            if ((typeof func === 'undefined' ? 'undefined' : _typeof2(func)).match(/^(function|object)$/) === null) {
+                throw new Error('subscribeTo requires function');
+            }
             var _o = ObserverBuilder.getInstance().get(path);
             if (!_o || _o === null) {
                 ObserverBuilder.getInstance().create(path, this);
@@ -526,6 +553,7 @@ var Schema = function () {
             }
 
             _o.subscribe(func);
+            return this;
         }
 
         /**
@@ -569,11 +597,16 @@ var Schema = function () {
         }
 
         /**
-         * gets raw value of this model
+         * @returns {boolean}
          */
 
     }, {
         key: 'valueOf',
+
+
+        /**
+         * gets raw value of this model
+         */
         value: function valueOf() {
             return _object.get(this);
         }
@@ -588,7 +621,7 @@ var Schema = function () {
             var _o = {};
             var _derive = function _derive(itm) {
                 if (itm instanceof Schema) {
-                    return _derive(itm.toJSON());
+                    return _derive(itm);
                 }
                 if (itm instanceof Set) {
                     var _arr = [];
@@ -656,7 +689,11 @@ var Schema = function () {
                 set: function set(t, key, value) {
                     var _sH = _schemaHelpers.get(_this2);
                     if ((typeof key === 'undefined' ? 'undefined' : _typeof2(key)) === 'object') {
-                        _sH.setObject(key);
+                        var e = _sH.setObject(key);
+                        if (typeof e === 'string') {
+                            ObserverBuilder.getInstance().error(key, e);
+                            return false;
+                        }
                         return true;
                     }
                     var _childSigs = _this2.signature.elements || _this2.signature;
@@ -664,6 +701,7 @@ var Schema = function () {
                     for (var _ in _pathKeys) {
                         var _k4 = _pathKeys[_];
                         var _schema = void 0;
+                        // derives path for element
                         var _key = _this2.path.length > 0 ? _this2.path + '.' + _k4 : _k4;
                         if (_exists(_childSigs['' + _k4])) {
                             _schema = _childSigs[_k4];
@@ -672,31 +710,44 @@ var Schema = function () {
                             if (_exists(_childSigs["*"])) {
                                 // applies schema
                                 _schema = _childSigs["*"].polymorphic || _childSigs["*"];
-                                // derives path for wildcard element
-                                var _pKey = _this2.path.length > 1 ? _this2.path + '.' + key : key;
                                 // creates Validator for path
-                                ValidatorBuilder.getInstance().create(_schema, _pKey);
+                                ValidatorBuilder.getInstance().create(_schema, _key);
                             }
                         }
                         // handles missing schema signatures
                         if (!_exists(_schema)) {
                             // rejects non-members of non-extensible schemas
                             if (!_this2.isExtensible) {
-                                throw new Error('element \'' + _key + '\' is not a valid element');
-                                // return false;
+                                var _e2 = 'element \'' + _key + '\' is not a valid element';
+                                ObserverBuilder.getInstance().error(key, _e2);
+                                return;
                             }
                             _schema = Schema.defaultSignature;
                         }
                         // handles child objects
                         if ((typeof value === 'undefined' ? 'undefined' : _typeof2(value)) === "object") {
-                            value = _sH.setChildObject(_key, value);
+                            var tVal = value;
+                            var _valKeys = Object.keys(tVal);
+
+                            if (typeof (value = _sH.setChildObject(_key, value)) === 'string') {
+                                ObserverBuilder.getInstance().error(_key, value);
+                                return;
+                            }
                         }
                         // handles absolute values (strings, numbers, booleans...)
                         else {
+                                _this2.subscribeTo(_key, {
+                                    next: function next(value) {
+                                        ObserverBuilder.getInstance().next(_this2.path, value);
+                                    },
+                                    error: function error(e) {
+                                        ObserverBuilder.getInstance().error(_this2.path, e);
+                                    }
+                                });
                                 var eMsg = _sH.validate(_key, value);
                                 if (typeof eMsg === "string") {
-                                    throw new Error(eMsg);
-                                    // return false;
+                                    ObserverBuilder.getInstance().error(_key, eMsg);
+                                    return;
                                 }
                             }
                         t[key] = value;
@@ -715,11 +766,22 @@ var Schema = function () {
         get: function get() {
             return _schemaSignatures.get(this);
         }
+
+        /**
+         * getter for object model
+         */
+
     }, {
         key: 'model',
         get: function get() {
             return _object.get(this);
-        },
+        }
+
+        /**
+         * setter for object model
+         * @param value
+         */
+        ,
         set: function set(value) {
             var _this3 = this;
 
@@ -728,8 +790,14 @@ var Schema = function () {
                     _this3.model[k] = value[k];
                 });
             } else {
-                throw 'unable to set scalar value on model at ' + (this.path.length ? this.path : '.');
+                var e = 'unable to set scalar value on model at ' + (this.path.length ? this.path : '.');
+                ObserverBuilder.getInstance().error(this.path, e);
             }
+        }
+    }, {
+        key: 'isValid',
+        get: function get() {
+            return typeof this.validate() != 'string';
         }
     }, {
         key: 'options',
@@ -818,11 +886,10 @@ var Schema = function () {
 
     return Schema;
 }();
-
-;
 /**
  * @class Set
  */
+
 
 var Set = function () {
     /**
@@ -833,7 +900,6 @@ var Set = function () {
     function Set(_type) {
         _classCallCheck(this, Set);
 
-        _object.set(this, []);
         var _types = void 0;
 
         if (!_exists(_type)) {
@@ -869,7 +935,8 @@ var Set = function () {
         if (!_exists(arguments[1])) {
             _ = new _metaData(this, {
                 _path: "",
-                _root: this });
+                _root: this
+            });
         } else {
             _ = arguments[1] instanceof _metaData ? arguments[1] : new _metaData(this, arguments[1]);
         }
@@ -879,18 +946,24 @@ var Set = function () {
         // type = _type;
         // for now we use Weakmap
         _vectorTypes.set(this, _types);
+        _object.set(this, new Proxy([], this.handler));
     }
 
     /**
-     * tests item to see if it conforms to expected item type
-     * @param item
-     * @returns {boolean}
-     * @private
+     * getter for object model
      */
 
 
     _createClass(Set, [{
         key: '_typeCheck',
+
+
+        /**
+         * tests item to see if it conforms to expected item type
+         * @param item
+         * @returns {boolean}
+         * @private
+         */
         value: function _typeCheck(item) {
             var _iteratorNormalCompletion7 = true;
             var _didIteratorError7 = false;
@@ -939,9 +1012,9 @@ var Set = function () {
     }, {
         key: 'validate',
         value: function validate() {
-            var _path = this.path();
+            var _path = this.path;
             var _validator = ValidatorBuilder.getInstance();
-            _object.get(this).forEach(function (itm) {
+            this.model.forEach(function (itm) {
                 var e = void 0;
                 if (typeof (e = _validator.exec(_path, itm)) === 'string') {
                     return e;
@@ -951,14 +1024,20 @@ var Set = function () {
         }
 
         /**
-         * @param {number} idx
-         * @returns {any} element at index if found
+         *
+         * @returns {boolean}
          */
 
     }, {
         key: 'getItemAt',
+
+
+        /**
+         * @param {number} idx
+         * @returns {any} element at index if found
+         */
         value: function getItemAt(idx) {
-            return _object.get(this).length >= idx ? _object.get(this)[idx] : null;
+            return this.model[idx];
         }
 
         /**
@@ -970,10 +1049,7 @@ var Set = function () {
     }, {
         key: 'setItemAt',
         value: function setItemAt(idx, item) {
-            if (!this._typeCheck(item)) {
-                return false;
-            }
-            _object.get(this).splice(idx, 0, item);
+            this.model[idx] = item;
             return this;
         }
 
@@ -986,10 +1062,8 @@ var Set = function () {
     }, {
         key: 'removeItemAt',
         value: function removeItemAt(idx) {
-            if (idx > _object.get(this).length) {
-                return false;
-            }
-            return _object.get(this).splice(idx, 1);
+            delete this.model[idx];
+            return this;
         }
 
         /**
@@ -1019,11 +1093,11 @@ var Set = function () {
             if (!this._typeCheck(item)) {
                 return false;
             }
-            if (idx > _object.get(this).length) {
+            if (idx > this.model.length) {
                 return false;
             }
-            if (idx <= _object.get(this).length) {
-                _object.get(this).splice(idx, 1, item);
+            if (idx <= this.model.length) {
+                this.model[idx] = item;
             }
             return this;
         }
@@ -1036,7 +1110,8 @@ var Set = function () {
     }, {
         key: 'addItem',
         value: function addItem(item) {
-            return this.setItemAt(_object.get(this).length, item);
+            this.setItemAt(this.model.length, item);
+            return this;
         }
 
         /**
@@ -1046,7 +1121,7 @@ var Set = function () {
     }, {
         key: 'shift',
         value: function shift() {
-            return _object.get(this).shift();
+            return Reflect.apply(Array.prototype.shift, this.model, []);
         }
     }, {
         key: 'unshift',
@@ -1057,16 +1132,11 @@ var Set = function () {
          * @returns {Set} reference to self
          */
         value: function unshift() {
-            var _this4 = this;
-
             for (var _len = arguments.length, items = Array(_len), _key2 = 0; _key2 < _len; _key2++) {
                 items[_key2] = arguments[_key2];
             }
 
-            items.reverse().forEach(function (item) {
-                return _this4.setItemAt(0, item);
-            });
-
+            Reflect.apply(Array.prototype.unshift, this.model, arguments);
             return this;
         }
 
@@ -1077,7 +1147,9 @@ var Set = function () {
     }, {
         key: 'pop',
         value: function pop() {
-            return _object.get(this).pop();
+            var v = this.model[this.model.length - 1];
+            delete this.model[this.model.length - 1];
+            return v;
         }
 
         /**
@@ -1088,14 +1160,14 @@ var Set = function () {
     }, {
         key: 'push',
         value: function push() {
-            var _this5 = this;
+            var _this4 = this;
 
             for (var _len2 = arguments.length, items = Array(_len2), _key3 = 0; _key3 < _len2; _key3++) {
                 items[_key3] = arguments[_key3];
             }
 
             items.forEach(function (item) {
-                return _this5.addItem(item);
+                return _this4.addItem(item);
             });
             return this;
         }
@@ -1108,7 +1180,7 @@ var Set = function () {
     }, {
         key: 'reset',
         value: function reset() {
-            _object.set(this, []);
+            _object.set(this, new Proxy([], this.handler));
             return this;
         }
 
@@ -1120,7 +1192,7 @@ var Set = function () {
     }, {
         key: 'sort',
         value: function sort(func) {
-            _object.get(this).sort(func);
+            this.model.sort(func);
             return this;
         }
 
@@ -1131,7 +1203,7 @@ var Set = function () {
     }, {
         key: 'valueOf',
         value: function valueOf() {
-            return _object.get(this);
+            return this.model;
         }
 
         /**
@@ -1141,7 +1213,7 @@ var Set = function () {
     }, {
         key: 'toString',
         value: function toString() {
-            return _object.get(this).toString();
+            return this.model.toString();
         }
 
         /**
@@ -1149,6 +1221,124 @@ var Set = function () {
          * @returns
          */
 
+    }, {
+        key: 'subscribe',
+
+
+        /**
+         * subscribes handler method to property observer for path
+         * @param path
+         * @param func
+         */
+        value: function subscribe(func) {
+            if ((typeof func === 'undefined' ? 'undefined' : _typeof2(func)).match(/^(function|object)$/) === null) {
+                throw new Error('subscribe requires function');
+            }
+            var _o = ObserverBuilder.getInstance().get(this.path);
+            if (!_o || _o === null) {
+                ObserverBuilder.getInstance().create(this.path, this);
+                _o = ObserverBuilder.getInstance().get(this.path);
+            }
+            _o.subscribe(func);
+            return this;
+        }
+
+        /**
+         * subscribes handler method to property observer for path
+         * @param path
+         * @param func
+         */
+
+    }, {
+        key: 'subscribeTo',
+        value: function subscribeTo(path, func) {
+            if ((typeof func === 'undefined' ? 'undefined' : _typeof2(func)).match(/^(function|object)$/) === null) {
+                throw new Error('subscribeTo requires function');
+            }
+            var _o = ObserverBuilder.getInstance().get(path);
+            if (!_o || _o === null) {
+                ObserverBuilder.getInstance().create(path, this);
+                _o = ObserverBuilder.getInstance().get(path);
+            }
+
+            _o.subscribe(func);
+            return this;
+        }
+    }, {
+        key: 'model',
+        get: function get() {
+            return _object.get(this);
+        }
+
+        /**
+         * setter for object model
+         * @param value
+         */
+        ,
+        set: function set(value) {
+            if (Array.isArray(value)) {
+                var _m = _object.get(this);
+                _m = value;
+                return;
+            } else {
+                ObserverBuilder.getInstance().error(this.path, this.path + ' requires Array');
+            }
+        }
+    }, {
+        key: 'handler',
+        get: function get() {
+            var _this5 = this;
+
+            return {
+                get: function get(t, idx) {
+                    if ((typeof idx === 'undefined' ? 'undefined' : _typeof2(idx)) === 'symbol') {
+                        idx = '' + String(idx);
+                    }
+
+                    if (idx === 'length') {
+                        return t.length;
+                    }
+
+                    if (idx in Array.prototype) {
+                        return t[idx];
+                    }
+                    if (parseInt(idx) !== NaN) {
+                        if (t[idx] instanceof Schema || t[idx] instanceof Set) {
+                            return t[idx].model;
+                        }
+                        return t[idx];
+                    }
+
+                    return null;
+                },
+                set: function set(t, idx, value) {
+                    if (!_this5._typeCheck(value)) {
+                        // return false;
+                        var eMsg = 'item at index ' + idx + ' had wrong type';
+                        ObserverBuilder.getInstance().error(_this5.path, eMsg);
+                        return false;
+                    }
+                    t[idx] = value;
+                    ObserverBuilder.getInstance().next(_this5.path, t);
+                    return true;
+                },
+                deleteProperty: function deleteProperty(t, idx) {
+                    if (idx >= t.length) {
+                        var e = 'index ' + idx + ' is out of bounds on ' + _this5.path;
+                        ObserverBuilder.getInstance().error(_this5.path, e);
+                        return false;
+                    }
+                    t.splice(idx, 1);
+                    ObserverBuilder.getInstance().next(_this5.path, t);
+                    return true;
+                }
+            };
+        }
+    }, {
+        key: 'isValid',
+        get: function get() {
+            return this.validate() === true;
+        }
     }, {
         key: 'type',
         get: function get() {
@@ -1208,7 +1398,7 @@ var Set = function () {
     }, {
         key: 'length',
         get: function get() {
-            return this.valueOf().length;
+            return this.model.length;
         }
     }]);
 
@@ -1530,6 +1720,7 @@ var ValidatorBuilder = function () {
         }
         return __vBuilder;
     }
+
     /**
      * @returns list of validation paths
      */
@@ -1541,6 +1732,7 @@ var ValidatorBuilder = function () {
             var _v = _validators.get(this);
             return Object.keys(_v);
         }
+
         /**
          * @param path
          * @returns item at path reference
@@ -1552,6 +1744,7 @@ var ValidatorBuilder = function () {
             var _v = _validators.get(this);
             return _exists(_v[path]) ? _v[path] : null;
         }
+
         /**
          * @param _path
          * @param func
@@ -1566,6 +1759,7 @@ var ValidatorBuilder = function () {
             _validators.get(this)[_path] = func;
             return this;
         }
+
         /**
          * @param {object} _ref
          * @param {string} _path
@@ -1574,6 +1768,8 @@ var ValidatorBuilder = function () {
     }, {
         key: 'create',
         value: function create(ref, path) {
+            var _this15 = this;
+
             if (!_exists(ref)) {
                 throw "create requires object reference at arguments[0]";
             }
@@ -1583,9 +1779,18 @@ var ValidatorBuilder = function () {
                 if ((typeof _sig === 'undefined' ? 'undefined' : _typeof2(_sig)) !== 'object') {
                     return new Validator["Default"](path, _sig);
                 }
+                if (_sig.hasOwnProperty('*')) {
+                    _this15.create(_sig['*'], path);
+                    delete _sig['*'];
+                    if (Object.keys(_sig) > 0) {
+                        return _this15.create(_sig, path);
+                    }
+                    return;
+                }
 
                 var _typeof = _global.wf.Str.capitalize(_sig.type);
                 var _hasKey = 0 <= Object.keys(Validator).indexOf(_typeof);
+                // ObserverBuilder.getInstance().create(path, ref);
                 return new Validator[_hasKey ? _typeof : "Default"](path, _sig);
             });
             return _validators.get(this)[path] = function (value) {
@@ -1601,7 +1806,7 @@ var ValidatorBuilder = function () {
         }
 
         /**
-         * executes validator `value` with validator at `path` 
+         * executes validator `value` with validator at `path`
          * @param path
          * @param value
          */
@@ -1615,6 +1820,7 @@ var ValidatorBuilder = function () {
             }
             return _v[path](value);
         }
+
         /**
          * @returns singleton ValidatorBuilder reference
          */
@@ -1624,6 +1830,7 @@ var ValidatorBuilder = function () {
         value: function getInstance() {
             return new this();
         }
+
         /**
          * @returns validators WeakMap
          */
@@ -1633,8 +1840,9 @@ var ValidatorBuilder = function () {
         value: function getValidators() {
             return _validators.get(ValidatorBuilder.getInstance());
         }
+
         /**
-         * 
+         *
          */
 
     }, {
@@ -1642,8 +1850,9 @@ var ValidatorBuilder = function () {
         value: function create(signature, path) {
             ValidatorBuilder.getInstance().create(signature, path);
         }
+
         /**
-         * 
+         *
          */
 
     }, {
@@ -2191,6 +2400,14 @@ var ObserverBuilder = function () {
                 _o.complete(value);
             }
         }
+    }, {
+        key: 'error',
+        value: function error(path, value) {
+            var _o = this.get(path);
+            if (_o) {
+                _o.error(value);
+            }
+        }
 
         /**
          * @returns singleton ObserverBuilder reference
@@ -2257,7 +2474,7 @@ var SchemaHelpers = function () {
             }
             // calls set with nested key value pair
             for (var k in obj) {
-                var eMsg = this._ref.set(k, obj[k]);
+                var eMsg = this._ref.model[k] = obj[k];
                 if (typeof eMsg === 'string') {
                     throw new Error(eMsg);
                 }
@@ -2339,7 +2556,7 @@ var SchemaHelpers = function () {
     }, {
         key: 'createSchemaChild',
         value: function createSchemaChild(key, value, opts, metaData) {
-            var _this15 = this;
+            var _this16 = this;
 
             var _kinds;
             // tests if value is not Array
@@ -2348,13 +2565,19 @@ var SchemaHelpers = function () {
                     _path: key, //`${this._ref.path}.${key}`,
                     _root: this._ref.root
                 });
+                // _kinds = this.getKinds(this._ref.signature[key] || this._ref.signature);
                 var _schemaDef = this._ref.signature[key.split(".").pop()] || this._ref.signature['*'] || this._ref.signature;
-                return new Schema(_schemaDef, opts, _md);
+                try {
+                    var _s = new Schema(_schemaDef, opts, _md);
+                } catch (e) {
+                    return e;
+                }
+                return _s;
             } else {
                 _kinds = this.getKinds(this._ref.signature[key] || this._ref.signature);
                 if (Array.isArray(_kinds)) {
                     _kinds = _kinds.map(function (val) {
-                        return _this15.ensureKindIsString(val);
+                        return _this16.ensureKindIsString(val);
                     });
                     _kinds = _kinds.filter(function (itm) {
                         return itm !== false;
