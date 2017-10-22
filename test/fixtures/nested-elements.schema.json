@@ -48,7 +48,7 @@
 								"aDeepParam": {
 									"type": "String",
 									"required": true,
-									"restrict": "^[0-9]+$"
+									"restrict": "^[a-zA-Z0-9\\\\s]+$"
 								},
 								"aDeeperObject": {
 									"type": "Object",
@@ -58,7 +58,7 @@
 										"aDeepParam": {
 											"type": "String",
 											"required": true,
-											"restrict": "^[0-9]+$"
+											"restrict": "^[a-zA-Z0-9\\\\s]+$"
 										}
 									}
 								}

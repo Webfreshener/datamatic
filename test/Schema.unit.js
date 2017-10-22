@@ -349,8 +349,39 @@ describe("Schema Class Test Suite", function () {
         it("should handle deep object nesting", () => {
             let _schema = new Schema(require("./fixtures/nested-elements.schema.json"));
             expect(_schema instanceof Schema).to.be.true;
-            //    expect((_schema.set(_d = require("./fixtures/nested.data.json"))).valueOf().NestedObjects).to.exist;
-            //    return expect(JSON.stringify(_d)).to.equal(_schema.toString());
+            _schema.model = require("./fixtures/_nested.data.json");
+            _schema.model.NestedObjects.anArray.length.should.eq(2);
+            _schema.model.NestedObjects.anObject.aDeepObject.aDeeperObject.should.exist;
+            _schema.model.NestedObjects.anObject.aDeepObject.aDeeperObject.aDeepParam.should.eq("a deep param");
+        });
+    });
+    
+    describe.only("casting to values", () => {
+        let _schema;
+        const _ts = JSON.stringify({
+            NestedObjects: {
+                anObject: {
+                    aString: "TEST",
+                    aObject: {},
+                    aDeepObject: {
+                        aDeepParam: "testing 123",
+                        aDeeperObject:{
+                            aDeepParam:"a deep param"
+                        }
+                    }
+                },
+                anArray: []
+            }
+        });
+        before(()=> {
+            _schema = new Schema(require("./fixtures/nested-elements.schema.json"));
+            _schema.model = require("./fixtures/_nested.data.json");
+        });
+        it("should provide JSON from toJSON", () => {
+            JSON.stringify(_schema.toJSON()).should.eq(_ts);
+        });
+        it("should provide JSON String from toString", () => {
+            _schema.toString().should.eq(_ts);
         });
     })
 });

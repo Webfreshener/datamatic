@@ -606,56 +606,33 @@ var Schema = function () {
          * gets raw value of this model
          */
         value: function valueOf() {
-            return _object.get(this);
+            return this.model;
         }
 
         /**
-         *
+         * JSONifies Schema Model
          */
 
     }, {
         key: 'toJSON',
         value: function toJSON() {
-            var _o = {};
             var _derive = function _derive(itm) {
                 if (itm instanceof Schema) {
-                    return _derive(itm);
+                    return itm.toJSON();
                 }
                 if (itm instanceof Set) {
-                    var _arr = [];
-                    var _iteratorNormalCompletion6 = true;
-                    var _didIteratorError6 = false;
-                    var _iteratorError6 = undefined;
-
-                    try {
-                        for (var _iterator6 = itm.valueOf()[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
-                            var _k2 = _step6.value;
-
-                            _arr.push(_derive(itm[_k2]));
-                            return _arr;
-                        }
-                    } catch (err) {
-                        _didIteratorError6 = true;
-                        _iteratorError6 = err;
-                    } finally {
-                        try {
-                            if (!_iteratorNormalCompletion6 && _iterator6.return) {
-                                _iterator6.return();
-                            }
-                        } finally {
-                            if (_didIteratorError6) {
-                                throw _iteratorError6;
-                            }
-                        }
+                    return itm.toJSON();
+                }
+                if ((typeof itm === 'undefined' ? 'undefined' : _typeof2(itm)) === 'object') {
+                    var _o = !Array.isArray(itm) ? {} : [];
+                    for (var _k2 in itm) {
+                        _o[_k2] = _derive(itm[_k2]);
                     }
+                    return _o;
                 }
                 return itm;
             };
-            var _obj = this.valueOf();
-            for (var _k3 in _obj) {
-                _o[_k3] = _derive(_obj[_k3]);
-            }
-            return _o;
+            return _derive(this.valueOf());
         }
 
         /**
@@ -697,12 +674,12 @@ var Schema = function () {
                     var _childSigs = _this2.signature.elements || _this2.signature;
                     var _pathKeys = key.split(".");
                     for (var _ in _pathKeys) {
-                        var _k4 = _pathKeys[_];
+                        var _k3 = _pathKeys[_];
                         var _schema = void 0;
                         // derives path for element
-                        var _key = _this2.path.length > 0 ? _this2.path + '.' + _k4 : _k4;
-                        if (_exists(_childSigs['' + _k4])) {
-                            _schema = _childSigs[_k4];
+                        var _key = _this2.path.length > 0 ? _this2.path + '.' + _k3 : _k3;
+                        if (_exists(_childSigs['' + _k3])) {
+                            _schema = _childSigs[_k3];
                         } else {
                             // attempts to find wildcard element name
                             if (_exists(_childSigs["*"])) {
@@ -963,13 +940,13 @@ var Set = function () {
          * @private
          */
         value: function _typeCheck(item) {
-            var _iteratorNormalCompletion7 = true;
-            var _didIteratorError7 = false;
-            var _iteratorError7 = undefined;
+            var _iteratorNormalCompletion6 = true;
+            var _didIteratorError6 = false;
+            var _iteratorError6 = undefined;
 
             try {
-                for (var _iterator7 = this.type[Symbol.iterator](), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
-                    var _t = _step7.value;
+                for (var _iterator6 = this.type[Symbol.iterator](), _step6; !(_iteratorNormalCompletion6 = (_step6 = _iterator6.next()).done); _iteratorNormalCompletion6 = true) {
+                    var _t = _step6.value;
 
                     if (typeof _t === "string" && _t.match(/^(\*|ALL)$/)) {
                         return true;
@@ -985,16 +962,16 @@ var Set = function () {
                     }
                 }
             } catch (err) {
-                _didIteratorError7 = true;
-                _iteratorError7 = err;
+                _didIteratorError6 = true;
+                _iteratorError6 = err;
             } finally {
                 try {
-                    if (!_iteratorNormalCompletion7 && _iterator7.return) {
-                        _iterator7.return();
+                    if (!_iteratorNormalCompletion6 && _iterator6.return) {
+                        _iterator6.return();
                     }
                 } finally {
-                    if (_didIteratorError7) {
-                        throw _iteratorError7;
+                    if (_didIteratorError6) {
+                        throw _iteratorError6;
                     }
                 }
             }
@@ -1211,7 +1188,35 @@ var Set = function () {
     }, {
         key: 'toString',
         value: function toString() {
-            return this.model.toString();
+            var pretty = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
+            return JSON.stringify(this.toJSON(), null, pretty ? 2 : void 0);
+        }
+
+        /**
+         * returns JSONified representation of list
+         */
+
+    }, {
+        key: 'toJSON',
+        value: function toJSON() {
+            var _derive = function _derive(itm) {
+                if (itm instanceof Schema) {
+                    return itm.toJSON();
+                }
+                if (itm instanceof Set) {
+                    return itm.toJSON();
+                };
+                if ((typeof itm === 'undefined' ? 'undefined' : _typeof2(itm)) === 'object') {
+                    var _o = !Array.isArray(itm) ? {} : [];
+                    for (var _k4 in itm) {
+                        _o[_k4] = _derive(itm[_k4]);
+                    }
+                    return _o;
+                };
+                return itm;
+            };
+            return _derive(this.valueOf());
         }
 
         /**
@@ -1892,13 +1897,13 @@ var SchemaValidator = function () {
         };
         // validates SCHEMA ENTRIES
         var _iterate = Array.isArray(_schema) ? _schema : Object.keys(_schema);
-        var _iteratorNormalCompletion8 = true;
-        var _didIteratorError8 = false;
-        var _iteratorError8 = undefined;
+        var _iteratorNormalCompletion7 = true;
+        var _didIteratorError7 = false;
+        var _iteratorError7 = undefined;
 
         try {
-            for (var _iterator8 = _iterate[Symbol.iterator](), _step8; !(_iteratorNormalCompletion8 = (_step8 = _iterator8.next()).done); _iteratorNormalCompletion8 = true) {
-                var _oKey = _step8.value;
+            for (var _iterator7 = _iterate[Symbol.iterator](), _step7; !(_iteratorNormalCompletion7 = (_step7 = _iterator7.next()).done); _iteratorNormalCompletion7 = true) {
+                var _oKey = _step7.value;
 
                 switch (_typeof2(_schema[_oKey])) {
                     case "string":
@@ -1915,41 +1920,41 @@ var SchemaValidator = function () {
                             if (_oKey !== "elements") {
                                 _errorMsg = this.validateSchemaEntry(_oKey, _schema[_oKey]);
                             } else {
-                                var _iteratorNormalCompletion9 = true;
-                                var _didIteratorError9 = false;
-                                var _iteratorError9 = undefined;
+                                var _iteratorNormalCompletion8 = true;
+                                var _didIteratorError8 = false;
+                                var _iteratorError8 = undefined;
 
                                 try {
-                                    for (var _iterator9 = Object.keys(_schema[_oKey])[Symbol.iterator](), _step9; !(_iteratorNormalCompletion9 = (_step9 = _iterator9.next()).done); _iteratorNormalCompletion9 = true) {
-                                        var _x = _step9.value;
+                                    for (var _iterator8 = Object.keys(_schema[_oKey])[Symbol.iterator](), _step8; !(_iteratorNormalCompletion8 = (_step8 = _iterator8.next()).done); _iteratorNormalCompletion8 = true) {
+                                        var _x = _step8.value;
 
                                         if (typeof (_errorMsg = this.validateSchemaEntry(_x, _schema[_oKey][_x])) === "string") {
                                             return _errorMsg;
                                         }
                                     }
                                 } catch (err) {
-                                    _didIteratorError9 = true;
-                                    _iteratorError9 = err;
+                                    _didIteratorError8 = true;
+                                    _iteratorError8 = err;
                                 } finally {
                                     try {
-                                        if (!_iteratorNormalCompletion9 && _iterator9.return) {
-                                            _iterator9.return();
+                                        if (!_iteratorNormalCompletion8 && _iterator8.return) {
+                                            _iterator8.return();
                                         }
                                     } finally {
-                                        if (_didIteratorError9) {
-                                            throw _iteratorError9;
+                                        if (_didIteratorError8) {
+                                            throw _iteratorError8;
                                         }
                                     }
                                 }
                             }
                         } else {
-                            var _iteratorNormalCompletion10 = true;
-                            var _didIteratorError10 = false;
-                            var _iteratorError10 = undefined;
+                            var _iteratorNormalCompletion9 = true;
+                            var _didIteratorError9 = false;
+                            var _iteratorError9 = undefined;
 
                             try {
-                                for (var _iterator10 = _schema[_oKey][Symbol.iterator](), _step10; !(_iteratorNormalCompletion10 = (_step10 = _iterator10.next()).done); _iteratorNormalCompletion10 = true) {
-                                    var _s = _step10.value;
+                                for (var _iterator9 = _schema[_oKey][Symbol.iterator](), _step9; !(_iteratorNormalCompletion9 = (_step9 = _iterator9.next()).done); _iteratorNormalCompletion9 = true) {
+                                    var _s = _step9.value;
 
                                     if (typeof _schema[_oKey][_s] === "string") {
                                         _errorMsg = this.validateTypeString(_oKey, _schema[_oKey][_s]);
@@ -1958,16 +1963,16 @@ var SchemaValidator = function () {
                                     }
                                 }
                             } catch (err) {
-                                _didIteratorError10 = true;
-                                _iteratorError10 = err;
+                                _didIteratorError9 = true;
+                                _iteratorError9 = err;
                             } finally {
                                 try {
-                                    if (!_iteratorNormalCompletion10 && _iterator10.return) {
-                                        _iterator10.return();
+                                    if (!_iteratorNormalCompletion9 && _iterator9.return) {
+                                        _iterator9.return();
                                     }
                                 } finally {
-                                    if (_didIteratorError10) {
-                                        throw _iteratorError10;
+                                    if (_didIteratorError9) {
+                                        throw _iteratorError9;
                                     }
                                 }
                             }
@@ -1980,16 +1985,16 @@ var SchemaValidator = function () {
                         _errorMsg = 'value for schema element \'' + _oKey + '\' was invalid';}
             }
         } catch (err) {
-            _didIteratorError8 = true;
-            _iteratorError8 = err;
+            _didIteratorError7 = true;
+            _iteratorError7 = err;
         } finally {
             try {
-                if (!_iteratorNormalCompletion8 && _iterator8.return) {
-                    _iterator8.return();
+                if (!_iteratorNormalCompletion7 && _iterator7.return) {
+                    _iterator7.return();
                 }
             } finally {
-                if (_didIteratorError8) {
-                    throw _iteratorError8;
+                if (_didIteratorError7) {
+                    throw _iteratorError7;
                 }
             }
         }
@@ -2036,13 +2041,13 @@ var SchemaValidator = function () {
         key: 'validateUntypedMembers',
         value: function validateUntypedMembers(key, params) {
             if (Array.isArray(params)) {
-                var _iteratorNormalCompletion11 = true;
-                var _didIteratorError11 = false;
-                var _iteratorError11 = undefined;
+                var _iteratorNormalCompletion10 = true;
+                var _didIteratorError10 = false;
+                var _iteratorError10 = undefined;
 
                 try {
-                    for (var _iterator11 = params[Symbol.iterator](), _step11; !(_iteratorNormalCompletion11 = (_step11 = _iterator11.next()).done); _iteratorNormalCompletion11 = true) {
-                        var item = _step11.value;
+                    for (var _iterator10 = params[Symbol.iterator](), _step10; !(_iteratorNormalCompletion10 = (_step10 = _iterator10.next()).done); _iteratorNormalCompletion10 = true) {
+                        var item = _step10.value;
 
                         var _res;
                         if (typeof (_res = this.validateSchemaEntry(key, item)) === "string") {
@@ -2050,16 +2055,16 @@ var SchemaValidator = function () {
                         }
                     }
                 } catch (err) {
-                    _didIteratorError11 = true;
-                    _iteratorError11 = err;
+                    _didIteratorError10 = true;
+                    _iteratorError10 = err;
                 } finally {
                     try {
-                        if (!_iteratorNormalCompletion11 && _iterator11.return) {
-                            _iterator11.return();
+                        if (!_iteratorNormalCompletion10 && _iterator10.return) {
+                            _iterator10.return();
                         }
                     } finally {
-                        if (_didIteratorError11) {
-                            throw _iteratorError11;
+                        if (_didIteratorError10) {
+                            throw _iteratorError10;
                         }
                     }
                 }
@@ -2075,13 +2080,13 @@ var SchemaValidator = function () {
                     }
                     return 'value for schema element \'' + key + '\' was malformed. Property \'type\' was missing';
                 } else {
-                    var _iteratorNormalCompletion12 = true;
-                    var _didIteratorError12 = false;
-                    var _iteratorError12 = undefined;
+                    var _iteratorNormalCompletion11 = true;
+                    var _didIteratorError11 = false;
+                    var _iteratorError11 = undefined;
 
                     try {
-                        for (var _iterator12 = Object.keys(params)[Symbol.iterator](), _step12; !(_iteratorNormalCompletion12 = (_step12 = _iterator12.next()).done); _iteratorNormalCompletion12 = true) {
-                            var param = _step12.value;
+                        for (var _iterator11 = Object.keys(params)[Symbol.iterator](), _step11; !(_iteratorNormalCompletion11 = (_step11 = _iterator11.next()).done); _iteratorNormalCompletion11 = true) {
+                            var param = _step11.value;
 
                             var _res;
                             var _keys = [].concat(keyPath).concat(param);
@@ -2090,16 +2095,16 @@ var SchemaValidator = function () {
                             }
                         }
                     } catch (err) {
-                        _didIteratorError12 = true;
-                        _iteratorError12 = err;
+                        _didIteratorError11 = true;
+                        _iteratorError11 = err;
                     } finally {
                         try {
-                            if (!_iteratorNormalCompletion12 && _iterator12.return) {
-                                _iterator12.return();
+                            if (!_iteratorNormalCompletion11 && _iterator11.return) {
+                                _iterator11.return();
                             }
                         } finally {
-                            if (_didIteratorError12) {
-                                throw _iteratorError12;
+                            if (_didIteratorError11) {
+                                throw _iteratorError11;
                             }
                         }
                     }
@@ -2200,13 +2205,13 @@ var SchemaValidator = function () {
                 // handles `elements` object
                 if (sKey === "elements") {
                     var _iterate2 = Array.isArray(params.elements) ? params.elements : Object.keys(params.elements);
-                    var _iteratorNormalCompletion13 = true;
-                    var _didIteratorError13 = false;
-                    var _iteratorError13 = undefined;
+                    var _iteratorNormalCompletion12 = true;
+                    var _didIteratorError12 = false;
+                    var _iteratorError12 = undefined;
 
                     try {
-                        for (var _iterator13 = _iterate2[Symbol.iterator](), _step13; !(_iteratorNormalCompletion13 = (_step13 = _iterator13.next()).done); _iteratorNormalCompletion13 = true) {
-                            var xKey = _step13.value;
+                        for (var _iterator12 = _iterate2[Symbol.iterator](), _step12; !(_iteratorNormalCompletion12 = (_step12 = _iterator12.next()).done); _iteratorNormalCompletion12 = true) {
+                            var xKey = _step12.value;
 
                             var eMsg = this.validateSchemaEntry(key + '.' + xKey, params.elements[xKey]);
                             if (typeof eMsg === "string") {
@@ -2214,16 +2219,16 @@ var SchemaValidator = function () {
                             }
                         }
                     } catch (err) {
-                        _didIteratorError13 = true;
-                        _iteratorError13 = err;
+                        _didIteratorError12 = true;
+                        _iteratorError12 = err;
                     } finally {
                         try {
-                            if (!_iteratorNormalCompletion13 && _iterator13.return) {
-                                _iterator13.return();
+                            if (!_iteratorNormalCompletion12 && _iterator12.return) {
+                                _iterator12.return();
                             }
                         } finally {
-                            if (_didIteratorError13) {
-                                throw _iteratorError13;
+                            if (_didIteratorError12) {
+                                throw _iteratorError12;
                             }
                         }
                     }
@@ -2275,13 +2280,13 @@ var SchemaValidator = function () {
                     return this.validateSchemaClass(key, params);
                 }
                 // handles child elements
-                var _iteratorNormalCompletion14 = true;
-                var _didIteratorError14 = false;
-                var _iteratorError14 = undefined;
+                var _iteratorNormalCompletion13 = true;
+                var _didIteratorError13 = false;
+                var _iteratorError13 = undefined;
 
                 try {
-                    for (var _iterator14 = Object.keys(params)[Symbol.iterator](), _step14; !(_iteratorNormalCompletion14 = (_step14 = _iterator14.next()).done); _iteratorNormalCompletion14 = true) {
-                        var sKey = _step14.value;
+                    for (var _iterator13 = Object.keys(params)[Symbol.iterator](), _step13; !(_iteratorNormalCompletion13 = (_step13 = _iterator13.next()).done); _iteratorNormalCompletion13 = true) {
+                        var sKey = _step13.value;
 
                         var _ = this.validateSchemaParam(key, sKey, _schemaKeys, params);
                         if (typeof _ === "string") {
@@ -2289,16 +2294,16 @@ var SchemaValidator = function () {
                         }
                     }
                 } catch (err) {
-                    _didIteratorError14 = true;
-                    _iteratorError14 = err;
+                    _didIteratorError13 = true;
+                    _iteratorError13 = err;
                 } finally {
                     try {
-                        if (!_iteratorNormalCompletion14 && _iterator14.return) {
-                            _iterator14.return();
+                        if (!_iteratorNormalCompletion13 && _iterator13.return) {
+                            _iterator13.return();
                         }
                     } finally {
-                        if (_didIteratorError14) {
-                            throw _iteratorError14;
+                        if (_didIteratorError13) {
+                            throw _iteratorError13;
                         }
                     }
                 }
@@ -2389,7 +2394,13 @@ var SchemaHelpers = function () {
             if (!_exists(_s) || (typeof _s === 'undefined' ? 'undefined' : _typeof2(_s)) !== "object") {
                 return '\'' + key + '\' was invalid';
             }
-            return _s[_s instanceof Set ? "replaceAll" : "set"](value);
+            // return _s[(_s instanceof Set) ? "replaceAll" : "set"](value);
+
+            if (_s instanceof Set) {
+                return _s;
+            }
+            // console.log(_s);
+            return _s.set(value);
         }
 
         /**
@@ -2564,31 +2575,28 @@ var SchemaHelpers = function () {
                 var _path = [];
                 var iterable = key.split('.');
                 var _p;
-                var _iteratorNormalCompletion15 = true;
-                var _didIteratorError15 = false;
-                var _iteratorError15 = undefined;
+                var _iteratorNormalCompletion14 = true;
+                var _didIteratorError14 = false;
+                var _iteratorError14 = undefined;
 
                 try {
-                    for (var _iterator15 = iterable[Symbol.iterator](), _step15; !(_iteratorNormalCompletion15 = (_step15 = _iterator15.next()).done); _iteratorNormalCompletion15 = true) {
-                        var _k = _step15.value;
+                    for (var _iterator14 = iterable[Symbol.iterator](), _step14; !(_iteratorNormalCompletion14 = (_step14 = _iterator14.next()).done); _iteratorNormalCompletion14 = true) {
+                        var _k = _step14.value;
 
                         _path.push(_k);
                         _p = _path.join('.');
-                        if (0 > _list.indexOf(_p)) {
-                            _path.push('*');
-                        }
                     }
                 } catch (err) {
-                    _didIteratorError15 = true;
-                    _iteratorError15 = err;
+                    _didIteratorError14 = true;
+                    _iteratorError14 = err;
                 } finally {
                     try {
-                        if (!_iteratorNormalCompletion15 && _iterator15.return) {
-                            _iterator15.return();
+                        if (!_iteratorNormalCompletion14 && _iterator14.return) {
+                            _iterator14.return();
                         }
                     } finally {
-                        if (_didIteratorError15) {
-                            throw _iteratorError15;
+                        if (_didIteratorError14) {
+                            throw _iteratorError14;
                         }
                     }
                 }

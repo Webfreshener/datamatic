@@ -45,7 +45,13 @@ class SchemaHelpers {
         if (!_exists(_s) || typeof _s !== "object") {
             return `'${key}' was invalid`;
         }
-        return _s[(_s instanceof Set) ? "replaceAll" : "set"](value);
+        // return _s[(_s instanceof Set) ? "replaceAll" : "set"](value);
+
+        if (_s instanceof Set) {
+            return _s;
+        }
+        // console.log(_s);
+        return _s.set(value);
     }
 
     /**
@@ -200,9 +206,6 @@ class SchemaHelpers {
             for (let _k of iterable) {
                 _path.push(_k);
                 _p = _path.join('.');
-                if (0 > _list.indexOf(_p)) {
-                    _path.push('*');
-                }
             }
             if (!(_ref = ValidatorBuilder.getInstance().get(_p))) {
                 if (!this.options.extensible) {
