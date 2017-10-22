@@ -271,32 +271,30 @@ class Schema {
      * gets raw value of this model
      */
     valueOf() {
-        return _object.get(this);
+        return this.model;
     }
 
     /**
-     *
+     * JSONifies Schema Model
      */
     toJSON() {
-        let _o = {};
-        let _derive = function (itm) {
+        let _derive = (itm) => {
             if (itm instanceof Schema) {
-                return _derive(itm);
+                return itm.toJSON();
             }
             if (itm instanceof Set) {
-                let _arr = [];
-                for (let k of itm.valueOf()) {
-                    _arr.push(_derive(itm[k]));
-                    return _arr;
+                return itm.toJSON();
+            }
+            if (typeof itm === 'object') {
+                const _o = !Array.isArray(itm) ? {} : [];
+                for (let k in itm) {
+                    _o[k] = _derive(itm[k]);
                 }
+                return _o;
             }
             return itm;
         };
-        let _obj = this.valueOf();
-        for (let k in _obj) {
-            _o[k] = _derive(_obj[k]);
-        }
-        return _o;
+        return _derive(this.valueOf());
     }
 
     /**

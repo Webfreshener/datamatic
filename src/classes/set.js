@@ -310,9 +310,33 @@ class Set {
     /**
      * @returns stringified representation of list
      */
-    toString() {
-        return this.model.toString();
+    toString(pretty = false) {
+        return JSON.stringify(this.toJSON(), null, (pretty ? 2 : void(0)));
     }
+
+    /**
+     * returns JSONified representation of list
+     */
+    toJSON() {
+        let _derive = (itm) => {
+            if (itm instanceof Schema) {
+                return itm.toJSON();
+            }
+            if (itm instanceof Set) {
+                return itm.toJSON();
+            };
+            if (typeof itm === 'object') {
+                const _o = !Array.isArray(itm) ? {} : [];
+                for (let k in itm) {
+                    _o[k] = _derive(itm[k]);
+                }
+                return _o;
+            };
+            return itm;
+        };
+        return _derive(this.valueOf());
+    }
+
 
     /**
      * getter for Set type
