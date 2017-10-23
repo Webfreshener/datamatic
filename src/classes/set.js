@@ -75,7 +75,7 @@ class Set {
         if (Array.isArray(value)) {
             let _m = _object.get(this);
             _m = value;
-            return;
+            return true;
         }
         else {
             ObserverBuilder.getInstance().error(this.path, `${this.path} requires Array`);

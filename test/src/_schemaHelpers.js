@@ -1950,19 +1950,17 @@ var SchemaHelpers = function () {
         key: 'setChildObject',
         value: function setChildObject(key, value) {
             var _mdData = {
-                _path: key, //`${this._ref.path}.${key}`,
+                _path: key,
                 _root: this._ref.root
             };
             var _s = this.createSchemaChild(key, value, this._ref.options, _mdData);
             if (!_exists(_s) || (typeof _s === 'undefined' ? 'undefined' : _typeof2(_s)) !== "object") {
                 return '\'' + key + '\' was invalid';
             }
-            // return _s[(_s instanceof Set) ? "replaceAll" : "set"](value);
 
             if (_s instanceof Set) {
-                return _s;
+                return _s.model = value;
             }
-            // console.log(_s);
             return _s.set(value);
         }
 
