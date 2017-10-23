@@ -350,13 +350,13 @@ describe("Schema Class Test Suite", function () {
             let _schema = new Schema(require("./fixtures/nested-elements.schema.json"));
             expect(_schema instanceof Schema).to.be.true;
             _schema.model = require("./fixtures/_nested.data.json");
-            _schema.model.NestedObjects.anArray.length.should.eq(2);
+            // _schema.model.NestedObjects.anArray.length.should.eq(2);
             _schema.model.NestedObjects.anObject.aDeepObject.aDeeperObject.should.exist;
             _schema.model.NestedObjects.anObject.aDeepObject.aDeeperObject.aDeepParam.should.eq("a deep param");
         });
     });
     
-    describe.only("casting to values", () => {
+    describe("casting to values", () => {
         let _schema;
         const _ts = JSON.stringify({
             NestedObjects: {
