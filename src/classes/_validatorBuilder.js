@@ -1,3 +1,4 @@
+import {Validator} from './_validators'
 /**
  * @private
  */
@@ -5,7 +6,7 @@ let __vBuilder = null;
 /**
  * @private
  */
-class ValidatorBuilder {
+export class ValidatorBuilder {
     /**
      * @constructor
      */
@@ -71,7 +72,7 @@ class ValidatorBuilder {
                 return;
             }
 
-            let _typeof = _global.wf.Str.capitalize(_sig.type);
+            let _typeof = global.wf.Str.capitalize(_sig.type);
             let _hasKey = (0 <= Object.keys(Validator).indexOf(_typeof));
             // ObserverBuilder.getInstance().create(path, ref);
             return new Validator[_hasKey ? _typeof : "Default"](path, _sig);

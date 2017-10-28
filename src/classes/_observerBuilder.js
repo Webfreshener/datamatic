@@ -2,7 +2,7 @@
  * Created by van on 10/9/17.
  */
 let __oBuilder = null;
-class ObserverBuilder {
+export class ObserverBuilder {
     /**
      * @constructor
      */

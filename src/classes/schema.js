@@ -1,7 +1,18 @@
+import {_mdRef, _required_elements,
+        _observers, _object, _kinds, _exists,
+        _schemaHelpers, _schemaOptions, _schemaSignatures,
+        _validators, wf} from './_maps';
+import {MetaData} from './_metaData';
+import {ObserverBuilder} from './_observerBuilder';
+import {SchemaHelpers} from './_schemaHelpers';
+import {SchemaValidator} from './_schemaValidator';
+import {ValidatorBuilder} from '././_validatorBuilder';
+import {JSD} from './jsd';
+import {Set} from './set';
 /**
  * @class Schema
  */
-class Schema {
+export class Schema {
     /**
      * @constructor
      * @param {Object} _o - schema definition object
@@ -33,16 +44,17 @@ class Schema {
             }
         }
         // tests for metadata
-        if (!(this instanceof _metaData)) {
+        if (!(this instanceof MetaData)) {
             let _;
-            if (!_exists(arguments[2])) {
-                _ = new _metaData(this, {
+            if (arguments[2] instanceof JSD) {
+                _ = new MetaData(this, {
                     _path: "",
-                    _root: this
+                    _root: this,
+                    _jsd: arguments[2],
                 });
             }
             else {
-                _ = (arguments[2] instanceof _metaData) ? arguments[2] : new _metaData(this, arguments[2]);
+                _ = (arguments[2] instanceof MetaData) ? arguments[2] : new MetaData(this, arguments[2]);
             }
             _mdRef.set(this, _);
         }

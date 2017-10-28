@@ -1,7 +1,10 @@
+import {MetaData} from './_metaData';
+import {ObserverBuilder} from './_observerBuilder';
+import {ValidatorBuilder} from './_validatorBuilder';
 /**
  * @class Set
  */
-class Set {
+export class Set {
     /**
      * @constructor
      * @param {any} _type
@@ -43,13 +46,13 @@ class Set {
 
         let _;
         if (!_exists(arguments[1])) {
-            _ = new _metaData(this, {
+            _ = new MetaData(this, {
                 _path: "",
                 _root: this
             });
         }
         else {
-            _ = (arguments[1] instanceof _metaData) ? arguments[1] : new _metaData(this, arguments[1]);
+            _ = (arguments[1] instanceof MetaData) ? arguments[1] : new MetaData(this, arguments[1]);
         }
         _mdRef.set(this, _);
 
@@ -148,7 +151,7 @@ class Set {
             }
             if (typeof _t == "string") {
                 return typeof item === _t;
-            } else if (!_global.wf.Obj.isOfType(item, _t)) {
+            } else if (!global.wf.Obj.isOfType(item, _t)) {
                 return false;
             }
         }
@@ -424,4 +427,3 @@ class Set {
         return this;
     }
 }
-

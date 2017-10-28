@@ -1,7 +1,7 @@
 /**
  * @private
  */
-class SchemaHelpers {
+export class SchemaHelpers {
     /**
      * @constructor
      */
@@ -93,13 +93,13 @@ class SchemaHelpers {
 
     /**
      * @param {Object} value
-     * @param {_metaData} metaData
+     * @param {MetaData} metaData
      */
     createSchemaChild(key, value, opts, metaData) {
         var _kinds;
         // tests if value is not Array
         if (!Array.isArray(value)) {
-            let _md = new _metaData(this._ref, metaData || {
+            let _md = new MetaData(this._ref, metaData || {
                     _path: key,//`${this._ref.path}.${key}`,
                     _root: this._ref.root
                 });
@@ -190,10 +190,10 @@ class SchemaHelpers {
         var _list = ValidatorBuilder.getInstance().list();
         var _ref;
         //-- attempts to validate
-        if (!key.length) { // and @ instanceof _metaData
+        if (!key.length) { // and @ instanceof MetaData
             return `invalid path '${key}'`;
         }
-        // key = if value instanceof _metaData then value.get( '_path' ) else value.getpath
+        // key = if value instanceof MetaData then value.get( '_path' ) else value.getpath
         // return "object provided was not a valid subclass of Schema" unless value instanceof Schema
         // return "object provided was malformed" unless typeof (key = value.getPath?()) is 'string'
         let msg;

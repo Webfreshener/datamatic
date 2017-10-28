@@ -1,8 +1,9 @@
+import {wf, _schemaOptions} from './_maps';
 /**
  * @private
  * @class
  */
-class SchemaValidator {
+export class SchemaValidator {
 	/**
 	 * @constructor
 	 * @param {object} schema
@@ -19,7 +20,7 @@ class SchemaValidator {
 	        	case "string":
 	        		let obj = {};
 	        		obj[_oKey] = {
-	        			type: _global.wf.Str.capitalize( _schema[_oKey] ),
+	        			type: wf.Str.capitalize( _schema[_oKey] ),
 	        			required: false
 	        			};
 	        		let _o = Object.assign( _schema, obj );
@@ -68,7 +69,7 @@ class SchemaValidator {
 				return `Regular Expression provided for '${key}' was invalid. ${e}`;	}	}
 		//- tests for basic string type declaration {key: {type: "String"} }
 		else {
-			if (!_exists( _jsd_.getClass( _global.wf.Str.capitalize(_type)) )) {
+			if (!_exists( _jsd_.getClass( wf.Str.capitalize(_type)) )) {
 				return `type '<${_type}>' for schema element '${key}' was invalid`; }	}
 		return true;
 		}
@@ -134,7 +135,7 @@ class SchemaValidator {
 	 * @param {object} params
 	 */
 	validateSchemaParamString(key, sKey, params) {
-		let _kind = _global.wf.Str.capitalize( params[sKey] );
+		let _kind = wf.Str.capitalize( params[sKey] );
 		let _schemaKeys = _jsd_.schemaRef;
 		let opts = _schemaOptions.get(this);
 		// handles special `restrict` key
@@ -223,10 +224,10 @@ class SchemaValidator {
 	    	if (_t !== "function") {
 	    		let _ = _schemaKeys[ key.split(".").pop() ];
 	    		// tests for everything that"s not a string, _object or function
-	    		if ( _ !== _global.wf.Str.capitalize(_t)) {
+	    		if ( _ !== wf.Str.capitalize(_t)) {
 	    			return `value for schema element '${key}' has invalid type :: '<${_t}>'`; } }
 	    	else {
-	    		let _ = _global.wf.Fun.getConstructorName(params);
+	    		let _ = wf.Fun.getConstructorName(params);
 	    		// tests for function"s constructor name
 	    		if (_ !== _schemaKeys[key]) { 
 	    			return `value for schema element '${key}' has invalid class or method '<${_}>'`; }}
