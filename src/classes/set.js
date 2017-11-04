@@ -1,6 +1,8 @@
+import {_mdRef, _object, _vectorTypes, _exists, wf} from './_references';
 import {MetaData} from './_metaData';
 import {ObserverBuilder} from './_observerBuilder';
 import {ValidatorBuilder} from './_validatorBuilder';
+import {JSD} from './jsd'
 /**
  * @class Set
  */
@@ -20,6 +22,27 @@ export class Set {
                 _type = [_type];
             }
         }
+        let _;
+
+        // tests for metadata
+        if (arguments[1] instanceof JSD) {
+            // return;
+            _ = new MetaData(this, {
+                _path: "",
+                _root: this,
+                _jsd: arguments[1],
+            });
+        }
+        else {
+            if (arguments[1] instanceof MetaData) {
+                _ = arguments[1];
+            } else {
+                throw `Invalid constructor call for Set: ${JSON.stringify(arguments)}`;
+                // _ = new MetaData(this, arguments[1]);
+            }
+        }
+        _mdRef.set(this, _);
+
         _types = _type.map((type) => {
             let _t = typeof type;
 
@@ -28,7 +51,7 @@ export class Set {
                     return type;
                 }
 
-                if (0 <= _jsd_.listClasses().indexOf(type)) {
+                if (0 <= this.jsd.listClasses().indexOf(type)) {
                     _type = type;
                 } else {
                     throw `could not determine type <${type}>`;
@@ -43,18 +66,6 @@ export class Set {
 
             return type;
         });
-
-        let _;
-        if (!_exists(arguments[1])) {
-            _ = new MetaData(this, {
-                _path: "",
-                _root: this
-            });
-        }
-        else {
-            _ = (arguments[1] instanceof MetaData) ? arguments[1] : new MetaData(this, arguments[1]);
-        }
-        _mdRef.set(this, _);
 
         // when we no longer need babel...
         // type = _type;
@@ -146,12 +157,12 @@ export class Set {
                 return true;
             }
 
-            if (!(_t = _jsd_.getClass(_t))) {
+            if (!(_t = this.jsd.getClass(_t))) {
                 return false;
             }
             if (typeof _t == "string") {
                 return typeof item === _t;
-            } else if (!global.wf.Obj.isOfType(item, _t)) {
+            } else if (!wf.Obj.isOfType(item, _t)) {
                 return false;
             }
         }
@@ -327,14 +338,16 @@ export class Set {
             }
             if (itm instanceof Set) {
                 return itm.toJSON();
-            };
+            }
+            ;
             if (typeof itm === 'object') {
                 const _o = !Array.isArray(itm) ? {} : [];
                 for (let k in itm) {
                     _o[k] = _derive(itm[k]);
                 }
                 return _o;
-            };
+            }
+            ;
             return itm;
         };
         return _derive(this.valueOf());
@@ -381,6 +394,10 @@ export class Set {
             return null;
         }
         return _root.get(this.path().split('.').pop().join('.'));
+    }
+
+    get jsd() {
+        return _mdRef.get(this).jsd;
     }
 
     /**

@@ -8,18 +8,18 @@
  * console.log(`${jsd.document.get('.'}`);
  * // -> Schema
  */
-import {wf, _kinds} from './_maps';
+import {wf, _kinds} from './_references';
 import {Schema} from './schema';
 
-
 const _documents = new WeakMap();
+
 export class JSD {
     /**
      * @constructor
      * @param schema
      * @param options
      */
-    constructor(schema = JSD.defaults, options) {
+    constructor(schema = JSD.defaults, options = {extensible: false}) {
         _kinds.set(this, {
             "Array": Array,
             "ArrayBuffer": ArrayBuffer,
@@ -29,22 +29,30 @@ export class JSD {
             "Number": Number,
             "Object": Object,
             "String": String,
-            "Function": Function
+            "Function": Function,
         });
-        _documents.set(this, new Schema(schema, options));
+        const _ref = this;
+        _documents.set(this, new Schema(schema, options || null, _ref));
+    }
+
+    /**
+     * @param key {String}
+     */
+    get(key) {
+        return _documents.get(this).get(key);
     }
 
     /**
      *
-     * @returns {*}
+     * @returns {Schema}
      */
     get document() {
-        return _documents.get(this);
+        return _documents.get(this).model;
     }
 
     /**
      *
-     * @param value
+     * @param value {Schema}
      */
     set document(value) {
         // let _m = _docs.get(this);
@@ -55,7 +63,7 @@ export class JSD {
      * @param {string|function} classesOrNames
      * @returns {function}
      */
-    static getClass(classesOrNames) {
+    getClass(classesOrNames) {
         let _k = _kinds.get(this);
         if (!Array.isArray(classesOrNames)) {
             classesOrNames = [classesOrNames];
@@ -136,7 +144,7 @@ export class JSD {
     fromJSON(json) {
         let _;
         if (_ = (typeof json).match(/^(string|object)+$/)) {
-            return new Schema((_[1] === "string") ? JSON.parse(json) : json);
+            return new JSD((_[1] === "string") ? JSON.parse(json) : json);
         }
         throw new Error("json must be either JSON formatted string or object");
     }
@@ -145,9 +153,10 @@ export class JSD {
      * @returns {object} base schema element signature
      */
     get schemaRef() {
+        let _keys = [].concat(Object.keys(_kinds.get(this)));
         return {
             type: {
-                type: this.listClasses(),
+                type: _keys,
                 required: true
             },
             required: "Boolean",

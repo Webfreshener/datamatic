@@ -1,6 +1,6 @@
-/**
- * Created by van on 10/9/17.
- */
+import {_exists, _observers} from './_references';
+import {Schema} from './schema';
+import {Subject} from 'rxjs/Rx';
 let __oBuilder = null;
 export class ObserverBuilder {
     /**
@@ -35,7 +35,7 @@ export class ObserverBuilder {
             throw 'oRef must be instance of Schema or Set';
         }
         let _o = _observers.get(this);
-        _o[forPath] = new Rx.Subject();
+        _o[forPath] = new Subject();
     }
 
     next(path, value) {

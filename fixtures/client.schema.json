@@ -13,7 +13,13 @@
     "required": true,
     "extensible": true,
     "default": {
-      "SESSION_KEY": "AUTHORIZATION"
+      "SESSION_KEY": "AUTHORIZATION",
+      "CRUD_METHODS": {
+        "create": "POST",
+        "read": "GET",
+        "update": "PUT",
+        "destroy": "DELETE"
+      }
     },
     "elements": {
       "ALLOWED": {
@@ -132,12 +138,6 @@
         "type": "Object",
         "required": true,
         "extensible": false,
-        "default": {
-          "create": "POST",
-          "read": "GET",
-          "update": "PUT",
-          "destroy": "DELETE"
-        },
         "elements": {
           "create": {
             "type": "String",

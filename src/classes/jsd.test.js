@@ -5,19 +5,19 @@ describe("JSD Instance Test", () => {
 
     beforeEach(() => {
         _jsd = new JSD();
-        console.log(`_jsd: ${_jsd}`);
     });
 
-    it.only("expects a valid JSD instance",() => {
+    it("expects a valid JSD instance",() => {
         expect(_jsd instanceof JSD).toBe(true);
     });
 
     it("expects JSD Instances to create a valid JSD Document", () => {
-        _jsd.document = {
+
+        _jsd.document.model = {
             name: 'test',
         };
-        expect(`${jsd.document.name}`).toEqual('test');
-        console.log(`${jsd.document.get('.')}`);
+        console.log(`_jsd.document: ${_jsd.document}`);
+        // expect(`${_jsd.document.model.name}`).toEqual('test');
         // expect(`${jsd.document.get('.')}`).toEqual(;
     });
 });

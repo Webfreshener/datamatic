@@ -1,4 +1,4 @@
-import {JSD} from './jsd';
+import {_exists, wf} from './_references';
 export const Validator = {};
 /**
  * @private
@@ -7,9 +7,10 @@ export class BaseValidator {
     /**
      * @constructor
      */
-    constructor(path, signature) {
+    constructor(path, signature, jsd) {
         this.path = path;
         this.signature = signature;
+        this.jsd = jsd;
     }
 
     /**
@@ -31,7 +32,7 @@ export class BaseValidator {
      */
     checkType(type, value) {
         let _eval = (type, value) => {
-            let _x = (typeof type !== "string") ? _jsd_.getClass([type]) : type;
+            let _x = (typeof type !== "string") ? this.jsd.getClass([type]) : type;
             if (_x.match(new RegExp(`^${typeof value}$`, "i")) === null) {
                 return `'${this.path}' expected ${type}, type was '<${typeof value}>'`
             }
@@ -59,7 +60,7 @@ export class BaseValidator {
      *
      */
     exec(value) {
-        return `${global.wf.utils.Fun.getClassName(this)} requires override of 'exec'`;
+        return `${wf.utils.Fun.getClassName(this)} requires override of 'exec'`;
     }
 }
 /**
@@ -71,7 +72,7 @@ Validator.Object = class Obj extends BaseValidator {
             let _p = `${this.path}.${key}`;
             let _v = ValidatorBuilder.getValidators();
             if (!_v.hasOwnProperty(_p)) {
-                ValidatorBuilder.create(this.signature.elements[key], _p);
+                ValidatorBuilder.create(this.signature.elements[key], _p, this.jsd);
             }
             let _ = this.call(_p, _val);
             if (typeof _ === "string") {
@@ -162,8 +163,8 @@ Validator.Number = class Num extends BaseValidator {
  */
 Validator.Function = class Fun extends BaseValidator {
     exec(value) {
-        let _x = typeof this.signature.type === 'string' ? this.signature.type : global.wf.Fun.getConstructorName(this.signature.type);
-        let _fn = global.wf.Fun.getConstructorName(value);
+        let _x = typeof this.signature.type === 'string' ? this.signature.type : wf.Fun.getConstructorName(this.signature.type);
+        let _fn = wf.Fun.getConstructorName(value);
         return _x === _fn ? true : `${this.path} requires '$_x' got '<${_fn}>' instead`;
     }
 }
@@ -173,21 +174,21 @@ Validator.Function = class Fun extends BaseValidator {
 Validator.Default = class Def extends BaseValidator {
     exec(value) {
         _testValidator = (type, value) => {
-            let _val = Validator[global.wf.Str.capitalize(type)];
+            let _val = Validator[wf.Str.capitalize(type)];
             if (!_exists(_val)) {
                 return `'${this.path}' was unable to obtain validator for type '<${type}>'`;
             }
             let _ = new _val(this.path, this.signature);
             return _.exec(value);
         }
-        var _x = typeof this.signature.type === 'string' ? _jsd_.getClass(this.signature.type) : this.signature.type;
+        var _x = typeof this.signature.type === 'string' ? this.jsd.getClass(this.signature.type) : this.signature.type;
         let _tR = this.checkType(_x, value);
         if (typeof _tR === "string") {
             return _tR;
         }
         if (Array.isArray(_x)) {
             let _ = _x.map(itm => {
-                let _clazz = _jsd_.getClass(itm);
+                let _clazz = this.jsd.getClass(itm);
                 return _testValidator(_clazz, value);
             });
             return (0 <= _.indexOf(true)) ? true : _[_.length - 1];

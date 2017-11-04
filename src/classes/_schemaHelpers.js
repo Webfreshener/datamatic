@@ -1,3 +1,9 @@
+import {_exists, _mdRef} from './_references';
+import {MetaData} from './_metaData';
+import {ValidatorBuilder} from './_validatorBuilder';
+import {Schema} from './schema';
+import {Set} from './set';
+
 /**
  * @private
  */
@@ -37,19 +43,16 @@ export class SchemaHelpers {
      * @returns {*}
      */
     setChildObject(key, value) {
-        let _mdData = {
-            _path: key,
-            _root: this._ref.root
-        };
+        let _mdData = _mdRef.get(this._ref);
         let _s = this.createSchemaChild(key, value, this._ref.options, _mdData);
         if (!_exists(_s) || typeof _s !== "object") {
             return `'${key}' was invalid`;
         }
 
-        if (_s instanceof Set) {
-            return _s.model = value;
-        }
-        return _s.set(value);
+        // if (_s instanceof Set) {
+        //     return _s.model = value;
+        // }
+        return _s.model = value;
     }
 
     /**
@@ -99,11 +102,12 @@ export class SchemaHelpers {
         var _kinds;
         // tests if value is not Array
         if (!Array.isArray(value)) {
-            let _md = new MetaData(this._ref, metaData || {
-                    _path: key,//`${this._ref.path}.${key}`,
-                    _root: this._ref.root
-                });
-            // _kinds = this.getKinds(this._ref.signature[key] || this._ref.signature);
+            let _d = Object.assign({
+                _path: key,
+                _root: this._ref.root,
+                _jsd: this._ref.jsd,
+            }, metaData || {});
+            let _md = new MetaData(this._ref, _d);
             let _schemaDef = this._ref.signature[key.split(".").pop()] ||
                 this._ref.signature['*'] ||
                 this._ref.signature;
@@ -120,7 +124,7 @@ export class SchemaHelpers {
                 _kinds = _kinds.map((val) => this.ensureKindIsString(val));
                 _kinds = _kinds.filter(itm => itm !== false);
                 _kinds = _kinds.length ? _kinds : '*';
-                return new Set((_kinds || '*'), metaData);
+                return new Set(_kinds, metaData);
             }
         }
         return "unable to process value";
@@ -140,7 +144,7 @@ export class SchemaHelpers {
             let _k = _elements[_i];
             let itm;
             let objPath = _exists(path) ? (path.length ? `${path}.${_k}` : _k) : _k || "";
-            ValidatorBuilder.getInstance().create(obj[_k], objPath);
+            ValidatorBuilder.getInstance().create(obj[_k], objPath, this._ref.jsd);
             // tests for nested elements
             if (_exists(obj[_k]) && typeof obj[_k].elements === "object") {
 
@@ -177,7 +181,7 @@ export class SchemaHelpers {
             });
             _kinds = _kinds.filter(itm => _exists(itm));
             _kinds = _kinds.length ? _kinds : '*';
-            return new Set(_kinds || '*');
+            return new Set(_kinds || '*', this._ref.metadata);
         }
         return null;
     }

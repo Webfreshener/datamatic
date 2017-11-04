@@ -1,7 +1,7 @@
 import {_mdRef, _required_elements,
         _observers, _object, _kinds, _exists,
         _schemaHelpers, _schemaOptions, _schemaSignatures,
-        _validators, wf} from './_maps';
+        _validators, wf} from './_references';
 import {MetaData} from './_metaData';
 import {ObserverBuilder} from './_observerBuilder';
 import {SchemaHelpers} from './_schemaHelpers';
@@ -26,6 +26,29 @@ export class Schema {
         _schemaOptions.set(this, opts);
         _validators.set(this, {});
         _required_elements.set(this, []);
+
+        // tests for metadata
+        if (!(this instanceof MetaData)) {
+            let _;
+            if (arguments[2] instanceof JSD) {
+                // return;
+                _ = new MetaData(this, {
+                    _path: "",
+                    _root: this,
+                    _jsd: arguments[2],
+                });
+            }
+            else {
+                if (arguments[2] instanceof MetaData) {
+                    _ = arguments[2];
+                } else {
+                    console.log('no metadata!');
+                    _ = new MetaData(this, arguments[2]);
+                }
+            }
+            _mdRef.set(this, _);
+        }
+
         if (_exists(_signature.polymorphic)) {
             _signature = _signature.polymorphic;
         }
@@ -43,23 +66,11 @@ export class Schema {
                 _required_elements.get(this).push(_sigEl);
             }
         }
-        // tests for metadata
-        if (!(this instanceof MetaData)) {
-            let _;
-            if (arguments[2] instanceof JSD) {
-                _ = new MetaData(this, {
-                    _path: "",
-                    _root: this,
-                    _jsd: arguments[2],
-                });
-            }
-            else {
-                _ = (arguments[2] instanceof MetaData) ? arguments[2] : new MetaData(this, arguments[2]);
-            }
-            _mdRef.set(this, _);
-        }
+
         // attempts to validate provided `schema` entries
-        let _schema_validator = new SchemaValidator(_signature, this.options);
+        let _schema_validator = new SchemaValidator(_signature, Object.assign(this.options || {}, {
+            jsd: _mdRef.get(this).jsd,
+        }));
         // throws error if error message returned
         if (typeof (eMsg = _schema_validator.isValid()) === 'string') {
             throw eMsg;
@@ -103,7 +114,8 @@ export class Schema {
                     let k = _pathKeys[_];
                     let _schema;
                     // derives path for element
-                    let _key = this.path.length > 0 ? `${this.path}.${k}` : k;
+                    let _key = this.path.length ? `${this.path}.${k}` : k;
+                    console.log(`setting key: ${_key}`);
                     if (_exists(_childSigs[`${k}`])) {
                         _schema = _childSigs[k];
                     }
@@ -113,7 +125,7 @@ export class Schema {
                             // applies schema
                             _schema = _childSigs["*"].polymorphic || _childSigs["*"];
                             // creates Validator for path
-                            ValidatorBuilder.getInstance().create(_schema, _key);
+                            ValidatorBuilder.getInstance().create(_schema, _key, this.jsd);
                         }
                     }
                     // handles missing schema signatures
@@ -138,6 +150,7 @@ export class Schema {
                     }
                     // handles absolute values (strings, numbers, booleans...)
                     else {
+                        console.log(`will subscribe to: ${_key}`); // Schema.concatPathAddr(this.path, _key)}`);
                         this.subscribeTo(_key, {
                             next: (value) => {
                                 ObserverBuilder.getInstance().next(this.path, value);
@@ -153,10 +166,16 @@ export class Schema {
                         }
                     }
                     t[key] = value;
-                    ObserverBuilder.getInstance().next(key, value);
+                    console.log(`calling next for ${this.path}`);
+                    ObserverBuilder.getInstance().next(this.path, value);
+                    ObserverBuilder.getInstance().next("", this.root.toJSON());
                 }
             }
         };
+    }
+
+    static concatPathAddr(path, addr) {
+        return path.length ? `${path}.${addr}` : addr;
     }
 
     /**
@@ -252,7 +271,6 @@ export class Schema {
             ObserverBuilder.getInstance().create(path, this);
             _o = ObserverBuilder.getInstance().get(path);
         }
-
         _o.subscribe(func);
         return this;
     }
@@ -334,14 +352,14 @@ export class Schema {
      * @returns {Schema} elemetn at Schema root
      */
     get root() {
-        let _ = _mdRef.get(this).root;
-        return _exists(_) ? _ : this;
+        return _mdRef.get(this).root || this;
     }
 
     /**
      * @returns {string} path to current Schema
      */
     get path() {
+        console.log(_mdRef.get(this));
         let _ = _mdRef.get(this).path;
         return _exists(_) ? _ : "";
     }
@@ -352,6 +370,13 @@ export class Schema {
     get parent() {
         let _ = _mdRef.get(this).root;
         return _exists(_) ? _ : this;
+    }
+
+    /**
+     * @returns {*|JSD}
+     */
+    get jsd() {
+        return _mdRef.get(this).jsd;
     }
 
     /**

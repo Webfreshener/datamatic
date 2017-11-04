@@ -1,7 +1,7 @@
 import {JSD}  from './index';
 import {JSD as JSDPackaged}  from '../dist/jsd'
 
-describe.skip("Package Validation Tests", () => {
+describe("Package Validation Tests", () => {
     it("should import from ES6 Source", function () {
         expect(typeof JSD).toEqual('function');
     });
