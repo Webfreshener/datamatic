@@ -1,7 +1,7 @@
 import {Schema} from './schema';
 import {JSD} from './jsd';
 
-describe("Schema Class Test Suite", function () {
+describe.only("Schema Class Test Suite", function () {
     describe("Schema Validation Methods", function () {
         it("should not allow Elements without a type or type parameter", function () {
             expect(() => new Schema({value: {foo: "test"}}, null, new JSD())).toThrow(
@@ -51,7 +51,7 @@ describe("Schema Class Test Suite", function () {
                 "schema element 'value.foo' is not allowed");
         });
     });
-    describe("Schema Data Validation Methods", function () {
+    describe.only("Schema Data Validation Methods", function () {
         /*
          it("should validate data set to it", function () {
          var _S = new Schema({
@@ -88,16 +88,27 @@ describe("Schema Class Test Suite", function () {
                 "invalid schema element 'type' requires one of [String,Function,Object] type was '<Function>'");
         });
 
-        it("should validate values", () => {
-            let _S = new Schema({
+        it.only("should validate values", (done) => {
+            const _h = {
+                next: () => {
+                    expect(_schema.get("value")).toEqual("test");
+                    done();
+                },
+                error: (e) => {
+                    expect(e).toEqual("http expected value of type 'Object'. Type was '<boolean>'");
+                    done();
+                }
+            };
+
+            let _schema = new Schema({
                 elements: {
                     value: {
                         type: "String"
                     }
                 }
             }, null, new JSD());
-            _S.set("value", "test");
-            expect(_S.get("value")).toEqual("test");
+            _schema.subscribe(_h);
+            _schema.set("value", "test");
         });
     });
 
@@ -123,7 +134,7 @@ describe("Schema Class Test Suite", function () {
         });
     });
 
-    describe.only("Wildcards", function () {
+    describe("Wildcards", function () {
         it("should initialize from wildcard schema fixture", () => {
             let _s = require("../../fixtures/wildcard.schema.json");
             this.schema = new Schema(_s, null, new JSD());
@@ -132,27 +143,23 @@ describe("Schema Class Test Suite", function () {
         it("should validate arbitrary wildcard elements", (done) => {
             const _h = {
                 next: (o) => {
-                    console.log(`next sent: ${JSON.stringify(o)}`);
-                    // done("should have dispatched an error");
+                    done("should have dispatched an error");
                 },
                 error: (e) => {
-                    console.log(`e: ${e}`);
                     done();
                 }
             };
-            console.log(this.schema.subscribe(_h));
+            this.schema.subscribe(_h);
             this.schema.model = {
                 foo: {
                     bar: {
                         active: {
                             foo: "bar"
                         },
-                        // name: 123,
-                        name: "Foo 1"
+                        name: 123,
                     }
                 }
             };
-            console.log(`${this.schema}`);
         })
     });
 
@@ -200,25 +207,25 @@ describe("Schema Class Test Suite", function () {
         });
     });
 
-    describe("Client Collection", function () {
+    describe.skip("Client Collection", function () {
         let _schema;
         beforeEach(() => {
             let _s = require("../../fixtures/client_collection.schema.json");
             _schema = new Schema(_s, null, new JSD());
         });
 
-        it("should initialize from client_collection schema fixture", () => {
-            expect(_schema instanceof Schema).toBe(true);
-        });
+        // it("should initialize from client_collection schema fixture", () => {
+        //     expect(_schema instanceof Schema).toBe(true);
+        // });
 
-        it("should check for valid properties", (done) => {
-            let _d = {
+        it.skip("should check for valid properties", (done) => {
+            const _d = {
                 name: "Test",
                 description: "some text here",
                 plural: "falsey",
                 base: "foo",
                 http: true,
-                strict: false,
+                strict: "false",
                 options: {
                     idInjection: true,
                     validateUpsert: false
@@ -238,7 +245,7 @@ describe("Schema Class Test Suite", function () {
             };
             const _h = {
                 next: () => {
-                    throw "expected to broadcast error message instead";
+                    throw "error was expected";
                 },
                 error: (e) => {
                     expect(e).toEqual("http expected value of type 'Object'. Type was '<boolean>'");
@@ -249,7 +256,7 @@ describe("Schema Class Test Suite", function () {
             _schema.model = _d;
         });
 
-        it("should check for required fields on elements", (done) => {
+        it.skip("should check for required fields on elements", (done) => {
             let _d = {
                 name: "Test",
                 description: "some text here",

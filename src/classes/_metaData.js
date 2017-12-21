@@ -1,6 +1,7 @@
 import {wf, _mdRef} from './_references';
 import {Schema} from './schema';
 import {Set} from './set';
+const _mData = new WeakMap();
 /**
  * @private
  */
@@ -30,15 +31,16 @@ export class MetaData {
             _className: _cName,
             _created: Date.now()
         });
-        _mdRef.set(this, _data);
-        _mdRef.set(_oRef, _data);
+        _mData.set(this, _data);
+        _mdRef.set(this, this);
+        // _mdRef.set(_oRef, this);
     }
 
     /**
      * @param {string} key
      */
     get(key) {
-        let _ = _mdRef.get(this);
+        let _ = _mData.get(this);
         return _.hasOwnProperty(key) ? _[key] : null;
     }
 
@@ -88,7 +90,6 @@ export class MetaData {
         let _ = this.path || "";
         var _p = _.split('.');
         _p = (_p.length > 1) ? _p.slice(0, _p.length - 2).join('.') : _p[0];
-        console.log(`parent: ${_p}`);
         return _p.length ? this.root.get(_p) : this.root;
     }
 }

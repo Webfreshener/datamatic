@@ -2,7 +2,7 @@ import {ObserverBuilder} from './_observerBuilder';
 import {JSD} from './jsd';
 import {Schema} from './schema';
 
-describe("ObserverBuilder Unit Test Suite", () => {
+describe.skip("ObserverBuilder Unit Test Suite", () => {
     describe("Builder Methods", () => {
         let _observer = null;
         let _schema = null;

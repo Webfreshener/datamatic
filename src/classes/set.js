@@ -2,6 +2,7 @@ import {_mdRef, _object, _vectorTypes, _exists, wf} from './_references';
 import {MetaData} from './_metaData';
 import {ObserverBuilder} from './_observerBuilder';
 import {ValidatorBuilder} from './_validatorBuilder';
+import {Schema} from './schema';
 import {JSD} from './jsd'
 /**
  * @class Set
@@ -13,6 +14,24 @@ export class Set {
      * @param {any} items
      */
     constructor(_type) {
+        // tests for metadata
+        let _;
+        if (arguments[1] instanceof JSD) {
+            _ = new MetaData(this, {
+                _path: "",
+                _root: this,
+                _jsd: arguments[1],
+            });
+        }
+        else if (arguments[1] instanceof MetaData) {
+            _ = arguments[1];
+        } else {
+            console.log(arguments[1] instanceof MetaData);
+            throw `Invalid constructor call for Set: ${JSON.stringify(arguments)}`;
+        }
+        _mdRef.set(this, _);
+
+        // tests for types
         let _types;
 
         if (!_exists(_type)) {
@@ -22,26 +41,6 @@ export class Set {
                 _type = [_type];
             }
         }
-        let _;
-
-        // tests for metadata
-        if (arguments[1] instanceof JSD) {
-            // return;
-            _ = new MetaData(this, {
-                _path: "",
-                _root: this,
-                _jsd: arguments[1],
-            });
-        }
-        else {
-            if (arguments[1] instanceof MetaData) {
-                _ = arguments[1];
-            } else {
-                throw `Invalid constructor call for Set: ${JSON.stringify(arguments)}`;
-                // _ = new MetaData(this, arguments[1]);
-            }
-        }
-        _mdRef.set(this, _);
 
         _types = _type.map((type) => {
             let _t = typeof type;

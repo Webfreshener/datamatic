@@ -31,20 +31,20 @@ export class Schema {
         if (!(this instanceof MetaData)) {
             let _;
             if (arguments[2] instanceof JSD) {
-                // return;
                 _ = new MetaData(this, {
                     _path: "",
                     _root: this,
                     _jsd: arguments[2],
                 });
             }
-            else {
+            else if (typeof arguments[2] == 'object') {
                 if (arguments[2] instanceof MetaData) {
                     _ = arguments[2];
                 } else {
-                    console.log('no metadata!');
                     _ = new MetaData(this, arguments[2]);
                 }
+            } else {
+                throw `Invalid constructor call for Schema: ${JSON.stringify(arguments)}`
             }
             _mdRef.set(this, _);
         }
@@ -60,7 +60,6 @@ export class Schema {
         for (let _sigEl of Object.keys(_signature)) {
             // -- tests for element `required`
             let _req = _signature[_sigEl].required;
-            // let _default = _signature[_sigEl].default;
             if (_req) {
                 // -- adds required element to list
                 _required_elements.get(this).push(_sigEl);
@@ -106,8 +105,10 @@ export class Schema {
                         ObserverBuilder.getInstance().error(key, e);
                         return false;
                     }
+                    ObserverBuilder.getInstance().next(key, this);
                     return true;
                 }
+                console.log(`path: ${this.path} -- key: ${key}`);
                 let _childSigs = this.signature.elements || this.signature;
                 let _pathKeys = key.split(".");
                 for (let _ in _pathKeys) {
@@ -115,7 +116,6 @@ export class Schema {
                     let _schema;
                     // derives path for element
                     let _key = this.path.length ? `${this.path}.${k}` : k;
-                    console.log(`setting key: ${_key}`);
                     if (_exists(_childSigs[`${k}`])) {
                         _schema = _childSigs[k];
                     }
@@ -134,41 +134,55 @@ export class Schema {
                         if (!this.isExtensible) {
                             const e = `element '${_key}' is not a valid element`;
                             ObserverBuilder.getInstance().error(key, e);
-                            return;
+                            return false;
                         }
                         _schema = Schema.defaultSignature;
                     }
                     // handles child objects
                     if (typeof value === "object") {
-                        const tVal = value;
-                        const _valKeys = Object.keys(tVal);
-
+                        // const tVal = value;
+                        // const _valKeys = Object.keys(tVal);
+                        console.log(`------\n${_key}\n${JSON.stringify(value)}\n------`);
                         if (typeof (value = _sH.setChildObject(_key, value)) === 'string') {
                             ObserverBuilder.getInstance().error(_key, value);
-                            return;
+                            return false;
                         }
+                        // return;
                     }
                     // handles absolute values (strings, numbers, booleans...)
                     else {
-                        console.log(`will subscribe to: ${_key}`); // Schema.concatPathAddr(this.path, _key)}`);
                         this.subscribeTo(_key, {
                             next: (value) => {
+                                console.log(`calling subscribeTo::next for ${_key}`);
                                 ObserverBuilder.getInstance().next(this.path, value);
                             },
                             error: (e) => {
+                                console.log(`dispatch error for ${this.path}`);
                                 ObserverBuilder.getInstance().error(this.path, e);
                             }
                         });
                         let eMsg = _sH.validate(_key, value);
                         if (typeof eMsg === "string") {
                             ObserverBuilder.getInstance().error(_key, eMsg);
-                            return;
+                            ObserverBuilder.getInstance().error(this.path, eMsg);
+                            return false;
                         }
                     }
                     t[key] = value;
-                    console.log(`calling next for ${this.path}`);
-                    ObserverBuilder.getInstance().next(this.path, value);
-                    ObserverBuilder.getInstance().next("", this.root.toJSON());
+                    ObserverBuilder.getInstance().next(Schema.concatPathAddr(this.path, _key), value);
+                }
+                let _e;
+                if (typeof (_e = this.validate()) !== 'string') {
+                    console.log(`\n${this.path} is valid\n`);
+                    if (this.path.length) {
+                        ObserverBuilder.getInstance().next(this.path, value);
+                    }
+                    ObserverBuilder.getInstance().next(this.path, this.root.toJSON());
+                    return true;
+                } else {
+                    console.log(`\n'${this.path}' GOT ERROR\n${_e}`);
+                    ObserverBuilder.getInstance().error(this.path, _e);
+                    return false;
                 }
             }
         };
@@ -279,11 +293,12 @@ export class Schema {
      * @returns {true|string} returns error string or true
      */
     validate() {
-        var _path = this.path;
-        for (let _k of ValidatorBuilder.getInstance().list()) {
+        const _sH = _schemaHelpers.get(this);
+        const keys = Object.keys(this.signature);
+        for (let _k of keys) {
             let e;
-            _path = _path.length > 0 ? `${_path}.${_k}` : _k;
-            if (typeof (e = _validate(_k, this.root.get(_k))) === 'string') {
+            let _path = this.path.length > 0 ? `${this.path}.${_k}` : _k;
+            if (typeof (e = _sH.validate(_path)) === 'string') {
                 return e;
             }
         }
@@ -359,7 +374,6 @@ export class Schema {
      * @returns {string} path to current Schema
      */
     get path() {
-        console.log(_mdRef.get(this));
         let _ = _mdRef.get(this).path;
         return _exists(_) ? _ : "";
     }

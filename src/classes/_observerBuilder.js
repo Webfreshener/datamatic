@@ -1,4 +1,5 @@
 import {_exists, _observers} from './_references';
+import {Set} from './set';
 import {Schema} from './schema';
 import {Subject} from 'rxjs/Rx';
 let __oBuilder = null;

@@ -49,9 +49,6 @@ export class SchemaHelpers {
             return `'${key}' was invalid`;
         }
 
-        // if (_s instanceof Set) {
-        //     return _s.model = value;
-        // }
         return _s.model = value;
     }
 
@@ -156,7 +153,6 @@ export class SchemaHelpers {
                 }
             }
         }
-
         return result;
     }
 
@@ -197,9 +193,6 @@ export class SchemaHelpers {
         if (!key.length) { // and @ instanceof MetaData
             return `invalid path '${key}'`;
         }
-        // key = if value instanceof MetaData then value.get( '_path' ) else value.getpath
-        // return "object provided was not a valid subclass of Schema" unless value instanceof Schema
-        // return "object provided was malformed" unless typeof (key = value.getPath?()) is 'string'
         let msg;
         if (0 <= _list.indexOf(key)) {
             let _path = [];

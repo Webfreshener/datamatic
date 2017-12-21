@@ -5,7 +5,7 @@ import {
     _observers, _required_elements
 } from './_references';
 
-describe("Maps Units", () => {
+describe.skip("Maps Units", () => {
     describe("_exists method", () => {
         it("expects _exists to be defined", () => {
             expect(typeof _exists).toBe("function");
