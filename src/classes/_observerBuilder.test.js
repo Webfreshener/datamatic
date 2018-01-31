@@ -2,7 +2,7 @@ import {ObserverBuilder} from './_observerBuilder';
 import {JSD} from './jsd';
 import {Schema} from './schema';
 
-describe.skip("ObserverBuilder Unit Test Suite", () => {
+describe("ObserverBuilder Unit Test Suite", () => {
     describe("Builder Methods", () => {
         let _observer = null;
         let _schema = null;
@@ -21,13 +21,13 @@ describe.skip("ObserverBuilder Unit Test Suite", () => {
             }, null, new JSD());
         });
 
-        it("should create an observer", function () {
+        it.skip("should create an observer", function () {
             ObserverBuilder.create('active', _schema);
             _observer = ObserverBuilder.getInstance().get('active');
             expect(typeof _observer.subscribe).toEqual("function");
         });
 
-        it("should subscribe to observer and get value", function (done) {
+        it.skip("should subscribe to observer and get value", function (done) {
             const _f = {
                 next: (o) => {
                     expect(o).toBe(true);

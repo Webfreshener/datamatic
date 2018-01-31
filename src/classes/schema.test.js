@@ -1,7 +1,7 @@
 import {Schema} from './schema';
 import {JSD} from './jsd';
 
-describe.only("Schema Class Test Suite", function () {
+describe("Schema Class Test Suite", function () {
     describe("Schema Validation Methods", function () {
         it("should not allow Elements without a type or type parameter", function () {
             expect(() => new Schema({value: {foo: "test"}}, null, new JSD())).toThrow(
@@ -51,7 +51,7 @@ describe.only("Schema Class Test Suite", function () {
                 "schema element 'value.foo' is not allowed");
         });
     });
-    describe.only("Schema Data Validation Methods", function () {
+    describe("Schema Data Validation Methods", function () {
         /*
          it("should validate data set to it", function () {
          var _S = new Schema({
@@ -88,18 +88,7 @@ describe.only("Schema Class Test Suite", function () {
                 "invalid schema element 'type' requires one of [String,Function,Object] type was '<Function>'");
         });
 
-        it.only("should validate values", (done) => {
-            const _h = {
-                next: () => {
-                    expect(_schema.get("value")).toEqual("test");
-                    done();
-                },
-                error: (e) => {
-                    expect(e).toEqual("http expected value of type 'Object'. Type was '<boolean>'");
-                    done();
-                }
-            };
-
+        it("should validate values", () => {
             let _schema = new Schema({
                 elements: {
                     value: {
@@ -107,8 +96,8 @@ describe.only("Schema Class Test Suite", function () {
                     }
                 }
             }, null, new JSD());
-            _schema.subscribe(_h);
             _schema.set("value", "test");
+            expect(_schema.isValid).toEqual(true);
         });
     });
 
@@ -122,7 +111,10 @@ describe.only("Schema Class Test Suite", function () {
         it("should check for required fields", () => {
             let _schema = new Schema({
                 elements: {
-                    name: {type: "String", required: true},
+                    name: {
+                        type: "String",
+                        required: true
+                    },
                     // description: {type: "String", required: true}
                 }
             }, null, new JSD());
@@ -190,124 +182,10 @@ describe.only("Schema Class Test Suite", function () {
         });
     });
 
-    describe("Client Schema", function () {
-        "use strict";
-        it("should initialize from client.schema schema fixture", () => {
-            let _s = require("../../fixtures/client.schema.json");
-            this.schema = new Schema(_s, null, new JSD()).subscribeTo('__OPTIONS__.ALLOWED', {
-                next: (v) => {
-                    console.log(`next: ${JSON.stringify(v)}`);
-                },
-                error: (e) => {
-                    console.log(`e ${e}`);
-                }
-            });
-            expect(this.schema instanceof Schema).toBe(true);
-            expect(this.schema.model.__OPTIONS__.CRUD_METHODS.create).toEqual('POST');
-        });
-    });
-
-    describe.skip("Client Collection", function () {
-        let _schema;
-        beforeEach(() => {
-            let _s = require("../../fixtures/client_collection.schema.json");
-            _schema = new Schema(_s, null, new JSD());
-        });
-
-        // it("should initialize from client_collection schema fixture", () => {
-        //     expect(_schema instanceof Schema).toBe(true);
-        // });
-
-        it.skip("should check for valid properties", (done) => {
-            const _d = {
-                name: "Test",
-                description: "some text here",
-                plural: "falsey",
-                base: "foo",
-                http: true,
-                strict: "false",
-                options: {
-                    idInjection: true,
-                    validateUpsert: false
-                },
-                validations: {},
-                relations: {
-                    myRelation: {
-                        type: "foo",
-                        polymorphic: "testing",
-                        model: "",
-                        foreignKey: "name"
-                    }
-                },
-                scope: {},
-                scopes: {},
-                properties: {}
-            };
-            const _h = {
-                next: () => {
-                    throw "error was expected";
-                },
-                error: (e) => {
-                    expect(e).toEqual("http expected value of type 'Object'. Type was '<boolean>'");
-                    done();
-                }
-            }
-            _schema.subscribe(_h);
-            _schema.model = _d;
-        });
-
-        it.skip("should check for required fields on elements", (done) => {
-            let _d = {
-                name: "Test",
-                description: "some text here",
-                plural: "Tests",
-                base: "foo",
-                http: {path: "api"},
-                strict: false,
-                options: {
-                    idInjection: true
-                },
-                validations: {},
-                relations: {},
-                scope: {},
-                scopes: {},
-                properties: {}
-            };
-            let res = this.schema.set(_d);
-            expect(res instanceof Schema).toBe(true);
-
-            // _d = Object.assign(_d, {
-            //     properties: {
-            //         // type: "Boolean",
-            //         name: "Test"
-            //     }
-            // });
-
-            let _f = {
-                next: () => {
-                    // console.log(this.schema.model.properties.badProperty);
-                    done("expected to fail with missing 'type' property");
-                },
-                error: (e) => {
-                    expect(e).to.eq("required property 'type' is missing for 'properties.badProperty'");
-                    done();
-                }
-            };
-
-            this.schema.subscribeTo('properties.badProperty', _f);
-            this.schema.model.properties = {
-                badProperty: {
-                    // type: "Boolean",
-                    name: "Test",
-                    index: true,
-                }
-            };
-        });
-    });
-
     describe("Getters/Setters", function () {
         it("should set basic values on elements", () => {
             let _schema = new Schema({
+
                 bool: {type: "Boolean"},
                 num: {type: "Number"},
                 str: {type: "String"}

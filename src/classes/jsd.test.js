@@ -1,6 +1,6 @@
 import {JSD} from './jsd'
 
-describe.skip("JSD Instance Test", () => {
+describe("JSD Instance Test", () => {
     let _jsd;
 
     beforeEach(() => {
@@ -14,10 +14,8 @@ describe.skip("JSD Instance Test", () => {
     it("expects JSD Instances to create a valid JSD Document", () => {
 
         _jsd.document.model = {
-            name: 'test',
+            'name': 'test',
         };
-        console.log(`_jsd.document: ${_jsd.document}`);
         expect(`${_jsd.document.model.name}`).toEqual('test');
-        // expect(`${jsd.document.get('.')}`).toEqual(;
     });
 });

@@ -8,11 +8,15 @@
  * console.log(`${jsd.document.get('.'}`);
  * // -> Schema
  */
-import {wf, _kinds} from './_references';
+import {wf, _kinds, _validPaths} from './_references';
+import {ObserverBuilder} from './_observerBuilder';
+import {ValidatorBuilder} from './_validatorBuilder';
 import {Schema} from './schema';
 
 const _documents = new WeakMap();
-
+const _vBuilders = new WeakMap();
+const _oBuilders = new WeakMap();
+const _validations = new WeakMap();
 export class JSD {
     /**
      * @constructor
@@ -32,7 +36,10 @@ export class JSD {
             "Function": Function,
         });
         const _ref = this;
-        _documents.set(this, new Schema(schema, options || null, _ref));
+        _validPaths.set(this, {});
+        _oBuilders.set(this, new ObserverBuilder());
+        _vBuilders.set(this, new ValidatorBuilder());
+        _documents.set(this, new Schema(schema, options || null, this));
     }
 
     /**
@@ -47,7 +54,29 @@ export class JSD {
      * @returns {Schema}
      */
     get document() {
-        return _documents.get(this).model;
+        return _documents.get(this);
+    }
+
+    get isValid() {
+        const v = this._validPaths.get(this);
+        for (path of v) {
+            if (!path) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     *
+     * @returns {ValidatorBuilder}
+     */
+    get validatorBuilder() {
+        return _vBuilders.get(this);
+    }
+
+    get observerBuilder() {
+        return _oBuilders.get(this);
     }
 
     /**
@@ -55,7 +84,6 @@ export class JSD {
      * @param value {Schema}
      */
     set document(value) {
-        // let _m = _docs.get(this);
         this.document = value;
     }
 
@@ -68,9 +96,13 @@ export class JSD {
         if (!Array.isArray(classesOrNames)) {
             classesOrNames = [classesOrNames];
         }
-        // traverses arguemtns
+        // traverses arguements
         for (let arg of classesOrNames) {
             if (typeof arg === "string") {
+                if (arg === '*') {
+                    // handles special * type
+                    return '*';
+                }
                 return (0 <= Object.keys(_k).indexOf(arg)) ? arg.toLowerCase() : null;
             }
             // operates on object
@@ -192,9 +224,16 @@ export class JSD {
      */
     static get defaults() {
         return {
-            type: "*",
+            type: "Object",
             required: false,
-            extensible: false
+            extensible: true,
+            elements: {
+                "*": {
+                    type: "*",
+                    required: false,
+                    extensible: true
+                }
+            }
         };
     }
 }

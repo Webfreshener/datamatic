@@ -1,6 +1,5 @@
 import {_exists, _mdRef} from './_references';
 import {MetaData} from './_metaData';
-import {ValidatorBuilder} from './_validatorBuilder';
 import {Schema} from './schema';
 import {Set} from './set';
 
@@ -48,7 +47,7 @@ export class SchemaHelpers {
         if (!_exists(_s) || typeof _s !== "object") {
             return `'${key}' was invalid`;
         }
-
+        const _res = _s.model = value;
         return _s.model = value;
     }
 
@@ -75,7 +74,7 @@ export class SchemaHelpers {
      * @returns {true|string} - returns true or error string
      */
     ensureRequiredFields(obj) {
-        let oKeys = Object.keys(obj);
+        let oKeys = Object.keys(obj || {});
         let _required = this._ref.requiredFields;
         for (let _ in _required) {
             let _key = _required[_];
@@ -94,6 +93,7 @@ export class SchemaHelpers {
     /**
      * @param {Object} value
      * @param {MetaData} metaData
+     * @returns {Schema|Set|error string} - Schema, Set or error string
      */
     createSchemaChild(key, value, opts, metaData) {
         var _kinds;
@@ -141,7 +141,7 @@ export class SchemaHelpers {
             let _k = _elements[_i];
             let itm;
             let objPath = _exists(path) ? (path.length ? `${path}.${_k}` : _k) : _k || "";
-            ValidatorBuilder.getInstance().create(obj[_k], objPath, this._ref.jsd);
+            this._ref.jsd.validatorBuilder.create(obj[_k], objPath, this._ref);
             // tests for nested elements
             if (_exists(obj[_k]) && typeof obj[_k].elements === "object") {
 
@@ -183,14 +183,16 @@ export class SchemaHelpers {
     }
 
     /**
-     * @param {string} key
-     * @param {object} object to validate
+     *
+     * @param key
+     * @param value
+     * @returns {*}
      */
     validate(key, value) {
-        var _list = ValidatorBuilder.getInstance().list();
-        var _ref;
+        let _list = this._ref.jsd.validatorBuilder.list();
+        let _ref;
         //-- attempts to validate
-        if (!key.length) { // and @ instanceof MetaData
+        if (!key.length) {
             return `invalid path '${key}'`;
         }
         let msg;
@@ -202,14 +204,14 @@ export class SchemaHelpers {
                 _path.push(_k);
                 _p = _path.join('.');
             }
-            if (!(_ref = ValidatorBuilder.getInstance().get(_p))) {
+            if (!(_ref = this._ref.jsd.validatorBuilder.get(_p))) {
                 if (!this.options.extensible) {
                     return `'${key}' is not a valid schema property`;
                 }
             }
-            ValidatorBuilder.getInstance().set(key, _ref);
+            this._ref.jsd.validatorBuilder.set(key, _ref);
         }
-        if (typeof (msg = ValidatorBuilder.getInstance().exec(key, value)) === 'string') {
+        if (typeof (msg = this._ref.jsd.validatorBuilder.exec(key, value)) === 'string') {
             return msg;
         }
         return true;

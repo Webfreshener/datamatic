@@ -1,6 +1,5 @@
 import {_mdRef, _object, _vectorTypes, _exists, wf} from './_references';
 import {MetaData} from './_metaData';
-import {ObserverBuilder} from './_observerBuilder';
 import {ValidatorBuilder} from './_validatorBuilder';
 import {Schema} from './schema';
 import {JSD} from './jsd'
@@ -26,7 +25,6 @@ export class Set {
         else if (arguments[1] instanceof MetaData) {
             _ = arguments[1];
         } else {
-            console.log(arguments[1] instanceof MetaData);
             throw `Invalid constructor call for Set: ${JSON.stringify(arguments)}`;
         }
         _mdRef.set(this, _);
@@ -91,7 +89,7 @@ export class Set {
             return true;
         }
         else {
-            ObserverBuilder.getInstance().error(this.path, `${this.path} requires Array`);
+            this.jsd.observerBuilder.error(this.path, `${this.path} requires Array`);
         }
     }
 
@@ -121,23 +119,22 @@ export class Set {
             },
             set: (t, idx, value) => {
                 if (!this._typeCheck(value)) {
-                    // return false;
                     var eMsg = `item at index ${idx} had wrong type`;
-                    ObserverBuilder.getInstance().error(this.path, eMsg);
+                    this.jsd.observerBuilder.error(this.path, eMsg);
                     return false;
                 }
                 t[idx] = value;
-                ObserverBuilder.getInstance().next(this.path, t);
+                this.jsd.observerBuilder.next(this.path, t);
                 return true;
             },
             deleteProperty: (t, idx) => {
                 if (idx >= t.length) {
                     const e = `index ${idx} is out of bounds on ${this.path}`;
-                    ObserverBuilder.getInstance().error(this.path, e);
+                    this.jsd.observerBuilder.error(this.path, e);
                     return false;
                 }
                 t.splice(idx, 1);
-                ObserverBuilder.getInstance().next(this.path, t);
+                this.jsd.observerBuilder.next(this.path, t);
                 return true;
             }
         };
@@ -159,7 +156,7 @@ export class Set {
             if (!(_t = this.jsd.getClass(_t))) {
                 return false;
             }
-            if (typeof _t == "string") {
+            if (typeof _t === "string") {
                 return typeof item === _t;
             } else if (!wf.Obj.isOfType(item, _t)) {
                 return false;
@@ -338,7 +335,6 @@ export class Set {
             if (itm instanceof Set) {
                 return itm.toJSON();
             }
-            ;
             if (typeof itm === 'object') {
                 const _o = !Array.isArray(itm) ? {} : [];
                 for (let k in itm) {
@@ -346,7 +342,6 @@ export class Set {
                 }
                 return _o;
             }
-            ;
             return itm;
         };
         return _derive(this.valueOf());
@@ -389,7 +384,8 @@ export class Set {
      */
     get parent() {
         let _root;
-        if (!(((_root = this.root()) != null) instanceof Schema) && !(_root instanceof Set)) {
+        if (!(((_root = this.root()) !== null) instanceof Schema)
+            && !(_root instanceof Set)) {
             return null;
         }
         return _root.get(this.path().split('.').pop().join('.'));
@@ -415,10 +411,10 @@ export class Set {
         if ((typeof func).match(/^(function|object)$/) === null) {
             throw new Error('subscribe requires function');
         }
-        let _o = ObserverBuilder.getInstance().get(this.path);
+        let _o = this.jsd.observerBuilder.get(this.path);
         if (!_o || _o === null) {
-            ObserverBuilder.getInstance().create(this.path, this);
-            _o = ObserverBuilder.getInstance().get(this.path);
+            this.jsd.observerBuilder.create(this.path, this);
+            _o = this.jsd.observerBuilder.get(this.path);
         }
         _o.subscribe(func);
         return this;
@@ -433,10 +429,10 @@ export class Set {
         if ((typeof func).match(/^(function|object)$/) === null) {
             throw new Error('subscribeTo requires function');
         }
-        let _o = ObserverBuilder.getInstance().get(path);
+        let _o = this.jsd.observerBuilder.get(path);
         if (!_o || _o === null) {
-            ObserverBuilder.getInstance().create(path, this);
-            _o = ObserverBuilder.getInstance().get(path);
+            this.jsd.observerBuilder.create(path, this);
+            _o = this.jsd.observerBuilder.get(path);
         }
 
         _o.subscribe(func);

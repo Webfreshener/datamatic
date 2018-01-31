@@ -2,16 +2,13 @@ import {_exists, _observers} from './_references';
 import {Set} from './set';
 import {Schema} from './schema';
 import {Subject} from 'rxjs/Rx';
-let __oBuilder = null;
+
 export class ObserverBuilder {
     /**
      * @constructor
      */
     constructor() {
-        if (!_exists(__oBuilder)) {
-            _observers.set((__oBuilder = this), {});
-        }
-        return __oBuilder;
+        _observers.set(this, {});
     }
 
     /**
@@ -60,23 +57,23 @@ export class ObserverBuilder {
         }
     }
 
-    /**
-     * @returns singleton ObserverBuilder reference
-     */
-    static getInstance() {
-        return new this;
-    }
-
-    /**
-     * @returns validators WeakMap
-     */
-    static getObservers() {
-        return _observers.get( ObserverBuilder.getInstance() );
-    }
-    /**
-     *
-     */
-    static create(path, oRef) {
-        return ObserverBuilder.getInstance().create(path, oRef);
-    }
+    // /**
+    //  * @returns singleton ObserverBuilder reference
+    //  */
+    // static getInstance() {
+    //     return new this;
+    // }
+    //
+    // /**
+    //  * @returns validators WeakMap
+    //  */
+    // static getObservers() {
+    //     return _observers.get( ObserverBuilder.getInstance() );
+    // }
+    // /**
+    //  *
+    //  */
+    // static create(path, oRef) {
+    //     return ObserverBuilder.getInstance().create(path, oRef);
+    // }
 }

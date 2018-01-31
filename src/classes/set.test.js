@@ -2,7 +2,7 @@ import {JSD} from './jsd';
 import {Schema} from './schema';
 import {Set} from './set';
 
-describe.skip('Set Class Test Suite', function() {
+describe('Set Class Test Suite', function() {
     describe("Initialization Tests", function() {
         // it.only("should initialize without a type", function() {
         //     let _set = new Set('*', new JSD());

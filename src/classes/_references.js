@@ -27,4 +27,5 @@ export const _schemaHelpers = new WeakMap();
 export const _schemaSignatures = new WeakMap();
 // RXJS Observer references
 export const _observers = new WeakMap();
+export const _validPaths = new WeakMap();
 
