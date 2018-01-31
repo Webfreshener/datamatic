@@ -1,7 +1,18 @@
+import {
+    _mdRef, _required_elements,
+    _observers, _object, _kinds, _exists,
+    _schemaHelpers, _schemaOptions, _schemaSignatures,
+    _validPaths, wf
+} from './_references';
+import {MetaData} from './_metaData';
+import {SchemaHelpers} from './_schemaHelpers';
+import {SchemaValidator} from './_schemaValidator';
+import {JSD} from './jsd';
+import {Set} from './set';
 /**
  * @class Schema
  */
-class Schema {
+export class Schema {
     /**
      * @constructor
      * @param {Object} _o - schema definition object
@@ -13,48 +24,77 @@ class Schema {
             throw `Schema requires JSON object at arguments[0]. Got '${typeof _signature}'`;
         }
         _schemaOptions.set(this, opts);
-        _validators.set(this, {});
+        // _validators.set(this, {});
         _required_elements.set(this, []);
+
+        // tests for metadata
+        if (!(this instanceof MetaData)) {
+            let _;
+            if (arguments[2] instanceof JSD) {
+                _ = new MetaData(this, {
+                    _path: "",
+                    _root: this,
+                    _jsd: arguments[2],
+                });
+            }
+            else if (typeof arguments[2] == 'object') {
+                if (arguments[2] instanceof MetaData) {
+                    _ = arguments[2];
+                } else {
+                    _ = new MetaData(this, arguments[2]);
+                }
+            } else {
+                throw `Invalid constructor call for Schema: ${JSON.stringify(arguments)}`
+            }
+            _mdRef.set(this, _);
+        }
+
         if (_exists(_signature.polymorphic)) {
             _signature = _signature.polymorphic;
         }
         // traverses elements of schema checking for elements marked as reqiured
         if (_exists(_signature.elements)) {
             _signature = _signature.elements;
+            for (let _sigEl of Object.keys(_signature)) {
+                // -- tests for element `required`
+                let _req = _signature[_sigEl].required;
+                if (_req) {
+                    // -- adds required element to list
+                    let req = _required_elements.get(this);
+                    req.push(_sigEl);
+                    _required_elements.set(this, req);
+                }
+            }
+        } else {
+            /*
+                enables "lazy" schemas
+                will format schema with default "Object" type
+             */
+            let _root = Object.assign(JSD.defaults, {type: "Object"});
+            // let _rx = `^(\\*|${Object.keys(JSD.defaults).join('|')})$`;
+            // keys = Object.keys(_signature).filter((k) => {
+            //     return (!k.match(new RegExp(_rx)));
+            // });
+            // if (keys.length) {
+            //     _signature = Object.assign(_root, {"elements": _signature});
+            // } else {
+            //     _signature = Object.assign(_root,  _signature);
+            // }
+            signature = Object.assign(_root, {"elements": _signature});
+
         }
 
-        for (let _sigEl of Object.keys(_signature)) {
-            // -- tests for element `required`
-            let _req = _signature[_sigEl].required;
-            // let _default = _signature[_sigEl].default;
-            if (_req) {
-                // -- adds required element to list
-                _required_elements.get(this).push(_sigEl);
-            }
-        }
-        // tests for metadata
-        if (!(this instanceof _metaData)) {
-            let _;
-            if (!_exists(arguments[2])) {
-                _ = new _metaData(this, {
-                    _path: "",
-                    _root: this
-                });
-            }
-            else {
-                _ = (arguments[2] instanceof _metaData) ? arguments[2] : new _metaData(this, arguments[2]);
-            }
-            _mdRef.set(this, _);
-        }
         // attempts to validate provided `schema` entries
-        let _schema_validator = new SchemaValidator(_signature, this.options);
+        let _schema_validator = new SchemaValidator(_signature, Object.assign(this.options || {}, {
+            jsd: _mdRef.get(this).jsd,
+        }));
         // throws error if error message returned
         if (typeof (eMsg = _schema_validator.isValid()) === 'string') {
             throw eMsg;
         }
         _schemaSignatures.set(this, _signature);
         _schemaHelpers.set(this, new SchemaHelpers(this));
-        _schemaHelpers.get(this).walkSchema(_signature || {}, this.path);
+        _schemaHelpers.get(this).walkSchema(_signature || JSD.defaults, this.path);
         // creates model
         _object.set(this, new Proxy({}, this.handler));
         // attempts to set default value
@@ -80,10 +120,10 @@ class Schema {
                 if (typeof key === 'object') {
                     const e = _sH.setObject(key);
                     if (typeof e === 'string') {
-                        ObserverBuilder.getInstance().error(key, e);
+                        this.jsd.observerBuilder.error(this.path, e);
                         return false;
                     }
-                    return true;
+                    return this.jsd.observerBuilder.next(this.path, this);
                 }
                 let _childSigs = this.signature.elements || this.signature;
                 let _pathKeys = key.split(".");
@@ -91,7 +131,7 @@ class Schema {
                     let k = _pathKeys[_];
                     let _schema;
                     // derives path for element
-                    let _key = this.path.length > 0 ? `${this.path}.${k}` : k;
+                    let _key = this.path.length ? `${this.path}.${k}` : k;
                     if (_exists(_childSigs[`${k}`])) {
                         _schema = _childSigs[k];
                     }
@@ -101,7 +141,7 @@ class Schema {
                             // applies schema
                             _schema = _childSigs["*"].polymorphic || _childSigs["*"];
                             // creates Validator for path
-                            ValidatorBuilder.getInstance().create(_schema, _key);
+                            this.jsd.validatorBuilder.create(_schema, _key, this);
                         }
                     }
                     // handles missing schema signatures
@@ -109,42 +149,67 @@ class Schema {
                         // rejects non-members of non-extensible schemas
                         if (!this.isExtensible) {
                             const e = `element '${_key}' is not a valid element`;
-                            ObserverBuilder.getInstance().error(key, e);
-                            return;
+                            this.jsd.observerBuilder.error(key, e);
+                            return false;
                         }
                         _schema = Schema.defaultSignature;
                     }
                     // handles child objects
                     if (typeof value === "object") {
-                        const tVal = value;
-                        const _valKeys = Object.keys(tVal);
-
-                        if (typeof (value = _sH.setChildObject(_key, value)) === 'string') {
-                            ObserverBuilder.getInstance().error(_key, value);
-                            return;
+                        value = _sH.setChildObject(_key, value);
+                        if (typeof value === 'string') {
+                            this.jsd.observerBuilder.error(_key, value);
+                            this.jsd.observerBuilder.error(this.root.path, value);
+                            return false;
                         }
+                        // return;
                     }
                     // handles absolute values (strings, numbers, booleans...)
                     else {
                         this.subscribeTo(_key, {
-                            next: (value) => {
-                                ObserverBuilder.getInstance().next(this.path, value);
-                            },
+                            // next: (value) => {
+                            //     let _k = Schema.concatPathAddr(this.path, _key);
+                            //     console.log(`next called on _key: ${_key} _k: ${_k} path: ${this.path}`);
+                            //     // this.jsd.observerBuilder.next(_k, value);
+                            // },
                             error: (e) => {
-                                ObserverBuilder.getInstance().error(this.path, e);
+                                // this.jsd.observerBuilder.error(this.path, e);
+                                let _p = Schema.concatPathAddr(this.path, _key);
+                                this.jsd.observerBuilder.error(_p, e)
                             }
                         });
                         let eMsg = _sH.validate(_key, value);
+                        _validPaths.get(this.jsd)[_key] = eMsg
                         if (typeof eMsg === "string") {
-                            ObserverBuilder.getInstance().error(_key, eMsg);
-                            return;
+                            this.jsd.observerBuilder.error(_key, eMsg);
+                            this.jsd.observerBuilder.error(this.path, eMsg);
+                            this.jsd.observerBuilder.error(this.root.path, eMsg);
+                            return eMsg
                         }
                     }
                     t[key] = value;
-                    ObserverBuilder.getInstance().next(key, value);
+                    // let _p = Schema.concatPathAddr(this.path, _key);
+                    // this.jsd.observerBuilder.next(_p, value);
+                    // this.jsd.observerBuilder.next(_key, value);
+                }
+                if (typeof((_e = this.validate())!== 'string')) {
+                    if (this.path.length) {
+                        this.jsd.observerBuilder.next(this.path, value);
+                    }
+                    const _p = Schema.concatPathAddr(this.path, key);
+                    const _j = this.root.toJSON();
+                    return this.jsd.observerBuilder.next(_p, _j);
+                    // return true;
+                } else {
+                    this.jsd.observerBuilder.error(this.path, _e);
+                    return false;
                 }
             }
         };
+    }
+
+    static concatPathAddr(path, addr) {
+        return path.length ? `${path}.${addr}` : addr;
     }
 
     /**
@@ -166,14 +231,33 @@ class Schema {
      * @param value
      */
     set model(value) {
+        let e;
         if (typeof value === 'object') {
-            Object.keys(value).forEach((k) => {
-                this.model[k] = value[k];
+            this.subscribe({
+                error: (e) => {
+                    this.jsd.observerBuilder.error(this.path, e);
+                }
             });
-        }
-        else {
-            const e = `unable to set scalar value on model at ${this.path.length ? this.path : '.'}`;
-            ObserverBuilder.getInstance().error(this.path, e);
+
+            const keys = Object.keys(value);
+
+            if (keys.length) {
+                for (k of keys) {
+                    this.model[k] = value[k];
+                }
+            } else {
+                e = 'null not allowed';
+                _validPaths.get(this.jsd)[this.path] = e;
+                this.jsd.observerBuilder.error(this.path, e);
+            }
+            _validPaths.get(this.jsd)[this.path] = true;
+            this.jsd.observerBuilder.next(this.path, this);
+            this.unsubscribe();
+        } else {
+            e = `unable to set scalar value on model at ${this.path.length ? this.path : '.'}`;
+            _validPaths.get(this.jsd)[this.path] = e;
+            this.jsd.observerBuilder.error(this.path, e);
+            return e;
         }
     }
 
@@ -197,8 +281,9 @@ class Schema {
         } else {
             const _sH = _schemaHelpers.get(this);
             let e = _sH.ensureRequiredFields(key);
+            _validPaths.get(this.jsd)[this.path] = e;
             if (typeof e === 'string') {
-                ObserverBuilder.getInstance().error(this.path, e);
+                this.jsd.observerBuilder.error(this.path, e);
             }
             Object.keys(key).forEach((_k) => {
                 this.model[_k] = key[_k];
@@ -206,6 +291,7 @@ class Schema {
         }
         return this;
     }
+
 
     /**
      * subscribes handler method to property observer for path
@@ -216,14 +302,24 @@ class Schema {
         if ((typeof func).match(/^(function|object)$/) === null) {
             throw new Error('subscribe requires function');
         }
-        let _o = ObserverBuilder.getInstance().get(this.path);
+        let _o = this.jsd.observerBuilder.get(this.path);
         if (!_o || _o === null) {
-            ObserverBuilder.getInstance().create(this.path, this);
-            _o = ObserverBuilder.getInstance().get(this.path);
+            this.jsd.observerBuilder.create(this.path, this);
+            _o = this.jsd.observerBuilder.get(this.path);
         }
 
         _o.subscribe(func);
         return this;
+    }
+
+    /**
+     * unsubscribes from this object's observer
+     */
+    unsubscribe() {
+        let _o = this.jsd.observerBuilder.get(this.path);
+        if (!_o || _o === null) {
+            _o.unsubscribe();
+        }
     }
 
     /**
@@ -235,26 +331,34 @@ class Schema {
         if ((typeof func).match(/^(function|object)$/) === null) {
             throw new Error('subscribeTo requires function');
         }
-        let _o = ObserverBuilder.getInstance().get(path);
+        let _o = this.jsd.observerBuilder.get(path);
         if (!_o || _o === null) {
-            ObserverBuilder.getInstance().create(path, this);
-            _o = ObserverBuilder.getInstance().get(path);
+            this.jsd.observerBuilder.create(path, this);
+            _o = this.jsd.observerBuilder.get(path);
         }
-
         _o.subscribe(func);
         return this;
+    }
+
+    /**
+     * unsubscribes from this observer for object at path
+     * @param path
+     */
+    unsubscribeFrom(path) {
+        let _o = this.jsd.observerBuilder.get(path);
+        if (!_o || _o === null) {
+            _o.unsubscribe();
+        }
     }
 
     /**
      * @returns {true|string} returns error string or true
      */
     validate() {
-        var _path = this.path;
-        for (let _k of ValidatorBuilder.getInstance().list()) {
-            let e;
-            _path = _path.length > 0 ? `${_path}.${_k}` : _k;
-            if (typeof (e = _validate(_k, this.root.get(_k))) === 'string') {
-                return e;
+        const paths = _validPaths.get(this.jsd);
+        for (_k in paths) {
+            if (typeof paths[_k] === 'string') {
+                return paths[_k];
             }
         }
         return true;
@@ -264,7 +368,7 @@ class Schema {
      * @returns {boolean}
      */
     get isValid() {
-        return (typeof this.validate() != 'string');
+        return (typeof this.validate() !== 'string');
     }
 
     /**
@@ -322,8 +426,7 @@ class Schema {
      * @returns {Schema} elemetn at Schema root
      */
     get root() {
-        let _ = _mdRef.get(this).root;
-        return _exists(_) ? _ : this;
+        return _mdRef.get(this).root || this;
     }
 
     /**
@@ -340,6 +443,13 @@ class Schema {
     get parent() {
         let _ = _mdRef.get(this).root;
         return _exists(_) ? _ : this;
+    }
+
+    /**
+     * @returns {*|JSD}
+     */
+    get jsd() {
+        return _mdRef.get(this).jsd;
     }
 
     /**

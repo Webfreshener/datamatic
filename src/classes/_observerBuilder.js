@@ -1,16 +1,14 @@
-/**
- * Created by van on 10/9/17.
- */
-let __oBuilder = null;
-class ObserverBuilder {
+import {_exists, _observers} from './_references';
+import {Set} from './set';
+import {Schema} from './schema';
+import {Subject} from 'rxjs/Rx';
+
+export class ObserverBuilder {
     /**
      * @constructor
      */
     constructor() {
-        if (!_exists(__oBuilder)) {
-            _observers.set((__oBuilder = this), {});
-        }
-        return __oBuilder;
+        _observers.set(this, {});
     }
 
     /**
@@ -35,7 +33,7 @@ class ObserverBuilder {
             throw 'oRef must be instance of Schema or Set';
         }
         let _o = _observers.get(this);
-        _o[forPath] = new Rx.Subject();
+        _o[forPath] = new Subject();
     }
 
     next(path, value) {
@@ -59,23 +57,23 @@ class ObserverBuilder {
         }
     }
 
-    /**
-     * @returns singleton ObserverBuilder reference
-     */
-    static getInstance() {
-        return new this;
-    }
-
-    /**
-     * @returns validators WeakMap
-     */
-    static getObservers() {
-        return _observers.get( ObserverBuilder.getInstance() );
-    }
-    /**
-     *
-     */
-    static create(path, oRef) {
-        return ObserverBuilder.getInstance().create(path, oRef);
-    }
+    // /**
+    //  * @returns singleton ObserverBuilder reference
+    //  */
+    // static getInstance() {
+    //     return new this;
+    // }
+    //
+    // /**
+    //  * @returns validators WeakMap
+    //  */
+    // static getObservers() {
+    //     return _observers.get( ObserverBuilder.getInstance() );
+    // }
+    // /**
+    //  *
+    //  */
+    // static create(path, oRef) {
+    //     return ObserverBuilder.getInstance().create(path, oRef);
+    // }
 }

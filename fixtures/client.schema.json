@@ -1,0 +1,172 @@
+{
+  "type": "Object",
+  "elements": {
+    "__COLLECTIONS__": {
+      "type": "Object",
+      "required": false,
+      "elements": {
+        "type": "Schema",
+        "required": false,
+        "extensible": true
+      }
+    },
+    "__OPTIONS__": {
+      "type": "Object",
+      "required": true,
+      "extensible": true,
+      "default": {
+        "SESSION_KEY": "AUTHORIZATION",
+        "CRUD_METHODS": {
+          "create": "POST",
+          "read": "GET",
+          "update": "PUT",
+          "destroy": "DELETE"
+        }
+      },
+      "elements": {
+        "ALLOWED": {
+          "type": "Array",
+          "required": false,
+          "elements": {
+            "type": "String",
+            "required": false
+          }
+        },
+        "VERSION": {
+          "type": "String",
+          "required": false,
+          "restrict": [
+            "\\\\bv?(?:0|[1-9]\\\\d*)\\\\.(?:0|[1-9]\\\\d*)\\\\.(?:0|[1-9]\\\\d*)(?:-[\\\\da-z\\\\-]+(?:\\\\.[\\\\da-z\\\\-]+)*)?(?:\\\\+[\\\\da-z\\\\-]+(?:\\\\.[\\\\da-z\\\\-]+)*)?\\\\b",
+            "ig"
+          ]
+        },
+        "APP_ID": {
+          "type": "String",
+          "required": true,
+          "restrict": "^[a-zA-Z0-9]{1,24}$"
+        },
+        "APP_ID_PARAM_NAME": {
+          "type": "String",
+          "required": false
+        },
+        "REST_KEY": {
+          "type": "String",
+          "required": false,
+          "restrict": "^[a-zA-Z0-9]{16,32}$"
+        },
+        "REST_KEY_PARAM_NAME": {
+          "type": "String",
+          "required": false,
+          "default": "REST_KEY"
+        },
+        "SESSION_TOKEN": {
+          "type": "String",
+          "required": false,
+          "restrict": "^[a-zA-Z0-9]{16,32}$"
+        },
+        "SESSION_KEY": {
+          "type": "String",
+          "required": true,
+          "restrict": "^[a-zA-Z0-9]{1,24}$",
+          "default": "AUTHORIZATION"
+        },
+        "CSRF_TOKEN": {
+          "type": "String",
+          "required": false,
+          "restrict": "^[a-zA-Z0-9]{16,32}$"
+        },
+        "API_VERSION": {
+          "type": "String",
+          "required": true,
+          "default": "1"
+        },
+        "MAX_BATCH_SIZE": {
+          "type": "Number",
+          "required": false,
+          "default": 50
+        },
+        "DEFAULT_FETCH_LIMIT_OVERRIDE": {
+          "type": "Number",
+          "required": false,
+          "default": 50000
+        },
+        "UNDEFINED_CLASSNAME": {
+          "type": "String",
+          "required": false,
+          "default": "__UNDEFINED_CLASSNAME__"
+        },
+        "API_URI": {
+          "type": "String",
+          "required": false
+        },
+        "CORS": {
+          "type": "Boolean",
+          "required": false,
+          "default": false
+        },
+        "PROTOCOL": {
+          "type": "String",
+          "required": false,
+          "default": "http",
+          "restrict": [
+            "^(HTTP)+S?$",
+            "i"
+          ]
+        },
+        "HOST": {
+          "type": "String",
+          "required": false,
+          "default": "127.0.0.1",
+          "restrict": "^(?:[0-9]{1,3}\\\\.){3}[0-9]{1,3}$"
+        },
+        "PORT": {
+          "type": "Number",
+          "required": false,
+          "default": 3000
+        },
+        "BASE_PATH": {
+          "type": "String",
+          "required": false,
+          "default": "/api",
+          "restrict": "^\\\\/+[a-zA-Z0-9_\\\\/\\\\.\\\\-]+$"
+        },
+        "CAPITALIZE_CLASSNAMES": {
+          "type": "Boolean",
+          "required": false,
+          "default": true
+        },
+        "QUERY_PARAM": {
+          "type": "String",
+          "required": false
+        },
+        "CRUD_METHODS": {
+          "type": "Object",
+          "required": true,
+          "extensible": false,
+          "elements": {
+            "create": {
+              "type": "String",
+              "required": false,
+              "restrict": "^POST+$"
+            },
+            "read": {
+              "type": "String",
+              "required": false,
+              "restrict": "^GET+$"
+            },
+            "update": {
+              "type": "String",
+              "required": false,
+              "restrict": "^PUT+$"
+            },
+            "destroy": {
+              "type": "String",
+              "required": false,
+              "restrict": "^DELETE+$"
+            }
+          }
+        }
+      }
+    }
+  }
+}

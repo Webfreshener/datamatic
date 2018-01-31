@@ -1,13 +1,35 @@
+import {_mdRef, _object, _vectorTypes, _exists, wf} from './_references';
+import {MetaData} from './_metaData';
+import {ValidatorBuilder} from './_validatorBuilder';
+import {Schema} from './schema';
+import {JSD} from './jsd'
 /**
  * @class Set
  */
-class Set {
+export class Set {
     /**
      * @constructor
      * @param {any} _type
      * @param {any} items
      */
     constructor(_type) {
+        // tests for metadata
+        let _;
+        if (arguments[1] instanceof JSD) {
+            _ = new MetaData(this, {
+                _path: "",
+                _root: this,
+                _jsd: arguments[1],
+            });
+        }
+        else if (arguments[1] instanceof MetaData) {
+            _ = arguments[1];
+        } else {
+            throw `Invalid constructor call for Set: ${JSON.stringify(arguments)}`;
+        }
+        _mdRef.set(this, _);
+
+        // tests for types
         let _types;
 
         if (!_exists(_type)) {
@@ -17,6 +39,7 @@ class Set {
                 _type = [_type];
             }
         }
+
         _types = _type.map((type) => {
             let _t = typeof type;
 
@@ -25,7 +48,7 @@ class Set {
                     return type;
                 }
 
-                if (0 <= _jsd_.listClasses().indexOf(type)) {
+                if (0 <= this.jsd.listClasses().indexOf(type)) {
                     _type = type;
                 } else {
                     throw `could not determine type <${type}>`;
@@ -40,18 +63,6 @@ class Set {
 
             return type;
         });
-
-        let _;
-        if (!_exists(arguments[1])) {
-            _ = new _metaData(this, {
-                _path: "",
-                _root: this
-            });
-        }
-        else {
-            _ = (arguments[1] instanceof _metaData) ? arguments[1] : new _metaData(this, arguments[1]);
-        }
-        _mdRef.set(this, _);
 
         // when we no longer need babel...
         // type = _type;
@@ -78,7 +89,7 @@ class Set {
             return true;
         }
         else {
-            ObserverBuilder.getInstance().error(this.path, `${this.path} requires Array`);
+            this.jsd.observerBuilder.error(this.path, `${this.path} requires Array`);
         }
     }
 
@@ -108,23 +119,22 @@ class Set {
             },
             set: (t, idx, value) => {
                 if (!this._typeCheck(value)) {
-                    // return false;
                     var eMsg = `item at index ${idx} had wrong type`;
-                    ObserverBuilder.getInstance().error(this.path, eMsg);
+                    this.jsd.observerBuilder.error(this.path, eMsg);
                     return false;
                 }
                 t[idx] = value;
-                ObserverBuilder.getInstance().next(this.path, t);
+                this.jsd.observerBuilder.next(this.path, t);
                 return true;
             },
             deleteProperty: (t, idx) => {
                 if (idx >= t.length) {
                     const e = `index ${idx} is out of bounds on ${this.path}`;
-                    ObserverBuilder.getInstance().error(this.path, e);
+                    this.jsd.observerBuilder.error(this.path, e);
                     return false;
                 }
                 t.splice(idx, 1);
-                ObserverBuilder.getInstance().next(this.path, t);
+                this.jsd.observerBuilder.next(this.path, t);
                 return true;
             }
         };
@@ -143,12 +153,12 @@ class Set {
                 return true;
             }
 
-            if (!(_t = _jsd_.getClass(_t))) {
+            if (!(_t = this.jsd.getClass(_t))) {
                 return false;
             }
-            if (typeof _t == "string") {
+            if (typeof _t === "string") {
                 return typeof item === _t;
-            } else if (!_global.wf.Obj.isOfType(item, _t)) {
+            } else if (!wf.Obj.isOfType(item, _t)) {
                 return false;
             }
         }
@@ -324,14 +334,14 @@ class Set {
             }
             if (itm instanceof Set) {
                 return itm.toJSON();
-            };
+            }
             if (typeof itm === 'object') {
                 const _o = !Array.isArray(itm) ? {} : [];
                 for (let k in itm) {
                     _o[k] = _derive(itm[k]);
                 }
                 return _o;
-            };
+            }
             return itm;
         };
         return _derive(this.valueOf());
@@ -374,10 +384,15 @@ class Set {
      */
     get parent() {
         let _root;
-        if (!(((_root = this.root()) != null) instanceof Schema) && !(_root instanceof Set)) {
+        if (!(((_root = this.root()) !== null) instanceof Schema)
+            && !(_root instanceof Set)) {
             return null;
         }
         return _root.get(this.path().split('.').pop().join('.'));
+    }
+
+    get jsd() {
+        return _mdRef.get(this).jsd;
     }
 
     /**
@@ -396,10 +411,10 @@ class Set {
         if ((typeof func).match(/^(function|object)$/) === null) {
             throw new Error('subscribe requires function');
         }
-        let _o = ObserverBuilder.getInstance().get(this.path);
+        let _o = this.jsd.observerBuilder.get(this.path);
         if (!_o || _o === null) {
-            ObserverBuilder.getInstance().create(this.path, this);
-            _o = ObserverBuilder.getInstance().get(this.path);
+            this.jsd.observerBuilder.create(this.path, this);
+            _o = this.jsd.observerBuilder.get(this.path);
         }
         _o.subscribe(func);
         return this;
@@ -414,14 +429,13 @@ class Set {
         if ((typeof func).match(/^(function|object)$/) === null) {
             throw new Error('subscribeTo requires function');
         }
-        let _o = ObserverBuilder.getInstance().get(path);
+        let _o = this.jsd.observerBuilder.get(path);
         if (!_o || _o === null) {
-            ObserverBuilder.getInstance().create(path, this);
-            _o = ObserverBuilder.getInstance().get(path);
+            this.jsd.observerBuilder.create(path, this);
+            _o = this.jsd.observerBuilder.get(path);
         }
 
         _o.subscribe(func);
         return this;
     }
 }
-

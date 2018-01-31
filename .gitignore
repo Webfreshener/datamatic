@@ -2,3 +2,4 @@
 .project
 *.iml
 node_modules/*
+test/_orig
