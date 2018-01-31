@@ -1,8 +1,8 @@
-import {_exists, _validators, _validPaths, wf} from './_references';
-import {Validator} from './_validators'
 /**
  * @private
  */
+import {_exists, _validators, _validPaths, wf} from './_references';
+import {Validator} from './_validators'
 /**
  * @private
  */
@@ -51,7 +51,7 @@ export class ValidatorBuilder {
      * @param ref
      * @param path
      * @param elRef
-     * @returns {function(*=)}
+     * @returns {function}
      */
     create(ref, path, elRef) {
         if (!_exists(ref) ) {

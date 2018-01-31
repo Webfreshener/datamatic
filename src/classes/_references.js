@@ -1,31 +1,87 @@
 /**
  * @private Weakmap Refs
- * @type {{wf: *, _kinds: WeakMap, _object: WeakMap, _mdRef: WeakMap, _required_elements: WeakMap, _validators: WeakMap, _singletons: WeakMap, _vectorTypes: WeakMap, _schemaOptions: WeakMap, _schemaHelpers: WeakMap, _schemaSignatures: WeakMap, _observers: WeakMap}}
  */
 import * as wfUtils from 'wf-utils';
 export const _exists = wfUtils.exists;
 export const wf = wfUtils;
-    // holds references to registered JS Objects
+/**
+ * Holder for registered JS Object references
+ *
+ * @type {WeakMap}
+ * @private
+ */
 export const _kinds = new WeakMap();
-    // Schema and Set instance references
+/**
+ * Holder for Schema and Set instance references
+ *
+ * @type {WeakMap}
+ * @private
+ */
 export const _object = new WeakMap();
-// MetaData references
+/**
+ * Holder for MetaData references
+ * @type {WeakMap}
+ * @private
+ */
 export const _mdRef = new WeakMap();
-// Lists of required elements for each Schema Node
+/**
+ * Holder for lists of required elements for each Schema Node
+ *
+ * @type {WeakMap}
+ * @private
+ */
 export const _required_elements = new WeakMap();
-// Schema Validators
+/**
+ * Holder for Schema Validators
+ * @type {WeakMap}
+ * @private
+ */
 export const _validators = new WeakMap();
-// Singleton instance references
+/**
+ * Holder for Singleton instance references
+ *
+ * @type {WeakMap}
+ * @private
+ */
 export const _singletons = new WeakMap();
-// Set element types
+/**
+ * Holder for `Set` element types
+ *
+ * @type {WeakMap}
+ * @private
+ */
 export const _vectorTypes = new WeakMap();
-// Schema options refeerences
+/**
+ * Holder for Schema options refeerences
+ *
+ * @type {WeakMap}
+ * @private
+ */
 export const _schemaOptions = new WeakMap();
-// Schema Helpers references
+/**
+ * Holder for Schema Helpers references
+ *
+ * @type {WeakMap}
+ * @private
+ */
 export const _schemaHelpers = new WeakMap();
-// Schema Signatures references
+/**
+ * Holder for Schema Signatures references
+ *
+ * @type {WeakMap}
+ * @private
+ */
 export const _schemaSignatures = new WeakMap();
-// RXJS Observer references
+/**
+ * Holder for RXJS Observer references
+ * @type {WeakMap}
+ * @private
+ */
 export const _observers = new WeakMap();
+/**
+ * Holder for Validation path references
+ * @type {WeakMap}
+ * @private
+ */
 export const _validPaths = new WeakMap();
 

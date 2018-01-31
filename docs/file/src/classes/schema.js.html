@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">src/classes/schema.js | jsd</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="Schema Generation and Data Validation with object virtualization"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="jsd"><meta property="twitter:description" content="Schema Generation and Data Validation with object virtualization"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/Webfreshener/JSD.git"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#classes">classes</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_metaData.js~MetaData.html">MetaData</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_observerBuilder.js~ObserverBuilder.html">ObserverBuilder</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_schemaHelpers.js~SchemaHelpers.html">SchemaHelpers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_schemaValidator.js~SchemaValidator.html">SchemaValidator</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_validatorBuilder.js~ValidatorBuilder.html">ValidatorBuilder</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_validators.js~BaseValidator.html">BaseValidator</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/jsd.js~JSD.html">JSD</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/schema.js~Schema.html">Schema</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/set.js~Set.html">Set</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_kinds">_kinds</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_object">_object</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_observers">_observers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_required_elements">_required_elements</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaHelpers">_schemaHelpers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaOptions">_schemaOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaSignatures">_schemaSignatures</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_singletons">_singletons</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validPaths">_validPaths</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validators">_validators</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vectorTypes">_vectorTypes</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-wf">wf</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-Validator">Validator</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/classes/schema.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {
+    _mdRef, _required_elements,
+    _observers, _object, _kinds, _exists,
+    _schemaHelpers, _schemaOptions, _schemaSignatures,
+    _validPaths, wf
+} from &apos;./_references&apos;;
+import {MetaData} from &apos;./_metaData&apos;;
+import {SchemaHelpers} from &apos;./_schemaHelpers&apos;;
+import {SchemaValidator} from &apos;./_schemaValidator&apos;;
+import {JSD} from &apos;./jsd&apos;;
+import {Set} from &apos;./set&apos;;
+/**
+ * @class Schema
+ */
+export class Schema {
+    /**
+     * @constructor
+     * @param {Object} _o - schema definition object
+     * @param {Object} opts - schema options
+     */
+    constructor(_signature, opts = {extensible: false}) {
+        var eMsg;
+        if (!_exists(_signature)) {
+            throw `Schema requires JSON object at arguments[0]. Got &apos;${typeof _signature}&apos;`;
+        }
+        _schemaOptions.set(this, opts);
+        // _validators.set(this, {});
+        _required_elements.set(this, []);
+
+        // tests for metadata
+        if (!(this instanceof MetaData)) {
+            let _;
+            if (arguments[2] instanceof JSD) {
+                _ = new MetaData(this, {
+                    _path: &quot;&quot;,
+                    _root: this,
+                    _jsd: arguments[2],
+                });
+            }
+            else if (typeof arguments[2] == &apos;object&apos;) {
+                if (arguments[2] instanceof MetaData) {
+                    _ = arguments[2];
+                } else {
+                    _ = new MetaData(this, arguments[2]);
+                }
+            } else {
+                throw `Invalid constructor call for Schema: ${JSON.stringify(arguments)}`
+            }
+            _mdRef.set(this, _);
+        }
+
+        if (_exists(_signature.polymorphic)) {
+            _signature = _signature.polymorphic;
+        }
+        // traverses elements of schema checking for elements marked as reqiured
+        if (_exists(_signature.elements)) {
+            _signature = _signature.elements;
+            for (let _sigEl of Object.keys(_signature)) {
+                // -- tests for element `required`
+                let _req = _signature[_sigEl].required;
+                if (_req) {
+                    // -- adds required element to list
+                    let req = _required_elements.get(this);
+                    req.push(_sigEl);
+                    _required_elements.set(this, req);
+                }
+            }
+        } else {
+            /*
+                enables &quot;lazy&quot; schemas
+                will format schema with default &quot;Object&quot; type
+             */
+            let _root = Object.assign(JSD.defaults, {type: &quot;Object&quot;});
+            // let _rx = `^(\\*|${Object.keys(JSD.defaults).join(&apos;|&apos;)})$`;
+            // keys = Object.keys(_signature).filter((k) =&gt; {
+            //     return (!k.match(new RegExp(_rx)));
+            // });
+            // if (keys.length) {
+            //     _signature = Object.assign(_root, {&quot;elements&quot;: _signature});
+            // } else {
+            //     _signature = Object.assign(_root,  _signature);
+            // }
+            signature = Object.assign(_root, {&quot;elements&quot;: _signature});
+
+        }
+
+        // attempts to validate provided `schema` entries
+        let _schema_validator = new SchemaValidator(_signature, Object.assign(this.options || {}, {
+            jsd: _mdRef.get(this).jsd,
+        }));
+        // throws error if error message returned
+        if (typeof (eMsg = _schema_validator.isValid()) === &apos;string&apos;) {
+            throw eMsg;
+        }
+        _schemaSignatures.set(this, _signature);
+        _schemaHelpers.set(this, new SchemaHelpers(this));
+        _schemaHelpers.get(this).walkSchema(_signature || JSD.defaults, this.path);
+        // creates model
+        _object.set(this, new Proxy({}, this.handler));
+        // attempts to set default value
+        for (let _sigEl of Object.keys(_signature)) {
+            // -- tests for element `default`
+            let _default = _signature[_sigEl].default;
+            if (_default) {
+                // sets default value for key on model
+                let _p = _sigEl.split(&apos;.&apos;);
+                this.model[_sigEl] = _default;
+            }
+        }
+    }
+
+    get handler() {
+        return {
+            get: (t, key) =&gt; {
+                const _m = t[key];
+                return _m instanceof Schema ? _m.model : _m;
+            },
+            set: (t, key, value) =&gt; {
+                let _sH = _schemaHelpers.get(this);
+                if (typeof key === &apos;object&apos;) {
+                    const e = _sH.setObject(key);
+                    if (typeof e === &apos;string&apos;) {
+                        this.jsd.observerBuilder.error(this.path, e);
+                        return false;
+                    }
+                    return this.jsd.observerBuilder.next(this.path, this);
+                }
+                let _childSigs = this.signature.elements || this.signature;
+                let _pathKeys = key.split(&quot;.&quot;);
+                for (let _ in _pathKeys) {
+                    let k = _pathKeys[_];
+                    let _schema;
+                    // derives path for element
+                    let _key = this.path.length ? `${this.path}.${k}` : k;
+                    if (_exists(_childSigs[`${k}`])) {
+                        _schema = _childSigs[k];
+                    }
+                    else {
+                        // attempts to find wildcard element name
+                        if (_exists(_childSigs[&quot;*&quot;])) {
+                            // applies schema
+                            _schema = _childSigs[&quot;*&quot;].polymorphic || _childSigs[&quot;*&quot;];
+                            // creates Validator for path
+                            this.jsd.validatorBuilder.create(_schema, _key, this);
+                        }
+                    }
+                    // handles missing schema signatures
+                    if (!_exists(_schema)) {
+                        // rejects non-members of non-extensible schemas
+                        if (!this.isExtensible) {
+                            const e = `element &apos;${_key}&apos; is not a valid element`;
+                            this.jsd.observerBuilder.error(key, e);
+                            return false;
+                        }
+                        _schema = Schema.defaultSignature;
+                    }
+                    // handles child objects
+                    if (typeof value === &quot;object&quot;) {
+                        value = _sH.setChildObject(_key, value);
+                        if (typeof value === &apos;string&apos;) {
+                            this.jsd.observerBuilder.error(_key, value);
+                            this.jsd.observerBuilder.error(this.root.path, value);
+                            return false;
+                        }
+                        // return;
+                    }
+                    // handles absolute values (strings, numbers, booleans...)
+                    else {
+                        this.subscribeTo(_key, {
+                            // next: (value) =&gt; {
+                            //     let _k = Schema.concatPathAddr(this.path, _key);
+                            //     console.log(`next called on _key: ${_key} _k: ${_k} path: ${this.path}`);
+                            //     // this.jsd.observerBuilder.next(_k, value);
+                            // },
+                            error: (e) =&gt; {
+                                // this.jsd.observerBuilder.error(this.path, e);
+                                let _p = Schema.concatPathAddr(this.path, _key);
+                                this.jsd.observerBuilder.error(_p, e)
+                            }
+                        });
+                        let eMsg = _sH.validate(_key, value);
+                        _validPaths.get(this.jsd)[_key] = eMsg
+                        if (typeof eMsg === &quot;string&quot;) {
+                            this.jsd.observerBuilder.error(_key, eMsg);
+                            this.jsd.observerBuilder.error(this.path, eMsg);
+                            this.jsd.observerBuilder.error(this.root.path, eMsg);
+                            return eMsg
+                        }
+                    }
+                    t[key] = value;
+                    // let _p = Schema.concatPathAddr(this.path, _key);
+                    // this.jsd.observerBuilder.next(_p, value);
+                    // this.jsd.observerBuilder.next(_key, value);
+                }
+                if (typeof((_e = this.validate())!== &apos;string&apos;)) {
+                    if (this.path.length) {
+                        this.jsd.observerBuilder.next(this.path, value);
+                    }
+                    const _p = Schema.concatPathAddr(this.path, key);
+                    const _j = this.root.toJSON();
+                    return this.jsd.observerBuilder.next(_p, _j);
+                    // return true;
+                } else {
+                    this.jsd.observerBuilder.error(this.path, _e);
+                    return false;
+                }
+            }
+        };
+    }
+
+    static concatPathAddr(path, addr) {
+        return path.length ? `${path}.${addr}` : addr;
+    }
+
+    /**
+     * @returns schema signature object
+     */
+    get signature() {
+        return _schemaSignatures.get(this);
+    }
+
+    /**
+     * getter for object model
+     */
+    get model() {
+        return _object.get(this);
+    }
+
+    /**
+     * setter for object model
+     * @param value
+     */
+    set model(value) {
+        let e;
+        if (typeof value === &apos;object&apos;) {
+            this.subscribe({
+                error: (e) =&gt; {
+                    this.jsd.observerBuilder.error(this.path, e);
+                }
+            });
+
+            const keys = Object.keys(value);
+
+            if (keys.length) {
+                for (k of keys) {
+                    this.model[k] = value[k];
+                }
+            } else {
+                e = &apos;null not allowed&apos;;
+                _validPaths.get(this.jsd)[this.path] = e;
+                this.jsd.observerBuilder.error(this.path, e);
+            }
+            _validPaths.get(this.jsd)[this.path] = true;
+            this.jsd.observerBuilder.next(this.path, this);
+            this.unsubscribe();
+        } else {
+            e = `unable to set scalar value on model at ${this.path.length ? this.path : &apos;.&apos;}`;
+            _validPaths.get(this.jsd)[this.path] = e;
+            this.jsd.observerBuilder.error(this.path, e);
+            return e;
+        }
+    }
+
+
+    /**
+     * @param {string} key
+     * @returns {any}
+     */
+    get(key) {
+        return this.model[key];
+    }
+
+    /**
+     * sets value to schema key
+     * @param {string|object} key
+     * @param {any} value
+     */
+    set(key, value) {
+        if (typeof key === &apos;string&apos;) {
+            this.model[key] = value;
+        } else {
+            const _sH = _schemaHelpers.get(this);
+            let e = _sH.ensureRequiredFields(key);
+            _validPaths.get(this.jsd)[this.path] = e;
+            if (typeof e === &apos;string&apos;) {
+                this.jsd.observerBuilder.error(this.path, e);
+            }
+            Object.keys(key).forEach((_k) =&gt; {
+                this.model[_k] = key[_k];
+            });
+        }
+        return this;
+    }
+
+
+    /**
+     * subscribes handler method to property observer for path
+     * @param path
+     * @param func
+     */
+    subscribe(func) {
+        if ((typeof func).match(/^(function|object)$/) === null) {
+            throw new Error(&apos;subscribe requires function&apos;);
+        }
+        let _o = this.jsd.observerBuilder.get(this.path);
+        if (!_o || _o === null) {
+            this.jsd.observerBuilder.create(this.path, this);
+            _o = this.jsd.observerBuilder.get(this.path);
+        }
+
+        _o.subscribe(func);
+        return this;
+    }
+
+    /**
+     * unsubscribes from this object&apos;s observer
+     */
+    unsubscribe() {
+        let _o = this.jsd.observerBuilder.get(this.path);
+        if (!_o || _o === null) {
+            _o.unsubscribe();
+        }
+    }
+
+    /**
+     * subscribes handler method to property observer for path
+     * @param path
+     * @param func
+     */
+    subscribeTo(path, func) {
+        if ((typeof func).match(/^(function|object)$/) === null) {
+            throw new Error(&apos;subscribeTo requires function&apos;);
+        }
+        let _o = this.jsd.observerBuilder.get(path);
+        if (!_o || _o === null) {
+            this.jsd.observerBuilder.create(path, this);
+            _o = this.jsd.observerBuilder.get(path);
+        }
+        _o.subscribe(func);
+        return this;
+    }
+
+    /**
+     * unsubscribes from this observer for object at path
+     * @param path
+     */
+    unsubscribeFrom(path) {
+        let _o = this.jsd.observerBuilder.get(path);
+        if (!_o || _o === null) {
+            _o.unsubscribe();
+        }
+    }
+
+    /**
+     * @returns {true|string} returns error string or true
+     */
+    validate() {
+        const paths = _validPaths.get(this.jsd);
+        for (_k in paths) {
+            if (typeof paths[_k] === &apos;string&apos;) {
+                return paths[_k];
+            }
+        }
+        return true;
+    }
+
+    /**
+     * @returns {boolean}
+     */
+    get isValid() {
+        return (typeof this.validate() !== &apos;string&apos;);
+    }
+
+    /**
+     * gets raw value of this model
+     */
+    valueOf() {
+        return this.model;
+    }
+
+    /**
+     * JSONifies Schema Model
+     */
+    toJSON() {
+        let _derive = (itm) =&gt; {
+            if (itm instanceof Schema) {
+                return itm.toJSON();
+            }
+            if (itm instanceof Set) {
+                return itm.toJSON();
+            }
+            if (typeof itm === &apos;object&apos;) {
+                const _o = !Array.isArray(itm) ? {} : [];
+                for (let k in itm) {
+                    _o[k] = _derive(itm[k]);
+                }
+                return _o;
+            }
+            return itm;
+        };
+        return _derive(this.valueOf());
+    }
+
+    /**
+     * JSON stringifies primitive value
+     */
+    toString(pretty = false) {
+        return JSON.stringify(this.toJSON(), null, (pretty ? 2 : void(0)));
+    }
+
+    /**
+     * get options (if any) for this model&apos;s schema
+     */
+    get options() {
+        return _schemaOptions.get(this);
+    }
+
+    /**
+     * @returns {string} Object ID for Schema
+     */
+    get objectID() {
+        return _mdRef.get(this)._id;
+    }
+
+    /**
+     * @returns {Schema} elemetn at Schema root
+     */
+    get root() {
+        return _mdRef.get(this).root || this;
+    }
+
+    /**
+     * @returns {string} path to current Schema
+     */
+    get path() {
+        let _ = _mdRef.get(this).path;
+        return _exists(_) ? _ : &quot;&quot;;
+    }
+
+    /**
+     * @returns {Schema} parent Schema element
+     */
+    get parent() {
+        let _ = _mdRef.get(this).root;
+        return _exists(_) ? _ : this;
+    }
+
+    /**
+     * @returns {*|JSD}
+     */
+    get jsd() {
+        return _mdRef.get(this).jsd;
+    }
+
+    /**
+     * @returns list of required elements on this Schema
+     */
+    get requiredFields() {
+        return _required_elements.get(this);
+    }
+
+    /**
+     * indicates if Schema will accept arbitrary keys
+     * @returns {boolean}
+     */
+    get isExtensible() {
+        return _exists(this.signature.extensible) ?
+            this.signature.extensible : this.options.extensible || false;
+    }
+
+    /**
+     * Base Signature for all Schema Objects
+     */
+    static defaultSignature() {
+        return {
+            type: &quot;*&quot;,
+            required: true,
+            extensible: false
+        };
+    }
+}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.0.4)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

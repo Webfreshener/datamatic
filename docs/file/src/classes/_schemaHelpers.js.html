@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">src/classes/_schemaHelpers.js | jsd</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="Schema Generation and Data Validation with object virtualization"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="jsd"><meta property="twitter:description" content="Schema Generation and Data Validation with object virtualization"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/Webfreshener/JSD.git"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#classes">classes</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_metaData.js~MetaData.html">MetaData</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_observerBuilder.js~ObserverBuilder.html">ObserverBuilder</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_schemaHelpers.js~SchemaHelpers.html">SchemaHelpers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_schemaValidator.js~SchemaValidator.html">SchemaValidator</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_validatorBuilder.js~ValidatorBuilder.html">ValidatorBuilder</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_validators.js~BaseValidator.html">BaseValidator</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/jsd.js~JSD.html">JSD</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/schema.js~Schema.html">Schema</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/set.js~Set.html">Set</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_kinds">_kinds</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_object">_object</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_observers">_observers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_required_elements">_required_elements</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaHelpers">_schemaHelpers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaOptions">_schemaOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaSignatures">_schemaSignatures</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_singletons">_singletons</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validPaths">_validPaths</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validators">_validators</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vectorTypes">_vectorTypes</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-wf">wf</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-Validator">Validator</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/classes/_schemaHelpers.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {_exists, _mdRef} from &apos;./_references&apos;;
+import {MetaData} from &apos;./_metaData&apos;;
+import {Schema} from &apos;./schema&apos;;
+import {Set} from &apos;./set&apos;;
+
+/**
+ * @private
+ */
+export class SchemaHelpers {
+    /**
+     * @constructor
+     */
+    constructor(_ref) {
+        if (!_exists(_ref) || !(_ref instanceof Schema)) {
+            throw new Error(&quot;arguments[0] must be type &apos;Schema&apos;&quot;);
+        }
+        this._ref = _ref;
+    }
+
+    /**
+     *
+     */
+    setObject(obj) {
+        obj = this.ensureRequiredFields(obj);
+        if (typeof obj === &apos;string&apos;) {
+            return obj;
+        }
+        // calls set with nested key value pair
+        for (var k in obj) {
+            let eMsg = this._ref.model[k] = obj[k];
+            if (typeof eMsg === &apos;string&apos;) {
+                throw new Error( eMsg );
+            }
+        }
+        return this._ref;
+    }
+
+    /**
+     *
+     * @param key
+     * @param value
+     * @returns {*}
+     */
+    setChildObject(key, value) {
+        let _mdData = _mdRef.get(this._ref);
+        let _s = this.createSchemaChild(key, value, this._ref.options, _mdData);
+        if (!_exists(_s) || typeof _s !== &quot;object&quot;) {
+            return `&apos;${key}&apos; was invalid`;
+        }
+        const _res = _s.model = value;
+        return _s.model = value;
+    }
+
+    /**
+     * @param {Object} itm
+     * @returns {String|Boolean}
+     */
+    ensureKindIsString(itm) {
+        switch (typeof itm) {
+            case &apos;string&apos;:
+                return itm;
+            case &apos;object&apos;:
+                if (itm.hasOwnProperty(&apos;type&apos;)) {
+                    return this.ensureKindIsString(itm.type);
+                }
+                break;
+        }
+        return false;
+    }
+
+    /**
+     * tests if required fields exist on object
+     * @param {Object} obj
+     * @returns {true|string} - returns true or error string
+     */
+    ensureRequiredFields(obj) {
+        let oKeys = Object.keys(obj || {});
+        let _required = this._ref.requiredFields;
+        for (let _ in _required) {
+            let _key = _required[_];
+            let _path = this._ref.path.length ? this._ref.path : &quot;root element&quot;;
+            if (0 &gt; oKeys.indexOf(_key)) {
+                if (_exists(this._ref.signature[_key].default)) {
+                    obj[_key] = this._ref.signature[_key].default;
+                } else {
+                    return `required property &apos;${_key}&apos; is missing for &apos;${_path}&apos;`;
+                }
+            }
+        }
+        return obj;
+    }
+
+    /**
+     * @param {Object} value
+     * @param {MetaData} metaData
+     * @returns {Schema|Set|error string} - Schema, Set or error string
+     */
+    createSchemaChild(key, value, opts, metaData) {
+        var _kinds;
+        // tests if value is not Array
+        if (!Array.isArray(value)) {
+            let _d = Object.assign({
+                _path: key,
+                _root: this._ref.root,
+                _jsd: this._ref.jsd,
+            }, metaData || {});
+            let _md = new MetaData(this._ref, _d);
+            let _schemaDef = this._ref.signature[key.split(&quot;.&quot;).pop()] ||
+                this._ref.signature[&apos;*&apos;] ||
+                this._ref.signature;
+            try {
+                var _s = new Schema(_schemaDef, opts, _md);
+            } catch (e) {
+                return e;
+            }
+            return _s;
+        }
+        else {
+            _kinds = this.getKinds(this._ref.signature[key] || this._ref.signature);
+            if (Array.isArray(_kinds)) {
+                _kinds = _kinds.map((val) =&gt; this.ensureKindIsString(val));
+                _kinds = _kinds.filter(itm =&gt; itm !== false);
+                _kinds = _kinds.length ? _kinds : &apos;*&apos;;
+                return new Set(_kinds, metaData);
+            }
+        }
+        return &quot;unable to process value&quot;;
+    }
+
+    /**
+     * builds validations from SCHEMA ENTRIES
+     * @private
+     */
+    walkSchema(obj, path) {
+        let result = [];
+        let _map = function (itm, objPath) {
+            return _walkSchema(itm, objPath);
+        };
+        let _elements = Array.isArray(obj) ? obj : Object.keys(obj);
+        for (let _i in _elements) {
+            let _k = _elements[_i];
+            let itm;
+            let objPath = _exists(path) ? (path.length ? `${path}.${_k}` : _k) : _k || &quot;&quot;;
+            this._ref.jsd.validatorBuilder.create(obj[_k], objPath, this._ref);
+            // tests for nested elements
+            if (_exists(obj[_k]) &amp;&amp; typeof obj[_k].elements === &quot;object&quot;) {
+
+                if (!Array.isArray(obj[_k].elements)) {
+                    result.push(this.walkSchema(obj[_k].elements, objPath));
+                }
+                else {
+                    result.push(_map(obj[_k].elements, objPath));
+                }
+            }
+        }
+        return result;
+    }
+
+    /**
+     * @private
+     */
+    objHelper(_schema, opts) {
+        var _kinds = this.getKinds(_schema);
+        if (Array.isArray(_kinds)) {
+            _kinds = _kinds.map(function (itm) {
+                switch (typeof itm) {
+                    case &quot;string&quot;:
+                        return itm;
+                        break;
+                    case &quot;object&quot;:
+                        if (itm.hasOwnProperty(&apos;type&apos;)) {
+                            return itm.type;
+                        }
+                        break;
+                }
+                return null;
+            });
+            _kinds = _kinds.filter(itm =&gt; _exists(itm));
+            _kinds = _kinds.length ? _kinds : &apos;*&apos;;
+            return new Set(_kinds || &apos;*&apos;, this._ref.metadata);
+        }
+        return null;
+    }
+
+    /**
+     *
+     * @param key
+     * @param value
+     * @returns {*}
+     */
+    validate(key, value) {
+        let _list = this._ref.jsd.validatorBuilder.list();
+        let _ref;
+        //-- attempts to validate
+        if (!key.length) {
+            return `invalid path &apos;${key}&apos;`;
+        }
+        let msg;
+        if (0 &lt;= _list.indexOf(key)) {
+            let _path = [];
+            let iterable = key.split(&apos;.&apos;);
+            var _p;
+            for (let _k of iterable) {
+                _path.push(_k);
+                _p = _path.join(&apos;.&apos;);
+            }
+            if (!(_ref = this._ref.jsd.validatorBuilder.get(_p))) {
+                if (!this.options.extensible) {
+                    return `&apos;${key}&apos; is not a valid schema property`;
+                }
+            }
+            this._ref.jsd.validatorBuilder.set(key, _ref);
+        }
+        if (typeof (msg = this._ref.jsd.validatorBuilder.exec(key, value)) === &apos;string&apos;) {
+            return msg;
+        }
+        return true;
+    }
+
+    /**
+     * @returns {array} list of types decalred by object
+     */
+    getKinds(_s) {
+        var _elems = Object.keys(_s).map(key =&gt; {
+            return (key === &quot;type&quot;) ? _s.type : _exists(_s[key].type) ? _s[key].type : null;
+        });
+        _elems = _elems.filter(elem =&gt; elem !== null);
+        return _elems.length ? _elems : null;
+    }
+}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.0.4)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

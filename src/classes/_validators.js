@@ -1,4 +1,7 @@
 import {_exists, wf, _validPaths} from './_references';
+/**
+ * Holder for Validator Class References
+ */
 export const Validator = {};
 /**
  * @private

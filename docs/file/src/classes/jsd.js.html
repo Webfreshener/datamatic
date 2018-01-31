@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">src/classes/jsd.js | jsd</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="Schema Generation and Data Validation with object virtualization"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="jsd"><meta property="twitter:description" content="Schema Generation and Data Validation with object virtualization"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/Webfreshener/JSD.git"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#classes">classes</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_metaData.js~MetaData.html">MetaData</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_observerBuilder.js~ObserverBuilder.html">ObserverBuilder</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_schemaHelpers.js~SchemaHelpers.html">SchemaHelpers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_schemaValidator.js~SchemaValidator.html">SchemaValidator</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_validatorBuilder.js~ValidatorBuilder.html">ValidatorBuilder</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_validators.js~BaseValidator.html">BaseValidator</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/jsd.js~JSD.html">JSD</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/schema.js~Schema.html">Schema</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/set.js~Set.html">Set</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_kinds">_kinds</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_object">_object</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_observers">_observers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_required_elements">_required_elements</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaHelpers">_schemaHelpers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaOptions">_schemaOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaSignatures">_schemaSignatures</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_singletons">_singletons</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validPaths">_validPaths</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validators">_validators</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vectorTypes">_vectorTypes</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-wf">wf</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-Validator">Validator</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/classes/jsd.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/**
+ * Strict JS Objects and Collections created from JSON Schema Definitions
+ * @class JSD
+ * @example const _jsd = new JSD();
+ * _jsd.document = {name: &apos;test&apos;};
+ * console.log(`${jsd.document.name}`);
+ * // -&gt; &apos;test&apos;
+ * console.log(`${jsd.document.get(&apos;.&apos;}`);
+ * // -&gt; Schema
+ */
+import {wf, _kinds, _validPaths} from &apos;./_references&apos;;
+import {ObserverBuilder} from &apos;./_observerBuilder&apos;;
+import {ValidatorBuilder} from &apos;./_validatorBuilder&apos;;
+import {Schema} from &apos;./schema&apos;;
+
+const _documents = new WeakMap();
+const _vBuilders = new WeakMap();
+const _oBuilders = new WeakMap();
+const _validations = new WeakMap();
+export class JSD {
+    /**
+     * @constructor
+     * @param schema
+     * @param options
+     */
+    constructor(schema = JSD.defaults, options = {extensible: false}) {
+        _kinds.set(this, {
+            &quot;Array&quot;: Array,
+            &quot;ArrayBuffer&quot;: ArrayBuffer,
+            &quot;Boolean&quot;: Boolean,
+            &quot;Buffer&quot;: ArrayBuffer,
+            &quot;Date&quot;: Date,
+            &quot;Number&quot;: Number,
+            &quot;Object&quot;: Object,
+            &quot;String&quot;: String,
+            &quot;Function&quot;: Function,
+        });
+        const _ref = this;
+        _validPaths.set(this, {});
+        _oBuilders.set(this, new ObserverBuilder());
+        _vBuilders.set(this, new ValidatorBuilder());
+        _documents.set(this, new Schema(schema, options || null, this));
+    }
+
+    /**
+     * @param key {String}
+     */
+    get(key) {
+        return _documents.get(this).get(key);
+    }
+
+    /**
+     *
+     * @returns {Schema}
+     */
+    get document() {
+        return _documents.get(this);
+    }
+
+    get isValid() {
+        const v = this._validPaths.get(this);
+        for (path of v) {
+            if (!path) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     *
+     * @returns {ValidatorBuilder}
+     */
+    get validatorBuilder() {
+        return _vBuilders.get(this);
+    }
+
+    get observerBuilder() {
+        return _oBuilders.get(this);
+    }
+
+    /**
+     *
+     * @param value {Schema}
+     */
+    set document(value) {
+        this.document = value;
+    }
+
+    /**
+     * @param {string|function} classesOrNames
+     * @returns {function}
+     */
+    getClass(classesOrNames) {
+        let _k = _kinds.get(this);
+        if (!Array.isArray(classesOrNames)) {
+            classesOrNames = [classesOrNames];
+        }
+        // traverses arguements
+        for (let arg of classesOrNames) {
+            if (typeof arg === &quot;string&quot;) {
+                if (arg === &apos;*&apos;) {
+                    // handles special * type
+                    return &apos;*&apos;;
+                }
+                return (0 &lt;= Object.keys(_k).indexOf(arg)) ? arg.toLowerCase() : null;
+            }
+            // operates on object
+            if (typeof arg === &quot;object&quot;) {
+                //- operates on arrays
+                if (Array.isArray(arg)) {
+                    //- holds the results set
+                    let _r = [];
+                    // traverses array elements
+                    for (let n of arg) {
+                        //- tests elements
+                        switch (typeof n) {
+                            //- operates on string
+                            case &quot;string&quot;:
+                                // sets reference onto results
+                                _r.push(this.getClass(n));
+                                break;
+                            //-- operates on functions/classes
+                            case &quot;function&quot;:
+                                //- sets function/class on results
+                                _r.push(n);
+                                break;
+                            default:
+                                //- handles nested arrays
+                                _r.push(Array.isArray(n) ? this.getClass.apply(this, n) : null);
+                        }
+                    } //- end for/switch
+                    return (0 &lt;= _r.indexOf(null)) ? {_r: null} : undefined;
+                } //- ends array handling
+                return null;
+            } //- end typrof arg is object
+            if (typeof arg === &quot;function&quot;) {
+                let _ = wf.Fun.getConstructorName(arg);
+                return this.getClass(_);
+            }
+        } //- end args in classesOrNames
+        return null;
+    }
+
+    /**
+     * @param {string} name
+     * @param {function} clazz
+     */
+    registerClass(name, clazz) {
+        this[name] = clazz;
+        return _kinds.get(this)[name] = clazz;
+    }
+
+    /**
+     * @param {string} name
+     */
+    unregisterClass(name) {
+        if (_kinds.hasOwnProperty(name)) {
+            return delete _kinds.get(this)[name];
+        }
+        return false
+    }
+
+    /**
+     * @return list of registered Class Names
+     */
+    listClasses() {
+        return Object.keys(_kinds.get(this));
+    }
+
+    /**
+     * creates new Schema from JSON data
+     * @param {string|object} json
+     * @returns Schema
+     */
+    fromJSON(json) {
+        let _;
+        if (_ = (typeof json).match(/^(string|object)+$/)) {
+            return new JSD((_[1] === &quot;string&quot;) ? JSON.parse(json) : json);
+        }
+        throw new Error(&quot;json must be either JSON formatted string or object&quot;);
+    }
+
+    /**
+     * @returns {object} base schema element signature
+     */
+    get schemaRef() {
+        let _keys = [].concat(Object.keys(_kinds.get(this)));
+        return {
+            type: {
+                type: _keys,
+                required: true
+            },
+            required: &quot;Boolean&quot;,
+            extensible: &quot;Boolean&quot;,
+            restrict: &quot;String&quot;,
+            default: &quot;*&quot;,
+            elements: [&quot;Object&quot;, &quot;Array&quot;],
+            polymorphic: {
+                type: [&quot;Object&quot;, &quot;Array&quot;],
+                required: false,
+                elements: {
+                    type: {
+                        type: this.listClasses(),
+                        required: true
+                    },
+                    extensible: &quot;Boolean&quot;,
+                    restrict: &quot;String&quot;,
+                    validate: &quot;Function&quot;,
+                    default: &quot;*&quot;,
+                    elements: [&quot;Object&quot;, &quot;Array&quot;]
+                }
+            }
+        };
+    }
+
+    /**
+     * @getter
+     * @returns {object} base schema element settings
+     * @example let schema = Object.assign({}, {extensible: true}, JSD.defaults);
+     * console.log( JSON.stringify( schema ) );
+     * // -&gt; `{ &quot;myElement&quot;: { &quot;type&quot;: &quot;*&quot;, &quot;required&quot;: false, &quot;extensible&quot;: true } }`
+     *
+     */
+    static get defaults() {
+        return {
+            type: &quot;Object&quot;,
+            required: false,
+            extensible: true,
+            elements: {
+                &quot;*&quot;: {
+                    type: &quot;*&quot;,
+                    required: false,
+                    extensible: true
+                }
+            }
+        };
+    }
+}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.0.4)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">src/classes/set.js | jsd</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="Schema Generation and Data Validation with object virtualization"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="jsd"><meta property="twitter:description" content="Schema Generation and Data Validation with object virtualization"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/Webfreshener/JSD.git"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#classes">classes</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_metaData.js~MetaData.html">MetaData</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_observerBuilder.js~ObserverBuilder.html">ObserverBuilder</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_schemaHelpers.js~SchemaHelpers.html">SchemaHelpers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_schemaValidator.js~SchemaValidator.html">SchemaValidator</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_validatorBuilder.js~ValidatorBuilder.html">ValidatorBuilder</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_validators.js~BaseValidator.html">BaseValidator</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/jsd.js~JSD.html">JSD</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/schema.js~Schema.html">Schema</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/set.js~Set.html">Set</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_kinds">_kinds</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_object">_object</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_observers">_observers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_required_elements">_required_elements</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaHelpers">_schemaHelpers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaOptions">_schemaOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaSignatures">_schemaSignatures</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_singletons">_singletons</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validPaths">_validPaths</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validators">_validators</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vectorTypes">_vectorTypes</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-wf">wf</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-Validator">Validator</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/classes/set.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {_mdRef, _object, _vectorTypes, _exists, wf} from &apos;./_references&apos;;
+import {MetaData} from &apos;./_metaData&apos;;
+import {ValidatorBuilder} from &apos;./_validatorBuilder&apos;;
+import {Schema} from &apos;./schema&apos;;
+import {JSD} from &apos;./jsd&apos;
+/**
+ * @class Set
+ */
+export class Set {
+    /**
+     * @constructor
+     * @param {any} _type
+     * @param {any} items
+     */
+    constructor(_type) {
+        // tests for metadata
+        let _;
+        if (arguments[1] instanceof JSD) {
+            _ = new MetaData(this, {
+                _path: &quot;&quot;,
+                _root: this,
+                _jsd: arguments[1],
+            });
+        }
+        else if (arguments[1] instanceof MetaData) {
+            _ = arguments[1];
+        } else {
+            throw `Invalid constructor call for Set: ${JSON.stringify(arguments)}`;
+        }
+        _mdRef.set(this, _);
+
+        // tests for types
+        let _types;
+
+        if (!_exists(_type)) {
+            _type = [&apos;*&apos;];
+        } else {
+            if (!Array.isArray(_type)) {
+                _type = [_type];
+            }
+        }
+
+        _types = _type.map((type) =&gt; {
+            let _t = typeof type;
+
+            if (_t === &quot;string&quot;) {
+                if (type === &quot;*&quot;) {
+                    return type;
+                }
+
+                if (0 &lt;= this.jsd.listClasses().indexOf(type)) {
+                    _type = type;
+                } else {
+                    throw `could not determine type &lt;${type}&gt;`;
+                }
+            }
+
+            else if ((!_exists(_t)) || _t === &quot;Function&quot;) {
+                type = &quot;*&quot;;
+            } else {
+                throw `could not determine type &lt;${type}&gt;`;
+            }
+
+            return type;
+        });
+
+        // when we no longer need babel...
+        // type = _type;
+        // for now we use Weakmap
+        _vectorTypes.set(this, _types);
+        _object.set(this, new Proxy([], this.handler));
+    }
+
+    /**
+     * getter for object model
+     */
+    get model() {
+        return _object.get(this);
+    }
+
+    /**
+     * setter for object model
+     * @param value
+     */
+    set model(value) {
+        if (Array.isArray(value)) {
+            let _m = _object.get(this);
+            _m = value;
+            return true;
+        }
+        else {
+            this.jsd.observerBuilder.error(this.path, `${this.path} requires Array`);
+        }
+    }
+
+    get handler() {
+        return {
+            get: (t, idx) =&gt; {
+                if (typeof idx === &apos;symbol&apos;) {
+                    idx = `${String(idx)}`;
+                }
+
+                if (idx === &apos;length&apos;) {
+                    return t.length;
+                }
+
+                if (idx in Array.prototype) {
+                    return t[idx];
+                }
+                if (parseInt(idx) !== NaN) {
+                    if (t[idx] instanceof Schema ||
+                        t[idx] instanceof Set) {
+                        return t[idx].model;
+                    }
+                    return t[idx];
+                }
+
+                return null;
+            },
+            set: (t, idx, value) =&gt; {
+                if (!this._typeCheck(value)) {
+                    var eMsg = `item at index ${idx} had wrong type`;
+                    this.jsd.observerBuilder.error(this.path, eMsg);
+                    return false;
+                }
+                t[idx] = value;
+                this.jsd.observerBuilder.next(this.path, t);
+                return true;
+            },
+            deleteProperty: (t, idx) =&gt; {
+                if (idx &gt;= t.length) {
+                    const e = `index ${idx} is out of bounds on ${this.path}`;
+                    this.jsd.observerBuilder.error(this.path, e);
+                    return false;
+                }
+                t.splice(idx, 1);
+                this.jsd.observerBuilder.next(this.path, t);
+                return true;
+            }
+        };
+    }
+
+
+    /**
+     * tests item to see if it conforms to expected item type
+     * @param item
+     * @returns {boolean}
+     * @private
+     */
+    _typeCheck(item) {
+        for (let _t of this.type) {
+            if ((typeof _t === &quot;string&quot;) &amp;&amp; _t.match(/^(\*|ALL)$/)) {
+                return true;
+            }
+
+            if (!(_t = this.jsd.getClass(_t))) {
+                return false;
+            }
+            if (typeof _t === &quot;string&quot;) {
+                return typeof item === _t;
+            } else if (!wf.Obj.isOfType(item, _t)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    /**
+     * validates items in Set list
+     * @returns {boolean}
+     */
+    validate() {
+        let _path = this.path;
+        let _validator = ValidatorBuilder.getInstance();
+        this.model.forEach(itm =&gt; {
+            let e;
+            if (typeof (e = _validator.exec(_path, itm)) === &apos;string&apos;) {
+                return e;
+            }
+        });
+        return true;
+    }
+
+    /**
+     *
+     * @returns {boolean}
+     */
+    get isValid() {
+        return this.validate() === true;
+    }
+
+    /**
+     * @param {number} idx
+     * @returns {any} element at index if found
+     */
+    getItemAt(idx) {
+        return this.model[idx];
+    }
+
+    /**
+     * @param {number} idx
+     * @param {any} item
+     * @returns {Set} reference to self
+     */
+    setItemAt(idx, item) {
+        this.model[idx] = item;
+        return this;
+    }
+
+    /**
+     * @param {number} idx
+     * @param {any} item
+     * @returns {any} item removed
+     */
+    removeItemAt(idx) {
+        delete this.model[idx];
+        return this;
+    }
+
+    /**
+     * @param {Array} array
+     * @returns {Set} reference to self
+     */
+    replaceAll(array) {
+        this.reset();
+        for (let itm in array) {
+            this.addItem(array[itm]);
+        }
+        return this;
+    }
+
+    /**
+     * @param {number} idx
+     * @param {any} item
+     * @returns {Set} reference to self
+     */
+    replaceItemAt(idx, item) {
+        if (!this._typeCheck(item)) {
+            return false;
+        }
+        if (idx &gt; this.model.length) {
+            return false;
+        }
+        if (idx &lt;= this.model.length) {
+            this.model[idx] = item;
+        }
+        return this;
+    }
+
+    /**
+     * @param {any} item
+     * @returns {Set} reference to self
+     */
+    addItem(item) {
+        this.setItemAt(this.model.length, item);
+        return this;
+    }
+
+    /**
+     * @returns {any} item removed from start of list
+     */
+    shift() {
+        return Reflect.apply(Array.prototype.shift, this.model, []);
+    };
+
+    /**
+     * @param {any} items to be added
+     * @returns {Set} reference to self
+     */
+    unshift(...items) {
+        Reflect.apply(Array.prototype.unshift, this.model, arguments);
+        return this;
+    }
+
+    /**
+     * @returns {any} items removed from end of list
+     */
+    pop() {
+        const v = this.model[this.model.length - 1];
+        delete this.model[this.model.length - 1];
+        return v
+    }
+
+    /**
+     * @param {any} items to be added at end of list
+     * @returns {Set} reference to self
+     */
+    push(...items) {
+        items.forEach(item =&gt; {
+            return this.addItem(item);
+        });
+        return this;
+    }
+
+    /**
+     * resets list to empty array
+     * @returns reference to self
+     */
+    reset() {
+        _object.set(this, new Proxy([], this.handler));
+        return this;
+    }
+
+    /**
+     * @param {function} func - sorrting function
+     * @returns {Set} reference to self
+     */
+    sort(func) {
+        this.model.sort(func);
+        return this;
+    }
+
+    /**
+     * @returns primitive value of list
+     */
+    valueOf() {
+        return this.model;
+    }
+
+    /**
+     * @returns stringified representation of list
+     */
+    toString(pretty = false) {
+        return JSON.stringify(this.toJSON(), null, (pretty ? 2 : void(0)));
+    }
+
+    /**
+     * returns JSONified representation of list
+     */
+    toJSON() {
+        let _derive = (itm) =&gt; {
+            if (itm instanceof Schema) {
+                return itm.toJSON();
+            }
+            if (itm instanceof Set) {
+                return itm.toJSON();
+            }
+            if (typeof itm === &apos;object&apos;) {
+                const _o = !Array.isArray(itm) ? {} : [];
+                for (let k in itm) {
+                    _o[k] = _derive(itm[k]);
+                }
+                return _o;
+            }
+            return itm;
+        };
+        return _derive(this.valueOf());
+    }
+
+
+    /**
+     * getter for Set type
+     * @returns
+     */
+    get type() {
+        // for when we no longer need babel
+        // return type;
+        return _vectorTypes.get(this);
+    }
+
+    /**
+     * @returns Unique ObjectID
+     */
+    get objectID() {
+        return _mdRef.get(this).get(&apos;_id&apos;);
+    }
+
+    /**
+     *
+     */
+    get root() {
+        return _mdRef.get(this).get(&apos;_root&apos;);
+    }
+
+    /**
+     *
+     */
+    get path() {
+        return _mdRef.get(this).path;
+    }
+
+    /**
+     *
+     */
+    get parent() {
+        let _root;
+        if (!(((_root = this.root()) !== null) instanceof Schema)
+            &amp;&amp; !(_root instanceof Set)) {
+            return null;
+        }
+        return _root.get(this.path().split(&apos;.&apos;).pop().join(&apos;.&apos;));
+    }
+
+    get jsd() {
+        return _mdRef.get(this).jsd;
+    }
+
+    /**
+     * @returns {number} number of elements in list
+     */
+    get length() {
+        return this.model.length;
+    }
+
+    /**
+     * subscribes handler method to property observer for path
+     * @param path
+     * @param func
+     */
+    subscribe(func) {
+        if ((typeof func).match(/^(function|object)$/) === null) {
+            throw new Error(&apos;subscribe requires function&apos;);
+        }
+        let _o = this.jsd.observerBuilder.get(this.path);
+        if (!_o || _o === null) {
+            this.jsd.observerBuilder.create(this.path, this);
+            _o = this.jsd.observerBuilder.get(this.path);
+        }
+        _o.subscribe(func);
+        return this;
+    }
+
+    /**
+     * subscribes handler method to property observer for path
+     * @param path
+     * @param func
+     */
+    subscribeTo(path, func) {
+        if ((typeof func).match(/^(function|object)$/) === null) {
+            throw new Error(&apos;subscribeTo requires function&apos;);
+        }
+        let _o = this.jsd.observerBuilder.get(path);
+        if (!_o || _o === null) {
+            this.jsd.observerBuilder.create(path, this);
+            _o = this.jsd.observerBuilder.get(path);
+        }
+
+        _o.subscribe(func);
+        return this;
+    }
+}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.0.4)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
