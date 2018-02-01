@@ -86,27 +86,121 @@ _jsd.document.model = {
 Attribute Name | Data Type
 ---------------|-----------
 required | Boolean
+default | Array 
+
+```
+// defines an Array of Strings
+{
+    type: "Array",
+    "required": false,
+    "elements": {
+        "type": "String",
+        "required": false
+    }
+}
+
+// defines an Array of Strings and Numbers
+{
+    type: "Array",
+    "required": false,
+    "elements": [
+        {
+        "type": "String",
+        "required": false
+       },
+       {
+        "type": "String",
+        "required": false
+        }
+     ]
+}
+```
 
 #### Boolean Type
 Attribute Name | Data Type
 ---------------|-----------
 required | Boolean
-
+default | Boolean 
+```
+// defines an Boolean Element 
+{
+    "myElement": {
+        "type": "Boolean",
+        "required": false,
+        "default": true
+    }
+}
+```
 #### Number Type
 Attribute Name | Data Type
 ---------------|-----------
 required | Boolean
+default | Number 
+
+```
+// defines an Number Element 
+{
+    "myElement": {
+        "type": "Number",
+        "required": false,
+        "default": 0 
+    }
+}
+```
 
 #### Object Type 
 Attribute Name | Data Type
 ---------------|-----------
 required | Boolean
-extendable | Boolean
+extensible | Boolean
 elements | Object
 polymorphic | Array
+default | Object 
+
+```
+// defines an Object Element 
+{
+    "myElement": {
+        "type": "Object",
+        "required": false,
+        "default": {
+         },
+         elements: {
+            "name": {
+                "type": "String"
+                "required": true
+            },
+            "active": {
+                "type": "Boolean"
+                "required": false,
+                "default": true
+            }
+         }
+    }
+}
+```
 
 #### String Type 
 Attribute Name | Data Type
 ---------------|-----------
 required | Boolean
 restrict | RegExp
+default | String
+
+``` 
+// defines a String Element 
+{
+    "myElement": {
+        "type": "String"
+        "required": true
+    }
+}
+```
+
+### Advanced Usage 
+
+#### Wildcards
+
+#### Polymorphism
+
+#### Regular Expressions
