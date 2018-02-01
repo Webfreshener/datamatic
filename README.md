@@ -334,8 +334,8 @@ _jsd.document.model = {
         score: 1100000
         },
     3: {
-      name: "Munga-Munga",
-      score: 900000
+        name: "Munga-Munga",
+        score: 900000
     }
 };
 ```
@@ -420,7 +420,7 @@ _jsd.document.model = {
             playerKills: 1100000,
             matchIds: [1234, 1235, 1236]
         },
-        "dataField1": {
+        "dataField2": {
             location: "I'm from the Internet",
             bio: "I like cupcakes" 
         }
