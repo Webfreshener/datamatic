@@ -1,7 +1,7 @@
 /**
  * @private Weakmap Refs
  */
-import * as wfUtils from 'wf-utils';
+import wfUtils from 'wf-utils';
 export const _exists = wfUtils.exists;
 export const wf = wfUtils;
 /**
