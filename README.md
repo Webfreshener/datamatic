@@ -1,10 +1,10 @@
 JSD
 =============
+**JSON Schema Definition**<br/>
+Schema Based Self-Validating and Observable Data Models
+
 [![Build Status](https://travis-ci.org/Webfreshener/JSD.svg?branch=master)](https://travis-ci.org/Webfreshener/JSD)
 [![Dev Dependency Status](https://david-dm.org/webfreshener/jsd/dev-status.svg)](https://david-dm.org/webfreshener/jsd?type=dev)
-
-**Schema Based Self-Validating and Observable Data Models**
- 
 
 [Online Developer Documentation](https://webfreshener.github.io/JSD/)
 
@@ -20,8 +20,14 @@ JSD
 
 **[Basic Usage](#basic-usage)**
 
+**[JSD Specification](#jsd-specification)**
 
-
+   * [Array Type](#array-type)
+   * [Boolean Type](#boolean-type)
+   * [Number Type](#number-type)
+   * [Object Type](#object-type)
+   * [String Type](#string-type)
+   
 
 #### Installation Instructions ####
 There are no dependencies or prerequesites besides NPM and NodeJS
@@ -71,3 +77,36 @@ _jsd.document.model = {
     "age": 23
 };
 ```
+
+
+### JSD Specification ###
+
+
+#### Array Type 
+Attribute Name | Data Type
+---------------|-----------
+required | Boolean
+
+#### Boolean Type
+Attribute Name | Data Type
+---------------|-----------
+required | Boolean
+
+#### Number Type
+Attribute Name | Data Type
+---------------|-----------
+required | Boolean
+
+#### Object Type 
+Attribute Name | Data Type
+---------------|-----------
+required | Boolean
+extendable | Boolean
+elements | Object
+polymorphic | Array
+
+#### String Type 
+Attribute Name | Data Type
+---------------|-----------
+required | Boolean
+restrict | RegExp
