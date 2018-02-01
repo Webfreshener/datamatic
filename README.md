@@ -28,6 +28,14 @@ Schema Based Self-Validating and Observable Data Models
    * [Object Type](#object-type)
    * [String Type](#string-type)
    
+**[Advanced Usage](#advanced-usage)**
+
+   * [Wildcard Keys](#wildcard-keys)
+   * [Wildcard Types](#wildcard-types)
+   * [Polymorphism](#polymorphism)
+   * [Regular Expressions](#regular-expressions)
+    
+        * [JSON File Example with Special Escaping](#json-file-example-with-special-escaping)
 
 #### Installation Instructions ####
 There are no dependencies or prerequesites besides NPM and NodeJS
@@ -86,8 +94,10 @@ _jsd.document.model = {
 Attribute Name | Data Type
 ---------------|-----------
 required | Boolean
+elements | Object
 default | Array 
 
+###### Schema Example
 ```
 // defines an Array of Strings
 {
@@ -114,6 +124,53 @@ default | Array
         }
      ]
 }
+```
+###### Usage Example
+```
+const _schema = {
+    values: {
+        type: "Array",
+        elements: [{
+            type: "Object",
+            elements: {
+                name: {
+                    type: "String",
+                    required: true,
+                    restrict: "^[a-zA-Z0\\-\\s]{1,24}$"
+                },
+                score: {
+                    type: "Number",
+                    required: true
+                },
+            }
+        }]
+    }
+};
+
+let _handler = {
+    next: (val)=> {
+        console.log(val);
+        _jsd.unsubscribe();
+    },
+    error: (e)=> {
+        console.log(e);
+    }
+};
+
+const _jsd = new JSD(_schema);
+_jsd.subscribe(_handler);
+_jsd.document.model = {
+    values: [{
+        name: "Player 1",
+        score: 2000000
+    },{
+        name: "Player 2",
+        score: 1100000
+    },{
+      name: "Player 3",
+      score: 900000
+    }]
+};
 ```
 
 #### Boolean Type
@@ -199,8 +256,294 @@ default | String
 
 ### Advanced Usage 
 
-#### Wildcards
+#### Wildcard Keys
+Wildcards keys allow for cases where you might not know or care about the actual key values.
+This is useful in cases where you might have severage elements of the ame data type and 
+format that you wish to describe in a single instance
+
+###### Schema Example
+```
+// declares any amount of Alphanumeric String values
+{
+    "*": {
+        "type": "String",
+        "restrict": "^[a-zA-Z0-9\-]{1,10}$"
+    }
+}
+
+// declares any amount of extensible Object values with name and age attributes 
+{
+    "*": {
+        type: "Object",
+        "extensible": true
+        "elements": {
+            "name": {
+                "type": "String",
+                "required": true,
+                "restrict": "^[a-zA-Z0-9\-]{1,10}$"
+            },
+            {
+            "age": {
+                "type": "Number",
+                "required":true 
+            }
+        },
+    }
+}
+```
+###### Usage Example
+```
+const _schema = {
+                    "*": {
+                        type: "Object",
+                        "extensible": true
+                        "elements": {
+                            "name": {
+                                "type": "String",
+                                "required": true,
+                                "restrict": "^[a-zA-Z0-9_\s\-]{9,}$"
+                            },
+                            {
+                            "score": {
+                                "type": "Number",
+                                "required":true 
+                            }
+                        },
+                    }
+                };
+
+let _handler = {
+    next: (val)=> {
+        console.log(val);
+        _jsd.unsubscribe();
+    },
+    error: (e)=> {
+        console.log(e);
+    }
+};
+
+const _jsd = new JSD(_schema);
+_jsd.subscribe(_handler);
+_jsd.document.model = {
+    1: {
+        name: "Big Daddy",
+        score: 2000000
+       },
+    2: {
+        name: "HeavyMetalPrincess",
+        score: 1100000
+        },
+    3: {
+      name: "Munga-Munga",
+      score: 900000
+    }
+};
+```
+#### Wildcard Types 
+In some cases, you might know the key of an attribute, 
+but the type might not be determined. In these cases,
+where you want to restrict an object to known keys but 
+allow for various value assignment, you can use 
+wildcard types
+
+###### Schema Example
+```
+// declares element myKey which can be any type, but must be present 
+{
+    "myKey": {
+        "type": "*",
+        "required": true
+    }
+}
+
+// declares an Object that allows for special user data 
+{
+    "id": {
+        "type": "Number",
+        "required": true,
+    },
+    "name": {
+        "type": "String",
+        "required": true,
+        "restrict": "^[a-zA-Z0-9\-]{1,10}$"
+    },
+    {
+    "dataField1": {
+        "type": "*",
+        "required": false 
+    },
+    "dataField2": {
+        "type": "*",
+        "required": false 
+    }
+}
+```
+###### Usage Example
+```
+const _schema = {
+                    "id": {
+                        "type": "Number",
+                        "required": true,
+                    },
+                    "name": {
+                        "type": "String",
+                        "required": true,
+                        "restrict": "^[a-zA-Z0-9\-]{1,10}$"
+                    },
+                    {
+                    "dataField1": {
+                        "type": "*",
+                        "required": false 
+                    },
+                    "dataField2": {
+                        "type": "*",
+                        "required": false 
+                    }
+                };
+
+let _handler = {
+    next: (val)=> {
+        console.log(val);
+        _jsd.unsubscribe();
+    },
+    error: (e)=> {
+        console.log(e);
+    }
+};
+
+const _jsd = new JSD(_schema);
+_jsd.subscribe(_handler);
+_jsd.document.model = {
+        "id": 100000234, 
+        "name": "HeavyMetalPrincess",
+        "dataField1": {
+            playerKills: 1100000,
+            matchIds: [1234, 1235, 1236]
+        },
+        "dataField1": {
+            location: "I'm from the Internet",
+            bio: "I like cupcakes" 
+        }
+    }
+};
+```
 
 #### Polymorphism
+In cases where you want to keep the data model tightly defined but must allow for certain values to conform to more 
+than one data type, you can use polymorhism
+
+###### Schema Example
+```
+// declares element `polyValue` which can be a String or an Object
+{
+   "polyValue": {
+     "required": true,
+     "polymorphic": [
+       {
+         "type": "String",
+         "restrict": "^[a-zA-Z-0-9_]+$"
+       },
+       {
+         "type": "Object",
+         "elements": {
+           "name": {
+             "type": "String",
+             "required": true,
+             "restrict": "^[a-zA-Z-0-9_]{1,24}+$"
+           },
+           "details": {
+             "type": "String",
+             "required": false,
+             "restrict": "^[a-zA-Z-0-9_]{0,256}+$"
+           }, 
+         }
+       }
+     ]
+   } 
+}
+```
+###### Usage Example
+```
+const _schema = {
+                   "polyValue": {
+                     "required": true,
+                     "polymorphic": [
+                       {
+                         "type": "String",
+                         "restrict": "^[a-zA-Z-0-9_]+$"
+                       },
+                       {
+                         "type": "Object",
+                         "elements": {
+                           "name": {
+                             "type": "String",
+                             "required": true,
+                             "restrict": "^[a-zA-Z-0-9_]{1,24}+$"
+                           },
+                           "details": {
+                             "type": "String",
+                             "required": false,
+                             "restrict": "^[a-zA-Z-0-9_]{0,256}+$"
+                           }, 
+                         }
+                       }
+                     ]
+                   } 
+                };
+
+let _handler = {
+    next: (val)=> {
+        console.log(val);
+    },
+    error: (e)=> {
+        console.log(e);
+    }
+};
+
+const _jsd = new JSD(_schema);
+_jsd.subscribe(_handler);
+
+// can be a string value
+_jsd.document.model = {
+        "polyValue" : "HeavyMetalPrincess",
+    }
+};
+
+// can also be object value
+_jsd.document.model = {
+        "polyValue" : {
+            "name": "HeavyMetalPrincess",
+            "details": "I like cupcakes" 
+        }
+    }
+};
+```
 
 #### Regular Expressions
+JSD allows the use of Regular Expressions to restrict String input
+There are caveats to it's use due to the nature of RegExp syntax vs  JSON
+character encoding limitations
+
+###### JS and TS file Example
+```
+// in code declaring a RegExp in JS or TS is no big deal 
+const schema = {
+   stringValue: {
+     required: true,
+     type: "String",
+     restrict: "^[a-zA-Z-0-9_\-\s]+$"
+   }
+};
+```
+
+
+###### JSON File Example with Special Escaping
+```
+{
+    "stringValue": {
+        "required": true,
+        "type": "String",
+        "restrict": "^[a-zA-Z-0-9_\\\\-\\\\s]+$"
+    }
+}
+```
