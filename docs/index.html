@@ -57,9 +57,549 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><h1 id="jsd">JSD</h1><p>Schema Generation and Data Validation with object virtualization</p>
-<p><a href="https://webfreshener.github.io/JSD/">Online Documentation</a></p>
-</div>
+<div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><h1 id="jsd">JSD</h1><p><strong>JSON Schema Definition</strong><br>
+Schema Based Self-Validating and Observable Data Models</p>
+<p><a href="https://travis-ci.org/Webfreshener/JSD"><img src="https://travis-ci.org/Webfreshener/JSD.svg?branch=master" alt="Build Status"></a>
+<a href="https://david-dm.org/webfreshener/jsd?type=dev"><img src="https://david-dm.org/webfreshener/jsd/dev-status.svg" alt="Dev Dependency Status"></a></p>
+<p><a href="https://webfreshener.github.io/JSD/">Online Developer Documentation</a></p>
+<h3 id="purpose">Purpose</h3><p> Most every developer has wished for a way to quickly and easily validate data from User Input or remote API calls and
+ and to be able to easily recieve update notifications without having to manually write code to facilitaate those 
+ objectives it is to that end that JSD was developed, an Observable, Schema Based Data Validation Utility written for Javascript, 
+ but which sets forth a Specification which may be implemented in any</p>
+<h3 id="table-of-contents">Table of Contents</h3><p><strong><a href="#installation-instructions">Installation Instructions</a></strong></p>
+<p><strong><a href="#basic-usage">Basic Usage</a></strong></p>
+<p><strong><a href="#jsd-specification">JSD Specification</a></strong></p>
+<ul>
+<li><a href="#array-type">Array Type</a></li>
+<li><a href="#boolean-type">Boolean Type</a></li>
+<li><a href="#number-type">Number Type</a></li>
+<li><a href="#object-type">Object Type</a></li>
+<li><a href="#string-type">String Type</a></li>
+</ul>
+<p><strong><a href="#advanced-usage">Advanced Usage</a></strong></p>
+<ul>
+<li><a href="#wildcard-keys">Wildcard Keys</a></li>
+<li><a href="#wildcard-types">Wildcard Types</a></li>
+<li><a href="#polymorphism">Polymorphism</a></li>
+<li><p><a href="#regular-expressions">Regular Expressions</a></p>
+<ul>
+<li><a href="#json-file-example-with-special-escaping">JSON File Example with Special Escaping</a></li>
+</ul>
+</li>
+</ul>
+<h4 id="installation-instructions">Installation Instructions</h4><p>There are no dependencies or prerequesites besides NPM and NodeJS</p>
+<pre><code><code class="source-code prettyprint">$ npm i --save @jsd/core</code>
+</code></pre><h4 id="basic-usage">Basic Usage</h4><h5 id="schema-basics">Schema Basics</h5><p>A schema is simply a JSON Document that 
+describes the attributes of a Data Model</p>
+<p>The example below defines an Schema that expects a <code>name</code> and an <code>age</code> attribute</p>
+<pre><code><code class="source-code prettyprint">let _schema = {
+    &quot;name&quot;: {
+        &quot;type&quot;: &quot;String&quot;,
+        &quot;required&quot;: true
+    },
+    &quot;age&quot; {
+        &quot;type&quot;: &quot;Number&quot;,
+        &quot;required&quot;: true
+    }
+};
+const _handlers = {
+    next: function(model) {
+        console.log(`${_jsd.document}`); // prints: {&quot;name&quot;: &quot;Frank&quot;, &quot;age&quot;: 23}
+    },
+    error: function(e) {
+        console.log(e);
+    }
+}
+const _jsd = new JSD(_schema);
+// set invalid data to the model to trigger error handler
+_jsd.document.model = {
+    &quot;name&quot;: &quot;Frank&quot;,
+    &quot;age&quot;: &quot;23&quot;
+};
+
+// set valid data to the model to trigger next handler 
+_jsd.document.model = {
+    &quot;name&quot;: &quot;Frank&quot;,
+    &quot;age&quot;: 23
+};</code>
+</code></pre><h3 id="jsd-specification">JSD Specification</h3><h4 id="array-type">Array Type</h4><table>
+<thead>
+<tr>
+<th>Attribute Name</th>
+<th>Data Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>required</td>
+<td>Boolean</td>
+</tr>
+<tr>
+<td>elements</td>
+<td>Object</td>
+</tr>
+<tr>
+<td>default</td>
+<td>Array </td>
+</tr>
+</tbody>
+</table>
+<h6 id="schema-example">Schema Example</h6><pre><code><code class="source-code prettyprint">// defines an Array of Strings
+{
+    type: &quot;Array&quot;,
+    &quot;required&quot;: false,
+    &quot;elements&quot;: {
+        &quot;type&quot;: &quot;String&quot;,
+        &quot;required&quot;: false
+    }
+}
+
+// defines an Array of Strings and Numbers
+{
+    type: &quot;Array&quot;,
+    &quot;required&quot;: false,
+    &quot;elements&quot;: [
+        {
+        &quot;type&quot;: &quot;String&quot;,
+        &quot;required&quot;: false
+       },
+       {
+        &quot;type&quot;: &quot;String&quot;,
+        &quot;required&quot;: false
+        }
+     ]
+}</code>
+</code></pre><h6 id="usage-example">Usage Example</h6><pre><code><code class="source-code prettyprint">const _schema = {
+    values: {
+        type: &quot;Array&quot;,
+        elements: [{
+            type: &quot;Object&quot;,
+            elements: {
+                name: {
+                    type: &quot;String&quot;,
+                    required: true,
+                    restrict: &quot;^[a-zA-Z0\\-\\s]{1,24}$&quot;
+                },
+                score: {
+                    type: &quot;Number&quot;,
+                    required: true
+                },
+            }
+        }]
+    }
+};
+
+let _handler = {
+    next: (val)=&gt; {
+        console.log(val);
+        _jsd.unsubscribe();
+    },
+    error: (e)=&gt; {
+        console.log(e);
+    }
+};
+
+const _jsd = new JSD(_schema);
+_jsd.subscribe(_handler);
+_jsd.document.model = {
+    values: [{
+        name: &quot;Player 1&quot;,
+        score: 2000000
+    },{
+        name: &quot;Player 2&quot;,
+        score: 1100000
+    },{
+      name: &quot;Player 3&quot;,
+      score: 900000
+    }]
+};</code>
+</code></pre><h4 id="boolean-type">Boolean Type</h4><table>
+<thead>
+<tr>
+<th>Attribute Name</th>
+<th>Data Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>required</td>
+<td>Boolean</td>
+</tr>
+<tr>
+<td>default</td>
+<td>Boolean </td>
+</tr>
+</tbody>
+</table>
+<pre><code><code class="source-code prettyprint">// defines an Boolean Element 
+{
+    &quot;myElement&quot;: {
+        &quot;type&quot;: &quot;Boolean&quot;,
+        &quot;required&quot;: false,
+        &quot;default&quot;: true
+    }
+}</code>
+</code></pre><h4 id="number-type">Number Type</h4><table>
+<thead>
+<tr>
+<th>Attribute Name</th>
+<th>Data Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>required</td>
+<td>Boolean</td>
+</tr>
+<tr>
+<td>default</td>
+<td>Number </td>
+</tr>
+</tbody>
+</table>
+<pre><code><code class="source-code prettyprint">// defines an Number Element 
+{
+    &quot;myElement&quot;: {
+        &quot;type&quot;: &quot;Number&quot;,
+        &quot;required&quot;: false,
+        &quot;default&quot;: 0 
+    }
+}</code>
+</code></pre><h4 id="object-type">Object Type</h4><table>
+<thead>
+<tr>
+<th>Attribute Name</th>
+<th>Data Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>required</td>
+<td>Boolean</td>
+</tr>
+<tr>
+<td>extensible</td>
+<td>Boolean</td>
+</tr>
+<tr>
+<td>elements</td>
+<td>Object</td>
+</tr>
+<tr>
+<td>polymorphic</td>
+<td>Array</td>
+</tr>
+<tr>
+<td>default</td>
+<td>Object </td>
+</tr>
+</tbody>
+</table>
+<pre><code><code class="source-code prettyprint">// defines an Object Element 
+{
+    &quot;myElement&quot;: {
+        &quot;type&quot;: &quot;Object&quot;,
+        &quot;required&quot;: false,
+        &quot;default&quot;: {
+         },
+         elements: {
+            &quot;name&quot;: {
+                &quot;type&quot;: &quot;String&quot;
+                &quot;required&quot;: true
+            },
+            &quot;active&quot;: {
+                &quot;type&quot;: &quot;Boolean&quot;
+                &quot;required&quot;: false,
+                &quot;default&quot;: true
+            }
+         }
+    }
+}</code>
+</code></pre><h4 id="string-type">String Type</h4><table>
+<thead>
+<tr>
+<th>Attribute Name</th>
+<th>Data Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>required</td>
+<td>Boolean</td>
+</tr>
+<tr>
+<td>restrict</td>
+<td>RegExp</td>
+</tr>
+<tr>
+<td>default</td>
+<td>String</td>
+</tr>
+</tbody>
+</table>
+<pre><code><code class="source-code prettyprint">// defines a String Element 
+{
+    &quot;myElement&quot;: {
+        &quot;type&quot;: &quot;String&quot;
+        &quot;required&quot;: true
+    }
+}</code>
+</code></pre><h3 id="advanced-usage">Advanced Usage</h3><h4 id="wildcard-keys">Wildcard Keys</h4><p>Wildcards keys allow for cases where you might not know or care about the actual key values.
+This is useful in cases where you might have severage elements of the ame data type and 
+format that you wish to describe in a single instance</p>
+<h6 id="schema-example">Schema Example</h6><pre><code><code class="source-code prettyprint">// declares any amount of Alphanumeric String values
+{
+    &quot;*&quot;: {
+        &quot;type&quot;: &quot;String&quot;,
+        &quot;restrict&quot;: &quot;^[a-zA-Z0-9\-]{1,10}$&quot;
+    }
+}
+
+// declares any amount of extensible Object values with name and age attributes 
+{
+    &quot;*&quot;: {
+        type: &quot;Object&quot;,
+        &quot;extensible&quot;: true
+        &quot;elements&quot;: {
+            &quot;name&quot;: {
+                &quot;type&quot;: &quot;String&quot;,
+                &quot;required&quot;: true,
+                &quot;restrict&quot;: &quot;^[a-zA-Z0-9\-]{1,10}$&quot;
+            },
+            {
+            &quot;age&quot;: {
+                &quot;type&quot;: &quot;Number&quot;,
+                &quot;required&quot;:true 
+            }
+        },
+    }
+}</code>
+</code></pre><h6 id="usage-example">Usage Example</h6><pre><code><code class="source-code prettyprint">const _schema = {
+                    &quot;*&quot;: {
+                        type: &quot;Object&quot;,
+                        &quot;extensible&quot;: true
+                        &quot;elements&quot;: {
+                            &quot;name&quot;: {
+                                &quot;type&quot;: &quot;String&quot;,
+                                &quot;required&quot;: true,
+                                &quot;restrict&quot;: &quot;^[a-zA-Z0-9_\s\-]{9,}$&quot;
+                            },
+                            {
+                            &quot;score&quot;: {
+                                &quot;type&quot;: &quot;Number&quot;,
+                                &quot;required&quot;:true 
+                            }
+                        },
+                    }
+                };
+
+let _handler = {
+    next: (val)=&gt; {
+        console.log(val);
+        _jsd.unsubscribe();
+    },
+    error: (e)=&gt; {
+        console.log(e);
+    }
+};
+
+const _jsd = new JSD(_schema);
+_jsd.subscribe(_handler);
+_jsd.document.model = {
+    1: {
+        name: &quot;Big Daddy&quot;,
+        score: 2000000
+       },
+    2: {
+        name: &quot;HeavyMetalPrincess&quot;,
+        score: 1100000
+        },
+    3: {
+        name: &quot;Munga-Munga&quot;,
+        score: 900000
+    }
+};</code>
+</code></pre><h4 id="wildcard-types">Wildcard Types</h4><p>In some cases, you might know the key of an attribute, 
+but the type might not be determined. In these cases,
+where you want to restrict an object to known keys but 
+allow for various value assignment, you can use 
+wildcard types</p>
+<h6 id="schema-example">Schema Example</h6><pre><code><code class="source-code prettyprint">// declares element myKey which can be any type, but must be present 
+{
+    &quot;myKey&quot;: {
+        &quot;type&quot;: &quot;*&quot;,
+        &quot;required&quot;: true
+    }
+}
+
+// declares an Object that allows for special user data 
+{
+    &quot;id&quot;: {
+        &quot;type&quot;: &quot;Number&quot;,
+        &quot;required&quot;: true,
+    },
+    &quot;name&quot;: {
+        &quot;type&quot;: &quot;String&quot;,
+        &quot;required&quot;: true,
+        &quot;restrict&quot;: &quot;^[a-zA-Z0-9\-]{1,10}$&quot;
+    },
+    {
+    &quot;dataField1&quot;: {
+        &quot;type&quot;: &quot;*&quot;,
+        &quot;required&quot;: false 
+    },
+    &quot;dataField2&quot;: {
+        &quot;type&quot;: &quot;*&quot;,
+        &quot;required&quot;: false 
+    }
+}</code>
+</code></pre><h6 id="usage-example">Usage Example</h6><pre><code><code class="source-code prettyprint">const _schema = {
+                    &quot;id&quot;: {
+                        &quot;type&quot;: &quot;Number&quot;,
+                        &quot;required&quot;: true,
+                    },
+                    &quot;name&quot;: {
+                        &quot;type&quot;: &quot;String&quot;,
+                        &quot;required&quot;: true,
+                        &quot;restrict&quot;: &quot;^[a-zA-Z0-9\-]{1,10}$&quot;
+                    },
+                    {
+                    &quot;dataField1&quot;: {
+                        &quot;type&quot;: &quot;*&quot;,
+                        &quot;required&quot;: false 
+                    },
+                    &quot;dataField2&quot;: {
+                        &quot;type&quot;: &quot;*&quot;,
+                        &quot;required&quot;: false 
+                    }
+                };
+
+let _handler = {
+    next: (val)=&gt; {
+        console.log(val);
+        _jsd.unsubscribe();
+    },
+    error: (e)=&gt; {
+        console.log(e);
+    }
+};
+
+const _jsd = new JSD(_schema);
+_jsd.subscribe(_handler);
+_jsd.document.model = {
+        &quot;id&quot;: 100000234, 
+        &quot;name&quot;: &quot;HeavyMetalPrincess&quot;,
+        &quot;dataField1&quot;: {
+            playerKills: 1100000,
+            matchIds: [1234, 1235, 1236]
+        },
+        &quot;dataField2&quot;: {
+            location: &quot;I&apos;m from the Internet&quot;,
+            bio: &quot;I like cupcakes&quot; 
+        }
+    }
+};</code>
+</code></pre><h4 id="polymorphism">Polymorphism</h4><p>In cases where you want to keep the data model tightly defined but must allow for certain values to conform to more 
+than one data type, you can use polymorhism</p>
+<h6 id="schema-example">Schema Example</h6><pre><code><code class="source-code prettyprint">// declares element `polyValue` which can be a String or an Object
+{
+   &quot;polyValue&quot;: {
+     &quot;required&quot;: true,
+     &quot;polymorphic&quot;: [
+       {
+         &quot;type&quot;: &quot;String&quot;,
+         &quot;restrict&quot;: &quot;^[a-zA-Z-0-9_]+$&quot;
+       },
+       {
+         &quot;type&quot;: &quot;Object&quot;,
+         &quot;elements&quot;: {
+           &quot;name&quot;: {
+             &quot;type&quot;: &quot;String&quot;,
+             &quot;required&quot;: true,
+             &quot;restrict&quot;: &quot;^[a-zA-Z-0-9_]{1,24}+$&quot;
+           },
+           &quot;details&quot;: {
+             &quot;type&quot;: &quot;String&quot;,
+             &quot;required&quot;: false,
+             &quot;restrict&quot;: &quot;^[a-zA-Z-0-9_]{0,256}+$&quot;
+           }, 
+         }
+       }
+     ]
+   } 
+}</code>
+</code></pre><h6 id="usage-example">Usage Example</h6><pre><code><code class="source-code prettyprint">const _schema = {
+                   &quot;polyValue&quot;: {
+                     &quot;required&quot;: true,
+                     &quot;polymorphic&quot;: [
+                       {
+                         &quot;type&quot;: &quot;String&quot;,
+                         &quot;restrict&quot;: &quot;^[a-zA-Z-0-9_]+$&quot;
+                       },
+                       {
+                         &quot;type&quot;: &quot;Object&quot;,
+                         &quot;elements&quot;: {
+                           &quot;name&quot;: {
+                             &quot;type&quot;: &quot;String&quot;,
+                             &quot;required&quot;: true,
+                             &quot;restrict&quot;: &quot;^[a-zA-Z-0-9_]{1,24}+$&quot;
+                           },
+                           &quot;details&quot;: {
+                             &quot;type&quot;: &quot;String&quot;,
+                             &quot;required&quot;: false,
+                             &quot;restrict&quot;: &quot;^[a-zA-Z-0-9_]{0,256}+$&quot;
+                           }, 
+                         }
+                       }
+                     ]
+                   } 
+                };
+
+let _handler = {
+    next: (val)=&gt; {
+        console.log(val);
+    },
+    error: (e)=&gt; {
+        console.log(e);
+    }
+};
+
+const _jsd = new JSD(_schema);
+_jsd.subscribe(_handler);
+
+// can be a string value
+_jsd.document.model = {
+        &quot;polyValue&quot; : &quot;HeavyMetalPrincess&quot;,
+    }
+};
+
+// can also be object value
+_jsd.document.model = {
+        &quot;polyValue&quot; : {
+            &quot;name&quot;: &quot;HeavyMetalPrincess&quot;,
+            &quot;details&quot;: &quot;I like cupcakes&quot; 
+        }
+    }
+};</code>
+</code></pre><h4 id="regular-expressions">Regular Expressions</h4><p>JSD allows the use of Regular Expressions to restrict String input
+There are caveats to it&apos;s use due to the nature of RegExp syntax vs  JSON
+character encoding limitations</p>
+<h6 id="js-and-ts-file-example">JS and TS file Example</h6><pre><code><code class="source-code prettyprint">// in code declaring a RegExp in JS or TS is no big deal 
+const schema = {
+   stringValue: {
+     required: true,
+     type: &quot;String&quot;,
+     restrict: &quot;^[a-zA-Z-0-9_\-\s]+$&quot;
+   }
+};</code>
+</code></pre><h6 id="json-file-example-with-special-escaping">JSON File Example with Special Escaping</h6><pre><code><code class="source-code prettyprint">{
+    &quot;stringValue&quot;: {
+        &quot;required&quot;: true,
+        &quot;type&quot;: &quot;String&quot;,
+        &quot;restrict&quot;: &quot;^[a-zA-Z-0-9_\\\\-\\\\s]+$&quot;
+    }
+}</code>
+</code></pre></div>
 </div>
 
 <footer class="footer">
