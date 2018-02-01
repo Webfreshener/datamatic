@@ -39,9 +39,16 @@ Schema Based Self-Validating and Observable Data Models
 
 #### Installation Instructions ####
 There are no dependencies or prerequesites besides NPM and NodeJS
-
+However, this project is not yet published. 
+You must manually add to your package.json
 ```
-$ npm i --save @jsd/core
+...
+dependencies: {
+    ...
+    "jsd": "git+https://github.com/Webfreshener/JSD",
+    ...
+}
+...
 ```
 
 #### Basic Usage ####
