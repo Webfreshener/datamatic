@@ -1,9 +1,13 @@
 /**
  * @private Weakmap Refs
  */
-import wfUtils from 'wf-utils';
-export const _exists = wfUtils.exists;
-export const wf = wfUtils;
+import {exists, Fun, Obj, Str} from 'jsd-utils';
+export const _exists = exists;
+export const wf = {
+    Fun:Fun,
+    Obj: Obj,
+    Str: Str
+};
 /**
  * Holder for registered JS Object references
  *
