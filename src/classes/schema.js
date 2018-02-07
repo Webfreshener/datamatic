@@ -24,7 +24,6 @@ export class Schema {
             throw `Schema requires JSON object at arguments[0]. Got '${typeof _signature}'`;
         }
         _schemaOptions.set(this, opts);
-        // _validators.set(this, {});
         _required_elements.set(this, []);
 
         // tests for metadata
@@ -66,24 +65,6 @@ export class Schema {
                 }
             }
         }
-        // else {
-        //     /*
-        //         enables "lazy" schemas
-        //         will format schema with default "Object" type
-        //      */
-        //     let _root = Object.assign(JSD.defaults, {type: "Object"});
-        //     // let _rx = `^(\\*|${Object.keys(JSD.defaults).join('|')})$`;
-        //     // keys = Object.keys(_signature).filter((k) => {
-        //     //     return (!k.match(new RegExp(_rx)));
-        //     // });
-        //     // if (keys.length) {
-        //     //     _signature = Object.assign(_root, {"elements": _signature});
-        //     // } else {
-        //     //     _signature = Object.assign(_root,  _signature);
-        //     // }
-        //     // _signature = Object.assign(_root, {"elements": _signature});
-        //
-        // }
 
         // attempts to validate provided `schema` entries
         let _schema_validator = new SchemaValidator(_signature, Object.assign(this.options || {}, {
@@ -168,13 +149,7 @@ export class Schema {
                     // handles absolute values (strings, numbers, booleans...)
                     else {
                         this.subscribeTo(_key, {
-                            // next: (value) => {
-                            //     let _k = Schema.concatPathAddr(this.path, _key);
-                            //     console.log(`next called on _key: ${_key} _k: ${_k} path: ${this.path}`);
-                            //     // this.jsd.observerBuilder.next(_k, value);
-                            // },
                             error: (e) => {
-                                // this.jsd.observerBuilder.error(this.path, e);
                                 let _p = Schema.concatPathAddr(this.path, _key);
                                 this.jsd.observerBuilder.error(_p, e)
                             }
@@ -189,18 +164,16 @@ export class Schema {
                         }
                     }
                     t[key] = value;
-                    // let _p = Schema.concatPathAddr(this.path, _key);
-                    // this.jsd.observerBuilder.next(_p, value);
-                    // this.jsd.observerBuilder.next(_key, value);
                 }
-                if (typeof((_e = this.validate())!== 'string')) {
+                const _e = this.validate();
+                if ((typeof _e) !== 'string') {
                     if (this.path.length) {
                         this.jsd.observerBuilder.next(this.path, value);
                     }
                     const _p = Schema.concatPathAddr(this.path, key);
                     const _j = this.root.toJSON();
-                    return this.jsd.observerBuilder.next(_p, _j);
-                    // return true;
+                    this.jsd.observerBuilder.next(_p, _j);
+                    return true;
                 } else {
                     this.jsd.observerBuilder.error(this.path, _e);
                     return false;
@@ -243,9 +216,9 @@ export class Schema {
             const keys = Object.keys(value);
 
             if (keys.length) {
-                for (k of keys) {
+                keys.forEach((k) => {
                     this.model[k] = value[k];
-                }
+                });
             } else {
                 e = 'null not allowed';
                 _validPaths.get(this.jsd)[this.path] = e;
@@ -357,10 +330,14 @@ export class Schema {
      */
     validate() {
         const paths = _validPaths.get(this.jsd);
-        for (_k in paths) {
-            if (typeof paths[_k] === 'string') {
-                return paths[_k];
-            }
+        try {
+            Object.keys(paths).forEach((k) => {
+                if (typeof paths[k] === 'string') {
+                    throw paths[k];
+                }
+            });
+        } catch (e) {
+            return e;
         }
         return true;
     }
