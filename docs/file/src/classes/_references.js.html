@@ -61,9 +61,13 @@
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/**
  * @private Weakmap Refs
  */
-import * as wfUtils from &apos;wf-utils&apos;;
-export const _exists = wfUtils.exists;
-export const wf = wfUtils;
+import {exists, Fun, Obj, Str} from &apos;jsd-utils&apos;;
+export const _exists = exists;
+export const wf = {
+    Fun:Fun,
+    Obj: Obj,
+    Str: Str
+};
 /**
  * Holder for registered JS Object references
  *

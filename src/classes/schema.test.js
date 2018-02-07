@@ -273,5 +273,14 @@ describe("Schema Class Test Suite", function () {
         it("should provide JSON String from toString", () => {
             expect(_schema.toString()).toEqual(_ts);
         });
-    })
+    });
+
+    describe('debug lazy schemas', () => {
+        it('should successfully create lazy schema', () => {
+            const jsd = new JSD({foo: {type: "String"}});
+            jsd.document.model = {foo: 'bar'};
+            expect(jsd.document.model.foo).toBe('bar');
+        });
+
+    });
 });

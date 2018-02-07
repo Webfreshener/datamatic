@@ -1765,24 +1765,25 @@ class Schema {
                     __WEBPACK_IMPORTED_MODULE_0__references__["f" /* _required_elements */].set(this, req);
                 }
             }
-        } else {
-            /*
-                enables "lazy" schemas
-                will format schema with default "Object" type
-             */
-            let _root = Object.assign(__WEBPACK_IMPORTED_MODULE_4__jsd__["a" /* JSD */].defaults, {type: "Object"});
-            // let _rx = `^(\\*|${Object.keys(JSD.defaults).join('|')})$`;
-            // keys = Object.keys(_signature).filter((k) => {
-            //     return (!k.match(new RegExp(_rx)));
-            // });
-            // if (keys.length) {
-            //     _signature = Object.assign(_root, {"elements": _signature});
-            // } else {
-            //     _signature = Object.assign(_root,  _signature);
-            // }
-            signature = Object.assign(_root, {"elements": _signature});
-
         }
+        // else {
+        //     /*
+        //         enables "lazy" schemas
+        //         will format schema with default "Object" type
+        //      */
+        //     let _root = Object.assign(JSD.defaults, {type: "Object"});
+        //     // let _rx = `^(\\*|${Object.keys(JSD.defaults).join('|')})$`;
+        //     // keys = Object.keys(_signature).filter((k) => {
+        //     //     return (!k.match(new RegExp(_rx)));
+        //     // });
+        //     // if (keys.length) {
+        //     //     _signature = Object.assign(_root, {"elements": _signature});
+        //     // } else {
+        //     //     _signature = Object.assign(_root,  _signature);
+        //     // }
+        //     // _signature = Object.assign(_root, {"elements": _signature});
+        //
+        // }
 
         // attempts to validate provided `schema` entries
         let _schema_validator = new __WEBPACK_IMPORTED_MODULE_3__schemaValidator__["a" /* SchemaValidator */](_signature, Object.assign(this.options || {}, {
