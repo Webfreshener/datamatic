@@ -141,27 +141,27 @@
     "filePath": "src/classes/schema.js",
     "lines": [
       {
-        "lineNumber": 295,
+        "lineNumber": 296,
         "line": "    /**"
       },
       {
-        "lineNumber": 296,
+        "lineNumber": 297,
         "line": "     * subscribes handler method to property observer for path"
       },
       {
-        "lineNumber": 297,
+        "lineNumber": 298,
         "line": "     * @param path"
       },
       {
-        "lineNumber": 298,
+        "lineNumber": 299,
         "line": "     * @param func"
       },
       {
-        "lineNumber": 299,
+        "lineNumber": 300,
         "line": "     */"
       },
       {
-        "lineNumber": 300,
+        "lineNumber": 301,
         "line": "    subscribe(func) {"
       }
     ],

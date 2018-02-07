@@ -65,24 +65,25 @@ export class Schema {
                     _required_elements.set(this, req);
                 }
             }
-        } else {
-            /*
-                enables "lazy" schemas
-                will format schema with default "Object" type
-             */
-            let _root = Object.assign(JSD.defaults, {type: "Object"});
-            // let _rx = `^(\\*|${Object.keys(JSD.defaults).join('|')})$`;
-            // keys = Object.keys(_signature).filter((k) => {
-            //     return (!k.match(new RegExp(_rx)));
-            // });
-            // if (keys.length) {
-            //     _signature = Object.assign(_root, {"elements": _signature});
-            // } else {
-            //     _signature = Object.assign(_root,  _signature);
-            // }
-            signature = Object.assign(_root, {"elements": _signature});
-
         }
+        // else {
+        //     /*
+        //         enables "lazy" schemas
+        //         will format schema with default "Object" type
+        //      */
+        //     let _root = Object.assign(JSD.defaults, {type: "Object"});
+        //     // let _rx = `^(\\*|${Object.keys(JSD.defaults).join('|')})$`;
+        //     // keys = Object.keys(_signature).filter((k) => {
+        //     //     return (!k.match(new RegExp(_rx)));
+        //     // });
+        //     // if (keys.length) {
+        //     //     _signature = Object.assign(_root, {"elements": _signature});
+        //     // } else {
+        //     //     _signature = Object.assign(_root,  _signature);
+        //     // }
+        //     // _signature = Object.assign(_root, {"elements": _signature});
+        //
+        // }
 
         // attempts to validate provided `schema` entries
         let _schema_validator = new SchemaValidator(_signature, Object.assign(this.options || {}, {

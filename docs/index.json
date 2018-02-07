@@ -1112,7 +1112,7 @@
     "__docId__": 69,
     "kind": "file",
     "name": "src/classes/_references.js",
-    "content": "/**\n * @private Weakmap Refs\n */\nimport * as wfUtils from 'wf-utils';\nexport const _exists = wfUtils.exists;\nexport const wf = wfUtils;\n/**\n * Holder for registered JS Object references\n *\n * @type {WeakMap}\n * @private\n */\nexport const _kinds = new WeakMap();\n/**\n * Holder for Schema and Set instance references\n *\n * @type {WeakMap}\n * @private\n */\nexport const _object = new WeakMap();\n/**\n * Holder for MetaData references\n * @type {WeakMap}\n * @private\n */\nexport const _mdRef = new WeakMap();\n/**\n * Holder for lists of required elements for each Schema Node\n *\n * @type {WeakMap}\n * @private\n */\nexport const _required_elements = new WeakMap();\n/**\n * Holder for Schema Validators\n * @type {WeakMap}\n * @private\n */\nexport const _validators = new WeakMap();\n/**\n * Holder for Singleton instance references\n *\n * @type {WeakMap}\n * @private\n */\nexport const _singletons = new WeakMap();\n/**\n * Holder for `Set` element types\n *\n * @type {WeakMap}\n * @private\n */\nexport const _vectorTypes = new WeakMap();\n/**\n * Holder for Schema options refeerences\n *\n * @type {WeakMap}\n * @private\n */\nexport const _schemaOptions = new WeakMap();\n/**\n * Holder for Schema Helpers references\n *\n * @type {WeakMap}\n * @private\n */\nexport const _schemaHelpers = new WeakMap();\n/**\n * Holder for Schema Signatures references\n *\n * @type {WeakMap}\n * @private\n */\nexport const _schemaSignatures = new WeakMap();\n/**\n * Holder for RXJS Observer references\n * @type {WeakMap}\n * @private\n */\nexport const _observers = new WeakMap();\n/**\n * Holder for Validation path references\n * @type {WeakMap}\n * @private\n */\nexport const _validPaths = new WeakMap();\n\n",
+    "content": "/**\n * @private Weakmap Refs\n */\nimport {exists, Fun, Obj, Str} from 'jsd-utils';\nexport const _exists = exists;\nexport const wf = {\n    Fun:Fun,\n    Obj: Obj,\n    Str: Str\n};\n/**\n * Holder for registered JS Object references\n *\n * @type {WeakMap}\n * @private\n */\nexport const _kinds = new WeakMap();\n/**\n * Holder for Schema and Set instance references\n *\n * @type {WeakMap}\n * @private\n */\nexport const _object = new WeakMap();\n/**\n * Holder for MetaData references\n * @type {WeakMap}\n * @private\n */\nexport const _mdRef = new WeakMap();\n/**\n * Holder for lists of required elements for each Schema Node\n *\n * @type {WeakMap}\n * @private\n */\nexport const _required_elements = new WeakMap();\n/**\n * Holder for Schema Validators\n * @type {WeakMap}\n * @private\n */\nexport const _validators = new WeakMap();\n/**\n * Holder for Singleton instance references\n *\n * @type {WeakMap}\n * @private\n */\nexport const _singletons = new WeakMap();\n/**\n * Holder for `Set` element types\n *\n * @type {WeakMap}\n * @private\n */\nexport const _vectorTypes = new WeakMap();\n/**\n * Holder for Schema options refeerences\n *\n * @type {WeakMap}\n * @private\n */\nexport const _schemaOptions = new WeakMap();\n/**\n * Holder for Schema Helpers references\n *\n * @type {WeakMap}\n * @private\n */\nexport const _schemaHelpers = new WeakMap();\n/**\n * Holder for Schema Signatures references\n *\n * @type {WeakMap}\n * @private\n */\nexport const _schemaSignatures = new WeakMap();\n/**\n * Holder for RXJS Observer references\n * @type {WeakMap}\n * @private\n */\nexport const _observers = new WeakMap();\n/**\n * Holder for Validation path references\n * @type {WeakMap}\n * @private\n */\nexport const _validPaths = new WeakMap();\n\n",
     "static": true,
     "longname": "/Users/van/IdeaProjects/JSD/src/classes/_references.js",
     "access": "public",
@@ -1155,7 +1155,7 @@
     "undocument": true,
     "type": {
       "types": [
-        "*"
+        "{\"Fun\": *, \"Obj\": *, \"Str\": *}"
       ]
     }
   },
@@ -1171,7 +1171,7 @@
     "importPath": "jsd/src/classes/_references.js",
     "importStyle": "{_kinds}",
     "description": "Holder for registered JS Object references",
-    "lineNumber": 13,
+    "lineNumber": 17,
     "type": {
       "nullable": null,
       "types": [
@@ -1193,7 +1193,7 @@
     "importPath": "jsd/src/classes/_references.js",
     "importStyle": "{_object}",
     "description": "Holder for Schema and Set instance references",
-    "lineNumber": 20,
+    "lineNumber": 24,
     "type": {
       "nullable": null,
       "types": [
@@ -1215,7 +1215,7 @@
     "importPath": "jsd/src/classes/_references.js",
     "importStyle": "{_mdRef}",
     "description": "Holder for MetaData references",
-    "lineNumber": 26,
+    "lineNumber": 30,
     "type": {
       "nullable": null,
       "types": [
@@ -1237,7 +1237,7 @@
     "importPath": "jsd/src/classes/_references.js",
     "importStyle": "{_required_elements}",
     "description": "Holder for lists of required elements for each Schema Node",
-    "lineNumber": 33,
+    "lineNumber": 37,
     "type": {
       "nullable": null,
       "types": [
@@ -1259,7 +1259,7 @@
     "importPath": "jsd/src/classes/_references.js",
     "importStyle": "{_validators}",
     "description": "Holder for Schema Validators",
-    "lineNumber": 39,
+    "lineNumber": 43,
     "type": {
       "nullable": null,
       "types": [
@@ -1281,7 +1281,7 @@
     "importPath": "jsd/src/classes/_references.js",
     "importStyle": "{_singletons}",
     "description": "Holder for Singleton instance references",
-    "lineNumber": 46,
+    "lineNumber": 50,
     "type": {
       "nullable": null,
       "types": [
@@ -1303,7 +1303,7 @@
     "importPath": "jsd/src/classes/_references.js",
     "importStyle": "{_vectorTypes}",
     "description": "Holder for `Set` element types",
-    "lineNumber": 53,
+    "lineNumber": 57,
     "type": {
       "nullable": null,
       "types": [
@@ -1325,7 +1325,7 @@
     "importPath": "jsd/src/classes/_references.js",
     "importStyle": "{_schemaOptions}",
     "description": "Holder for Schema options refeerences",
-    "lineNumber": 60,
+    "lineNumber": 64,
     "type": {
       "nullable": null,
       "types": [
@@ -1347,7 +1347,7 @@
     "importPath": "jsd/src/classes/_references.js",
     "importStyle": "{_schemaHelpers}",
     "description": "Holder for Schema Helpers references",
-    "lineNumber": 67,
+    "lineNumber": 71,
     "type": {
       "nullable": null,
       "types": [
@@ -1369,7 +1369,7 @@
     "importPath": "jsd/src/classes/_references.js",
     "importStyle": "{_schemaSignatures}",
     "description": "Holder for Schema Signatures references",
-    "lineNumber": 74,
+    "lineNumber": 78,
     "type": {
       "nullable": null,
       "types": [
@@ -1391,7 +1391,7 @@
     "importPath": "jsd/src/classes/_references.js",
     "importStyle": "{_observers}",
     "description": "Holder for RXJS Observer references",
-    "lineNumber": 80,
+    "lineNumber": 84,
     "type": {
       "nullable": null,
       "types": [
@@ -1413,7 +1413,7 @@
     "importPath": "jsd/src/classes/_references.js",
     "importStyle": "{_validPaths}",
     "description": "Holder for Validation path references",
-    "lineNumber": 86,
+    "lineNumber": 90,
     "type": {
       "nullable": null,
       "types": [
@@ -3649,7 +3649,7 @@
     "__docId__": 162,
     "kind": "file",
     "name": "src/classes/schema.js",
-    "content": "import {\n    _mdRef, _required_elements,\n    _observers, _object, _kinds, _exists,\n    _schemaHelpers, _schemaOptions, _schemaSignatures,\n    _validPaths, wf\n} from './_references';\nimport {MetaData} from './_metaData';\nimport {SchemaHelpers} from './_schemaHelpers';\nimport {SchemaValidator} from './_schemaValidator';\nimport {JSD} from './jsd';\nimport {Set} from './set';\n/**\n * @class Schema\n */\nexport class Schema {\n    /**\n     * @constructor\n     * @param {Object} _o - schema definition object\n     * @param {Object} opts - schema options\n     */\n    constructor(_signature, opts = {extensible: false}) {\n        var eMsg;\n        if (!_exists(_signature)) {\n            throw `Schema requires JSON object at arguments[0]. Got '${typeof _signature}'`;\n        }\n        _schemaOptions.set(this, opts);\n        // _validators.set(this, {});\n        _required_elements.set(this, []);\n\n        // tests for metadata\n        if (!(this instanceof MetaData)) {\n            let _;\n            if (arguments[2] instanceof JSD) {\n                _ = new MetaData(this, {\n                    _path: \"\",\n                    _root: this,\n                    _jsd: arguments[2],\n                });\n            }\n            else if (typeof arguments[2] == 'object') {\n                if (arguments[2] instanceof MetaData) {\n                    _ = arguments[2];\n                } else {\n                    _ = new MetaData(this, arguments[2]);\n                }\n            } else {\n                throw `Invalid constructor call for Schema: ${JSON.stringify(arguments)}`\n            }\n            _mdRef.set(this, _);\n        }\n\n        if (_exists(_signature.polymorphic)) {\n            _signature = _signature.polymorphic;\n        }\n        // traverses elements of schema checking for elements marked as reqiured\n        if (_exists(_signature.elements)) {\n            _signature = _signature.elements;\n            for (let _sigEl of Object.keys(_signature)) {\n                // -- tests for element `required`\n                let _req = _signature[_sigEl].required;\n                if (_req) {\n                    // -- adds required element to list\n                    let req = _required_elements.get(this);\n                    req.push(_sigEl);\n                    _required_elements.set(this, req);\n                }\n            }\n        } else {\n            /*\n                enables \"lazy\" schemas\n                will format schema with default \"Object\" type\n             */\n            let _root = Object.assign(JSD.defaults, {type: \"Object\"});\n            // let _rx = `^(\\\\*|${Object.keys(JSD.defaults).join('|')})$`;\n            // keys = Object.keys(_signature).filter((k) => {\n            //     return (!k.match(new RegExp(_rx)));\n            // });\n            // if (keys.length) {\n            //     _signature = Object.assign(_root, {\"elements\": _signature});\n            // } else {\n            //     _signature = Object.assign(_root,  _signature);\n            // }\n            signature = Object.assign(_root, {\"elements\": _signature});\n\n        }\n\n        // attempts to validate provided `schema` entries\n        let _schema_validator = new SchemaValidator(_signature, Object.assign(this.options || {}, {\n            jsd: _mdRef.get(this).jsd,\n        }));\n        // throws error if error message returned\n        if (typeof (eMsg = _schema_validator.isValid()) === 'string') {\n            throw eMsg;\n        }\n        _schemaSignatures.set(this, _signature);\n        _schemaHelpers.set(this, new SchemaHelpers(this));\n        _schemaHelpers.get(this).walkSchema(_signature || JSD.defaults, this.path);\n        // creates model\n        _object.set(this, new Proxy({}, this.handler));\n        // attempts to set default value\n        for (let _sigEl of Object.keys(_signature)) {\n            // -- tests for element `default`\n            let _default = _signature[_sigEl].default;\n            if (_default) {\n                // sets default value for key on model\n                let _p = _sigEl.split('.');\n                this.model[_sigEl] = _default;\n            }\n        }\n    }\n\n    get handler() {\n        return {\n            get: (t, key) => {\n                const _m = t[key];\n                return _m instanceof Schema ? _m.model : _m;\n            },\n            set: (t, key, value) => {\n                let _sH = _schemaHelpers.get(this);\n                if (typeof key === 'object') {\n                    const e = _sH.setObject(key);\n                    if (typeof e === 'string') {\n                        this.jsd.observerBuilder.error(this.path, e);\n                        return false;\n                    }\n                    return this.jsd.observerBuilder.next(this.path, this);\n                }\n                let _childSigs = this.signature.elements || this.signature;\n                let _pathKeys = key.split(\".\");\n                for (let _ in _pathKeys) {\n                    let k = _pathKeys[_];\n                    let _schema;\n                    // derives path for element\n                    let _key = this.path.length ? `${this.path}.${k}` : k;\n                    if (_exists(_childSigs[`${k}`])) {\n                        _schema = _childSigs[k];\n                    }\n                    else {\n                        // attempts to find wildcard element name\n                        if (_exists(_childSigs[\"*\"])) {\n                            // applies schema\n                            _schema = _childSigs[\"*\"].polymorphic || _childSigs[\"*\"];\n                            // creates Validator for path\n                            this.jsd.validatorBuilder.create(_schema, _key, this);\n                        }\n                    }\n                    // handles missing schema signatures\n                    if (!_exists(_schema)) {\n                        // rejects non-members of non-extensible schemas\n                        if (!this.isExtensible) {\n                            const e = `element '${_key}' is not a valid element`;\n                            this.jsd.observerBuilder.error(key, e);\n                            return false;\n                        }\n                        _schema = Schema.defaultSignature;\n                    }\n                    // handles child objects\n                    if (typeof value === \"object\") {\n                        value = _sH.setChildObject(_key, value);\n                        if (typeof value === 'string') {\n                            this.jsd.observerBuilder.error(_key, value);\n                            this.jsd.observerBuilder.error(this.root.path, value);\n                            return false;\n                        }\n                        // return;\n                    }\n                    // handles absolute values (strings, numbers, booleans...)\n                    else {\n                        this.subscribeTo(_key, {\n                            // next: (value) => {\n                            //     let _k = Schema.concatPathAddr(this.path, _key);\n                            //     console.log(`next called on _key: ${_key} _k: ${_k} path: ${this.path}`);\n                            //     // this.jsd.observerBuilder.next(_k, value);\n                            // },\n                            error: (e) => {\n                                // this.jsd.observerBuilder.error(this.path, e);\n                                let _p = Schema.concatPathAddr(this.path, _key);\n                                this.jsd.observerBuilder.error(_p, e)\n                            }\n                        });\n                        let eMsg = _sH.validate(_key, value);\n                        _validPaths.get(this.jsd)[_key] = eMsg\n                        if (typeof eMsg === \"string\") {\n                            this.jsd.observerBuilder.error(_key, eMsg);\n                            this.jsd.observerBuilder.error(this.path, eMsg);\n                            this.jsd.observerBuilder.error(this.root.path, eMsg);\n                            return eMsg\n                        }\n                    }\n                    t[key] = value;\n                    // let _p = Schema.concatPathAddr(this.path, _key);\n                    // this.jsd.observerBuilder.next(_p, value);\n                    // this.jsd.observerBuilder.next(_key, value);\n                }\n                if (typeof((_e = this.validate())!== 'string')) {\n                    if (this.path.length) {\n                        this.jsd.observerBuilder.next(this.path, value);\n                    }\n                    const _p = Schema.concatPathAddr(this.path, key);\n                    const _j = this.root.toJSON();\n                    return this.jsd.observerBuilder.next(_p, _j);\n                    // return true;\n                } else {\n                    this.jsd.observerBuilder.error(this.path, _e);\n                    return false;\n                }\n            }\n        };\n    }\n\n    static concatPathAddr(path, addr) {\n        return path.length ? `${path}.${addr}` : addr;\n    }\n\n    /**\n     * @returns schema signature object\n     */\n    get signature() {\n        return _schemaSignatures.get(this);\n    }\n\n    /**\n     * getter for object model\n     */\n    get model() {\n        return _object.get(this);\n    }\n\n    /**\n     * setter for object model\n     * @param value\n     */\n    set model(value) {\n        let e;\n        if (typeof value === 'object') {\n            this.subscribe({\n                error: (e) => {\n                    this.jsd.observerBuilder.error(this.path, e);\n                }\n            });\n\n            const keys = Object.keys(value);\n\n            if (keys.length) {\n                for (k of keys) {\n                    this.model[k] = value[k];\n                }\n            } else {\n                e = 'null not allowed';\n                _validPaths.get(this.jsd)[this.path] = e;\n                this.jsd.observerBuilder.error(this.path, e);\n            }\n            _validPaths.get(this.jsd)[this.path] = true;\n            this.jsd.observerBuilder.next(this.path, this);\n            this.unsubscribe();\n        } else {\n            e = `unable to set scalar value on model at ${this.path.length ? this.path : '.'}`;\n            _validPaths.get(this.jsd)[this.path] = e;\n            this.jsd.observerBuilder.error(this.path, e);\n            return e;\n        }\n    }\n\n\n    /**\n     * @param {string} key\n     * @returns {any}\n     */\n    get(key) {\n        return this.model[key];\n    }\n\n    /**\n     * sets value to schema key\n     * @param {string|object} key\n     * @param {any} value\n     */\n    set(key, value) {\n        if (typeof key === 'string') {\n            this.model[key] = value;\n        } else {\n            const _sH = _schemaHelpers.get(this);\n            let e = _sH.ensureRequiredFields(key);\n            _validPaths.get(this.jsd)[this.path] = e;\n            if (typeof e === 'string') {\n                this.jsd.observerBuilder.error(this.path, e);\n            }\n            Object.keys(key).forEach((_k) => {\n                this.model[_k] = key[_k];\n            });\n        }\n        return this;\n    }\n\n\n    /**\n     * subscribes handler method to property observer for path\n     * @param path\n     * @param func\n     */\n    subscribe(func) {\n        if ((typeof func).match(/^(function|object)$/) === null) {\n            throw new Error('subscribe requires function');\n        }\n        let _o = this.jsd.observerBuilder.get(this.path);\n        if (!_o || _o === null) {\n            this.jsd.observerBuilder.create(this.path, this);\n            _o = this.jsd.observerBuilder.get(this.path);\n        }\n\n        _o.subscribe(func);\n        return this;\n    }\n\n    /**\n     * unsubscribes from this object's observer\n     */\n    unsubscribe() {\n        let _o = this.jsd.observerBuilder.get(this.path);\n        if (!_o || _o === null) {\n            _o.unsubscribe();\n        }\n    }\n\n    /**\n     * subscribes handler method to property observer for path\n     * @param path\n     * @param func\n     */\n    subscribeTo(path, func) {\n        if ((typeof func).match(/^(function|object)$/) === null) {\n            throw new Error('subscribeTo requires function');\n        }\n        let _o = this.jsd.observerBuilder.get(path);\n        if (!_o || _o === null) {\n            this.jsd.observerBuilder.create(path, this);\n            _o = this.jsd.observerBuilder.get(path);\n        }\n        _o.subscribe(func);\n        return this;\n    }\n\n    /**\n     * unsubscribes from this observer for object at path\n     * @param path\n     */\n    unsubscribeFrom(path) {\n        let _o = this.jsd.observerBuilder.get(path);\n        if (!_o || _o === null) {\n            _o.unsubscribe();\n        }\n    }\n\n    /**\n     * @returns {true|string} returns error string or true\n     */\n    validate() {\n        const paths = _validPaths.get(this.jsd);\n        for (_k in paths) {\n            if (typeof paths[_k] === 'string') {\n                return paths[_k];\n            }\n        }\n        return true;\n    }\n\n    /**\n     * @returns {boolean}\n     */\n    get isValid() {\n        return (typeof this.validate() !== 'string');\n    }\n\n    /**\n     * gets raw value of this model\n     */\n    valueOf() {\n        return this.model;\n    }\n\n    /**\n     * JSONifies Schema Model\n     */\n    toJSON() {\n        let _derive = (itm) => {\n            if (itm instanceof Schema) {\n                return itm.toJSON();\n            }\n            if (itm instanceof Set) {\n                return itm.toJSON();\n            }\n            if (typeof itm === 'object') {\n                const _o = !Array.isArray(itm) ? {} : [];\n                for (let k in itm) {\n                    _o[k] = _derive(itm[k]);\n                }\n                return _o;\n            }\n            return itm;\n        };\n        return _derive(this.valueOf());\n    }\n\n    /**\n     * JSON stringifies primitive value\n     */\n    toString(pretty = false) {\n        return JSON.stringify(this.toJSON(), null, (pretty ? 2 : void(0)));\n    }\n\n    /**\n     * get options (if any) for this model's schema\n     */\n    get options() {\n        return _schemaOptions.get(this);\n    }\n\n    /**\n     * @returns {string} Object ID for Schema\n     */\n    get objectID() {\n        return _mdRef.get(this)._id;\n    }\n\n    /**\n     * @returns {Schema} elemetn at Schema root\n     */\n    get root() {\n        return _mdRef.get(this).root || this;\n    }\n\n    /**\n     * @returns {string} path to current Schema\n     */\n    get path() {\n        let _ = _mdRef.get(this).path;\n        return _exists(_) ? _ : \"\";\n    }\n\n    /**\n     * @returns {Schema} parent Schema element\n     */\n    get parent() {\n        let _ = _mdRef.get(this).root;\n        return _exists(_) ? _ : this;\n    }\n\n    /**\n     * @returns {*|JSD}\n     */\n    get jsd() {\n        return _mdRef.get(this).jsd;\n    }\n\n    /**\n     * @returns list of required elements on this Schema\n     */\n    get requiredFields() {\n        return _required_elements.get(this);\n    }\n\n    /**\n     * indicates if Schema will accept arbitrary keys\n     * @returns {boolean}\n     */\n    get isExtensible() {\n        return _exists(this.signature.extensible) ?\n            this.signature.extensible : this.options.extensible || false;\n    }\n\n    /**\n     * Base Signature for all Schema Objects\n     */\n    static defaultSignature() {\n        return {\n            type: \"*\",\n            required: true,\n            extensible: false\n        };\n    }\n}\n",
+    "content": "import {\n    _mdRef, _required_elements,\n    _observers, _object, _kinds, _exists,\n    _schemaHelpers, _schemaOptions, _schemaSignatures,\n    _validPaths, wf\n} from './_references';\nimport {MetaData} from './_metaData';\nimport {SchemaHelpers} from './_schemaHelpers';\nimport {SchemaValidator} from './_schemaValidator';\nimport {JSD} from './jsd';\nimport {Set} from './set';\n/**\n * @class Schema\n */\nexport class Schema {\n    /**\n     * @constructor\n     * @param {Object} _o - schema definition object\n     * @param {Object} opts - schema options\n     */\n    constructor(_signature, opts = {extensible: false}) {\n        var eMsg;\n        if (!_exists(_signature)) {\n            throw `Schema requires JSON object at arguments[0]. Got '${typeof _signature}'`;\n        }\n        _schemaOptions.set(this, opts);\n        // _validators.set(this, {});\n        _required_elements.set(this, []);\n\n        // tests for metadata\n        if (!(this instanceof MetaData)) {\n            let _;\n            if (arguments[2] instanceof JSD) {\n                _ = new MetaData(this, {\n                    _path: \"\",\n                    _root: this,\n                    _jsd: arguments[2],\n                });\n            }\n            else if (typeof arguments[2] == 'object') {\n                if (arguments[2] instanceof MetaData) {\n                    _ = arguments[2];\n                } else {\n                    _ = new MetaData(this, arguments[2]);\n                }\n            } else {\n                throw `Invalid constructor call for Schema: ${JSON.stringify(arguments)}`\n            }\n            _mdRef.set(this, _);\n        }\n\n        if (_exists(_signature.polymorphic)) {\n            _signature = _signature.polymorphic;\n        }\n        // traverses elements of schema checking for elements marked as reqiured\n        if (_exists(_signature.elements)) {\n            _signature = _signature.elements;\n            for (let _sigEl of Object.keys(_signature)) {\n                // -- tests for element `required`\n                let _req = _signature[_sigEl].required;\n                if (_req) {\n                    // -- adds required element to list\n                    let req = _required_elements.get(this);\n                    req.push(_sigEl);\n                    _required_elements.set(this, req);\n                }\n            }\n        }\n        // else {\n        //     /*\n        //         enables \"lazy\" schemas\n        //         will format schema with default \"Object\" type\n        //      */\n        //     let _root = Object.assign(JSD.defaults, {type: \"Object\"});\n        //     // let _rx = `^(\\\\*|${Object.keys(JSD.defaults).join('|')})$`;\n        //     // keys = Object.keys(_signature).filter((k) => {\n        //     //     return (!k.match(new RegExp(_rx)));\n        //     // });\n        //     // if (keys.length) {\n        //     //     _signature = Object.assign(_root, {\"elements\": _signature});\n        //     // } else {\n        //     //     _signature = Object.assign(_root,  _signature);\n        //     // }\n        //     // _signature = Object.assign(_root, {\"elements\": _signature});\n        //\n        // }\n\n        // attempts to validate provided `schema` entries\n        let _schema_validator = new SchemaValidator(_signature, Object.assign(this.options || {}, {\n            jsd: _mdRef.get(this).jsd,\n        }));\n        // throws error if error message returned\n        if (typeof (eMsg = _schema_validator.isValid()) === 'string') {\n            throw eMsg;\n        }\n        _schemaSignatures.set(this, _signature);\n        _schemaHelpers.set(this, new SchemaHelpers(this));\n        _schemaHelpers.get(this).walkSchema(_signature || JSD.defaults, this.path);\n        // creates model\n        _object.set(this, new Proxy({}, this.handler));\n        // attempts to set default value\n        for (let _sigEl of Object.keys(_signature)) {\n            // -- tests for element `default`\n            let _default = _signature[_sigEl].default;\n            if (_default) {\n                // sets default value for key on model\n                let _p = _sigEl.split('.');\n                this.model[_sigEl] = _default;\n            }\n        }\n    }\n\n    get handler() {\n        return {\n            get: (t, key) => {\n                const _m = t[key];\n                return _m instanceof Schema ? _m.model : _m;\n            },\n            set: (t, key, value) => {\n                let _sH = _schemaHelpers.get(this);\n                if (typeof key === 'object') {\n                    const e = _sH.setObject(key);\n                    if (typeof e === 'string') {\n                        this.jsd.observerBuilder.error(this.path, e);\n                        return false;\n                    }\n                    return this.jsd.observerBuilder.next(this.path, this);\n                }\n                let _childSigs = this.signature.elements || this.signature;\n                let _pathKeys = key.split(\".\");\n                for (let _ in _pathKeys) {\n                    let k = _pathKeys[_];\n                    let _schema;\n                    // derives path for element\n                    let _key = this.path.length ? `${this.path}.${k}` : k;\n                    if (_exists(_childSigs[`${k}`])) {\n                        _schema = _childSigs[k];\n                    }\n                    else {\n                        // attempts to find wildcard element name\n                        if (_exists(_childSigs[\"*\"])) {\n                            // applies schema\n                            _schema = _childSigs[\"*\"].polymorphic || _childSigs[\"*\"];\n                            // creates Validator for path\n                            this.jsd.validatorBuilder.create(_schema, _key, this);\n                        }\n                    }\n                    // handles missing schema signatures\n                    if (!_exists(_schema)) {\n                        // rejects non-members of non-extensible schemas\n                        if (!this.isExtensible) {\n                            const e = `element '${_key}' is not a valid element`;\n                            this.jsd.observerBuilder.error(key, e);\n                            return false;\n                        }\n                        _schema = Schema.defaultSignature;\n                    }\n                    // handles child objects\n                    if (typeof value === \"object\") {\n                        value = _sH.setChildObject(_key, value);\n                        if (typeof value === 'string') {\n                            this.jsd.observerBuilder.error(_key, value);\n                            this.jsd.observerBuilder.error(this.root.path, value);\n                            return false;\n                        }\n                        // return;\n                    }\n                    // handles absolute values (strings, numbers, booleans...)\n                    else {\n                        this.subscribeTo(_key, {\n                            // next: (value) => {\n                            //     let _k = Schema.concatPathAddr(this.path, _key);\n                            //     console.log(`next called on _key: ${_key} _k: ${_k} path: ${this.path}`);\n                            //     // this.jsd.observerBuilder.next(_k, value);\n                            // },\n                            error: (e) => {\n                                // this.jsd.observerBuilder.error(this.path, e);\n                                let _p = Schema.concatPathAddr(this.path, _key);\n                                this.jsd.observerBuilder.error(_p, e)\n                            }\n                        });\n                        let eMsg = _sH.validate(_key, value);\n                        _validPaths.get(this.jsd)[_key] = eMsg\n                        if (typeof eMsg === \"string\") {\n                            this.jsd.observerBuilder.error(_key, eMsg);\n                            this.jsd.observerBuilder.error(this.path, eMsg);\n                            this.jsd.observerBuilder.error(this.root.path, eMsg);\n                            return eMsg\n                        }\n                    }\n                    t[key] = value;\n                    // let _p = Schema.concatPathAddr(this.path, _key);\n                    // this.jsd.observerBuilder.next(_p, value);\n                    // this.jsd.observerBuilder.next(_key, value);\n                }\n                if (typeof((_e = this.validate())!== 'string')) {\n                    if (this.path.length) {\n                        this.jsd.observerBuilder.next(this.path, value);\n                    }\n                    const _p = Schema.concatPathAddr(this.path, key);\n                    const _j = this.root.toJSON();\n                    return this.jsd.observerBuilder.next(_p, _j);\n                    // return true;\n                } else {\n                    this.jsd.observerBuilder.error(this.path, _e);\n                    return false;\n                }\n            }\n        };\n    }\n\n    static concatPathAddr(path, addr) {\n        return path.length ? `${path}.${addr}` : addr;\n    }\n\n    /**\n     * @returns schema signature object\n     */\n    get signature() {\n        return _schemaSignatures.get(this);\n    }\n\n    /**\n     * getter for object model\n     */\n    get model() {\n        return _object.get(this);\n    }\n\n    /**\n     * setter for object model\n     * @param value\n     */\n    set model(value) {\n        let e;\n        if (typeof value === 'object') {\n            this.subscribe({\n                error: (e) => {\n                    this.jsd.observerBuilder.error(this.path, e);\n                }\n            });\n\n            const keys = Object.keys(value);\n\n            if (keys.length) {\n                for (k of keys) {\n                    this.model[k] = value[k];\n                }\n            } else {\n                e = 'null not allowed';\n                _validPaths.get(this.jsd)[this.path] = e;\n                this.jsd.observerBuilder.error(this.path, e);\n            }\n            _validPaths.get(this.jsd)[this.path] = true;\n            this.jsd.observerBuilder.next(this.path, this);\n            this.unsubscribe();\n        } else {\n            e = `unable to set scalar value on model at ${this.path.length ? this.path : '.'}`;\n            _validPaths.get(this.jsd)[this.path] = e;\n            this.jsd.observerBuilder.error(this.path, e);\n            return e;\n        }\n    }\n\n\n    /**\n     * @param {string} key\n     * @returns {any}\n     */\n    get(key) {\n        return this.model[key];\n    }\n\n    /**\n     * sets value to schema key\n     * @param {string|object} key\n     * @param {any} value\n     */\n    set(key, value) {\n        if (typeof key === 'string') {\n            this.model[key] = value;\n        } else {\n            const _sH = _schemaHelpers.get(this);\n            let e = _sH.ensureRequiredFields(key);\n            _validPaths.get(this.jsd)[this.path] = e;\n            if (typeof e === 'string') {\n                this.jsd.observerBuilder.error(this.path, e);\n            }\n            Object.keys(key).forEach((_k) => {\n                this.model[_k] = key[_k];\n            });\n        }\n        return this;\n    }\n\n\n    /**\n     * subscribes handler method to property observer for path\n     * @param path\n     * @param func\n     */\n    subscribe(func) {\n        if ((typeof func).match(/^(function|object)$/) === null) {\n            throw new Error('subscribe requires function');\n        }\n        let _o = this.jsd.observerBuilder.get(this.path);\n        if (!_o || _o === null) {\n            this.jsd.observerBuilder.create(this.path, this);\n            _o = this.jsd.observerBuilder.get(this.path);\n        }\n\n        _o.subscribe(func);\n        return this;\n    }\n\n    /**\n     * unsubscribes from this object's observer\n     */\n    unsubscribe() {\n        let _o = this.jsd.observerBuilder.get(this.path);\n        if (!_o || _o === null) {\n            _o.unsubscribe();\n        }\n    }\n\n    /**\n     * subscribes handler method to property observer for path\n     * @param path\n     * @param func\n     */\n    subscribeTo(path, func) {\n        if ((typeof func).match(/^(function|object)$/) === null) {\n            throw new Error('subscribeTo requires function');\n        }\n        let _o = this.jsd.observerBuilder.get(path);\n        if (!_o || _o === null) {\n            this.jsd.observerBuilder.create(path, this);\n            _o = this.jsd.observerBuilder.get(path);\n        }\n        _o.subscribe(func);\n        return this;\n    }\n\n    /**\n     * unsubscribes from this observer for object at path\n     * @param path\n     */\n    unsubscribeFrom(path) {\n        let _o = this.jsd.observerBuilder.get(path);\n        if (!_o || _o === null) {\n            _o.unsubscribe();\n        }\n    }\n\n    /**\n     * @returns {true|string} returns error string or true\n     */\n    validate() {\n        const paths = _validPaths.get(this.jsd);\n        for (_k in paths) {\n            if (typeof paths[_k] === 'string') {\n                return paths[_k];\n            }\n        }\n        return true;\n    }\n\n    /**\n     * @returns {boolean}\n     */\n    get isValid() {\n        return (typeof this.validate() !== 'string');\n    }\n\n    /**\n     * gets raw value of this model\n     */\n    valueOf() {\n        return this.model;\n    }\n\n    /**\n     * JSONifies Schema Model\n     */\n    toJSON() {\n        let _derive = (itm) => {\n            if (itm instanceof Schema) {\n                return itm.toJSON();\n            }\n            if (itm instanceof Set) {\n                return itm.toJSON();\n            }\n            if (typeof itm === 'object') {\n                const _o = !Array.isArray(itm) ? {} : [];\n                for (let k in itm) {\n                    _o[k] = _derive(itm[k]);\n                }\n                return _o;\n            }\n            return itm;\n        };\n        return _derive(this.valueOf());\n    }\n\n    /**\n     * JSON stringifies primitive value\n     */\n    toString(pretty = false) {\n        return JSON.stringify(this.toJSON(), null, (pretty ? 2 : void(0)));\n    }\n\n    /**\n     * get options (if any) for this model's schema\n     */\n    get options() {\n        return _schemaOptions.get(this);\n    }\n\n    /**\n     * @returns {string} Object ID for Schema\n     */\n    get objectID() {\n        return _mdRef.get(this)._id;\n    }\n\n    /**\n     * @returns {Schema} elemetn at Schema root\n     */\n    get root() {\n        return _mdRef.get(this).root || this;\n    }\n\n    /**\n     * @returns {string} path to current Schema\n     */\n    get path() {\n        let _ = _mdRef.get(this).path;\n        return _exists(_) ? _ : \"\";\n    }\n\n    /**\n     * @returns {Schema} parent Schema element\n     */\n    get parent() {\n        let _ = _mdRef.get(this).root;\n        return _exists(_) ? _ : this;\n    }\n\n    /**\n     * @returns {*|JSD}\n     */\n    get jsd() {\n        return _mdRef.get(this).jsd;\n    }\n\n    /**\n     * @returns list of required elements on this Schema\n     */\n    get requiredFields() {\n        return _required_elements.get(this);\n    }\n\n    /**\n     * indicates if Schema will accept arbitrary keys\n     * @returns {boolean}\n     */\n    get isExtensible() {\n        return _exists(this.signature.extensible) ?\n            this.signature.extensible : this.options.extensible || false;\n    }\n\n    /**\n     * Base Signature for all Schema Objects\n     */\n    static defaultSignature() {\n        return {\n            type: \"*\",\n            required: true,\n            extensible: false\n        };\n    }\n}\n",
     "static": true,
     "longname": "/Users/van/IdeaProjects/JSD/src/classes/schema.js",
     "access": "public",
@@ -3729,7 +3729,7 @@
     "longname": "src/classes/schema.js~Schema#handler",
     "access": "public",
     "description": null,
-    "lineNumber": 112,
+    "lineNumber": 113,
     "undocument": true,
     "type": {
       "types": [
@@ -3748,7 +3748,7 @@
     "longname": "src/classes/schema.js~Schema.concatPathAddr",
     "access": "public",
     "description": null,
-    "lineNumber": 211,
+    "lineNumber": 212,
     "undocument": true,
     "params": [
       {
@@ -3781,7 +3781,7 @@
     "longname": "src/classes/schema.js~Schema#signature",
     "access": "public",
     "description": "",
-    "lineNumber": 218,
+    "lineNumber": 219,
     "unknown": [
       {
         "tagName": "@returns",
@@ -3813,7 +3813,7 @@
     "longname": "src/classes/schema.js~Schema#model",
     "access": "public",
     "description": "getter for object model",
-    "lineNumber": 225,
+    "lineNumber": 226,
     "type": {
       "types": [
         "*"
@@ -3831,7 +3831,7 @@
     "longname": "src/classes/schema.js~Schema#model",
     "access": "public",
     "description": "setter for object model",
-    "lineNumber": 233,
+    "lineNumber": 234,
     "params": [
       {
         "nullable": null,
@@ -3856,7 +3856,7 @@
     "longname": "src/classes/schema.js~Schema#get",
     "access": "public",
     "description": "",
-    "lineNumber": 269,
+    "lineNumber": 270,
     "unknown": [
       {
         "tagName": "@returns",
@@ -3895,7 +3895,7 @@
     "longname": "src/classes/schema.js~Schema#set",
     "access": "public",
     "description": "sets value to schema key",
-    "lineNumber": 278,
+    "lineNumber": 279,
     "params": [
       {
         "nullable": null,
@@ -3936,7 +3936,7 @@
     "longname": "src/classes/schema.js~Schema#subscribe",
     "access": "public",
     "description": "subscribes handler method to property observer for path",
-    "lineNumber": 301,
+    "lineNumber": 302,
     "params": [
       {
         "nullable": null,
@@ -3976,7 +3976,7 @@
     "longname": "src/classes/schema.js~Schema#unsubscribe",
     "access": "public",
     "description": "unsubscribes from this object's observer",
-    "lineNumber": 318,
+    "lineNumber": 319,
     "params": [],
     "return": null
   },
@@ -3991,7 +3991,7 @@
     "longname": "src/classes/schema.js~Schema#subscribeTo",
     "access": "public",
     "description": "subscribes handler method to property observer for path",
-    "lineNumber": 330,
+    "lineNumber": 331,
     "params": [
       {
         "nullable": null,
@@ -4031,7 +4031,7 @@
     "longname": "src/classes/schema.js~Schema#unsubscribeFrom",
     "access": "public",
     "description": "unsubscribes from this observer for object at path",
-    "lineNumber": 347,
+    "lineNumber": 348,
     "params": [
       {
         "nullable": null,
@@ -4057,7 +4057,7 @@
     "longname": "src/classes/schema.js~Schema#validate",
     "access": "public",
     "description": "",
-    "lineNumber": 357,
+    "lineNumber": 358,
     "unknown": [
       {
         "tagName": "@returns",
@@ -4086,7 +4086,7 @@
     "longname": "src/classes/schema.js~Schema#isValid",
     "access": "public",
     "description": "",
-    "lineNumber": 370,
+    "lineNumber": 371,
     "unknown": [
       {
         "tagName": "@returns",
@@ -4118,7 +4118,7 @@
     "longname": "src/classes/schema.js~Schema#valueOf",
     "access": "public",
     "description": "gets raw value of this model",
-    "lineNumber": 377,
+    "lineNumber": 378,
     "params": [],
     "return": {
       "types": [
@@ -4137,7 +4137,7 @@
     "longname": "src/classes/schema.js~Schema#toJSON",
     "access": "public",
     "description": "JSONifies Schema Model",
-    "lineNumber": 384,
+    "lineNumber": 385,
     "params": [],
     "return": {
       "types": [
@@ -4156,7 +4156,7 @@
     "longname": "src/classes/schema.js~Schema#toString",
     "access": "public",
     "description": "JSON stringifies primitive value",
-    "lineNumber": 407,
+    "lineNumber": 408,
     "params": [
       {
         "name": "pretty",
@@ -4185,7 +4185,7 @@
     "longname": "src/classes/schema.js~Schema#options",
     "access": "public",
     "description": "get options (if any) for this model's schema",
-    "lineNumber": 414,
+    "lineNumber": 415,
     "type": {
       "types": [
         "*"
@@ -4203,7 +4203,7 @@
     "longname": "src/classes/schema.js~Schema#objectID",
     "access": "public",
     "description": "",
-    "lineNumber": 421,
+    "lineNumber": 422,
     "unknown": [
       {
         "tagName": "@returns",
@@ -4235,7 +4235,7 @@
     "longname": "src/classes/schema.js~Schema#root",
     "access": "public",
     "description": "",
-    "lineNumber": 428,
+    "lineNumber": 429,
     "unknown": [
       {
         "tagName": "@returns",
@@ -4267,7 +4267,7 @@
     "longname": "src/classes/schema.js~Schema#path",
     "access": "public",
     "description": "",
-    "lineNumber": 435,
+    "lineNumber": 436,
     "unknown": [
       {
         "tagName": "@returns",
@@ -4299,7 +4299,7 @@
     "longname": "src/classes/schema.js~Schema#parent",
     "access": "public",
     "description": "",
-    "lineNumber": 443,
+    "lineNumber": 444,
     "unknown": [
       {
         "tagName": "@returns",
@@ -4331,7 +4331,7 @@
     "longname": "src/classes/schema.js~Schema#jsd",
     "access": "public",
     "description": "",
-    "lineNumber": 451,
+    "lineNumber": 452,
     "unknown": [
       {
         "tagName": "@returns",
@@ -4364,7 +4364,7 @@
     "longname": "src/classes/schema.js~Schema#requiredFields",
     "access": "public",
     "description": "",
-    "lineNumber": 458,
+    "lineNumber": 459,
     "unknown": [
       {
         "tagName": "@returns",
@@ -4396,7 +4396,7 @@
     "longname": "src/classes/schema.js~Schema#isExtensible",
     "access": "public",
     "description": "indicates if Schema will accept arbitrary keys",
-    "lineNumber": 466,
+    "lineNumber": 467,
     "unknown": [
       {
         "tagName": "@returns",
@@ -4428,7 +4428,7 @@
     "longname": "src/classes/schema.js~Schema.defaultSignature",
     "access": "public",
     "description": "Base Signature for all Schema Objects",
-    "lineNumber": 474,
+    "lineNumber": 475,
     "params": [],
     "return": {
       "types": [
@@ -5482,7 +5482,7 @@
   },
   {
     "kind": "packageJSON",
-    "content": "{\n  \"author\": \"Van Schroeder <van@webfreshener.com>\",\n  \"name\": \"jsd\",\n  \"description\": \"Schema Generation and Data Validation with object virtualization\",\n  \"keywords\": [\n    \"schema\",\n    \"validation\",\n    \"validatable\",\n    \"observable\",\n    \"proxy\",\n    \"model\",\n    \"json\",\n    \"data\",\n    \"orm\",\n    \"object\",\n    \"hash\",\n    \"properties\",\n    \"DOM\",\n    \"object model\"\n  ],\n  \"version\": \"1.0.0-beta.1\",\n  \"main\": \"./index.js\",\n  \"licenses\": [\n    {\n      \"type\": \"MIT\",\n      \"url\": \"http://www.opensource.org/licenses/MIT\"\n    }\n  ],\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"https://github.com/Webfreshener/JSD.git\"\n  },\n  \"dependencies\": {},\n  \"devDependencies\": {\n    \"babel\": \"^6.5.2\",\n    \"babel-core\": \"^6.18.2\",\n    \"babel-plugin-transform-remove-strict-mode\": \"0.0.2\",\n    \"babel-preset-es2015\": \"^6.18.0\",\n    \"babel-register\": \"^6.18.0\",\n    \"chai\": \"^3.5.0\",\n    \"es6-weak-map\": \"^2.0.1\",\n    \"esdoc\": \"^1.0.4\",\n    \"esdoc-accessor-plugin\": \"^1.0.0\",\n    \"esdoc-exclude-source-plugin\": \"^1.0.0\",\n    \"esdoc-standard-plugin\": \"^1.0.0\",\n    \"jest\": \"^21.2.1\",\n    \"jest-each\": \"^0.3.1\",\n    \"jshint\": \"^2.9.4\",\n    \"mocha\": \"^3.5.3\",\n    \"run-sequence\": \"^1.2.2\",\n    \"rxjs\": \"^5.5.6\",\n    \"weakmap\": \"0.0.6\",\n    \"webpack\": \"^3.10.0\",\n    \"wf-utils\": \"git+https://github.com/webfreshener/wf-utils.git\"\n  },\n  \"homepage\": \"https://webfreshener.github.io/JSD/\",\n  \"scripts\": {\n    \"test\": \"jest\",\n    \"version\": \"webpack --config webpack.config.js\",\n    \"docs\": \"./node_modules/.bin/esdoc\"\n  }\n}\n",
+    "content": "{\n  \"author\": \"Van Schroeder <van@webfreshener.com>\",\n  \"name\": \"jsd\",\n  \"description\": \"Schema Generation and Data Validation with object virtualization\",\n  \"keywords\": [\n    \"schema\",\n    \"validation\",\n    \"validatable\",\n    \"observable\",\n    \"proxy\",\n    \"model\",\n    \"json\",\n    \"data\",\n    \"orm\",\n    \"object\",\n    \"hash\",\n    \"properties\",\n    \"DOM\",\n    \"object model\"\n  ],\n  \"version\": \"1.0.0-beta.2\",\n  \"main\": \"./index.js\",\n  \"licenses\": [\n    {\n      \"type\": \"MIT\",\n      \"url\": \"http://www.opensource.org/licenses/MIT\"\n    }\n  ],\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"https://github.com/Webfreshener/JSD.git\"\n  },\n  \"dependencies\": {},\n  \"devDependencies\": {\n    \"babel\": \"^6.5.2\",\n    \"babel-core\": \"^6.18.2\",\n    \"babel-plugin-transform-remove-strict-mode\": \"0.0.2\",\n    \"babel-preset-env\": \"^1.6.1\",\n    \"babel-register\": \"^6.18.0\",\n    \"chai\": \"^4.1.2\",\n    \"es6-weak-map\": \"^2.0.1\",\n    \"esdoc\": \"^1.0.4\",\n    \"esdoc-accessor-plugin\": \"^1.0.0\",\n    \"esdoc-exclude-source-plugin\": \"^1.0.0\",\n    \"esdoc-standard-plugin\": \"^1.0.0\",\n    \"jest\": \"^22.1.4\",\n    \"jest-each\": \"^0.3.1\",\n    \"jshint\": \"^2.9.4\",\n    \"mocha\": \"^5.0.0\",\n    \"rxjs\": \"^5.5.6\",\n    \"weakmap\": \"0.0.6\",\n    \"webpack\": \"^3.10.0\",\n    \"jsd-utils\": \"git+https://github.com/webfreshener/jsd-utils.git\"\n  },\n  \"homepage\": \"https://webfreshener.github.io/JSD/\",\n  \"scripts\": {\n    \"test\": \"jest\",\n    \"webpack\": \"webpack --config webpack.config.js\",\n    \"version\": \"npm run webpack\",\n    \"docs\": \"./node_modules/.bin/esdoc\"\n  }\n}\n",
     "longname": "/Users/van/IdeaProjects/JSD/package.json",
     "name": "package.json",
     "static": true,
