@@ -20,6 +20,8 @@ Schema Based Self-Validating and Observable Data Models
 
 **[Basic Usage](#basic-usage)**
 
+   * [Schema Basics](#schema-basics)
+    
 **[JSD Specification](#jsd-specification)**
 
    * [Array Type](#array-type)

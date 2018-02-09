@@ -141,7 +141,7 @@ export class SchemaHelpers {
             let _k = _elements[_i];
             let itm;
             let objPath = _exists(path) ? (path.length ? `${path}.${_k}` : _k) : _k || "";
-            this._ref.jsd.validatorBuilder.create(obj[_k], objPath, this._ref);
+            this._ref.validatorBuilder.create(obj[_k], objPath, this._ref);
             // tests for nested elements
             if (_exists(obj[_k]) && typeof obj[_k].elements === "object") {
 
@@ -189,7 +189,7 @@ export class SchemaHelpers {
      * @returns {*}
      */
     validate(key, value) {
-        let _list = this._ref.jsd.validatorBuilder.list();
+        let _list = this._ref.validatorBuilder.list();
         let _ref;
         //-- attempts to validate
         if (!key.length) {
@@ -204,14 +204,14 @@ export class SchemaHelpers {
                 _path.push(_k);
                 _p = _path.join('.');
             }
-            if (!(_ref = this._ref.jsd.validatorBuilder.get(_p))) {
+            if (!(_ref = this._ref.validatorBuilder.get(_p))) {
                 if (!this.options.extensible) {
                     return `'${key}' is not a valid schema property`;
                 }
             }
-            this._ref.jsd.validatorBuilder.set(key, _ref);
+            this._ref.validatorBuilder.set(key, _ref);
         }
-        if (typeof (msg = this._ref.jsd.validatorBuilder.exec(key, value)) === 'string') {
+        if (typeof (msg = this._ref.validatorBuilder.exec(key, value)) === 'string') {
             return msg;
         }
         return true;

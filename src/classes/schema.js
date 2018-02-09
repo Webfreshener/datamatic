@@ -2,7 +2,7 @@ import {
     _mdRef, _required_elements,
     _observers, _object, _kinds, _exists,
     _schemaHelpers, _schemaOptions, _schemaSignatures,
-    _validPaths, wf
+    _validPaths, _oBuilders, _vBuilders, wf
 } from './_references';
 import {MetaData} from './_metaData';
 import {SchemaHelpers} from './_schemaHelpers';
@@ -102,10 +102,10 @@ export class Schema {
                 if (typeof key === 'object') {
                     const e = _sH.setObject(key);
                     if (typeof e === 'string') {
-                        this.jsd.observerBuilder.error(this.path, e);
+                        this.observerBuilder.error(this.path, e);
                         return false;
                     }
-                    return this.jsd.observerBuilder.next(this.path, this);
+                    return this.observerBuilder.next(this.path, this);
                 }
                 let _childSigs = this.signature.elements || this.signature;
                 let _pathKeys = key.split(".");
@@ -123,7 +123,7 @@ export class Schema {
                             // applies schema
                             _schema = _childSigs["*"].polymorphic || _childSigs["*"];
                             // creates Validator for path
-                            this.jsd.validatorBuilder.create(_schema, _key, this);
+                            this.validatorBuilder.create(_schema, _key, this);
                         }
                     }
                     // handles missing schema signatures
@@ -131,7 +131,7 @@ export class Schema {
                         // rejects non-members of non-extensible schemas
                         if (!this.isExtensible) {
                             const e = `element '${_key}' is not a valid element`;
-                            this.jsd.observerBuilder.error(key, e);
+                            this.observerBuilder.error(key, e);
                             return false;
                         }
                         _schema = Schema.defaultSignature;
@@ -140,8 +140,8 @@ export class Schema {
                     if (typeof value === "object") {
                         value = _sH.setChildObject(_key, value);
                         if (typeof value === 'string') {
-                            this.jsd.observerBuilder.error(_key, value);
-                            this.jsd.observerBuilder.error(this.root.path, value);
+                            this.observerBuilder.error(_key, value);
+                            this.observerBuilder.error(this.root.path, value);
                             return false;
                         }
                         // return;
@@ -151,15 +151,15 @@ export class Schema {
                         this.subscribeTo(_key, {
                             error: (e) => {
                                 let _p = Schema.concatPathAddr(this.path, _key);
-                                this.jsd.observerBuilder.error(_p, e)
+                                this.observerBuilder.error(_p, e)
                             }
                         });
                         let eMsg = _sH.validate(_key, value);
                         _validPaths.get(this.jsd)[_key] = eMsg
                         if (typeof eMsg === "string") {
-                            this.jsd.observerBuilder.error(_key, eMsg);
-                            this.jsd.observerBuilder.error(this.path, eMsg);
-                            this.jsd.observerBuilder.error(this.root.path, eMsg);
+                            this.observerBuilder.error(_key, eMsg);
+                            this.observerBuilder.error(this.path, eMsg);
+                            this.observerBuilder.error(this.root.path, eMsg);
                             return eMsg
                         }
                     }
@@ -168,14 +168,14 @@ export class Schema {
                 const _e = this.validate();
                 if ((typeof _e) !== 'string') {
                     if (this.path.length) {
-                        this.jsd.observerBuilder.next(this.path, value);
+                        this.observerBuilder.next(this.path, value);
                     }
                     const _p = Schema.concatPathAddr(this.path, key);
                     const _j = this.root.toJSON();
-                    this.jsd.observerBuilder.next(_p, _j);
+                    this.observerBuilder.next(_p, _j);
                     return true;
                 } else {
-                    this.jsd.observerBuilder.error(this.path, _e);
+                    this.observerBuilder.error(this.path, _e);
                     return false;
                 }
             }
@@ -209,7 +209,7 @@ export class Schema {
         if (typeof value === 'object') {
             this.subscribe({
                 error: (e) => {
-                    this.jsd.observerBuilder.error(this.path, e);
+                    this.observerBuilder.error(this.path, e);
                 }
             });
 
@@ -222,15 +222,15 @@ export class Schema {
             } else {
                 e = 'null not allowed';
                 _validPaths.get(this.jsd)[this.path] = e;
-                this.jsd.observerBuilder.error(this.path, e);
+                this.observerBuilder.error(this.path, e);
             }
             _validPaths.get(this.jsd)[this.path] = true;
-            this.jsd.observerBuilder.next(this.path, this);
+            this.observerBuilder.next(this.path, this);
             this.unsubscribe();
         } else {
             e = `unable to set scalar value on model at ${this.path.length ? this.path : '.'}`;
             _validPaths.get(this.jsd)[this.path] = e;
-            this.jsd.observerBuilder.error(this.path, e);
+            this.observerBuilder.error(this.path, e);
             return e;
         }
     }
@@ -257,7 +257,7 @@ export class Schema {
             let e = _sH.ensureRequiredFields(key);
             _validPaths.get(this.jsd)[this.path] = e;
             if (typeof e === 'string') {
-                this.jsd.observerBuilder.error(this.path, e);
+                this.observerBuilder.error(this.path, e);
             }
             Object.keys(key).forEach((_k) => {
                 this.model[_k] = key[_k];
@@ -276,10 +276,10 @@ export class Schema {
         if ((typeof func).match(/^(function|object)$/) === null) {
             throw new Error('subscribe requires function');
         }
-        let _o = this.jsd.observerBuilder.get(this.path);
+        let _o = this.observerBuilder.get(this.path);
         if (!_o || _o === null) {
-            this.jsd.observerBuilder.create(this.path, this);
-            _o = this.jsd.observerBuilder.get(this.path);
+            this.observerBuilder.create(this.path, this);
+            _o = this.observerBuilder.get(this.path);
         }
 
         _o.subscribe(func);
@@ -290,7 +290,7 @@ export class Schema {
      * unsubscribes from this object's observer
      */
     unsubscribe() {
-        let _o = this.jsd.observerBuilder.get(this.path);
+        let _o = this.observerBuilder.get(this.path);
         if (!_o || _o === null) {
             _o.unsubscribe();
         }
@@ -305,10 +305,10 @@ export class Schema {
         if ((typeof func).match(/^(function|object)$/) === null) {
             throw new Error('subscribeTo requires function');
         }
-        let _o = this.jsd.observerBuilder.get(path);
+        let _o = this.observerBuilder.get(path);
         if (!_o || _o === null) {
-            this.jsd.observerBuilder.create(path, this);
-            _o = this.jsd.observerBuilder.get(path);
+            this.observerBuilder.create(path, this);
+            _o = this.observerBuilder.get(path);
         }
         _o.subscribe(func);
         return this;
@@ -319,7 +319,7 @@ export class Schema {
      * @param path
      */
     unsubscribeFrom(path) {
-        let _o = this.jsd.observerBuilder.get(path);
+        let _o = this.observerBuilder.get(path);
         if (!_o || _o === null) {
             _o.unsubscribe();
         }
@@ -444,6 +444,18 @@ export class Schema {
     get isExtensible() {
         return _exists(this.signature.extensible) ?
             this.signature.extensible : this.options.extensible || false;
+    }
+
+    /**
+     *
+     * @returns {ValidatorBuilder}
+     */
+    get validatorBuilder() {
+        return _vBuilders.get(this.jsd);
+    }
+
+    get observerBuilder() {
+        return _oBuilders.get(this.jsd);
     }
 
     /**

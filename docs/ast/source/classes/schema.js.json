@@ -12541,7 +12541,7 @@
                                                                   "leadingComments": [
                                                                     {
                                                                       "type": "CommentLine",
-                                                                      "value": " this.jsd.observerBuilder.error(this.path, e);",
+                                                                      "value": " this.observerBuildererror(this.path, e);",
                                                                       "start": 7402,
                                                                       "end": 7450,
                                                                       "loc": {
@@ -12792,7 +12792,7 @@
                                                             },
                                                             {
                                                               "type": "CommentLine",
-                                                              "value": "     // this.jsd.observerBuilder.next(_k, value);",
+                                                              "value": "     // this.observerBuildernext(_k, value);",
                                                               "start": 7240,
                                                               "end": 7291,
                                                               "loc": {
@@ -14108,7 +14108,7 @@
                                             },
                                             {
                                               "type": "CommentLine",
-                                              "value": " this.jsd.observerBuilder.next(_p, value);",
+                                              "value": " this.observerBuildernext(_p, value);",
                                               "start": 8288,
                                               "end": 8332,
                                               "loc": {
@@ -14124,7 +14124,7 @@
                                             },
                                             {
                                               "type": "CommentLine",
-                                              "value": " this.jsd.observerBuilder.next(_key, value);",
+                                              "value": " this.observerBuildernext(_key, value);",
                                               "start": 8353,
                                               "end": 8399,
                                               "loc": {
@@ -30367,7 +30367,7 @@
     },
     {
       "type": "CommentLine",
-      "value": "     // this.jsd.observerBuilder.next(_k, value);",
+      "value": "     // this.observerBuildernext(_k, value);",
       "start": 7240,
       "end": 7291,
       "loc": {
@@ -30399,7 +30399,7 @@
     },
     {
       "type": "CommentLine",
-      "value": " this.jsd.observerBuilder.error(this.path, e);",
+      "value": " this.observerBuildererror(this.path, e);",
       "start": 7402,
       "end": 7450,
       "loc": {
@@ -30431,7 +30431,7 @@
     },
     {
       "type": "CommentLine",
-      "value": " this.jsd.observerBuilder.next(_p, value);",
+      "value": " this.observerBuildernext(_p, value);",
       "start": 8288,
       "end": 8332,
       "loc": {
@@ -30447,7 +30447,7 @@
     },
     {
       "type": "CommentLine",
-      "value": " this.jsd.observerBuilder.next(_key, value);",
+      "value": " this.observerBuildernext(_key, value);",
       "start": 8353,
       "end": 8399,
       "loc": {
@@ -54447,7 +54447,7 @@
     },
     {
       "type": "CommentLine",
-      "value": "     // this.jsd.observerBuilder.next(_k, value);",
+      "value": "     // this.observerBuildernext(_k, value);",
       "start": 7240,
       "end": 7291,
       "loc": {
@@ -54658,7 +54658,7 @@
     },
     {
       "type": "CommentLine",
-      "value": " this.jsd.observerBuilder.error(this.path, e);",
+      "value": " this.observerBuildererror(this.path, e);",
       "start": 7402,
       "end": 7450,
       "loc": {
@@ -57794,7 +57794,7 @@
     },
     {
       "type": "CommentLine",
-      "value": " this.jsd.observerBuilder.next(_p, value);",
+      "value": " this.observerBuildernext(_p, value);",
       "start": 8288,
       "end": 8332,
       "loc": {
@@ -57810,7 +57810,7 @@
     },
     {
       "type": "CommentLine",
-      "value": " this.jsd.observerBuilder.next(_key, value);",
+      "value": " this.observerBuildernext(_key, value);",
       "start": 8353,
       "end": 8399,
       "loc": {
