@@ -88,4 +88,16 @@ export const _observers = new WeakMap();
  * @private
  */
 export const _validPaths = new WeakMap();
+/**
+ * Holder for Observer Builders
+ * @type {WeakMap}
+ * @private
+ */
+export const _oBuilders = new WeakMap();
+/**
+ * Holder for Validator Builders
+ * @type {WeakMap}
+ * @private
+ */
+export const _vBuilders = new WeakMap();
 

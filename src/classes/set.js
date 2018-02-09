@@ -1,4 +1,4 @@
-import {_mdRef, _object, _vectorTypes, _exists, wf} from './_references';
+import {_mdRef, _object, _vectorTypes, _oBuilders, _vBuilders, _exists, wf} from './_references';
 import {MetaData} from './_metaData';
 import {ValidatorBuilder} from './_validatorBuilder';
 import {Schema} from './schema';
@@ -89,7 +89,7 @@ export class Set {
             return true;
         }
         else {
-            this.jsd.observerBuilder.error(this.path, `${this.path} requires Array`);
+            this.observerBuilder.error(this.path, `${this.path} requires Array`);
         }
     }
 
@@ -120,21 +120,21 @@ export class Set {
             set: (t, idx, value) => {
                 if (!this._typeCheck(value)) {
                     var eMsg = `item at index ${idx} had wrong type`;
-                    this.jsd.observerBuilder.error(this.path, eMsg);
+                    this.observerBuilder.error(this.path, eMsg);
                     return false;
                 }
                 t[idx] = value;
-                this.jsd.observerBuilder.next(this.path, t);
+                this.observerBuilder.next(this.path, t);
                 return true;
             },
             deleteProperty: (t, idx) => {
                 if (idx >= t.length) {
                     const e = `index ${idx} is out of bounds on ${this.path}`;
-                    this.jsd.observerBuilder.error(this.path, e);
+                    this.observerBuilder.error(this.path, e);
                     return false;
                 }
                 t.splice(idx, 1);
-                this.jsd.observerBuilder.next(this.path, t);
+                this.observerBuilder.next(this.path, t);
                 return true;
             }
         };
@@ -411,10 +411,10 @@ export class Set {
         if ((typeof func).match(/^(function|object)$/) === null) {
             throw new Error('subscribe requires function');
         }
-        let _o = this.jsd.observerBuilder.get(this.path);
+        let _o = this.observerBuilder.get(this.path);
         if (!_o || _o === null) {
-            this.jsd.observerBuilder.create(this.path, this);
-            _o = this.jsd.observerBuilder.get(this.path);
+            this.observerBuilder.create(this.path, this);
+            _o = this.observerBuilder.get(this.path);
         }
         _o.subscribe(func);
         return this;
@@ -429,13 +429,29 @@ export class Set {
         if ((typeof func).match(/^(function|object)$/) === null) {
             throw new Error('subscribeTo requires function');
         }
-        let _o = this.jsd.observerBuilder.get(path);
+        let _o = this.observerBuilder.get(path);
         if (!_o || _o === null) {
-            this.jsd.observerBuilder.create(path, this);
-            _o = this.jsd.observerBuilder.get(path);
+            this.observerBuilder.create(path, this);
+            _o = this.observerBuilder.get(path);
         }
 
         _o.subscribe(func);
         return this;
+    }
+
+    /**
+     *
+     * @returns {ValidatorBuilder}
+     */
+    get validatorBuilder() {
+        return _vBuilders.get(this.jsd);
+    }
+
+    /**
+     *
+     * @returns {ObserverBuilder}
+     */
+    get observerBuilder() {
+        return _oBuilders.get(this.jsd);
     }
 }

@@ -181,10 +181,10 @@ export class Schema {
                 if (typeof key === &apos;object&apos;) {
                     const e = _sH.setObject(key);
                     if (typeof e === &apos;string&apos;) {
-                        this.jsd.observerBuilder.error(this.path, e);
+                        this.observerBuildererror(this.path, e);
                         return false;
                     }
-                    return this.jsd.observerBuilder.next(this.path, this);
+                    return this.observerBuildernext(this.path, this);
                 }
                 let _childSigs = this.signature.elements || this.signature;
                 let _pathKeys = key.split(&quot;.&quot;);
@@ -210,7 +210,7 @@ export class Schema {
                         // rejects non-members of non-extensible schemas
                         if (!this.isExtensible) {
                             const e = `element &apos;${_key}&apos; is not a valid element`;
-                            this.jsd.observerBuilder.error(key, e);
+                            this.observerBuildererror(key, e);
                             return false;
                         }
                         _schema = Schema.defaultSignature;
@@ -219,8 +219,8 @@ export class Schema {
                     if (typeof value === &quot;object&quot;) {
                         value = _sH.setChildObject(_key, value);
                         if (typeof value === &apos;string&apos;) {
-                            this.jsd.observerBuilder.error(_key, value);
-                            this.jsd.observerBuilder.error(this.root.path, value);
+                            this.observerBuildererror(_key, value);
+                            this.observerBuildererror(this.root.path, value);
                             return false;
                         }
                         // return;
@@ -231,38 +231,38 @@ export class Schema {
                             // next: (value) =&gt; {
                             //     let _k = Schema.concatPathAddr(this.path, _key);
                             //     console.log(`next called on _key: ${_key} _k: ${_k} path: ${this.path}`);
-                            //     // this.jsd.observerBuilder.next(_k, value);
+                            //     // this.observerBuildernext(_k, value);
                             // },
                             error: (e) =&gt; {
-                                // this.jsd.observerBuilder.error(this.path, e);
+                                // this.observerBuildererror(this.path, e);
                                 let _p = Schema.concatPathAddr(this.path, _key);
-                                this.jsd.observerBuilder.error(_p, e)
+                                this.observerBuildererror(_p, e)
                             }
                         });
                         let eMsg = _sH.validate(_key, value);
                         _validPaths.get(this.jsd)[_key] = eMsg
                         if (typeof eMsg === &quot;string&quot;) {
-                            this.jsd.observerBuilder.error(_key, eMsg);
-                            this.jsd.observerBuilder.error(this.path, eMsg);
-                            this.jsd.observerBuilder.error(this.root.path, eMsg);
+                            this.observerBuildererror(_key, eMsg);
+                            this.observerBuildererror(this.path, eMsg);
+                            this.observerBuildererror(this.root.path, eMsg);
                             return eMsg
                         }
                     }
                     t[key] = value;
                     // let _p = Schema.concatPathAddr(this.path, _key);
-                    // this.jsd.observerBuilder.next(_p, value);
-                    // this.jsd.observerBuilder.next(_key, value);
+                    // this.observerBuildernext(_p, value);
+                    // this.observerBuildernext(_key, value);
                 }
                 if (typeof((_e = this.validate())!== &apos;string&apos;)) {
                     if (this.path.length) {
-                        this.jsd.observerBuilder.next(this.path, value);
+                        this.observerBuildernext(this.path, value);
                     }
                     const _p = Schema.concatPathAddr(this.path, key);
                     const _j = this.root.toJSON();
-                    return this.jsd.observerBuilder.next(_p, _j);
+                    return this.observerBuildernext(_p, _j);
                     // return true;
                 } else {
-                    this.jsd.observerBuilder.error(this.path, _e);
+                    this.observerBuildererror(this.path, _e);
                     return false;
                 }
             }
@@ -296,7 +296,7 @@ export class Schema {
         if (typeof value === &apos;object&apos;) {
             this.subscribe({
                 error: (e) =&gt; {
-                    this.jsd.observerBuilder.error(this.path, e);
+                    this.observerBuildererror(this.path, e);
                 }
             });
 
@@ -309,15 +309,15 @@ export class Schema {
             } else {
                 e = &apos;null not allowed&apos;;
                 _validPaths.get(this.jsd)[this.path] = e;
-                this.jsd.observerBuilder.error(this.path, e);
+                this.observerBuildererror(this.path, e);
             }
             _validPaths.get(this.jsd)[this.path] = true;
-            this.jsd.observerBuilder.next(this.path, this);
+            this.observerBuildernext(this.path, this);
             this.unsubscribe();
         } else {
             e = `unable to set scalar value on model at ${this.path.length ? this.path : &apos;.&apos;}`;
             _validPaths.get(this.jsd)[this.path] = e;
-            this.jsd.observerBuilder.error(this.path, e);
+            this.observerBuildererror(this.path, e);
             return e;
         }
     }
@@ -344,7 +344,7 @@ export class Schema {
             let e = _sH.ensureRequiredFields(key);
             _validPaths.get(this.jsd)[this.path] = e;
             if (typeof e === &apos;string&apos;) {
-                this.jsd.observerBuilder.error(this.path, e);
+                this.observerBuildererror(this.path, e);
             }
             Object.keys(key).forEach((_k) =&gt; {
                 this.model[_k] = key[_k];
@@ -363,10 +363,10 @@ export class Schema {
         if ((typeof func).match(/^(function|object)$/) === null) {
             throw new Error(&apos;subscribe requires function&apos;);
         }
-        let _o = this.jsd.observerBuilder.get(this.path);
+        let _o = this.this.observerBuilder.get(this.path);
         if (!_o || _o === null) {
-            this.jsd.observerBuilder.create(this.path, this);
-            _o = this.jsd.observerBuilder.get(this.path);
+            this.observerBuildercreate(this.path, this);
+            _o = this.this.observerBuilder.get(this.path);
         }
 
         _o.subscribe(func);
@@ -377,7 +377,7 @@ export class Schema {
      * unsubscribes from this object&apos;s observer
      */
     unsubscribe() {
-        let _o = this.jsd.observerBuilder.get(this.path);
+        let _o = this.this.observerBuilder.get(this.path);
         if (!_o || _o === null) {
             _o.unsubscribe();
         }
@@ -392,10 +392,10 @@ export class Schema {
         if ((typeof func).match(/^(function|object)$/) === null) {
             throw new Error(&apos;subscribeTo requires function&apos;);
         }
-        let _o = this.jsd.observerBuilder.get(path);
+        let _o = this.this.observerBuilder.get(path);
         if (!_o || _o === null) {
-            this.jsd.observerBuilder.create(path, this);
-            _o = this.jsd.observerBuilder.get(path);
+            this.observerBuildercreate(path, this);
+            _o = this.this.observerBuilder.get(path);
         }
         _o.subscribe(func);
         return this;
@@ -406,7 +406,7 @@ export class Schema {
      * @param path
      */
     unsubscribeFrom(path) {
-        let _o = this.jsd.observerBuilder.get(path);
+        let _o = this.this.observerBuilder.get(path);
         if (!_o || _o === null) {
             _o.unsubscribe();
         }

@@ -8,15 +8,16 @@
  * console.log(`${jsd.document.get('.'}`);
  * // -> Schema
  */
-import {wf, _kinds, _validPaths} from './_references';
+import {wf, _kinds, _validPaths, _oBuilders, _vBuilders} from './_references';
 import {ObserverBuilder} from './_observerBuilder';
 import {ValidatorBuilder} from './_validatorBuilder';
 import {Schema} from './schema';
 
 const _documents = new WeakMap();
-const _vBuilders = new WeakMap();
-const _oBuilders = new WeakMap();
-const _validations = new WeakMap();
+/**
+ * JSD Document Entrypoint
+ * @public
+ */
 export class JSD {
     /**
      * @constructor
@@ -65,26 +66,6 @@ export class JSD {
             }
         }
         return true;
-    }
-
-    /**
-     *
-     * @returns {ValidatorBuilder}
-     */
-    get validatorBuilder() {
-        return _vBuilders.get(this);
-    }
-
-    get observerBuilder() {
-        return _oBuilders.get(this);
-    }
-
-    /**
-     *
-     * @param value {Schema}
-     */
-    set document(value) {
-        this.document = value;
     }
 
     /**

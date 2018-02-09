@@ -1303,7 +1303,7 @@ const wf = {
     Obj: __WEBPACK_IMPORTED_MODULE_0_jsd_utils__["Obj"],
     Str: __WEBPACK_IMPORTED_MODULE_0_jsd_utils__["Str"]
 };
-/* harmony export (immutable) */ __webpack_exports__["m"] = wf;
+/* harmony export (immutable) */ __webpack_exports__["o"] = wf;
 
 /**
  * Holder for registered JS Object references
@@ -1321,7 +1321,7 @@ const _kinds = new WeakMap();
  * @private
  */
 const _object = new WeakMap();
-/* harmony export (immutable) */ __webpack_exports__["d"] = _object;
+/* harmony export (immutable) */ __webpack_exports__["e"] = _object;
 
 /**
  * Holder for MetaData references
@@ -1338,7 +1338,7 @@ const _mdRef = new WeakMap();
  * @private
  */
 const _required_elements = new WeakMap();
-/* harmony export (immutable) */ __webpack_exports__["f"] = _required_elements;
+/* harmony export (immutable) */ __webpack_exports__["g"] = _required_elements;
 
 /**
  * Holder for Schema Validators
@@ -1346,7 +1346,7 @@ const _required_elements = new WeakMap();
  * @private
  */
 const _validators = new WeakMap();
-/* harmony export (immutable) */ __webpack_exports__["k"] = _validators;
+/* harmony export (immutable) */ __webpack_exports__["m"] = _validators;
 
 /**
  * Holder for Singleton instance references
@@ -1364,7 +1364,7 @@ const _singletons = new WeakMap();
  * @private
  */
 const _vectorTypes = new WeakMap();
-/* harmony export (immutable) */ __webpack_exports__["l"] = _vectorTypes;
+/* harmony export (immutable) */ __webpack_exports__["n"] = _vectorTypes;
 
 /**
  * Holder for Schema options refeerences
@@ -1373,7 +1373,7 @@ const _vectorTypes = new WeakMap();
  * @private
  */
 const _schemaOptions = new WeakMap();
-/* harmony export (immutable) */ __webpack_exports__["h"] = _schemaOptions;
+/* harmony export (immutable) */ __webpack_exports__["i"] = _schemaOptions;
 
 /**
  * Holder for Schema Helpers references
@@ -1382,7 +1382,7 @@ const _schemaOptions = new WeakMap();
  * @private
  */
 const _schemaHelpers = new WeakMap();
-/* harmony export (immutable) */ __webpack_exports__["g"] = _schemaHelpers;
+/* harmony export (immutable) */ __webpack_exports__["h"] = _schemaHelpers;
 
 /**
  * Holder for Schema Signatures references
@@ -1391,7 +1391,7 @@ const _schemaHelpers = new WeakMap();
  * @private
  */
 const _schemaSignatures = new WeakMap();
-/* harmony export (immutable) */ __webpack_exports__["i"] = _schemaSignatures;
+/* harmony export (immutable) */ __webpack_exports__["j"] = _schemaSignatures;
 
 /**
  * Holder for RXJS Observer references
@@ -1399,7 +1399,7 @@ const _schemaSignatures = new WeakMap();
  * @private
  */
 const _observers = new WeakMap();
-/* harmony export (immutable) */ __webpack_exports__["e"] = _observers;
+/* harmony export (immutable) */ __webpack_exports__["f"] = _observers;
 
 /**
  * Holder for Validation path references
@@ -1407,7 +1407,23 @@ const _observers = new WeakMap();
  * @private
  */
 const _validPaths = new WeakMap();
-/* harmony export (immutable) */ __webpack_exports__["j"] = _validPaths;
+/* harmony export (immutable) */ __webpack_exports__["l"] = _validPaths;
+
+/**
+ * Holder for Observer Builders
+ * @type {WeakMap}
+ * @private
+ */
+const _oBuilders = new WeakMap();
+/* harmony export (immutable) */ __webpack_exports__["d"] = _oBuilders;
+
+/**
+ * Holder for Validator Builders
+ * @type {WeakMap}
+ * @private
+ */
+const _vBuilders = new WeakMap();
+/* harmony export (immutable) */ __webpack_exports__["k"] = _vBuilders;
 
 
 
@@ -1723,8 +1739,8 @@ class Schema {
         if (!Object(__WEBPACK_IMPORTED_MODULE_0__references__["a" /* _exists */])(_signature)) {
             throw `Schema requires JSON object at arguments[0]. Got '${typeof _signature}'`;
         }
-        __WEBPACK_IMPORTED_MODULE_0__references__["h" /* _schemaOptions */].set(this, opts);
-        __WEBPACK_IMPORTED_MODULE_0__references__["f" /* _required_elements */].set(this, []);
+        __WEBPACK_IMPORTED_MODULE_0__references__["i" /* _schemaOptions */].set(this, opts);
+        __WEBPACK_IMPORTED_MODULE_0__references__["g" /* _required_elements */].set(this, []);
 
         // tests for metadata
         if (!(this instanceof __WEBPACK_IMPORTED_MODULE_1__metaData__["a" /* MetaData */])) {
@@ -1759,9 +1775,9 @@ class Schema {
                 let _req = _signature[_sigEl].required;
                 if (_req) {
                     // -- adds required element to list
-                    let req = __WEBPACK_IMPORTED_MODULE_0__references__["f" /* _required_elements */].get(this);
+                    let req = __WEBPACK_IMPORTED_MODULE_0__references__["g" /* _required_elements */].get(this);
                     req.push(_sigEl);
-                    __WEBPACK_IMPORTED_MODULE_0__references__["f" /* _required_elements */].set(this, req);
+                    __WEBPACK_IMPORTED_MODULE_0__references__["g" /* _required_elements */].set(this, req);
                 }
             }
         }
@@ -1774,11 +1790,11 @@ class Schema {
         if (typeof (eMsg = _schema_validator.isValid()) === 'string') {
             throw eMsg;
         }
-        __WEBPACK_IMPORTED_MODULE_0__references__["i" /* _schemaSignatures */].set(this, _signature);
-        __WEBPACK_IMPORTED_MODULE_0__references__["g" /* _schemaHelpers */].set(this, new __WEBPACK_IMPORTED_MODULE_2__schemaHelpers__["a" /* SchemaHelpers */](this));
-        __WEBPACK_IMPORTED_MODULE_0__references__["g" /* _schemaHelpers */].get(this).walkSchema(_signature || __WEBPACK_IMPORTED_MODULE_4__jsd__["a" /* JSD */].defaults, this.path);
+        __WEBPACK_IMPORTED_MODULE_0__references__["j" /* _schemaSignatures */].set(this, _signature);
+        __WEBPACK_IMPORTED_MODULE_0__references__["h" /* _schemaHelpers */].set(this, new __WEBPACK_IMPORTED_MODULE_2__schemaHelpers__["a" /* SchemaHelpers */](this));
+        __WEBPACK_IMPORTED_MODULE_0__references__["h" /* _schemaHelpers */].get(this).walkSchema(_signature || __WEBPACK_IMPORTED_MODULE_4__jsd__["a" /* JSD */].defaults, this.path);
         // creates model
-        __WEBPACK_IMPORTED_MODULE_0__references__["d" /* _object */].set(this, new Proxy({}, this.handler));
+        __WEBPACK_IMPORTED_MODULE_0__references__["e" /* _object */].set(this, new Proxy({}, this.handler));
         // attempts to set default value
         for (let _sigEl of Object.keys(_signature)) {
             // -- tests for element `default`
@@ -1798,14 +1814,14 @@ class Schema {
                 return _m instanceof Schema ? _m.model : _m;
             },
             set: (t, key, value) => {
-                let _sH = __WEBPACK_IMPORTED_MODULE_0__references__["g" /* _schemaHelpers */].get(this);
+                let _sH = __WEBPACK_IMPORTED_MODULE_0__references__["h" /* _schemaHelpers */].get(this);
                 if (typeof key === 'object') {
                     const e = _sH.setObject(key);
                     if (typeof e === 'string') {
-                        this.jsd.observerBuilder.error(this.path, e);
+                        this.observerBuilder.error(this.path, e);
                         return false;
                     }
-                    return this.jsd.observerBuilder.next(this.path, this);
+                    return this.observerBuilder.next(this.path, this);
                 }
                 let _childSigs = this.signature.elements || this.signature;
                 let _pathKeys = key.split(".");
@@ -1823,7 +1839,7 @@ class Schema {
                             // applies schema
                             _schema = _childSigs["*"].polymorphic || _childSigs["*"];
                             // creates Validator for path
-                            this.jsd.validatorBuilder.create(_schema, _key, this);
+                            this.validatorBuilder.create(_schema, _key, this);
                         }
                     }
                     // handles missing schema signatures
@@ -1831,7 +1847,7 @@ class Schema {
                         // rejects non-members of non-extensible schemas
                         if (!this.isExtensible) {
                             const e = `element '${_key}' is not a valid element`;
-                            this.jsd.observerBuilder.error(key, e);
+                            this.observerBuilder.error(key, e);
                             return false;
                         }
                         _schema = Schema.defaultSignature;
@@ -1840,8 +1856,8 @@ class Schema {
                     if (typeof value === "object") {
                         value = _sH.setChildObject(_key, value);
                         if (typeof value === 'string') {
-                            this.jsd.observerBuilder.error(_key, value);
-                            this.jsd.observerBuilder.error(this.root.path, value);
+                            this.observerBuilder.error(_key, value);
+                            this.observerBuilder.error(this.root.path, value);
                             return false;
                         }
                         // return;
@@ -1851,15 +1867,15 @@ class Schema {
                         this.subscribeTo(_key, {
                             error: (e) => {
                                 let _p = Schema.concatPathAddr(this.path, _key);
-                                this.jsd.observerBuilder.error(_p, e)
+                                this.observerBuilder.error(_p, e)
                             }
                         });
                         let eMsg = _sH.validate(_key, value);
-                        __WEBPACK_IMPORTED_MODULE_0__references__["j" /* _validPaths */].get(this.jsd)[_key] = eMsg
+                        __WEBPACK_IMPORTED_MODULE_0__references__["l" /* _validPaths */].get(this.jsd)[_key] = eMsg
                         if (typeof eMsg === "string") {
-                            this.jsd.observerBuilder.error(_key, eMsg);
-                            this.jsd.observerBuilder.error(this.path, eMsg);
-                            this.jsd.observerBuilder.error(this.root.path, eMsg);
+                            this.observerBuilder.error(_key, eMsg);
+                            this.observerBuilder.error(this.path, eMsg);
+                            this.observerBuilder.error(this.root.path, eMsg);
                             return eMsg
                         }
                     }
@@ -1868,14 +1884,14 @@ class Schema {
                 const _e = this.validate();
                 if ((typeof _e) !== 'string') {
                     if (this.path.length) {
-                        this.jsd.observerBuilder.next(this.path, value);
+                        this.observerBuilder.next(this.path, value);
                     }
                     const _p = Schema.concatPathAddr(this.path, key);
                     const _j = this.root.toJSON();
-                    this.jsd.observerBuilder.next(_p, _j);
+                    this.observerBuilder.next(_p, _j);
                     return true;
                 } else {
-                    this.jsd.observerBuilder.error(this.path, _e);
+                    this.observerBuilder.error(this.path, _e);
                     return false;
                 }
             }
@@ -1890,14 +1906,14 @@ class Schema {
      * @returns schema signature object
      */
     get signature() {
-        return __WEBPACK_IMPORTED_MODULE_0__references__["i" /* _schemaSignatures */].get(this);
+        return __WEBPACK_IMPORTED_MODULE_0__references__["j" /* _schemaSignatures */].get(this);
     }
 
     /**
      * getter for object model
      */
     get model() {
-        return __WEBPACK_IMPORTED_MODULE_0__references__["d" /* _object */].get(this);
+        return __WEBPACK_IMPORTED_MODULE_0__references__["e" /* _object */].get(this);
     }
 
     /**
@@ -1909,7 +1925,7 @@ class Schema {
         if (typeof value === 'object') {
             this.subscribe({
                 error: (e) => {
-                    this.jsd.observerBuilder.error(this.path, e);
+                    this.observerBuilder.error(this.path, e);
                 }
             });
 
@@ -1921,16 +1937,16 @@ class Schema {
                 });
             } else {
                 e = 'null not allowed';
-                __WEBPACK_IMPORTED_MODULE_0__references__["j" /* _validPaths */].get(this.jsd)[this.path] = e;
-                this.jsd.observerBuilder.error(this.path, e);
+                __WEBPACK_IMPORTED_MODULE_0__references__["l" /* _validPaths */].get(this.jsd)[this.path] = e;
+                this.observerBuilder.error(this.path, e);
             }
-            __WEBPACK_IMPORTED_MODULE_0__references__["j" /* _validPaths */].get(this.jsd)[this.path] = true;
-            this.jsd.observerBuilder.next(this.path, this);
+            __WEBPACK_IMPORTED_MODULE_0__references__["l" /* _validPaths */].get(this.jsd)[this.path] = true;
+            this.observerBuilder.next(this.path, this);
             this.unsubscribe();
         } else {
             e = `unable to set scalar value on model at ${this.path.length ? this.path : '.'}`;
-            __WEBPACK_IMPORTED_MODULE_0__references__["j" /* _validPaths */].get(this.jsd)[this.path] = e;
-            this.jsd.observerBuilder.error(this.path, e);
+            __WEBPACK_IMPORTED_MODULE_0__references__["l" /* _validPaths */].get(this.jsd)[this.path] = e;
+            this.observerBuilder.error(this.path, e);
             return e;
         }
     }
@@ -1953,11 +1969,11 @@ class Schema {
         if (typeof key === 'string') {
             this.model[key] = value;
         } else {
-            const _sH = __WEBPACK_IMPORTED_MODULE_0__references__["g" /* _schemaHelpers */].get(this);
+            const _sH = __WEBPACK_IMPORTED_MODULE_0__references__["h" /* _schemaHelpers */].get(this);
             let e = _sH.ensureRequiredFields(key);
-            __WEBPACK_IMPORTED_MODULE_0__references__["j" /* _validPaths */].get(this.jsd)[this.path] = e;
+            __WEBPACK_IMPORTED_MODULE_0__references__["l" /* _validPaths */].get(this.jsd)[this.path] = e;
             if (typeof e === 'string') {
-                this.jsd.observerBuilder.error(this.path, e);
+                this.observerBuilder.error(this.path, e);
             }
             Object.keys(key).forEach((_k) => {
                 this.model[_k] = key[_k];
@@ -1976,10 +1992,10 @@ class Schema {
         if ((typeof func).match(/^(function|object)$/) === null) {
             throw new Error('subscribe requires function');
         }
-        let _o = this.jsd.observerBuilder.get(this.path);
+        let _o = this.observerBuilder.get(this.path);
         if (!_o || _o === null) {
-            this.jsd.observerBuilder.create(this.path, this);
-            _o = this.jsd.observerBuilder.get(this.path);
+            this.observerBuilder.create(this.path, this);
+            _o = this.observerBuilder.get(this.path);
         }
 
         _o.subscribe(func);
@@ -1990,7 +2006,7 @@ class Schema {
      * unsubscribes from this object's observer
      */
     unsubscribe() {
-        let _o = this.jsd.observerBuilder.get(this.path);
+        let _o = this.observerBuilder.get(this.path);
         if (!_o || _o === null) {
             _o.unsubscribe();
         }
@@ -2005,10 +2021,10 @@ class Schema {
         if ((typeof func).match(/^(function|object)$/) === null) {
             throw new Error('subscribeTo requires function');
         }
-        let _o = this.jsd.observerBuilder.get(path);
+        let _o = this.observerBuilder.get(path);
         if (!_o || _o === null) {
-            this.jsd.observerBuilder.create(path, this);
-            _o = this.jsd.observerBuilder.get(path);
+            this.observerBuilder.create(path, this);
+            _o = this.observerBuilder.get(path);
         }
         _o.subscribe(func);
         return this;
@@ -2019,7 +2035,7 @@ class Schema {
      * @param path
      */
     unsubscribeFrom(path) {
-        let _o = this.jsd.observerBuilder.get(path);
+        let _o = this.observerBuilder.get(path);
         if (!_o || _o === null) {
             _o.unsubscribe();
         }
@@ -2029,7 +2045,7 @@ class Schema {
      * @returns {true|string} returns error string or true
      */
     validate() {
-        const paths = __WEBPACK_IMPORTED_MODULE_0__references__["j" /* _validPaths */].get(this.jsd);
+        const paths = __WEBPACK_IMPORTED_MODULE_0__references__["l" /* _validPaths */].get(this.jsd);
         try {
             Object.keys(paths).forEach((k) => {
                 if (typeof paths[k] === 'string') {
@@ -2090,7 +2106,7 @@ class Schema {
      * get options (if any) for this model's schema
      */
     get options() {
-        return __WEBPACK_IMPORTED_MODULE_0__references__["h" /* _schemaOptions */].get(this);
+        return __WEBPACK_IMPORTED_MODULE_0__references__["i" /* _schemaOptions */].get(this);
     }
 
     /**
@@ -2134,7 +2150,7 @@ class Schema {
      * @returns list of required elements on this Schema
      */
     get requiredFields() {
-        return __WEBPACK_IMPORTED_MODULE_0__references__["f" /* _required_elements */].get(this);
+        return __WEBPACK_IMPORTED_MODULE_0__references__["g" /* _required_elements */].get(this);
     }
 
     /**
@@ -2144,6 +2160,18 @@ class Schema {
     get isExtensible() {
         return Object(__WEBPACK_IMPORTED_MODULE_0__references__["a" /* _exists */])(this.signature.extensible) ?
             this.signature.extensible : this.options.extensible || false;
+    }
+
+    /**
+     *
+     * @returns {ValidatorBuilder}
+     */
+    get validatorBuilder() {
+        return __WEBPACK_IMPORTED_MODULE_0__references__["k" /* _vBuilders */].get(this.jsd);
+    }
+
+    get observerBuilder() {
+        return __WEBPACK_IMPORTED_MODULE_0__references__["d" /* _oBuilders */].get(this.jsd);
     }
 
     /**
@@ -3140,15 +3168,15 @@ class Set {
         // when we no longer need babel...
         // type = _type;
         // for now we use Weakmap
-        __WEBPACK_IMPORTED_MODULE_0__references__["l" /* _vectorTypes */].set(this, _types);
-        __WEBPACK_IMPORTED_MODULE_0__references__["d" /* _object */].set(this, new Proxy([], this.handler));
+        __WEBPACK_IMPORTED_MODULE_0__references__["n" /* _vectorTypes */].set(this, _types);
+        __WEBPACK_IMPORTED_MODULE_0__references__["e" /* _object */].set(this, new Proxy([], this.handler));
     }
 
     /**
      * getter for object model
      */
     get model() {
-        return __WEBPACK_IMPORTED_MODULE_0__references__["d" /* _object */].get(this);
+        return __WEBPACK_IMPORTED_MODULE_0__references__["e" /* _object */].get(this);
     }
 
     /**
@@ -3157,12 +3185,12 @@ class Set {
      */
     set model(value) {
         if (Array.isArray(value)) {
-            let _m = __WEBPACK_IMPORTED_MODULE_0__references__["d" /* _object */].get(this);
+            let _m = __WEBPACK_IMPORTED_MODULE_0__references__["e" /* _object */].get(this);
             _m = value;
             return true;
         }
         else {
-            this.jsd.observerBuilder.error(this.path, `${this.path} requires Array`);
+            this.observerBuilder.error(this.path, `${this.path} requires Array`);
         }
     }
 
@@ -3193,21 +3221,21 @@ class Set {
             set: (t, idx, value) => {
                 if (!this._typeCheck(value)) {
                     var eMsg = `item at index ${idx} had wrong type`;
-                    this.jsd.observerBuilder.error(this.path, eMsg);
+                    this.observerBuilder.error(this.path, eMsg);
                     return false;
                 }
                 t[idx] = value;
-                this.jsd.observerBuilder.next(this.path, t);
+                this.observerBuilder.next(this.path, t);
                 return true;
             },
             deleteProperty: (t, idx) => {
                 if (idx >= t.length) {
                     const e = `index ${idx} is out of bounds on ${this.path}`;
-                    this.jsd.observerBuilder.error(this.path, e);
+                    this.observerBuilder.error(this.path, e);
                     return false;
                 }
                 t.splice(idx, 1);
-                this.jsd.observerBuilder.next(this.path, t);
+                this.observerBuilder.next(this.path, t);
                 return true;
             }
         };
@@ -3231,7 +3259,7 @@ class Set {
             }
             if (typeof _t === "string") {
                 return typeof item === _t;
-            } else if (!__WEBPACK_IMPORTED_MODULE_0__references__["m" /* wf */].Obj.isOfType(item, _t)) {
+            } else if (!__WEBPACK_IMPORTED_MODULE_0__references__["o" /* wf */].Obj.isOfType(item, _t)) {
                 return false;
             }
         }
@@ -3370,7 +3398,7 @@ class Set {
      * @returns reference to self
      */
     reset() {
-        __WEBPACK_IMPORTED_MODULE_0__references__["d" /* _object */].set(this, new Proxy([], this.handler));
+        __WEBPACK_IMPORTED_MODULE_0__references__["e" /* _object */].set(this, new Proxy([], this.handler));
         return this;
     }
 
@@ -3428,7 +3456,7 @@ class Set {
     get type() {
         // for when we no longer need babel
         // return type;
-        return __WEBPACK_IMPORTED_MODULE_0__references__["l" /* _vectorTypes */].get(this);
+        return __WEBPACK_IMPORTED_MODULE_0__references__["n" /* _vectorTypes */].get(this);
     }
 
     /**
@@ -3484,10 +3512,10 @@ class Set {
         if ((typeof func).match(/^(function|object)$/) === null) {
             throw new Error('subscribe requires function');
         }
-        let _o = this.jsd.observerBuilder.get(this.path);
+        let _o = this.observerBuilder.get(this.path);
         if (!_o || _o === null) {
-            this.jsd.observerBuilder.create(this.path, this);
-            _o = this.jsd.observerBuilder.get(this.path);
+            this.observerBuilder.create(this.path, this);
+            _o = this.observerBuilder.get(this.path);
         }
         _o.subscribe(func);
         return this;
@@ -3502,14 +3530,30 @@ class Set {
         if ((typeof func).match(/^(function|object)$/) === null) {
             throw new Error('subscribeTo requires function');
         }
-        let _o = this.jsd.observerBuilder.get(path);
+        let _o = this.observerBuilder.get(path);
         if (!_o || _o === null) {
-            this.jsd.observerBuilder.create(path, this);
-            _o = this.jsd.observerBuilder.get(path);
+            this.observerBuilder.create(path, this);
+            _o = this.observerBuilder.get(path);
         }
 
         _o.subscribe(func);
         return this;
+    }
+
+    /**
+     *
+     * @returns {ValidatorBuilder}
+     */
+    get validatorBuilder() {
+        return __WEBPACK_IMPORTED_MODULE_0__references__["k" /* _vBuilders */].get(this.jsd);
+    }
+
+    /**
+     *
+     * @returns {ObserverBuilder}
+     */
+    get observerBuilder() {
+        return __WEBPACK_IMPORTED_MODULE_0__references__["d" /* _oBuilders */].get(this.jsd);
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = Set;
@@ -4715,9 +4759,10 @@ var ThrottleSubscriber = (function (_super) {
 
 
 const _documents = new WeakMap();
-const _vBuilders = new WeakMap();
-const _oBuilders = new WeakMap();
-const _validations = new WeakMap();
+/**
+ * JSD Document Entrypoint
+ * @public
+ */
 class JSD {
     /**
      * @constructor
@@ -4737,9 +4782,9 @@ class JSD {
             "Function": Function,
         });
         const _ref = this;
-        __WEBPACK_IMPORTED_MODULE_0__references__["j" /* _validPaths */].set(this, {});
-        _oBuilders.set(this, new __WEBPACK_IMPORTED_MODULE_1__observerBuilder__["a" /* ObserverBuilder */]());
-        _vBuilders.set(this, new __WEBPACK_IMPORTED_MODULE_2__validatorBuilder__["a" /* ValidatorBuilder */]());
+        __WEBPACK_IMPORTED_MODULE_0__references__["l" /* _validPaths */].set(this, {});
+        __WEBPACK_IMPORTED_MODULE_0__references__["d" /* _oBuilders */].set(this, new __WEBPACK_IMPORTED_MODULE_1__observerBuilder__["a" /* ObserverBuilder */]());
+        __WEBPACK_IMPORTED_MODULE_0__references__["k" /* _vBuilders */].set(this, new __WEBPACK_IMPORTED_MODULE_2__validatorBuilder__["a" /* ValidatorBuilder */]());
         _documents.set(this, new __WEBPACK_IMPORTED_MODULE_3__schema__["a" /* Schema */](schema, options || null, this));
     }
 
@@ -4768,25 +4813,13 @@ class JSD {
         return true;
     }
 
-    /**
-     *
-     * @returns {ValidatorBuilder}
-     */
-    get validatorBuilder() {
-        return _vBuilders.get(this);
-    }
-
-    get observerBuilder() {
-        return _oBuilders.get(this);
-    }
-
-    /**
-     *
-     * @param value {Schema}
-     */
-    set document(value) {
-        this.document = value;
-    }
+    // /**
+    //  *
+    //  * @param value {Schema}
+    //  */
+    // set document(value) {
+    //     this.document = value;
+    // }
 
     /**
      * @param {string|function} classesOrNames
@@ -4836,7 +4869,7 @@ class JSD {
                 return null;
             } //- end typrof arg is object
             if (typeof arg === "function") {
-                let _ = __WEBPACK_IMPORTED_MODULE_0__references__["m" /* wf */].Fun.getConstructorName(arg);
+                let _ = __WEBPACK_IMPORTED_MODULE_0__references__["o" /* wf */].Fun.getConstructorName(arg);
                 return this.getClass(_);
             }
         } //- end args in classesOrNames
@@ -4964,7 +4997,7 @@ class MetaData {
      * @param {object} _data -- Initial Data {parent:Schema|Set}
      */
     constructor(_oRef, _data = {}) {
-        let _cName = __WEBPACK_IMPORTED_MODULE_0__references__["m" /* wf */].Fun.getConstructorName(_oRef);
+        let _cName = __WEBPACK_IMPORTED_MODULE_0__references__["o" /* wf */].Fun.getConstructorName(_oRef);
         if (!(_oRef instanceof __WEBPACK_IMPORTED_MODULE_1__schema__["a" /* Schema */]) && !(_oRef instanceof __WEBPACK_IMPORTED_MODULE_2__set__["a" /* Set */])) {
             throw `new MetaData() argument 1 requires subclass Schema or Set. Was subclass of '<${_cName}>'`;
         }
@@ -6613,9 +6646,9 @@ class ValidatorBuilder {
      * @constructor
      */
     constructor() {
-        let inst = __WEBPACK_IMPORTED_MODULE_0__references__["k" /* _validators */].get(this);
+        let inst = __WEBPACK_IMPORTED_MODULE_0__references__["m" /* _validators */].get(this);
         if (!Object(__WEBPACK_IMPORTED_MODULE_0__references__["a" /* _exists */])(inst)) {
-            __WEBPACK_IMPORTED_MODULE_0__references__["k" /* _validators */].set( inst = this, {});
+            __WEBPACK_IMPORTED_MODULE_0__references__["m" /* _validators */].set( inst = this, {});
         }
     }
 
@@ -6623,7 +6656,7 @@ class ValidatorBuilder {
      * @returns list of validation paths
      */
     list() {
-        let _v = __WEBPACK_IMPORTED_MODULE_0__references__["k" /* _validators */].get(this);
+        let _v = __WEBPACK_IMPORTED_MODULE_0__references__["m" /* _validators */].get(this);
         return Object.keys(_v);
     }
 
@@ -6632,7 +6665,7 @@ class ValidatorBuilder {
      * @returns item at path reference
      */
     get(path) {
-        let _v = __WEBPACK_IMPORTED_MODULE_0__references__["k" /* _validators */].get(this);
+        let _v = __WEBPACK_IMPORTED_MODULE_0__references__["m" /* _validators */].get(this);
         return Object(__WEBPACK_IMPORTED_MODULE_0__references__["a" /* _exists */])(_v[path]) ? _v[path] : null;
     }
 
@@ -6644,7 +6677,7 @@ class ValidatorBuilder {
         if (!Object(__WEBPACK_IMPORTED_MODULE_0__references__["a" /* _exists */])(func) || typeof func !== 'function') {
             return "2nd argument expects a function";
         }
-        __WEBPACK_IMPORTED_MODULE_0__references__["k" /* _validators */].get(this)[path] = func;
+        __WEBPACK_IMPORTED_MODULE_0__references__["m" /* _validators */].get(this)[path] = func;
         return this;
     }
 
@@ -6663,7 +6696,7 @@ class ValidatorBuilder {
             ref.polymorphic : (
                 Array.isArray(ref) ? ref : [ref]
             );
-        let _v = __WEBPACK_IMPORTED_MODULE_0__references__["k" /* _validators */].get(this);
+        let _v = __WEBPACK_IMPORTED_MODULE_0__references__["m" /* _validators */].get(this);
         let _functs = _signatures.map(_sig => {
             if (typeof _sig !== 'object') {
                 return new __WEBPACK_IMPORTED_MODULE_1__validators__["a" /* Validator */]["Default"](path, _sig, elRef.jsd);
@@ -6676,11 +6709,11 @@ class ValidatorBuilder {
                 }
                 return;
             }
-            let _typeof = __WEBPACK_IMPORTED_MODULE_0__references__["m" /* wf */].Str.capitalize(_sig.type);
+            let _typeof = __WEBPACK_IMPORTED_MODULE_0__references__["o" /* wf */].Str.capitalize(_sig.type);
             let _hasKey = (0 <= Object.keys(__WEBPACK_IMPORTED_MODULE_1__validators__["a" /* Validator */]).indexOf(_typeof));
             return new __WEBPACK_IMPORTED_MODULE_1__validators__["a" /* Validator */][_hasKey ? _typeof : "Default"](path, _sig, elRef.jsd);
         });
-        return __WEBPACK_IMPORTED_MODULE_0__references__["k" /* _validators */].get(this)[path] = (value) => {
+        return __WEBPACK_IMPORTED_MODULE_0__references__["m" /* _validators */].get(this)[path] = (value) => {
             var _result;
             for (let idx in _functs) {
                 _result = _functs[idx].exec(value);
@@ -6698,7 +6731,7 @@ class ValidatorBuilder {
      * @param value
      */
     exec(path, value) {
-        let _v = __WEBPACK_IMPORTED_MODULE_0__references__["k" /* _validators */].get(this);
+        let _v = __WEBPACK_IMPORTED_MODULE_0__references__["m" /* _validators */].get(this);
         if (!_v.hasOwnProperty(path)) {
             return `validator for '${path}' does not exist`;
         }
@@ -18199,14 +18232,14 @@ class ObserverBuilder {
      * @constructor
      */
     constructor() {
-        __WEBPACK_IMPORTED_MODULE_0__references__["e" /* _observers */].set(this, {});
+        __WEBPACK_IMPORTED_MODULE_0__references__["f" /* _observers */].set(this, {});
     }
 
     /**
      * @returns list of validation paths
      */
     list() {
-        let _v = __WEBPACK_IMPORTED_MODULE_0__references__["e" /* _observers */].get(this);
+        let _v = __WEBPACK_IMPORTED_MODULE_0__references__["f" /* _observers */].get(this);
         return object.keys(_v);
     }
 
@@ -18215,7 +18248,7 @@ class ObserverBuilder {
      * @returns item at path reference
      */
     get(path) {
-        let _o = __WEBPACK_IMPORTED_MODULE_0__references__["e" /* _observers */].get(this);
+        let _o = __WEBPACK_IMPORTED_MODULE_0__references__["f" /* _observers */].get(this);
         return Object(__WEBPACK_IMPORTED_MODULE_0__references__["a" /* _exists */])(_o[path]) ? _o[path] : null;
     }
 
@@ -18223,7 +18256,7 @@ class ObserverBuilder {
         if (!(oRef instanceof __WEBPACK_IMPORTED_MODULE_2__schema__["a" /* Schema */] || oRef instanceof __WEBPACK_IMPORTED_MODULE_1__set__["a" /* Set */])) {
             throw 'oRef must be instance of Schema or Set';
         }
-        let _o = __WEBPACK_IMPORTED_MODULE_0__references__["e" /* _observers */].get(this);
+        let _o = __WEBPACK_IMPORTED_MODULE_0__references__["f" /* _observers */].get(this);
         _o[forPath] = new __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__["Subject"]();
     }
 
@@ -18424,7 +18457,7 @@ class SchemaHelpers {
             let _k = _elements[_i];
             let itm;
             let objPath = Object(__WEBPACK_IMPORTED_MODULE_0__references__["a" /* _exists */])(path) ? (path.length ? `${path}.${_k}` : _k) : _k || "";
-            this._ref.jsd.validatorBuilder.create(obj[_k], objPath, this._ref);
+            this._ref.validatorBuilder.create(obj[_k], objPath, this._ref);
             // tests for nested elements
             if (Object(__WEBPACK_IMPORTED_MODULE_0__references__["a" /* _exists */])(obj[_k]) && typeof obj[_k].elements === "object") {
 
@@ -18472,7 +18505,7 @@ class SchemaHelpers {
      * @returns {*}
      */
     validate(key, value) {
-        let _list = this._ref.jsd.validatorBuilder.list();
+        let _list = this._ref.validatorBuilder.list();
         let _ref;
         //-- attempts to validate
         if (!key.length) {
@@ -18487,14 +18520,14 @@ class SchemaHelpers {
                 _path.push(_k);
                 _p = _path.join('.');
             }
-            if (!(_ref = this._ref.jsd.validatorBuilder.get(_p))) {
+            if (!(_ref = this._ref.validatorBuilder.get(_p))) {
                 if (!this.options.extensible) {
                     return `'${key}' is not a valid schema property`;
                 }
             }
-            this._ref.jsd.validatorBuilder.set(key, _ref);
+            this._ref.validatorBuilder.set(key, _ref);
         }
-        if (typeof (msg = this._ref.jsd.validatorBuilder.exec(key, value)) === 'string') {
+        if (typeof (msg = this._ref.validatorBuilder.exec(key, value)) === 'string') {
             return msg;
         }
         return true;
@@ -18535,7 +18568,7 @@ class SchemaValidator {
      * @param {object} options
      */
     constructor(_schema = {}, opts = {extensible: false}) {
-        __WEBPACK_IMPORTED_MODULE_0__references__["h" /* _schemaOptions */].set(this, opts);
+        __WEBPACK_IMPORTED_MODULE_0__references__["i" /* _schemaOptions */].set(this, opts);
         var _errorMsg = null;
         this.isValid = () => _errorMsg || true;
         // validates SCHEMA ENTRIES
@@ -18545,7 +18578,7 @@ class SchemaValidator {
                 case "string":
                     let obj = {};
                     obj[_oKey] = {
-                        type: __WEBPACK_IMPORTED_MODULE_0__references__["m" /* wf */].Str.capitalize(_schema[_oKey]),
+                        type: __WEBPACK_IMPORTED_MODULE_0__references__["o" /* wf */].Str.capitalize(_schema[_oKey]),
                         required: false
                     };
                     let _o = Object.assign(_schema, obj);
@@ -18608,7 +18641,7 @@ class SchemaValidator {
         }
         //- tests for basic string type declaration {key: {type: "String"} }
         else {
-            if (!Object(__WEBPACK_IMPORTED_MODULE_0__references__["a" /* _exists */])(this.jsd.getClass(__WEBPACK_IMPORTED_MODULE_0__references__["m" /* wf */].Str.capitalize(_type)))) {
+            if (!Object(__WEBPACK_IMPORTED_MODULE_0__references__["a" /* _exists */])(this.jsd.getClass(__WEBPACK_IMPORTED_MODULE_0__references__["o" /* wf */].Str.capitalize(_type)))) {
                 return `type '<${_type}>' for schema element '${key}' was invalid`;
             }
         }
@@ -18695,9 +18728,9 @@ class SchemaValidator {
      * @param {object} params
      */
     validateSchemaParamString(key, sKey, params) {
-        let _kind = __WEBPACK_IMPORTED_MODULE_0__references__["m" /* wf */].Str.capitalize(params[sKey]);
+        let _kind = __WEBPACK_IMPORTED_MODULE_0__references__["o" /* wf */].Str.capitalize(params[sKey]);
         let _schemaKeys = this.jsd.schemaRef;
-        let opts = __WEBPACK_IMPORTED_MODULE_0__references__["h" /* _schemaOptions */].get(this);
+        let opts = __WEBPACK_IMPORTED_MODULE_0__references__["i" /* _schemaOptions */].get(this);
         // handles special `restrict` key
         if (sKey === "restrict") {
             try {
@@ -18725,7 +18758,7 @@ class SchemaValidator {
     validateSchemaParam(key, sKey, _schemaKeys, params) {
         var _type;
         // rejects unknown element if schema non-extensible
-        if (!Object(__WEBPACK_IMPORTED_MODULE_0__references__["a" /* _exists */])(_schemaKeys[sKey]) && !__WEBPACK_IMPORTED_MODULE_0__references__["h" /* _schemaOptions */].get(this).extensible) {
+        if (!Object(__WEBPACK_IMPORTED_MODULE_0__references__["a" /* _exists */])(_schemaKeys[sKey]) && !__WEBPACK_IMPORTED_MODULE_0__references__["i" /* _schemaOptions */].get(this).extensible) {
             return `schema element '${key}.${sKey}' is not allowed`;
         }
         // returns result of Params String Valdiation
@@ -18770,7 +18803,7 @@ class SchemaValidator {
     validateSchemaEntry(key, params, opts) {
         let _schemaKeys = this.jsd.schemaRef;
         if (!Object(__WEBPACK_IMPORTED_MODULE_0__references__["a" /* _exists */])(opts)) {
-            opts = __WEBPACK_IMPORTED_MODULE_0__references__["h" /* _schemaOptions */].get(this);
+            opts = __WEBPACK_IMPORTED_MODULE_0__references__["i" /* _schemaOptions */].get(this);
         }
         if (!Object(__WEBPACK_IMPORTED_MODULE_0__references__["a" /* _exists */])(params)) {
             return `${key} was null or undefined`;
@@ -18805,12 +18838,12 @@ class SchemaValidator {
             if (_t !== "function") {
                 let _ = _schemaKeys[key.split(".").pop()];
                 // tests for everything that"s not a string, _object or function
-                if (_ !== __WEBPACK_IMPORTED_MODULE_0__references__["m" /* wf */].Str.capitalize(_t)) {
+                if (_ !== __WEBPACK_IMPORTED_MODULE_0__references__["o" /* wf */].Str.capitalize(_t)) {
                     return `value for schema element '${key}' has invalid type :: '<${_t}>'`;
                 }
             }
             else {
-                let _ = __WEBPACK_IMPORTED_MODULE_0__references__["m" /* wf */].Fun.getConstructorName(params);
+                let _ = __WEBPACK_IMPORTED_MODULE_0__references__["o" /* wf */].Fun.getConstructorName(params);
                 // tests for function"s constructor name
                 if (_ !== _schemaKeys[key]) {
                     return `value for schema element '${key}' has invalid class or method '<${_}>'`;
@@ -18823,7 +18856,7 @@ class SchemaValidator {
     }
 
     get jsd() {
-        return __WEBPACK_IMPORTED_MODULE_0__references__["h" /* _schemaOptions */].get(this).jsd;
+        return __WEBPACK_IMPORTED_MODULE_0__references__["i" /* _schemaOptions */].get(this).jsd;
     }
 }
 /* harmony export (immutable) */ __webpack_exports__["a"] = SchemaValidator;
@@ -18923,11 +18956,11 @@ class BaseValidator {
      * @returns {string}
      */
     exec(value) {
-        return `${__WEBPACK_IMPORTED_MODULE_0__references__["m" /* wf */].utils.Fun.getClassName(this)} requires override of 'exec'`;
+        return `${__WEBPACK_IMPORTED_MODULE_0__references__["o" /* wf */].utils.Fun.getClassName(this)} requires override of 'exec'`;
     }
 
     get validations() {
-        return __WEBPACK_IMPORTED_MODULE_0__references__["j" /* _validPaths */].get(this.jsd);
+        return __WEBPACK_IMPORTED_MODULE_0__references__["l" /* _validPaths */].get(this.jsd);
     }
 }
 /* unused harmony export BaseValidator */
@@ -19062,8 +19095,8 @@ Validator.Function = class Fun extends BaseValidator {
      * @returns {*}
      */
     exec(value) {
-        let _x = typeof this.signature.type === 'string' ? this.signature.type : __WEBPACK_IMPORTED_MODULE_0__references__["m" /* wf */].Fun.getConstructorName(this.signature.type);
-        let _fn = __WEBPACK_IMPORTED_MODULE_0__references__["m" /* wf */].Fun.getConstructorName(value);
+        let _x = typeof this.signature.type === 'string' ? this.signature.type : __WEBPACK_IMPORTED_MODULE_0__references__["o" /* wf */].Fun.getConstructorName(this.signature.type);
+        let _fn = __WEBPACK_IMPORTED_MODULE_0__references__["o" /* wf */].Fun.getConstructorName(value);
         return _x === _fn ? true : `${this.path} requires '$_x' got '<${_fn}>' instead`;
     }
 };
@@ -19083,7 +19116,7 @@ Validator.Default = class Def extends BaseValidator {
             if (type === '*') {
                 return true;
             }
-            let _val = Validator[__WEBPACK_IMPORTED_MODULE_0__references__["m" /* wf */].Str.capitalize(type)];
+            let _val = Validator[__WEBPACK_IMPORTED_MODULE_0__references__["o" /* wf */].Str.capitalize(type)];
             if (!Object(__WEBPACK_IMPORTED_MODULE_0__references__["a" /* _exists */])(_val)) {
                 return `'${this.path}' was unable to obtain validator for type '<${type}>'`;
             }

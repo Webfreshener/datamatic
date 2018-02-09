@@ -149,7 +149,7 @@ export class Set {
             return true;
         }
         else {
-            this.jsd.observerBuilder.error(this.path, `${this.path} requires Array`);
+            this.observerBuildererror(this.path, `${this.path} requires Array`);
         }
     }
 
@@ -180,21 +180,21 @@ export class Set {
             set: (t, idx, value) =&gt; {
                 if (!this._typeCheck(value)) {
                     var eMsg = `item at index ${idx} had wrong type`;
-                    this.jsd.observerBuilder.error(this.path, eMsg);
+                    this.observerBuildererror(this.path, eMsg);
                     return false;
                 }
                 t[idx] = value;
-                this.jsd.observerBuilder.next(this.path, t);
+                this.observerBuildernext(this.path, t);
                 return true;
             },
             deleteProperty: (t, idx) =&gt; {
                 if (idx &gt;= t.length) {
                     const e = `index ${idx} is out of bounds on ${this.path}`;
-                    this.jsd.observerBuilder.error(this.path, e);
+                    this.observerBuildererror(this.path, e);
                     return false;
                 }
                 t.splice(idx, 1);
-                this.jsd.observerBuilder.next(this.path, t);
+                this.observerBuildernext(this.path, t);
                 return true;
             }
         };
@@ -471,10 +471,10 @@ export class Set {
         if ((typeof func).match(/^(function|object)$/) === null) {
             throw new Error(&apos;subscribe requires function&apos;);
         }
-        let _o = this.jsd.observerBuilder.get(this.path);
+        let _o = this.this.observerBuilder.get(this.path);
         if (!_o || _o === null) {
-            this.jsd.observerBuilder.create(this.path, this);
-            _o = this.jsd.observerBuilder.get(this.path);
+            this.observerBuildercreate(this.path, this);
+            _o = this.this.observerBuilder.get(this.path);
         }
         _o.subscribe(func);
         return this;
@@ -489,10 +489,10 @@ export class Set {
         if ((typeof func).match(/^(function|object)$/) === null) {
             throw new Error(&apos;subscribeTo requires function&apos;);
         }
-        let _o = this.jsd.observerBuilder.get(path);
+        let _o = this.this.observerBuilder.get(path);
         if (!_o || _o === null) {
-            this.jsd.observerBuilder.create(path, this);
-            _o = this.jsd.observerBuilder.get(path);
+            this.observerBuildercreate(path, this);
+            _o = this.this.observerBuilder.get(path);
         }
 
         _o.subscribe(func);
