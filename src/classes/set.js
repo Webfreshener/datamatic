@@ -2,17 +2,19 @@ import {_mdRef, _object, _vectorTypes, _oBuilders, _vBuilders, _exists, wf} from
 import {MetaData} from './_metaData';
 import {ValidatorBuilder} from './_validatorBuilder';
 import {Schema} from './schema';
-import {JSD} from './jsd'
+import {JSD} from './jsd';
+import {Model} from './model';
 /**
  * @class Set
  */
-export class Set {
+export class Set extends Model {
     /**
      * @constructor
      * @param {any} _type
      * @param {any} items
      */
     constructor(_type) {
+        super();
         // tests for metadata
         let _;
         if (arguments[1] instanceof JSD) {
@@ -166,30 +168,6 @@ export class Set {
     }
 
     /**
-     * validates items in Set list
-     * @returns {boolean}
-     */
-    validate() {
-        let _path = this.path;
-        let _validator = ValidatorBuilder.getInstance();
-        this.model.forEach(itm => {
-            let e;
-            if (typeof (e = _validator.exec(_path, itm)) === 'string') {
-                return e;
-            }
-        });
-        return true;
-    }
-
-    /**
-     *
-     * @returns {boolean}
-     */
-    get isValid() {
-        return this.validate() === true;
-    }
-
-    /**
      * @param {number} idx
      * @returns {any} element at index if found
      */
@@ -208,9 +186,9 @@ export class Set {
     }
 
     /**
-     * @param {number} idx
-     * @param {any} item
-     * @returns {any} item removed
+     *
+     * @param idx
+     * @returns {Set}
      */
     removeItemAt(idx) {
         delete this.model[idx];
@@ -311,91 +289,6 @@ export class Set {
     }
 
     /**
-     * @returns primitive value of list
-     */
-    valueOf() {
-        return this.model;
-    }
-
-    /**
-     * @returns stringified representation of list
-     */
-    toString(pretty = false) {
-        return JSON.stringify(this.toJSON(), null, (pretty ? 2 : void(0)));
-    }
-
-    /**
-     * returns JSONified representation of list
-     */
-    toJSON() {
-        let _derive = (itm) => {
-            if (itm instanceof Schema) {
-                return itm.toJSON();
-            }
-            if (itm instanceof Set) {
-                return itm.toJSON();
-            }
-            if (typeof itm === 'object') {
-                const _o = !Array.isArray(itm) ? {} : [];
-                for (let k in itm) {
-                    _o[k] = _derive(itm[k]);
-                }
-                return _o;
-            }
-            return itm;
-        };
-        return _derive(this.valueOf());
-    }
-
-
-    /**
-     * getter for Set type
-     * @returns
-     */
-    get type() {
-        // for when we no longer need babel
-        // return type;
-        return _vectorTypes.get(this);
-    }
-
-    /**
-     * @returns Unique ObjectID
-     */
-    get objectID() {
-        return _mdRef.get(this).get('_id');
-    }
-
-    /**
-     *
-     */
-    get root() {
-        return _mdRef.get(this).get('_root');
-    }
-
-    /**
-     *
-     */
-    get path() {
-        return _mdRef.get(this).path;
-    }
-
-    /**
-     *
-     */
-    get parent() {
-        let _root;
-        if (!(((_root = this.root()) !== null) instanceof Schema)
-            && !(_root instanceof Set)) {
-            return null;
-        }
-        return _root.get(this.path().split('.').pop().join('.'));
-    }
-
-    get jsd() {
-        return _mdRef.get(this).jsd;
-    }
-
-    /**
      * @returns {number} number of elements in list
      */
     get length() {
@@ -403,55 +296,10 @@ export class Set {
     }
 
     /**
-     * subscribes handler method to property observer for path
-     * @param path
-     * @param func
+     * getter for Set type
+     * @returns
      */
-    subscribe(func) {
-        if ((typeof func).match(/^(function|object)$/) === null) {
-            throw new Error('subscribe requires function');
-        }
-        let _o = this.observerBuilder.get(this.path);
-        if (!_o || _o === null) {
-            this.observerBuilder.create(this.path, this);
-            _o = this.observerBuilder.get(this.path);
-        }
-        _o.subscribe(func);
-        return this;
-    }
-
-    /**
-     * subscribes handler method to property observer for path
-     * @param path
-     * @param func
-     */
-    subscribeTo(path, func) {
-        if ((typeof func).match(/^(function|object)$/) === null) {
-            throw new Error('subscribeTo requires function');
-        }
-        let _o = this.observerBuilder.get(path);
-        if (!_o || _o === null) {
-            this.observerBuilder.create(path, this);
-            _o = this.observerBuilder.get(path);
-        }
-
-        _o.subscribe(func);
-        return this;
-    }
-
-    /**
-     *
-     * @returns {ValidatorBuilder}
-     */
-    get validatorBuilder() {
-        return _vBuilders.get(this.jsd);
-    }
-
-    /**
-     *
-     * @returns {ObserverBuilder}
-     */
-    get observerBuilder() {
-        return _oBuilders.get(this.jsd);
+    get type() {
+        return _vectorTypes.get(this);
     }
 }

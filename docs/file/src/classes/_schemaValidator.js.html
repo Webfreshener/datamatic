@@ -36,11 +36,13 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_validatorBuilder.js~ValidatorBuilder.html">ValidatorBuilder</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_validators.js~BaseValidator.html">BaseValidator</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/jsd.js~JSD.html">JSD</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/schema.js~Schema.html">Schema</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/set.js~Set.html">Set</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_kinds">_kinds</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_oBuilders">_oBuilders</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_object">_object</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_observers">_observers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_required_elements">_required_elements</a></span></span></li>
@@ -48,6 +50,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaOptions">_schemaOptions</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaSignatures">_schemaSignatures</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_singletons">_singletons</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vBuilders">_vBuilders</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validPaths">_validPaths</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validators">_validators</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vectorTypes">_vectorTypes</a></span></span></li>
@@ -153,9 +156,11 @@ export class SchemaValidator {
     }
 
     /**
-     * @param {string} key
-     * @param {object{ params
-	 */
+     *
+     * @param key
+     * @param params
+     * @returns {true|string}
+     */
     validateUntypedMembers(key, params) {
         if (Array.isArray(params)) {
             for (let item of params) {
@@ -191,9 +196,11 @@ export class SchemaValidator {
     }
 
     /**
-     * @param {string} key
-     * @param {object{ params
-	 */
+     *
+     * @param key
+     * @param params
+     * @returns {true|string}
+     */
     validateSchemaClass(key, params) {
         if (!_exists(key)) {
             throw &quot;key was undefined&quot;;
@@ -257,7 +264,12 @@ export class SchemaValidator {
     }
 
     /**
-     * @param {string}
+     *
+     * @param key
+     * @param sKey
+     * @param _schemaKeys
+     * @param params
+     * @returns {true|string}
      */
     validateSchemaParam(key, sKey, _schemaKeys, params) {
         var _type;
@@ -300,9 +312,11 @@ export class SchemaValidator {
     }
 
     /**
-     * @param {string} key
-     * @param {object} params
-     * @param {object} opts
+     *
+     * @param key
+     * @param params
+     * @param opts
+     * @returns {true|string}
      */
     validateSchemaEntry(key, params, opts) {
         let _schemaKeys = this.jsd.schemaRef;
@@ -359,6 +373,10 @@ export class SchemaValidator {
         return `unable to process schema element &apos;${key}&apos;`;
     }
 
+    /**
+     *
+     * @returns {*|JSD|*|JSD}
+     */
     get jsd() {
         return _schemaOptions.get(this).jsd;
     }

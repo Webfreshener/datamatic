@@ -1,7 +1,7 @@
 {
-  "coverage": "82.31%",
-  "expectCount": 164,
-  "actualCount": 135,
+  "coverage": "84.1%",
+  "expectCount": 151,
+  "actualCount": 127,
   "files": {
     "src/classes/_metaData.js": {
       "expectCount": 11,
@@ -23,8 +23,8 @@
       ]
     },
     "src/classes/_references.js": {
-      "expectCount": 14,
-      "actualCount": 12,
+      "expectCount": 16,
+      "actualCount": 14,
       "undocumentLines": [
         5,
         6
@@ -39,11 +39,10 @@
     },
     "src/classes/_schemaValidator.js": {
       "expectCount": 11,
-      "actualCount": 8,
+      "actualCount": 9,
       "undocumentLines": [
         17,
-        161,
-        302
+        165
       ]
     },
     "src/classes/_validatorBuilder.js": {
@@ -62,33 +61,35 @@
       ]
     },
     "src/classes/jsd.js": {
-      "expectCount": 20,
-      "actualCount": 12,
+      "expectCount": 14,
+      "actualCount": 11,
       "undocumentLines": [
         16,
-        17,
-        18,
-        19,
-        20,
-        60,
-        78,
-        150
+        61,
+        131
+      ]
+    },
+    "src/classes/model.js": {
+      "expectCount": 17,
+      "actualCount": 15,
+      "undocumentLines": [
+        5,
+        169
       ]
     },
     "src/classes/schema.js": {
-      "expectCount": 27,
-      "actualCount": 25,
+      "expectCount": 13,
+      "actualCount": 11,
       "undocumentLines": [
-        113,
-        212
+        95,
+        186
       ]
     },
     "src/classes/set.js": {
-      "expectCount": 32,
-      "actualCount": 30,
+      "expectCount": 20,
+      "actualCount": 19,
       "undocumentLines": [
-        96,
-        394
+        98
       ]
     }
   }

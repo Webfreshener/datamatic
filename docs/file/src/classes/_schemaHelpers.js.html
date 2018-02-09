@@ -36,11 +36,13 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_validatorBuilder.js~ValidatorBuilder.html">ValidatorBuilder</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_validators.js~BaseValidator.html">BaseValidator</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/jsd.js~JSD.html">JSD</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/schema.js~Schema.html">Schema</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/set.js~Set.html">Set</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_kinds">_kinds</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_oBuilders">_oBuilders</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_object">_object</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_observers">_observers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_required_elements">_required_elements</a></span></span></li>
@@ -48,6 +50,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaOptions">_schemaOptions</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaSignatures">_schemaSignatures</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_singletons">_singletons</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vBuilders">_vBuilders</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validPaths">_validPaths</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validators">_validators</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vectorTypes">_vectorTypes</a></span></span></li>
@@ -151,8 +154,11 @@ export class SchemaHelpers {
     }
 
     /**
-     * @param {Object} value
-     * @param {MetaData} metaData
+     *
+     * @param key
+     * @param value
+     * @param opts
+     * @param metaData
      * @returns {Schema|Set|error string} - Schema, Set or error string
      */
     createSchemaChild(key, value, opts, metaData) {
@@ -201,7 +207,7 @@ export class SchemaHelpers {
             let _k = _elements[_i];
             let itm;
             let objPath = _exists(path) ? (path.length ? `${path}.${_k}` : _k) : _k || &quot;&quot;;
-            this._ref.jsd.validatorBuilder.create(obj[_k], objPath, this._ref);
+            this._ref.validatorBuilder.create(obj[_k], objPath, this._ref);
             // tests for nested elements
             if (_exists(obj[_k]) &amp;&amp; typeof obj[_k].elements === &quot;object&quot;) {
 
@@ -249,7 +255,7 @@ export class SchemaHelpers {
      * @returns {*}
      */
     validate(key, value) {
-        let _list = this._ref.jsd.validatorBuilder.list();
+        let _list = this._ref.validatorBuilder.list();
         let _ref;
         //-- attempts to validate
         if (!key.length) {
@@ -264,14 +270,14 @@ export class SchemaHelpers {
                 _path.push(_k);
                 _p = _path.join(&apos;.&apos;);
             }
-            if (!(_ref = this._ref.jsd.validatorBuilder.get(_p))) {
+            if (!(_ref = this._ref.validatorBuilder.get(_p))) {
                 if (!this.options.extensible) {
                     return `&apos;${key}&apos; is not a valid schema property`;
                 }
             }
-            this._ref.jsd.validatorBuilder.set(key, _ref);
+            this._ref.validatorBuilder.set(key, _ref);
         }
-        if (typeof (msg = this._ref.jsd.validatorBuilder.exec(key, value)) === &apos;string&apos;) {
+        if (typeof (msg = this._ref.validatorBuilder.exec(key, value)) === &apos;string&apos;) {
             return msg;
         }
         return true;

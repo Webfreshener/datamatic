@@ -36,11 +36,13 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_validatorBuilder.js~ValidatorBuilder.html">ValidatorBuilder</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_validators.js~BaseValidator.html">BaseValidator</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/jsd.js~JSD.html">JSD</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/schema.js~Schema.html">Schema</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/set.js~Set.html">Set</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_kinds">_kinds</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_oBuilders">_oBuilders</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_object">_object</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_observers">_observers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_required_elements">_required_elements</a></span></span></li>
@@ -48,6 +50,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaOptions">_schemaOptions</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaSignatures">_schemaSignatures</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_singletons">_singletons</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vBuilders">_vBuilders</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validPaths">_validPaths</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validators">_validators</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vectorTypes">_vectorTypes</a></span></span></li>
@@ -58,21 +61,23 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/classes/set.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {_mdRef, _object, _vectorTypes, _exists, wf} from &apos;./_references&apos;;
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {_mdRef, _object, _vectorTypes, _oBuilders, _vBuilders, _exists, wf} from &apos;./_references&apos;;
 import {MetaData} from &apos;./_metaData&apos;;
 import {ValidatorBuilder} from &apos;./_validatorBuilder&apos;;
 import {Schema} from &apos;./schema&apos;;
-import {JSD} from &apos;./jsd&apos;
+import {JSD} from &apos;./jsd&apos;;
+import {Model} from &apos;./model&apos;;
 /**
  * @class Set
  */
-export class Set {
+export class Set extends Model {
     /**
      * @constructor
      * @param {any} _type
      * @param {any} items
      */
     constructor(_type) {
+        super();
         // tests for metadata
         let _;
         if (arguments[1] instanceof JSD) {
@@ -149,7 +154,7 @@ export class Set {
             return true;
         }
         else {
-            this.observerBuildererror(this.path, `${this.path} requires Array`);
+            this.observerBuilder.error(this.path, `${this.path} requires Array`);
         }
     }
 
@@ -180,21 +185,21 @@ export class Set {
             set: (t, idx, value) =&gt; {
                 if (!this._typeCheck(value)) {
                     var eMsg = `item at index ${idx} had wrong type`;
-                    this.observerBuildererror(this.path, eMsg);
+                    this.observerBuilder.error(this.path, eMsg);
                     return false;
                 }
                 t[idx] = value;
-                this.observerBuildernext(this.path, t);
+                this.observerBuilder.next(this.path, t);
                 return true;
             },
             deleteProperty: (t, idx) =&gt; {
                 if (idx &gt;= t.length) {
                     const e = `index ${idx} is out of bounds on ${this.path}`;
-                    this.observerBuildererror(this.path, e);
+                    this.observerBuilder.error(this.path, e);
                     return false;
                 }
                 t.splice(idx, 1);
-                this.observerBuildernext(this.path, t);
+                this.observerBuilder.next(this.path, t);
                 return true;
             }
         };
@@ -226,30 +231,6 @@ export class Set {
     }
 
     /**
-     * validates items in Set list
-     * @returns {boolean}
-     */
-    validate() {
-        let _path = this.path;
-        let _validator = ValidatorBuilder.getInstance();
-        this.model.forEach(itm =&gt; {
-            let e;
-            if (typeof (e = _validator.exec(_path, itm)) === &apos;string&apos;) {
-                return e;
-            }
-        });
-        return true;
-    }
-
-    /**
-     *
-     * @returns {boolean}
-     */
-    get isValid() {
-        return this.validate() === true;
-    }
-
-    /**
      * @param {number} idx
      * @returns {any} element at index if found
      */
@@ -268,9 +249,9 @@ export class Set {
     }
 
     /**
-     * @param {number} idx
-     * @param {any} item
-     * @returns {any} item removed
+     *
+     * @param idx
+     * @returns {Set}
      */
     removeItemAt(idx) {
         delete this.model[idx];
@@ -371,91 +352,6 @@ export class Set {
     }
 
     /**
-     * @returns primitive value of list
-     */
-    valueOf() {
-        return this.model;
-    }
-
-    /**
-     * @returns stringified representation of list
-     */
-    toString(pretty = false) {
-        return JSON.stringify(this.toJSON(), null, (pretty ? 2 : void(0)));
-    }
-
-    /**
-     * returns JSONified representation of list
-     */
-    toJSON() {
-        let _derive = (itm) =&gt; {
-            if (itm instanceof Schema) {
-                return itm.toJSON();
-            }
-            if (itm instanceof Set) {
-                return itm.toJSON();
-            }
-            if (typeof itm === &apos;object&apos;) {
-                const _o = !Array.isArray(itm) ? {} : [];
-                for (let k in itm) {
-                    _o[k] = _derive(itm[k]);
-                }
-                return _o;
-            }
-            return itm;
-        };
-        return _derive(this.valueOf());
-    }
-
-
-    /**
-     * getter for Set type
-     * @returns
-     */
-    get type() {
-        // for when we no longer need babel
-        // return type;
-        return _vectorTypes.get(this);
-    }
-
-    /**
-     * @returns Unique ObjectID
-     */
-    get objectID() {
-        return _mdRef.get(this).get(&apos;_id&apos;);
-    }
-
-    /**
-     *
-     */
-    get root() {
-        return _mdRef.get(this).get(&apos;_root&apos;);
-    }
-
-    /**
-     *
-     */
-    get path() {
-        return _mdRef.get(this).path;
-    }
-
-    /**
-     *
-     */
-    get parent() {
-        let _root;
-        if (!(((_root = this.root()) !== null) instanceof Schema)
-            &amp;&amp; !(_root instanceof Set)) {
-            return null;
-        }
-        return _root.get(this.path().split(&apos;.&apos;).pop().join(&apos;.&apos;));
-    }
-
-    get jsd() {
-        return _mdRef.get(this).jsd;
-    }
-
-    /**
      * @returns {number} number of elements in list
      */
     get length() {
@@ -463,40 +359,11 @@ export class Set {
     }
 
     /**
-     * subscribes handler method to property observer for path
-     * @param path
-     * @param func
+     * getter for Set type
+     * @returns
      */
-    subscribe(func) {
-        if ((typeof func).match(/^(function|object)$/) === null) {
-            throw new Error(&apos;subscribe requires function&apos;);
-        }
-        let _o = this.this.observerBuilder.get(this.path);
-        if (!_o || _o === null) {
-            this.observerBuildercreate(this.path, this);
-            _o = this.this.observerBuilder.get(this.path);
-        }
-        _o.subscribe(func);
-        return this;
-    }
-
-    /**
-     * subscribes handler method to property observer for path
-     * @param path
-     * @param func
-     */
-    subscribeTo(path, func) {
-        if ((typeof func).match(/^(function|object)$/) === null) {
-            throw new Error(&apos;subscribeTo requires function&apos;);
-        }
-        let _o = this.this.observerBuilder.get(path);
-        if (!_o || _o === null) {
-            this.observerBuildercreate(path, this);
-            _o = this.this.observerBuilder.get(path);
-        }
-
-        _o.subscribe(func);
-        return this;
+    get type() {
+        return _vectorTypes.get(this);
     }
 }
 </code></pre>

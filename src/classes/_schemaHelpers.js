@@ -91,8 +91,11 @@ export class SchemaHelpers {
     }
 
     /**
-     * @param {Object} value
-     * @param {MetaData} metaData
+     *
+     * @param key
+     * @param value
+     * @param opts
+     * @param metaData
      * @returns {Schema|Set|error string} - Schema, Set or error string
      */
     createSchemaChild(key, value, opts, metaData) {

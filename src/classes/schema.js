@@ -8,17 +8,18 @@ import {MetaData} from './_metaData';
 import {SchemaHelpers} from './_schemaHelpers';
 import {SchemaValidator} from './_schemaValidator';
 import {JSD} from './jsd';
-import {Set} from './set';
+import {Model} from './model';
 /**
  * @class Schema
  */
-export class Schema {
+export class Schema extends Model {
     /**
      * @constructor
      * @param {Object} _o - schema definition object
      * @param {Object} opts - schema options
      */
     constructor(_signature, opts = {extensible: false}) {
+        super();
         var eMsg;
         if (!_exists(_signature)) {
             throw `Schema requires JSON object at arguments[0]. Got '${typeof _signature}'`;
@@ -266,177 +267,6 @@ export class Schema {
         return this;
     }
 
-
-    /**
-     * subscribes handler method to property observer for path
-     * @param path
-     * @param func
-     */
-    subscribe(func) {
-        if ((typeof func).match(/^(function|object)$/) === null) {
-            throw new Error('subscribe requires function');
-        }
-        let _o = this.observerBuilder.get(this.path);
-        if (!_o || _o === null) {
-            this.observerBuilder.create(this.path, this);
-            _o = this.observerBuilder.get(this.path);
-        }
-
-        _o.subscribe(func);
-        return this;
-    }
-
-    /**
-     * unsubscribes from this object's observer
-     */
-    unsubscribe() {
-        let _o = this.observerBuilder.get(this.path);
-        if (!_o || _o === null) {
-            _o.unsubscribe();
-        }
-    }
-
-    /**
-     * subscribes handler method to property observer for path
-     * @param path
-     * @param func
-     */
-    subscribeTo(path, func) {
-        if ((typeof func).match(/^(function|object)$/) === null) {
-            throw new Error('subscribeTo requires function');
-        }
-        let _o = this.observerBuilder.get(path);
-        if (!_o || _o === null) {
-            this.observerBuilder.create(path, this);
-            _o = this.observerBuilder.get(path);
-        }
-        _o.subscribe(func);
-        return this;
-    }
-
-    /**
-     * unsubscribes from this observer for object at path
-     * @param path
-     */
-    unsubscribeFrom(path) {
-        let _o = this.observerBuilder.get(path);
-        if (!_o || _o === null) {
-            _o.unsubscribe();
-        }
-    }
-
-    /**
-     * @returns {true|string} returns error string or true
-     */
-    validate() {
-        const paths = _validPaths.get(this.jsd);
-        try {
-            Object.keys(paths).forEach((k) => {
-                if (typeof paths[k] === 'string') {
-                    throw paths[k];
-                }
-            });
-        } catch (e) {
-            return e;
-        }
-        return true;
-    }
-
-    /**
-     * @returns {boolean}
-     */
-    get isValid() {
-        return (typeof this.validate() !== 'string');
-    }
-
-    /**
-     * gets raw value of this model
-     */
-    valueOf() {
-        return this.model;
-    }
-
-    /**
-     * JSONifies Schema Model
-     */
-    toJSON() {
-        let _derive = (itm) => {
-            if (itm instanceof Schema) {
-                return itm.toJSON();
-            }
-            if (itm instanceof Set) {
-                return itm.toJSON();
-            }
-            if (typeof itm === 'object') {
-                const _o = !Array.isArray(itm) ? {} : [];
-                for (let k in itm) {
-                    _o[k] = _derive(itm[k]);
-                }
-                return _o;
-            }
-            return itm;
-        };
-        return _derive(this.valueOf());
-    }
-
-    /**
-     * JSON stringifies primitive value
-     */
-    toString(pretty = false) {
-        return JSON.stringify(this.toJSON(), null, (pretty ? 2 : void(0)));
-    }
-
-    /**
-     * get options (if any) for this model's schema
-     */
-    get options() {
-        return _schemaOptions.get(this);
-    }
-
-    /**
-     * @returns {string} Object ID for Schema
-     */
-    get objectID() {
-        return _mdRef.get(this)._id;
-    }
-
-    /**
-     * @returns {Schema} elemetn at Schema root
-     */
-    get root() {
-        return _mdRef.get(this).root || this;
-    }
-
-    /**
-     * @returns {string} path to current Schema
-     */
-    get path() {
-        let _ = _mdRef.get(this).path;
-        return _exists(_) ? _ : "";
-    }
-
-    /**
-     * @returns {Schema} parent Schema element
-     */
-    get parent() {
-        let _ = _mdRef.get(this).root;
-        return _exists(_) ? _ : this;
-    }
-
-    /**
-     * @returns {*|JSD}
-     */
-    get jsd() {
-        return _mdRef.get(this).jsd;
-    }
-
-    /**
-     * @returns list of required elements on this Schema
-     */
-    get requiredFields() {
-        return _required_elements.get(this);
-    }
-
     /**
      * indicates if Schema will accept arbitrary keys
      * @returns {boolean}
@@ -447,15 +277,17 @@ export class Schema {
     }
 
     /**
-     *
-     * @returns {ValidatorBuilder}
+     * get options (if any) for this model's schema
      */
-    get validatorBuilder() {
-        return _vBuilders.get(this.jsd);
+    get options() {
+        return _schemaOptions.get(this);
     }
 
-    get observerBuilder() {
-        return _oBuilders.get(this.jsd);
+    /**
+     * @returns list of required elements on this Schema
+     */
+    get requiredFields() {
+        return _required_elements.get(this);
     }
 
     /**
