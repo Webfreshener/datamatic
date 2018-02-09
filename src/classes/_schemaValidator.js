@@ -93,9 +93,11 @@ export class SchemaValidator {
     }
 
     /**
-     * @param {string} key
-     * @param {object{ params
-	 */
+     *
+     * @param key
+     * @param params
+     * @returns {true|string}
+     */
     validateUntypedMembers(key, params) {
         if (Array.isArray(params)) {
             for (let item of params) {
@@ -131,9 +133,11 @@ export class SchemaValidator {
     }
 
     /**
-     * @param {string} key
-     * @param {object{ params
-	 */
+     *
+     * @param key
+     * @param params
+     * @returns {true|string}
+     */
     validateSchemaClass(key, params) {
         if (!_exists(key)) {
             throw "key was undefined";
@@ -197,7 +201,12 @@ export class SchemaValidator {
     }
 
     /**
-     * @param {string}
+     *
+     * @param key
+     * @param sKey
+     * @param _schemaKeys
+     * @param params
+     * @returns {true|string}
      */
     validateSchemaParam(key, sKey, _schemaKeys, params) {
         var _type;
@@ -240,9 +249,11 @@ export class SchemaValidator {
     }
 
     /**
-     * @param {string} key
-     * @param {object} params
-     * @param {object} opts
+     *
+     * @param key
+     * @param params
+     * @param opts
+     * @returns {true|string}
      */
     validateSchemaEntry(key, params, opts) {
         let _schemaKeys = this.jsd.schemaRef;
@@ -299,6 +310,10 @@ export class SchemaValidator {
         return `unable to process schema element '${key}'`;
     }
 
+    /**
+     *
+     * @returns {*|JSD|*|JSD}
+     */
     get jsd() {
         return _schemaOptions.get(this).jsd;
     }

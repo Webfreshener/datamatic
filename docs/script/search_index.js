@@ -18,6 +18,12 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
+    "jsd/src/classes/model.js~model",
+    "class/src/classes/model.js~Model.html",
+    "<span>Model</span> <span class=\"search-result-import-path\">jsd/src/classes/model.js</span>",
+    "class"
+  ],
+  [
     "jsd/src/classes/_observerbuilder.js~observerbuilder",
     "class/src/classes/_observerBuilder.js~ObserverBuilder.html",
     "<span>ObserverBuilder</span> <span class=\"search-result-import-path\">jsd/src/classes/_observerBuilder.js</span>",
@@ -78,6 +84,12 @@ window.esdocSearchIndex = [
     "variable"
   ],
   [
+    "jsd/src/classes/_references.js~_obuilders",
+    "variable/index.html#static-variable-_oBuilders",
+    "<span>_oBuilders</span> <span class=\"search-result-import-path\">jsd/src/classes/_references.js</span>",
+    "variable"
+  ],
+  [
     "jsd/src/classes/_references.js~_object",
     "variable/index.html#static-variable-_object",
     "<span>_object</span> <span class=\"search-result-import-path\">jsd/src/classes/_references.js</span>",
@@ -117,6 +129,12 @@ window.esdocSearchIndex = [
     "jsd/src/classes/_references.js~_singletons",
     "variable/index.html#static-variable-_singletons",
     "<span>_singletons</span> <span class=\"search-result-import-path\">jsd/src/classes/_references.js</span>",
+    "variable"
+  ],
+  [
+    "jsd/src/classes/_references.js~_vbuilders",
+    "variable/index.html#static-variable-_vBuilders",
+    "<span>_vBuilders</span> <span class=\"search-result-import-path\">jsd/src/classes/_references.js</span>",
     "variable"
   ],
   [
@@ -798,12 +816,6 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
-    "src/classes/jsd.js~jsd#document",
-    "class/src/classes/jsd.js~JSD.html#instance-set-document",
-    "src/classes/jsd.js~JSD#document",
-    "member"
-  ],
-  [
     "src/classes/jsd.js~jsd#fromjson",
     "class/src/classes/jsd.js~JSD.html#instance-method-fromJSON",
     "src/classes/jsd.js~JSD#fromJSON",
@@ -834,12 +846,6 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "src/classes/jsd.js~jsd#observerbuilder",
-    "class/src/classes/jsd.js~JSD.html#instance-get-observerBuilder",
-    "src/classes/jsd.js~JSD#observerBuilder",
-    "member"
-  ],
-  [
     "src/classes/jsd.js~jsd#registerclass",
     "class/src/classes/jsd.js~JSD.html#instance-method-registerClass",
     "src/classes/jsd.js~JSD#registerClass",
@@ -858,16 +864,112 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "src/classes/jsd.js~jsd#validatorbuilder",
-    "class/src/classes/jsd.js~JSD.html#instance-get-validatorBuilder",
-    "src/classes/jsd.js~JSD#validatorBuilder",
-    "member"
-  ],
-  [
     "src/classes/jsd.js~jsd.defaults",
     "class/src/classes/jsd.js~JSD.html#static-get-defaults",
     "src/classes/jsd.js~JSD.defaults",
     "member"
+  ],
+  [
+    "src/classes/model.js",
+    "file/src/classes/model.js.html",
+    "src/classes/model.js",
+    "file"
+  ],
+  [
+    "src/classes/model.js~model#isvalid",
+    "class/src/classes/model.js~Model.html#instance-get-isValid",
+    "src/classes/model.js~Model#isValid",
+    "member"
+  ],
+  [
+    "src/classes/model.js~model#jsd",
+    "class/src/classes/model.js~Model.html#instance-get-jsd",
+    "src/classes/model.js~Model#jsd",
+    "member"
+  ],
+  [
+    "src/classes/model.js~model#objectid",
+    "class/src/classes/model.js~Model.html#instance-get-objectID",
+    "src/classes/model.js~Model#objectID",
+    "member"
+  ],
+  [
+    "src/classes/model.js~model#observerbuilder",
+    "class/src/classes/model.js~Model.html#instance-get-observerBuilder",
+    "src/classes/model.js~Model#observerBuilder",
+    "member"
+  ],
+  [
+    "src/classes/model.js~model#parent",
+    "class/src/classes/model.js~Model.html#instance-get-parent",
+    "src/classes/model.js~Model#parent",
+    "member"
+  ],
+  [
+    "src/classes/model.js~model#path",
+    "class/src/classes/model.js~Model.html#instance-get-path",
+    "src/classes/model.js~Model#path",
+    "member"
+  ],
+  [
+    "src/classes/model.js~model#root",
+    "class/src/classes/model.js~Model.html#instance-get-root",
+    "src/classes/model.js~Model#root",
+    "member"
+  ],
+  [
+    "src/classes/model.js~model#subscribe",
+    "class/src/classes/model.js~Model.html#instance-method-subscribe",
+    "src/classes/model.js~Model#subscribe",
+    "method"
+  ],
+  [
+    "src/classes/model.js~model#subscribeto",
+    "class/src/classes/model.js~Model.html#instance-method-subscribeTo",
+    "src/classes/model.js~Model#subscribeTo",
+    "method"
+  ],
+  [
+    "src/classes/model.js~model#tojson",
+    "class/src/classes/model.js~Model.html#instance-method-toJSON",
+    "src/classes/model.js~Model#toJSON",
+    "method"
+  ],
+  [
+    "src/classes/model.js~model#tostring",
+    "class/src/classes/model.js~Model.html#instance-method-toString",
+    "src/classes/model.js~Model#toString",
+    "method"
+  ],
+  [
+    "src/classes/model.js~model#unsubscribe",
+    "class/src/classes/model.js~Model.html#instance-method-unsubscribe",
+    "src/classes/model.js~Model#unsubscribe",
+    "method"
+  ],
+  [
+    "src/classes/model.js~model#unsubscribefrom",
+    "class/src/classes/model.js~Model.html#instance-method-unsubscribeFrom",
+    "src/classes/model.js~Model#unsubscribeFrom",
+    "method"
+  ],
+  [
+    "src/classes/model.js~model#validate",
+    "class/src/classes/model.js~Model.html#instance-method-validate",
+    "src/classes/model.js~Model#validate",
+    "method"
+  ],
+  [
+    "src/classes/model.js~model#validatorbuilder",
+    "class/src/classes/model.js~Model.html#instance-get-validatorBuilder",
+    "src/classes/model.js~Model#validatorBuilder",
+    "member"
+  ],
+  [
+    "src/classes/model.js~model#valueof",
+    "class/src/classes/model.js~Model.html#instance-method-valueOf",
+    "src/classes/model.js~Model#valueOf",
+    "method"
   ],
   [
     "src/classes/schema.js",
@@ -900,15 +1002,9 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
-    "src/classes/schema.js~schema#isvalid",
-    "class/src/classes/schema.js~Schema.html#instance-get-isValid",
-    "src/classes/schema.js~Schema#isValid",
-    "member"
-  ],
-  [
-    "src/classes/schema.js~schema#jsd",
-    "class/src/classes/schema.js~Schema.html#instance-get-jsd",
-    "src/classes/schema.js~Schema#jsd",
+    "src/classes/schema.js~schema#model",
+    "class/src/classes/schema.js~Schema.html#instance-get-model",
+    "src/classes/schema.js~Schema#model",
     "member"
   ],
   [
@@ -918,45 +1014,15 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
-    "src/classes/schema.js~schema#model",
-    "class/src/classes/schema.js~Schema.html#instance-get-model",
-    "src/classes/schema.js~Schema#model",
-    "member"
-  ],
-  [
-    "src/classes/schema.js~schema#objectid",
-    "class/src/classes/schema.js~Schema.html#instance-get-objectID",
-    "src/classes/schema.js~Schema#objectID",
-    "member"
-  ],
-  [
     "src/classes/schema.js~schema#options",
     "class/src/classes/schema.js~Schema.html#instance-get-options",
     "src/classes/schema.js~Schema#options",
     "member"
   ],
   [
-    "src/classes/schema.js~schema#parent",
-    "class/src/classes/schema.js~Schema.html#instance-get-parent",
-    "src/classes/schema.js~Schema#parent",
-    "member"
-  ],
-  [
-    "src/classes/schema.js~schema#path",
-    "class/src/classes/schema.js~Schema.html#instance-get-path",
-    "src/classes/schema.js~Schema#path",
-    "member"
-  ],
-  [
     "src/classes/schema.js~schema#requiredfields",
     "class/src/classes/schema.js~Schema.html#instance-get-requiredFields",
     "src/classes/schema.js~Schema#requiredFields",
-    "member"
-  ],
-  [
-    "src/classes/schema.js~schema#root",
-    "class/src/classes/schema.js~Schema.html#instance-get-root",
-    "src/classes/schema.js~Schema#root",
     "member"
   ],
   [
@@ -970,54 +1036,6 @@ window.esdocSearchIndex = [
     "class/src/classes/schema.js~Schema.html#instance-get-signature",
     "src/classes/schema.js~Schema#signature",
     "member"
-  ],
-  [
-    "src/classes/schema.js~schema#subscribe",
-    "class/src/classes/schema.js~Schema.html#instance-method-subscribe",
-    "src/classes/schema.js~Schema#subscribe",
-    "method"
-  ],
-  [
-    "src/classes/schema.js~schema#subscribeto",
-    "class/src/classes/schema.js~Schema.html#instance-method-subscribeTo",
-    "src/classes/schema.js~Schema#subscribeTo",
-    "method"
-  ],
-  [
-    "src/classes/schema.js~schema#tojson",
-    "class/src/classes/schema.js~Schema.html#instance-method-toJSON",
-    "src/classes/schema.js~Schema#toJSON",
-    "method"
-  ],
-  [
-    "src/classes/schema.js~schema#tostring",
-    "class/src/classes/schema.js~Schema.html#instance-method-toString",
-    "src/classes/schema.js~Schema#toString",
-    "method"
-  ],
-  [
-    "src/classes/schema.js~schema#unsubscribe",
-    "class/src/classes/schema.js~Schema.html#instance-method-unsubscribe",
-    "src/classes/schema.js~Schema#unsubscribe",
-    "method"
-  ],
-  [
-    "src/classes/schema.js~schema#unsubscribefrom",
-    "class/src/classes/schema.js~Schema.html#instance-method-unsubscribeFrom",
-    "src/classes/schema.js~Schema#unsubscribeFrom",
-    "method"
-  ],
-  [
-    "src/classes/schema.js~schema#validate",
-    "class/src/classes/schema.js~Schema.html#instance-method-validate",
-    "src/classes/schema.js~Schema#validate",
-    "method"
-  ],
-  [
-    "src/classes/schema.js~schema#valueof",
-    "class/src/classes/schema.js~Schema.html#instance-method-valueOf",
-    "src/classes/schema.js~Schema#valueOf",
-    "method"
   ],
   [
     "src/classes/schema.js~schema.concatpathaddr",
@@ -1068,18 +1086,6 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
-    "src/classes/set.js~set#isvalid",
-    "class/src/classes/set.js~Set.html#instance-get-isValid",
-    "src/classes/set.js~Set#isValid",
-    "member"
-  ],
-  [
-    "src/classes/set.js~set#jsd",
-    "class/src/classes/set.js~Set.html#instance-get-jsd",
-    "src/classes/set.js~Set#jsd",
-    "member"
-  ],
-  [
     "src/classes/set.js~set#length",
     "class/src/classes/set.js~Set.html#instance-get-length",
     "src/classes/set.js~Set#length",
@@ -1095,24 +1101,6 @@ window.esdocSearchIndex = [
     "src/classes/set.js~set#model",
     "class/src/classes/set.js~Set.html#instance-get-model",
     "src/classes/set.js~Set#model",
-    "member"
-  ],
-  [
-    "src/classes/set.js~set#objectid",
-    "class/src/classes/set.js~Set.html#instance-get-objectID",
-    "src/classes/set.js~Set#objectID",
-    "member"
-  ],
-  [
-    "src/classes/set.js~set#parent",
-    "class/src/classes/set.js~Set.html#instance-get-parent",
-    "src/classes/set.js~Set#parent",
-    "member"
-  ],
-  [
-    "src/classes/set.js~set#path",
-    "class/src/classes/set.js~Set.html#instance-get-path",
-    "src/classes/set.js~Set#path",
     "member"
   ],
   [
@@ -1152,12 +1140,6 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "src/classes/set.js~set#root",
-    "class/src/classes/set.js~Set.html#instance-get-root",
-    "src/classes/set.js~Set#root",
-    "member"
-  ],
-  [
     "src/classes/set.js~set#setitemat",
     "class/src/classes/set.js~Set.html#instance-method-setItemAt",
     "src/classes/set.js~Set#setItemAt",
@@ -1176,30 +1158,6 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "src/classes/set.js~set#subscribe",
-    "class/src/classes/set.js~Set.html#instance-method-subscribe",
-    "src/classes/set.js~Set#subscribe",
-    "method"
-  ],
-  [
-    "src/classes/set.js~set#subscribeto",
-    "class/src/classes/set.js~Set.html#instance-method-subscribeTo",
-    "src/classes/set.js~Set#subscribeTo",
-    "method"
-  ],
-  [
-    "src/classes/set.js~set#tojson",
-    "class/src/classes/set.js~Set.html#instance-method-toJSON",
-    "src/classes/set.js~Set#toJSON",
-    "method"
-  ],
-  [
-    "src/classes/set.js~set#tostring",
-    "class/src/classes/set.js~Set.html#instance-method-toString",
-    "src/classes/set.js~Set#toString",
-    "method"
-  ],
-  [
     "src/classes/set.js~set#type",
     "class/src/classes/set.js~Set.html#instance-get-type",
     "src/classes/set.js~Set#type",
@@ -1209,18 +1167,6 @@ window.esdocSearchIndex = [
     "src/classes/set.js~set#unshift",
     "class/src/classes/set.js~Set.html#instance-method-unshift",
     "src/classes/set.js~Set#unshift",
-    "method"
-  ],
-  [
-    "src/classes/set.js~set#validate",
-    "class/src/classes/set.js~Set.html#instance-method-validate",
-    "src/classes/set.js~Set#validate",
-    "method"
-  ],
-  [
-    "src/classes/set.js~set#valueof",
-    "class/src/classes/set.js~Set.html#instance-method-valueOf",
-    "src/classes/set.js~Set#valueOf",
     "method"
   ],
   [
