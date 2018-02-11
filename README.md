@@ -5,6 +5,7 @@ Schema Based Self-Validating and Observable Data Models
 
 [![Build Status](https://travis-ci.org/Webfreshener/JSD.svg?branch=master)](https://travis-ci.org/Webfreshener/JSD)
 [![Dev Dependency Status](https://david-dm.org/webfreshener/jsd/dev-status.svg)](https://david-dm.org/webfreshener/jsd?type=dev)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/3ca79cd83489410295680ef3ee96cd01)](https://www.codacy.com/app/vanschroeder/JSD?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Webfreshener/JSD&amp;utm_campaign=Badge_Grade)
 
 [Online Developer Documentation](https://webfreshener.github.io/JSD/)
 
