@@ -1,6 +1,6 @@
-import {ObserverBuilder} from './_observerBuilder';
-import {JSD} from './jsd';
-import {Schema} from './schema';
+import {ObserverBuilder} from "./_observerBuilder";
+import {JSD} from "./jsd";
+import {Schema} from "./schema";
 
 describe("ObserverBuilder Unit Test Suite", () => {
     describe("Builder Methods", () => {
@@ -22,8 +22,8 @@ describe("ObserverBuilder Unit Test Suite", () => {
         });
 
         it.skip("should create an observer", function () {
-            ObserverBuilder.create('active', _schema);
-            _observer = ObserverBuilder.getInstance().get('active');
+            ObserverBuilder.create("active", _schema);
+            _observer = ObserverBuilder.getInstance().get("active");
             expect(typeof _observer.subscribe).toEqual("function");
         });
 
@@ -37,7 +37,7 @@ describe("ObserverBuilder Unit Test Suite", () => {
                     done(e);
                 }
             };
-            _schema.subscribeTo('active', _f);
+            _schema.subscribeTo("active", _f);
             _schema.model = {
                 name: "item-A",
                 active: true

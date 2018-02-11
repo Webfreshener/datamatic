@@ -1,4 +1,4 @@
-import {JSD} from './jsd'
+import {JSD} from "./jsd"
 
 describe("JSD Instance Test", () => {
     let _jsd;
@@ -14,8 +14,8 @@ describe("JSD Instance Test", () => {
     it("expects JSD Instances to create a valid JSD Document", () => {
 
         _jsd.document.model = {
-            'name': 'test',
+            "name": "test",
         };
-        expect(`${_jsd.document.model.name}`).toEqual('test');
+        expect(`${_jsd.document.model.name}`).toEqual("test");
     });
 });

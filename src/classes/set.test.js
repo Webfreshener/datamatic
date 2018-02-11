@@ -1,11 +1,11 @@
-import {JSD} from './jsd';
-import {Schema} from './schema';
-import {Set} from './set';
+import {JSD} from "./jsd";
+import {Schema} from "./schema";
+import {Set} from "./set";
 
-describe('Set Class Test Suite', function() {
+describe("Set Class Test Suite", function() {
     describe("Initialization Tests", function() {
         // it.only("should initialize without a type", function() {
-        //     let _set = new Set('*', new JSD());
+        //     let _set = new Set("*", new JSD());
         //     expect(_set instanceof Set).toBe(true);
         // });
 
@@ -24,7 +24,7 @@ describe('Set Class Test Suite', function() {
             expect(_set instanceof Set).toBe(true);
         });
 
-        it("should initialize with special type '*'", function() {
+        it("should initialize with special type "*"", function() {
             let _set = new Set("*", new JSD());
             expect(_set instanceof Set).toBe(true);
         });

@@ -1,7 +1,7 @@
-import {_exists, _mdRef} from './_references';
-import {MetaData} from './_metaData';
-import {Schema} from './schema';
-import {Set} from './set';
+import {_exists, _mdRef} from "./_references";
+import {MetaData} from "./_metaData";
+import {Schema} from "./schema";
+import {Set} from "./set";
 
 /**
  * @private
@@ -22,13 +22,13 @@ export class SchemaHelpers {
      */
     setObject(obj) {
         obj = this.ensureRequiredFields(obj);
-        if (typeof obj === 'string') {
+        if (typeof obj === "string") {
             return obj;
         }
         // calls set with nested key value pair
         for (var k in obj) {
             let eMsg = this._ref.model[k] = obj[k];
-            if (typeof eMsg === 'string') {
+            if (typeof eMsg === "string") {
                 throw new Error( eMsg );
             }
         }
@@ -45,7 +45,7 @@ export class SchemaHelpers {
         let _mdData = _mdRef.get(this._ref);
         let _s = this.createSchemaChild(key, value, this._ref.options, _mdData);
         if (!_exists(_s) || typeof _s !== "object") {
-            return `'${key}' was invalid`;
+            return `"${key}" was invalid`;
         }
         const _res = _s.model = value;
         return _s.model = value;
@@ -57,10 +57,10 @@ export class SchemaHelpers {
      */
     ensureKindIsString(itm) {
         switch (typeof itm) {
-            case 'string':
+            case "string":
                 return itm;
-            case 'object':
-                if (itm.hasOwnProperty('type')) {
+            case "object":
+                if (itm.hasOwnProperty("type")) {
                     return this.ensureKindIsString(itm.type);
                 }
                 break;
@@ -83,7 +83,7 @@ export class SchemaHelpers {
                 if (_exists(this._ref.signature[_key].default)) {
                     obj[_key] = this._ref.signature[_key].default;
                 } else {
-                    return `required property '${_key}' is missing for '${_path}'`;
+                    return `required property "${_key}" is missing for '${_path}'`;
                 }
             }
         }
@@ -109,7 +109,7 @@ export class SchemaHelpers {
             }, metaData || {});
             let _md = new MetaData(this._ref, _d);
             let _schemaDef = this._ref.signature[key.split(".").pop()] ||
-                this._ref.signature['*'] ||
+                this._ref.signature["*"] ||
                 this._ref.signature;
             try {
                 var _s = new Schema(_schemaDef, opts, _md);
@@ -123,7 +123,7 @@ export class SchemaHelpers {
             if (Array.isArray(_kinds)) {
                 _kinds = _kinds.map((val) => this.ensureKindIsString(val));
                 _kinds = _kinds.filter(itm => itm !== false);
-                _kinds = _kinds.length ? _kinds : '*';
+                _kinds = _kinds.length ? _kinds : "*";
                 return new Set(_kinds, metaData);
             }
         }
@@ -171,7 +171,7 @@ export class SchemaHelpers {
                         return itm;
                         break;
                     case "object":
-                        if (itm.hasOwnProperty('type')) {
+                        if (itm.hasOwnProperty("type")) {
                             return itm.type;
                         }
                         break;
@@ -179,8 +179,8 @@ export class SchemaHelpers {
                 return null;
             });
             _kinds = _kinds.filter(itm => _exists(itm));
-            _kinds = _kinds.length ? _kinds : '*';
-            return new Set(_kinds || '*', this._ref.metadata);
+            _kinds = _kinds.length ? _kinds : "*";
+            return new Set(_kinds || "*", this._ref.metadata);
         }
         return null;
     }
@@ -196,16 +196,16 @@ export class SchemaHelpers {
         let _ref;
         //-- attempts to validate
         if (!key.length) {
-            return `invalid path '${key}'`;
+            return `invalid path "${key}"`;
         }
         let msg;
         if (0 <= _list.indexOf(key)) {
             let _path = [];
-            let iterable = key.split('.');
+            let iterable = key.split(".");
             var _p;
             for (let _k of iterable) {
                 _path.push(_k);
-                _p = _path.join('.');
+                _p = _path.join(".");
             }
             if (!(_ref = this._ref.validatorBuilder.get(_p))) {
                 if (!this.options.extensible) {
@@ -214,7 +214,7 @@ export class SchemaHelpers {
             }
             this._ref.validatorBuilder.set(key, _ref);
         }
-        if (typeof (msg = this._ref.validatorBuilder.exec(key, value)) === 'string') {
+        if (typeof (msg = this._ref.validatorBuilder.exec(key, value)) === "string") {
             return msg;
         }
         return true;

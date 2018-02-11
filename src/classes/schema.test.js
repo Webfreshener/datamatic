@@ -1,5 +1,5 @@
-import {Schema} from './schema';
-import {JSD} from './jsd';
+import {Schema} from "./schema";
+import {JSD} from "./jsd";
 
 describe("Schema Class Test Suite", function () {
     describe("Schema Validation Methods", function () {
@@ -122,7 +122,7 @@ describe("Schema Class Test Suite", function () {
                 name: "Test"
             };
             _schema.set(_d);
-            expect(_schema.model.hasOwnProperty('name')).toEqual(true);
+            expect(_schema.model.hasOwnProperty("name")).toEqual(true);
         });
     });
 
@@ -177,7 +177,7 @@ describe("Schema Class Test Suite", function () {
                 }
             };
 
-            let _sub = this.schema.subscribeTo('badParam', _f);
+            let _sub = this.schema.subscribeTo("badParam", _f);
             this.schema.model = _d;
         });
     });
@@ -275,11 +275,11 @@ describe("Schema Class Test Suite", function () {
         });
     });
 
-    describe('debug lazy schemas', () => {
-        it('should successfully create lazy schema', () => {
+    describe("debug lazy schemas", () => {
+        it("should successfully create lazy schema", () => {
             const jsd = new JSD({foo: {type: "String"}});
-            jsd.document.model = {foo: 'bar'};
-            expect(jsd.document.model.foo).toBe('bar');
+            jsd.document.model = {foo: "bar"};
+            expect(jsd.document.model.foo).toBe("bar");
         });
 
     });
