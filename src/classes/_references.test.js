@@ -1,9 +1,9 @@
-import each from 'jest-each';
+import each from "jest-each";
 import {
     _validators, _schemaHelpers,
     _exists, _kinds, _mdRef, _object,
     _observers, _required_elements
-} from './_references';
+} from "./_references";
 
 describe("Maps Units", () => {
     describe("_exists method", () => {

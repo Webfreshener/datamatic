@@ -1,4 +1,4 @@
-import {_exists, wf, _validPaths} from './_references';
+import {_exists, wf, _validPaths, _vBuilders} from "./_references";
 /**
  * Holder for Validator Class References
  */
@@ -30,7 +30,7 @@ export class BaseValidator {
      */
     call(path, value) {
         // attempt to reference validator at path
-        let _ = ValidatorBuilder.getValidators()[path];
+        let _ = _vBuilders.get(this.jsd).getValidators()[path];
         // tests for existence of validator
         if (_exists(_) && typeof _ === "function") {
             const _r = _(value);
@@ -61,13 +61,14 @@ export class BaseValidator {
         };
         if (_exists(type)) {
             if (Array.isArray(type)) {
-                let _ = null;
+                let __ = null;
+                let k;
                 for (k in type) {
-                    if (typeof (_ = _eval(type[k], value)) === "boolean") {
-                        return _;
+                    if (typeof (__ = _eval(type[k], value)) === "boolean") {
+                        return __;
                     }
                 }
-                return _;
+                return __;
             }
             return _eval(type, value);
         }
@@ -103,9 +104,9 @@ Validator.Object = class Obj extends BaseValidator {
     exec(value) {
         let _iterate = (key, _val) => {
             let _p = `${this.path}.${key}`;
-            let _v = ValidatorBuilder.getValidators();
+            let _v = _vBuilders.get(this.jsd).getValidators();
             if (!_v.hasOwnProperty(_p)) {
-                ValidatorBuilder.create(this.signature.elements[key], _p, this);
+                _vBuilders.get(this.jsd).create(this.signature.elements[key], _p, this);
             }
             let _ = this.call(_p, _val);
             if (typeof _ === "string") {
@@ -162,9 +163,9 @@ Validator.String = class Str extends BaseValidator {
      * @returns {*}
      */
     exec(value) {
-        let _;
-        if (typeof (_ = this.checkType("string", value)) === "string") {
-            return _;
+        let __ = this.checkType("string", value);
+        if ((typeof __) === "string") {
+            return __;
         }
         if (_exists(this.signature.restrict)) {
             let _rxStr;
@@ -220,9 +221,12 @@ Validator.Function = class Fun extends BaseValidator {
      * @returns {*}
      */
     exec(value) {
-        let _x = typeof this.signature.type === 'string' ? this.signature.type : wf.Fun.getConstructorName(this.signature.type);
+        let _x = typeof this.signature.type === "string" ?
+            this.signature.type :
+            wf.Fun.getConstructorName(this.signature.type);
         let _fn = wf.Fun.getConstructorName(value);
-        return _x === _fn ? true : `${this.path} requires '$_x' got '<${_fn}>' instead`;
+        return _x === _fn ? true :
+            `${this.path} requires '$_x' got '<${_fn}>' instead`;
     }
 };
 
@@ -237,7 +241,7 @@ Validator.Default = class Def extends BaseValidator {
      * @returns {*}
      */
     exec(value) {
-        _testValidator = (type, value) => {
+        const _testValidator = (type, value) => {
             if (type === '*') {
                 return true;
             }

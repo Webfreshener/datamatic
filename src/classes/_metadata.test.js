@@ -1,6 +1,6 @@
 import {MetaData} from "./_metaData";
-import {Schema} from './schema';
-import {JSD} from './jsd';
+import {Schema} from "./schema";
+import {JSD} from "./jsd";
 describe("MetaData Units", () => {
     let _md = null;
     describe( "SubClass Validation", ()=> {

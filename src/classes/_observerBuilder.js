@@ -1,7 +1,7 @@
-import {_exists, _observers} from './_references';
-import {Set} from './set';
-import {Schema} from './schema';
-import {Subject} from 'rxjs/Rx';
+import {_exists, _observers} from "./_references";
+import {Set} from "./set";
+import {Schema} from "./schema";
+import {Subject} from "rxjs/Rx";
 
 export class ObserverBuilder {
     /**
@@ -30,7 +30,7 @@ export class ObserverBuilder {
 
     create(forPath, oRef) {
         if (!(oRef instanceof Schema || oRef instanceof Set)) {
-            throw 'oRef must be instance of Schema or Set';
+            throw "oRef must be instance of Schema or Set";
         }
         let _o = _observers.get(this);
         _o[forPath] = new Subject();

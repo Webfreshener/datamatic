@@ -1,6 +1,6 @@
-import {wf, _exists, _schemaOptions} from './_references';
-// import {MetaData} from './_metaData';
-// import {JSD} from './jsd';
+import {wf, _exists, _schemaOptions} from "./_references";
+// import {MetaData} from "./_metaData";
+// import {JSD} from "./jsd";
 /**
  * @private
  * @class
@@ -294,14 +294,14 @@ export class SchemaValidator {
                 let _ = _schemaKeys[key.split(".").pop()];
                 // tests for everything that"s not a string, _object or function
                 if (_ !== wf.Str.capitalize(_t)) {
-                    return `value for schema element '${key}' has invalid type :: '<${_t}>'`;
+                    return `value for schema element '${key}' has invalid type :: "<${_t}>"`;
                 }
             }
             else {
                 let _ = wf.Fun.getConstructorName(params);
                 // tests for function"s constructor name
                 if (_ !== _schemaKeys[key]) {
-                    return `value for schema element '${key}' has invalid class or method '<${_}>'`;
+                    return `value for schema element '${key}' has invalid class or method "<${_}>"`;
                 }
             }
             return true;

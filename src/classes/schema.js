@@ -3,12 +3,12 @@ import {
     _observers, _object, _kinds, _exists,
     _schemaHelpers, _schemaOptions, _schemaSignatures,
     _validPaths, _oBuilders, _vBuilders, wf
-} from './_references';
-import {MetaData} from './_metaData';
-import {SchemaHelpers} from './_schemaHelpers';
-import {SchemaValidator} from './_schemaValidator';
-import {JSD} from './jsd';
-import {Model} from './model';
+} from "./_references";
+import {MetaData} from "./_metaData";
+import {SchemaHelpers} from "./_schemaHelpers";
+import {SchemaValidator} from "./_schemaValidator";
+import {JSD} from "./jsd";
+import {Model} from "./model";
 /**
  * @class Schema
  */
@@ -37,7 +37,7 @@ export class Schema extends Model {
                     _jsd: arguments[2],
                 });
             }
-            else if (typeof arguments[2] == 'object') {
+            else if (typeof arguments[2] == "object") {
                 if (arguments[2] instanceof MetaData) {
                     _ = arguments[2];
                 } else {
@@ -72,7 +72,7 @@ export class Schema extends Model {
             jsd: _mdRef.get(this).jsd,
         }));
         // throws error if error message returned
-        if (typeof (eMsg = _schema_validator.isValid()) === 'string') {
+        if (typeof (eMsg = _schema_validator.isValid()) === "string") {
             throw eMsg;
         }
         _schemaSignatures.set(this, _signature);
@@ -86,7 +86,7 @@ export class Schema extends Model {
             let _default = _signature[_sigEl].default;
             if (_default) {
                 // sets default value for key on model
-                let _p = _sigEl.split('.');
+                let _p = _sigEl.split(".");
                 this.model[_sigEl] = _default;
             }
         }
@@ -100,9 +100,9 @@ export class Schema extends Model {
             },
             set: (t, key, value) => {
                 let _sH = _schemaHelpers.get(this);
-                if (typeof key === 'object') {
+                if (typeof key === "object") {
                     const e = _sH.setObject(key);
-                    if (typeof e === 'string') {
+                    if (typeof e === "string") {
                         this.observerBuilder.error(this.path, e);
                         return false;
                     }
@@ -140,7 +140,7 @@ export class Schema extends Model {
                     // handles child objects
                     if (typeof value === "object") {
                         value = _sH.setChildObject(_key, value);
-                        if (typeof value === 'string') {
+                        if (typeof value === "string") {
                             this.observerBuilder.error(_key, value);
                             this.observerBuilder.error(this.root.path, value);
                             return false;
@@ -167,7 +167,7 @@ export class Schema extends Model {
                     t[key] = value;
                 }
                 const _e = this.validate();
-                if ((typeof _e) !== 'string') {
+                if ((typeof _e) !== "string") {
                     if (this.path.length) {
                         this.observerBuilder.next(this.path, value);
                     }
@@ -207,7 +207,7 @@ export class Schema extends Model {
      */
     set model(value) {
         let e;
-        if (typeof value === 'object') {
+        if (typeof value === "object") {
             this.subscribe({
                 error: (e) => {
                     this.observerBuilder.error(this.path, e);
@@ -221,7 +221,7 @@ export class Schema extends Model {
                     this.model[k] = value[k];
                 });
             } else {
-                e = 'null not allowed';
+                e = "null not allowed";
                 _validPaths.get(this.jsd)[this.path] = e;
                 this.observerBuilder.error(this.path, e);
             }
@@ -229,7 +229,7 @@ export class Schema extends Model {
             this.observerBuilder.next(this.path, this);
             this.unsubscribe();
         } else {
-            e = `unable to set scalar value on model at ${this.path.length ? this.path : '.'}`;
+            e = `unable to set scalar value on model at ${this.path.length ? this.path : "."}`;
             _validPaths.get(this.jsd)[this.path] = e;
             this.observerBuilder.error(this.path, e);
             return e;
@@ -251,13 +251,13 @@ export class Schema extends Model {
      * @param {any} value
      */
     set(key, value) {
-        if (typeof key === 'string') {
+        if (typeof key === "string") {
             this.model[key] = value;
         } else {
             const _sH = _schemaHelpers.get(this);
             let e = _sH.ensureRequiredFields(key);
             _validPaths.get(this.jsd)[this.path] = e;
-            if (typeof e === 'string') {
+            if (typeof e === "string") {
                 this.observerBuilder.error(this.path, e);
             }
             Object.keys(key).forEach((_k) => {
@@ -277,7 +277,7 @@ export class Schema extends Model {
     }
 
     /**
-     * get options (if any) for this model's schema
+     * get options (if any) for this model"s schema
      */
     get options() {
         return _schemaOptions.get(this);

@@ -1,7 +1,7 @@
-import {_mdRef, _oBuilders, _vBuilders, _exists, _validPaths} from './_references';
-import {Schema} from './schema';
-import {Set} from './set';
-import {JSD} from './jsd';
+import {_mdRef, _oBuilders, _vBuilders, _exists, _validPaths} from "./_references";
+import {Schema} from "./schema";
+import {Set} from "./set";
+import {JSD} from "./jsd";
 export class Model {
     /**
      * subscribes handler method to observer for model
@@ -10,7 +10,7 @@ export class Model {
      */
     subscribe(func) {
         if ((typeof func).match(/^(function|object)$/) === null) {
-            throw new Error('subscribe requires function');
+            throw new Error("subscribe requires function");
         }
         let _o = this.observerBuilder.get(this.path);
         if (!_o || _o === null) {
@@ -22,7 +22,7 @@ export class Model {
     }
 
     /**
-     * unsubscribes from this object's observer
+     * unsubscribes from this object"s observer
      */
     unsubscribe() {
         let _o = this.observerBuilder.get(this.path);
@@ -38,7 +38,7 @@ export class Model {
      */
     subscribeTo(path, func) {
         if ((typeof func).match(/^(function|object)$/) === null) {
-            throw new Error('subscribeTo requires function');
+            throw new Error("subscribeTo requires function");
         }
         let _o = this.observerBuilder.get(path);
         if (!_o || _o === null) {
@@ -67,7 +67,7 @@ export class Model {
         const paths = _validPaths.get(this.jsd);
         try {
             Object.keys(paths).forEach((k) => {
-                if (typeof paths[k] === 'string') {
+                if (typeof paths[k] === "string") {
                     throw paths[k];
                 }
             });
@@ -81,7 +81,7 @@ export class Model {
      * @returns {boolean}
      */
     get isValid() {
-        return (typeof this.validate() !== 'string');
+        return (typeof this.validate() !== "string");
     }
 
     /**
@@ -102,7 +102,7 @@ export class Model {
             if (itm instanceof Set) {
                 return itm.toJSON();
             }
-            if (typeof itm === 'object') {
+            if (typeof itm === "object") {
                 const _o = !Array.isArray(itm) ? {} : [];
                 for (let k in itm) {
                     _o[k] = _derive(itm[k]);
@@ -116,6 +116,7 @@ export class Model {
 
     /**
      * JSON stringifies primitive value
+     * @param pretty - `prettifies` JSON output for readability
      */
     toString(pretty = false) {
         return JSON.stringify(this.toJSON(), null, (pretty ? 2 : void(0)));
@@ -129,14 +130,16 @@ export class Model {
     }
 
     /**
-     * @returns {Schema} elemetn at Schema root
+     * getter for document root element
+     * @returns {Schema|Set}
      */
     get root() {
         return _mdRef.get(this).root || this;
     }
 
     /**
-     * @returns {string} path to current Schema
+     * getter for `path` to current Element
+     * @returns {string}
      */
     get path() {
         let _ = _mdRef.get(this).path;
@@ -144,7 +147,8 @@ export class Model {
     }
 
     /**
-     * @returns {Schema} parent Schema element
+     * getter for models parent Schema or Set element
+     * @returns {Schema|Set}
      */
     get parent() {
         let _ = _mdRef.get(this).root;
@@ -152,20 +156,24 @@ export class Model {
     }
 
     /**
-     * @returns {*|JSD}
+     * getter for model"s JSD owner object
+     * @returns {JSD}
      */
     get jsd() {
         return _mdRef.get(this).jsd;
     }
 
     /**
-     *
+     * getter for ValidatorBuilder reference
      * @returns {ValidatorBuilder}
      */
     get validatorBuilder() {
         return _vBuilders.get(this.jsd);
     }
-
+    /**
+     * getter for ObserverBuilder reference
+     * @returns {ObserverBuilder}
+     */
     get observerBuilder() {
         return _oBuilders.get(this.jsd);
     }

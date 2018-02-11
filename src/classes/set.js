@@ -1,9 +1,9 @@
-import {_mdRef, _object, _vectorTypes, _oBuilders, _vBuilders, _exists, wf} from './_references';
-import {MetaData} from './_metaData';
-import {ValidatorBuilder} from './_validatorBuilder';
-import {Schema} from './schema';
-import {JSD} from './jsd';
-import {Model} from './model';
+import {_mdRef, _object, _vectorTypes, _oBuilders, _vBuilders, _exists, wf} from "./_references";
+import {MetaData} from "./_metaData";
+import {ValidatorBuilder} from "./_validatorBuilder";
+import {Schema} from "./schema";
+import {JSD} from "./jsd";
+import {Model} from "./model";
 /**
  * @class Set
  */
@@ -35,7 +35,7 @@ export class Set extends Model {
         let _types;
 
         if (!_exists(_type)) {
-            _type = ['*'];
+            _type = ["*"];
         } else {
             if (!Array.isArray(_type)) {
                 _type = [_type];
@@ -98,11 +98,11 @@ export class Set extends Model {
     get handler() {
         return {
             get: (t, idx) => {
-                if (typeof idx === 'symbol') {
+                if (typeof idx === "symbol") {
                     idx = `${String(idx)}`;
                 }
 
-                if (idx === 'length') {
+                if (idx === "length") {
                     return t.length;
                 }
 

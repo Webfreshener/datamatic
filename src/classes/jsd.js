@@ -2,16 +2,16 @@
  * Strict JS Objects and Collections created from JSON Schema Definitions
  * @class JSD
  * @example const _jsd = new JSD();
- * _jsd.document = {name: 'test'};
+ * _jsd.document = {name: "test"};
  * console.log(`${jsd.document.name}`);
- * // -> 'test'
- * console.log(`${jsd.document.get('.'}`);
+ * // -> "test"
+ * console.log(`${jsd.document.get("."}`);
  * // -> Schema
  */
-import {wf, _kinds, _validPaths, _oBuilders, _vBuilders} from './_references';
-import {ObserverBuilder} from './_observerBuilder';
-import {ValidatorBuilder} from './_validatorBuilder';
-import {Schema} from './schema';
+import {wf, _kinds, _validPaths, _oBuilders, _vBuilders} from "./_references";
+import {ObserverBuilder} from "./_observerBuilder";
+import {ValidatorBuilder} from "./_validatorBuilder";
+import {Schema} from "./schema";
 
 const _documents = new WeakMap();
 /**
@@ -80,9 +80,9 @@ export class JSD {
         // traverses arguements
         for (let arg of classesOrNames) {
             if (typeof arg === "string") {
-                if (arg === '*') {
+                if (arg === "*") {
                     // handles special * type
-                    return '*';
+                    return "*";
                 }
                 return (0 <= Object.keys(_k).indexOf(arg)) ? arg.toLowerCase() : null;
             }

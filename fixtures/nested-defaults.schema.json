@@ -12,7 +12,6 @@
     "type": "Object",
     "required": true,
     "extensible": true,
-    "default": {},
     "elements": {
       "ALLOWED": {
         "type": "Array",

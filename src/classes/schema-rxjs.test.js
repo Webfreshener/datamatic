@@ -1,5 +1,5 @@
-import {Schema} from './schema';
-import {JSD} from './jsd';
+import {Schema} from "./schema";
+import {JSD} from "./jsd";
 
 describe("Schema RXJS Test Suite", () => {
     describe("Data Validation", () => {
@@ -107,7 +107,7 @@ describe("Schema RXJS Test Suite", () => {
     describe("Client Schema", function () {
         it("should initialize from client.schema schema fixture", () => {
             let _s = require("../../fixtures/client.schema.json");
-            this.schema = new Schema(_s, null, new JSD()).subscribeTo('__OPTIONS__.ALLOWED', {
+            this.schema = new Schema(_s, null, new JSD()).subscribeTo("__OPTIONS__.ALLOWED", {
                 next: (v) => {
                     console.log(`next: ${JSON.stringify(v)}`);
                 },
@@ -116,7 +116,7 @@ describe("Schema RXJS Test Suite", () => {
                 }
             });
             expect(this.schema instanceof Schema).toBe(true);
-            expect(this.schema.model.__OPTIONS__.CRUD_METHODS.create).toEqual('POST');
+            expect(this.schema.model.__OPTIONS__.CRUD_METHODS.create).toEqual("POST");
         });
     });
 

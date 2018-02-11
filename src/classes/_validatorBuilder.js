@@ -1,8 +1,8 @@
 /**
  * @private
  */
-import {_exists, _validators, _validPaths, wf} from './_references';
-import {Validator} from './_validators'
+import {_exists, _validators, _validPaths, wf} from "./_references";
+import {Validator} from "./_validators"
 /**
  * @private
  */
@@ -39,7 +39,7 @@ export class ValidatorBuilder {
      * @param func
      */
     set(path, func) {
-        if (!_exists(func) || typeof func !== 'function') {
+        if (!_exists(func) || typeof func !== "function") {
             return "2nd argument expects a function";
         }
         _validators.get(this)[path] = func;
@@ -63,12 +63,12 @@ export class ValidatorBuilder {
             );
         let _v = _validators.get(this);
         let _functs = _signatures.map(_sig => {
-            if (typeof _sig !== 'object') {
+            if (typeof _sig !== "object") {
                 return new Validator["Default"](path, _sig, elRef.jsd);
             }
-            if (_sig.hasOwnProperty('*')) {
-                this.create(_sig['*'], path, elRef);
-                delete _sig['*'];
+            if (_sig.hasOwnProperty("*")) {
+                this.create(_sig["*"], path, elRef);
+                delete _sig["*"];
                 if (Object.keys(_sig) > 0) {
                     return this.create(_sig, path, elRef);
                 }

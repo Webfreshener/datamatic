@@ -1,6 +1,6 @@
-import {wf, _mdRef} from './_references';
-import {Schema} from './schema';
-import {Set} from './set';
+import {wf, _mdRef} from "./_references";
+import {Schema} from "./schema";
+import {Set} from "./set";
 const _mData = new WeakMap();
 /**
  * @private
@@ -56,7 +56,7 @@ export class MetaData {
      * @returns {string} Unique ObjectID
      */
     get objectID() {
-        return this.get('_id');
+        return this.get("_id");
     }
 
     /**
@@ -64,7 +64,7 @@ export class MetaData {
      * @returns {Schema|Set}
      */
     get root() {
-        return this.get('_root');
+        return this.get("_root");
     }
 
     /**
@@ -72,7 +72,7 @@ export class MetaData {
      * @returns {string}
      */
     get path() {
-        return this.get('_path');
+        return this.get("_path");
     }
 
     /**
@@ -80,7 +80,7 @@ export class MetaData {
      * @returns {JSD}
      */
     get jsd() {
-        return this.get('_jsd');
+        return this.get("_jsd");
     }
 
     /**
@@ -88,8 +88,8 @@ export class MetaData {
      */
     get parent() {
         let _ = this.path || "";
-        var _p = _.split('.');
-        _p = (_p.length > 1) ? _p.slice(0, _p.length - 2).join('.') : _p[0];
+        var _p = _.split(".");
+        _p = (_p.length > 1) ? _p.slice(0, _p.length - 2).join(".") : _p[0];
         return _p.length ? this.root.get(_p) : this.root;
     }
 }
