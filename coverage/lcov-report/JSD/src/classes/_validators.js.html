@@ -1,0 +1,878 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for JSD/src/classes/_validators.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">All files</a> / <a href="index.html">JSD/src/classes</a> _validators.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">53.68% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>51/95</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">41.67% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>25/60</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">66.67% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>10/15</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">53.68% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>51/95</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line medium'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">520x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">520x</span>
+<span class="cline-any cline-yes">520x</span>
+<span class="cline-any cline-yes">520x</span>
+<span class="cline-any cline-yes">520x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">195x</span>
+<span class="cline-any cline-yes">195x</span>
+<span class="cline-any cline-yes">195x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">194x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">185x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">195x</span>
+<span class="cline-any cline-yes">195x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">195x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">520x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">178x</span>
+<span class="cline-any cline-yes">178x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">172x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">158x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">157x</span>
+<span class="cline-any cline-yes">157x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">158x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">163x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import {_exists, wf, _validPaths, _vBuilders} from "./_references";
+/**
+ * Holder for Validator Class References
+ */
+export const Validator = {};
+/**
+ * @private
+ */
+export class BaseValidator {
+    /**
+     * @constructor
+     */
+    constructor(path, signature, jsd) {
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (!jsd)
+        {
+<span class="cstat-no" title="statement not covered" >            throw `JSD is required for ${path}`;</span>
+        }
+        this.path = path;
+        this.signature = signature;
+        this.jsd = jsd;
+        this.validations[path] = -1;
+    }
+&nbsp;
+    /**
+     * invokes `exec` for validator on object child elements
+     *
+     * @param path
+     * @param value
+     * @returns {*}
+     */
+<span class="fstat-no" title="function not covered" >    ca</span>ll(path, value) {
+        // attempt to reference validator at path
+        let _ = <span class="cstat-no" title="statement not covered" >_vBuilders.get(this.jsd).getValidators()[path];</span>
+        // tests for existence of validator
+<span class="cstat-no" title="statement not covered" >        if (_exists(_) &amp;&amp; typeof _ === "function") {</span>
+            const _r = <span class="cstat-no" title="statement not covered" >_(value);</span>
+            // sets result of validation
+<span class="cstat-no" title="statement not covered" >            this.validations[path] = typeof _r !== 'string';</span>
+<span class="cstat-no" title="statement not covered" >            return _r;</span>
+        }
+<span class="cstat-no" title="statement not covered" >        return `'${path}' has no validator defined`;</span>
+    }
+&nbsp;
+    /**
+     * tests typeof value reference
+     *
+     * @param type
+     * @param value
+     * @returns {Boolean|String}
+     */
+    checkType(type, value) {
+        let _eval = (type, value) =&gt; {
+            let _x = (typeof type !== "string") ? <span class="branch-0 cbranch-no" title="branch not covered" >this.jsd.getClass([type]) </span>: type;
+            if (_x === '*') {
+                return true;
+            }
+            if (_x.match(new RegExp(`^${typeof value}$`, "i")) === null) {
+                return `'${this.path}' expected ${type}, type was '&lt;${typeof value}&gt;'`
+            }
+            return true;
+        };
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (_exists(type)) {
+            <span class="missing-if-branch" title="if path not taken" >I</span>if (Array.isArray(type)) {
+                let __ = <span class="cstat-no" title="statement not covered" >null;</span>
+                let k;
+<span class="cstat-no" title="statement not covered" >                for (k in type) {</span>
+<span class="cstat-no" title="statement not covered" >                    if (typeof (__ = _eval(type[k], value)) === "boolean") {</span>
+<span class="cstat-no" title="statement not covered" >                        return __;</span>
+                    }
+                }
+<span class="cstat-no" title="statement not covered" >                return __;</span>
+            }
+            return _eval(type, value);
+        }
+        else {
+<span class="cstat-no" title="statement not covered" >            return `type '${type}' for ${this.path} was undefined`;</span>
+        }
+    }
+&nbsp;
+    /**
+     * default exec method, must be overridden by subclass
+     *
+     * @param value
+     * @returns {string}
+     */
+<span class="fstat-no" title="function not covered" >    ex</span>ec(value) {
+<span class="cstat-no" title="statement not covered" >        return `${wf.utils.Fun.getClassName(this)} requires override of 'exec'`;</span>
+    }
+&nbsp;
+    get validations() {
+        return _validPaths.get(this.jsd);
+    }
+}
+/**
+ * @private
+ */
+Validator.Object = class Obj extends BaseValidator {
+    /**
+     * validates Object datatypes
+     *
+     * @param value
+     * @returns {*}
+     */
+    exec(value) {
+        let _iterate = <span class="fstat-no" title="function not covered" >(k</span>ey, _val) =&gt; {
+            let _p = <span class="cstat-no" title="statement not covered" >`${this.path}.${key}`;</span>
+            let _v = <span class="cstat-no" title="statement not covered" >_vBuilders.get(this.jsd).getValidators();</span>
+<span class="cstat-no" title="statement not covered" >            if (!_v.hasOwnProperty(_p)) {</span>
+<span class="cstat-no" title="statement not covered" >                _vBuilders.get(this.jsd).create(this.signature.elements[key], _p, this);</span>
+            }
+            let _ = <span class="cstat-no" title="statement not covered" >this.call(_p, _val);</span>
+<span class="cstat-no" title="statement not covered" >            if (typeof _ === "string") {</span>
+<span class="cstat-no" title="statement not covered" >                return _;</span>
+            }
+        };
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (typeof value === "object") {
+<span class="cstat-no" title="statement not covered" >            if (!Array.isArray(value)) {</span>
+<span class="cstat-no" title="statement not covered" >                for (let _k in value) {</span>
+                    let _res = <span class="cstat-no" title="statement not covered" >_iterate(_k, value[_k]);</span>
+<span class="cstat-no" title="statement not covered" >                    if (typeof _res === "string") {</span>
+<span class="cstat-no" title="statement not covered" >                        return _res;</span>
+                    }
+                }
+            }
+            else {
+<span class="cstat-no" title="statement not covered" >                for (let _ in value) {</span>
+                    let e = <span class="cstat-no" title="statement not covered" >this.call(this.path, value[_]);</span>
+<span class="cstat-no" title="statement not covered" >                    if (typeof e === 'string') {</span>
+<span class="cstat-no" title="statement not covered" >                        return e;</span>
+                    }
+                }
+            }
+<span class="cstat-no" title="statement not covered" >            return true;</span>
+        }
+        else {
+            return `${this.path} expected value of type 'Object'. Type was '&lt;${typeof value}&gt;'`;
+        }
+    }
+};
+/**
+ * @private
+ */
+Validator.Boolean = class Bool extends BaseValidator {
+    /**
+     * validates Boolean datatypes
+     *
+     * @param value
+     * @returns {Boolean|String}
+     */
+    exec(value) {
+        return this.checkType("boolean", value);
+    }
+};
+&nbsp;
+/**
+ * @private
+ */
+Validator.String = class Str extends BaseValidator {
+    /**
+     * validates String datatypes
+     *
+     * @param value
+     * @returns {*}
+     */
+    exec(value) {
+        let __ = this.checkType("string", value);
+        if ((typeof __) === "string") {
+            return __;
+        }
+        if (_exists(this.signature.restrict)) {
+            let _rxStr;
+            let _rxFlags;
+            /*
+                Allow restrict to be Array or String
+                if Array, first element is rx string, second element is rx flags
+             */
+            if (Array.isArray(this.signature.restrict)) {
+                _rxStr = this.signature.restrict[0];
+                _rxFlags = this.signature.restrict.length &gt; 1 ? this.signature.restrict[1] : <span class="branch-1 cbranch-no" title="branch not covered" >"";</span>
+            } else {
+                _rxStr = this.signature.restrict;
+                _rxFlags = "";
+            }
+&nbsp;
+            if (!_exists(new RegExp(_rxStr.replace(/[\\\\]{2,}/g, "\\"), _rxFlags).exec(value))) {
+                return `value '${value}' for ${this.path} did not match required expression`;
+            }
+        }
+        return true;
+    }
+};
+&nbsp;
+/**
+ * @private
+ */
+Validator.Number = class Num extends BaseValidator {
+    /**
+     * validates Number datatypes
+     *
+     * @param value
+     * @returns {*}
+     */
+    exec(value) {
+        let _ = this.checkType("number", value);
+        if (typeof _ === "string") {
+            return _;
+        }
+        // attempts to cast to number
+        return !isNaN(Number(value)) ? true : <span class="branch-1 cbranch-no" title="branch not covered" >`${this.path} was unable to process '${value}' as Number`;</span>
+    }
+};
+&nbsp;
+/**
+ * @private
+ */
+Validator.Function = class Fun extends BaseValidator {
+    /**
+     * validates Function datatypes
+     *
+     * @param value
+     * @returns {*}
+     */
+<span class="fstat-no" title="function not covered" >    ex</span>ec(value) {
+        let _x = <span class="cstat-no" title="statement not covered" >typeof this.signature.type === "string" ?</span>
+            this.signature.type :
+            wf.Fun.getConstructorName(this.signature.type);
+        let _fn = <span class="cstat-no" title="statement not covered" >wf.Fun.getConstructorName(value);</span>
+<span class="cstat-no" title="statement not covered" >        return _x === _fn ? true :</span>
+            `${this.path} requires '$_x' got '&lt;${_fn}&gt;' instead`;
+    }
+};
+&nbsp;
+/**
+ * @private
+ */
+Validator.Default = class Def extends BaseValidator {
+    /**
+     * validates unknown (default) datatypes
+     *
+     * @param value
+     * @returns {*}
+     */
+    exec(value) {
+        const _testValidator = (type, value) =&gt; {
+            <span class="missing-if-branch" title="else path not taken" >E</span>if (type === '*') {
+                return true;
+            }
+            let _val = <span class="cstat-no" title="statement not covered" >Validator[wf.Str.capitalize(type)];</span>
+<span class="cstat-no" title="statement not covered" >            if (!_exists(_val)) {</span>
+<span class="cstat-no" title="statement not covered" >                return `'${this.path}' was unable to obtain validator for type '&lt;${type}&gt;'`;</span>
+            }
+            let _ = <span class="cstat-no" title="statement not covered" >new _val(this.path, this.signature);</span>
+<span class="cstat-no" title="statement not covered" >            return _.exec(value);</span>
+        };
+        let _x = typeof this.signature.type === 'string'
+            ? this.jsd.getClass(this.signature.type)
+            : <span class="branch-1 cbranch-no" title="branch not covered" >this.signature.type;</span>
+        let _tR = this.checkType(_x, value);
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (typeof _tR === "string") {
+<span class="cstat-no" title="statement not covered" >            return _tR;</span>
+        }
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (Array.isArray(_x)) {
+            let _ = <span class="cstat-no" title="statement not covered" >_x.map(<span class="fstat-no" title="function not covered" >it</span>m =&gt; {</span>
+                let _clazz = <span class="cstat-no" title="statement not covered" >this.jsd.getClass(itm);</span>
+<span class="cstat-no" title="statement not covered" >                return _testValidator(_clazz, value);</span>
+            });
+<span class="cstat-no" title="statement not covered" >            return (0 &lt;= _.indexOf(true)) ? true : _[_.length - 1];</span>
+        }
+        return _testValidator(_x, value);
+    }
+};
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Mon Feb 12 2018 21:11:39 GMT-0600 (CST)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

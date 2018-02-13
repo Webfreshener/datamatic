@@ -61,7 +61,7 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/classes/_validators.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {_exists, wf, _validPaths} from &apos;./_references&apos;;
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {_exists, wf, _validPaths, _vBuilders} from &quot;./_references&quot;;
 /**
  * Holder for Validator Class References
  */
@@ -93,7 +93,7 @@ export class BaseValidator {
      */
     call(path, value) {
         // attempt to reference validator at path
-        let _ = ValidatorBuilder.getValidators()[path];
+        let _ = _vBuilders.get(this.jsd).getValidators()[path];
         // tests for existence of validator
         if (_exists(_) &amp;&amp; typeof _ === &quot;function&quot;) {
             const _r = _(value);
@@ -124,13 +124,14 @@ export class BaseValidator {
         };
         if (_exists(type)) {
             if (Array.isArray(type)) {
-                let _ = null;
+                let __ = null;
+                let k;
                 for (k in type) {
-                    if (typeof (_ = _eval(type[k], value)) === &quot;boolean&quot;) {
-                        return _;
+                    if (typeof (__ = _eval(type[k], value)) === &quot;boolean&quot;) {
+                        return __;
                     }
                 }
-                return _;
+                return __;
             }
             return _eval(type, value);
         }
@@ -166,9 +167,9 @@ Validator.Object = class Obj extends BaseValidator {
     exec(value) {
         let _iterate = (key, _val) =&gt; {
             let _p = `${this.path}.${key}`;
-            let _v = ValidatorBuilder.getValidators();
+            let _v = _vBuilders.get(this.jsd).getValidators();
             if (!_v.hasOwnProperty(_p)) {
-                ValidatorBuilder.create(this.signature.elements[key], _p, this);
+                _vBuilders.get(this.jsd).create(this.signature.elements[key], _p, this);
             }
             let _ = this.call(_p, _val);
             if (typeof _ === &quot;string&quot;) {
@@ -225,9 +226,9 @@ Validator.String = class Str extends BaseValidator {
      * @returns {*}
      */
     exec(value) {
-        let _;
-        if (typeof (_ = this.checkType(&quot;string&quot;, value)) === &quot;string&quot;) {
-            return _;
+        let __ = this.checkType(&quot;string&quot;, value);
+        if ((typeof __) === &quot;string&quot;) {
+            return __;
         }
         if (_exists(this.signature.restrict)) {
             let _rxStr;
@@ -283,9 +284,12 @@ Validator.Function = class Fun extends BaseValidator {
      * @returns {*}
      */
     exec(value) {
-        let _x = typeof this.signature.type === &apos;string&apos; ? this.signature.type : wf.Fun.getConstructorName(this.signature.type);
+        let _x = typeof this.signature.type === &quot;string&quot; ?
+            this.signature.type :
+            wf.Fun.getConstructorName(this.signature.type);
         let _fn = wf.Fun.getConstructorName(value);
-        return _x === _fn ? true : `${this.path} requires &apos;$_x&apos; got &apos;&lt;${_fn}&gt;&apos; instead`;
+        return _x === _fn ? true :
+            `${this.path} requires &apos;$_x&apos; got &apos;&lt;${_fn}&gt;&apos; instead`;
     }
 };
 
@@ -300,7 +304,7 @@ Validator.Default = class Def extends BaseValidator {
      * @returns {*}
      */
     exec(value) {
-        _testValidator = (type, value) =&gt; {
+        const _testValidator = (type, value) =&gt; {
             if (type === &apos;*&apos;) {
                 return true;
             }

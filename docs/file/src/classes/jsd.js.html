@@ -65,16 +65,16 @@
  * Strict JS Objects and Collections created from JSON Schema Definitions
  * @class JSD
  * @example const _jsd = new JSD();
- * _jsd.document = {name: &apos;test&apos;};
+ * _jsd.document = {name: &quot;test&quot;};
  * console.log(`${jsd.document.name}`);
- * // -&gt; &apos;test&apos;
- * console.log(`${jsd.document.get(&apos;.&apos;}`);
+ * // -&gt; &quot;test&quot;
+ * console.log(`${jsd.document.get(&quot;.&quot;}`);
  * // -&gt; Schema
  */
-import {wf, _kinds, _validPaths, _oBuilders, _vBuilders} from &apos;./_references&apos;;
-import {ObserverBuilder} from &apos;./_observerBuilder&apos;;
-import {ValidatorBuilder} from &apos;./_validatorBuilder&apos;;
-import {Schema} from &apos;./schema&apos;;
+import {wf, _kinds, _validPaths, _oBuilders, _vBuilders} from &quot;./_references&quot;;
+import {ObserverBuilder} from &quot;./_observerBuilder&quot;;
+import {ValidatorBuilder} from &quot;./_validatorBuilder&quot;;
+import {Schema} from &quot;./schema&quot;;
 
 const _documents = new WeakMap();
 /**
@@ -143,9 +143,9 @@ export class JSD {
         // traverses arguements
         for (let arg of classesOrNames) {
             if (typeof arg === &quot;string&quot;) {
-                if (arg === &apos;*&apos;) {
+                if (arg === &quot;*&quot;) {
                     // handles special * type
-                    return &apos;*&apos;;
+                    return &quot;*&quot;;
                 }
                 return (0 &lt;= Object.keys(_k).indexOf(arg)) ? arg.toLowerCase() : null;
             }

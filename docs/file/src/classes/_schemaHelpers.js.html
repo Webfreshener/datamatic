@@ -61,10 +61,10 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/classes/_schemaHelpers.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {_exists, _mdRef} from &apos;./_references&apos;;
-import {MetaData} from &apos;./_metaData&apos;;
-import {Schema} from &apos;./schema&apos;;
-import {Set} from &apos;./set&apos;;
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {_exists, _mdRef} from &quot;./_references&quot;;
+import {MetaData} from &quot;./_metaData&quot;;
+import {Schema} from &quot;./schema&quot;;
+import {Set} from &quot;./set&quot;;
 
 /**
  * @private
@@ -85,13 +85,13 @@ export class SchemaHelpers {
      */
     setObject(obj) {
         obj = this.ensureRequiredFields(obj);
-        if (typeof obj === &apos;string&apos;) {
+        if (typeof obj === &quot;string&quot;) {
             return obj;
         }
         // calls set with nested key value pair
         for (var k in obj) {
             let eMsg = this._ref.model[k] = obj[k];
-            if (typeof eMsg === &apos;string&apos;) {
+            if (typeof eMsg === &quot;string&quot;) {
                 throw new Error( eMsg );
             }
         }
@@ -108,7 +108,7 @@ export class SchemaHelpers {
         let _mdData = _mdRef.get(this._ref);
         let _s = this.createSchemaChild(key, value, this._ref.options, _mdData);
         if (!_exists(_s) || typeof _s !== &quot;object&quot;) {
-            return `&apos;${key}&apos; was invalid`;
+            return `&quot;${key}&quot; was invalid`;
         }
         const _res = _s.model = value;
         return _s.model = value;
@@ -120,10 +120,10 @@ export class SchemaHelpers {
      */
     ensureKindIsString(itm) {
         switch (typeof itm) {
-            case &apos;string&apos;:
+            case &quot;string&quot;:
                 return itm;
-            case &apos;object&apos;:
-                if (itm.hasOwnProperty(&apos;type&apos;)) {
+            case &quot;object&quot;:
+                if (itm.hasOwnProperty(&quot;type&quot;)) {
                     return this.ensureKindIsString(itm.type);
                 }
                 break;
@@ -146,7 +146,7 @@ export class SchemaHelpers {
                 if (_exists(this._ref.signature[_key].default)) {
                     obj[_key] = this._ref.signature[_key].default;
                 } else {
-                    return `required property &apos;${_key}&apos; is missing for &apos;${_path}&apos;`;
+                    return `required property &quot;${_key}&quot; is missing for &apos;${_path}&apos;`;
                 }
             }
         }
@@ -172,7 +172,7 @@ export class SchemaHelpers {
             }, metaData || {});
             let _md = new MetaData(this._ref, _d);
             let _schemaDef = this._ref.signature[key.split(&quot;.&quot;).pop()] ||
-                this._ref.signature[&apos;*&apos;] ||
+                this._ref.signature[&quot;*&quot;] ||
                 this._ref.signature;
             try {
                 var _s = new Schema(_schemaDef, opts, _md);
@@ -186,7 +186,7 @@ export class SchemaHelpers {
             if (Array.isArray(_kinds)) {
                 _kinds = _kinds.map((val) =&gt; this.ensureKindIsString(val));
                 _kinds = _kinds.filter(itm =&gt; itm !== false);
-                _kinds = _kinds.length ? _kinds : &apos;*&apos;;
+                _kinds = _kinds.length ? _kinds : &quot;*&quot;;
                 return new Set(_kinds, metaData);
             }
         }
@@ -234,7 +234,7 @@ export class SchemaHelpers {
                         return itm;
                         break;
                     case &quot;object&quot;:
-                        if (itm.hasOwnProperty(&apos;type&apos;)) {
+                        if (itm.hasOwnProperty(&quot;type&quot;)) {
                             return itm.type;
                         }
                         break;
@@ -242,8 +242,8 @@ export class SchemaHelpers {
                 return null;
             });
             _kinds = _kinds.filter(itm =&gt; _exists(itm));
-            _kinds = _kinds.length ? _kinds : &apos;*&apos;;
-            return new Set(_kinds || &apos;*&apos;, this._ref.metadata);
+            _kinds = _kinds.length ? _kinds : &quot;*&quot;;
+            return new Set(_kinds || &quot;*&quot;, this._ref.metadata);
         }
         return null;
     }
@@ -259,16 +259,16 @@ export class SchemaHelpers {
         let _ref;
         //-- attempts to validate
         if (!key.length) {
-            return `invalid path &apos;${key}&apos;`;
+            return `invalid path &quot;${key}&quot;`;
         }
         let msg;
         if (0 &lt;= _list.indexOf(key)) {
             let _path = [];
-            let iterable = key.split(&apos;.&apos;);
+            let iterable = key.split(&quot;.&quot;);
             var _p;
             for (let _k of iterable) {
                 _path.push(_k);
-                _p = _path.join(&apos;.&apos;);
+                _p = _path.join(&quot;.&quot;);
             }
             if (!(_ref = this._ref.validatorBuilder.get(_p))) {
                 if (!this.options.extensible) {
@@ -277,7 +277,7 @@ export class SchemaHelpers {
             }
             this._ref.validatorBuilder.set(key, _ref);
         }
-        if (typeof (msg = this._ref.validatorBuilder.exec(key, value)) === &apos;string&apos;) {
+        if (typeof (msg = this._ref.validatorBuilder.exec(key, value)) === &quot;string&quot;) {
             return msg;
         }
         return true;

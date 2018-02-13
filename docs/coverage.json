@@ -1,7 +1,7 @@
 {
-  "coverage": "84.1%",
+  "coverage": "84.76%",
   "expectCount": 151,
-  "actualCount": 127,
+  "actualCount": 128,
   "files": {
     "src/classes/_metaData.js": {
       "expectCount": 11,
@@ -57,7 +57,7 @@
         18,
         19,
         20,
-        89
+        90
       ]
     },
     "src/classes/jsd.js": {
@@ -71,10 +71,9 @@
     },
     "src/classes/model.js": {
       "expectCount": 17,
-      "actualCount": 15,
+      "actualCount": 16,
       "undocumentLines": [
-        5,
-        169
+        5
       ]
     },
     "src/classes/schema.js": {

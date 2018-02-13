@@ -61,12 +61,12 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/classes/set.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {_mdRef, _object, _vectorTypes, _oBuilders, _vBuilders, _exists, wf} from &apos;./_references&apos;;
-import {MetaData} from &apos;./_metaData&apos;;
-import {ValidatorBuilder} from &apos;./_validatorBuilder&apos;;
-import {Schema} from &apos;./schema&apos;;
-import {JSD} from &apos;./jsd&apos;;
-import {Model} from &apos;./model&apos;;
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {_mdRef, _object, _vectorTypes, _oBuilders, _vBuilders, _exists, wf} from &quot;./_references&quot;;
+import {MetaData} from &quot;./_metaData&quot;;
+import {ValidatorBuilder} from &quot;./_validatorBuilder&quot;;
+import {Schema} from &quot;./schema&quot;;
+import {JSD} from &quot;./jsd&quot;;
+import {Model} from &quot;./model&quot;;
 /**
  * @class Set
  */
@@ -98,7 +98,7 @@ export class Set extends Model {
         let _types;
 
         if (!_exists(_type)) {
-            _type = [&apos;*&apos;];
+            _type = [&quot;*&quot;];
         } else {
             if (!Array.isArray(_type)) {
                 _type = [_type];
@@ -161,11 +161,11 @@ export class Set extends Model {
     get handler() {
         return {
             get: (t, idx) =&gt; {
-                if (typeof idx === &apos;symbol&apos;) {
+                if (typeof idx === &quot;symbol&quot;) {
                     idx = `${String(idx)}`;
                 }
 
-                if (idx === &apos;length&apos;) {
+                if (idx === &quot;length&quot;) {
                     return t.length;
                 }
 

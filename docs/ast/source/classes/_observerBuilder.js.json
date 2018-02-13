@@ -158,7 +158,7 @@
           },
           "extra": {
             "rawValue": "./_references",
-            "raw": "'./_references'"
+            "raw": "\"./_references\""
           },
           "value": "./_references"
         }
@@ -244,7 +244,7 @@
           },
           "extra": {
             "rawValue": "./set",
-            "raw": "'./set'"
+            "raw": "\"./set\""
           },
           "value": "./set"
         }
@@ -330,7 +330,7 @@
           },
           "extra": {
             "rawValue": "./schema",
-            "raw": "'./schema'"
+            "raw": "\"./schema\""
           },
           "value": "./schema"
         }
@@ -416,7 +416,7 @@
           },
           "extra": {
             "rawValue": "rxjs/Rx",
-            "raw": "'rxjs/Rx'"
+            "raw": "\"rxjs/Rx\""
           },
           "value": "rxjs/Rx"
         }
@@ -1714,7 +1714,7 @@
                               },
                               "extra": {
                                 "rawValue": "oRef must be instance of Schema or Set",
-                                "raw": "'oRef must be instance of Schema or Set'"
+                                "raw": "\"oRef must be instance of Schema or Set\""
                               },
                               "value": "oRef must be instance of Schema or Set"
                             }
