@@ -697,7 +697,7 @@
           },
           "extra": {
             "rawValue": "./_references",
-            "raw": "'./_references'"
+            "raw": "\"./_references\""
           },
           "value": "./_references"
         }
@@ -783,7 +783,7 @@
           },
           "extra": {
             "rawValue": "./_metaData",
-            "raw": "'./_metaData'"
+            "raw": "\"./_metaData\""
           },
           "value": "./_metaData"
         }
@@ -869,7 +869,7 @@
           },
           "extra": {
             "rawValue": "./_schemaHelpers",
-            "raw": "'./_schemaHelpers'"
+            "raw": "\"./_schemaHelpers\""
           },
           "value": "./_schemaHelpers"
         }
@@ -955,7 +955,7 @@
           },
           "extra": {
             "rawValue": "./_schemaValidator",
-            "raw": "'./_schemaValidator'"
+            "raw": "\"./_schemaValidator\""
           },
           "value": "./_schemaValidator"
         }
@@ -1041,7 +1041,7 @@
           },
           "extra": {
             "rawValue": "./jsd",
-            "raw": "'./jsd'"
+            "raw": "\"./jsd\""
           },
           "value": "./jsd"
         }
@@ -1127,7 +1127,7 @@
           },
           "extra": {
             "rawValue": "./model",
-            "raw": "'./model'"
+            "raw": "\"./model\""
           },
           "value": "./model"
         },
@@ -2659,7 +2659,7 @@
                                   },
                                   "extra": {
                                     "rawValue": "object",
-                                    "raw": "'object'"
+                                    "raw": "\"object\""
                                   },
                                   "value": "object"
                                 }
@@ -5236,7 +5236,7 @@
                           },
                           "extra": {
                             "rawValue": "string",
-                            "raw": "'string'"
+                            "raw": "\"string\""
                           },
                           "value": "string"
                         },
@@ -6596,7 +6596,7 @@
                                             },
                                             "extra": {
                                               "rawValue": ".",
-                                              "raw": "'.'"
+                                              "raw": "\".\""
                                             },
                                             "value": "."
                                           }
@@ -7575,7 +7575,7 @@
                                         },
                                         "extra": {
                                           "rawValue": "object",
-                                          "raw": "'object'"
+                                          "raw": "\"object\""
                                         },
                                         "value": "object"
                                       }
@@ -7811,7 +7811,7 @@
                                               },
                                               "extra": {
                                                 "rawValue": "string",
-                                                "raw": "'string'"
+                                                "raw": "\"string\""
                                               },
                                               "value": "string"
                                             }
@@ -11034,7 +11034,7 @@
                                                     },
                                                     "extra": {
                                                       "rawValue": "string",
-                                                      "raw": "'string'"
+                                                      "raw": "\"string\""
                                                     },
                                                     "value": "string"
                                                   }
@@ -13403,7 +13403,7 @@
                                         },
                                         "extra": {
                                           "rawValue": "string",
-                                          "raw": "'string'"
+                                          "raw": "\"string\""
                                         },
                                         "value": "string"
                                       }
@@ -15377,7 +15377,7 @@
                           },
                           "extra": {
                             "rawValue": "object",
-                            "raw": "'object'"
+                            "raw": "\"object\""
                           },
                           "value": "object"
                         }
@@ -16356,7 +16356,7 @@
                                       },
                                       "extra": {
                                         "rawValue": "null not allowed",
-                                        "raw": "'null not allowed'"
+                                        "raw": "\"null not allowed\""
                                       },
                                       "value": "null not allowed"
                                     }
@@ -17490,7 +17490,7 @@
                                       },
                                       "extra": {
                                         "rawValue": ".",
-                                        "raw": "'.'"
+                                        "raw": "\".\""
                                       },
                                       "value": "."
                                     }
@@ -18405,7 +18405,7 @@
                           },
                           "extra": {
                             "rawValue": "string",
-                            "raw": "'string'"
+                            "raw": "\"string\""
                           },
                           "value": "string"
                         }
@@ -19147,7 +19147,7 @@
                                 },
                                 "extra": {
                                   "rawValue": "string",
-                                  "raw": "'string'"
+                                  "raw": "\"string\""
                                 },
                                 "value": "string"
                               }
@@ -20210,7 +20210,7 @@
                 "trailingComments": [
                   {
                     "type": "CommentBlock",
-                    "value": "*\n     * get options (if any) for this model's schema\n     ",
+                    "value": "*\n     * get options (if any) for this model\"s schema\n     ",
                     "start": 9996,
                     "end": 10059,
                     "loc": {
@@ -20384,7 +20384,7 @@
                 "leadingComments": [
                   {
                     "type": "CommentBlock",
-                    "value": "*\n     * get options (if any) for this model's schema\n     ",
+                    "value": "*\n     * get options (if any) for this model\"s schema\n     ",
                     "start": 9996,
                     "end": 10059,
                     "loc": {
@@ -21354,7 +21354,7 @@
     },
     {
       "type": "CommentBlock",
-      "value": "*\n     * get options (if any) for this model's schema\n     ",
+      "value": "*\n     * get options (if any) for this model\"s schema\n     ",
       "start": 9996,
       "end": 10059,
       "loc": {
@@ -61880,7 +61880,7 @@
     },
     {
       "type": "CommentBlock",
-      "value": "*\n     * get options (if any) for this model's schema\n     ",
+      "value": "*\n     * get options (if any) for this model\"s schema\n     ",
       "start": 9996,
       "end": 10059,
       "loc": {

@@ -61,10 +61,10 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/classes/_observerBuilder.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {_exists, _observers} from &apos;./_references&apos;;
-import {Set} from &apos;./set&apos;;
-import {Schema} from &apos;./schema&apos;;
-import {Subject} from &apos;rxjs/Rx&apos;;
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {_exists, _observers} from &quot;./_references&quot;;
+import {Set} from &quot;./set&quot;;
+import {Schema} from &quot;./schema&quot;;
+import {Subject} from &quot;rxjs/Rx&quot;;
 
 export class ObserverBuilder {
     /**
@@ -93,7 +93,7 @@ export class ObserverBuilder {
 
     create(forPath, oRef) {
         if (!(oRef instanceof Schema || oRef instanceof Set)) {
-            throw &apos;oRef must be instance of Schema or Set&apos;;
+            throw &quot;oRef must be instance of Schema or Set&quot;;
         }
         let _o = _observers.get(this);
         _o[forPath] = new Subject();

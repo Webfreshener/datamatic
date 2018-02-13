@@ -207,14 +207,14 @@
           },
           "extra": {
             "rawValue": "./_references",
-            "raw": "'./_references'"
+            "raw": "\"./_references\""
           },
           "value": "./_references"
         },
         "trailingComments": [
           {
             "type": "CommentLine",
-            "value": " import {MetaData} from './_metaData';",
+            "value": " import {MetaData} from \"./_metaData\";",
             "start": 59,
             "end": 99,
             "loc": {
@@ -230,7 +230,7 @@
           },
           {
             "type": "CommentLine",
-            "value": " import {JSD} from './jsd';",
+            "value": " import {JSD} from \"./jsd\";",
             "start": 100,
             "end": 129,
             "loc": {
@@ -18534,8 +18534,8 @@
                                                 }
                                               },
                                               "value": {
-                                                "raw": "' has invalid type :: '<",
-                                                "cooked": "' has invalid type :: '<"
+                                                "raw": "' has invalid type :: \"<",
+                                                "cooked": "' has invalid type :: \"<"
                                               },
                                               "tail": false
                                             },
@@ -18554,8 +18554,8 @@
                                                 }
                                               },
                                               "value": {
-                                                "raw": ">'",
-                                                "cooked": ">'"
+                                                "raw": ">\"",
+                                                "cooked": ">\""
                                               },
                                               "tail": true
                                             }
@@ -19002,8 +19002,8 @@
                                                 }
                                               },
                                               "value": {
-                                                "raw": "' has invalid class or method '<",
-                                                "cooked": "' has invalid class or method '<"
+                                                "raw": "' has invalid class or method \"<",
+                                                "cooked": "' has invalid class or method \"<"
                                               },
                                               "tail": false
                                             },
@@ -19022,8 +19022,8 @@
                                                 }
                                               },
                                               "value": {
-                                                "raw": ">'",
-                                                "cooked": ">'"
+                                                "raw": ">\"",
+                                                "cooked": ">\""
                                               },
                                               "tail": true
                                             }
@@ -19492,7 +19492,7 @@
           "leadingComments": [
             {
               "type": "CommentLine",
-              "value": " import {MetaData} from './_metaData';",
+              "value": " import {MetaData} from \"./_metaData\";",
               "start": 59,
               "end": 99,
               "loc": {
@@ -19508,7 +19508,7 @@
             },
             {
               "type": "CommentLine",
-              "value": " import {JSD} from './jsd';",
+              "value": " import {JSD} from \"./jsd\";",
               "start": 100,
               "end": 129,
               "loc": {
@@ -19544,7 +19544,7 @@
         "leadingComments": [
           {
             "type": "CommentLine",
-            "value": " import {MetaData} from './_metaData';",
+            "value": " import {MetaData} from \"./_metaData\";",
             "start": 59,
             "end": 99,
             "loc": {
@@ -19560,7 +19560,7 @@
           },
           {
             "type": "CommentLine",
-            "value": " import {JSD} from './jsd';",
+            "value": " import {JSD} from \"./jsd\";",
             "start": 100,
             "end": 129,
             "loc": {
@@ -19598,7 +19598,7 @@
   "comments": [
     {
       "type": "CommentLine",
-      "value": " import {MetaData} from './_metaData';",
+      "value": " import {MetaData} from \"./_metaData\";",
       "start": 59,
       "end": 99,
       "loc": {
@@ -19614,7 +19614,7 @@
     },
     {
       "type": "CommentLine",
-      "value": " import {JSD} from './jsd';",
+      "value": " import {JSD} from \"./jsd\";",
       "start": 100,
       "end": 129,
       "loc": {
@@ -20367,7 +20367,7 @@
     },
     {
       "type": "CommentLine",
-      "value": " import {MetaData} from './_metaData';",
+      "value": " import {MetaData} from \"./_metaData\";",
       "start": 59,
       "end": 99,
       "loc": {
@@ -20383,7 +20383,7 @@
     },
     {
       "type": "CommentLine",
-      "value": " import {JSD} from './jsd';",
+      "value": " import {JSD} from \"./jsd\";",
       "start": 100,
       "end": 129,
       "loc": {
@@ -59602,7 +59602,7 @@
         "binop": null,
         "updateContext": null
       },
-      "value": "' has invalid type :: '<",
+      "value": "' has invalid type :: \"<",
       "start": 10346,
       "end": 10370,
       "loc": {
@@ -59705,7 +59705,7 @@
         "binop": null,
         "updateContext": null
       },
-      "value": ">'",
+      "value": ">\"",
       "start": 10375,
       "end": 10377,
       "loc": {
@@ -60631,7 +60631,7 @@
         "binop": null,
         "updateContext": null
       },
-      "value": "' has invalid class or method '<",
+      "value": "' has invalid class or method \"<",
       "start": 10653,
       "end": 10685,
       "loc": {
@@ -60734,7 +60734,7 @@
         "binop": null,
         "updateContext": null
       },
-      "value": ">'",
+      "value": ">\"",
       "start": 10689,
       "end": 10691,
       "loc": {

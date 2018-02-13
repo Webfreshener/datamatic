@@ -61,9 +61,9 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/classes/_schemaValidator.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {wf, _exists, _schemaOptions} from &apos;./_references&apos;;
-// import {MetaData} from &apos;./_metaData&apos;;
-// import {JSD} from &apos;./jsd&apos;;
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {wf, _exists, _schemaOptions} from &quot;./_references&quot;;
+// import {MetaData} from &quot;./_metaData&quot;;
+// import {JSD} from &quot;./jsd&quot;;
 /**
  * @private
  * @class
@@ -357,14 +357,14 @@ export class SchemaValidator {
                 let _ = _schemaKeys[key.split(&quot;.&quot;).pop()];
                 // tests for everything that&quot;s not a string, _object or function
                 if (_ !== wf.Str.capitalize(_t)) {
-                    return `value for schema element &apos;${key}&apos; has invalid type :: &apos;&lt;${_t}&gt;&apos;`;
+                    return `value for schema element &apos;${key}&apos; has invalid type :: &quot;&lt;${_t}&gt;&quot;`;
                 }
             }
             else {
                 let _ = wf.Fun.getConstructorName(params);
                 // tests for function&quot;s constructor name
                 if (_ !== _schemaKeys[key]) {
-                    return `value for schema element &apos;${key}&apos; has invalid class or method &apos;&lt;${_}&gt;&apos;`;
+                    return `value for schema element &apos;${key}&apos; has invalid class or method &quot;&lt;${_}&gt;&quot;`;
                 }
             }
             return true;

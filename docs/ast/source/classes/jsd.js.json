@@ -307,14 +307,14 @@
           },
           "extra": {
             "rawValue": "./_references",
-            "raw": "'./_references'"
+            "raw": "\"./_references\""
           },
           "value": "./_references"
         },
         "leadingComments": [
           {
             "type": "CommentBlock",
-            "value": "*\n * Strict JS Objects and Collections created from JSON Schema Definitions\n * @class JSD\n * @example const _jsd = new JSD();\n * _jsd.document = {name: 'test'};\n * console.log(`${jsd.document.name}`);\n * // -> 'test'\n * console.log(`${jsd.document.get('.'}`);\n * // -> Schema\n ",
+            "value": "*\n * Strict JS Objects and Collections created from JSON Schema Definitions\n * @class JSD\n * @example const _jsd = new JSD();\n * _jsd.document = {name: \"test\"};\n * console.log(`${jsd.document.name}`);\n * // -> \"test\"\n * console.log(`${jsd.document.get(\".\"}`);\n * // -> Schema\n ",
             "start": 0,
             "end": 281,
             "loc": {
@@ -411,7 +411,7 @@
           },
           "extra": {
             "rawValue": "./_observerBuilder",
-            "raw": "'./_observerBuilder'"
+            "raw": "\"./_observerBuilder\""
           },
           "value": "./_observerBuilder"
         }
@@ -497,7 +497,7 @@
           },
           "extra": {
             "rawValue": "./_validatorBuilder",
-            "raw": "'./_validatorBuilder'"
+            "raw": "\"./_validatorBuilder\""
           },
           "value": "./_validatorBuilder"
         }
@@ -583,7 +583,7 @@
           },
           "extra": {
             "rawValue": "./schema",
-            "raw": "'./schema'"
+            "raw": "\"./schema\""
           },
           "value": "./schema"
         }
@@ -3889,7 +3889,7 @@
                                       },
                                       "extra": {
                                         "rawValue": "*",
-                                        "raw": "'*'"
+                                        "raw": "\"*\""
                                       },
                                       "value": "*"
                                     }
@@ -3939,7 +3939,7 @@
                                           },
                                           "extra": {
                                             "rawValue": "*",
-                                            "raw": "'*'"
+                                            "raw": "\"*\""
                                           },
                                           "value": "*",
                                           "leadingComments": null
@@ -10508,7 +10508,7 @@
   "comments": [
     {
       "type": "CommentBlock",
-      "value": "*\n * Strict JS Objects and Collections created from JSON Schema Definitions\n * @class JSD\n * @example const _jsd = new JSD();\n * _jsd.document = {name: 'test'};\n * console.log(`${jsd.document.name}`);\n * // -> 'test'\n * console.log(`${jsd.document.get('.'}`);\n * // -> Schema\n ",
+      "value": "*\n * Strict JS Objects and Collections created from JSON Schema Definitions\n * @class JSD\n * @example const _jsd = new JSD();\n * _jsd.document = {name: \"test\"};\n * console.log(`${jsd.document.name}`);\n * // -> \"test\"\n * console.log(`${jsd.document.get(\".\"}`);\n * // -> Schema\n ",
       "start": 0,
       "end": 281,
       "loc": {
@@ -10958,7 +10958,7 @@
   "tokens": [
     {
       "type": "CommentBlock",
-      "value": "*\n * Strict JS Objects and Collections created from JSON Schema Definitions\n * @class JSD\n * @example const _jsd = new JSD();\n * _jsd.document = {name: 'test'};\n * console.log(`${jsd.document.name}`);\n * // -> 'test'\n * console.log(`${jsd.document.get('.'}`);\n * // -> Schema\n ",
+      "value": "*\n * Strict JS Objects and Collections created from JSON Schema Definitions\n * @class JSD\n * @example const _jsd = new JSD();\n * _jsd.document = {name: \"test\"};\n * console.log(`${jsd.document.name}`);\n * // -> \"test\"\n * console.log(`${jsd.document.get(\".\"}`);\n * // -> Schema\n ",
       "start": 0,
       "end": 281,
       "loc": {

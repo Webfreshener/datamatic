@@ -258,7 +258,7 @@
           },
           "extra": {
             "rawValue": "./_references",
-            "raw": "'./_references'"
+            "raw": "\"./_references\""
           },
           "value": "./_references"
         },
@@ -362,7 +362,7 @@
           },
           "extra": {
             "rawValue": "./_validators",
-            "raw": "'./_validators'"
+            "raw": "\"./_validators\""
           },
           "value": "./_validators",
           "leadingComments": null,
@@ -1940,7 +1940,7 @@
                             },
                             "extra": {
                               "rawValue": "function",
-                              "raw": "'function'"
+                              "raw": "\"function\""
                             },
                             "value": "function"
                           }
@@ -3212,7 +3212,7 @@
                                           },
                                           "extra": {
                                             "rawValue": "object",
-                                            "raw": "'object'"
+                                            "raw": "\"object\""
                                           },
                                           "value": "object"
                                         }
@@ -3501,7 +3501,7 @@
                                             },
                                             "extra": {
                                               "rawValue": "*",
-                                              "raw": "'*'"
+                                              "raw": "\"*\""
                                             },
                                             "value": "*"
                                           }
@@ -3646,7 +3646,7 @@
                                                     },
                                                     "extra": {
                                                       "rawValue": "*",
-                                                      "raw": "'*'"
+                                                      "raw": "\"*\""
                                                     },
                                                     "value": "*"
                                                   },
@@ -3766,7 +3766,7 @@
                                                   },
                                                   "extra": {
                                                     "rawValue": "*",
-                                                    "raw": "'*'"
+                                                    "raw": "\"*\""
                                                   },
                                                   "value": "*"
                                                 },

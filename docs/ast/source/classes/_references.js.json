@@ -258,7 +258,7 @@
           },
           "extra": {
             "rawValue": "jsd-utils",
-            "raw": "'jsd-utils'"
+            "raw": "\"jsd-utils\""
           },
           "value": "jsd-utils"
         },

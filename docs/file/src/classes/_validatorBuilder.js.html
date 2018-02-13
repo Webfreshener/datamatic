@@ -64,8 +64,8 @@
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/**
  * @private
  */
-import {_exists, _validators, _validPaths, wf} from &apos;./_references&apos;;
-import {Validator} from &apos;./_validators&apos;
+import {_exists, _validators, _validPaths, wf} from &quot;./_references&quot;;
+import {Validator} from &quot;./_validators&quot;
 /**
  * @private
  */
@@ -102,7 +102,7 @@ export class ValidatorBuilder {
      * @param func
      */
     set(path, func) {
-        if (!_exists(func) || typeof func !== &apos;function&apos;) {
+        if (!_exists(func) || typeof func !== &quot;function&quot;) {
             return &quot;2nd argument expects a function&quot;;
         }
         _validators.get(this)[path] = func;
@@ -126,12 +126,12 @@ export class ValidatorBuilder {
             );
         let _v = _validators.get(this);
         let _functs = _signatures.map(_sig =&gt; {
-            if (typeof _sig !== &apos;object&apos;) {
+            if (typeof _sig !== &quot;object&quot;) {
                 return new Validator[&quot;Default&quot;](path, _sig, elRef.jsd);
             }
-            if (_sig.hasOwnProperty(&apos;*&apos;)) {
-                this.create(_sig[&apos;*&apos;], path, elRef);
-                delete _sig[&apos;*&apos;];
+            if (_sig.hasOwnProperty(&quot;*&quot;)) {
+                this.create(_sig[&quot;*&quot;], path, elRef);
+                delete _sig[&quot;*&quot;];
                 if (Object.keys(_sig) &gt; 0) {
                     return this.create(_sig, path, elRef);
                 }
