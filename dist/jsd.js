@@ -1753,7 +1753,7 @@ class Schema extends __WEBPACK_IMPORTED_MODULE_5__model__["a" /* Model */] {
                     _jsd: arguments[2],
                 });
             }
-            else if (typeof arguments[2] == 'object') {
+            else if (typeof arguments[2] == "object") {
                 if (arguments[2] instanceof __WEBPACK_IMPORTED_MODULE_1__metaData__["a" /* MetaData */]) {
                     _ = arguments[2];
                 } else {
@@ -1788,7 +1788,7 @@ class Schema extends __WEBPACK_IMPORTED_MODULE_5__model__["a" /* Model */] {
             jsd: __WEBPACK_IMPORTED_MODULE_0__references__["c" /* _mdRef */].get(this).jsd,
         }));
         // throws error if error message returned
-        if (typeof (eMsg = _schema_validator.isValid()) === 'string') {
+        if (typeof (eMsg = _schema_validator.isValid()) === "string") {
             throw eMsg;
         }
         __WEBPACK_IMPORTED_MODULE_0__references__["j" /* _schemaSignatures */].set(this, _signature);
@@ -1802,7 +1802,7 @@ class Schema extends __WEBPACK_IMPORTED_MODULE_5__model__["a" /* Model */] {
             let _default = _signature[_sigEl].default;
             if (_default) {
                 // sets default value for key on model
-                let _p = _sigEl.split('.');
+                let _p = _sigEl.split(".");
                 this.model[_sigEl] = _default;
             }
         }
@@ -1816,9 +1816,9 @@ class Schema extends __WEBPACK_IMPORTED_MODULE_5__model__["a" /* Model */] {
             },
             set: (t, key, value) => {
                 let _sH = __WEBPACK_IMPORTED_MODULE_0__references__["h" /* _schemaHelpers */].get(this);
-                if (typeof key === 'object') {
+                if (typeof key === "object") {
                     const e = _sH.setObject(key);
-                    if (typeof e === 'string') {
+                    if (typeof e === "string") {
                         this.observerBuilder.error(this.path, e);
                         return false;
                     }
@@ -1856,7 +1856,7 @@ class Schema extends __WEBPACK_IMPORTED_MODULE_5__model__["a" /* Model */] {
                     // handles child objects
                     if (typeof value === "object") {
                         value = _sH.setChildObject(_key, value);
-                        if (typeof value === 'string') {
+                        if (typeof value === "string") {
                             this.observerBuilder.error(_key, value);
                             this.observerBuilder.error(this.root.path, value);
                             return false;
@@ -1883,7 +1883,7 @@ class Schema extends __WEBPACK_IMPORTED_MODULE_5__model__["a" /* Model */] {
                     t[key] = value;
                 }
                 const _e = this.validate();
-                if ((typeof _e) !== 'string') {
+                if ((typeof _e) !== "string") {
                     if (this.path.length) {
                         this.observerBuilder.next(this.path, value);
                     }
@@ -1923,7 +1923,7 @@ class Schema extends __WEBPACK_IMPORTED_MODULE_5__model__["a" /* Model */] {
      */
     set model(value) {
         let e;
-        if (typeof value === 'object') {
+        if (typeof value === "object") {
             this.subscribe({
                 error: (e) => {
                     this.observerBuilder.error(this.path, e);
@@ -1937,7 +1937,7 @@ class Schema extends __WEBPACK_IMPORTED_MODULE_5__model__["a" /* Model */] {
                     this.model[k] = value[k];
                 });
             } else {
-                e = 'null not allowed';
+                e = "null not allowed";
                 __WEBPACK_IMPORTED_MODULE_0__references__["l" /* _validPaths */].get(this.jsd)[this.path] = e;
                 this.observerBuilder.error(this.path, e);
             }
@@ -1945,7 +1945,7 @@ class Schema extends __WEBPACK_IMPORTED_MODULE_5__model__["a" /* Model */] {
             this.observerBuilder.next(this.path, this);
             this.unsubscribe();
         } else {
-            e = `unable to set scalar value on model at ${this.path.length ? this.path : '.'}`;
+            e = `unable to set scalar value on model at ${this.path.length ? this.path : "."}`;
             __WEBPACK_IMPORTED_MODULE_0__references__["l" /* _validPaths */].get(this.jsd)[this.path] = e;
             this.observerBuilder.error(this.path, e);
             return e;
@@ -1967,13 +1967,13 @@ class Schema extends __WEBPACK_IMPORTED_MODULE_5__model__["a" /* Model */] {
      * @param {any} value
      */
     set(key, value) {
-        if (typeof key === 'string') {
+        if (typeof key === "string") {
             this.model[key] = value;
         } else {
             const _sH = __WEBPACK_IMPORTED_MODULE_0__references__["h" /* _schemaHelpers */].get(this);
             let e = _sH.ensureRequiredFields(key);
             __WEBPACK_IMPORTED_MODULE_0__references__["l" /* _validPaths */].get(this.jsd)[this.path] = e;
-            if (typeof e === 'string') {
+            if (typeof e === "string") {
                 this.observerBuilder.error(this.path, e);
             }
             Object.keys(key).forEach((_k) => {
@@ -1993,7 +1993,7 @@ class Schema extends __WEBPACK_IMPORTED_MODULE_5__model__["a" /* Model */] {
     }
 
     /**
-     * get options (if any) for this model's schema
+     * get options (if any) for this model"s schema
      */
     get options() {
         return __WEBPACK_IMPORTED_MODULE_0__references__["i" /* _schemaOptions */].get(this);
@@ -2934,10 +2934,10 @@ exports.reduce = reduce;
  * Strict JS Objects and Collections created from JSON Schema Definitions
  * @class JSD
  * @example const _jsd = new JSD();
- * _jsd.document = {name: 'test'};
+ * _jsd.document = {name: "test"};
  * console.log(`${jsd.document.name}`);
- * // -> 'test'
- * console.log(`${jsd.document.get('.'}`);
+ * // -> "test"
+ * console.log(`${jsd.document.get("."}`);
  * // -> Schema
  */
 
@@ -3012,9 +3012,9 @@ class JSD {
         // traverses arguements
         for (let arg of classesOrNames) {
             if (typeof arg === "string") {
-                if (arg === '*') {
+                if (arg === "*") {
                     // handles special * type
-                    return '*';
+                    return "*";
                 }
                 return (0 <= Object.keys(_k).indexOf(arg)) ? arg.toLowerCase() : null;
             }
@@ -3202,7 +3202,7 @@ class Set extends __WEBPACK_IMPORTED_MODULE_5__model__["a" /* Model */] {
         let _types;
 
         if (!Object(__WEBPACK_IMPORTED_MODULE_0__references__["a" /* _exists */])(_type)) {
-            _type = ['*'];
+            _type = ["*"];
         } else {
             if (!Array.isArray(_type)) {
                 _type = [_type];
@@ -3265,11 +3265,11 @@ class Set extends __WEBPACK_IMPORTED_MODULE_5__model__["a" /* Model */] {
     get handler() {
         return {
             get: (t, idx) => {
-                if (typeof idx === 'symbol') {
+                if (typeof idx === "symbol") {
                     idx = `${String(idx)}`;
                 }
 
-                if (idx === 'length') {
+                if (idx === "length") {
                     return t.length;
                 }
 
@@ -4714,7 +4714,7 @@ class MetaData {
      * @returns {string} Unique ObjectID
      */
     get objectID() {
-        return this.get('_id');
+        return this.get("_id");
     }
 
     /**
@@ -4722,7 +4722,7 @@ class MetaData {
      * @returns {Schema|Set}
      */
     get root() {
-        return this.get('_root');
+        return this.get("_root");
     }
 
     /**
@@ -4730,7 +4730,7 @@ class MetaData {
      * @returns {string}
      */
     get path() {
-        return this.get('_path');
+        return this.get("_path");
     }
 
     /**
@@ -4738,7 +4738,7 @@ class MetaData {
      * @returns {JSD}
      */
     get jsd() {
-        return this.get('_jsd');
+        return this.get("_jsd");
     }
 
     /**
@@ -4746,8 +4746,8 @@ class MetaData {
      */
     get parent() {
         let _ = this.path || "";
-        var _p = _.split('.');
-        _p = (_p.length > 1) ? _p.slice(0, _p.length - 2).join('.') : _p[0];
+        var _p = _.split(".");
+        _p = (_p.length > 1) ? _p.slice(0, _p.length - 2).join(".") : _p[0];
         return _p.length ? this.root.get(_p) : this.root;
     }
 }
@@ -6320,7 +6320,7 @@ class Model {
      */
     subscribe(func) {
         if ((typeof func).match(/^(function|object)$/) === null) {
-            throw new Error('subscribe requires function');
+            throw new Error("subscribe requires function");
         }
         let _o = this.observerBuilder.get(this.path);
         if (!_o || _o === null) {
@@ -6332,7 +6332,7 @@ class Model {
     }
 
     /**
-     * unsubscribes from this object's observer
+     * unsubscribes from this object"s observer
      */
     unsubscribe() {
         let _o = this.observerBuilder.get(this.path);
@@ -6348,7 +6348,7 @@ class Model {
      */
     subscribeTo(path, func) {
         if ((typeof func).match(/^(function|object)$/) === null) {
-            throw new Error('subscribeTo requires function');
+            throw new Error("subscribeTo requires function");
         }
         let _o = this.observerBuilder.get(path);
         if (!_o || _o === null) {
@@ -6377,7 +6377,7 @@ class Model {
         const paths = __WEBPACK_IMPORTED_MODULE_0__references__["l" /* _validPaths */].get(this.jsd);
         try {
             Object.keys(paths).forEach((k) => {
-                if (typeof paths[k] === 'string') {
+                if (typeof paths[k] === "string") {
                     throw paths[k];
                 }
             });
@@ -6391,7 +6391,7 @@ class Model {
      * @returns {boolean}
      */
     get isValid() {
-        return (typeof this.validate() !== 'string');
+        return (typeof this.validate() !== "string");
     }
 
     /**
@@ -6412,7 +6412,7 @@ class Model {
             if (itm instanceof __WEBPACK_IMPORTED_MODULE_2__set__["a" /* Set */]) {
                 return itm.toJSON();
             }
-            if (typeof itm === 'object') {
+            if (typeof itm === "object") {
                 const _o = !Array.isArray(itm) ? {} : [];
                 for (let k in itm) {
                     _o[k] = _derive(itm[k]);
@@ -6426,6 +6426,7 @@ class Model {
 
     /**
      * JSON stringifies primitive value
+     * @param pretty - `prettifies` JSON output for readability
      */
     toString(pretty = false) {
         return JSON.stringify(this.toJSON(), null, (pretty ? 2 : void(0)));
@@ -6439,14 +6440,16 @@ class Model {
     }
 
     /**
-     * @returns {Schema} elemetn at Schema root
+     * getter for document root element
+     * @returns {Schema|Set}
      */
     get root() {
         return __WEBPACK_IMPORTED_MODULE_0__references__["c" /* _mdRef */].get(this).root || this;
     }
 
     /**
-     * @returns {string} path to current Schema
+     * getter for `path` to current Element
+     * @returns {string}
      */
     get path() {
         let _ = __WEBPACK_IMPORTED_MODULE_0__references__["c" /* _mdRef */].get(this).path;
@@ -6454,7 +6457,8 @@ class Model {
     }
 
     /**
-     * @returns {Schema} parent Schema element
+     * getter for models parent Schema or Set element
+     * @returns {Schema|Set}
      */
     get parent() {
         let _ = __WEBPACK_IMPORTED_MODULE_0__references__["c" /* _mdRef */].get(this).root;
@@ -6462,20 +6466,24 @@ class Model {
     }
 
     /**
-     * @returns {*|JSD}
+     * getter for model"s JSD owner object
+     * @returns {JSD}
      */
     get jsd() {
         return __WEBPACK_IMPORTED_MODULE_0__references__["c" /* _mdRef */].get(this).jsd;
     }
 
     /**
-     *
+     * getter for ValidatorBuilder reference
      * @returns {ValidatorBuilder}
      */
     get validatorBuilder() {
         return __WEBPACK_IMPORTED_MODULE_0__references__["k" /* _vBuilders */].get(this.jsd);
     }
-
+    /**
+     * getter for ObserverBuilder reference
+     * @returns {ObserverBuilder}
+     */
     get observerBuilder() {
         return __WEBPACK_IMPORTED_MODULE_0__references__["d" /* _oBuilders */].get(this.jsd);
     }
@@ -6531,7 +6539,7 @@ class ValidatorBuilder {
      * @param func
      */
     set(path, func) {
-        if (!Object(__WEBPACK_IMPORTED_MODULE_0__references__["a" /* _exists */])(func) || typeof func !== 'function') {
+        if (!Object(__WEBPACK_IMPORTED_MODULE_0__references__["a" /* _exists */])(func) || typeof func !== "function") {
             return "2nd argument expects a function";
         }
         __WEBPACK_IMPORTED_MODULE_0__references__["m" /* _validators */].get(this)[path] = func;
@@ -6555,12 +6563,12 @@ class ValidatorBuilder {
             );
         let _v = __WEBPACK_IMPORTED_MODULE_0__references__["m" /* _validators */].get(this);
         let _functs = _signatures.map(_sig => {
-            if (typeof _sig !== 'object') {
+            if (typeof _sig !== "object") {
                 return new __WEBPACK_IMPORTED_MODULE_1__validators__["a" /* Validator */]["Default"](path, _sig, elRef.jsd);
             }
-            if (_sig.hasOwnProperty('*')) {
-                this.create(_sig['*'], path, elRef);
-                delete _sig['*'];
+            if (_sig.hasOwnProperty("*")) {
+                this.create(_sig["*"], path, elRef);
+                delete _sig["*"];
                 if (Object.keys(_sig) > 0) {
                     return this.create(_sig, path, elRef);
                 }
@@ -15774,7 +15782,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
  * @public
  */
 
-
 /**
  * returns false if value is `null` or `undefined`
  * @public
@@ -15785,6 +15792,8 @@ const exists = (value) => {
     return typeof value !== 'undefined' && value !== null;
 };
 /* harmony export (immutable) */ __webpack_exports__["exists"] = exists;
+
+
 
 
 
@@ -18111,7 +18120,7 @@ class ObserverBuilder {
 
     create(forPath, oRef) {
         if (!(oRef instanceof __WEBPACK_IMPORTED_MODULE_2__schema__["a" /* Schema */] || oRef instanceof __WEBPACK_IMPORTED_MODULE_1__set__["a" /* Set */])) {
-            throw 'oRef must be instance of Schema or Set';
+            throw "oRef must be instance of Schema or Set";
         }
         let _o = __WEBPACK_IMPORTED_MODULE_0__references__["f" /* _observers */].get(this);
         _o[forPath] = new __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__["Subject"]();
@@ -18195,13 +18204,13 @@ class SchemaHelpers {
      */
     setObject(obj) {
         obj = this.ensureRequiredFields(obj);
-        if (typeof obj === 'string') {
+        if (typeof obj === "string") {
             return obj;
         }
         // calls set with nested key value pair
         for (var k in obj) {
             let eMsg = this._ref.model[k] = obj[k];
-            if (typeof eMsg === 'string') {
+            if (typeof eMsg === "string") {
                 throw new Error( eMsg );
             }
         }
@@ -18218,7 +18227,7 @@ class SchemaHelpers {
         let _mdData = __WEBPACK_IMPORTED_MODULE_0__references__["c" /* _mdRef */].get(this._ref);
         let _s = this.createSchemaChild(key, value, this._ref.options, _mdData);
         if (!Object(__WEBPACK_IMPORTED_MODULE_0__references__["a" /* _exists */])(_s) || typeof _s !== "object") {
-            return `'${key}' was invalid`;
+            return `"${key}" was invalid`;
         }
         const _res = _s.model = value;
         return _s.model = value;
@@ -18230,10 +18239,10 @@ class SchemaHelpers {
      */
     ensureKindIsString(itm) {
         switch (typeof itm) {
-            case 'string':
+            case "string":
                 return itm;
-            case 'object':
-                if (itm.hasOwnProperty('type')) {
+            case "object":
+                if (itm.hasOwnProperty("type")) {
                     return this.ensureKindIsString(itm.type);
                 }
                 break;
@@ -18256,7 +18265,7 @@ class SchemaHelpers {
                 if (Object(__WEBPACK_IMPORTED_MODULE_0__references__["a" /* _exists */])(this._ref.signature[_key].default)) {
                     obj[_key] = this._ref.signature[_key].default;
                 } else {
-                    return `required property '${_key}' is missing for '${_path}'`;
+                    return `required property "${_key}" is missing for '${_path}'`;
                 }
             }
         }
@@ -18282,7 +18291,7 @@ class SchemaHelpers {
             }, metaData || {});
             let _md = new __WEBPACK_IMPORTED_MODULE_1__metaData__["a" /* MetaData */](this._ref, _d);
             let _schemaDef = this._ref.signature[key.split(".").pop()] ||
-                this._ref.signature['*'] ||
+                this._ref.signature["*"] ||
                 this._ref.signature;
             try {
                 var _s = new __WEBPACK_IMPORTED_MODULE_2__schema__["a" /* Schema */](_schemaDef, opts, _md);
@@ -18296,7 +18305,7 @@ class SchemaHelpers {
             if (Array.isArray(_kinds)) {
                 _kinds = _kinds.map((val) => this.ensureKindIsString(val));
                 _kinds = _kinds.filter(itm => itm !== false);
-                _kinds = _kinds.length ? _kinds : '*';
+                _kinds = _kinds.length ? _kinds : "*";
                 return new __WEBPACK_IMPORTED_MODULE_3__set__["a" /* Set */](_kinds, metaData);
             }
         }
@@ -18344,7 +18353,7 @@ class SchemaHelpers {
                         return itm;
                         break;
                     case "object":
-                        if (itm.hasOwnProperty('type')) {
+                        if (itm.hasOwnProperty("type")) {
                             return itm.type;
                         }
                         break;
@@ -18352,8 +18361,8 @@ class SchemaHelpers {
                 return null;
             });
             _kinds = _kinds.filter(itm => Object(__WEBPACK_IMPORTED_MODULE_0__references__["a" /* _exists */])(itm));
-            _kinds = _kinds.length ? _kinds : '*';
-            return new __WEBPACK_IMPORTED_MODULE_3__set__["a" /* Set */](_kinds || '*', this._ref.metadata);
+            _kinds = _kinds.length ? _kinds : "*";
+            return new __WEBPACK_IMPORTED_MODULE_3__set__["a" /* Set */](_kinds || "*", this._ref.metadata);
         }
         return null;
     }
@@ -18369,16 +18378,16 @@ class SchemaHelpers {
         let _ref;
         //-- attempts to validate
         if (!key.length) {
-            return `invalid path '${key}'`;
+            return `invalid path "${key}"`;
         }
         let msg;
         if (0 <= _list.indexOf(key)) {
             let _path = [];
-            let iterable = key.split('.');
+            let iterable = key.split(".");
             var _p;
             for (let _k of iterable) {
                 _path.push(_k);
-                _p = _path.join('.');
+                _p = _path.join(".");
             }
             if (!(_ref = this._ref.validatorBuilder.get(_p))) {
                 if (!this.options.extensible) {
@@ -18387,7 +18396,7 @@ class SchemaHelpers {
             }
             this._ref.validatorBuilder.set(key, _ref);
         }
-        if (typeof (msg = this._ref.validatorBuilder.exec(key, value)) === 'string') {
+        if (typeof (msg = this._ref.validatorBuilder.exec(key, value)) === "string") {
             return msg;
         }
         return true;
@@ -18415,8 +18424,8 @@ class SchemaHelpers {
 "use strict";
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__references__ = __webpack_require__(11);
 
-// import {MetaData} from './_metaData';
-// import {JSD} from './jsd';
+// import {MetaData} from "./_metaData";
+// import {JSD} from "./jsd";
 /**
  * @private
  * @class
@@ -18710,14 +18719,14 @@ class SchemaValidator {
                 let _ = _schemaKeys[key.split(".").pop()];
                 // tests for everything that"s not a string, _object or function
                 if (_ !== __WEBPACK_IMPORTED_MODULE_0__references__["o" /* wf */].Str.capitalize(_t)) {
-                    return `value for schema element '${key}' has invalid type :: '<${_t}>'`;
+                    return `value for schema element '${key}' has invalid type :: "<${_t}>"`;
                 }
             }
             else {
                 let _ = __WEBPACK_IMPORTED_MODULE_0__references__["o" /* wf */].Fun.getConstructorName(params);
                 // tests for function"s constructor name
                 if (_ !== _schemaKeys[key]) {
-                    return `value for schema element '${key}' has invalid class or method '<${_}>'`;
+                    return `value for schema element '${key}' has invalid class or method "<${_}>"`;
                 }
             }
             return true;
@@ -18778,7 +18787,7 @@ class BaseValidator {
      */
     call(path, value) {
         // attempt to reference validator at path
-        let _ = ValidatorBuilder.getValidators()[path];
+        let _ = __WEBPACK_IMPORTED_MODULE_0__references__["k" /* _vBuilders */].get(this.jsd).getValidators()[path];
         // tests for existence of validator
         if (Object(__WEBPACK_IMPORTED_MODULE_0__references__["a" /* _exists */])(_) && typeof _ === "function") {
             const _r = _(value);
@@ -18809,13 +18818,14 @@ class BaseValidator {
         };
         if (Object(__WEBPACK_IMPORTED_MODULE_0__references__["a" /* _exists */])(type)) {
             if (Array.isArray(type)) {
-                let _ = null;
+                let __ = null;
+                let k;
                 for (k in type) {
-                    if (typeof (_ = _eval(type[k], value)) === "boolean") {
-                        return _;
+                    if (typeof (__ = _eval(type[k], value)) === "boolean") {
+                        return __;
                     }
                 }
-                return _;
+                return __;
             }
             return _eval(type, value);
         }
@@ -18853,9 +18863,9 @@ Validator.Object = class Obj extends BaseValidator {
     exec(value) {
         let _iterate = (key, _val) => {
             let _p = `${this.path}.${key}`;
-            let _v = ValidatorBuilder.getValidators();
+            let _v = __WEBPACK_IMPORTED_MODULE_0__references__["k" /* _vBuilders */].get(this.jsd).getValidators();
             if (!_v.hasOwnProperty(_p)) {
-                ValidatorBuilder.create(this.signature.elements[key], _p, this);
+                __WEBPACK_IMPORTED_MODULE_0__references__["k" /* _vBuilders */].get(this.jsd).create(this.signature.elements[key], _p, this);
             }
             let _ = this.call(_p, _val);
             if (typeof _ === "string") {
@@ -18912,9 +18922,9 @@ Validator.String = class Str extends BaseValidator {
      * @returns {*}
      */
     exec(value) {
-        let _;
-        if (typeof (_ = this.checkType("string", value)) === "string") {
-            return _;
+        let __ = this.checkType("string", value);
+        if ((typeof __) === "string") {
+            return __;
         }
         if (Object(__WEBPACK_IMPORTED_MODULE_0__references__["a" /* _exists */])(this.signature.restrict)) {
             let _rxStr;
@@ -18970,9 +18980,12 @@ Validator.Function = class Fun extends BaseValidator {
      * @returns {*}
      */
     exec(value) {
-        let _x = typeof this.signature.type === 'string' ? this.signature.type : __WEBPACK_IMPORTED_MODULE_0__references__["o" /* wf */].Fun.getConstructorName(this.signature.type);
+        let _x = typeof this.signature.type === "string" ?
+            this.signature.type :
+            __WEBPACK_IMPORTED_MODULE_0__references__["o" /* wf */].Fun.getConstructorName(this.signature.type);
         let _fn = __WEBPACK_IMPORTED_MODULE_0__references__["o" /* wf */].Fun.getConstructorName(value);
-        return _x === _fn ? true : `${this.path} requires '$_x' got '<${_fn}>' instead`;
+        return _x === _fn ? true :
+            `${this.path} requires '$_x' got '<${_fn}>' instead`;
     }
 };
 
@@ -18987,7 +19000,7 @@ Validator.Default = class Def extends BaseValidator {
      * @returns {*}
      */
     exec(value) {
-        _testValidator = (type, value) => {
+        const _testValidator = (type, value) => {
             if (type === '*') {
                 return true;
             }
