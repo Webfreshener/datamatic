@@ -175,7 +175,7 @@ describe('README.md examples tests', () => {
         _jsd.document.model = {value: "false"};
     });
 
-    it('JSD Object example should work', (done) => {
+    it.only('JSD Object example should work', (done) => {
         const _schema = {
             value: {
                 type: "Object",
@@ -208,20 +208,21 @@ describe('README.md examples tests', () => {
 
         const _jsd = new JSD(_schema);
         _jsd.document.subscribe(_handler);
-        // _jsd.document.model = {
-        //     value: {
-        //         name: "Alice",
-        //         active: 1,
-        //     }
-        // };
+        // this will error since `active` is a number
+        _jsd.document.model = {
+            value: {
+                name: "Alice",
+                active: 1,
+            }
+        };
+
+        // this will pass
         _jsd.document.model = {
             value: {
                 name: "Alice",
                 active: true
             }
         };
-
-
     });
 
     it('JSD Wildcard KEYS example should work', (done) => {

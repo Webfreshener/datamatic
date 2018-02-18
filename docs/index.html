@@ -388,7 +388,52 @@ _jsd.document.model = {value: 1234};</code>
          }
     }
 }</code>
-</code></pre><h6 id="usage-example">Usage Example</h6><pre><code><code class="source-code prettyprint"></code>
+</code></pre><h6 id="usage-example">Usage Example</h6><pre><code><code class="source-code prettyprint">const _schema = {
+    value: {
+        type: &quot;Object&quot;,
+        required: false,
+        default: {},
+        elements: {
+            name: {
+                type: &quot;String&quot;,
+                required: true
+            },
+            active: {
+                type: &quot;Boolean&quot;,
+                required: false
+            }
+        }
+    }
+};
+
+let _handler = {
+    next: (val) =&gt; {
+        // {&quot;value&quot;:{&quot;name&quot;:&quot;Alice&quot;,&quot;active&quot;:true}}
+        console.log(`${val}`);
+    },
+    error: (e) =&gt; {
+        // error: &apos;value.active&apos; expected boolean, type was &apos;&lt;number&gt;&apos;
+        console.log(`error: ${e}`);
+    }
+};
+
+const _jsd = new JSD(_schema);
+_jsd.document.subscribe(_handler);
+// this will error since `active` is a number
+_jsd.document.model = {
+    value: {
+        name: &quot;Alice&quot;,
+        active: 1,
+    }
+};
+
+// this will pass
+_jsd.document.model = {
+    value: {
+        name: &quot;Alice&quot;,
+        active: true
+    }
+};</code>
 </code></pre><h4 id="string-type">String Type</h4><table>
 <thead>
 <tr>
