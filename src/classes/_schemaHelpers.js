@@ -1,4 +1,4 @@
-import {_exists, _mdRef} from "./_references";
+import {_exists, _mdRef, _validPaths} from "./_references";
 import {MetaData} from "./_metaData";
 import {Schema} from "./schema";
 import {Set} from "./set";
@@ -29,7 +29,7 @@ export class SchemaHelpers {
         for (var k in obj) {
             let eMsg = this._ref.model[k] = obj[k];
             if (typeof eMsg === "string") {
-                throw new Error( eMsg );
+                throw new Error(eMsg);
             }
         }
         return this._ref;
@@ -44,10 +44,12 @@ export class SchemaHelpers {
     setChildObject(key, value) {
         let _mdData = _mdRef.get(this._ref);
         let _s = this.createSchemaChild(key, value, this._ref.options, _mdData);
-        if (!_exists(_s) || typeof _s !== "object") {
+        if (typeof _s === "string") {
+            return _s;
+        } else if (!_exists(_s) || typeof _s !== "object") {
             return `"${key}" was invalid`;
         }
-        const _res = _s.model = value;
+
         return _s.model = value;
     }
 
@@ -136,14 +138,18 @@ export class SchemaHelpers {
      */
     walkSchema(obj, path) {
         let result = [];
+        const _self = this;
         let _map = function (itm, objPath) {
-            return _walkSchema(itm, objPath);
+            return _self.walkSchema(itm, objPath);
         };
         let _elements = Array.isArray(obj) ? obj : Object.keys(obj);
         for (let _i in _elements) {
             let _k = _elements[_i];
             let itm;
             let objPath = _exists(path) ? (path.length ? `${path}.${_k}` : _k) : _k || "";
+            if (typeof _k === "object") {
+                return this.walkSchema(_k.elements, objPath)
+            }
             this._ref.validatorBuilder.create(obj[_k], objPath, this._ref);
             // tests for nested elements
             if (_exists(obj[_k]) && typeof obj[_k].elements === "object") {
@@ -229,5 +235,64 @@ export class SchemaHelpers {
         });
         _elems = _elems.filter(elem => elem !== null);
         return _elems.length ? _elems : null;
+    }
+
+    /**
+     * utility method for testing values at given keys in schema path
+     * @param t
+     * @param _pathKeys
+     * @param _childSigs
+     * @param value
+     * @returns {boolean}
+     */
+    testPathkeys(t, _pathKeys, _childSigs, value) {
+        for (let __ in _pathKeys) {
+            let k = _pathKeys[__];
+            let _schema;
+            // derives path for element
+            let _key = this._ref.path.length ? `${this._ref.path}.${k}` : k;
+            let kP = Schema.concatPathAddr(this._ref.path, _key);
+            if (_exists(_childSigs[`${k}`])) {
+                _schema = _childSigs[k];
+            }
+            else {
+                // attempts to find wildcard element name
+                if (_exists(_childSigs["*"])) {
+                    // applies schema
+                    _schema = _childSigs["*"].polymorphic || _childSigs["*"];
+                    // creates Validator for path
+                    this._ref.validatorBuilder.create(_schema, _key, this._ref);
+                }
+            }
+            // handles missing schema signatures
+            if (!_exists(_schema)) {
+                // rejects non-members of non-extensible schemas
+                if (!this._ref.isExtensible) {
+                    const e = `element '${_key}' is not a valid element`;
+                    return false;
+                }
+                _schema = Schema.defaultSignature;
+            }
+            // handles child objects
+            if (typeof value === "object") {
+                value = this.setChildObject(_key, value);
+                if (typeof value === "string") {
+                    _validPaths.get(this._ref.jsd)[kP] = value;
+                    return false;
+                }
+            }
+            // handles scalar values (strings, numbers, booleans...)
+            else {
+                let eMsg = this.validate(_key, value);
+                _validPaths.get(this._ref.jsd)[_key] = eMsg;
+                if (typeof eMsg === "string") {
+                    _validPaths.get(this._ref.jsd)[kP] = eMsg;
+                    this._ref.observerBuilder.error(kP, eMsg);
+                    return false;
+                }
+                return _validPaths.get(this._ref.jsd)[kP] = true;
+            }
+        }
+        return true;
     }
 }

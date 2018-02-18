@@ -618,6 +618,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/classes/_schemahelpers.js~schemahelpers#testpathkeys",
+    "class/src/classes/_schemaHelpers.js~SchemaHelpers.html#instance-method-testPathkeys",
+    "src/classes/_schemaHelpers.js~SchemaHelpers#testPathkeys",
+    "method"
+  ],
+  [
     "src/classes/_schemahelpers.js~schemahelpers#validate",
     "class/src/classes/_schemaHelpers.js~SchemaHelpers.html#instance-method-validate",
     "src/classes/_schemaHelpers.js~SchemaHelpers#validate",
@@ -693,6 +699,12 @@ window.esdocSearchIndex = [
     "src/classes/_schemavalidator.js~schemavalidator#validateuntypedmembers",
     "class/src/classes/_schemaValidator.js~SchemaValidator.html#instance-method-validateUntypedMembers",
     "src/classes/_schemaValidator.js~SchemaValidator#validateUntypedMembers",
+    "method"
+  ],
+  [
+    "src/classes/_schemavalidator.js~schemavalidator.eval",
+    "class/src/classes/_schemaValidator.js~SchemaValidator.html#static-method-eval",
+    "src/classes/_schemaValidator.js~SchemaValidator.eval",
     "method"
   ],
   [

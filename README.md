@@ -69,27 +69,35 @@ let _schema = {
         "type": "String",
         "required": true
     },
-    "age" {
+    "age": {
         "type": "Number",
         "required": true
     }
 };
+
 const _handlers = {
-    next: function(model) {
-        console.log(`${_jsd.document}`); // prints: {"name": "Frank", "age": 23}
+    next: function (schema) {
+        if (typeof schema !== 'undefined') {
+            // outputs: {"name":"Frank","age":23}
+            console.log(`${schema}`); 
+        }
     },
-    error: function(e) {
-        console.log(e);
+    error: function (e) {
+        // outputs: error: 'age' expected number, type was '<string>'
+        console.log(`error: ${e}`);
     }
-}
+};
+
 const _jsd = new JSD(_schema);
+_jsd.document.subscribe(_handlers);
+
 // set invalid data to the model to trigger error handler
 _jsd.document.model = {
     "name": "Frank",
     "age": "23"
 };
 
-// set valid data to the model to trigger next handler 
+// set valid data to the model to trigger next handler
 _jsd.document.model = {
     "name": "Frank",
     "age": 23
@@ -158,27 +166,28 @@ const _schema = {
 };
 
 let _handler = {
-    next: (val)=> {
-        console.log(val);
-        _jsd.unsubscribe();
+    next: (val) => {
+        // outputs: {"values":[{"name":"Player 1","score":2000000},...]}
+        console.log(`${val}`);
+        _jsd.document.unsubscribe();
     },
-    error: (e)=> {
-        console.log(e);
+    error: (e) => {
+        console.log(`error: ${e}`);
     }
 };
 
 const _jsd = new JSD(_schema);
-_jsd.subscribe(_handler);
+_jsd.document.subscribe(_handler);
 _jsd.document.model = {
     values: [{
         name: "Player 1",
         score: 2000000
-    },{
+    }, {
         name: "Player 2",
         score: 1100000
-    },{
-      name: "Player 3",
-      score: 900000
+    }, {
+        name: "Player 3",
+        score: 900000
     }]
 };
 ```
@@ -198,6 +207,36 @@ default | Boolean
     }
 }
 ```
+
+###### Usage Example
+```
+const _schema = {
+    value: {
+        type: "Boolean",
+        required: false,
+    }
+};
+
+let _handler = {
+    next: (val) => {
+        // {"value":true}
+        // {"value":false}
+        console.log(`${val}`);
+    },
+    error: (e) => {
+        // error: 'value' expected boolean, type was '<string>'
+        console.log(`error: ${e}`);
+    }
+};
+
+
+const _jsd = new JSD(_schema);
+_jsd.document.subscribe(_handler);
+_jsd.document.model = {value: "true"};
+_jsd.document.model = {value: true};
+_jsd.document.model = {value: false};
+```
+
 #### Number Type
 Attribute Name | Data Type
 ---------------|-----------
@@ -213,6 +252,34 @@ default | Number
         "default": 0 
     }
 }
+```
+
+###### Usage Example
+```
+const _schema = {
+    value: {
+        type: "Number",
+        required: true,
+        // default: true,
+    }
+};
+
+let _handler = {
+    next: (val) => {
+        // {"value":1234}
+        console.log(`${val}`);
+    },
+    error: (e) => {
+        // error: 'value' expected number, type was '<string>'
+        console.log(`error: ${e}`);
+    }
+};
+
+
+const _jsd = new JSD(_schema);
+_jsd.document.subscribe(_handler);
+_jsd.document.model = {value: "1234"};
+_jsd.document.model = {value: 1234};
 ```
 
 #### Object Type 
@@ -247,6 +314,11 @@ default | Object
 }
 ```
 
+###### Usage Example
+```
+
+```
+
 #### String Type 
 Attribute Name | Data Type
 ---------------|-----------
@@ -262,6 +334,34 @@ default | String
         "required": true
     }
 }
+```
+
+###### Usage Example
+```
+const _schema = {
+    value: {
+        type: "String",
+        required: true,
+        restrict: "^[a-zA-Z0-9_\\s\\-]+$"
+    }
+};
+
+let _handler = {
+    next: (val) => {
+        // {"value":"false"}
+        console.log(`${val}`);
+    },
+    error: (e) => {
+        // error: 'value' expected string, type was '<boolean>'
+        console.log(`error: ${e}`);
+    }
+};
+
+
+const _jsd = new JSD(_schema);
+_jsd.document.subscribe(_handler);
+_jsd.document.model = {value: true};
+_jsd.document.model = {value: "false"};
 ```
 
 ### Advanced Usage 
@@ -326,9 +426,6 @@ let _handler = {
     next: (val)=> {
         console.log(val);
         _jsd.unsubscribe();
-    },
-    error: (e)=> {
-        console.log(e);
     }
 };
 
@@ -391,50 +488,33 @@ wildcard types
 ###### Usage Example
 ```
 const _schema = {
-                    "id": {
-                        "type": "Number",
-                        "required": true,
-                    },
-                    "name": {
-                        "type": "String",
-                        "required": true,
-                        "restrict": "^[a-zA-Z0-9\-]{1,10}$"
-                    },
-                    {
-                    "dataField1": {
-                        "type": "*",
-                        "required": false 
-                    },
-                    "dataField2": {
-                        "type": "*",
-                        "required": false 
-                    }
-                };
+    value: {
+        type: "*",
+    }
+};
 
 let _handler = {
-    next: (val)=> {
-        console.log(val);
-        _jsd.unsubscribe();
-    },
-    error: (e)=> {
-        console.log(e);
+    next: (val) => {
+        // {"value":900000}
+        // {"value":"A string"}
+        // {"value":false}
+        console.log(`${val}`);
+        _jsd.document.unsubscribe();
+        done()
     }
 };
 
 const _jsd = new JSD(_schema);
-_jsd.subscribe(_handler);
+_jsd.document.subscribe(_handler);
+
 _jsd.document.model = {
-        "id": 100000234, 
-        "name": "HeavyMetalPrincess",
-        "dataField1": {
-            playerKills: 1100000,
-            matchIds: [1234, 1235, 1236]
-        },
-        "dataField2": {
-            location: "I'm from the Internet",
-            bio: "I like cupcakes" 
-        }
-    }
+    value: 900000,
+};
+_jsd.document.model = {
+    value: "A string",
+};
+_jsd.document.model = {
+    value: false,
 };
 ```
 
@@ -475,57 +555,51 @@ than one data type, you can use polymorhism
 ###### Usage Example
 ```
 const _schema = {
-                   "polyValue": {
-                     "required": true,
-                     "polymorphic": [
-                       {
-                         "type": "String",
-                         "restrict": "^[a-zA-Z-0-9_]+$"
-                       },
-                       {
-                         "type": "Object",
-                         "elements": {
-                           "name": {
-                             "type": "String",
-                             "required": true,
-                             "restrict": "^[a-zA-Z-0-9_]{1,24}+$"
-                           },
-                           "details": {
-                             "type": "String",
-                             "required": false,
-                             "restrict": "^[a-zA-Z-0-9_]{0,256}+$"
-                           }, 
-                         }
-                       }
-                     ]
-                   } 
-                };
+    polyValue: {
+        required: true,
+        polymorphic: [{
+            type: "String",
+            restrict: "^[a-zA-Z0-9_\\s]+$"
 
+        },
+        {
+            type: "Object",
+            "*": {
+                type: "Number"
+            },
+        }]
+    }
+};
+
+let _cnt = 0;
 let _handler = {
-    next: (val)=> {
-        console.log(val);
-    },
-    error: (e)=> {
-        console.log(e);
+    next: (val) => {
+        // {"polyValue":"HeavyMetalPrincess"}
+        // {"polyValue":{"name":"HeavyMetalPrincess","description":"cupcakes"}}
+        // {"polyValue":{"HeaveyMetalPrincess":10001234}}
+        console.log(`${val}`); 
     }
 };
 
 const _jsd = new JSD(_schema);
-_jsd.subscribe(_handler);
+_jsd.document.subscribe(_handler);
 
 // can be a string value
 _jsd.document.model = {
-        "polyValue" : "HeavyMetalPrincess",
+    "polyValue": "HeavyMetalPrincess",
+}
+
+_jsd.document.model = {
+    "polyValue": {
+        "name": "HeavyMetalPrincess",
+        "description": "cupcakes",
     }
 };
 
-// can also be object value
 _jsd.document.model = {
-        "polyValue" : {
-            "name": "HeavyMetalPrincess",
-            "details": "I like cupcakes" 
-        }
-    }
+    "polyValue": {
+        HeaveyMetalPrincess: 10001234
+    },
 };
 ```
 
@@ -541,7 +615,7 @@ const schema = {
    stringValue: {
      required: true,
      type: "String",
-     restrict: "^[a-zA-Z-0-9_\-\s]+$"
+     restrict: "^[a-zA-Z0-9_\\-\\s]+$"
    }
 };
 ```
@@ -553,7 +627,7 @@ const schema = {
     "stringValue": {
         "required": true,
         "type": "String",
-        "restrict": "^[a-zA-Z-0-9_\\\\-\\\\s]+$"
+        "restrict": "^[a-zA-Z0-9_\\\\-\\\\s]+$"
     }
 }
 ```

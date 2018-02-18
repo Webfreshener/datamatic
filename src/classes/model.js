@@ -2,23 +2,15 @@ import {_mdRef, _oBuilders, _vBuilders, _exists, _validPaths} from "./_reference
 import {Schema} from "./schema";
 import {Set} from "./set";
 import {JSD} from "./jsd";
+import {Observable} from 'rxjs';
 export class Model {
     /**
      * subscribes handler method to observer for model
      * @param func
-     * @returns {Model}
+     * @returns {Observable}
      */
     subscribe(func) {
-        if ((typeof func).match(/^(function|object)$/) === null) {
-            throw new Error("subscribe requires function");
-        }
-        let _o = this.observerBuilder.get(this.path);
-        if (!_o || _o === null) {
-            this.observerBuilder.create(this.path, this);
-            _o = this.observerBuilder.get(this.path);
-        }
-        _o.subscribe(func);
-        return this;
+       return this.subscribeTo(this.path, func);
     }
 
     /**
@@ -35,6 +27,7 @@ export class Model {
      * subscribes handler method to property observer for path
      * @param path
      * @param func
+     * @returns {Observable}
      */
     subscribeTo(path, func) {
         if ((typeof func).match(/^(function|object)$/) === null) {
@@ -45,7 +38,15 @@ export class Model {
             this.observerBuilder.create(path, this);
             _o = this.observerBuilder.get(path);
         }
-        _o.subscribe(func);
+        if (func.hasOwnProperty('next')) {
+            _o.onNext.subscribe({next: func.next});
+        }
+        if (func.hasOwnProperty('error')) {
+            _o.onError.subscribe({next: func.error});
+        }
+        if (func.hasOwnProperty('complete')) {
+            _o.onComplete.subscribe({next: func.complete});
+        }
         return this;
     }
 

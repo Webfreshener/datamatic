@@ -103,7 +103,16 @@ export class JSD {
         _validPaths.set(this, {});
         _oBuilders.set(this, new ObserverBuilder());
         _vBuilders.set(this, new ValidatorBuilder());
-        _documents.set(this, new Schema(schema, options || null, this));
+        let _s;
+        if (!schema || schema.type !== &quot;Array&quot;) {
+            _s = new Schema(schema, options || null, this);
+        } else {
+            if (!schema.hasOwnProperty(&quot;elements&quot;)) {
+                schema.elements = [&quot;*&quot;];
+            }
+            _s = new Set(schema.elements, options || null, this);
+        }
+        _documents.set(this, _s);
     }
 
     /**

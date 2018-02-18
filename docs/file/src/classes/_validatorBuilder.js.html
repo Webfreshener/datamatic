@@ -103,7 +103,7 @@ export class ValidatorBuilder {
      */
     set(path, func) {
         if (!_exists(func) || typeof func !== &quot;function&quot;) {
-            return &quot;2nd argument expects a function&quot;;
+            return &quot;ValidatorBuilder set: expects a function at arguments[1]&quot;;
         }
         _validators.get(this)[path] = func;
         return this;
@@ -118,7 +118,7 @@ export class ValidatorBuilder {
      */
     create(ref, path, elRef) {
         if (!_exists(ref) ) {
-            throw &quot;create requires object reference at arguments[0]&quot;;
+            throw &quot;ValidatorBuilder create: object reference required at arguments[0]&quot;;
         }
         let _signatures = _exists(ref.polymorphic) ?
             ref.polymorphic : (
@@ -161,7 +161,7 @@ export class ValidatorBuilder {
     exec(path, value) {
         let _v = _validators.get(this);
         if (!_v.hasOwnProperty(path)) {
-            return `validator for &apos;${path}&apos; does not exist`;
+            return `ValidatorBuilder exec: validator for &apos;${path}&apos; does not exist`;
         }
         return _v[path](value);
     }

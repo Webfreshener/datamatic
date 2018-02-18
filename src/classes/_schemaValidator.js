@@ -13,52 +13,10 @@ export class SchemaValidator {
      */
     constructor(_schema = {}, opts = {extensible: false}) {
         _schemaOptions.set(this, opts);
-        var _errorMsg = null;
+        let _errorMsg = null;
         this.isValid = () => _errorMsg || true;
         // validates SCHEMA ENTRIES
-        let _iterate = Array.isArray(_schema) ? _schema : Object.keys(_schema);
-        for (let _oKey of _iterate) {
-            switch (typeof _schema[_oKey]) {
-                case "string":
-                    let obj = {};
-                    obj[_oKey] = {
-                        type: wf.Str.capitalize(_schema[_oKey]),
-                        required: false
-                    };
-                    let _o = Object.assign(_schema, obj);
-                    _errorMsg = this.validateSchemaEntry(_oKey, _schema[_oKey]);
-                    break;
-                case "object":
-                    if (!Array.isArray(_schema[_oKey])) {
-                        if (_oKey !== "elements") {
-                            _errorMsg = this.validateSchemaEntry(_oKey, _schema[_oKey]);
-                        }
-                        else {
-                            for (let _x of Object.keys(_schema[_oKey])) {
-                                if (typeof (_errorMsg = this.validateSchemaEntry(_x, _schema[_oKey][_x])) === "string") {
-                                    break;
-                                }
-                            }
-                        }
-                    }
-                    else {
-                        for (let _s of _schema[_oKey]) {
-                            if (typeof _schema[_oKey][_s] === "string") {
-                                _errorMsg = this.validateTypeString(_oKey, _schema[_oKey][_s]);
-                            }
-                            else {
-                                _errorMsg = this.validateSchemaEntry(_oKey, _schema[_oKey][_s]);
-                            }
-                        }
-                    }
-                    break;
-                case "boolean":
-                    _errorMsg = this.validateSchemaEntry(_oKey, _schema[_oKey]);
-                    break;
-                default:
-                    _errorMsg = `value for schema element '${_oKey}' was invalid`;
-            }
-        }
+        _errorMsg = SchemaValidator.eval(_schema, this);
     }
 
     /**
@@ -190,7 +148,7 @@ export class SchemaValidator {
             return true;
         }
         // rejects values for keys not found in Schema
-        if (!_exists(_schemaKeys[sKey]) && opts.extensible === false) {
+        if (sKey !== "*" && !_exists(_schemaKeys[sKey]) && opts.extensible === false) {
             return `schema element '${key}.${sKey}' is not allowed`;
         }
         let eMsg = this.validateTypeString(`${key}.${sKey}`, params[sKey]);
@@ -211,7 +169,7 @@ export class SchemaValidator {
     validateSchemaParam(key, sKey, _schemaKeys, params) {
         var _type;
         // rejects unknown element if schema non-extensible
-        if (!_exists(_schemaKeys[sKey]) && !_schemaOptions.get(this).extensible) {
+        if (sKey !== "*" && !_exists(_schemaKeys[sKey]) && !_schemaOptions.get(this).extensible) {
             return `schema element '${key}.${sKey}' is not allowed`;
         }
         // returns result of Params String Valdiation
@@ -227,9 +185,13 @@ export class SchemaValidator {
             if (sKey === "elements") {
                 let _iterate = Array.isArray(params.elements) ? params.elements : Object.keys(params.elements);
                 for (let xKey of _iterate) {
-                    let eMsg = this.validateSchemaEntry(`${key}.${xKey}`, params.elements[xKey]);
-                    if (typeof eMsg === "string") {
-                        return eMsg;
+                    if (typeof xKey === "string") {
+                        let eMsg = this.validateSchemaEntry(`${key}.${xKey}`, params.elements[xKey]);
+                        if (typeof eMsg === "string") {
+                            return eMsg;
+                        }
+                    } else {
+                        this.validateSchemaParam(key, xKey.type, _schemaKeys, params.elements);
                     }
                 }
                 return true;
@@ -316,5 +278,70 @@ export class SchemaValidator {
      */
     get jsd() {
         return _schemaOptions.get(this).jsd;
+    }
+
+    /**
+     *
+     * @param _schema
+     * @param caller
+     * @returns {boolean}
+     */
+    static eval(_schema, caller) {
+        let _errorMsg = true;
+        let _iterate = Array.isArray(_schema) ? _schema : Object.keys(_schema);
+        for (let _oKey of _iterate) {
+            if (_oKey && typeof _oKey === "object") {
+
+                for (let _oKey of Object.keys(_oKey)) {
+                    let e = SchemaValidator.eval(_oKey);
+                    if (typeof e === "string") {
+                        _errorMsg = e;
+                        break;
+                    }
+                }
+                break;
+            }
+            switch (typeof _schema[_oKey]) {
+                case "string":
+                    let obj = {};
+                    obj[_oKey] = {
+                        type: wf.Str.capitalize(_schema[_oKey]),
+                        required: false
+                    };
+                    let _o = Object.assign(_schema, obj);
+                    _errorMsg = caller.validateSchemaEntry(_oKey, _schema[_oKey]);
+                    break;
+                case "object":
+                    if (!Array.isArray(_schema[_oKey])) {
+                        if (_oKey !== "elements") {
+                            _errorMsg = caller.validateSchemaEntry(_oKey, _schema[_oKey]);
+                        }
+                        else {
+                            for (let _x of Object.keys(_schema[_oKey])) {
+                                if (typeof (_errorMsg = caller.validateSchemaEntry(_x, _schema[_oKey][_x])) === "string") {
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    else {
+                        for (let _s of _schema[_oKey]) {
+                            if (typeof _schema[_oKey][_s] === "string") {
+                                _errorMsg = caller.validateTypeString(_oKey, _schema[_oKey][_s]);
+                            }
+                            else {
+                                _errorMsg = caller.validateSchemaEntry(_oKey, _schema[_oKey][_s]);
+                            }
+                        }
+                    }
+                    break;
+                case "boolean":
+                    _errorMsg = caller.validateSchemaEntry(_oKey, _schema[_oKey]);
+                    break;
+                default:
+                    _errorMsg = `value for schema element '${_oKey}' was invalid`;
+            }
+        }
+        return _errorMsg;
     }
 }
