@@ -246,7 +246,7 @@ export class SchemaValidator {
         if (typeof _schemaKeys[sKey] === &quot;object&quot;) {
             // handles `elements` object
             if (sKey === &quot;elements&quot;) {
-                let _iterate = Array.isArray(params.elements) ? params.elements : Object.values(params.elements);
+                let _iterate = Array.isArray(params.elements) ? params.elements : Object.keys(params.elements);
                 for (let xKey of _iterate) {
                     if (typeof xKey === &quot;string&quot;) {
                         let eMsg = this.validateSchemaEntry(`${key}.${xKey}`, params.elements[xKey]);
