@@ -2,7 +2,7 @@ import {_mdRef, _oBuilders, _vBuilders, _exists, _validPaths} from "./_reference
 import {Schema} from "./schema";
 import {Set} from "./set";
 import {JSD} from "./jsd";
-import {Observable} from 'rxjs/observable';
+import {Observable} from 'rxjs';
 export class Model {
     /**
      * subscribes handler method to observer for model
