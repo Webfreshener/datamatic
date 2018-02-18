@@ -14,11 +14,11 @@
 				"name": {
 					"type": "String",
 					"required": true,
-					"restrict": "^[a-zA-Z-0-9_]+$"
+					"restrict": "^[a-zA-Z0-9_]+$"
 				},
 				"desc": {
 					"type": "String",
-					"restrict": "^[a-zA-Z-0-9_\\s]+$"
+					"restrict": "^[a-zA-Z0-9_\\s]+$"
 				}
 				}
 			},

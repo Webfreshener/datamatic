@@ -112,27 +112,35 @@ describes the attributes of a Data Model</p>
         &quot;type&quot;: &quot;String&quot;,
         &quot;required&quot;: true
     },
-    &quot;age&quot; {
+    &quot;age&quot;: {
         &quot;type&quot;: &quot;Number&quot;,
         &quot;required&quot;: true
     }
 };
+
 const _handlers = {
-    next: function(model) {
-        console.log(`${_jsd.document}`); // prints: {&quot;name&quot;: &quot;Frank&quot;, &quot;age&quot;: 23}
+    next: function (schema) {
+        if (typeof schema !== &apos;undefined&apos;) {
+            // outputs: {&quot;name&quot;:&quot;Frank&quot;,&quot;age&quot;:23}
+            console.log(`${schema}`); 
+        }
     },
-    error: function(e) {
-        console.log(e);
+    error: function (e) {
+        // outputs: error: &apos;age&apos; expected number, type was &apos;&lt;string&gt;&apos;
+        console.log(`error: ${e}`);
     }
-}
+};
+
 const _jsd = new JSD(_schema);
+_jsd.document.subscribe(_handlers);
+
 // set invalid data to the model to trigger error handler
 _jsd.document.model = {
     &quot;name&quot;: &quot;Frank&quot;,
     &quot;age&quot;: &quot;23&quot;
 };
 
-// set valid data to the model to trigger next handler 
+// set valid data to the model to trigger next handler
 _jsd.document.model = {
     &quot;name&quot;: &quot;Frank&quot;,
     &quot;age&quot;: 23
@@ -205,27 +213,28 @@ _jsd.document.model = {
 };
 
 let _handler = {
-    next: (val)=&gt; {
-        console.log(val);
-        _jsd.unsubscribe();
+    next: (val) =&gt; {
+        // outputs: {&quot;values&quot;:[{&quot;name&quot;:&quot;Player 1&quot;,&quot;score&quot;:2000000},...]}
+        console.log(`${val}`);
+        _jsd.document.unsubscribe();
     },
-    error: (e)=&gt; {
-        console.log(e);
+    error: (e) =&gt; {
+        console.log(`error: ${e}`);
     }
 };
 
 const _jsd = new JSD(_schema);
-_jsd.subscribe(_handler);
+_jsd.document.subscribe(_handler);
 _jsd.document.model = {
     values: [{
         name: &quot;Player 1&quot;,
         score: 2000000
-    },{
+    }, {
         name: &quot;Player 2&quot;,
         score: 1100000
-    },{
-      name: &quot;Player 3&quot;,
-      score: 900000
+    }, {
+        name: &quot;Player 3&quot;,
+        score: 900000
     }]
 };</code>
 </code></pre><h4 id="boolean-type">Boolean Type</h4><table>
@@ -254,6 +263,31 @@ _jsd.document.model = {
         &quot;default&quot;: true
     }
 }</code>
+</code></pre><h6 id="usage-example">Usage Example</h6><pre><code><code class="source-code prettyprint">const _schema = {
+    value: {
+        type: &quot;Boolean&quot;,
+        required: false,
+    }
+};
+
+let _handler = {
+    next: (val) =&gt; {
+        // {&quot;value&quot;:true}
+        // {&quot;value&quot;:false}
+        console.log(`${val}`);
+    },
+    error: (e) =&gt; {
+        // error: &apos;value&apos; expected boolean, type was &apos;&lt;string&gt;&apos;
+        console.log(`error: ${e}`);
+    }
+};
+
+
+const _jsd = new JSD(_schema);
+_jsd.document.subscribe(_handler);
+_jsd.document.model = {value: &quot;true&quot;};
+_jsd.document.model = {value: true};
+_jsd.document.model = {value: false};</code>
 </code></pre><h4 id="number-type">Number Type</h4><table>
 <thead>
 <tr>
@@ -280,6 +314,30 @@ _jsd.document.model = {
         &quot;default&quot;: 0 
     }
 }</code>
+</code></pre><h6 id="usage-example">Usage Example</h6><pre><code><code class="source-code prettyprint">const _schema = {
+    value: {
+        type: &quot;Number&quot;,
+        required: true,
+        // default: true,
+    }
+};
+
+let _handler = {
+    next: (val) =&gt; {
+        // {&quot;value&quot;:1234}
+        console.log(`${val}`);
+    },
+    error: (e) =&gt; {
+        // error: &apos;value&apos; expected number, type was &apos;&lt;string&gt;&apos;
+        console.log(`error: ${e}`);
+    }
+};
+
+
+const _jsd = new JSD(_schema);
+_jsd.document.subscribe(_handler);
+_jsd.document.model = {value: &quot;1234&quot;};
+_jsd.document.model = {value: 1234};</code>
 </code></pre><h4 id="object-type">Object Type</h4><table>
 <thead>
 <tr>
@@ -330,6 +388,7 @@ _jsd.document.model = {
          }
     }
 }</code>
+</code></pre><h6 id="usage-example">Usage Example</h6><pre><code><code class="source-code prettyprint"></code>
 </code></pre><h4 id="string-type">String Type</h4><table>
 <thead>
 <tr>
@@ -359,6 +418,30 @@ _jsd.document.model = {
         &quot;required&quot;: true
     }
 }</code>
+</code></pre><h6 id="usage-example">Usage Example</h6><pre><code><code class="source-code prettyprint">const _schema = {
+    value: {
+        type: &quot;String&quot;,
+        required: true,
+        restrict: &quot;^[a-zA-Z0-9_\\s\\-]+$&quot;
+    }
+};
+
+let _handler = {
+    next: (val) =&gt; {
+        // {&quot;value&quot;:&quot;false&quot;}
+        console.log(`${val}`);
+    },
+    error: (e) =&gt; {
+        // error: &apos;value&apos; expected string, type was &apos;&lt;boolean&gt;&apos;
+        console.log(`error: ${e}`);
+    }
+};
+
+
+const _jsd = new JSD(_schema);
+_jsd.document.subscribe(_handler);
+_jsd.document.model = {value: true};
+_jsd.document.model = {value: &quot;false&quot;};</code>
 </code></pre><h3 id="advanced-usage">Advanced Usage</h3><h4 id="wildcard-keys">Wildcard Keys</h4><p>Wildcards keys allow for cases where you might not know or care about the actual key values.
 This is useful in cases where you might have severage elements of the ame data type and 
 format that you wish to describe in a single instance</p>
@@ -412,9 +495,6 @@ let _handler = {
     next: (val)=&gt; {
         console.log(val);
         _jsd.unsubscribe();
-    },
-    error: (e)=&gt; {
-        console.log(e);
     }
 };
 
@@ -469,50 +549,33 @@ wildcard types</p>
     }
 }</code>
 </code></pre><h6 id="usage-example">Usage Example</h6><pre><code><code class="source-code prettyprint">const _schema = {
-                    &quot;id&quot;: {
-                        &quot;type&quot;: &quot;Number&quot;,
-                        &quot;required&quot;: true,
-                    },
-                    &quot;name&quot;: {
-                        &quot;type&quot;: &quot;String&quot;,
-                        &quot;required&quot;: true,
-                        &quot;restrict&quot;: &quot;^[a-zA-Z0-9\-]{1,10}$&quot;
-                    },
-                    {
-                    &quot;dataField1&quot;: {
-                        &quot;type&quot;: &quot;*&quot;,
-                        &quot;required&quot;: false 
-                    },
-                    &quot;dataField2&quot;: {
-                        &quot;type&quot;: &quot;*&quot;,
-                        &quot;required&quot;: false 
-                    }
-                };
+    value: {
+        type: &quot;*&quot;,
+    }
+};
 
 let _handler = {
-    next: (val)=&gt; {
-        console.log(val);
-        _jsd.unsubscribe();
-    },
-    error: (e)=&gt; {
-        console.log(e);
+    next: (val) =&gt; {
+        // {&quot;value&quot;:900000}
+        // {&quot;value&quot;:&quot;A string&quot;}
+        // {&quot;value&quot;:false}
+        console.log(`${val}`);
+        _jsd.document.unsubscribe();
+        done()
     }
 };
 
 const _jsd = new JSD(_schema);
-_jsd.subscribe(_handler);
+_jsd.document.subscribe(_handler);
+
 _jsd.document.model = {
-        &quot;id&quot;: 100000234, 
-        &quot;name&quot;: &quot;HeavyMetalPrincess&quot;,
-        &quot;dataField1&quot;: {
-            playerKills: 1100000,
-            matchIds: [1234, 1235, 1236]
-        },
-        &quot;dataField2&quot;: {
-            location: &quot;I&apos;m from the Internet&quot;,
-            bio: &quot;I like cupcakes&quot; 
-        }
-    }
+    value: 900000,
+};
+_jsd.document.model = {
+    value: &quot;A string&quot;,
+};
+_jsd.document.model = {
+    value: false,
 };</code>
 </code></pre><h4 id="polymorphism">Polymorphism</h4><p>In cases where you want to keep the data model tightly defined but must allow for certain values to conform to more 
 than one data type, you can use polymorhism</p>
@@ -544,57 +607,51 @@ than one data type, you can use polymorhism</p>
    } 
 }</code>
 </code></pre><h6 id="usage-example">Usage Example</h6><pre><code><code class="source-code prettyprint">const _schema = {
-                   &quot;polyValue&quot;: {
-                     &quot;required&quot;: true,
-                     &quot;polymorphic&quot;: [
-                       {
-                         &quot;type&quot;: &quot;String&quot;,
-                         &quot;restrict&quot;: &quot;^[a-zA-Z-0-9_]+$&quot;
-                       },
-                       {
-                         &quot;type&quot;: &quot;Object&quot;,
-                         &quot;elements&quot;: {
-                           &quot;name&quot;: {
-                             &quot;type&quot;: &quot;String&quot;,
-                             &quot;required&quot;: true,
-                             &quot;restrict&quot;: &quot;^[a-zA-Z-0-9_]{1,24}+$&quot;
-                           },
-                           &quot;details&quot;: {
-                             &quot;type&quot;: &quot;String&quot;,
-                             &quot;required&quot;: false,
-                             &quot;restrict&quot;: &quot;^[a-zA-Z-0-9_]{0,256}+$&quot;
-                           }, 
-                         }
-                       }
-                     ]
-                   } 
-                };
+    polyValue: {
+        required: true,
+        polymorphic: [{
+            type: &quot;String&quot;,
+            restrict: &quot;^[a-zA-Z0-9_\\s]+$&quot;
 
+        },
+        {
+            type: &quot;Object&quot;,
+            &quot;*&quot;: {
+                type: &quot;Number&quot;
+            },
+        }]
+    }
+};
+
+let _cnt = 0;
 let _handler = {
-    next: (val)=&gt; {
-        console.log(val);
-    },
-    error: (e)=&gt; {
-        console.log(e);
+    next: (val) =&gt; {
+        // {&quot;polyValue&quot;:&quot;HeavyMetalPrincess&quot;}
+        // {&quot;polyValue&quot;:{&quot;name&quot;:&quot;HeavyMetalPrincess&quot;,&quot;description&quot;:&quot;cupcakes&quot;}}
+        // {&quot;polyValue&quot;:{&quot;HeaveyMetalPrincess&quot;:10001234}}
+        console.log(`${val}`); 
     }
 };
 
 const _jsd = new JSD(_schema);
-_jsd.subscribe(_handler);
+_jsd.document.subscribe(_handler);
 
 // can be a string value
 _jsd.document.model = {
-        &quot;polyValue&quot; : &quot;HeavyMetalPrincess&quot;,
+    &quot;polyValue&quot;: &quot;HeavyMetalPrincess&quot;,
+}
+
+_jsd.document.model = {
+    &quot;polyValue&quot;: {
+        &quot;name&quot;: &quot;HeavyMetalPrincess&quot;,
+        &quot;description&quot;: &quot;cupcakes&quot;,
     }
 };
 
-// can also be object value
 _jsd.document.model = {
-        &quot;polyValue&quot; : {
-            &quot;name&quot;: &quot;HeavyMetalPrincess&quot;,
-            &quot;details&quot;: &quot;I like cupcakes&quot; 
-        }
-    }
+    &quot;polyValue&quot;: {
+        HeaveyMetalPrincess: 10001234
+    },
 };</code>
 </code></pre><h4 id="regular-expressions">Regular Expressions</h4><p>JSD allows the use of Regular Expressions to restrict String input
 There are caveats to it&apos;s use due to the nature of RegExp syntax vs  JSON
@@ -604,14 +661,14 @@ const schema = {
    stringValue: {
      required: true,
      type: &quot;String&quot;,
-     restrict: &quot;^[a-zA-Z-0-9_\-\s]+$&quot;
+     restrict: &quot;^[a-zA-Z0-9_\\-\\s]+$&quot;
    }
 };</code>
 </code></pre><h6 id="json-file-example-with-special-escaping">JSON File Example with Special Escaping</h6><pre><code><code class="source-code prettyprint">{
     &quot;stringValue&quot;: {
         &quot;required&quot;: true,
         &quot;type&quot;: &quot;String&quot;,
-        &quot;restrict&quot;: &quot;^[a-zA-Z-0-9_\\\\-\\\\s]+$&quot;
+        &quot;restrict&quot;: &quot;^[a-zA-Z0-9_\\\\-\\\\s]+$&quot;
     }
 }</code>
 </code></pre></div>

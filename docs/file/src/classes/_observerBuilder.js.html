@@ -64,7 +64,7 @@
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {_exists, _observers} from &quot;./_references&quot;;
 import {Set} from &quot;./set&quot;;
 import {Schema} from &quot;./schema&quot;;
-import {Subject} from &quot;rxjs/Rx&quot;;
+import {BehaviorSubject} from &quot;rxjs&quot;;
 
 export class ObserverBuilder {
     /**
@@ -91,54 +91,58 @@ export class ObserverBuilder {
         return _exists(_o[path]) ? _o[path] : null;
     }
 
+    /**
+     *
+     * @param forPath
+     * @param oRef
+     */
     create(forPath, oRef) {
         if (!(oRef instanceof Schema || oRef instanceof Set)) {
             throw &quot;oRef must be instance of Schema or Set&quot;;
         }
         let _o = _observers.get(this);
-        _o[forPath] = new Subject();
+        _o[forPath] = {
+            onNext: new BehaviorSubject().skip(1),
+            onError: new BehaviorSubject().skip(1),
+            onComplete: new BehaviorSubject().skip(1),
+        }
     }
 
+    /**
+     * calls next on Next Subject
+     * @param path
+     * @param value
+     */
     next(path, value) {
         let _o = this.get(path);
         if (_o) {
-            _o.next(value);
+            _o.onNext.next(value);
         }
     }
 
+    /**
+     * calls next on Complete Subject
+     * @param path
+     * @param value
+     */
     complete(path, value) {
         let _o = this.get(path);
         if (_o) {
-            _o.complete(value);
+            _o.onComplete.next(value);
         }
     }
 
+    /**
+     * calls next on Error Subject
+     * @param path
+     * @param value
+     */
     error(path, value) {
         let _o = this.get(path);
         if (_o) {
-            _o.error(value);
+            _o.onError.next(value);
         }
     }
-
-    // /**
-    //  * @returns singleton ObserverBuilder reference
-    //  */
-    // static getInstance() {
-    //     return new this;
-    // }
-    //
-    // /**
-    //  * @returns validators WeakMap
-    //  */
-    // static getObservers() {
-    //     return _observers.get( ObserverBuilder.getInstance() );
-    // }
-    // /**
-    //  *
-    //  */
-    // static create(path, oRef) {
-    //     return ObserverBuilder.getInstance().create(path, oRef);
-    // }
 }
 </code></pre>
 

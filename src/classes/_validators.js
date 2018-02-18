@@ -13,7 +13,7 @@ export class BaseValidator {
     constructor(path, signature, jsd) {
         if (!jsd)
         {
-            throw `JSD is required for ${path}`;
+            throw `JSD is required for '${path}'`;
         }
         this.path = path;
         this.signature = signature;

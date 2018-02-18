@@ -1,7 +1,7 @@
 import {_exists, _observers} from "./_references";
 import {Set} from "./set";
 import {Schema} from "./schema";
-import {Subject} from "rxjs/Rx";
+import {BehaviorSubject} from "rxjs";
 
 export class ObserverBuilder {
     /**
@@ -28,52 +28,56 @@ export class ObserverBuilder {
         return _exists(_o[path]) ? _o[path] : null;
     }
 
+    /**
+     *
+     * @param forPath
+     * @param oRef
+     */
     create(forPath, oRef) {
         if (!(oRef instanceof Schema || oRef instanceof Set)) {
             throw "oRef must be instance of Schema or Set";
         }
         let _o = _observers.get(this);
-        _o[forPath] = new Subject();
+        _o[forPath] = {
+            onNext: new BehaviorSubject().skip(1),
+            onError: new BehaviorSubject().skip(1),
+            onComplete: new BehaviorSubject().skip(1),
+        }
     }
 
+    /**
+     * calls next on Next Subject
+     * @param path
+     * @param value
+     */
     next(path, value) {
         let _o = this.get(path);
         if (_o) {
-            _o.next(value);
+            _o.onNext.next(value);
         }
     }
 
+    /**
+     * calls next on Complete Subject
+     * @param path
+     * @param value
+     */
     complete(path, value) {
         let _o = this.get(path);
         if (_o) {
-            _o.complete(value);
+            _o.onComplete.next(value);
         }
     }
 
+    /**
+     * calls next on Error Subject
+     * @param path
+     * @param value
+     */
     error(path, value) {
         let _o = this.get(path);
         if (_o) {
-            _o.error(value);
+            _o.onError.next(value);
         }
     }
-
-    // /**
-    //  * @returns singleton ObserverBuilder reference
-    //  */
-    // static getInstance() {
-    //     return new this;
-    // }
-    //
-    // /**
-    //  * @returns validators WeakMap
-    //  */
-    // static getObservers() {
-    //     return _observers.get( ObserverBuilder.getInstance() );
-    // }
-    // /**
-    //  *
-    //  */
-    // static create(path, oRef) {
-    //     return ObserverBuilder.getInstance().create(path, oRef);
-    // }
 }

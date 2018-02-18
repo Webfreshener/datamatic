@@ -44,7 +44,6 @@ export class Set extends Model {
 
         _types = _type.map((type) => {
             let _t = typeof type;
-
             if (_t === "string") {
                 if (type === "*") {
                     return type;
@@ -55,11 +54,13 @@ export class Set extends Model {
                 } else {
                     throw `could not determine type <${type}>`;
                 }
+            } else if (_t === 'object') {
+                type = _t;
+            } else if ((!_exists(_t)) || _t === "Function") {
+                type = "*";
             }
 
-            else if ((!_exists(_t)) || _t === "Function") {
-                type = "*";
-            } else {
+            else {
                 throw `could not determine type <${type}>`;
             }
 
