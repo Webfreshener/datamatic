@@ -1885,6 +1885,7 @@ class Schema extends __WEBPACK_IMPORTED_MODULE_5__model__["a" /* Model */] {
             if (keys.length) {
                 keys.forEach((k) => {
                     this.model[k] = value[k];
+                    return true;
                 });
             } else {
                 e = "null not allowed";

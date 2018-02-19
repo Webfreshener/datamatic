@@ -230,6 +230,7 @@ export class Schema extends Model {
             if (keys.length) {
                 keys.forEach((k) =&gt; {
                     this.model[k] = value[k];
+                    return true;
                 });
             } else {
                 e = &quot;null not allowed&quot;;
