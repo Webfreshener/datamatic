@@ -1,5 +1,5 @@
-describe('node commonjs require', () => {
-    it('should import JSD and create document', ()=> {
+describe("node commonjs require", () => {
+    it("should import JSD and create document", ()=> {
         let JSD = require('../index');
         let jsd = new JSD({foo: {type: "String"}});
         jsd.document.model = {
@@ -8,3 +8,8 @@ describe('node commonjs require', () => {
         expect(jsd.document.model.foo).toBe('bar');
     });
 });
+//
+// describe("UMD with require via commonJS", {
+//     let JSD = require('../index');
+//
+// });
