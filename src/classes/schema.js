@@ -166,7 +166,12 @@ export class Schema extends Model {
             const keys = Object.keys(value);
             if (keys.length) {
                 keys.forEach((k) => {
-                    this.model[k] = value[k];
+                    // -- added try/catch to avoid error in jsfiddle
+                    try {
+                        this.model[k] = value[k];
+                    } catch (e) {
+                        // -- no-op
+                    }
                 });
             } else {
                 e = "null not allowed";

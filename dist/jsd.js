@@ -2,7 +2,7 @@
 	if(typeof exports === 'object' && typeof module === 'object')
 		module.exports = factory();
 	else if(typeof define === 'function' && define.amd)
-		define([], factory);
+		define("JSD", [], factory);
 	else if(typeof exports === 'object')
 		exports["JSD"] = factory();
 	else
@@ -1884,7 +1884,11 @@ class Schema extends __WEBPACK_IMPORTED_MODULE_5__model__["a" /* Model */] {
             const keys = Object.keys(value);
             if (keys.length) {
                 keys.forEach((k) => {
-                    this.model[k] = value[k];
+                    try {
+                        this.model[k] = value[k];
+                    } catch (e) {
+                        // -- no-op
+                    }
                 });
             } else {
                 e = "null not allowed";
@@ -6277,8 +6281,8 @@ exports.Timestamp = Timestamp;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__schema__ = __webpack_require__(16);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__set__ = __webpack_require__(28);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__jsd__ = __webpack_require__(27);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs__ = __webpack_require__(63);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_Rx__ = __webpack_require__(63);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4_rxjs_Rx__);
 
 
 
@@ -18297,8 +18301,8 @@ class Str {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__references__ = __webpack_require__(11);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__set__ = __webpack_require__(28);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__schema__ = __webpack_require__(16);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs__ = __webpack_require__(63);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__ = __webpack_require__(63);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__);
 
 
 
@@ -18340,9 +18344,9 @@ class ObserverBuilder {
         }
         let _o = __WEBPACK_IMPORTED_MODULE_0__references__["f" /* _observers */].get(this);
         _o[forPath] = {
-            onNext: new __WEBPACK_IMPORTED_MODULE_3_rxjs__["BehaviorSubject"]().skip(1),
-            onError: new __WEBPACK_IMPORTED_MODULE_3_rxjs__["BehaviorSubject"]().skip(1),
-            onComplete: new __WEBPACK_IMPORTED_MODULE_3_rxjs__["BehaviorSubject"]().skip(1),
+            onNext: new __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__["BehaviorSubject"]().skip(1),
+            onError: new __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__["BehaviorSubject"]().skip(1),
+            onComplete: new __WEBPACK_IMPORTED_MODULE_3_rxjs_Rx__["BehaviorSubject"]().skip(1),
         }
     }
 

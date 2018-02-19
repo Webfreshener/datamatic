@@ -9,7 +9,8 @@ module.exports = [{
         path: path.join(__dirname, 'dist'),
         filename: 'jsd.js',
         library: 'JSD',
-        libraryTarget: 'umd'
+        libraryTarget: 'umd',
+        umdNamedDefine: true
     }
 }, {
     context: path.join(__dirname),

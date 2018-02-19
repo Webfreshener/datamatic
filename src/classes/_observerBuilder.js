@@ -1,7 +1,7 @@
 import {_exists, _observers} from "./_references";
 import {Set} from "./set";
 import {Schema} from "./schema";
-import {BehaviorSubject} from "rxjs";
+import {BehaviorSubject} from "rxjs/Rx";
 
 export class ObserverBuilder {
     /**
