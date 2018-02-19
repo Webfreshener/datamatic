@@ -85,7 +85,7 @@ export class Schema extends Model {
         for (let _sigEl of Object.keys(_signature)) {
             // -- tests for element `default`
             let _default = _signature[_sigEl].default;
-            if (_default) {
+            if (_exists(_default)) {
                 // sets default value for key on model
                 let _p = _sigEl.split(".");
                 this.model[_sigEl] = _default;

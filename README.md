@@ -214,11 +214,13 @@ const _schema = {
     value: {
         type: "Boolean",
         required: false,
+        default: true,
     }
 };
 
 let _handler = {
     next: (val) => {
+        // {"value":true}
         // {"value":true}
         // {"value":false}
         console.log(`${val}`);
@@ -229,12 +231,20 @@ let _handler = {
     }
 };
 
-
 const _jsd = new JSD(_schema);
 _jsd.document.subscribe(_handler);
-_jsd.document.model = {value: "true"};
+
+// this will be set to the default value
+_jsd.document.model = {};
+
+// set value to true
 _jsd.document.model = {value: true};
+
+// set value to false
 _jsd.document.model = {value: false};
+
+// triggers error due to type mismatch
+_jsd.document.model = {value: "true"};
 ```
 
 #### Number Type

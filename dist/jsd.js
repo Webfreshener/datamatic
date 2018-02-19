@@ -1803,7 +1803,7 @@ class Schema extends __WEBPACK_IMPORTED_MODULE_5__model__["a" /* Model */] {
         for (let _sigEl of Object.keys(_signature)) {
             // -- tests for element `default`
             let _default = _signature[_sigEl].default;
-            if (_default) {
+            if (Object(__WEBPACK_IMPORTED_MODULE_0__references__["a" /* _exists */])(_default)) {
                 // sets default value for key on model
                 let _p = _sigEl.split(".");
                 this.model[_sigEl] = _default;
@@ -1884,6 +1884,7 @@ class Schema extends __WEBPACK_IMPORTED_MODULE_5__model__["a" /* Model */] {
             const keys = Object.keys(value);
             if (keys.length) {
                 keys.forEach((k) => {
+                    // -- added try/catch to avoid error in jsfiddle
                     try {
                         this.model[k] = value[k];
                     } catch (e) {

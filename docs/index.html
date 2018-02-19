@@ -267,11 +267,13 @@ _jsd.document.model = {
     value: {
         type: &quot;Boolean&quot;,
         required: false,
+        default: true,
     }
 };
 
 let _handler = {
     next: (val) =&gt; {
+        // {&quot;value&quot;:true}
         // {&quot;value&quot;:true}
         // {&quot;value&quot;:false}
         console.log(`${val}`);
@@ -282,12 +284,20 @@ let _handler = {
     }
 };
 
-
 const _jsd = new JSD(_schema);
 _jsd.document.subscribe(_handler);
-_jsd.document.model = {value: &quot;true&quot;};
+
+// this will be set to the default value
+_jsd.document.model = {};
+
+// set value to true
 _jsd.document.model = {value: true};
-_jsd.document.model = {value: false};</code>
+
+// set value to false
+_jsd.document.model = {value: false};
+
+// triggers error due to type mismatch
+_jsd.document.model = {value: &quot;true&quot;};</code>
 </code></pre><h4 id="number-type">Number Type</h4><table>
 <thead>
 <tr>

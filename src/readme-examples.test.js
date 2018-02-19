@@ -94,12 +94,13 @@ describe('README.md examples tests', () => {
             value: {
                 type: "Boolean",
                 required: false,
-                // default: true,
+                default: true,
             }
         };
 
         let _handler = {
             next: (val) => {
+                // {"value":true}
                 // {"value":true}
                 // {"value":false}
                 console.log(`${val}`);
@@ -114,9 +115,14 @@ describe('README.md examples tests', () => {
 
         const _jsd = new JSD(_schema);
         _jsd.document.subscribe(_handler);
-        _jsd.document.model = {value: "true"};
+        // - this will trigger the default value
+        _jsd.document.model = {};
+        // set value to true
         _jsd.document.model = {value: true};
+        // set value to false
         _jsd.document.model = {value: false};
+        // triggers error due to type mismatch
+        _jsd.document.model = {value: "true"};
     });
 
     it('JSD Number example should work', (done) => {

@@ -219,18 +219,27 @@ describe("Schema Class Test Suite", function () {
             let _jsd = {
                 value: {
                     type: "Number",
-                    required: true
+                    required: true,
                 },
                 str: {
                     type: "String",
                     required: true,
-                    default: "DEFAULT VALUE"
+                    default: "DEFAULT VALUE",
+                },
+                active: {
+                    type: "Boolean",
+                    required: true,
+                    default: false,
                 }
             };
             let _ = new Schema(_jsd, null, new JSD());
             _.model = {value: 123};
             expect(_.model.value).toEqual(123);
             expect(_.model.str).toEqual("DEFAULT VALUE");
+            expect(_.model.active).toEqual(false);
+            _.model = {value: 456, str:"USER VALUE", active: true};
+            expect(_.model.str).toEqual("USER VALUE");
+            expect(_.model.active).toEqual(true);
         });
     });
 
