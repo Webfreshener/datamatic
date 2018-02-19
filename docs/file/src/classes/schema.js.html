@@ -148,7 +148,7 @@ export class Schema extends Model {
         for (let _sigEl of Object.keys(_signature)) {
             // -- tests for element `default`
             let _default = _signature[_sigEl].default;
-            if (_default) {
+            if (_exists(_default)) {
                 // sets default value for key on model
                 let _p = _sigEl.split(&quot;.&quot;);
                 this.model[_sigEl] = _default;
@@ -229,6 +229,7 @@ export class Schema extends Model {
             const keys = Object.keys(value);
             if (keys.length) {
                 keys.forEach((k) =&gt; {
+                    // -- added try/catch to avoid error in jsfiddle
                     try {
                         this.model[k] = value[k];
                     } catch (e) {
