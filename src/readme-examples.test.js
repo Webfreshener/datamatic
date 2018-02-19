@@ -175,7 +175,7 @@ describe('README.md examples tests', () => {
         _jsd.document.model = {value: "false"};
     });
 
-    it.only('JSD Object example should work', (done) => {
+    it('JSD Object example should work', (done) => {
         const _schema = {
             value: {
                 type: "Object",
