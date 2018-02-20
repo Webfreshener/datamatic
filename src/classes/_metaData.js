@@ -33,7 +33,6 @@ export class MetaData {
         });
         _mData.set(this, _data);
         _mdRef.set(this, this);
-        // _mdRef.set(_oRef, this);
     }
 
     /**

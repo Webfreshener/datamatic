@@ -102,14 +102,14 @@ export class SchemaHelpers {
      */
     createSchemaChild(key, value, opts, metaData) {
         var _kinds;
+        let _d = Object.assign({
+            _path: key,
+            _root: this._ref.root,
+            _jsd: this._ref.jsd,
+        }, metaData || {});
+        let _md = new MetaData(this._ref, _d);
         // tests if value is not Array
         if (!Array.isArray(value)) {
-            let _d = Object.assign({
-                _path: key,
-                _root: this._ref.root,
-                _jsd: this._ref.jsd,
-            }, metaData || {});
-            let _md = new MetaData(this._ref, _d);
             let _schemaDef = this._ref.signature[key.split(".").pop()] ||
                 this._ref.signature["*"] ||
                 this._ref.signature;
@@ -121,13 +121,13 @@ export class SchemaHelpers {
             return _s;
         }
         else {
-            _kinds = this.getKinds(this._ref.signature[key] || this._ref.signature);
-            if (Array.isArray(_kinds)) {
-                _kinds = _kinds.map((val) => this.ensureKindIsString(val));
-                _kinds = _kinds.filter(itm => itm !== false);
-                _kinds = _kinds.length ? _kinds : "*";
-                return new Set(_kinds, metaData);
+            try {
+                let sig = this._ref.signature[key] || this._ref.signature;
+                var _s = new Set(sig, _opts, _md);
+            } catch (e) {
+                return e;
             }
+            return _s;
         }
         return "unable to process value";
     }
@@ -163,32 +163,6 @@ export class SchemaHelpers {
             }
         }
         return result;
-    }
-
-    /**
-     * @private
-     */
-    objHelper(_schema, opts) {
-        var _kinds = this.getKinds(_schema);
-        if (Array.isArray(_kinds)) {
-            _kinds = _kinds.map(function (itm) {
-                switch (typeof itm) {
-                    case "string":
-                        return itm;
-                        break;
-                    case "object":
-                        if (itm.hasOwnProperty("type")) {
-                            return itm.type;
-                        }
-                        break;
-                }
-                return null;
-            });
-            _kinds = _kinds.filter(itm => _exists(itm));
-            _kinds = _kinds.length ? _kinds : "*";
-            return new Set(_kinds || "*", this._ref.metadata);
-        }
-        return null;
     }
 
     /**

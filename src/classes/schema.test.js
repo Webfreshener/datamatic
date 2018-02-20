@@ -13,7 +13,7 @@ describe("Schema Class Test Suite", function () {
         });
         it("should not allow invalid Element Types", () => {
             expect(() => new Schema({value: "test"}, null, new JSD())).toThrow(
-                "value for schema element 'value' has invalid type '<Test>'");
+                "type '<test>' for schema element 'value' was invalid");
         });
         it("should allow String type", function () {
             expect(() => new Schema({value: "String"}, null, new JSD())).not.toThrow(

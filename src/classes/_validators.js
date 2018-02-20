@@ -30,7 +30,7 @@ export class BaseValidator {
      */
     call(path, value) {
         // attempt to reference validator at path
-        let _ = _vBuilders.get(this.jsd).getValidators()[path];
+        let _ = _vBuilders.get(this.jsd).get(path);
         // tests for existence of validator
         if (_exists(_) && typeof _ === "function") {
             const _r = _(value);
@@ -103,9 +103,9 @@ Validator.Object = class Obj extends BaseValidator {
      */
     exec(value) {
         let _iterate = (key, _val) => {
-            let _p = `${this.path}.${key}`;
-            let _v = _vBuilders.get(this.jsd).getValidators();
-            if (!_v.hasOwnProperty(_p)) {
+            let _p = `${this.path}.${key}`.replace(/^(\.)+/, "");
+            let _v = _vBuilders.get(this.jsd);
+            if (!_v.get(_p)) {
                 _vBuilders.get(this.jsd).create(this.signature.elements[key], _p, this);
             }
             let _ = this.call(_p, _val);

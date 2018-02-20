@@ -1,4 +1,4 @@
-import {_mdRef, _oBuilders, _vBuilders, _exists, _validPaths} from "./_references";
+import {_mdRef, _oBuilders, _vBuilders, _exists, _validPaths, _object} from "./_references";
 import {Schema} from "./schema";
 import {Set} from "./set";
 import {JSD} from "./jsd";
@@ -123,6 +123,7 @@ export class Model {
         return JSON.stringify(this.toJSON(), null, (pretty ? 2 : void(0)));
     }
 
+
     /**
      * @returns {string} Object ID for Schema
      */
@@ -143,8 +144,8 @@ export class Model {
      * @returns {string}
      */
     get path() {
-        let _ = _mdRef.get(this).path;
-        return _exists(_) ? _ : "";
+        let __ = _mdRef.get(this).path;
+        return _exists(__) ? __ : "";
     }
 
     /**
@@ -152,8 +153,8 @@ export class Model {
      * @returns {Schema|Set}
      */
     get parent() {
-        let _ = _mdRef.get(this).root;
-        return _exists(_) ? _ : this;
+        let __ = _mdRef.get(this).root;
+        return _exists(__) ? __ : this;
     }
 
     /**

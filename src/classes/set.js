@@ -1,6 +1,6 @@
-import {_mdRef, _object, _vectorTypes, _oBuilders, _vBuilders, _exists, wf} from "./_references";
+import {_mdRef, _object, _vectorTypes, _schemaOptions, _exists, _vBuilders, wf} from "./_references";
 import {MetaData} from "./_metaData";
-import {ValidatorBuilder} from "./_validatorBuilder";
+import {SchemaValidator} from "./_schemaValidator";
 import {Schema} from "./schema";
 import {JSD} from "./jsd";
 import {Model} from "./model";
@@ -13,64 +13,57 @@ export class Set extends Model {
      * @param {any} _type
      * @param {any} items
      */
-    constructor(_type) {
+    constructor(_signature, opts = {}) {
         super();
         // tests for metadata
-        let _;
-        if (arguments[1] instanceof JSD) {
-            _ = new MetaData(this, {
+        let __;
+        if (arguments[2] instanceof JSD) {
+            __ = new MetaData(this, {
                 _path: "",
                 _root: this,
-                _jsd: arguments[1],
+                _jsd: arguments[2],
             });
         }
-        else if (arguments[1] instanceof MetaData) {
-            _ = arguments[1];
+        else if (arguments[2] instanceof MetaData) {
+            __ = arguments[2];
         } else {
             throw `Invalid constructor call for Set: ${JSON.stringify(arguments)}`;
         }
-        _mdRef.set(this, _);
+        _mdRef.set(this, __);
+        _schemaOptions.set(this, opts);
 
-        // tests for types
-        let _types;
 
-        if (!_exists(_type)) {
-            _type = ["*"];
+        if (!_exists(_signature)) {
+            _signature = [{type: "*"}];
         } else {
-            if (!Array.isArray(_type)) {
-                _type = [_type];
+            switch (typeof _signature) {
+                case "object":
+                    if (!Array.isArray(_signature)) {
+                        _signature = [_signature];
+                    } else {
+                        _signature = _signature.map((sig) => {
+                            return typeof sig === "string" ? {type: sig} : sig;
+                        });
+                    }
+                    break;
+                case "string":
+                    _signature = [{type: _signature}];
+                    break;
+                default:
+                    throw `schema for ${this.path} was invalid`;
             }
         }
+        // attempts to validate provided `schema` entries
+        let _sV = new SchemaValidator(_signature, Object.assign(this.options || {}, {
+            jsd: _mdRef.get(this).jsd,
+        }), this);
 
-        _types = _type.map((type) => {
-            let _t = typeof type;
-            if (_t === "string") {
-                if (type === "*") {
-                    return type;
-                }
+        // throws error if error message returned
+        if (typeof (eMsg = _sV.isValid()) === "string") {
+            throw eMsg;
+        }
 
-                if (0 <= this.jsd.listClasses().indexOf(type)) {
-                    _type = type;
-                } else {
-                    throw `could not determine type <${type}>`;
-                }
-            } else if (_t === 'object') {
-                type = _t;
-            } else if ((!_exists(_t)) || _t === "Function") {
-                type = "*";
-            }
-
-            else {
-                throw `could not determine type <${type}>`;
-            }
-
-            return type;
-        });
-
-        // when we no longer need babel...
-        // type = _type;
-        // for now we use Weakmap
-        _vectorTypes.set(this, _types);
+        this.validatorBuilder.create(_signature, this.path, this);
         _object.set(this, new Proxy([], this.handler));
     }
 
@@ -87,11 +80,19 @@ export class Set extends Model {
      */
     set model(value) {
         if (Array.isArray(value)) {
-            let _m = _object.get(this);
-            _m = value;
+            try {
+                let cnt = 0;
+                value.forEach((val) => {
+                    this.model[cnt] = val;
+                    cnt++;
+                });
+            } catch (e) {
+                return this.observerBuilder.error(this.path, e);
+            }
+
+            this.observerBuilder.next(this.path, this);
             return true;
-        }
-        else {
+        } else {
             this.observerBuilder.error(this.path, `${this.path} requires Array`);
         }
     }
@@ -121,13 +122,13 @@ export class Set extends Model {
                 return null;
             },
             set: (t, idx, value) => {
-                if (!this._typeCheck(value)) {
-                    var eMsg = `item at index ${idx} had wrong type`;
-                    this.observerBuilder.error(this.path, eMsg);
+                let msg = this.validatorBuilder.exec(this.path, value);
+                if ((typeof msg) === "string") {
+                    this.observerBuilder.error(this.path, msg);
                     return false;
                 }
                 t[idx] = value;
-                this.observerBuilder.next(this.path, t);
+                // this.observerBuilder.next(this.path, t);
                 return true;
             },
             deleteProperty: (t, idx) => {
@@ -141,31 +142,6 @@ export class Set extends Model {
                 return true;
             }
         };
-    }
-
-
-    /**
-     * tests item to see if it conforms to expected item type
-     * @param item
-     * @returns {boolean}
-     * @private
-     */
-    _typeCheck(item) {
-        for (let _t of this.type) {
-            if ((typeof _t === "string") && _t.match(/^(\*|ALL)$/)) {
-                return true;
-            }
-
-            if (!(_t = this.jsd.getClass(_t))) {
-                return false;
-            }
-            if (typeof _t === "string") {
-                return typeof item === _t;
-            } else if (!wf.Obj.isOfType(item, _t)) {
-                return false;
-            }
-        }
-        return true;
     }
 
     /**
@@ -214,7 +190,7 @@ export class Set extends Model {
      * @returns {Set} reference to self
      */
     replaceItemAt(idx, item) {
-        if (!this._typeCheck(item)) {
+        if (!this.validatorBuilder.exec(this.path, item)) {
             return false;
         }
         if (idx > this.model.length) {
@@ -293,14 +269,7 @@ export class Set extends Model {
      * @returns {number} number of elements in list
      */
     get length() {
-        return this.model.length;
+        return this.model.length || 0;
     }
 
-    /**
-     * getter for Set type
-     * @returns
-     */
-    get type() {
-        return _vectorTypes.get(this);
-    }
 }

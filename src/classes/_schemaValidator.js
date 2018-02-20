@@ -291,24 +291,15 @@ export class SchemaValidator {
         let _iterate = Array.isArray(_schema) ? _schema : Object.keys(_schema);
         for (let _oKey of _iterate) {
             if (_oKey && typeof _oKey === "object") {
-
-                for (let _oKey of Object.keys(_oKey)) {
-                    let e = SchemaValidator.eval(_oKey);
-                    if (typeof e === "string") {
-                        _errorMsg = e;
-                        break;
-                    }
+                let e = SchemaValidator.eval(_oKey, caller);
+                if (typeof e === "string") {
+                    _errorMsg = e;
+                    break;
                 }
                 break;
             }
             switch (typeof _schema[_oKey]) {
                 case "string":
-                    let obj = {};
-                    obj[_oKey] = {
-                        type: wf.Str.capitalize(_schema[_oKey]),
-                        required: false
-                    };
-                    let _o = Object.assign(_schema, obj);
                     _errorMsg = caller.validateSchemaEntry(_oKey, _schema[_oKey]);
                     break;
                 case "object":
@@ -327,10 +318,10 @@ export class SchemaValidator {
                     else {
                         for (let _s of _schema[_oKey]) {
                             if (typeof _schema[_oKey][_s] === "string") {
-                                _errorMsg = caller.validateTypeString(_oKey, _schema[_oKey][_s]);
+                                _errorMsg = caller.validateTypeString(_oKey, _s);
                             }
                             else {
-                                _errorMsg = caller.validateSchemaEntry(_oKey, _schema[_oKey][_s]);
+                                _errorMsg = caller.validateSchemaEntry(_oKey, _s);
                             }
                         }
                     }
