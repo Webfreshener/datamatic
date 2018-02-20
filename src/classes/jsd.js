@@ -12,7 +12,7 @@ import {wf, _kinds, _validPaths, _oBuilders, _vBuilders} from "./_references";
 import {ObserverBuilder} from "./_observerBuilder";
 import {ValidatorBuilder} from "./_validatorBuilder";
 import {Schema} from "./schema";
-
+import {Set} from "./set";
 const _documents = new WeakMap();
 /**
  * JSD Document Entrypoint

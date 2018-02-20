@@ -58,9 +58,8 @@ export class ValidatorBuilder {
             throw "ValidatorBuilder create: object reference required at arguments[0]";
         }
         let _signatures = _exists(ref.polymorphic) ?
-            ref.polymorphic : (
-                Array.isArray(ref) ? ref : [ref]
-            );
+            ref.polymorphic :
+            (Array.isArray(ref) ? ref : [ref]);
         let _v = _validators.get(this);
         let _functs = _signatures.map(_sig => {
             if (typeof _sig !== "object") {

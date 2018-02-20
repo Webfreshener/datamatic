@@ -27,9 +27,9 @@ export class Schema extends Model {
 
         // tests for metadata
         if (!(this instanceof MetaData)) {
-            let _;
+            let _md;
             if (arguments[2] instanceof JSD) {
-                _ = new MetaData(this, {
+                _md = new MetaData(this, {
                     _path: "",
                     _root: this,
                     _jsd: arguments[2],
@@ -37,14 +37,14 @@ export class Schema extends Model {
             }
             else if (typeof arguments[2] == "object") {
                 if (arguments[2] instanceof MetaData) {
-                    _ = arguments[2];
+                    _md = arguments[2];
                 } else {
-                    _ = new MetaData(this, arguments[2]);
+                    _md = new MetaData(this, arguments[2]);
                 }
             } else {
                 throw `Invalid constructor call for Schema: ${JSON.stringify(arguments)}`
             }
-            _mdRef.set(this, _);
+            _mdRef.set(this, _md);
         }
 
         if (_exists(_signature.polymorphic)) {
@@ -67,20 +67,22 @@ export class Schema extends Model {
         }
 
         // attempts to validate provided `schema` entries
-        let _schema_validator = new SchemaValidator(_signature, Object.assign(this.options || {}, {
+        let _sV = new SchemaValidator(_signature, Object.assign(this.options || {}, {
             jsd: _mdRef.get(this).jsd,
         }));
 
         // throws error if error message returned
-        if (typeof (eMsg = _schema_validator.isValid()) === "string") {
+        if (typeof (eMsg = _sV.isValid()) === "string") {
             throw eMsg;
         }
 
         _schemaSignatures.set(this, _signature);
         _schemaHelpers.set(this, new SchemaHelpers(this));
         _schemaHelpers.get(this).walkSchema(_signature || JSD.defaults, this.path);
+
         // creates model
         _object.set(this, new Proxy({}, this.handler));
+
         // attempts to set default value
         for (let _sigEl of Object.keys(_signature)) {
             // -- tests for element `default`

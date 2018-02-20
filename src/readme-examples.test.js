@@ -1,4 +1,5 @@
 import {JSD} from './index';
+import {Set} from './classes/set';
 describe('README.md examples tests', () => {
     it('main Schema example should work', (done) => {
         let _schema = {
@@ -42,30 +43,29 @@ describe('README.md examples tests', () => {
 
     it('JSD Array example should work', (done) => {
         const _schema = {
-            values: {
-                type: "Array",
-                elements: [{
-                    type: "Object",
-                    elements: {
-                        name: {
-                            type: "String",
-                            required: true,
-                            restrict: "^[a-zA-Z0\\-\\s]{1,24}$"
-                        },
-                        score: {
-                            type: "Number",
-                            required: true
-                        },
-                    }
-                }]
-            }
+            type: "Array",
+            default: [],
+            elements: {
+                type: "Object",
+                elements: {
+                    name: {
+                        type: "String",
+                        required: true,
+                        restrict: "^[a-zA-Z0-9\\-\\s]{1,24}$"
+                    },
+                    score: {
+                        type: "Number",
+                        required: true
+                    },
+                },
+            },
         };
 
         let _handler = {
             next: (val) => {
                 // outputs: {"values":[{"name":"Player 1","score":2000000},{"name":"Player 2","score":1100000},{"name":"Player 3","score":900000}]}
                 console.log(`${val}`);
-                _jsd.document.unsubscribe();
+                // _jsd.document.unsubscribe();
                 done();
             },
             error: (e) => {
@@ -75,18 +75,19 @@ describe('README.md examples tests', () => {
 
         const _jsd = new JSD(_schema);
         _jsd.document.subscribe(_handler);
-        _jsd.document.model = {
-            values: [{
-                name: "Player 1",
-                score: 2000000
-            }, {
-                name: "Player 2",
-                score: 1100000
-            }, {
-                name: "Player 3",
-                score: 900000
-            }]
-        };
+        _jsd.document.model = [{
+            name: "Player 1",
+            score: 2000000,
+        }, {
+            name: "Player 2",
+            score: 1100000
+        }, {
+        //     name: "BOGUS",
+        //     score: "1100000"
+        // }, {
+            name: "Player 3",
+            score: 900000
+        }];
     });
 
     it('JSD Boolean example should work', (done) => {
@@ -325,12 +326,12 @@ describe('README.md examples tests', () => {
                     restrict: "^[a-zA-Z0-9_\\s]+$"
 
                 },
-                {
-                    type: "Object",
-                    "*": {
-                        type: "Number"
-                    },
-                }]
+                    {
+                        type: "Object",
+                        "*": {
+                            type: "Number"
+                        },
+                    }]
             }
         };
         let _cnt = 0;
