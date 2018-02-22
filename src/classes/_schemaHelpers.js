@@ -43,7 +43,7 @@ export class SchemaHelpers {
      */
     setChildObject(key, value) {
         let _mdData = _mdRef.get(this._ref);
-        let _s = this.createSchemaChild(key, value, this._ref.options, _mdData);
+        let _s = this.createSchemaChild(key, value, this._ref.options || {}, _mdData);
         if (typeof _s === "string") {
             return _s;
         } else if (!_exists(_s) || typeof _s !== "object") {
@@ -188,7 +188,7 @@ export class SchemaHelpers {
                 _p = _path.join(".");
             }
             if (!(_ref = this._ref.validatorBuilder.get(_p))) {
-                if (!this.options.extensible) {
+                if (!this._ref.options.extensible) {
                     return `'${key}' is not a valid schema property`;
                 }
             }
@@ -228,6 +228,15 @@ export class SchemaHelpers {
             let kP = Schema.concatPathAddr(this._ref.path, _key);
             if (_exists(_childSigs[`${k}`])) {
                 _schema = _childSigs[k];
+                // if (_schema.hasOwnProperty('polymorphic')) {
+                //     let res = _schema.polymorphic.some((sig) => {
+                //         // console.log(sig);
+                //         return this.testPathkeys(t, _pathKeys, sig, value);
+                //     });
+                //     let eMsg = this.validate(_key, value);
+                //     console.log(`${_pathKeys} res: ${eMsg}`);
+                //     return res;
+                // }
             }
             else {
                 // attempts to find wildcard element name
@@ -243,6 +252,7 @@ export class SchemaHelpers {
                 // rejects non-members of non-extensible schemas
                 if (!this._ref.isExtensible) {
                     const e = `element '${_key}' is not a valid element`;
+                    _validPaths.get(this._ref.jsd)[kP] = e;
                     return false;
                 }
                 _schema = Schema.defaultSignature;

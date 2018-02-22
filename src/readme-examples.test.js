@@ -317,21 +317,36 @@ describe('README.md examples tests', () => {
         };
     });
 
-    it('JSD Polymorphism example should work', (done) => {
+    it.only('JSD Polymorphism example should work', (done) => {
         const _schema = {
             polyValue: {
                 required: true,
                 polymorphic: [{
                     type: "String",
-                    restrict: "^[a-zA-Z0-9_\\s]+$"
+                    restrict: "^[a-zA-Z0-9_\\s]+$",
 
-                },
-                    {
-                        type: "Object",
+                }, {
+                    type: "Object",
+                    elements: {
+                        name: {
+                            type: "String",
+                            required: true,
+                            restrict: "^[a-zA-Z0-9_\\s]{1,24}$"
+                        },
+                        description: {
+                            type: "String",
+                            required: true,
+                            restrict: "^[a-zA-Z0-9_\\s]{1,24}$"
+                        },
+                    },
+                }, {
+                    type: "Object",
+                    elements: {
                         "*": {
                             type: "Number"
                         },
-                    }]
+                    },
+                }]
             }
         };
         let _cnt = 0;

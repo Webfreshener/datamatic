@@ -236,6 +236,9 @@ export class Schema extends Model {
      * @returns {boolean}
      */
     get isExtensible() {
+        if (this.signature === null) {
+            console.log(`isExtensible fails for ${this.path}`);
+        }
         return _exists(this.signature.extensible) ?
             this.signature.extensible : this.options.extensible || false;
     }

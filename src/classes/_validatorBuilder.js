@@ -54,6 +54,7 @@ export class ValidatorBuilder {
      * @returns {function}
      */
     create(ref, path, elRef) {
+        console.log(arguments);
         if (!_exists(ref) ) {
             throw "ValidatorBuilder create: object reference required at arguments[0]";
         }
