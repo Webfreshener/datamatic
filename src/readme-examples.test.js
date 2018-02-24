@@ -285,7 +285,7 @@ describe('README.md examples tests', () => {
         };
     });
 
-    it('JSD Wildcard TYPES example should work', (done) => {
+    it.only('JSD Wildcard TYPES example should work', (done) => {
         const _schema = {
             value: {
                 type: "*",
@@ -300,21 +300,34 @@ describe('README.md examples tests', () => {
                 console.log(`${val}`);
                 _jsd.document.unsubscribe();
                 done()
+            },
+            error: (e) => {
+                // error: element 'bogus' is not a valid element
+                console.log(`error: ${e}`);
             }
         };
 
         const _jsd = new JSD(_schema);
         _jsd.document.subscribe(_handler);
 
+
         _jsd.document.model = {
             value: 900000,
         };
+
         _jsd.document.model = {
             value: "A string",
         };
+
         _jsd.document.model = {
             value: false,
         };
+
+        // this will fail
+        _jsd.document.model = {
+            bogus: "false",
+        };
+
     });
 
     it('JSD Polymorphism example should work', (done) => {

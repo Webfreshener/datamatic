@@ -219,6 +219,9 @@ export class SchemaHelpers {
      * @returns {boolean}
      */
     testPathkeys(t, _pathKeys, _childSigs, value) {
+        if ((typeof _pathKeys) === "string") {
+            _pathKeys = [_pathKeys];
+        }
         for (let __ in _pathKeys) {
             let k = _pathKeys[__];
             let _schema;
@@ -243,6 +246,13 @@ export class SchemaHelpers {
                     _schema = _childSigs["*"].polymorphic || _childSigs["*"];
                     // creates Validator for path
                     this._ref.validatorBuilder.create(_schema, _key, this._ref);
+                } else {
+                    // rejects non-members of non-extensible schemas
+                    if (!this._ref.isExtensible) {
+                        const e = `element '${_key}' is not a valid element`;
+                        _validPaths.get(this._ref.jsd)[kP] = e;
+                        return false;
+                    }
                 }
             }
 

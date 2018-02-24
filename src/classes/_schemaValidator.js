@@ -168,17 +168,19 @@ export class SchemaValidator {
      */
     validateSchemaParam(key, sKey, _schemaKeys, params) {
         var _type;
+        let eMsg;
         // rejects unknown element if schema non-extensible
         if (sKey !== "*" && !_exists(_schemaKeys[sKey]) && !_schemaOptions.get(this).extensible) {
             return `schema element '${key}.${sKey}' is not allowed`;
         }
         // returns result of Params String Valdiation
         if (typeof params[sKey] === "string") {
-            let _ = this.validateSchemaParamString(key, sKey, params);
-            if (typeof _ === "string") {
-                return _;
+            let eMsg = this.validateSchemaParamString(key, sKey, params);
+            if (typeof eMsg === "string") {
+                return eMsg;
             }
         }
+
         // returns result of
         if (typeof _schemaKeys[sKey] === "object") {
             // handles `elements` object
@@ -186,12 +188,15 @@ export class SchemaValidator {
                 let _iterate = Array.isArray(params.elements) ? params.elements : Object.keys(params.elements);
                 for (let xKey of _iterate) {
                     if (typeof xKey === "string") {
-                        let eMsg = this.validateSchemaEntry(`${key}.${xKey}`, params.elements[xKey]);
+                        eMsg = this.validateSchemaEntry(`${key}.${xKey}`, params.elements[xKey]);
                         if (typeof eMsg === "string") {
                             return eMsg;
                         }
                     } else {
-                        this.validateSchemaParam(key, xKey.type, _schemaKeys, params.elements);
+                        eMsg = this.validateSchemaParam(key, xKey.type, _schemaKeys, params.elements);
+                        if (typeof eMsg === "string") {
+                            return eMsg;
+                        }
                     }
                 }
                 return true;
@@ -205,9 +210,17 @@ export class SchemaValidator {
                 if (!Array.isArray(_type)) {
                     _type = _type.type;
                 }
+
+                if (params.type === "*") {
+                    return true;
+                } else if (_type.indexOf(params.type) < 0 ) {
+                    // console.log(`_schemaKeys['${sKey}']:\n\t_type: ${JSON.stringify(_type)}\n\tparams: ${JSON.stringify(params)}`);
+                    return `type attribute was not defined for ${sKey}`;
+                }
             }
         }
-        return;
+        // console.log(`failed to identify _schemaKeys['${sKey}']: ${JSON.stringify(params)}`);
+        return true;
     }
 
     /**
