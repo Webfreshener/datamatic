@@ -49,7 +49,6 @@ export class SchemaHelpers {
         } else if (!_exists(_s) || typeof _s !== "object") {
             return `"${key}" was invalid`;
         }
-
         return _s.model = value;
     }
 
@@ -101,7 +100,7 @@ export class SchemaHelpers {
      * @returns {Schema|Set|error string} - Schema, Set or error string
      */
     createSchemaChild(key, value, opts, metaData) {
-        var _kinds;
+        let _s; // will be set with Schema | Set
         let _d = Object.assign({
             _path: key,
             _root: this._ref.root,
@@ -114,18 +113,18 @@ export class SchemaHelpers {
                 this._ref.signature["*"] ||
                 this._ref.signature;
             try {
-                var _s = new Schema(_schemaDef, opts, _md);
+               _s  = new Schema(_schemaDef, opts, _md);
             } catch (e) {
-                return e;
+                return e.message;
             }
             return _s;
         }
         else {
             try {
                 let sig = this._ref.signature[key] || this._ref.signature;
-                var _s = new Set(sig, _opts, _md);
+                _s = new Set(sig, opts, _md);
             } catch (e) {
-                return e;
+                return e.message;
             }
             return _s;
         }
@@ -228,15 +227,14 @@ export class SchemaHelpers {
             let kP = Schema.concatPathAddr(this._ref.path, _key);
             if (_exists(_childSigs[`${k}`])) {
                 _schema = _childSigs[k];
-                // if (_schema.hasOwnProperty('polymorphic')) {
-                //     let res = _schema.polymorphic.some((sig) => {
-                //         // console.log(sig);
-                //         return this.testPathkeys(t, _pathKeys, sig, value);
-                //     });
-                //     let eMsg = this.validate(_key, value);
-                //     console.log(`${_pathKeys} res: ${eMsg}`);
-                //     return res;
-                // }
+                if (_schema.hasOwnProperty('polymorphic')) {
+                    let res = _schema.polymorphic.some((sig) => {
+                        let _s = {};
+                        _s[k] = sig;
+                        return this.testPathkeys(t, _pathKeys, _s, value);
+                    });
+                    return res;
+                }
             }
             else {
                 // attempts to find wildcard element name
@@ -247,8 +245,20 @@ export class SchemaHelpers {
                     this._ref.validatorBuilder.create(_schema, _key, this._ref);
                 }
             }
+
             // handles missing schema signatures
             if (!_exists(_schema)) {
+                if (_childSigs.hasOwnProperty('polymorphic')) {
+                    return _childSigs.polymorphic.some((sig) => {
+                        return this.testPathkeys(t, _pathKeys, sig.elements || sig, value);
+                    });
+                }
+
+                // attempts to resolve to current signature
+                if (this.testPathkeys(t, _key, _childSigs, value)) {
+                    return true;
+                }
+
                 // rejects non-members of non-extensible schemas
                 if (!this._ref.isExtensible) {
                     const e = `element '${_key}' is not a valid element`;
@@ -257,6 +267,7 @@ export class SchemaHelpers {
                 }
                 _schema = Schema.defaultSignature;
             }
+
             // handles child objects
             if (typeof value === "object") {
                 value = this.setChildObject(_key, value);
@@ -264,6 +275,7 @@ export class SchemaHelpers {
                     _validPaths.get(this._ref.jsd)[kP] = value;
                     return false;
                 }
+                _validPaths.get(this._ref.jsd)[kP] = true;
             }
             // handles scalar values (strings, numbers, booleans...)
             else {

@@ -317,7 +317,7 @@ describe('README.md examples tests', () => {
         };
     });
 
-    it.only('JSD Polymorphism example should work', (done) => {
+    it('JSD Polymorphism example should work', (done) => {
         const _schema = {
             polyValue: {
                 required: true,
@@ -339,13 +339,13 @@ describe('README.md examples tests', () => {
                             restrict: "^[a-zA-Z0-9_\\s]{1,24}$"
                         },
                     },
-                }, {
-                    type: "Object",
-                    elements: {
-                        "*": {
-                            type: "Number"
-                        },
-                    },
+                // }, {
+                //     type: "Object",
+                //     elements: {
+                //         "*": {
+                //             type: "Number"
+                //         },
+                //     },
                 }]
             }
         };
@@ -354,7 +354,7 @@ describe('README.md examples tests', () => {
             next: (val) => {
                 // {"polyValue":"HeavyMetalPrincess"}
                 // {"polyValue":{"name":"HeavyMetalPrincess","description":"cupcakes"}}
-                // {"polyValue":{"HeaveyMetalPrincess":10001234}}
+                // {"polyValue":{"HeavyMetalPrincess":10001234}}
                 console.log(`${val}`);
                 if ((++_cnt) === 3) {
                     done();
@@ -383,7 +383,13 @@ describe('README.md examples tests', () => {
 
         _jsd.document.model = {
             "polyValue": {
-                HeaveyMetalPrincess: 10001234
+                HeavyMetalPrincess: "10001234",
+            },
+        };
+
+        _jsd.document.model = {
+            "polyValue": {
+                HeavyMetalPrincess: 10001234,
             },
         };
     });

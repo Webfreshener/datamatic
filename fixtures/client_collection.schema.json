@@ -42,8 +42,7 @@
           "restrict": "^(throw|validate)+$"
         }
       ],
-      "required": false,
-      "default": false
+      "required": false
     },
     "options": {
       "type": "Object",

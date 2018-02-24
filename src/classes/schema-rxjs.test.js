@@ -127,10 +127,6 @@ describe("Schema RXJS Test Suite", () => {
             _schema = new Schema(_s, null, new JSD());
         });
 
-        // it("should initialize from client_collection schema fixture", () => {
-        //     expect(_schema instanceof Schema).toBe(true);
-        // });
-
         it("should check for valid properties", (done) => {
             const _d = {
                 name: "Test",
