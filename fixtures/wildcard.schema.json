@@ -1,19 +1,31 @@
 {
-  "*": {
-    "type": "Object",
-    "required": true,
-    "elements": {
-      "*": {
-        "type": "Object",
-        "required": true,
-        "extensible": true,
-        "elements": {
-          "*": {
-            "type": ["Boolean", "String", "Number"]
-          },
-          "name": {
-            "type": "String",
-            "required": true
+  "type": "Object",
+  "required": true,
+  "elements": {
+    "*": {
+      "type": "Object",
+      "elements": {
+        "*": {
+          "type": "Object",
+          "required": true,
+          "elements": {
+            "name": {
+              "type": "String",
+              "required": true
+            },
+            "*": {
+              "polymorphic": [
+                {
+                  "type": "Boolean"
+                },
+                {
+                  "type": "Number"
+                },
+                {
+                  "type": "String"
+                }
+              ]
+            }
           }
         }
       }
