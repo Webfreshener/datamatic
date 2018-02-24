@@ -10,7 +10,7 @@ export class Model {
      * @returns {Observable}
      */
     subscribe(func) {
-       return this.subscribeTo(this.path, func);
+        return this.subscribeTo(this.path, func);
     }
 
     /**

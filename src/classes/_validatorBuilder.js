@@ -57,10 +57,11 @@ export class ValidatorBuilder {
         if (!_exists(ref) ) {
             throw "ValidatorBuilder create: object reference required at arguments[0]";
         }
-        let _signatures = _exists(ref.polymorphic) ?
-            ref.polymorphic :
-            (Array.isArray(ref) ? ref : [ref]);
+
+        let _signatures = ref.hasOwnProperty('polymorphic') ?
+            ref.polymorphic : (Array.isArray(ref) ? ref : [ref]);
         let _v = _validators.get(this);
+
         let _functs = _signatures.map(_sig => {
             if (typeof _sig !== "object") {
                 return new Validator["Default"](path, _sig, elRef.jsd);
@@ -77,6 +78,7 @@ export class ValidatorBuilder {
             let _hasKey = (0 <= Object.keys(Validator).indexOf(_typeof));
             return new Validator[_hasKey ? _typeof : "Default"](path, _sig, elRef.jsd);
         });
+
         return _validators.get(this)[path] = (value) => {
             var _result;
             for (let idx in _functs) {
@@ -97,6 +99,13 @@ export class ValidatorBuilder {
     exec(path, value) {
         let _v = _validators.get(this);
         if (!_v.hasOwnProperty(path)) {
+            const polyPath = `${path}`.replace(/\.+.*$/, '.polymorphic');
+            if (_v.hasOwnProperty(polyPath)) {
+                return _v[polyPath].some((validator) => {
+                    return validator(value);
+                });
+            }
+
             return `ValidatorBuilder exec: validator for '${path}' does not exist`;
         }
         return _v[path](value);

@@ -42,8 +42,7 @@
           "restrict": "^(throw|validate)+$"
         }
       ],
-      "required": false,
-      "default": false
+      "required": false
     },
     "options": {
       "type": "Object",
@@ -85,26 +84,30 @@
               "restrict": "^((?!\"|\b|\\f|\\n|\\r|\\t|\\u).)*$"
             },
             "id": {
-              "type": [
-                "Boolean",
-                "Object"
-              ],
               "required": false,
-              "elements": {
-                "type": {
-                  "type": "String",
-                  "required": true,
-                  "restrict": "^(String|Number)+$"
+              "polymorphic": [
+                {
+                  "type": "Boolean"
                 },
-                "id": {
-                  "type": "Boolean",
-                  "required": true
-                },
-                "generated": {
-                  "type": "Boolean",
-                  "required": false
+                {
+                  "type": "Object",
+                  "elements": {
+                    "type": {
+                      "type": "String",
+                      "required": true,
+                      "restrict": "^(String|Number)+$"
+                    },
+                    "id": {
+                      "type": "Boolean",
+                      "required": true
+                    },
+                    "generated": {
+                      "type": "Boolean",
+                      "required": false
+                    }
+                  }
                 }
-              }
+              ]
             },
             "index": {
               "type": "Boolean",
@@ -143,38 +146,36 @@
       "type": "Array",
       "required": false,
       "default": [],
-      "elements": {
-        "*": {
-          "type": "Object",
-          "required": false,
-          "elements": {
-            "default": {
-              "type": "*",
-              "required": true
-            },
-            "required": {
-              "type": "Boolean",
-              "required": false
-            },
-            "pattern": {
-              "type": "String",
-              "required": false
-            },
-            "min": {
-              "type": "Number",
-              "required": false
-            },
-            "max": {
-              "type": "Number",
-              "required": false
-            },
-            "length": {
-              "type": "Number",
-              "required": false
-            }
+      "elements": [{
+        "type": "Object",
+        "required": false,
+        "elements": {
+          "default": {
+            "type": "*",
+            "required": true
+          },
+          "required": {
+            "type": "Boolean",
+            "required": false
+          },
+          "pattern": {
+            "type": "String",
+            "required": false
+          },
+          "min": {
+            "type": "Number",
+            "required": false
+          },
+          "max": {
+            "type": "Number",
+            "required": false
+          },
+          "length": {
+            "type": "Number",
+            "required": false
           }
         }
-      }
+      }]
     },
     "relations": {
       "type": "Object",

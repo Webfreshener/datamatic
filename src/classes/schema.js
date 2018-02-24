@@ -47,10 +47,6 @@ export class Schema extends Model {
             _mdRef.set(this, _md);
         }
 
-        if (_exists(_signature.polymorphic)) {
-            _signature = _signature.polymorphic;
-        }
-
         // traverses elements of schema checking for elements marked as reqiured
         if (_exists(_signature.elements)) {
             _signature = _signature.elements;
@@ -116,12 +112,15 @@ export class Schema extends Model {
                     _validPaths.get(this.jsd)[this.path] = true;
                     return this.observerBuilder.next(this.path, this.toJSON());
                 }
+
                 let _childSigs = this.signature.elements || this.signature;
                 let _pathKeys = key.split(".");
+
                 if (_sH.testPathkeys(t, _pathKeys, _childSigs, value)) {
                     let kP = Schema.concatPathAddr(this.path, key);
                     _validPaths.get(this.jsd)[kP] = true;
-                    t[key] = value;
+                    t[key] = ((typeof value) === "object") ?
+                        _sH.setChildObject(key, value) : value;
                 }
 
                 const _e = this.validate();

@@ -323,15 +323,30 @@ describe('README.md examples tests', () => {
                 required: true,
                 polymorphic: [{
                     type: "String",
-                    restrict: "^[a-zA-Z0-9_\\s]+$"
+                    restrict: "^[a-zA-Z0-9_\\s]+$",
 
-                },
-                    {
-                        type: "Object",
-                        "*": {
-                            type: "Number"
+                }, {
+                    type: "Object",
+                    elements: {
+                        name: {
+                            type: "String",
+                            required: true,
+                            restrict: "^[a-zA-Z0-9_\\s]{1,24}$"
                         },
-                    }]
+                        description: {
+                            type: "String",
+                            required: true,
+                            restrict: "^[a-zA-Z0-9_\\s]{1,24}$"
+                        },
+                    },
+                // }, {
+                //     type: "Object",
+                //     elements: {
+                //         "*": {
+                //             type: "Number"
+                //         },
+                //     },
+                }]
             }
         };
         let _cnt = 0;
@@ -339,7 +354,7 @@ describe('README.md examples tests', () => {
             next: (val) => {
                 // {"polyValue":"HeavyMetalPrincess"}
                 // {"polyValue":{"name":"HeavyMetalPrincess","description":"cupcakes"}}
-                // {"polyValue":{"HeaveyMetalPrincess":10001234}}
+                // {"polyValue":{"HeavyMetalPrincess":10001234}}
                 console.log(`${val}`);
                 if ((++_cnt) === 3) {
                     done();
@@ -368,7 +383,13 @@ describe('README.md examples tests', () => {
 
         _jsd.document.model = {
             "polyValue": {
-                HeaveyMetalPrincess: 10001234
+                HeavyMetalPrincess: "10001234",
+            },
+        };
+
+        _jsd.document.model = {
+            "polyValue": {
+                HeavyMetalPrincess: 10001234,
             },
         };
     });
