@@ -8,8 +8,3 @@ describe("node commonjs require", () => {
         expect(jsd.document.model.foo).toBe('bar');
     });
 });
-//
-// describe("UMD with require via commonJS", {
-//     let JSD = require('../index');
-//
-// });
