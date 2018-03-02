@@ -155,7 +155,7 @@ describe("Schema Class Test Suite", function () {
         })
     });
 
-    describe.only("Polymorphism", function () {
+    describe("Polymorphism", function () {
         it("should initialize from polymorphic schema fixture", () => {
             let _s = require("../../fixtures/polymorphic.schema.json");
             this.schema = new Schema(_s, null, new JSD());
@@ -177,7 +177,7 @@ describe("Schema Class Test Suite", function () {
                 }
             };
 
-            let _sub = this.schema.subscribeTo("badParam", _f);
+            let _sub = this.schema.subscribe(_f);
             this.schema.model = _d;
         });
     });
@@ -185,7 +185,6 @@ describe("Schema Class Test Suite", function () {
     describe("Getters/Setters", function () {
         it("should set basic values on elements", () => {
             let _schema = new Schema({
-
                 bool: {type: "Boolean"},
                 num: {type: "Number"},
                 str: {type: "String"}

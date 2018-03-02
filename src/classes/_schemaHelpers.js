@@ -178,6 +178,7 @@ export class SchemaHelpers {
                 this.walkSchema(obj[_k].elements, objPath);
             }
         }
+        // console.log(this._ref.validatorBuilder.list());
     }
 
 
@@ -248,45 +249,23 @@ export class SchemaHelpers {
             let kP = Schema.concatPathAddr(this._ref.path, _key);
             if (_exists(_childSigs[`${k}`])) {
                 _schema = _childSigs[k];
-                // if (_schema.hasOwnProperty('polymorphic')) {
-                //     let res = _schema.polymorphic.some((sig) => {
-                //         let _s = {};
-                //         _s[k] = sig;
-                //         return this.testPathkeys(t, _pathKeys, _s, value);
-                //     });
-                //     return res;
-                // }
             }
             else {
                 // attempts to find wildcard element name
                 if (_exists(_childSigs["*"])) {
                     // applies schema
-                    _schema = _childSigs["*"].polymorphic || _childSigs["*"];
+                    _schema = _childSigs["*"];
                     // creates Validator for path
                     this._ref.validatorBuilder.create(_schema, _key, this._ref);
-                    return true;
                 } else {
                     if (_childSigs.hasOwnProperty('polymorphic')) {
-                        //     return _childSigs.polymorphic.some((sig) => {
-                        //         const pKey = `${_key}`.split(".").shift();
-                        //         let _s = {};
-                        //         _s[pKey] = sig;
-                        //         console.log(`testing polymorpthic ${_key}\n${JSON.stringify(sig)}`);
-                        //         return this.testPathkeys(t, _pathKeys, sig, value);
-                        //     });
-                        //     // console.log(`creating enrtry for polymorpthic element`)
-                        //     // this._ref.validatorBuilder.create(_childSigs, _key, this._ref);
-                        //     return true;
-
                         const pKey = `${_key}`.split(".").shift();
                         let _s = {};
                         _s[pKey] = _childSigs.polymorphic;
                         _schema = _s;
-
                     }
                     // rejects non-members of non-extensible schemas
                     if (!_exists(_schema) && !this._ref.isExtensible) {
-                        // console.log(`${JSON.stringify(_childSigs)}`);
                         const e = `element '${_key}' is not a valid element`;
                         _validPaths.get(this._ref.jsd)[kP] = e;
                         return false;
@@ -296,19 +275,6 @@ export class SchemaHelpers {
 
             // handles missing schema signatures
             if (!_exists(_schema)) {
-                // if (_childSigs.hasOwnProperty('polymorphic')) {
-                //     return _childSigs.polymorphic.some((sig) => {
-                //         const _pPath = `${_key.split(".").shift()}`;
-                //         let _s = {};
-                //         _s[_pPath] = sig;
-                //         // console.log(_childSigs);
-                //         // console.log(`\n${_pathKeys}\n\tsig: ${JSON.stringify(_s)}\n\tvalue: ${JSON.stringify(value)}\n`);
-                //         const res = this.testPathkeys(t, _key, _s, value);
-                //         // console.log(`res: ${res}`);
-                //         return res;
-                //     });
-                // }
-
                 // attempts to resolve to current signature
                 if (this.testPathkeys(t, _key, _childSigs, value)) {
                     return true;
@@ -334,9 +300,7 @@ export class SchemaHelpers {
             }
             // handles scalar values (strings, numbers, booleans...)
             else {
-                // console.log(`${_key} is scalar '${value}'`);
                 let eMsg = this.validate(_key, value);
-                // console.log(`eMsg: '${eMsg}'`);
                 _validPaths.get(this._ref.jsd)[_key] = eMsg;
                 if (typeof eMsg === "string") {
                     _validPaths.get(this._ref.jsd)[kP] = eMsg;

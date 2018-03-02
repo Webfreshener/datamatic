@@ -97,14 +97,7 @@ export class ValidatorBuilder {
             return _result;
         };
 
-        // let refs = this.get(path);
-        // if (refs) {
-        //     refs = (Array.isArray(refs) ? refs : [refs]).splice(refs.length, 0, _f);
-        //     this.set(path, refs) ;
-        // } else {
-        //     // sets closure method to Validators Hash
-            this.set(path,  _f);
-        // }
+        this.set(path,  _f);
 
         // returns closure to caller
         return _f;
