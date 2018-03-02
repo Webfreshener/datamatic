@@ -16,7 +16,7 @@ export class Schema extends Model {
      * @param {Object} _o - schema definition object
      * @param {Object} opts - schema options
      */
-    constructor(_signature, opts = {extensible: false}) {
+    constructor(_signature, opts = {extensible: false, debug:false}) {
         super();
         var eMsg;
         if (!_exists(_signature)) {
@@ -70,6 +70,10 @@ export class Schema extends Model {
         // throws error if error message returned
         if (typeof (eMsg = _sV.isValid()) === "string") {
             throw eMsg;
+        }
+
+        if (_signature.hasOwnProperty('polymorphic')) {
+            // _signature = _signature.polymorphic;
         }
 
         _schemaSignatures.set(this, _signature);

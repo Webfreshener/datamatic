@@ -24,7 +24,7 @@ export class JSD {
      * @param schema
      * @param options
      */
-    constructor(schema = JSD.defaults, options = {extensible: false}) {
+    constructor(schema = JSD.defaults, options = {extensible: false, debug: false}) {
         _kinds.set(this, {
             "Array": Array,
             "ArrayBuffer": ArrayBuffer,
@@ -79,16 +79,16 @@ export class JSD {
 
     /**
      * @param {string|function} classesOrNames
-     * @returns {function}
+     * @returns {function|string}
      */
     getClass(classesOrNames) {
         let _k = _kinds.get(this);
         if (!Array.isArray(classesOrNames)) {
             classesOrNames = [classesOrNames];
         }
-        // traverses arguements
+        // traverses arguments
         for (let arg of classesOrNames) {
-            if (typeof arg === "string") {
+            if ((typeof arg) === "string") {
                 if (arg === "*") {
                     // handles special * type
                     return "*";

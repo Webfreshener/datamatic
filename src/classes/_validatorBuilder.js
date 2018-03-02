@@ -18,6 +18,7 @@ export class ValidatorBuilder {
     }
 
     /**
+     *
      * @returns list of validation paths
      */
     list() {
@@ -26,6 +27,8 @@ export class ValidatorBuilder {
     }
 
     /**
+     * gets Validator at `path` from Validator Hash
+     *
      * @param path
      * @returns item at path reference
      */
@@ -35,6 +38,8 @@ export class ValidatorBuilder {
     }
 
     /**
+     * sets Validator at `path` in Validator Hash
+     *
      * @param path
      * @param func
      */
@@ -47,6 +52,7 @@ export class ValidatorBuilder {
     }
 
     /**
+     *
      *
      * @param ref
      * @param path
@@ -79,16 +85,22 @@ export class ValidatorBuilder {
             return new Validator[_hasKey ? _typeof : "Default"](path, _sig, elRef.jsd);
         });
 
-        return _validators.get(this)[path] = (value) => {
-            var _result;
+        // evaluates all defined functions, returning true or last error message
+        const _f = (value) => {
+            let _result;
             for (let idx in _functs) {
                 _result = _functs[idx].exec(value);
-                if (typeof _result === "boolean") {
+                if ((typeof _result) === "boolean") {
                     return _result;
                 }
             }
             return _result;
         };
+
+        this.set(path,  _f);
+
+        // returns closure to caller
+        return _f;
     }
 
     /**
@@ -99,14 +111,32 @@ export class ValidatorBuilder {
     exec(path, value) {
         let _v = _validators.get(this);
         if (!_v.hasOwnProperty(path)) {
-            const polyPath = `${path}`.replace(/\.+.*$/, '.polymorphic');
-            if (_v.hasOwnProperty(polyPath)) {
-                return _v[polyPath].some((validator) => {
-                    return validator(value);
+            const polyValidate = (validators) => {
+                let eMsg = true;
+                validators.some((vPath)=> {
+                    eMsg = _v[vPath](value);
+                    if ((typeof eMsg) === "boolean") {
+                        return eMsg;
+                    }
                 });
+                return eMsg;
+            };
+            let polyPath = `${path}`.replace(/\.+.*$/, ".polymorphic.0");
+            if (_v.hasOwnProperty(polyPath)) {
+                let pathArr = `${path}`.split(".");
+                const elName = pathArr.pop();
+                pathArr.push("polymorphic");
+                polyPath = pathArr.join("\\.");
+                const rxStr = `^(${polyPath}\\.\\d+\\.${elName}|${polyPath}\\.\\d+\.\\*)+`;
+                const validators = Object.keys(_v).filter((v) => {
+                    return v.match(new RegExp(rxStr));
+                });
+                if (validators.length) {
+                    const res = polyValidate(validators);
+                    return res;
+                }
             }
-
-            return `ValidatorBuilder exec: validator for '${path}' does not exist`;
+            return `validator for '${path}' does not exist`;
         }
         return _v[path](value);
     }

@@ -45,7 +45,7 @@ describe('README.md examples tests', () => {
         const _schema = {
             type: "Array",
             default: [],
-            elements: {
+            elements: [{
                 type: "Object",
                 elements: {
                     name: {
@@ -58,7 +58,7 @@ describe('README.md examples tests', () => {
                         required: true
                     },
                 },
-            },
+            }],
         };
 
         let _handler = {
@@ -285,7 +285,7 @@ describe('README.md examples tests', () => {
         };
     });
 
-    it.only('JSD Wildcard TYPES example should work', (done) => {
+    it('JSD Wildcard TYPES example should work', (done) => {
         const _schema = {
             value: {
                 type: "*",
@@ -349,16 +349,16 @@ describe('README.md examples tests', () => {
                         description: {
                             type: "String",
                             required: true,
-                            restrict: "^[a-zA-Z0-9_\\s]{1,24}$"
+                            restrict: "^[a-zA-Z0-9_\\s]{1,140}$"
                         },
                     },
-                // }, {
-                //     type: "Object",
-                //     elements: {
-                //         "*": {
-                //             type: "Number"
-                //         },
-                //     },
+                }, {
+                    type: "Object",
+                    elements: {
+                        "*": {
+                            type: "Number"
+                        },
+                    },
                 }]
             }
         };
@@ -374,15 +374,16 @@ describe('README.md examples tests', () => {
                 }
             },
             error: (e) => {
+                // error: 'polyValue.polymorphic.2.*' expected number, type was '<string>'
                 console.log(`error: ${e}`);
             }
 
         };
 
-        const _jsd = new JSD(_schema);
+        const _jsd = new JSD(_schema, {debug: true});
         _jsd.document.subscribe(_handler);
 
-        // can be a string value
+        // // can be a string value
         _jsd.document.model = {
             "polyValue": "HeavyMetalPrincess",
         }
