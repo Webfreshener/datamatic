@@ -82,9 +82,9 @@ describe('README.md examples tests', () => {
             name: "Player 2",
             score: 1100000
         }, {
-        //     name: "BOGUS",
-        //     score: "1100000"
-        // }, {
+            //     name: "BOGUS",
+            //     score: "1100000"
+            // }, {
             name: "Player 3",
             score: 900000
         }];
@@ -334,42 +334,50 @@ describe('README.md examples tests', () => {
         const _schema = {
             polyValue: {
                 required: true,
-                polymorphic: [{
-                    type: "String",
-                    restrict: "^[a-zA-Z0-9_\\s]+$",
+                default: "DEFAULT VALUE",
+                polymorphic: [
+                    // this schema will accept a string value
+                    {
+                        type: "String",
+                        restrict: "^[a-zA-Z0-9_\\s]+$",
 
-                }, {
-                    type: "Object",
-                    elements: {
-                        name: {
-                            type: "String",
-                            required: true,
-                            restrict: "^[a-zA-Z0-9_\\s]{1,24}$"
-                        },
-                        description: {
-                            type: "String",
-                            required: true,
-                            restrict: "^[a-zA-Z0-9_\\s]{1,140}$"
+                    },
+                    // ... or and object with `name` and `description` elements
+                    {
+                        type: "Object",
+                        elements: {
+                            name: {
+                                type: "String",
+                                required: true,
+                                restrict: "^[a-zA-Z0-9_\\s]{1,24}$"
+                            },
+                            description: {
+                                type: "String",
+                                required: true,
+                                restrict: "^[a-zA-Z0-9_\\s]{1,140}$"
+                            },
                         },
                     },
-                }, {
-                    type: "Object",
-                    elements: {
-                        "*": {
-                            type: "Number"
+                    // ... or a wildcard key/value pairs requiring numeric values
+                    {
+                        type: "Object",
+                        elements: {
+                            "*": {
+                                type: "Number"
+                            },
                         },
-                    },
-                }]
+                    }]
             }
         };
         let _cnt = 0;
         let _handler = {
             next: (val) => {
+                // {"polyValue":"DEFAULT VALUE"}
                 // {"polyValue":"HeavyMetalPrincess"}
                 // {"polyValue":{"name":"HeavyMetalPrincess","description":"cupcakes"}}
                 // {"polyValue":{"HeavyMetalPrincess":10001234}}
                 console.log(`${val}`);
-                if ((++_cnt) === 3) {
+                if ((++_cnt) === 4) {
                     done();
                 }
             },
@@ -383,11 +391,16 @@ describe('README.md examples tests', () => {
         const _jsd = new JSD(_schema, {debug: true});
         _jsd.document.subscribe(_handler);
 
-        // // can be a string value
+        // will set default value
+        _jsd.document.model = {};
+
+
+        // can be a string value
         _jsd.document.model = {
             "polyValue": "HeavyMetalPrincess",
         }
 
+        // can be an object with `name` and `description` elements
         _jsd.document.model = {
             "polyValue": {
                 "name": "HeavyMetalPrincess",
@@ -395,12 +408,16 @@ describe('README.md examples tests', () => {
             }
         };
 
+        // can be a wildcard key/value pairs...
+
+        // -- this will error because the schema requires value be numeric
         _jsd.document.model = {
             "polyValue": {
                 HeavyMetalPrincess: "10001234",
             },
         };
 
+        // -- this has a numeric value and will succeed
         _jsd.document.model = {
             "polyValue": {
                 HeavyMetalPrincess: 10001234,
