@@ -64,7 +64,7 @@ describes the attributes of a Data Model
 The example below defines an Schema that expects a `name` and an `age` attribute
 
 ```
-let _schema = {
+const _schema = {
     "name": {
         "type": "String",
         "required": true
@@ -74,16 +74,17 @@ let _schema = {
         "required": true
     }
 };
-
 const _handlers = {
     next: function (schema) {
         if (typeof schema !== 'undefined') {
             // outputs: {"name":"Frank","age":23}
-            console.log(`${schema}`); 
+            console.log(`${schema}`);
+            expect(schema.model.name).toBe("Frank");
+            expect(schema.model.age).toBe(23);
         }
     },
     error: function (e) {
-        // outputs: error: 'age' expected number, type was '<string>'
+        // error: 'age' expected number, type was '<string>'
         console.log(`error: ${e}`);
     }
 };
@@ -145,51 +146,54 @@ default | Array
 ```
 ###### Usage Example
 ```
+// we define an array that accepts objects comprised of a name string and numeric score 
 const _schema = {
-    values: {
-        type: "Array",
-        elements: [{
-            type: "Object",
-            elements: {
-                name: {
-                    type: "String",
-                    required: true,
-                    restrict: "^[a-zA-Z0\\-\\s]{1,24}$"
-                },
-                score: {
-                    type: "Number",
-                    required: true
-                },
-            }
-        }]
-    }
+    type: "Array",
+    default: [],
+    elements: [{
+        type: "Object",
+        elements: {
+            name: {
+                type: "String",
+                required: true,
+                restrict: "^[a-zA-Z0-9\\-\\s]{1,24}$"
+            },
+            score: {
+                type: "Number",
+                required: true
+            },
+        },
+    }],
 };
 
-let _handler = {
+const _handler = {
     next: (val) => {
-        // outputs: {"values":[{"name":"Player 1","score":2000000},...]}
+        // outputs: {"values":[{"name":"Player 1","score":2000000},{"name":"Player 2","score":1100000},{"name":"Player 3","score":900000}]}
         console.log(`${val}`);
-        _jsd.document.unsubscribe();
     },
     error: (e) => {
+        // error: 'score' expected number, type was '<string>'s
         console.log(`error: ${e}`);
     }
 };
 
 const _jsd = new JSD(_schema);
 _jsd.document.subscribe(_handler);
-_jsd.document.model = {
-    values: [{
-        name: "Player 1",
-        score: 2000000
+
+_jsd.document.model = [{
+    name: "Player 1",
+    score: 2000000,
+}, {
+    name: "Player 2",
+    score: 1100000
+}, {
+        // this will error because score is a string value
+        name: "BOGUS",
+        score: "1100000"
     }, {
-        name: "Player 2",
-        score: 1100000
-    }, {
-        name: "Player 3",
-        score: 900000
-    }]
-};
+    name: "Player 3",
+    score: 900000
+}];
 ```
 
 #### Boolean Type
@@ -218,11 +222,11 @@ const _schema = {
     }
 };
 
-let _handler = {
+const _handler = {
     next: (val) => {
-        // {"value":true}
-        // {"value":true}
-        // {"value":false}
+        // outputs: {"value":true}
+        // outputs: {"value":true}
+        // outputs: {"value":false}
         console.log(`${val}`);
     },
     error: (e) => {
@@ -231,10 +235,11 @@ let _handler = {
     }
 };
 
+
 const _jsd = new JSD(_schema);
 _jsd.document.subscribe(_handler);
 
-// this will be set to the default value
+// - this will trigger the default value
 _jsd.document.model = {};
 
 // set value to true
@@ -274,9 +279,9 @@ const _schema = {
     }
 };
 
-let _handler = {
+const _handler = {
     next: (val) => {
-        // {"value":1234}
+        // outputs: {"value":1234}
         console.log(`${val}`);
     },
     error: (e) => {
@@ -288,7 +293,11 @@ let _handler = {
 
 const _jsd = new JSD(_schema);
 _jsd.document.subscribe(_handler);
+
+// this fails because the value is a string
 _jsd.document.model = {value: "1234"};
+
+// this will succeed
 _jsd.document.model = {value: 1234};
 ```
 
@@ -326,11 +335,11 @@ default | Object
 
 ###### Usage Example
 ```
+// we define an element named `value` that requires a name and optional active attributes 
 const _schema = {
     value: {
         type: "Object",
         required: false,
-        default: {},
         elements: {
             name: {
                 type: "String",
@@ -338,15 +347,17 @@ const _schema = {
             },
             active: {
                 type: "Boolean",
-                required: false
+                required: false,
+                default: false
             }
         }
     }
 };
 
-let _handler = {
+const _handler = {
     next: (val) => {
-        // {"value":{"name":"Alice","active":true}}
+        // outputs: {"value":{"name":"Alice","active":true}}
+        // outputs: {"value":{"name":"Bob","active":false}}
         console.log(`${val}`);
     },
     error: (e) => {
@@ -357,6 +368,7 @@ let _handler = {
 
 const _jsd = new JSD(_schema);
 _jsd.document.subscribe(_handler);
+
 // this will error since `active` is a number
 _jsd.document.model = {
     value: {
@@ -370,6 +382,13 @@ _jsd.document.model = {
     value: {
         name: "Alice",
         active: true
+    }
+};
+
+// this will also pass since `active` is optional
+_jsd.document.model = {
+    value: {
+        name: "Bob",
     }
 };
 ```
@@ -401,9 +420,9 @@ const _schema = {
     }
 };
 
-let _handler = {
+const _handler = {
     next: (val) => {
-        // {"value":"false"}
+        // outputs: {"value":"false"}
         console.log(`${val}`);
     },
     error: (e) => {
@@ -412,10 +431,13 @@ let _handler = {
     }
 };
 
-
 const _jsd = new JSD(_schema);
 _jsd.document.subscribe(_handler);
+
+// this fails because type is boolean
 _jsd.document.model = {value: true};
+
+// this will succeeed
 _jsd.document.model = {value: "false"};
 ```
 
@@ -612,38 +634,73 @@ than one data type, you can use polymorhism
 const _schema = {
     polyValue: {
         required: true,
-        polymorphic: [{
-            type: "String",
-            restrict: "^[a-zA-Z0-9_\\s]+$"
+        default: "DEFAULT VALUE",
+        polymorphic: [
+            // this schema will accept a string value
+            {
+                type: "String",
+                restrict: "^[a-zA-Z0-9_\\s]+$",
 
-        },
-        {
-            type: "Object",
-            "*": {
-                type: "Number"
             },
-        }]
+            // ... or and object with `name` and `description` elements
+            {
+                type: "Object",
+                elements: {
+                    name: {
+                        type: "String",
+                        required: true,
+                        restrict: "^[a-zA-Z0-9_\\s]{1,24}$"
+                    },
+                    description: {
+                        type: "String",
+                        required: true,
+                        restrict: "^[a-zA-Z0-9_\\s]{1,140}$"
+                    },
+                },
+            },
+            // ... or a wildcard key & numeric value pair
+            {
+                type: "Object",
+                elements: {
+                    "*": {
+                        type: "Number"
+                    },
+                },
+            }]
     }
 };
-
 let _cnt = 0;
 let _handler = {
     next: (val) => {
+        // {"polyValue":"DEFAULT VALUE"}
         // {"polyValue":"HeavyMetalPrincess"}
         // {"polyValue":{"name":"HeavyMetalPrincess","description":"cupcakes"}}
-        // {"polyValue":{"HeaveyMetalPrincess":10001234}}
-        console.log(`${val}`); 
+        // {"polyValue":{"HeavyMetalPrincess":10001234}}
+        console.log(`${val}`);
+        if ((++_cnt) === 4) {
+            done();
+        }
+    },
+    error: (e) => {
+        // error: 'polyValue.polymorphic.2.*' expected number, type was '<string>'
+        console.log(`error: ${e}`);
     }
+
 };
 
-const _jsd = new JSD(_schema);
+const _jsd = new JSD(_schema, {debug: true});
 _jsd.document.subscribe(_handler);
+
+// will set default value
+_jsd.document.model = {};
+
 
 // can be a string value
 _jsd.document.model = {
     "polyValue": "HeavyMetalPrincess",
 }
 
+// can be an object with `name` and `description` elements
 _jsd.document.model = {
     "polyValue": {
         "name": "HeavyMetalPrincess",
@@ -651,11 +708,22 @@ _jsd.document.model = {
     }
 };
 
+// or a wildcard key & numeric value pair...
+
+// -- this will error because the value is a string, not numeric
 _jsd.document.model = {
     "polyValue": {
-        HeaveyMetalPrincess: 10001234
+        HeavyMetalPrincess: "10001234",
     },
 };
+
+// -- this has a numeric value and will succeed
+_jsd.document.model = {
+    "polyValue": {
+        HeavyMetalPrincess: 10001234,
+    },
+};
+});
 ```
 
 #### Regular Expressions

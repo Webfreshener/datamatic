@@ -2,7 +2,7 @@ import {JSD} from './index';
 import {Set} from './classes/set';
 describe('README.md examples tests', () => {
     it('main Schema example should work', (done) => {
-        let _schema = {
+        const _schema = {
             "name": {
                 "type": "String",
                 "required": true
@@ -23,7 +23,7 @@ describe('README.md examples tests', () => {
                 }
             },
             error: function (e) {
-                // outputs: error: 'age' expected number, type was '<string>'
+                // error: 'age' expected number, type was '<string>'
                 console.log(`error: ${e}`);
             }
         };
@@ -42,6 +42,7 @@ describe('README.md examples tests', () => {
     });
 
     it('JSD Array example should work', (done) => {
+        // we define an array that accepts objects comprised of a name string and numeric score
         const _schema = {
             type: "Array",
             default: [],
@@ -61,20 +62,21 @@ describe('README.md examples tests', () => {
             }],
         };
 
-        let _handler = {
+        const _handler = {
             next: (val) => {
                 // outputs: {"values":[{"name":"Player 1","score":2000000},{"name":"Player 2","score":1100000},{"name":"Player 3","score":900000}]}
                 console.log(`${val}`);
-                // _jsd.document.unsubscribe();
                 done();
             },
             error: (e) => {
+                // error: 'score' expected number, type was '<string>'s
                 console.log(`error: ${e}`);
             }
         };
 
         const _jsd = new JSD(_schema);
         _jsd.document.subscribe(_handler);
+
         _jsd.document.model = [{
             name: "Player 1",
             score: 2000000,
@@ -82,9 +84,10 @@ describe('README.md examples tests', () => {
             name: "Player 2",
             score: 1100000
         }, {
-            //     name: "BOGUS",
-            //     score: "1100000"
-            // }, {
+                // this will error because score is a string value
+                name: "BOGUS",
+                score: "1100000"
+            }, {
             name: "Player 3",
             score: 900000
         }];
@@ -99,11 +102,11 @@ describe('README.md examples tests', () => {
             }
         };
 
-        let _handler = {
+        const _handler = {
             next: (val) => {
-                // {"value":true}
-                // {"value":true}
-                // {"value":false}
+                // outputs: {"value":true}
+                // outputs: {"value":true}
+                // outputs: {"value":false}
                 console.log(`${val}`);
                 done();
             },
@@ -116,12 +119,16 @@ describe('README.md examples tests', () => {
 
         const _jsd = new JSD(_schema);
         _jsd.document.subscribe(_handler);
+
         // - this will trigger the default value
         _jsd.document.model = {};
+
         // set value to true
         _jsd.document.model = {value: true};
+
         // set value to false
         _jsd.document.model = {value: false};
+
         // triggers error due to type mismatch
         _jsd.document.model = {value: "true"};
     });
@@ -135,9 +142,9 @@ describe('README.md examples tests', () => {
             }
         };
 
-        let _handler = {
+        const _handler = {
             next: (val) => {
-                // {"value":1234}
+                // outputs: {"value":1234}
                 console.log(`${val}`);
                 done();
             },
@@ -150,7 +157,11 @@ describe('README.md examples tests', () => {
 
         const _jsd = new JSD(_schema);
         _jsd.document.subscribe(_handler);
+
+        // this fails because the value is a string
         _jsd.document.model = {value: "1234"};
+
+        // this will succeed
         _jsd.document.model = {value: 1234};
     });
 
@@ -163,9 +174,9 @@ describe('README.md examples tests', () => {
             }
         };
 
-        let _handler = {
+        const _handler = {
             next: (val) => {
-                // {"value":"false"}
+                // outputs: {"value":"false"}
                 console.log(`${val}`);
                 done();
             },
@@ -178,16 +189,20 @@ describe('README.md examples tests', () => {
 
         const _jsd = new JSD(_schema);
         _jsd.document.subscribe(_handler);
+
+        // this fails because type is boolean
         _jsd.document.model = {value: true};
+
+        // this will succeeed
         _jsd.document.model = {value: "false"};
     });
 
-    it('JSD Object example should work', (done) => {
+    it.only('JSD Object example should work', (done) => {
+        // we define an element named `value` that requires a name and optional active attributes
         const _schema = {
             value: {
                 type: "Object",
                 required: false,
-                default: {},
                 elements: {
                     name: {
                         type: "String",
@@ -195,15 +210,16 @@ describe('README.md examples tests', () => {
                     },
                     active: {
                         type: "Boolean",
-                        required: false
+                        required: false,
+                        default: false
                     }
                 }
             }
         };
 
-        let _handler = {
+        const _handler = {
             next: (val) => {
-                // {"value":{"name":"Alice","active":true}}
+                // outputs: {"value":{"name":"Alice","active":true}}
                 console.log(`${val}`);
                 done();
             },
@@ -230,6 +246,13 @@ describe('README.md examples tests', () => {
                 active: true
             }
         };
+
+        // this will also pass since `active` is optional
+        _jsd.document.model = {
+            value: {
+                name: "Bob",
+            }
+        };
     });
 
     it('JSD Wildcard KEYS example should work', (done) => {
@@ -251,7 +274,7 @@ describe('README.md examples tests', () => {
             }
         };
 
-        let _handler = {
+        const _handler = {
             next: (val) => {
                 // {"1":{"name":"Big Daddy","score":2000000}, ...}
                 console.log(`${val}`);
@@ -292,7 +315,7 @@ describe('README.md examples tests', () => {
             }
         };
 
-        let _handler = {
+        const _handler = {
             next: (val) => {
                 // {"value":900000}
                 // {"value":"A string"}
@@ -358,7 +381,7 @@ describe('README.md examples tests', () => {
                             },
                         },
                     },
-                    // ... or a wildcard key/value pairs requiring numeric values
+                    // ... or a wildcard key & numeric value pair
                     {
                         type: "Object",
                         elements: {
@@ -370,7 +393,7 @@ describe('README.md examples tests', () => {
             }
         };
         let _cnt = 0;
-        let _handler = {
+        const _handler = {
             next: (val) => {
                 // {"polyValue":"DEFAULT VALUE"}
                 // {"polyValue":"HeavyMetalPrincess"}
@@ -408,9 +431,9 @@ describe('README.md examples tests', () => {
             }
         };
 
-        // can be a wildcard key/value pairs...
+        // or a wildcard key & numeric value pair...
 
-        // -- this will error because the schema requires value be numeric
+        // -- this will error because the value is a string, not numeric
         _jsd.document.model = {
             "polyValue": {
                 HeavyMetalPrincess: "10001234",
