@@ -153,6 +153,12 @@ export class SchemaHelpers {
                 return this.walkSchema(_k.elements, objPath)
             }
             if (_k === "polymorphic") {
+                // test for probably element key rather than schema key
+                if (!Array.isArray(obj.polymorphic)) {
+                    // if is element key, create validator and continue to next steps
+                    this._ref.validatorBuilder.create(obj[_k], objPath, this._ref);
+                    continue;
+                }
                 let cnt = 0;
                 obj.polymorphic.forEach((polyItm) => {
                     let polyPath = `${objPath}.${cnt++}`;
@@ -172,7 +178,6 @@ export class SchemaHelpers {
                 this.walkSchema(obj[_k].elements, objPath);
             }
         }
-        // console.log(this._ref.validatorBuilder.list());
     }
 
 

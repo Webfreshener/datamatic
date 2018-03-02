@@ -155,7 +155,7 @@ describe("Schema Class Test Suite", function () {
         })
     });
 
-    describe("Polymorphism", function () {
+    describe.only("Polymorphism", function () {
         it("should initialize from polymorphic schema fixture", () => {
             let _s = require("../../fixtures/polymorphic.schema.json");
             this.schema = new Schema(_s, null, new JSD());
