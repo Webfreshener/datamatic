@@ -11,6 +11,6 @@ describe("Package Validation Tests", () => {
     });
 
     it("should import from ES5 `require`", () => {
-        expect(typeof (require('../index'))).toEqual('function');
+        expect(typeof (require('../index').JSD)).toEqual('function');
     });
 });
