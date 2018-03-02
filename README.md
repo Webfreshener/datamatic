@@ -79,8 +79,6 @@ const _handlers = {
         if (typeof schema !== 'undefined') {
             // outputs: {"name":"Frank","age":23}
             console.log(`${schema}`);
-            expect(schema.model.name).toBe("Frank");
-            expect(schema.model.age).toBe(23);
         }
     },
     error: function (e) {
@@ -146,7 +144,7 @@ default | Array
 ```
 ###### Usage Example
 ```
-// we define an array that accepts objects comprised of a name string and numeric score 
+// we define an array that accepts objects comprised of a name string and numeric score
 const _schema = {
     type: "Array",
     default: [],
@@ -187,10 +185,10 @@ _jsd.document.model = [{
     name: "Player 2",
     score: 1100000
 }, {
-        // this will error because score is a string value
-        name: "BOGUS",
-        score: "1100000"
-    }, {
+    // this will error because score is a string value
+    name: "BOGUS",
+    score: "1100000"
+}, {
     name: "Player 3",
     score: 900000
 }];
@@ -480,47 +478,58 @@ format that you wish to describe in a single instance
 ```
 ###### Usage Example
 ```
+// creates a schema that allows any key assignent, but value must be object
 const _schema = {
-                    "*": {
-                        type: "Object",
-                        "extensible": true
-                        "elements": {
-                            "name": {
-                                "type": "String",
-                                "required": true,
-                                "restrict": "^[a-zA-Z0-9_\s\-]{9,}$"
-                            },
-                            {
-                            "score": {
-                                "type": "Number",
-                                "required":true 
-                            }
-                        },
-                    }
-                };
+    "*": {
+        type: "Object",
+        extensible: true,
+        elements: {
+            name: {
+                type: "String",
+                required: true,
+                restrict: "^[a-zA-Z0-9_\\s\\-]{9,}$"
+            },
+            score: {
+                type: "Number",
+                required: true,
+            }
+        },
+    }
+};
 
-let _handler = {
-    next: (val)=> {
-        console.log(val);
-        _jsd.unsubscribe();
+const _handler = {
+    next: (val) => {
+        // {"1":{"name":"Big Daddy","score":2000000}, ...}
+        console.log(`${val}`); 
+    },
+    error: (e) => {
+        // error: 1 expected value of type 'Object'. Type was '<number>'
+        console.log(`error: ${e}`);
     }
 };
 
 const _jsd = new JSD(_schema);
-_jsd.subscribe(_handler);
+_jsd.document.subscribe(_handler);
+
+// this will fail because value is number, not an object
+_jsd.document.model = {
+    1: 900000,
+};
+
+// this succeeds
 _jsd.document.model = {
     1: {
         name: "Big Daddy",
         score: 2000000
-       },
+    },
     2: {
         name: "HeavyMetalPrincess",
         score: 1100000
-        },
+    },
     3: {
         name: "Munga-Munga",
         score: 900000
-    }
+    },
 };
 ```
 #### Wildcard Types 
@@ -564,35 +573,48 @@ wildcard types
 ```
 ###### Usage Example
 ```
+// creates a schema that lets key `value` be set to any type 
 const _schema = {
     value: {
         type: "*",
     }
 };
 
-let _handler = {
+const _handler = {
     next: (val) => {
-        // {"value":900000}
-        // {"value":"A string"}
-        // {"value":false}
-        console.log(`${val}`);
-        _jsd.document.unsubscribe();
-        done()
+        // outputs: {"value":900000}
+        // outputs: {"value":"A string"}
+        // outputs: {"value":false}
+        console.log(`${val}`); 
+    },
+    error: (e) => {
+        // error: element 'bogus' is not a valid element
+        console.log(`error: ${e}`);
     }
 };
 
 const _jsd = new JSD(_schema);
 _jsd.document.subscribe(_handler);
 
+// any model with the key named `value` is ok
 _jsd.document.model = {
     value: 900000,
 };
+
+// any model with the key named `value` is ok
 _jsd.document.model = {
     value: "A string",
 };
+
+// any model with the key named `value` is ok
 _jsd.document.model = {
     value: false,
 };
+
+// this will fail because key `bogus` is not allowed
+_jsd.document.model = {
+    bogus: "false",
+}
 ```
 
 #### Polymorphism
@@ -669,7 +691,7 @@ const _schema = {
             }]
     }
 };
-let _cnt = 0;
+
 let _handler = {
     next: (val) => {
         // {"polyValue":"DEFAULT VALUE"}
@@ -677,9 +699,6 @@ let _handler = {
         // {"polyValue":{"name":"HeavyMetalPrincess","description":"cupcakes"}}
         // {"polyValue":{"HeavyMetalPrincess":10001234}}
         console.log(`${val}`);
-        if ((++_cnt) === 4) {
-            done();
-        }
     },
     error: (e) => {
         // error: 'polyValue.polymorphic.2.*' expected number, type was '<string>'

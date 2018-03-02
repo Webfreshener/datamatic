@@ -1,14 +1,5 @@
-(function webpackUniversalModuleDefinition(root, factory) {
-	if(typeof exports === 'object' && typeof module === 'object')
-		module.exports = factory();
-	else if(typeof define === 'function' && define.amd)
-		define([], factory);
-	else if(typeof exports === 'object')
-		exports["JSD"] = factory();
-	else
-		root["JSD"] = factory();
-})(window, function() {
-return /******/ (function(modules) { // webpackBootstrap
+exports["JSD"] =
+/******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
 /******/ 	var installedModules = {};
 /******/
@@ -5703,4 +5694,3 @@ eval("Object.defineProperty(exports, \"__esModule\", {\n    value: true\n});\nex
 /***/ })
 
 /******/ });
-});
