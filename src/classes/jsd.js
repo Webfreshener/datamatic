@@ -24,7 +24,7 @@ export class JSD {
      * @param schema
      * @param options
      */
-    constructor(schema = JSD.defaults, options = {extensible: false}) {
+    constructor(schema = JSD.defaults, options = {extensible: false, debug: false}) {
         _kinds.set(this, {
             "Array": Array,
             "ArrayBuffer": ArrayBuffer,

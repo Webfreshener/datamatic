@@ -28,8 +28,12 @@ describe("Schema RXJS Test Suite", () => {
             const s = new Schema(_schema, null, new JSD());
             s.subscribe(_h);
             // -- this must pass
-            s.set("value", "test");
-            // -- this must fail
+            s.model = {
+                value: "test"
+            };
+            //
+            // s.set("value", "test");
+            // // -- this must fail
             s.set("value", false);
         });
 
@@ -139,7 +143,7 @@ describe("Schema RXJS Test Suite", () => {
                     idInjection: true,
                     validateUpsert: false
                 },
-                validations: {},
+                validations: [],
                 relations: {
                     myRelation: {
                         type: "foo",

@@ -38,6 +38,7 @@ export class BaseValidator {
             this.validations[path] = typeof _r !== 'string';
             return _r;
         }
+        // returns error message if unable to find validator for path
         return `'${path}' has no validator defined`;
     }
 
@@ -49,30 +50,34 @@ export class BaseValidator {
      * @returns {Boolean|String}
      */
     checkType(type, value) {
+        // evaluation closure to test typeof element
         let _eval = (type, value) => {
             let _x = (typeof type !== "string") ? this.jsd.getClass([type]) : type;
+            // tests for special '*' (wildcard) type
             if (_x === '*') {
                 return true;
             }
+            // tests for explicit type match
             if (_x.match(new RegExp(`^${typeof value}$`, "i")) === null) {
                 return `'${this.path}' expected ${type}, type was '<${typeof value}>'`
             }
             return true;
         };
+        // tests that param `type` exists
         if (_exists(type)) {
+            // tests if `type` is Array
+            // -- NOTE: this should allow an Array of Types
+            // -- might want re-evaluate this
             if (Array.isArray(type)) {
-                let __ = null;
-                let k;
-                for (k in type) {
-                    if (typeof (__ = _eval(type[k], value)) === "boolean") {
-                        return __;
-                    }
-                }
-                return __;
+                // tests each `type` specified in Set
+                return type.some((k) => {
+                   return _eval(type[k], value) === "boolean"
+                });
             }
+            // performs eval on type against value
             return _eval(type, value);
-        }
-        else {
+        } else {
+            // returns error string if `type` was undefined
             return `type '${type}' for ${this.path} was undefined`;
         }
     }
@@ -87,6 +92,11 @@ export class BaseValidator {
         return `${wf.utils.Fun.getClassName(this)} requires override of 'exec'`;
     }
 
+    /**
+     * getter returns Hash of all validations defined for this document
+     *
+     * @returns {V}
+     */
     get validations() {
         return _validPaths.get(this.jsd);
     }
@@ -103,11 +113,16 @@ Validator.Object = class Obj extends BaseValidator {
      */
     exec(value) {
         let _iterate = (key, _val) => {
+            // replaces "." path with ""
             let _p = `${this.path}.${key}`.replace(/^(\.)+/, "");
+            // obtains Validator Builder for this Document
             let _v = _vBuilders.get(this.jsd);
+            // tests for Validator for path
             if (!_v.get(_p)) {
+                // creates new Validator for path using signature for key
                 _vBuilders.get(this.jsd).create(this.signature.elements[key], _p, this);
             }
+            // calls the validator with path and value
             let _ = this.call(_p, _val);
             if (typeof _ === "string") {
                 return _;
