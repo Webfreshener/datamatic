@@ -197,7 +197,7 @@ describe('README.md examples tests', () => {
         _jsd.document.model = {value: "false"};
     });
 
-    it.only('JSD Object example should work', (done) => {
+    it('JSD Object example should work', (done) => {
         // we define an element named `value` that requires a name and optional active attributes
         const _schema = {
             value: {
@@ -210,7 +210,7 @@ describe('README.md examples tests', () => {
                     },
                     active: {
                         type: "Boolean",
-                        required: false,
+                        required: true,
                         default: false
                     }
                 }
@@ -231,21 +231,22 @@ describe('README.md examples tests', () => {
 
         const _jsd = new JSD(_schema);
         _jsd.document.subscribe(_handler);
-        // this will error since `active` is a number
-        _jsd.document.model = {
-            value: {
-                name: "Alice",
-                active: 1,
-            }
-        };
 
-        // this will pass
-        _jsd.document.model = {
-            value: {
-                name: "Alice",
-                active: true
-            }
-        };
+        // this will error since `active` is a number
+        // _jsd.document.model = {
+        //     value: {
+        //         name: "Alice",
+        //         active: 1,
+        //     }
+        // };
+        //
+        // // this will pass
+        // _jsd.document.model = {
+        //     value: {
+        //         name: "Alice",
+        //         active: true
+        //     }
+        // };
 
         // this will also pass since `active` is optional
         _jsd.document.model = {

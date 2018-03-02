@@ -182,7 +182,12 @@ export class Schema extends Model {
                 e = "null not allowed";
                 _validPaths.get(this.jsd)[this.path] = e;
             }
-            _validPaths.get(this.jsd)[this.path] = true;
+
+            // checks for required field and sets defaults if able
+            e = _schemaHelpers.get(this).ensureRequiredFields(value);
+
+            _validPaths.get(this.jsd)[this.path] = e;
+
             if (this.isValid) {
                 this.observerBuilder.next(this.path, this);
             }

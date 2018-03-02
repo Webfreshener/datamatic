@@ -138,6 +138,7 @@ describe("Schema Class Test Suite", function () {
                     done("should have dispatched an error");
                 },
                 error: (e) => {
+                    console.log(`error: ${e}`);
                     done();
                 }
             };
