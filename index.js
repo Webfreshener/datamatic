@@ -1,1 +1,1 @@
-module.exports = require('./dist/jsd').JSD;
+module.exports = require('./dist/jsd.node').JSD;

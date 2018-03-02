@@ -84,10 +84,10 @@ describe('README.md examples tests', () => {
             name: "Player 2",
             score: 1100000
         }, {
-                // this will error because score is a string value
-                name: "BOGUS",
-                score: "1100000"
-            }, {
+            // this will error because score is a string value
+            name: "BOGUS",
+            score: "1100000"
+        }, {
             name: "Player 3",
             score: 900000
         }];
@@ -220,6 +220,7 @@ describe('README.md examples tests', () => {
         const _handler = {
             next: (val) => {
                 // outputs: {"value":{"name":"Alice","active":true}}
+                // outputs: {"value":{"name":"Bob","active":false}}
                 console.log(`${val}`);
                 done();
             },
@@ -233,20 +234,20 @@ describe('README.md examples tests', () => {
         _jsd.document.subscribe(_handler);
 
         // this will error since `active` is a number
-        // _jsd.document.model = {
-        //     value: {
-        //         name: "Alice",
-        //         active: 1,
-        //     }
-        // };
-        //
-        // // this will pass
-        // _jsd.document.model = {
-        //     value: {
-        //         name: "Alice",
-        //         active: true
-        //     }
-        // };
+        _jsd.document.model = {
+            value: {
+                name: "Alice",
+                active: 1,
+            }
+        };
+
+        // this will pass
+        _jsd.document.model = {
+            value: {
+                name: "Alice",
+                active: true
+            }
+        };
 
         // this will also pass since `active` is optional
         _jsd.document.model = {
@@ -257,6 +258,7 @@ describe('README.md examples tests', () => {
     });
 
     it('JSD Wildcard KEYS example should work', (done) => {
+        // creates a schema that allows any key assignent, but value must be object
         const _schema = {
             "*": {
                 type: "Object",
@@ -290,9 +292,13 @@ describe('README.md examples tests', () => {
 
         const _jsd = new JSD(_schema);
         _jsd.document.subscribe(_handler);
+
+        // this will fail because value is number, not an object
         _jsd.document.model = {
             1: 900000,
         };
+
+        // this succeeds
         _jsd.document.model = {
             1: {
                 name: "Big Daddy",
@@ -310,6 +316,7 @@ describe('README.md examples tests', () => {
     });
 
     it('JSD Wildcard TYPES example should work', (done) => {
+        // creates a schema that lets key `value` be set to any scalar type (string, bool, number etc)
         const _schema = {
             value: {
                 type: "*",
@@ -318,9 +325,9 @@ describe('README.md examples tests', () => {
 
         const _handler = {
             next: (val) => {
-                // {"value":900000}
-                // {"value":"A string"}
-                // {"value":false}
+                // outputs: {"value":900000}
+                // outputs: {"value":"A string"}
+                // outputs: {"value":false}
                 console.log(`${val}`);
                 _jsd.document.unsubscribe();
                 done()
@@ -334,24 +341,25 @@ describe('README.md examples tests', () => {
         const _jsd = new JSD(_schema);
         _jsd.document.subscribe(_handler);
 
-
+        // any model with the key named `value` is ok
         _jsd.document.model = {
             value: 900000,
         };
 
+        // any model with the key named `value` is ok
         _jsd.document.model = {
             value: "A string",
         };
 
+        // any model with the key named `value` is ok
         _jsd.document.model = {
             value: false,
         };
 
-        // this will fail
+        // this will fail because key `bogus` is not allowed
         _jsd.document.model = {
             bogus: "false",
         };
-
     });
 
     it('JSD Polymorphism example should work', (done) => {
