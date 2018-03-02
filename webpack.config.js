@@ -1,25 +1,22 @@
-const path = require('path');
-const webpack = require('webpack');
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const path = require("path");
+const webpack = require("webpack");
 
-module.exports = [{
-    context: path.join(__dirname),
-    entry: './src/index.js',
-    output: {
-        path: path.join(__dirname, 'dist'),
+module.exports = {
+	output: {
+        path: path.join(__dirname, "dist"),
         filename: 'jsd.js',
-        library: 'JSD',
-        libraryTarget: 'umd',
-        umdNamedDefine: true
-    }
-}, {
-    context: path.join(__dirname),
-    entry: './src/index.js',
-    output: {
-        path: path.join(__dirname, 'dist'),
-        filename: 'jsd.min.js'
+		libraryTarget: "umd",
+		library: "JSD",
+	},
+    module: {
+        rules: [
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: "babel-loader"
+                }
+            }
+        ]
     },
-    plugins: [
-        new UglifyJsPlugin()
-    ]
-}];
+};
