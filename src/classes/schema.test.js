@@ -292,4 +292,23 @@ describe("Schema Class Test Suite", function () {
         });
 
     });
+
+    describe("reset model on data", () => {
+        it("should reset the model when the model is overwritten", () => {
+            const _schema = new Schema({"*": {type: "*"}}, null, new JSD());
+            _schema.model= {
+                valueA: 1,
+                valueB: 2,
+                valueC: 3
+            };
+
+            _schema.model = {
+                valueA: 10,
+                valueB: 12,
+            };
+            expect(_schema.model.hasOwnProperty('valueA')).toBe(true);
+            expect(_schema.model.hasOwnProperty('valueB')).toBe(true);
+            expect(_schema.model.hasOwnProperty('valueC')).toBe(false);
+        });
+    });
 });

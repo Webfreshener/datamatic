@@ -89,8 +89,9 @@ export class Set extends Model {
             } catch (e) {
                 return this.observerBuilder.error(this.path, e);
             }
-
-            this.observerBuilder.next(this.path, this);
+            if (this.isValid) {
+                this.observerBuilder.next(this.path, this);
+            }
             return true;
         } else {
             this.observerBuilder.error(this.path, `${this.path} requires Array`);

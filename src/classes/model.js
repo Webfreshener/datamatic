@@ -68,7 +68,8 @@ export class Model {
         const paths = _validPaths.get(this.jsd);
         try {
             Object.keys(paths).forEach((k) => {
-                if (typeof paths[k] === "string") {
+                const _t = typeof paths[k];
+                if (_t === "string") {
                     throw paths[k];
                 }
             });

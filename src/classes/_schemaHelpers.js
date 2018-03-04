@@ -1,4 +1,4 @@
-import {_exists, _mdRef, _validPaths} from "./_references";
+import {_exists, _mdRef, _validPaths, _required_elements} from "./_references";
 import {MetaData} from "./_metaData";
 import {Schema} from "./schema";
 import {Set} from "./set";
@@ -27,7 +27,7 @@ export class SchemaHelpers {
         }
         // calls set with nested key value pair
         for (var k in obj) {
-            let eMsg = this._ref.model[k] = obj[k];
+            let eMsg = this._ref.set(k, obj[k]);
             if (typeof eMsg === "string") {
                 throw new Error(eMsg);
             }
@@ -77,8 +77,9 @@ export class SchemaHelpers {
     ensureRequiredFields(obj) {
         let oKeys = Object.keys(obj || {});
         let _required = this._ref.requiredFields;
-        for (let _ in _required) {
-            let _key = _required[_];
+
+        for (let __ in _required) {
+            let _key = _required[__];
             let _path = this._ref.path.length ? this._ref.path : "root element";
             if (0 > oKeys.indexOf(_key)) {
                 if (_exists(this._ref.signature[_key].default)) {
@@ -115,7 +116,6 @@ export class SchemaHelpers {
             try {
                 _s = new Schema(_schemaDef, opts, _md);
             } catch (e) {
-                console.log(`${e}`);
                 return e.message;
             }
             return _s;
@@ -140,12 +140,12 @@ export class SchemaHelpers {
      */
     walkSchema(obj, path) {
         let _elements = Array.isArray(obj) ? obj : Object.keys(obj);
-        _elements = _elements.filter((el) => {
-            if (typeof el !== "string") {
-                return false;
-            }
-            return el.match(/^(type|required|default|extensible|restrict)$/) === null;
-        });
+        // _elements = _elements.filter((el) => {
+        //     if (typeof el !== "string") {
+        //         return false;
+        //     }
+        //     return el.match(/^(type|required|default|extensible|restrict)$/) === null;
+        // });
         for (let _i in _elements) {
             let _k = _elements[_i];
             let objPath = _exists(path) ? (path.length ? `${path}.${_k}` : _k) : _k || "";

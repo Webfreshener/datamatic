@@ -39,8 +39,8 @@ export class MetaData {
      * @param {string} key
      */
     get(key) {
-        let _ = _mData.get(this);
-        return _.hasOwnProperty(key) ? _[key] : null;
+        let __ = _mData.get(this);
+        return __.hasOwnProperty(key) ? __[key] : null;
     }
 
     /**
@@ -90,5 +90,9 @@ export class MetaData {
         var _p = _.split(".");
         _p = (_p.length > 1) ? _p.slice(0, _p.length - 2).join(".") : _p[0];
         return _p.length ? this.root.get(_p) : this.root;
+    }
+
+    toString() {
+        return JSON.stringify(_mData.get(this));
     }
 }
