@@ -116,7 +116,7 @@
             "type": {
               "type": "String",
               "required": true,
-              "restrict": "^(\\*|any|Array|Boolean|Buffer|Date|GeoPoint|Number|Object|String|[a-zA-Z-0-9_])+$"
+              "restrict": "^(any|Array|Boolean|Buffer|Date|GeoPoint|Number|Object|String)+$"
             },
             "required": {
               "type": "Boolean",
@@ -253,7 +253,6 @@
     "scopes": {
       "type": "Object",
       "required": false,
-      "default": {},
       "extensible": true,
       "elements": {
         "*": {

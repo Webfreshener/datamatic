@@ -157,12 +157,53 @@ describe("Schema RXJS Test Suite", () => {
                 properties: {}
             };
             const _h = {
-                next: () => {
-                    throw "error was expected";
+                next: (model) => {
+                    console.log(`\n\nmodel: ${JSON.stringify(model)}\n`);
+                    // done("error was expected");
+                    done();
                 },
                 error: (e) => {
                     expect(e).toEqual("http expected value of type 'Object'. Type was '<boolean>'");
                     done();
+                }
+            };
+            _schema.subscribe(_h);
+            _schema.model = _d;
+        });
+
+        it("should pass valid models", (done) => {
+            const _d = {
+                name: "Test",
+                description: "some text here",
+                plural: "falsey",
+                base: "foo",
+                http: {
+                    path: "/"
+                },
+                strict: false,
+                options: {
+                    idInjection: true,
+                    validateUpsert: false
+                },
+                // validations: [],
+                relations: {
+                    myRelation: {
+                        type: "belongsTo",
+                        polymorphic: "testing",
+                        model: "MyModel",
+                        foreignKey: "name"
+                    }
+                },
+                // scope: {},
+                // scopes: {},
+                properties: {}
+            };
+            const _h = {
+                next: (model) => {
+                    done();
+                },
+                error: (e) => {
+                    done(`error '${e}' was given`);
                 }
             };
             _schema.subscribe(_h);

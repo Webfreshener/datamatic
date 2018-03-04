@@ -16,7 +16,6 @@ describe('README.md examples tests', () => {
             next: function (schema) {
                 if (typeof schema !== 'undefined') {
                     // outputs: {"name":"Frank","age":23}
-                    console.log(`${schema}`);
                     expect(schema.model.name).toBe("Frank");
                     expect(schema.model.age).toBe(23);
                     done();
