@@ -210,4 +210,27 @@ describe("Schema RXJS Test Suite", () => {
             _schema.model = _d;
         });
     });
+
+    describe("sequential operation", () => {
+        it("should allow updated from within notifications", (done) => {
+            const _schema = new Schema({"*": {type: "*"}}, null, new JSD());
+            let cnt = 0;
+            const _h = {
+                next: (model) => {
+                    if (++cnt < 2) {
+                        _schema.set("valueD", 4);
+                    } else {
+                        done();
+                    }
+                },
+            };
+
+            _schema.subscribe(_h);
+            _schema.model = {
+                valueA: 1,
+                valueB: 2,
+                valueC: 3
+            };
+        });
+    });
 });

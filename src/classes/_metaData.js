@@ -13,9 +13,11 @@ export class MetaData {
      */
     constructor(_oRef, _data = {}) {
         let _cName = wf.Fun.getConstructorName(_oRef);
+
         if (!(_oRef instanceof Schema) && !(_oRef instanceof Set)) {
             throw `new MetaData() argument 1 requires subclass Schema or Set. Was subclass of '<${_cName}>'`;
         }
+
         if (this._createID == null) {
             let _id = 0;
             MetaData.prototype._createID = function () {
@@ -26,11 +28,18 @@ export class MetaData {
                 return this.__objID;
             };
         }
-        _data = Object.assign(_data, {
+
+        // ensures existance of writeLock param
+        if (!_data.hasOwnProperty('_writeLock') || _data._writeLock === void(0)) {
+            _data._writeLock = false;
+        }
+
+        _data = Object.assign({}, _data, {
             _id: this._createID(),
             _className: _cName,
             _created: Date.now()
         });
+
         _mData.set(this, _data);
         _mdRef.set(this, this);
     }
@@ -90,6 +99,14 @@ export class MetaData {
         var _p = _.split(".");
         _p = (_p.length > 1) ? _p.slice(0, _p.length - 2).join(".") : _p[0];
         return _p.length ? this.root.get(_p) : this.root;
+    }
+
+    /**
+     *
+     * @returns {*}
+     */
+    get writeLock() {
+        return this.get("_writeLock");
     }
 
     toString() {

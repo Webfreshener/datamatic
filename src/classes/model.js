@@ -124,7 +124,6 @@ export class Model {
         return JSON.stringify(this.toJSON(), null, (pretty ? 2 : void(0)));
     }
 
-
     /**
      * @returns {string} Object ID for Schema
      */
@@ -173,11 +172,33 @@ export class Model {
     get validatorBuilder() {
         return _vBuilders.get(this.jsd);
     }
+
     /**
      * getter for ObserverBuilder reference
      * @returns {ObserverBuilder}
      */
     get observerBuilder() {
         return _oBuilders.get(this.jsd);
+    }
+
+    /**
+     * applies Object.freeze to model and triggers complete notification
+     * @returns {Model}
+     */
+    lock() {
+        Object.freeze(_object.get(this));
+        const _self = this;
+        setTimeout(()=> {
+            _self.observerBuilder.complete(_self.path, _self);
+        }, 0);
+        return this;
+    }
+
+    /**
+     *
+     * @returns {boolean}
+     */
+    get isLocked() {
+        return Object.isFrozen(_object.get(this));
     }
 }

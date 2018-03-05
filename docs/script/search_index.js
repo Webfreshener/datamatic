@@ -504,6 +504,18 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/classes/_metadata.js~metadata#tostring",
+    "class/src/classes/_metaData.js~MetaData.html#instance-method-toString",
+    "src/classes/_metaData.js~MetaData#toString",
+    "method"
+  ],
+  [
+    "src/classes/_metadata.js~metadata#writelock",
+    "class/src/classes/_metaData.js~MetaData.html#instance-get-writeLock",
+    "src/classes/_metaData.js~MetaData#writeLock",
+    "member"
+  ],
+  [
     "src/classes/_observerbuilder.js",
     "file/src/classes/_observerBuilder.js.html",
     "src/classes/_observerBuilder.js",
@@ -597,12 +609,6 @@ window.esdocSearchIndex = [
     "src/classes/_schemahelpers.js~schemahelpers#getkinds",
     "class/src/classes/_schemaHelpers.js~SchemaHelpers.html#instance-method-getKinds",
     "src/classes/_schemaHelpers.js~SchemaHelpers#getKinds",
-    "method"
-  ],
-  [
-    "src/classes/_schemahelpers.js~schemahelpers#objhelper",
-    "class/src/classes/_schemaHelpers.js~SchemaHelpers.html#instance-method-objHelper",
-    "src/classes/_schemaHelpers.js~SchemaHelpers#objHelper",
     "method"
   ],
   [
@@ -888,6 +894,12 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/classes/model.js~model#islocked",
+    "class/src/classes/model.js~Model.html#instance-get-isLocked",
+    "src/classes/model.js~Model#isLocked",
+    "member"
+  ],
+  [
     "src/classes/model.js~model#isvalid",
     "class/src/classes/model.js~Model.html#instance-get-isValid",
     "src/classes/model.js~Model#isValid",
@@ -898,6 +910,12 @@ window.esdocSearchIndex = [
     "class/src/classes/model.js~Model.html#instance-get-jsd",
     "src/classes/model.js~Model#jsd",
     "member"
+  ],
+  [
+    "src/classes/model.js~model#lock",
+    "class/src/classes/model.js~Model.html#instance-method-lock",
+    "src/classes/model.js~Model#lock",
+    "method"
   ],
   [
     "src/classes/model.js~model#objectid",
@@ -1038,9 +1056,21 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
+    "src/classes/schema.js~schema#schema",
+    "class/src/classes/schema.js~Schema.html#instance-get-schema",
+    "src/classes/schema.js~Schema#schema",
+    "member"
+  ],
+  [
     "src/classes/schema.js~schema#set",
     "class/src/classes/schema.js~Schema.html#instance-method-set",
     "src/classes/schema.js~Schema#set",
+    "method"
+  ],
+  [
+    "src/classes/schema.js~schema#setdefaults",
+    "class/src/classes/schema.js~Schema.html#instance-method-setDefaults",
+    "src/classes/schema.js~Schema#setDefaults",
     "method"
   ],
   [
@@ -1056,22 +1086,22 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/classes/schema.js~schema.defaultoptions",
+    "class/src/classes/schema.js~Schema.html#static-get-defaultOptions",
+    "src/classes/schema.js~Schema.defaultOptions",
+    "member"
+  ],
+  [
     "src/classes/schema.js~schema.defaultsignature",
-    "class/src/classes/schema.js~Schema.html#static-method-defaultSignature",
+    "class/src/classes/schema.js~Schema.html#static-get-defaultSignature",
     "src/classes/schema.js~Schema.defaultSignature",
-    "method"
+    "member"
   ],
   [
     "src/classes/set.js",
     "file/src/classes/set.js.html",
     "src/classes/set.js",
     "file"
-  ],
-  [
-    "src/classes/set.js~set#_typecheck",
-    "class/src/classes/set.js~Set.html#instance-method-_typeCheck",
-    "src/classes/set.js~Set#_typeCheck",
-    "method"
   ],
   [
     "src/classes/set.js~set#additem",
@@ -1105,13 +1135,13 @@ window.esdocSearchIndex = [
   ],
   [
     "src/classes/set.js~set#model",
-    "class/src/classes/set.js~Set.html#instance-set-model",
+    "class/src/classes/set.js~Set.html#instance-get-model",
     "src/classes/set.js~Set#model",
     "member"
   ],
   [
     "src/classes/set.js~set#model",
-    "class/src/classes/set.js~Set.html#instance-get-model",
+    "class/src/classes/set.js~Set.html#instance-set-model",
     "src/classes/set.js~Set#model",
     "member"
   ],
@@ -1168,12 +1198,6 @@ window.esdocSearchIndex = [
     "class/src/classes/set.js~Set.html#instance-method-sort",
     "src/classes/set.js~Set#sort",
     "method"
-  ],
-  [
-    "src/classes/set.js~set#type",
-    "class/src/classes/set.js~Set.html#instance-get-type",
-    "src/classes/set.js~Set#type",
-    "member"
   ],
   [
     "src/classes/set.js~set#unshift",

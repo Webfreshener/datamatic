@@ -93,6 +93,7 @@ Schema Based Self-Validating and Observable Data Models</p>
 <li><a href="#json-file-example-with-special-escaping">JSON File Example with Special Escaping</a></li>
 </ul>
 </li>
+<li><a href="#write-locking">Write-Locking</a></li>
 </ul>
 <h4 id="installation-instructions">Installation Instructions</h4><p>There are no dependencies or prerequesites besides NPM and NodeJS
 However, this project is not yet published. 
@@ -107,7 +108,7 @@ dependencies: {
 </code></pre><h4 id="basic-usage">Basic Usage</h4><h5 id="schema-basics">Schema Basics</h5><p>A schema is simply a JSON Document that 
 describes the attributes of a Data Model</p>
 <p>The example below defines an Schema that expects a <code>name</code> and an <code>age</code> attribute</p>
-<pre><code><code class="source-code prettyprint">let _schema = {
+<pre><code><code class="source-code prettyprint">const _schema = {
     &quot;name&quot;: {
         &quot;type&quot;: &quot;String&quot;,
         &quot;required&quot;: true
@@ -117,16 +118,15 @@ describes the attributes of a Data Model</p>
         &quot;required&quot;: true
     }
 };
-
 const _handlers = {
     next: function (schema) {
         if (typeof schema !== &apos;undefined&apos;) {
             // outputs: {&quot;name&quot;:&quot;Frank&quot;,&quot;age&quot;:23}
-            console.log(`${schema}`); 
+            console.log(`${schema}`);
         }
     },
     error: function (e) {
-        // outputs: error: &apos;age&apos; expected number, type was &apos;&lt;string&gt;&apos;
+        // error: &apos;age&apos; expected number, type was &apos;&lt;string&gt;&apos;
         console.log(`error: ${e}`);
     }
 };
@@ -192,51 +192,54 @@ _jsd.document.model = {
         }
      ]
 }</code>
-</code></pre><h6 id="usage-example">Usage Example</h6><pre><code><code class="source-code prettyprint">const _schema = {
-    values: {
-        type: &quot;Array&quot;,
-        elements: [{
-            type: &quot;Object&quot;,
-            elements: {
-                name: {
-                    type: &quot;String&quot;,
-                    required: true,
-                    restrict: &quot;^[a-zA-Z0\\-\\s]{1,24}$&quot;
-                },
-                score: {
-                    type: &quot;Number&quot;,
-                    required: true
-                },
-            }
-        }]
-    }
+</code></pre><h6 id="usage-example">Usage Example</h6><pre><code><code class="source-code prettyprint">// we define an array that accepts objects comprised of a name string and numeric score
+const _schema = {
+    type: &quot;Array&quot;,
+    default: [],
+    elements: [{
+        type: &quot;Object&quot;,
+        elements: {
+            name: {
+                type: &quot;String&quot;,
+                required: true,
+                restrict: &quot;^[a-zA-Z0-9\\-\\s]{1,24}$&quot;
+            },
+            score: {
+                type: &quot;Number&quot;,
+                required: true
+            },
+        },
+    }],
 };
 
-let _handler = {
+const _handler = {
     next: (val) =&gt; {
-        // outputs: {&quot;values&quot;:[{&quot;name&quot;:&quot;Player 1&quot;,&quot;score&quot;:2000000},...]}
+        // outputs: {&quot;values&quot;:[{&quot;name&quot;:&quot;Player 1&quot;,&quot;score&quot;:2000000},{&quot;name&quot;:&quot;Player 2&quot;,&quot;score&quot;:1100000},{&quot;name&quot;:&quot;Player 3&quot;,&quot;score&quot;:900000}]}
         console.log(`${val}`);
-        _jsd.document.unsubscribe();
     },
     error: (e) =&gt; {
+        // error: &apos;score&apos; expected number, type was &apos;&lt;string&gt;&apos;s
         console.log(`error: ${e}`);
     }
 };
 
 const _jsd = new JSD(_schema);
 _jsd.document.subscribe(_handler);
-_jsd.document.model = {
-    values: [{
-        name: &quot;Player 1&quot;,
-        score: 2000000
-    }, {
-        name: &quot;Player 2&quot;,
-        score: 1100000
-    }, {
-        name: &quot;Player 3&quot;,
-        score: 900000
-    }]
-};</code>
+
+_jsd.document.model = [{
+    name: &quot;Player 1&quot;,
+    score: 2000000,
+}, {
+    name: &quot;Player 2&quot;,
+    score: 1100000
+}, {
+    // this will error because score is a string value
+    name: &quot;BOGUS&quot;,
+    score: &quot;1100000&quot;
+}, {
+    name: &quot;Player 3&quot;,
+    score: 900000
+}];</code>
 </code></pre><h4 id="boolean-type">Boolean Type</h4><table>
 <thead>
 <tr>
@@ -271,11 +274,11 @@ _jsd.document.model = {
     }
 };
 
-let _handler = {
+const _handler = {
     next: (val) =&gt; {
-        // {&quot;value&quot;:true}
-        // {&quot;value&quot;:true}
-        // {&quot;value&quot;:false}
+        // outputs: {&quot;value&quot;:true}
+        // outputs: {&quot;value&quot;:true}
+        // outputs: {&quot;value&quot;:false}
         console.log(`${val}`);
     },
     error: (e) =&gt; {
@@ -284,10 +287,11 @@ let _handler = {
     }
 };
 
+
 const _jsd = new JSD(_schema);
 _jsd.document.subscribe(_handler);
 
-// this will be set to the default value
+// - this will trigger the default value
 _jsd.document.model = {};
 
 // set value to true
@@ -332,9 +336,9 @@ _jsd.document.model = {value: &quot;true&quot;};</code>
     }
 };
 
-let _handler = {
+const _handler = {
     next: (val) =&gt; {
-        // {&quot;value&quot;:1234}
+        // outputs: {&quot;value&quot;:1234}
         console.log(`${val}`);
     },
     error: (e) =&gt; {
@@ -346,7 +350,11 @@ let _handler = {
 
 const _jsd = new JSD(_schema);
 _jsd.document.subscribe(_handler);
+
+// this fails because the value is a string
 _jsd.document.model = {value: &quot;1234&quot;};
+
+// this will succeed
 _jsd.document.model = {value: 1234};</code>
 </code></pre><h4 id="object-type">Object Type</h4><table>
 <thead>
@@ -398,11 +406,11 @@ _jsd.document.model = {value: 1234};</code>
          }
     }
 }</code>
-</code></pre><h6 id="usage-example">Usage Example</h6><pre><code><code class="source-code prettyprint">const _schema = {
+</code></pre><h6 id="usage-example">Usage Example</h6><pre><code><code class="source-code prettyprint">// we define an element named `value` that requires a name and optional active attributes 
+const _schema = {
     value: {
         type: &quot;Object&quot;,
         required: false,
-        default: {},
         elements: {
             name: {
                 type: &quot;String&quot;,
@@ -410,15 +418,17 @@ _jsd.document.model = {value: 1234};</code>
             },
             active: {
                 type: &quot;Boolean&quot;,
-                required: false
+                required: false,
+                default: false
             }
         }
     }
 };
 
-let _handler = {
+const _handler = {
     next: (val) =&gt; {
-        // {&quot;value&quot;:{&quot;name&quot;:&quot;Alice&quot;,&quot;active&quot;:true}}
+        // outputs: {&quot;value&quot;:{&quot;name&quot;:&quot;Alice&quot;,&quot;active&quot;:true}}
+        // outputs: {&quot;value&quot;:{&quot;name&quot;:&quot;Bob&quot;,&quot;active&quot;:false}}
         console.log(`${val}`);
     },
     error: (e) =&gt; {
@@ -429,6 +439,7 @@ let _handler = {
 
 const _jsd = new JSD(_schema);
 _jsd.document.subscribe(_handler);
+
 // this will error since `active` is a number
 _jsd.document.model = {
     value: {
@@ -442,6 +453,13 @@ _jsd.document.model = {
     value: {
         name: &quot;Alice&quot;,
         active: true
+    }
+};
+
+// this will also pass since `active` is optional
+_jsd.document.model = {
+    value: {
+        name: &quot;Bob&quot;,
     }
 };</code>
 </code></pre><h4 id="string-type">String Type</h4><table>
@@ -481,9 +499,9 @@ _jsd.document.model = {
     }
 };
 
-let _handler = {
+const _handler = {
     next: (val) =&gt; {
-        // {&quot;value&quot;:&quot;false&quot;}
+        // outputs: {&quot;value&quot;:&quot;false&quot;}
         console.log(`${val}`);
     },
     error: (e) =&gt; {
@@ -492,10 +510,13 @@ let _handler = {
     }
 };
 
-
 const _jsd = new JSD(_schema);
 _jsd.document.subscribe(_handler);
+
+// this fails because type is boolean
 _jsd.document.model = {value: true};
+
+// this will succeeed
 _jsd.document.model = {value: &quot;false&quot;};</code>
 </code></pre><h3 id="advanced-usage">Advanced Usage</h3><h4 id="wildcard-keys">Wildcard Keys</h4><p>Wildcards keys allow for cases where you might not know or care about the actual key values.
 This is useful in cases where you might have severage elements of the ame data type and 
@@ -527,47 +548,58 @@ format that you wish to describe in a single instance</p>
         },
     }
 }</code>
-</code></pre><h6 id="usage-example">Usage Example</h6><pre><code><code class="source-code prettyprint">const _schema = {
-                    &quot;*&quot;: {
-                        type: &quot;Object&quot;,
-                        &quot;extensible&quot;: true
-                        &quot;elements&quot;: {
-                            &quot;name&quot;: {
-                                &quot;type&quot;: &quot;String&quot;,
-                                &quot;required&quot;: true,
-                                &quot;restrict&quot;: &quot;^[a-zA-Z0-9_\s\-]{9,}$&quot;
-                            },
-                            {
-                            &quot;score&quot;: {
-                                &quot;type&quot;: &quot;Number&quot;,
-                                &quot;required&quot;:true 
-                            }
-                        },
-                    }
-                };
+</code></pre><h6 id="usage-example">Usage Example</h6><pre><code><code class="source-code prettyprint">// creates a schema that allows any key assignent, but value must be object
+const _schema = {
+    &quot;*&quot;: {
+        type: &quot;Object&quot;,
+        extensible: true,
+        elements: {
+            name: {
+                type: &quot;String&quot;,
+                required: true,
+                restrict: &quot;^[a-zA-Z0-9_\\s\\-]{9,}$&quot;
+            },
+            score: {
+                type: &quot;Number&quot;,
+                required: true,
+            }
+        },
+    }
+};
 
-let _handler = {
-    next: (val)=&gt; {
-        console.log(val);
-        _jsd.unsubscribe();
+const _handler = {
+    next: (val) =&gt; {
+        // {&quot;1&quot;:{&quot;name&quot;:&quot;Big Daddy&quot;,&quot;score&quot;:2000000}, ...}
+        console.log(`${val}`); 
+    },
+    error: (e) =&gt; {
+        // error: 1 expected value of type &apos;Object&apos;. Type was &apos;&lt;number&gt;&apos;
+        console.log(`error: ${e}`);
     }
 };
 
 const _jsd = new JSD(_schema);
-_jsd.subscribe(_handler);
+_jsd.document.subscribe(_handler);
+
+// this will fail because value is number, not an object
+_jsd.document.model = {
+    1: 900000,
+};
+
+// this succeeds
 _jsd.document.model = {
     1: {
         name: &quot;Big Daddy&quot;,
         score: 2000000
-       },
+    },
     2: {
         name: &quot;HeavyMetalPrincess&quot;,
         score: 1100000
-        },
+    },
     3: {
         name: &quot;Munga-Munga&quot;,
         score: 900000
-    }
+    },
 };</code>
 </code></pre><h4 id="wildcard-types">Wildcard Types</h4><p>In some cases, you might know the key of an attribute, 
 but the type might not be determined. In these cases,
@@ -603,35 +635,48 @@ wildcard types</p>
         &quot;required&quot;: false 
     }
 }</code>
-</code></pre><h6 id="usage-example">Usage Example</h6><pre><code><code class="source-code prettyprint">const _schema = {
+</code></pre><h6 id="usage-example">Usage Example</h6><pre><code><code class="source-code prettyprint">// creates a schema that lets key `value` be set to any type 
+const _schema = {
     value: {
         type: &quot;*&quot;,
     }
 };
 
-let _handler = {
+const _handler = {
     next: (val) =&gt; {
-        // {&quot;value&quot;:900000}
-        // {&quot;value&quot;:&quot;A string&quot;}
-        // {&quot;value&quot;:false}
-        console.log(`${val}`);
-        _jsd.document.unsubscribe();
-        done()
+        // outputs: {&quot;value&quot;:900000}
+        // outputs: {&quot;value&quot;:&quot;A string&quot;}
+        // outputs: {&quot;value&quot;:false}
+        console.log(`${val}`); 
+    },
+    error: (e) =&gt; {
+        // error: element &apos;bogus&apos; is not a valid element
+        console.log(`error: ${e}`);
     }
 };
 
 const _jsd = new JSD(_schema);
 _jsd.document.subscribe(_handler);
 
+// any model with the key named `value` is ok
 _jsd.document.model = {
     value: 900000,
 };
+
+// any model with the key named `value` is ok
 _jsd.document.model = {
     value: &quot;A string&quot;,
 };
+
+// any model with the key named `value` is ok
 _jsd.document.model = {
     value: false,
-};</code>
+};
+
+// this will fail because key `bogus` is not allowed
+_jsd.document.model = {
+    bogus: &quot;false&quot;,
+}</code>
 </code></pre><h4 id="polymorphism">Polymorphism</h4><p>In cases where you want to keep the data model tightly defined but must allow for certain values to conform to more 
 than one data type, you can use polymorhism</p>
 <h6 id="schema-example">Schema Example</h6><pre><code><code class="source-code prettyprint">// declares element `polyValue` which can be a String or an Object
@@ -664,38 +709,70 @@ than one data type, you can use polymorhism</p>
 </code></pre><h6 id="usage-example">Usage Example</h6><pre><code><code class="source-code prettyprint">const _schema = {
     polyValue: {
         required: true,
-        polymorphic: [{
-            type: &quot;String&quot;,
-            restrict: &quot;^[a-zA-Z0-9_\\s]+$&quot;
+        default: &quot;DEFAULT VALUE&quot;,
+        polymorphic: [
+            // this schema will accept a string value
+            {
+                type: &quot;String&quot;,
+                restrict: &quot;^[a-zA-Z0-9_\\s]+$&quot;,
 
-        },
-        {
-            type: &quot;Object&quot;,
-            &quot;*&quot;: {
-                type: &quot;Number&quot;
             },
-        }]
+            // ... or and object with `name` and `description` elements
+            {
+                type: &quot;Object&quot;,
+                elements: {
+                    name: {
+                        type: &quot;String&quot;,
+                        required: true,
+                        restrict: &quot;^[a-zA-Z0-9_\\s]{1,24}$&quot;
+                    },
+                    description: {
+                        type: &quot;String&quot;,
+                        required: true,
+                        restrict: &quot;^[a-zA-Z0-9_\\s]{1,140}$&quot;
+                    },
+                },
+            },
+            // ... or a wildcard key &amp; numeric value pair
+            {
+                type: &quot;Object&quot;,
+                elements: {
+                    &quot;*&quot;: {
+                        type: &quot;Number&quot;
+                    },
+                },
+            }]
     }
 };
 
-let _cnt = 0;
 let _handler = {
     next: (val) =&gt; {
+        // {&quot;polyValue&quot;:&quot;DEFAULT VALUE&quot;}
         // {&quot;polyValue&quot;:&quot;HeavyMetalPrincess&quot;}
         // {&quot;polyValue&quot;:{&quot;name&quot;:&quot;HeavyMetalPrincess&quot;,&quot;description&quot;:&quot;cupcakes&quot;}}
-        // {&quot;polyValue&quot;:{&quot;HeaveyMetalPrincess&quot;:10001234}}
-        console.log(`${val}`); 
+        // {&quot;polyValue&quot;:{&quot;HeavyMetalPrincess&quot;:10001234}}
+        console.log(`${val}`);
+    },
+    error: (e) =&gt; {
+        // error: &apos;polyValue.polymorphic.2.*&apos; expected number, type was &apos;&lt;string&gt;&apos;
+        console.log(`error: ${e}`);
     }
+
 };
 
-const _jsd = new JSD(_schema);
+const _jsd = new JSD(_schema, {debug: true});
 _jsd.document.subscribe(_handler);
+
+// will set default value
+_jsd.document.model = {};
+
 
 // can be a string value
 _jsd.document.model = {
     &quot;polyValue&quot;: &quot;HeavyMetalPrincess&quot;,
 }
 
+// can be an object with `name` and `description` elements
 _jsd.document.model = {
     &quot;polyValue&quot;: {
         &quot;name&quot;: &quot;HeavyMetalPrincess&quot;,
@@ -703,11 +780,22 @@ _jsd.document.model = {
     }
 };
 
+// or a wildcard key &amp; numeric value pair...
+
+// -- this will error because the value is a string, not numeric
 _jsd.document.model = {
     &quot;polyValue&quot;: {
-        HeaveyMetalPrincess: 10001234
+        HeavyMetalPrincess: &quot;10001234&quot;,
     },
-};</code>
+};
+
+// -- this has a numeric value and will succeed
+_jsd.document.model = {
+    &quot;polyValue&quot;: {
+        HeavyMetalPrincess: 10001234,
+    },
+};
+});</code>
 </code></pre><h4 id="regular-expressions">Regular Expressions</h4><p>JSD allows the use of Regular Expressions to restrict String input
 There are caveats to it&apos;s use due to the nature of RegExp syntax vs  JSON
 character encoding limitations</p>
@@ -726,6 +814,98 @@ const schema = {
         &quot;restrict&quot;: &quot;^[a-zA-Z0-9_\\\\-\\\\s]+$&quot;
     }
 }</code>
+</code></pre><h4 id="write-locking">Write-Locking</h4><p>In some cases you might want to define Read-Only Data Structures, such as Config Files
+JSD allows you to set data to the Schema and then Write-Lock it via Schema Params or Programmatically</p>
+<h6 id="schema-example">Schema Example</h6><pre><code><code class="source-code prettyprint">// a schema designating itself as write-locked with the writeLock attribute
+// once data is set to this schema, it will be read-only
+{
+  &quot;writeLock&quot;: true,
+  &quot;elements&quot;: {
+    &quot;*&quot;{
+      &quot;type&quot;: &quot;*&quot;
+    }
+  }
+}</code>
+</code></pre><h6 id="usage-example">Usage Example</h6><pre><code><code class="source-code prettyprint">// creates a schema with writeLock attribute set to true
+var _schema = {
+    writeLock: true,
+    elements: {
+        &quot;*&quot;: {
+            type: &quot;*&quot;,
+        }
+    }
+};
+
+var _handler = {
+    next: function(val) {
+        // {&quot;valueA&quot;:1,&quot;valueB&quot;:2,&quot;valueC&quot;:3}
+        // {&quot;valueA&quot;:1,&quot;valueB&quot;:2,&quot;valueC&quot;:3}
+        console.log(`${val}`);
+    },
+    complete: function(model) {
+        // complete: schema is now locked.
+        console.log(&apos;complete: schema is now locked.&apos;);
+    }
+};
+
+var _jsd = new JSD(_schema);
+_jsd.document.subscribe(_handler);
+
+// will lock schema after write
+_jsd.document.model = {
+    valueA: 1,
+    valueB: 2,
+    valueC: 3,
+};
+
+// subsequent writes will silently fail
+_jsd.document.model = {
+    valueD: 4,
+    valueE: 5,
+    valueF: 6,
+};
+
+
+// Additionally, the end-user can set this programatically
+
+// creates a schema with writeLock attribute set to true
+var _schema = {
+    &quot;*&quot;: {
+        type: &quot;*&quot;,
+    }
+};
+
+var _handler = {
+    next: function(val) {
+        // {&quot;valueA&quot;:1,&quot;valueB&quot;:2,&quot;valueC&quot;:3}
+        // {&quot;valueA&quot;:1,&quot;valueB&quot;:2,&quot;valueC&quot;:3}
+        console.log(`${val}`);
+    },
+    complete: function(model) {
+        // complete: schema is now locked.
+        console.log(&apos;complete: schema is now locked.&apos;);
+    }
+};
+
+var _jsd = new JSD(_schema);
+_jsd.document.subscribe(_handler);
+
+// will lock schema after write
+_jsd.document.model = {
+    valueA: 1,
+    valueB: 2,
+    valueC: 3,
+};
+
+// Invoke the lock feature on the document
+_jsd.document.lock();
+
+// subsequent writes will silently fail
+_jsd.document.model = {
+    valueD: 4,
+    valueE: 5,
+    valueF: 6,
+};</code>
 </code></pre></div>
 </div>
 

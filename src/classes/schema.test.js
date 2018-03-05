@@ -237,7 +237,7 @@ describe("Schema Class Test Suite", function () {
             expect(_.model.value).toEqual(123);
             expect(_.model.str).toEqual("DEFAULT VALUE");
             expect(_.model.active).toEqual(false);
-            _.model = {value: 456, str:"USER VALUE", active: true};
+            _.model = {value: 456, str: "USER VALUE", active: true};
             expect(_.model.str).toEqual("USER VALUE");
             expect(_.model.active).toEqual(true);
         });
@@ -259,20 +259,20 @@ describe("Schema Class Test Suite", function () {
         let _schema;
         const _ts = JSON.stringify({
             NestedObjects: {
-                anArray: ["string 1","string 2"],
+                anArray: ["string 1", "string 2"],
                 anObject: {
                     aString: "TEST",
                     aObject: {},
                     aDeepObject: {
                         aDeepParam: "testing 123",
-                        aDeeperObject:{
-                            aDeepParam:"a deep param"
+                        aDeeperObject: {
+                            aDeepParam: "a deep param"
                         }
                     }
                 }
             }
         });
-        beforeEach(()=> {
+        beforeEach(() => {
             _schema = new Schema(require("../../fixtures/nested-elements.schema.json"), null, new JSD());
             _schema.model = require("../../fixtures/_nested.data.json");
         });
@@ -296,7 +296,7 @@ describe("Schema Class Test Suite", function () {
     describe("reset model on data", () => {
         it("should reset the model when the model is overwritten", () => {
             const _schema = new Schema({"*": {type: "*"}}, null, new JSD());
-            _schema.model= {
+            _schema.model = {
                 valueA: 1,
                 valueB: 2,
                 valueC: 3
@@ -309,6 +309,62 @@ describe("Schema Class Test Suite", function () {
             expect(_schema.model.hasOwnProperty('valueA')).toBe(true);
             expect(_schema.model.hasOwnProperty('valueB')).toBe(true);
             expect(_schema.model.hasOwnProperty('valueC')).toBe(false);
+        });
+    });
+
+    describe("Write Lock", () => {
+        it("should lock model programmatically  and trigger notification", (done) => {
+            const _schema = new Schema({"*": {type: "*"}}, null, new JSD());
+            let cnt = 0;
+            const _h = {
+                next: (model) => {
+                    expect(model.hasOwnProperty('valueD')).toBe(false);
+                    if (++cnt == 2) {
+                        expect(_schema.isLocked).toBe(true);
+                        done();
+                    }
+
+                },
+                complete: (model) => {
+                    _schema.set('valueD', 4);
+                },
+            };
+
+            _schema.subscribe(_h);
+
+            _schema.model = {
+                valueA: 1,
+                valueB: 2,
+                valueC: 3
+            };
+
+            _schema.lock();
+        });
+
+        it("should lock model via Schema  and trigger notification", (done) => {
+            const _schema = new Schema({writeLock: true, elements:{"*": {type: "*"}}}, null, new JSD());
+            let cnt = 0;
+            const _h = {
+                next: (model) => {
+                    if (++cnt < 2) {
+                        expect(_schema.isLocked).toBe(true);
+                        _schema.set('valueD', 4);
+                    } else {
+                        expect(model.hasOwnProperty('valueD')).toBe(false);
+                    }
+                },
+                complete: (model) => {
+                    done();
+                },
+            };
+
+            _schema.subscribe(_h);
+
+            _schema.model = {
+                valueA: 1,
+                valueB: 2,
+                valueC: 3
+            };
         });
     });
 });

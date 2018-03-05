@@ -39,6 +39,7 @@ Schema Based Self-Validating and Observable Data Models
    * [Regular Expressions](#regular-expressions)
     
         * [JSON File Example with Special Escaping](#json-file-example-with-special-escaping)
+   * [Write-Locking](#write-locking)
 
 #### Installation Instructions ####
 There are no dependencies or prerequesites besides NPM and NodeJS
@@ -772,4 +773,105 @@ const schema = {
         "restrict": "^[a-zA-Z0-9_\\\\-\\\\s]+$"
     }
 }
+```
+
+#### Write-Locking 
+In some cases you might want to define Read-Only Data Structures, such as Config Files
+JSD allows you to set data to the Schema and then Write-Lock it via Schema Params or Programmatically
+
+###### Schema Example
+```
+// a schema designating itself as write-locked with the writeLock attribute
+// once data is set to this schema, it will be read-only
+{
+  "writeLock": true,
+  "elements": {
+    "*"{
+      "type": "*"
+    }
+  }
+}
+```
+###### Usage Example
+```
+// creates a schema with writeLock attribute set to true
+var _schema = {
+    writeLock: true,
+    elements: {
+        "*": {
+            type: "*",
+        }
+    }
+};
+
+var _handler = {
+    next: function(val) {
+        // {"valueA":1,"valueB":2,"valueC":3}
+        // {"valueA":1,"valueB":2,"valueC":3}
+        console.log(`${val}`);
+    },
+    complete: function(model) {
+        // complete: schema is now locked.
+        console.log('complete: schema is now locked.');
+    }
+};
+
+var _jsd = new JSD(_schema);
+_jsd.document.subscribe(_handler);
+
+// will lock schema after write
+_jsd.document.model = {
+    valueA: 1,
+    valueB: 2,
+    valueC: 3,
+};
+
+// subsequent writes will silently fail
+_jsd.document.model = {
+    valueD: 4,
+    valueE: 5,
+    valueF: 6,
+};
+
+
+// Additionally, the end-user can set this programatically
+
+// creates a schema with writeLock attribute set to true
+var _schema = {
+    "*": {
+        type: "*",
+    }
+};
+
+var _handler = {
+    next: function(val) {
+        // {"valueA":1,"valueB":2,"valueC":3}
+        // {"valueA":1,"valueB":2,"valueC":3}
+        console.log(`${val}`);
+    },
+    complete: function(model) {
+        // complete: schema is now locked.
+        console.log('complete: schema is now locked.');
+    }
+};
+
+var _jsd = new JSD(_schema);
+_jsd.document.subscribe(_handler);
+
+// will lock schema after write
+_jsd.document.model = {
+    valueA: 1,
+    valueB: 2,
+    valueC: 3,
+};
+
+// Invoke the lock feature on the document
+_jsd.document.lock();
+
+// subsequent writes will silently fail
+_jsd.document.model = {
+    valueD: 4,
+    valueE: 5,
+    valueF: 6,
+};
 ```

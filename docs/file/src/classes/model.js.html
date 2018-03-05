@@ -61,7 +61,7 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/classes/model.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {_mdRef, _oBuilders, _vBuilders, _exists, _validPaths} from &quot;./_references&quot;;
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {_mdRef, _oBuilders, _vBuilders, _exists, _validPaths, _object} from &quot;./_references&quot;;
 import {Schema} from &quot;./schema&quot;;
 import {Set} from &quot;./set&quot;;
 import {JSD} from &quot;./jsd&quot;;
@@ -73,7 +73,7 @@ export class Model {
      * @returns {Observable}
      */
     subscribe(func) {
-       return this.subscribeTo(this.path, func);
+        return this.subscribeTo(this.path, func);
     }
 
     /**
@@ -131,7 +131,8 @@ export class Model {
         const paths = _validPaths.get(this.jsd);
         try {
             Object.keys(paths).forEach((k) =&gt; {
-                if (typeof paths[k] === &quot;string&quot;) {
+                const _t = typeof paths[k];
+                if (_t === &quot;string&quot;) {
                     throw paths[k];
                 }
             });
@@ -206,8 +207,8 @@ export class Model {
      * @returns {string}
      */
     get path() {
-        let _ = _mdRef.get(this).path;
-        return _exists(_) ? _ : &quot;&quot;;
+        let __ = _mdRef.get(this).path;
+        return _exists(__) ? __ : &quot;&quot;;
     }
 
     /**
@@ -215,8 +216,8 @@ export class Model {
      * @returns {Schema|Set}
      */
     get parent() {
-        let _ = _mdRef.get(this).root;
-        return _exists(_) ? _ : this;
+        let __ = _mdRef.get(this).root;
+        return _exists(__) ? __ : this;
     }
 
     /**
@@ -234,12 +235,34 @@ export class Model {
     get validatorBuilder() {
         return _vBuilders.get(this.jsd);
     }
+
     /**
      * getter for ObserverBuilder reference
      * @returns {ObserverBuilder}
      */
     get observerBuilder() {
         return _oBuilders.get(this.jsd);
+    }
+
+    /**
+     * applies Object.freeze to model and triggers complete notification
+     * @returns {Model}
+     */
+    lock() {
+        Object.freeze(_object.get(this));
+        const _self = this;
+        setTimeout(()=&gt; {
+            _self.observerBuilder.complete(_self.path, _self);
+        }, 0);
+        return this;
+    }
+
+    /**
+     *
+     * @returns {boolean}
+     */
+    get isLocked() {
+        return Object.isFrozen(_object.get(this));
     }
 }</code></pre>
 
