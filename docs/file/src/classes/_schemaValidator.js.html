@@ -231,17 +231,19 @@ export class SchemaValidator {
      */
     validateSchemaParam(key, sKey, _schemaKeys, params) {
         var _type;
+        let eMsg;
         // rejects unknown element if schema non-extensible
         if (sKey !== &quot;*&quot; &amp;&amp; !_exists(_schemaKeys[sKey]) &amp;&amp; !_schemaOptions.get(this).extensible) {
             return `schema element &apos;${key}.${sKey}&apos; is not allowed`;
         }
         // returns result of Params String Valdiation
         if (typeof params[sKey] === &quot;string&quot;) {
-            let _ = this.validateSchemaParamString(key, sKey, params);
-            if (typeof _ === &quot;string&quot;) {
-                return _;
+            let eMsg = this.validateSchemaParamString(key, sKey, params);
+            if (typeof eMsg === &quot;string&quot;) {
+                return eMsg;
             }
         }
+
         // returns result of
         if (typeof _schemaKeys[sKey] === &quot;object&quot;) {
             // handles `elements` object
@@ -249,12 +251,15 @@ export class SchemaValidator {
                 let _iterate = Array.isArray(params.elements) ? params.elements : Object.keys(params.elements);
                 for (let xKey of _iterate) {
                     if (typeof xKey === &quot;string&quot;) {
-                        let eMsg = this.validateSchemaEntry(`${key}.${xKey}`, params.elements[xKey]);
+                        eMsg = this.validateSchemaEntry(`${key}.${xKey}`, params.elements[xKey]);
                         if (typeof eMsg === &quot;string&quot;) {
                             return eMsg;
                         }
                     } else {
-                        this.validateSchemaParam(key, xKey.type, _schemaKeys, params.elements);
+                        eMsg = this.validateSchemaParam(key, xKey.type, _schemaKeys, params.elements);
+                        if (typeof eMsg === &quot;string&quot;) {
+                            return eMsg;
+                        }
                     }
                 }
                 return true;
@@ -268,9 +273,17 @@ export class SchemaValidator {
                 if (!Array.isArray(_type)) {
                     _type = _type.type;
                 }
+
+                if (params.type === &quot;*&quot;) {
+                    return true;
+                } else if (_type.indexOf(params.type) &lt; 0 ) {
+                    // console.log(`_schemaKeys[&apos;${sKey}&apos;]:\n\t_type: ${JSON.stringify(_type)}\n\tparams: ${JSON.stringify(params)}`);
+                    return `type attribute was not defined for ${sKey}`;
+                }
             }
         }
-        return;
+        // console.log(`failed to identify _schemaKeys[&apos;${sKey}&apos;]: ${JSON.stringify(params)}`);
+        return true;
     }
 
     /**
@@ -354,24 +367,15 @@ export class SchemaValidator {
         let _iterate = Array.isArray(_schema) ? _schema : Object.keys(_schema);
         for (let _oKey of _iterate) {
             if (_oKey &amp;&amp; typeof _oKey === &quot;object&quot;) {
-
-                for (let _oKey of Object.keys(_oKey)) {
-                    let e = SchemaValidator.eval(_oKey);
-                    if (typeof e === &quot;string&quot;) {
-                        _errorMsg = e;
-                        break;
-                    }
+                let e = SchemaValidator.eval(_oKey, caller);
+                if (typeof e === &quot;string&quot;) {
+                    _errorMsg = e;
+                    break;
                 }
                 break;
             }
             switch (typeof _schema[_oKey]) {
                 case &quot;string&quot;:
-                    let obj = {};
-                    obj[_oKey] = {
-                        type: wf.Str.capitalize(_schema[_oKey]),
-                        required: false
-                    };
-                    let _o = Object.assign(_schema, obj);
                     _errorMsg = caller.validateSchemaEntry(_oKey, _schema[_oKey]);
                     break;
                 case &quot;object&quot;:
@@ -390,10 +394,10 @@ export class SchemaValidator {
                     else {
                         for (let _s of _schema[_oKey]) {
                             if (typeof _schema[_oKey][_s] === &quot;string&quot;) {
-                                _errorMsg = caller.validateTypeString(_oKey, _schema[_oKey][_s]);
+                                _errorMsg = caller.validateTypeString(_oKey, _s);
                             }
                             else {
-                                _errorMsg = caller.validateSchemaEntry(_oKey, _schema[_oKey][_s]);
+                                _errorMsg = caller.validateSchemaEntry(_oKey, _s);
                             }
                         }
                     }

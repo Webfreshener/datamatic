@@ -217,6 +217,7 @@ export class JSD {
             type: "Object",
             required: false,
             extensible: true,
+            writeLock: false,
             elements: {
                 "*": {
                     type: "*",

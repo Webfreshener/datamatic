@@ -33,6 +33,7 @@ export class Schema extends Model {
                 _md = new MetaData(this, {
                     _path: "",
                     _root: this,
+                    _writeLock: _signature.writeLock,
                     _jsd: arguments[2],
                 });
             }
@@ -104,7 +105,6 @@ export class Schema extends Model {
                         return false;
                     }
                     _validPaths.get(this.jsd)[this.path] = true;
-                    // return this.observerBuilder.next(this.path, this.toJSON());
                 }
 
                 let _childSigs = this.signature.elements || this.signature;
@@ -120,6 +120,7 @@ export class Schema extends Model {
                 const _e = this.validate();
                 if ((typeof _e) !== "string") {
                     if (this.path.length) {
+                        // TODO: should evaluate this block
                         const _p = Schema.concatPathAddr(this.path, key);
                         this.observerBuilder.next(_p, value);
                     }
@@ -163,8 +164,10 @@ export class Schema extends Model {
      */
     set model(value) {
         let e;
-        // -- reset the proxy model to initial object state
-        _object.set(this, new Proxy({}, this.handler));
+        // -- reset the proxy model to initial object state if not locked
+        if (!this.isLocked) {
+            _object.set(this, new Proxy({}, this.handler));
+        }
         // -- preliminary setting of default values on initial object
         this.setDefaults();
         if (typeof value === "object") {
@@ -190,6 +193,10 @@ export class Schema extends Model {
             // tests current state of calidation hash
             e = this.validate();
             if (e === true) {
+                // tests for writeLock and locks model if set
+                if (_mdRef.get(this).writeLock && !this.isLocked) {
+                    this.lock();
+                }
                 // calls next's observable to update subscribers
                 this.observerBuilder.next(this.path, this);
                 return true;
@@ -204,7 +211,6 @@ export class Schema extends Model {
             return false;
         }
     }
-
 
     /**
      * @param {string} key
@@ -243,7 +249,7 @@ export class Schema extends Model {
             });
         }
         if (this.isValid) {
-            this.observerBuilder.next(this.path, this.toJSON());
+            this.observerBuilder.next(this.path, this);
             return this;
         }
         let eMsg = this.validate();

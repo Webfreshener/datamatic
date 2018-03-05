@@ -81,6 +81,7 @@ export class ValidatorBuilder {
     }
 
     /**
+     *
      * @returns list of validation paths
      */
     list() {
@@ -89,6 +90,8 @@ export class ValidatorBuilder {
     }
 
     /**
+     * gets Validator at `path` from Validator Hash
+     *
      * @param path
      * @returns item at path reference
      */
@@ -98,6 +101,8 @@ export class ValidatorBuilder {
     }
 
     /**
+     * sets Validator at `path` in Validator Hash
+     *
      * @param path
      * @param func
      */
@@ -111,6 +116,7 @@ export class ValidatorBuilder {
 
     /**
      *
+     *
      * @param ref
      * @param path
      * @param elRef
@@ -120,11 +126,11 @@ export class ValidatorBuilder {
         if (!_exists(ref) ) {
             throw &quot;ValidatorBuilder create: object reference required at arguments[0]&quot;;
         }
-        let _signatures = _exists(ref.polymorphic) ?
-            ref.polymorphic : (
-                Array.isArray(ref) ? ref : [ref]
-            );
+
+        let _signatures = ref.hasOwnProperty(&apos;polymorphic&apos;) ?
+            ref.polymorphic : (Array.isArray(ref) ? ref : [ref]);
         let _v = _validators.get(this);
+
         let _functs = _signatures.map(_sig =&gt; {
             if (typeof _sig !== &quot;object&quot;) {
                 return new Validator[&quot;Default&quot;](path, _sig, elRef.jsd);
@@ -141,16 +147,23 @@ export class ValidatorBuilder {
             let _hasKey = (0 &lt;= Object.keys(Validator).indexOf(_typeof));
             return new Validator[_hasKey ? _typeof : &quot;Default&quot;](path, _sig, elRef.jsd);
         });
-        return _validators.get(this)[path] = (value) =&gt; {
-            var _result;
+
+        // evaluates all defined functions, returning true or last error message
+        const _f = (value) =&gt; {
+            let _result;
             for (let idx in _functs) {
                 _result = _functs[idx].exec(value);
-                if (typeof _result === &quot;boolean&quot;) {
+                if ((typeof _result) === &quot;boolean&quot;) {
                     return _result;
                 }
             }
             return _result;
         };
+
+        this.set(path,  _f);
+
+        // returns closure to caller
+        return _f;
     }
 
     /**
@@ -161,12 +174,36 @@ export class ValidatorBuilder {
     exec(path, value) {
         let _v = _validators.get(this);
         if (!_v.hasOwnProperty(path)) {
-            return `ValidatorBuilder exec: validator for &apos;${path}&apos; does not exist`;
+            const polyValidate = (validators) =&gt; {
+                let eMsg = true;
+                validators.some((vPath)=&gt; {
+                    eMsg = _v[vPath](value);
+                    if ((typeof eMsg) === &quot;boolean&quot;) {
+                        return eMsg;
+                    }
+                });
+                return eMsg;
+            };
+            let polyPath = `${path}`.replace(/\.+.*$/, &quot;.polymorphic.0&quot;);
+            if (_v.hasOwnProperty(polyPath)) {
+                let pathArr = `${path}`.split(&quot;.&quot;);
+                const elName = pathArr.pop();
+                pathArr.push(&quot;polymorphic&quot;);
+                polyPath = pathArr.join(&quot;\\.&quot;);
+                const rxStr = `^(${polyPath}\\.\\d+\\.${elName}|${polyPath}\\.\\d+\.\\*)+`;
+                const validators = Object.keys(_v).filter((v) =&gt; {
+                    return v.match(new RegExp(rxStr));
+                });
+                if (validators.length) {
+                    const res = polyValidate(validators);
+                    return res;
+                }
+            }
+            return `validator for &apos;${path}&apos; does not exist`;
         }
         return _v[path](value);
     }
-}
-</code></pre>
+}</code></pre>
 
 </div>
 

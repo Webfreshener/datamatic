@@ -76,9 +76,11 @@ export class MetaData {
      */
     constructor(_oRef, _data = {}) {
         let _cName = wf.Fun.getConstructorName(_oRef);
+
         if (!(_oRef instanceof Schema) &amp;&amp; !(_oRef instanceof Set)) {
             throw `new MetaData() argument 1 requires subclass Schema or Set. Was subclass of &apos;&lt;${_cName}&gt;&apos;`;
         }
+
         if (this._createID == null) {
             let _id = 0;
             MetaData.prototype._createID = function () {
@@ -89,22 +91,28 @@ export class MetaData {
                 return this.__objID;
             };
         }
-        _data = Object.assign(_data, {
+
+        // ensures existance of writeLock param
+        if (!_data.hasOwnProperty(&apos;_writeLock&apos;) || _data._writeLock === void(0)) {
+            _data._writeLock = false;
+        }
+
+        _data = Object.assign({}, _data, {
             _id: this._createID(),
             _className: _cName,
             _created: Date.now()
         });
+
         _mData.set(this, _data);
         _mdRef.set(this, this);
-        // _mdRef.set(_oRef, this);
     }
 
     /**
      * @param {string} key
      */
     get(key) {
-        let _ = _mData.get(this);
-        return _.hasOwnProperty(key) ? _[key] : null;
+        let __ = _mData.get(this);
+        return __.hasOwnProperty(key) ? __[key] : null;
     }
 
     /**
@@ -154,6 +162,18 @@ export class MetaData {
         var _p = _.split(&quot;.&quot;);
         _p = (_p.length &gt; 1) ? _p.slice(0, _p.length - 2).join(&quot;.&quot;) : _p[0];
         return _p.length ? this.root.get(_p) : this.root;
+    }
+
+    /**
+     *
+     * @returns {*}
+     */
+    get writeLock() {
+        return this.get(&quot;_writeLock&quot;);
+    }
+
+    toString() {
+        return JSON.stringify(_mData.get(this));
     }
 }
 </code></pre>
