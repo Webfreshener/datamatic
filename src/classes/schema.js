@@ -80,9 +80,6 @@ export class Schema extends Model {
         _schemaSignatures.set(this, _sig);
         _schemaHelpers.set(this, new SchemaHelpers(this));
         _schemaHelpers.get(this).walkSchema(_sig, this.path);
-
-        // creates model
-        _object.set(this, new Proxy({}, this.handler));
         this.setDefaults();
     }
 
@@ -93,8 +90,8 @@ export class Schema extends Model {
     get handler() {
         return {
             get: (t, key) => {
-                const _m = t[key];
-                return _m instanceof Schema ? _m.model : _m;
+                const _m = key === '$ref' ? this: t[key];
+                return _m;
             },
             set: (t, key, value) => {
                 let _sH = _schemaHelpers.get(this);
@@ -166,7 +163,8 @@ export class Schema extends Model {
         let e;
         // -- reset the proxy model to initial object state if not locked
         if (!this.isLocked) {
-            _object.set(this, new Proxy({}, this.handler));
+            // _object.set(this, new Proxy({}, this.handler));
+            _object.set(this, new Proxy(Model.createRef(this), this.handler));
         }
         // -- preliminary setting of default values on initial object
         this.setDefaults();

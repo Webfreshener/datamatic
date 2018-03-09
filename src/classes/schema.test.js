@@ -135,9 +135,11 @@ describe("Schema Class Test Suite", function () {
         it("should validate arbitrary wildcard elements", (done) => {
             const _h = {
                 next: (o) => {
+                    this.schema.unsubscribe();
                     done("should have dispatched an error");
                 },
                 error: (e) => {
+                    this.schema.unsubscribe();
                     console.log(`error: ${e}`);
                     done();
                 }
@@ -346,6 +348,7 @@ describe("Schema Class Test Suite", function () {
             let cnt = 0;
             const _h = {
                 next: (model) => {
+                    done()
                     if (++cnt < 2) {
                         expect(_schema.isLocked).toBe(true);
                         _schema.set('valueD', 4);
@@ -356,6 +359,9 @@ describe("Schema Class Test Suite", function () {
                 complete: (model) => {
                     done();
                 },
+                error: (e) => {
+                    done(e);
+                }
             };
 
             _schema.subscribe(_h);
@@ -366,5 +372,32 @@ describe("Schema Class Test Suite", function () {
                 valueC: 3
             };
         });
+    });
+
+    it.only("should provide backref on model", () => {
+        const _schema = new Schema({elements:{"*": {type: "*"}}}, null, new JSD());
+        let cnt = 0;
+        const _h = {
+            next: (model) => {
+                expect(model.valueC.subObj.hasOwnProperty('$ref')).toBe(true);
+                expect(model.valueC.subObj.$ref instanceof Schema).toBe(true);
+            },
+            error: (e) => {
+                done(`error: ${e}`);
+            },
+        };
+
+        _schema.subscribe(_h);
+
+        _schema.model = {
+            valueA: 1,
+            valueB: 2,
+            valueC: {
+                subEl: "foo",
+                subObj: {
+                    subEl: "bar"
+                }
+            }
+        };
     });
 });

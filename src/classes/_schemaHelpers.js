@@ -1,4 +1,4 @@
-import {_exists, _mdRef, _validPaths, _required_elements} from "./_references";
+import {_exists, _mdRef, _validPaths, _required_elements, _object} from "./_references";
 import {MetaData} from "./_metaData";
 import {Schema} from "./schema";
 import {Set} from "./set";
@@ -11,7 +11,7 @@ export class SchemaHelpers {
      * @constructor
      */
     constructor(_ref) {
-        if (!_exists(_ref) || !(_ref instanceof Schema)) {
+        if (!_exists(_ref)) { // || !(_ref instanceof Schema)) {
             throw new Error("arguments[0] must be type 'Schema'");
         }
         this._ref = _ref;
@@ -49,7 +49,12 @@ export class SchemaHelpers {
         } else if (!_exists(_s) || typeof _s !== "object") {
             return `"${key}" was invalid`;
         }
-        return _s.model = value;
+        _s.model = value;
+        // Object.defineProperty(_object.get(_s), '$ref', {
+        //     value: () => { return _s; },
+        //     writable: false
+        // });
+        return _s.model;
     }
 
     /**

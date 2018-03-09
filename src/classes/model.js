@@ -4,6 +4,9 @@ import {Set} from "./set";
 import {JSD} from "./jsd";
 import {Observable} from 'rxjs/Rx';
 export class Model {
+    constructor() {
+        _object.set(this, new Proxy(Model.createRef(this), this.handler));
+    }
     /**
      * subscribes handler method to observer for model
      * @param func
@@ -201,4 +204,18 @@ export class Model {
     get isLocked() {
         return Object.isFrozen(_object.get(this));
     }
+
+    /**
+     *
+     * @param ref
+     * @returns {{}}
+     */
+    static createRef(ref) {
+        let _o = {};
+        Object.defineProperty(_o, '$ref', {
+            value: ref,
+            writable: false
+        });
+        return _o;
+    };
 }
