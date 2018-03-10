@@ -344,7 +344,7 @@ describe("Schema Class Test Suite", function () {
         });
 
         it("should lock model via Schema  and trigger notification", (done) => {
-            const _schema = new Schema({writeLock: true, elements:{"*": {type: "*"}}}, null, new JSD());
+            const _schema = new Schema({writeLock: true, elements: {"*": {type: "*"}}}, null, new JSD());
             let cnt = 0;
             const _h = {
                 next: (model) => {
@@ -374,13 +374,29 @@ describe("Schema Class Test Suite", function () {
         });
     });
 
-    it.only("should provide backref on model", () => {
-        const _schema = new Schema({elements:{"*": {type: "*"}}}, null, new JSD());
+    it("should provide backref on model", (done) => {
+        const _s = {
+            "*": {
+                polymorphic: [
+                    {
+                        type: "Number"
+                    }, {
+                        type: "Object",
+                        elements: {
+                            "*": {
+                                type: "*"
+                            }
+                        }
+                    }],
+            }
+        };
+        const _schema = new Schema(_s, null, new JSD());
         let cnt = 0;
         const _h = {
-            next: (model) => {
-                expect(model.valueC.subObj.hasOwnProperty('$ref')).toBe(true);
-                expect(model.valueC.subObj.$ref instanceof Schema).toBe(true);
+            next: (schema) => {
+                expect(schema.model.valueC.subObj.hasOwnProperty('$ref')).toBe(true);
+                expect(schema.model.valueC.subObj.$ref instanceof Schema).toBe(true);
+                done();
             },
             error: (e) => {
                 done(`error: ${e}`);

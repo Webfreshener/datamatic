@@ -153,8 +153,9 @@ export class SchemaHelpers {
         // });
         for (let _i in _elements) {
             let _k = _elements[_i];
-            let objPath = _exists(path) ? (path.length ? `${path}.${_k}` : _k) : _k || "";
-            if (typeof _k === "object") {
+            let objPath = _exists(path) ?
+                (path.length ? `${path}.${_k}` : _k) : _k || "";
+            if ((typeof _k === "object") && _k.hasOwnProperty("elements")) {
                 return this.walkSchema(_k.elements, objPath)
             }
             if (_k === "polymorphic") {
@@ -170,13 +171,19 @@ export class SchemaHelpers {
                     let _o = {};
                     _o[path] = polyItm;
                     this._ref.validatorBuilder.create(polyItm, polyPath, this._ref);
-                    if (polyItm.hasOwnProperty('elements')) {
+                    if (polyItm.hasOwnProperty("elements")) {
                         this.walkSchema(polyItm.elements, polyPath);
                     }
                 });
                 return;
             } else {
-                this._ref.validatorBuilder.create(obj[_k], objPath, this._ref);
+
+                if (this._ref instanceof Set) {
+                    this._ref.validatorBuilder.create(obj, this._ref.path, this._ref);
+                } else {
+                    this._ref.validatorBuilder.create(obj[_k], objPath, this._ref);
+                }
+
             }
             // tests for nested elements
             if (_exists(obj[_k]) && typeof obj[_k].elements === "object") {

@@ -1,9 +1,13 @@
-import {_mdRef, _object, _vectorTypes, _schemaOptions, _exists, _vBuilders, wf} from "./_references";
+import {
+    _mdRef, _object, _vectorTypes, _schemaOptions,
+    _exists, _vBuilders, wf, _schemaHelpers, _schemaSignatures
+} from "./_references";
 import {MetaData} from "./_metaData";
 import {SchemaValidator} from "./_schemaValidator";
 import {Schema} from "./schema";
 import {JSD} from "./jsd";
 import {Model} from "./model";
+import {SchemaHelpers} from "./_schemaHelpers";
 /**
  * @class Set
  */
@@ -62,9 +66,12 @@ export class Set extends Model {
         if (typeof (eMsg = _sV.isValid()) === "string") {
             throw eMsg;
         }
-
-        this.validatorBuilder.create(_signature, this.path, this);
-        _object.set(this, new Proxy([], this.handler));
+        // freezes schema signature to prevent modifications
+        const _sig = Object.freeze(_signature || JSD.defaults);
+        _schemaSignatures.set(this, _sig);
+        _object.set(this, new Proxy(Model.createRef(this), this.handler));
+        _schemaHelpers.set(this, new SchemaHelpers(this));
+        _schemaHelpers.get(this).walkSchema(_sig, this.path);
     }
 
     /**
@@ -79,6 +86,9 @@ export class Set extends Model {
      * @param value
      */
     set model(value) {
+        if (!this.isLocked) {
+            _object.set(this, new Proxy(Model.createRef(this), this.handler));
+        }
         if (Array.isArray(value)) {
             try {
                 let cnt = 0;
@@ -101,6 +111,7 @@ export class Set extends Model {
     get handler() {
         return {
             get: (t, idx) => {
+                console.log(`get idx: ${idx}`)
                 if (typeof idx === "symbol") {
                     idx = `${String(idx)}`;
                 }
@@ -112,15 +123,15 @@ export class Set extends Model {
                 if (idx in Array.prototype) {
                     return t[idx];
                 }
-                if (parseInt(idx) !== NaN) {
-                    if (t[idx] instanceof Schema ||
-                        t[idx] instanceof Set) {
-                        return t[idx].model;
-                    }
-                    return t[idx];
-                }
+                // if (parseInt(idx) !== NaN) {
+                //     if (t[idx] instanceof Schema ||
+                //         t[idx] instanceof Set) {
+                //         return t[idx].model;
+                //     }
+                //     return t[idx];
+                // }
 
-                return null;
+                return t[idx];
             },
             set: (t, idx, value) => {
                 let msg = this.validatorBuilder.exec(this.path, value);
@@ -128,7 +139,39 @@ export class Set extends Model {
                     this.observerBuilder.error(this.path, msg);
                     return false;
                 }
-                t[idx] = value;
+
+                if ((typeof value) === "object") {
+                    let _d = Object.assign({
+                        _path: this.path,
+                        _root: this.root,
+                        _jsd: this.jsd,
+                    }, _mdRef.get(this) || {});
+                    let _md = new MetaData(this, _d);
+                    let _opts = _schemaOptions.get(this);
+                    let _sig = this.signature;
+                    let _ref;
+                    _sig = _sig["*"] || _sig.polymorphic || _sig;
+                    if (!Array.isArray(value)) {
+                        try {
+                            console.log(`_sig for schema: ${JSON.stringify(_sig)}`);
+                            _ref = new Schema({"*": {polymorphic: _sig}}, _opts, _md);
+                        } catch (e) {
+                            this.observerBuilder.error(this.path, e);
+                            return false;
+                        }
+                    }
+                    else {
+                        try {
+                            _ref = new Set(_sig, _opts, _md);
+                        } catch (e) {
+                            this.observerBuilder.error(this.path, e);
+                            return false;
+                        }
+                    }
+                    value = (_ref.model = value);
+                }
+
+                t.splice(idx, 0, value);
                 // this.observerBuilder.next(this.path, t);
                 return true;
             },
@@ -271,6 +314,10 @@ export class Set extends Model {
      */
     get length() {
         return this.model.length || 0;
+    }
+
+    get signature() {
+        return _schemaSignatures.get(this);
     }
 
 }

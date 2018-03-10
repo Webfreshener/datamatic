@@ -211,7 +211,7 @@ export class Model {
      * @returns {{}}
      */
     static createRef(ref) {
-        let _o = {};
+        let _o = ref instanceof Set ? [] : {};
         Object.defineProperty(_o, '$ref', {
             value: ref,
             writable: false

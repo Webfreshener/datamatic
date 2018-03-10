@@ -18,6 +18,7 @@ export class Schema extends Model {
      */
     constructor(_signature = Schema.defaultSignature, opts = Schema.defaultOptions) {
         super();
+
         var eMsg;
         if (!_exists(_signature)) {
             throw `Schema requires JSON object at arguments[0]. Got '${typeof _signature}'`;
