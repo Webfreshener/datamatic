@@ -164,7 +164,6 @@ export class Schema extends Model {
         let e;
         // -- reset the proxy model to initial object state if not locked
         if (!this.isLocked) {
-            // _object.set(this, new Proxy({}, this.handler));
             _object.set(this, new Proxy(Model.createRef(this), this.handler));
         }
         // -- preliminary setting of default values on initial object

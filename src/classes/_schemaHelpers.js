@@ -1,4 +1,4 @@
-import {_exists, _mdRef, _validPaths, _required_elements, _object} from "./_references";
+import {_exists, _mdRef, _validPaths, _required_elements, _object, _schemaOptions} from "./_references";
 import {MetaData} from "./_metaData";
 import {Schema} from "./schema";
 import {Set} from "./set";
@@ -135,6 +135,42 @@ export class SchemaHelpers {
             return _s;
         }
         return "unable to process value";
+    }
+
+    createSetEement(idx, value) {
+        let _d = Object.assign({
+            _path: `${this._ref.path}.${idx}`,
+            _root: this._ref.root,
+            _jsd: this._ref.jsd,
+        }, _mdRef.get(this) || {});
+        let _md = new MetaData(this._ref, _d);
+        let _opts = _schemaOptions.get(this._ref);
+        let _sig = this._ref.signature;
+        let _ref;
+        _sig = _sig["*"] || _sig.polymorphic || _sig;
+        if (!Array.isArray(value)) {
+            try {
+                _ref = new Schema({"*": {polymorphic: _sig}}, _opts, _md);
+            } catch (e) {
+                this.observerBuilder.error(this._ref.path, e);
+                return false;
+            }
+        }
+        else {
+            try {
+                _ref = new Set(_sig, _opts, _md);
+            } catch (e) {
+                this.observerBuilder.error(this._ref.path, e);
+                return false;
+            }
+        }
+        try {
+            _ref.model = value;
+        } catch (e) {
+            console.log(`e: ${e}`);
+            return e;
+        }
+        return _ref.model;
     }
 
     /**

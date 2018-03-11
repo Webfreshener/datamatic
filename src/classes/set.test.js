@@ -163,8 +163,8 @@ describe("Set Class Test Suite", function () {
             let cnt = 0;
             const _h = {
                 next: (schema) => {
-                    console.log(`${JSON.stringify(schema.model[1])}`);
-                    // expect(schema.model[1].$ref instanceof Schema).toBe(true);
+                    expect(schema.model[0].$ref instanceof Schema).toBe(true);
+                    expect(schema.model[0].valueA).toBe(1);
                     // expect(schema.model[2].valueC.subObj.hasOwnProperty('$ref')).toBe(true);
                     // expect(schema.model[2].valueC.subObj.$ref instanceof Schema).toBe(true);
                     done();

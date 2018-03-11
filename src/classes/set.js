@@ -69,7 +69,6 @@ export class Set extends Model {
         // freezes schema signature to prevent modifications
         const _sig = Object.freeze(_signature || JSD.defaults);
         _schemaSignatures.set(this, _sig);
-        _object.set(this, new Proxy(Model.createRef(this), this.handler));
         _schemaHelpers.set(this, new SchemaHelpers(this));
         _schemaHelpers.get(this).walkSchema(_sig, this.path);
     }
@@ -86,14 +85,14 @@ export class Set extends Model {
      * @param value
      */
     set model(value) {
-        if (!this.isLocked) {
-            _object.set(this, new Proxy(Model.createRef(this), this.handler));
-        }
         if (Array.isArray(value)) {
+            if (!this.isLocked) {
+                _object.set(this, new Proxy(Model.createRef(this), this.handler));
+            }
             try {
                 let cnt = 0;
                 value.forEach((val) => {
-                    this.model[cnt] = val;
+                    _object.get(this)[cnt] = val;
                     cnt++;
                 });
             } catch (e) {
@@ -101,6 +100,8 @@ export class Set extends Model {
             }
             if (this.isValid) {
                 this.observerBuilder.next(this.path, this);
+            } else {
+                console.log(this.validate());
             }
             return true;
         } else {
@@ -111,10 +112,10 @@ export class Set extends Model {
     get handler() {
         return {
             get: (t, idx) => {
-                console.log(`get idx: ${idx}`)
-                if (typeof idx === "symbol") {
-                    idx = `${String(idx)}`;
-                }
+                // TODO: review for removal
+                // if (typeof idx === "symbol") {
+                //     idx = `${String(idx)}`;
+                // }
 
                 if (idx === "length") {
                     return t.length;
@@ -123,17 +124,15 @@ export class Set extends Model {
                 if (idx in Array.prototype) {
                     return t[idx];
                 }
-                // if (parseInt(idx) !== NaN) {
-                //     if (t[idx] instanceof Schema ||
-                //         t[idx] instanceof Set) {
-                //         return t[idx].model;
-                //     }
-                //     return t[idx];
-                // }
+
+                if (idx === '$ref') {
+                    return this;
+                }
 
                 return t[idx];
             },
             set: (t, idx, value) => {
+                let _sH = _schemaHelpers.get(this);
                 let msg = this.validatorBuilder.exec(this.path, value);
                 if ((typeof msg) === "string") {
                     this.observerBuilder.error(this.path, msg);
@@ -141,38 +140,10 @@ export class Set extends Model {
                 }
 
                 if ((typeof value) === "object") {
-                    let _d = Object.assign({
-                        _path: this.path,
-                        _root: this.root,
-                        _jsd: this.jsd,
-                    }, _mdRef.get(this) || {});
-                    let _md = new MetaData(this, _d);
-                    let _opts = _schemaOptions.get(this);
-                    let _sig = this.signature;
-                    let _ref;
-                    _sig = _sig["*"] || _sig.polymorphic || _sig;
-                    if (!Array.isArray(value)) {
-                        try {
-                            console.log(`_sig for schema: ${JSON.stringify(_sig)}`);
-                            _ref = new Schema({"*": {polymorphic: _sig}}, _opts, _md);
-                        } catch (e) {
-                            this.observerBuilder.error(this.path, e);
-                            return false;
-                        }
-                    }
-                    else {
-                        try {
-                            _ref = new Set(_sig, _opts, _md);
-                        } catch (e) {
-                            this.observerBuilder.error(this.path, e);
-                            return false;
-                        }
-                    }
-                    value = (_ref.model = value);
+                    value = _sH.createSetEement(idx, value);
                 }
 
-                t.splice(idx, 0, value);
-                // this.observerBuilder.next(this.path, t);
+                t[idx] = value;
                 return true;
             },
             deleteProperty: (t, idx) => {
