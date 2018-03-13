@@ -152,7 +152,7 @@ export class SchemaHelpers {
             try {
                 _ref = new Schema({"*": {polymorphic: _sig}}, _opts, _md);
             } catch (e) {
-                this.observerBuilder.error(this._ref.path, e);
+                this._ref.observerBuilder.error(this._ref.path, e);
                 return false;
             }
         }
@@ -160,7 +160,7 @@ export class SchemaHelpers {
             try {
                 _ref = new Set(_sig, _opts, _md);
             } catch (e) {
-                this.observerBuilder.error(this._ref.path, e);
+                this._ref.observerBuilder.error(this._ref.path, e);
                 return false;
             }
         }
@@ -211,11 +211,11 @@ export class SchemaHelpers {
                         this.walkSchema(polyItm.elements, polyPath);
                     }
                 });
-                return;
+                // return;
             } else {
 
                 if (this._ref instanceof Set) {
-                    this._ref.validatorBuilder.create(obj, this._ref.path, this._ref);
+                    this._ref.validatorBuilder.create(obj, `${this._ref.path}.*`, this._ref);
                 } else {
                     this._ref.validatorBuilder.create(obj[_k], objPath, this._ref);
                 }
@@ -226,7 +226,7 @@ export class SchemaHelpers {
                 this.walkSchema(obj[_k].elements, objPath);
             }
         }
-        // console.log(this._ref.validatorBuilder.list());
+        // console.log(`\n\nvBuilders:\n${JSON.stringify(this._ref.validatorBuilder.list())}`);
     }
 
 

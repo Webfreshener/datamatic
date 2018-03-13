@@ -70,6 +70,7 @@ describe('README.md examples tests', () => {
             error: (e) => {
                 // error: 'score' expected number, type was '<string>'s
                 console.log(`error: ${e}`);
+                done(e);
             }
         };
 
@@ -361,7 +362,7 @@ describe('README.md examples tests', () => {
         };
     });
 
-    it('JSD Polymorphism example should work', (done) => {
+    it.only('JSD Polymorphism example should work', (done) => {
         const _schema = {
             polyValue: {
                 required: true,

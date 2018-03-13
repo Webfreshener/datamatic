@@ -39,24 +39,26 @@ export class Set extends Model {
 
         if (!_exists(_signature)) {
             _signature = [{type: "*"}];
-        } else {
-            switch (typeof _signature) {
-                case "object":
-                    if (!Array.isArray(_signature)) {
-                        _signature = [_signature];
-                    } else {
-                        _signature = _signature.map((sig) => {
-                            return typeof sig === "string" ? {type: sig} : sig;
-                        });
-                    }
-                    break;
-                case "string":
-                    _signature = [{type: _signature}];
-                    break;
-                default:
-                    throw `schema for ${this.path} was invalid`;
-            }
         }
+        // else {
+        //     switch (typeof _signature) {
+        //         case "object":
+        //             if (!Array.isArray(_signature)) {
+        //                 _signature = [_signature];
+        //             } else {
+        //                 _signature = _signature.map((sig) => {
+        //                     return typeof sig === "string" ? {type: sig} : sig;
+        //                 });
+        //             }
+        //             break;
+        //         case "string":
+        //             _signature = [{type: _signature}];
+        //             break;
+        //         default:
+        //             throw `schema for ${this.path} was invalid`;
+        //     }
+        // }
+        _signature = {"*": {polymorphic: _signature}};
         // attempts to validate provided `schema` entries
         let _sV = new SchemaValidator(_signature, Object.assign(this.options || {}, {
             jsd: _mdRef.get(this).jsd,
@@ -70,6 +72,9 @@ export class Set extends Model {
         const _sig = Object.freeze(_signature || JSD.defaults);
         _schemaSignatures.set(this, _sig);
         _schemaHelpers.set(this, new SchemaHelpers(this));
+        // let el = _sig.map((el) => {
+        //     return el;
+        // });
         _schemaHelpers.get(this).walkSchema(_sig, this.path);
     }
 
@@ -133,7 +138,7 @@ export class Set extends Model {
             },
             set: (t, idx, value) => {
                 let _sH = _schemaHelpers.get(this);
-                let msg = this.validatorBuilder.exec(this.path, value);
+                let msg = this.validatorBuilder.exec(`${this.path}.*`, value);
                 if ((typeof msg) === "string") {
                     this.observerBuilder.error(this.path, msg);
                     return false;

@@ -50,6 +50,8 @@ export class ValidatorBuilder {
         _validators.get(this)[path] = func;
         return this;
     }
+    
+
 
     /**
      *
@@ -63,28 +65,36 @@ export class ValidatorBuilder {
         if (!_exists(ref) ) {
             throw "ValidatorBuilder create: object reference required at arguments[0]";
         }
-
-        let _signatures = ref.hasOwnProperty('polymorphic') ?
-            ref.polymorphic : (Array.isArray(ref) ? ref : [ref]);
+        const formatSig = (sig) => {
+            return sig.hasOwnProperty('polymorphic') ?
+                sig.polymorphic : (Array.isArray(sig) ? sig : [sig]);
+        }
+        let _signatures = formatSig(ref);
         let _v = _validators.get(this);
-
-        let _functs = _signatures.map(_sig => {
-            if (typeof _sig !== "object") {
-                return new Validator["Default"](path, _sig, elRef.jsd);
-            }
-            if (_sig.hasOwnProperty("*")) {
-                this.create(_sig["*"], path, elRef);
-                delete _sig["*"];
-                if (Object.keys(_sig) > 0) {
-                    return this.create(_sig, path, elRef);
+        let _functs = []
+        const createFuncts = (_sigs) => {
+            _sigs = formatSig(_sigs);
+            _sigs.forEach(sig => {
+                if (typeof sig !== "object") {
+                    _functs.push( new Validator["Default"](path, sig, elRef.jsd));
                 }
-                return;
-            }
-            let _typeof = wf.Str.capitalize(_sig.type);
-            let _hasKey = (0 <= Object.keys(Validator).indexOf(_typeof));
-            return new Validator[_hasKey ? _typeof : "Default"](path, _sig, elRef.jsd);
-        });
-
+                if (sig.hasOwnProperty("*")) {
+                    createFuncts(sig["*"]);
+                    delete sig["*"];
+                    if (Object.keys(sig) > 0) {
+                        createFuncts(sig);
+                    }
+                    return;
+                }
+                if (sig.hasOwnProperty('type')) {
+                    let _typeof = wf.Str.capitalize(sig.type);
+                    let _hasKey = (0 <= Object.keys(Validator).indexOf(_typeof));
+                    const _v = new Validator[_hasKey ? _typeof : "Default"](path, sig, elRef.jsd);
+                    _functs.push(_v);
+                }
+            });
+        };
+        createFuncts(_signatures, path, elRef, []);
         // evaluates all defined functions, returning true or last error message
         const _f = (value) => {
             let _result;
@@ -97,7 +107,7 @@ export class ValidatorBuilder {
             return _result;
         };
 
-        this.set(path,  _f);
+        this.set(path, _f);
 
         // returns closure to caller
         return _f;
