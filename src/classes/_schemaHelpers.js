@@ -226,7 +226,7 @@ export class SchemaHelpers {
                 this.walkSchema(obj[_k].elements, objPath);
             }
         }
-        // console.log(`\n\nvBuilders:\n${JSON.stringify(this._ref.validatorBuilder.list())}`);
+        console.log(`\n\nvBuilders:\n${JSON.stringify(this._ref.validatorBuilder.list())}`);
     }
 
 

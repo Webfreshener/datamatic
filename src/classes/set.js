@@ -138,7 +138,7 @@ export class Set extends Model {
             },
             set: (t, idx, value) => {
                 let _sH = _schemaHelpers.get(this);
-                let msg = this.validatorBuilder.exec(`${this.path}.*`, value);
+                let msg = this.validatorBuilder.exec(`${this.path}.${idx}`, value);
                 if ((typeof msg) === "string") {
                     this.observerBuilder.error(this.path, msg);
                     return false;

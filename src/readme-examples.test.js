@@ -40,7 +40,7 @@ describe('README.md examples tests', () => {
         };
     });
 
-    it('JSD Array example should work', (done) => {
+    it.only('JSD Array example should work', (done) => {
         // we define an array that accepts objects comprised of a name string and numeric score
         const _schema = {
             type: "Array",
@@ -362,7 +362,7 @@ describe('README.md examples tests', () => {
         };
     });
 
-    it.only('JSD Polymorphism example should work', (done) => {
+    it('JSD Polymorphism example should work', (done) => {
         const _schema = {
             polyValue: {
                 required: true,

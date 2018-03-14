@@ -146,6 +146,10 @@ export class ValidatorBuilder {
                     return res;
                 }
             }
+            const _tPath = `${path}`.replace(/(.*)(\.+.*)$/, "$1.*");
+            if (_v.hasOwnProperty(_tPath)) {
+                return _v[_tPath](value);
+            }
             return `validator for '${path}' does not exist`;
         }
         return _v[path](value);
