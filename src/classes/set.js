@@ -40,25 +40,8 @@ export class Set extends Model {
         if (!_exists(_signature)) {
             _signature = [{type: "*"}];
         }
-        // else {
-        //     switch (typeof _signature) {
-        //         case "object":
-        //             if (!Array.isArray(_signature)) {
-        //                 _signature = [_signature];
-        //             } else {
-        //                 _signature = _signature.map((sig) => {
-        //                     return typeof sig === "string" ? {type: sig} : sig;
-        //                 });
-        //             }
-        //             break;
-        //         case "string":
-        //             _signature = [{type: _signature}];
-        //             break;
-        //         default:
-        //             throw `schema for ${this.path} was invalid`;
-        //     }
-        // }
-        _signature = {"*": {polymorphic: _signature}};
+
+        _signature = {polymorphic: _signature};
         // attempts to validate provided `schema` entries
         let _sV = new SchemaValidator(_signature, Object.assign(this.options || {}, {
             jsd: _mdRef.get(this).jsd,
@@ -68,14 +51,12 @@ export class Set extends Model {
         if (typeof (eMsg = _sV.isValid()) === "string") {
             throw eMsg;
         }
+
         // freezes schema signature to prevent modifications
         const _sig = Object.freeze(_signature || JSD.defaults);
         _schemaSignatures.set(this, _sig);
         _schemaHelpers.set(this, new SchemaHelpers(this));
-        // let el = _sig.map((el) => {
-        //     return el;
-        // });
-        _schemaHelpers.get(this).walkSchema(_sig, this.path);
+        _schemaHelpers.get(this).walkSchema(_sig, `${this.path}.*`);
     }
 
     /**
@@ -106,7 +87,8 @@ export class Set extends Model {
             if (this.isValid) {
                 this.observerBuilder.next(this.path, this);
             } else {
-                console.log(this.validate());
+                this.observerBuilder.error(this.path, this.validate());
+                false;
             }
             return true;
         } else {
@@ -145,7 +127,7 @@ export class Set extends Model {
                 }
 
                 if ((typeof value) === "object") {
-                    value = _sH.createSetEement(idx, value);
+                    value = _sH.createSetElement(idx, value);
                 }
 
                 t[idx] = value;

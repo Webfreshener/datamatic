@@ -79,17 +79,21 @@ export class ValidatorBuilder {
                     _functs.push( new Validator["Default"](path, sig, elRef.jsd));
                 }
                 if (sig.hasOwnProperty("*")) {
-                    createFuncts(sig["*"]);
+                    createFuncts(sig["*"].elements || sig["*"].polymorphic || sig["*"]);
                     delete sig["*"];
                     if (Object.keys(sig) > 0) {
-                        createFuncts(sig);
+                        createFuncts(sig.elements || sig.polymorphic || sig);
                     }
                     return;
                 }
                 if (sig.hasOwnProperty('type')) {
                     let _typeof = wf.Str.capitalize(sig.type);
                     let _hasKey = (0 <= Object.keys(Validator).indexOf(_typeof));
-                    const _v = new Validator[_hasKey ? _typeof : "Default"](path, sig, elRef.jsd);
+
+                    let _v = new Validator[_hasKey ? _typeof : "Default"](path, sig, elRef.jsd);
+                    _functs.push(_v);
+                    let _path = path.replace(/(.*)\.polymorphic\.\d(.*)/, '$1$2');
+                    _v = new Validator[_hasKey ? _typeof : "Default"](_path, sig, elRef.jsd);
                     _functs.push(_v);
                 }
             });
@@ -108,7 +112,7 @@ export class ValidatorBuilder {
         };
 
         this.set(path, _f);
-
+        this.set(path.replace(/(.*)\.polymorphic\.\d(.*)/, '$1$2'), _f);
         // returns closure to caller
         return _f;
     }
@@ -120,6 +124,7 @@ export class ValidatorBuilder {
      */
     exec(path, value) {
         let _v = _validators.get(this);
+        let validators;
         if (!_v.hasOwnProperty(path)) {
             const polyValidate = (validators) => {
                 let eMsg = true;
@@ -131,16 +136,19 @@ export class ValidatorBuilder {
                 });
                 return eMsg;
             };
+            const findPolyPaths = (_pPath, _eName) => {
+                const rxStr = `^(${_pPath}\\.\\d+\\.${_eName}|${_pPath}\\.\\d+\.\\*)+`;
+                return Object.keys(_v).filter((v) => {
+                    return v.match(new RegExp(rxStr)) !== null;
+                });
+            }
             let polyPath = `${path}`.replace(/\.+.*$/, ".polymorphic.0");
             if (_v.hasOwnProperty(polyPath)) {
                 let pathArr = `${path}`.split(".");
                 const elName = pathArr.pop();
                 pathArr.push("polymorphic");
                 polyPath = pathArr.join("\\.");
-                const rxStr = `^(${polyPath}\\.\\d+\\.${elName}|${polyPath}\\.\\d+\.\\*)+`;
-                const validators = Object.keys(_v).filter((v) => {
-                    return v.match(new RegExp(rxStr));
-                });
+                validators = findPolyPaths(polyPath, elName);
                 if (validators.length) {
                     const res = polyValidate(validators);
                     return res;
@@ -149,6 +157,18 @@ export class ValidatorBuilder {
             const _tPath = `${path}`.replace(/(.*)(\.+.*)$/, "$1.*");
             if (_v.hasOwnProperty(_tPath)) {
                 return _v[_tPath](value);
+            }
+            if (_v.hasOwnProperty(`${_tPath}.polymorphic.0`)) {
+                let _eName = _tPath.split(".").pop();
+                const _pPath = `${wf.Str.regexEscape(_tPath)}\\.polymorphic`;
+                const rxStr = `^(${_pPath}\\.\\d+|${_pPath}\\.\\d+\\.\\*)+`;
+                validators = Object.keys(_v).filter((v) => {
+                    return v.match(new RegExp(rxStr)) !== null;
+                });
+                if (validators.length) {
+                    const res = polyValidate(validators);
+                    return res;
+                }
             }
             return `validator for '${path}' does not exist`;
         }

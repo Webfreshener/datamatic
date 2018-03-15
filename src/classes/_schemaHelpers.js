@@ -137,20 +137,22 @@ export class SchemaHelpers {
         return "unable to process value";
     }
 
-    createSetEement(idx, value) {
+    createSetElement(idx, value) {
         let _d = Object.assign({
             _path: `${this._ref.path}.${idx}`,
             _root: this._ref.root,
             _jsd: this._ref.jsd,
         }, _mdRef.get(this) || {});
-        let _md = new MetaData(this._ref, _d);
+        // let _md = new MetaData(this._ref, _d);
         let _opts = _schemaOptions.get(this._ref);
-        let _sig = this._ref.signature;
+        let _sig = Object.assign({}, this._ref.signature);
         let _ref;
-        _sig = _sig["*"] || _sig.polymorphic || _sig;
+        //
+        // _sig = _sig["*"] || _sig.polymorphic || _sig;
         if (!Array.isArray(value)) {
             try {
-                _ref = new Schema({"*": {polymorphic: _sig}}, _opts, _md);
+                _sig = _sig;
+                _ref = new Schema(_sig, _opts, _d);
             } catch (e) {
                 this._ref.observerBuilder.error(this._ref.path, e);
                 return false;
@@ -167,7 +169,6 @@ export class SchemaHelpers {
         try {
             _ref.model = value;
         } catch (e) {
-            console.log(`e: ${e}`);
             return e;
         }
         return _ref.model;
@@ -191,11 +192,12 @@ export class SchemaHelpers {
             let _k = _elements[_i];
             let objPath = _exists(path) ?
                 (path.length ? `${path}.${_k}` : _k) : _k || "";
+            // tests for standard schema object with elements
             if ((typeof _k === "object") && _k.hasOwnProperty("elements")) {
                 return this.walkSchema(_k.elements, objPath)
             }
             if (_k === "polymorphic") {
-                // test for probably element key rather than schema key
+                // tests for polymorphic element key rather than schema key
                 if (!Array.isArray(obj.polymorphic)) {
                     // if is element key, create validator and continue to next steps
                     this._ref.validatorBuilder.create(obj[_k], objPath, this._ref);
@@ -215,18 +217,18 @@ export class SchemaHelpers {
             } else {
 
                 if (this._ref instanceof Set) {
-                    this._ref.validatorBuilder.create(obj, `${this._ref.path}.*`, this._ref);
+                    // this.walkSchema(obj["*"], `${this._ref.path}.*`);
+                    this._ref.validatorBuilder.create(obj, `${this._ref.path}`, this._ref);
                 } else {
                     this._ref.validatorBuilder.create(obj[_k], objPath, this._ref);
                 }
-
             }
             // tests for nested elements
             if (_exists(obj[_k]) && typeof obj[_k].elements === "object") {
                 this.walkSchema(obj[_k].elements, objPath);
             }
         }
-        console.log(`\n\nvBuilders:\n${JSON.stringify(this._ref.validatorBuilder.list())}`);
+        // console.log(`\n\nvBuilders:\n${JSON.stringify(this._ref.validatorBuilder.list())}`);
     }
 
 

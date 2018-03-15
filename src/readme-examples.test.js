@@ -1,5 +1,6 @@
 import {JSD} from './index';
 import {Set} from './classes/set';
+import {Schema} from "./classes/schema";
 describe('README.md examples tests', () => {
     it('main Schema example should work', (done) => {
         const _schema = {
@@ -40,7 +41,7 @@ describe('README.md examples tests', () => {
         };
     });
 
-    it.only('JSD Array example should work', (done) => {
+    it('JSD Array example should work', (done) => {
         // we define an array that accepts objects comprised of a name string and numeric score
         const _schema = {
             type: "Array",
@@ -64,12 +65,13 @@ describe('README.md examples tests', () => {
         const _handler = {
             next: (val) => {
                 // outputs: {"values":[{"name":"Player 1","score":2000000},{"name":"Player 2","score":1100000},{"name":"Player 3","score":900000}]}
-                console.log(`${val}`);
+                console.log(`done: ${val}`);
+                // expect(val.model[0].("$ref")).toBe(true);
+                expect(val.model[0].$ref instanceof Schema).toBe(true);
                 done();
             },
             error: (e) => {
                 // error: 'score' expected number, type was '<string>'s
-                console.log(`error: ${e}`);
                 done(e);
             }
         };
@@ -80,16 +82,16 @@ describe('README.md examples tests', () => {
         _jsd.document.model = [{
             name: "Player 1",
             score: 2000000,
-        }, {
-            name: "Player 2",
-            score: 1100000
-        }, {
-            // this will error because score is a string value
-            name: "BOGUS",
-            score: "1100000"
-        }, {
-            name: "Player 3",
-            score: 900000
+        // }, {
+        //     name: "Player 2",
+        //     score: 1100000
+        // }, {
+        //     // this will error because score is a string value
+        //     name: "BOGUS",
+        //     score: "1100000"
+        // }, {
+        //     name: "Player 3",
+        //     score: 900000
         }];
     });
 
