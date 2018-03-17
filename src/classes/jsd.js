@@ -41,11 +41,15 @@ export class JSD {
         _oBuilders.set(this, new ObserverBuilder());
         _vBuilders.set(this, new ValidatorBuilder());
         let _s;
-        if (!schema || schema.type !== "Array") {
+        if (!Array.isArray(schema) && schema.type !== "Array") {
             _s = new Schema(schema, options || null, this);
         } else {
-            if (!schema.hasOwnProperty("elements")) {
-                schema.elements = ["*"];
+            if (!Array.isArray(schema)) {
+                if (!schema.hasOwnProperty("elements")) {
+                    schema.elements = ["*"];
+                }
+            } else {
+                schema = {elements: Array.isArray(schema) ? schema : [schema]};
             }
             _s = new Set(schema.elements, options || null, this);
         }

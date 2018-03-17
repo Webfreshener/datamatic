@@ -185,23 +185,23 @@ describe("Schema Class Test Suite", function () {
         });
     });
 
-    describe("Getters/Setters", function () {
+    describe.only("Getters/Setters", function () {
         it("should set basic values on elements", () => {
-            let _schema = new Schema({
+            let _schema = new JSD({
                 bool: {type: "Boolean"},
                 num: {type: "Number"},
                 str: {type: "String"}
-            }, null, new JSD());
-            _schema.set("bool", false);
-            expect(_schema.get("bool")).toBe(false);
-            _schema.set("num", 123);
-            expect(_schema.get("num")).toEqual(123);
-            _schema.set("str", "test");
-            expect(_schema.get("str")).toEqual("test");
+            });
+            _schema.document.set("bool", false);
+            expect(_schema.document.get("bool")).toBe(false);
+            _schema.document.set("num", 123);
+            expect(_schema.document.get("num")).toEqual(123);
+            _schema.document.set("str", "test");
+            expect(_schema.document.get("str")).toEqual("test");
         });
 
         it("should set object values on elements", () => {
-            let _schema = new Schema({
+            let _schema = new JSD({
                 nested: {
                     type: "Object",
                     elements: {
@@ -210,10 +210,38 @@ describe("Schema Class Test Suite", function () {
                         }
                     }
                 }
-            }, null, new JSD());
-            _schema.set("nested", {name: "Ishmael"});
-            expect(JSON.parse("" + _schema).nested.name).toEqual("Ishmael");
+            });
+            _schema.document.set("nested", {name: "Ishmael"});
+            expect(JSON.parse(`${_schema.document}`).nested.name).toEqual("Ishmael");
         });
+
+        it.only("should set Array values on elements", () => {
+            let _schema = new JSD({
+                nested: [{
+                    type: "Object",
+                    elements: {
+                        name: {
+                            type: "String",
+                        },
+                    },
+                }],
+            });
+            _schema.document.subscribe({
+                next: (val) => {
+                    console.log(`${val}`);
+                },
+                error: (e) => {
+                    console.log(`e: ${e}`);
+                }
+            });
+            _schema.document.set("nested", [{name: "Ishmael"}]);
+            expect(Array.isArray(_schema.document.model.nested)).toBe(true);
+            expect(_schema.document.model.nested[0].name).toEqual("Ishmael");
+            _schema.document.set("nested", {name: "Ishmael"});
+            expect(Array.isArray(_schema.document.model.nested)).toBe(true);
+            expect(_schema.document.model.nested.length).toBe(0);
+
+        })
     });
 
     describe("Default Values", function () {
@@ -247,13 +275,18 @@ describe("Schema Class Test Suite", function () {
 
     describe("Deep Object Nesting", function () {
         it("should handle deep object nesting", () => {
-            const _jsd = require("../../fixtures/nested-elements.schema.json");
-            let _schema = new Schema(_jsd, null, new JSD());
-            expect(_schema instanceof Schema).toBe(true);
-            _schema.model = require("../../fixtures/_nested.data.json");
-            expect(_schema.model.NestedObjects.anArray.length).toEqual(2);
-            expect(_schema.model.NestedObjects.anObject.aDeepObject.aDeeperObject).toBeTruthy();
-            expect(_schema.model.NestedObjects.anObject.aDeepObject.aDeeperObject.aDeepParam).toEqual("a deep param");
+            const _s = require("../../fixtures/nested-elements.schema.json");
+            let _jsd = new JSD(_s);
+            _jsd.document.subscribe({
+                error: (e) => {
+                    console.log(`e: ${e}`);
+                }
+            })
+            expect(_jsd.document instanceof Schema).toBe(true);
+            _jsd.document.model = require("../../fixtures/_nested.data.json");
+            expect(_jsd.document.model.NestedObjects.anArray.length).toEqual(2);
+            expect(_jsd.document.model.NestedObjects.anObject.aDeepObject.aDeeperObject).toBeTruthy();
+            expect(_jsd.document.model.NestedObjects.anObject.aDeepObject.aDeeperObject.aDeepParam).toEqual("a deep param");
         });
     });
 
@@ -374,46 +407,49 @@ describe("Schema Class Test Suite", function () {
         });
     });
 
-    it("should provide backref on model", (done) => {
-        const _s = {
-            "*": {
-                polymorphic: [
-                    {
-                        type: "Number"
-                    }, {
-                        type: "Object",
-                        elements: {
-                            "*": {
-                                type: "*"
+    describe("Backref", () => {
+        it("should provide backref on model", (done) => {
+            const _s = {
+                "*": {
+                    polymorphic: [
+                        {
+                            type: "Number"
+                        }, {
+                            type: "Object",
+                            elements: {
+                                "*": {
+                                    type: "*"
+                                }
                             }
-                        }
-                    }],
-            }
-        };
-        const _schema = new Schema(_s, null, new JSD());
-        let cnt = 0;
-        const _h = {
-            next: (schema) => {
-                expect(schema.model.valueC.subObj.hasOwnProperty('$ref')).toBe(true);
-                expect(schema.model.valueC.subObj.$ref instanceof Schema).toBe(true);
-                done();
-            },
-            error: (e) => {
-                done(`error: ${e}`);
-            },
-        };
-
-        _schema.subscribe(_h);
-
-        _schema.model = {
-            valueA: 1,
-            valueB: 2,
-            valueC: {
-                subEl: "foo",
-                subObj: {
-                    subEl: "bar"
+                        }],
                 }
-            }
-        };
+            };
+            const _schema = new Schema(_s, null, new JSD());
+            let cnt = 0;
+            const _h = {
+                next: (schema) => {
+                    expect(schema.model.valueC.subObj.hasOwnProperty('$ref')).toBe(true);
+                    expect(schema.model.valueC.subObj.$ref instanceof Schema).toBe(true);
+                    done();
+                },
+                error: (e) => {
+                    done(`error: ${e}`);
+                },
+            };
+
+            _schema.subscribe(_h);
+
+            _schema.model = {
+                valueA: 1,
+                valueB: 2,
+                valueC: {
+                    subEl: "foo",
+                    subObj: {
+                        subEl: "bar"
+                    }
+                }
+            };
+        });
     });
+
 });

@@ -4,23 +4,23 @@
     "name": {
       "type": "String",
       "required": true,
-      "restrict": "^[a-zA-Z-0-9_]+$"
+      "restrict": "^[a-zA-Z0-9_]+$"
     },
     "description": {
       "type": "String",
       "required": false,
       "default": "Add description here",
-      "restrict": "^((?!\"|\b|\\f|\\n|\\r|\\t|\\u).)*$"
+      "restrict": "^[\\w\\s\\W]+$"
     },
     "plural": {
       "type": "String",
       "required": false,
-      "restrict": "^[a-zA-Z-0-9_]+$"
+      "restrict": "^[a-zA-Z0-9_]+$"
     },
     "base": {
       "type": "String",
       "required": false,
-      "restrict": "^[a-zA-Z-0-9_]+$"
+      "restrict": "^[a-zA-Z0-9_]+$"
     },
     "http": {
       "type": "Object",
@@ -81,7 +81,7 @@
             "description": {
               "type": "String",
               "required": false,
-              "restrict": "^((?!\"|\b|\\f|\\n|\\r|\\t|\\u).)*$"
+              "restrict": "^((?!\"|\\b|\\f|\\n|\\r|\\t|\\u).)*$"
             },
             "id": {
               "required": false,
@@ -145,7 +145,6 @@
     "validations": {
       "type": "Array",
       "required": false,
-      "default": [],
       "elements": [{
         "type": "Object",
         "required": false,

@@ -8,6 +8,7 @@ import {Schema} from "./schema";
 import {JSD} from "./jsd";
 import {Model} from "./model";
 import {SchemaHelpers} from "./_schemaHelpers";
+
 /**
  * @class Set
  */
@@ -41,7 +42,10 @@ export class Set extends Model {
             _signature = [{type: "*"}];
         }
 
+        // _signature = {elements: Array.isArray(_signature) ? _signature : [_signature]};
+        // console.log(`_signature: ${_signature}`);
         _signature = {polymorphic: _signature};
+        // console.log(`_signature: ${JSON.stringify(_signature)}`);
         // attempts to validate provided `schema` entries
         let _sV = new SchemaValidator(_signature, Object.assign(this.options || {}, {
             jsd: _mdRef.get(this).jsd,
@@ -52,9 +56,8 @@ export class Set extends Model {
             throw eMsg;
         }
 
-        // freezes schema signature to prevent modifications
-        const _sig = Object.freeze(_signature || JSD.defaults);
-        _schemaSignatures.set(this, _sig);
+        const _sig = _signature || JSD.defaults;
+        _schemaSignatures.set(this, JSON.stringify(_sig));
         _schemaHelpers.set(this, new SchemaHelpers(this));
         _schemaHelpers.get(this).walkSchema(_sig, `${this.path}.*`);
     }
@@ -119,7 +122,6 @@ export class Set extends Model {
                 return t[idx];
             },
             set: (t, idx, value) => {
-                let _sH = _schemaHelpers.get(this);
                 let msg = this.validatorBuilder.exec(`${this.path}.${idx}`, value);
                 if ((typeof msg) === "string") {
                     this.observerBuilder.error(this.path, msg);
@@ -127,6 +129,7 @@ export class Set extends Model {
                 }
 
                 if ((typeof value) === "object") {
+                    let _sH = _schemaHelpers.get(this);
                     value = _sH.createSetElement(idx, value);
                 }
 
@@ -275,7 +278,11 @@ export class Set extends Model {
     }
 
     get signature() {
-        return _schemaSignatures.get(this);
+        return JSON.parse(_schemaSignatures.get(this));
+    }
+
+    get schema() {
+        return this.signature;
     }
 
 }

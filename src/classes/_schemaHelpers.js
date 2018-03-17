@@ -46,14 +46,11 @@ export class SchemaHelpers {
         let _s = this.createSchemaChild(key, value, this._ref.options || {}, _mdData);
         if (typeof _s === "string") {
             return _s;
-        } else if (!_exists(_s) || typeof _s !== "object") {
-            return `"${key}" was invalid`;
+        } else if (!_exists(_s) ||
+            typeof _s !== "object") {
+            return `'${key}' was invalid`;
         }
         _s.model = value;
-        // Object.defineProperty(_object.get(_s), '$ref', {
-        //     value: () => { return _s; },
-        //     writable: false
-        // });
         return _s.model;
     }
 
@@ -114,7 +111,8 @@ export class SchemaHelpers {
         }, metaData || {});
         let _md = new MetaData(this._ref, _d);
         // tests if value is not Array
-        if (!Array.isArray(value)) {
+        let _kS = this._ref.schema[key];
+        if (!Array.isArray(_kS) && !Array.isArray(value)) {
             let _schemaDef = this._ref.signature[key.split(".").pop()] ||
                 this._ref.signature["*"] ||
                 this._ref.signature;
@@ -127,10 +125,12 @@ export class SchemaHelpers {
         }
         else {
             try {
-                let sig = this._ref.signature[key] || this._ref.signature;
+                let sig = this._ref.signature[key] ||
+                    this._ref.signature.elements ||
+                    this._ref.signature;
                 _s = new Set(sig, opts, _md);
             } catch (e) {
-                return e.message;
+                return e;
             }
             return _s;
         }
@@ -160,6 +160,7 @@ export class SchemaHelpers {
         }
         else {
             try {
+                console.log(`create child as SET`);
                 _ref = new Set(_sig, _opts, _md);
             } catch (e) {
                 this._ref.observerBuilder.error(this._ref.path, e);
@@ -206,8 +207,6 @@ export class SchemaHelpers {
                 let cnt = 0;
                 obj.polymorphic.forEach((polyItm) => {
                     let polyPath = `${objPath}.${cnt++}`;
-                    let _o = {};
-                    _o[path] = polyItm;
                     this._ref.validatorBuilder.create(polyItm, polyPath, this._ref);
                     if (polyItm.hasOwnProperty("elements")) {
                         this.walkSchema(polyItm.elements, polyPath);
@@ -215,16 +214,17 @@ export class SchemaHelpers {
                 });
                 // return;
             } else {
-
                 if (this._ref instanceof Set) {
                     // this.walkSchema(obj["*"], `${this._ref.path}.*`);
                     this._ref.validatorBuilder.create(obj, `${this._ref.path}`, this._ref);
                 } else {
                     this._ref.validatorBuilder.create(obj[_k], objPath, this._ref);
                 }
+                // return;
             }
             // tests for nested elements
-            if (_exists(obj[_k]) && typeof obj[_k].elements === "object") {
+            if (_exists(obj[_k]) &&
+                typeof obj[_k].elements === "object") {
                 this.walkSchema(obj[_k].elements, objPath);
             }
         }

@@ -3,6 +3,8 @@
  */
 import {_exists, _validators, _validPaths, wf} from "./_references";
 import {Validator} from "./_validators"
+import {Set} from "./set";
+
 /**
  * @private
  */
@@ -71,7 +73,7 @@ export class ValidatorBuilder {
         }
         let _signatures = formatSig(ref);
         let _v = _validators.get(this);
-        let _functs = []
+        let _functs = [];
         const createFuncts = (_sigs) => {
             _sigs = formatSig(_sigs);
             _sigs.forEach(sig => {
@@ -89,11 +91,10 @@ export class ValidatorBuilder {
                 if (sig.hasOwnProperty('type')) {
                     let _typeof = wf.Str.capitalize(sig.type);
                     let _hasKey = (0 <= Object.keys(Validator).indexOf(_typeof));
-
-                    let _v = new Validator[_hasKey ? _typeof : "Default"](path, sig, elRef.jsd);
+                    let _v = new Validator[_hasKey ? _typeof : "Default"](path, sig, elRef.jsd || elRef);
                     _functs.push(_v);
                     let _path = path.replace(/(.*)\.polymorphic\.\d(.*)/, '$1$2');
-                    _v = new Validator[_hasKey ? _typeof : "Default"](_path, sig, elRef.jsd);
+                    _v = new Validator[_hasKey ? _typeof : "Default"](_path, sig, elRef.jsd || elRef);
                     _functs.push(_v);
                 }
             });

@@ -1,6 +1,7 @@
 import {
     _mdRef, _required_elements, _object, _kinds, _exists,
-    _schemaHelpers, _schemaOptions, _schemaSignatures, _validPaths
+    _schemaHelpers, _schemaOptions, _schemaSignatures,
+    _validPaths, _vBuilders
 } from "./_references";
 import {MetaData} from "./_metaData";
 import {SchemaHelpers} from "./_schemaHelpers";
@@ -78,7 +79,7 @@ export class Schema extends Model {
 
         // freezes schema signature to prevent modifications
         const _sig = Object.freeze(_signature || JSD.defaults);
-        _schemaSignatures.set(this, _sig);
+        _schemaSignatures.set(this, JSON.stringify(_sig));
         _schemaHelpers.set(this, new SchemaHelpers(this));
         _schemaHelpers.get(this).walkSchema(_sig, this.path);
         this.setDefaults();
@@ -146,7 +147,7 @@ export class Schema extends Model {
      * @returns schema signature object
      */
     get signature() {
-        return _schemaSignatures.get(this);
+        return JSON.parse(_schemaSignatures.get(this));
     }
 
     /**
@@ -188,7 +189,7 @@ export class Schema extends Model {
                 _validPaths.get(this.jsd)[this.path] = reqErr;
             }
 
-            // tests current state of calidation hash
+            // tests current state of validation hash
             e = this.validate();
             if (e === true) {
                 // tests for writeLock and locks model if set
@@ -283,7 +284,7 @@ export class Schema extends Model {
      * @returns {*}
      */
     get schema() {
-        return _schemaSignatures.get(this);
+        return JSON.parse(_schemaSignatures.get(this));
     }
 
     /**
