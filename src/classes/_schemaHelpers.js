@@ -110,6 +110,10 @@ export class SchemaHelpers {
             _jsd: this._ref.jsd,
         }, metaData || {});
         let _md = new MetaData(this._ref, _d);
+        // tests for nested sub-elements with partial paths as keys
+        if (key.match(/.*\.+.*/) !== null) {
+            key = key.split(".").pop();
+        }
         // tests if value is not Array
         let _kS = this._ref.schema[key];
         if (!Array.isArray(_kS) && !Array.isArray(value)) {
@@ -122,8 +126,7 @@ export class SchemaHelpers {
                 return e.message;
             }
             return _s;
-        }
-        else {
+        } else {
             try {
                 let sig = this._ref.signature[key] ||
                     this._ref.signature.elements ||

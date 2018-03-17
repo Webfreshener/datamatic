@@ -185,7 +185,7 @@ describe("Schema Class Test Suite", function () {
         });
     });
 
-    describe.only("Getters/Setters", function () {
+    describe("Getters/Setters", function () {
         it("should set basic values on elements", () => {
             let _schema = new JSD({
                 bool: {type: "Boolean"},
@@ -215,16 +215,30 @@ describe("Schema Class Test Suite", function () {
             expect(JSON.parse(`${_schema.document}`).nested.name).toEqual("Ishmael");
         });
 
-        it.only("should set Array values on elements", () => {
+        it("should set Array values on elements", () => {
             let _schema = new JSD({
-                nested: [{
+                root: {
                     type: "Object",
                     elements: {
-                        name: {
-                            type: "String",
+                        child: {
+                            type: "Object",
+                            elements: {
+                                value: {
+                                    type: "String",
+                                    required: true,
+                                },
+                            },
                         },
+                        nested: [{
+                            type: "Object",
+                            elements: {
+                                name: {
+                                    type: "String",
+                                },
+                            },
+                        }],
                     },
-                }],
+                },
             });
             _schema.document.subscribe({
                 next: (val) => {
@@ -234,12 +248,20 @@ describe("Schema Class Test Suite", function () {
                     console.log(`e: ${e}`);
                 }
             });
-            _schema.document.set("nested", [{name: "Ishmael"}]);
-            expect(Array.isArray(_schema.document.model.nested)).toBe(true);
-            expect(_schema.document.model.nested[0].name).toEqual("Ishmael");
-            _schema.document.set("nested", {name: "Ishmael"});
-            expect(Array.isArray(_schema.document.model.nested)).toBe(true);
-            expect(_schema.document.model.nested.length).toBe(0);
+            _schema.document.model = {
+                root: {
+                    child: {
+                        value: "foo",
+                    },
+                    nested: [{name: "Ishmael"}],
+                },
+            };
+            expect(Array.isArray(_schema.document.model.root.nested)).toBe(true);
+            expect(_schema.document.model.root.nested.length).toBe(1);
+            expect(_schema.document.model.root.nested[0].name).toEqual("Ishmael");
+            _schema.document.model.root.$ref.set("nested", {name: "Ishmael"});
+            expect(Array.isArray(_schema.document.model.root.nested)).toBe(true);
+            expect(_schema.document.model.root.nested.length).toBe(0);
 
         })
     });
@@ -294,7 +316,6 @@ describe("Schema Class Test Suite", function () {
         let _schema;
         const _ts = JSON.stringify({
             NestedObjects: {
-                anArray: ["string 1", "string 2"],
                 anObject: {
                     aString: "TEST",
                     aObject: {},
@@ -304,8 +325,9 @@ describe("Schema Class Test Suite", function () {
                             aDeepParam: "a deep param"
                         }
                     }
-                }
-            }
+                },
+                anArray: ["string 1", "string 2"],
+            },
         });
         beforeEach(() => {
             _schema = new Schema(require("../../fixtures/nested-elements.schema.json"), null, new JSD());
