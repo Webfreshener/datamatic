@@ -244,7 +244,7 @@ describe("Set Class Test Suite", function () {
         });
     });
 
-    describe("back ref", () => {
+    describe.skip("back ref", () => {
         it("should provide backref on model", (done) => {
             const _jsd = new JSD([{
                 type: "Object",
