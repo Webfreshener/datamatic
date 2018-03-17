@@ -72,9 +72,7 @@ export class SchemaValidator {
                 if (_p === "default") {
                     return true;
                 }
-                console.log(`${key} params: ${JSON.stringify(params)}`);
                 if (Array.isArray(params)) {
-                    console.log("GOT ARRAY!");
                     params = {polymorphic: params};
                 }
                 if (params.hasOwnProperty("polymorphic")) {

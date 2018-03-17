@@ -34,13 +34,13 @@ export class BaseValidator {
      */
     call(path, value) {
         // attempt to reference validator at path
-        let _ = _vBuilders.get(this.jsd).get(path);
+        let __ = _vBuilders.get(this.jsd).get(path);
         // tests for existence of validator
-        if (_exists(_) && typeof _ === "function") {
-            const _r = _(value);
+        if (_exists(__) && typeof __ === "function") {
+            const e = __(value);
             // sets result of validation
-            this.validations[path] = typeof _r !== 'string';
-            return _r;
+            this.validations[path] = ((typeof e) !== 'string') || e;
+            return e;
         }
         // returns error message if unable to find validator for path
         return `'${path}' has no validator defined`;
@@ -124,11 +124,9 @@ Validator.Array = class Arr extends BaseValidator {
      * @returns {*}
      */
     exec(value) {
-        console.log(`value is array: ${Array.isArray(value)}`);
         if (!Array.isArray(value)) {
             return `array expected t '${this.path}'`;
         }
-        console.log(`${JSON.stringify(value)} is ARRAY`);
         for (let __ in value) {
             let e = this.call(this.path, value[__]);
             if ((typeof e) === "string") {
@@ -160,7 +158,7 @@ Validator.Object = class Obj extends BaseValidator {
     exec(value) {
         let _iterate = (key, _val) => {
             // replaces "." path with ""
-            let _p = `${this.path}.${key}`; // .replace(/^(\.)+/, "");
+            let _p = `${this.path}.${key}`;
             // obtains Validator Builder for this Document
             let _v = _vBuilders.get(this.jsd);
             // tests for Validator for path
@@ -170,9 +168,9 @@ Validator.Object = class Obj extends BaseValidator {
                 _vBuilders.get(this.jsd).create(_sig, _p, this.jsd);
             }
             // calls the validator with path and value
-            let _ = this.call(_p, _val);
-            if (typeof _ === "string") {
-                return _;
+            let e = this.call(_p, _val);
+            if ((typeof e) === "string") {
+                return e;
             }
         };
         if (typeof value === "object") {
@@ -185,8 +183,8 @@ Validator.Object = class Obj extends BaseValidator {
                 }
             }
             else {
-                for (let _ in value) {
-                    let e = this.call(this.path, value[_]);
+                for (let __ in value) {
+                    let e = this.call(this.path, value[__]);
                     if (typeof e === 'string') {
                         return e;
                     }

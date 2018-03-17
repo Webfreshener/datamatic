@@ -218,7 +218,6 @@ export class SchemaHelpers {
                 // return;
             } else {
                 if (this._ref instanceof Set) {
-                    // this.walkSchema(obj["*"], `${this._ref.path}.*`);
                     this._ref.validatorBuilder.create(obj, `${this._ref.path}`, this._ref);
                 } else {
                     this._ref.validatorBuilder.create(obj[_k], objPath, this._ref);

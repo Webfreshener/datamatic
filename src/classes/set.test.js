@@ -242,41 +242,38 @@ describe("Set Class Test Suite", function () {
 
             ];
         });
-    })
+    });
 
     describe("back ref", () => {
         it("should provide backref on model", (done) => {
-            const _jsd = new JSD({
-                type: "Array",
-                elements: [{
-                    type: "Object",
-                    elements: {
-                        value: {
-                            type: "Number",
-                        },
-                    },
-                }, {
-                    type: "Object",
-                    elements: {
-                        "value": {
-                            type: "Object",
-                            elements: {
-                                subEl: {
-                                    type: "String",
-                                },
-                                subObj: {
-                                    type: "Object",
-                                    elements: {
-                                        subEl: {
-                                            type: "String",
-                                        },
+            const _jsd = new JSD([{
+                type: "Object",
+                elements: {
+                    value: {
+                        type: "Object",
+                        elements: {
+                            subEl: {
+                                type: "String",
+                            },
+                            subObj: {
+                                type: "Object",
+                                elements: {
+                                    subEl: {
+                                        type: "String",
                                     },
                                 },
                             },
                         },
                     },
-                }],
-            });
+                },
+            }, {
+                type: "Object",
+                elements: {
+                    value: {
+                        type: "Number",
+                    },
+                },
+            }]);
             let cnt = 0;
 
             const _h = {

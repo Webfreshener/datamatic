@@ -122,6 +122,11 @@ export class Set extends Model {
                 return t[idx];
             },
             set: (t, idx, value) => {
+                if (idx in Array.prototype) {
+                    // do nothing against proto props
+                    return true;
+                }
+
                 let msg = this.validatorBuilder.exec(`${this.path}.${idx}`, value);
                 if ((typeof msg) === "string") {
                     this.observerBuilder.error(this.path, msg);
