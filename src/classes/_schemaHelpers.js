@@ -1,4 +1,4 @@
-import {_exists, _mdRef, _validPaths, _required_elements} from "./_references";
+import {_exists, _mdRef, _validPaths, _required_elements, _object, _schemaOptions} from "./_references";
 import {MetaData} from "./_metaData";
 import {Schema} from "./schema";
 import {Set} from "./set";
@@ -11,7 +11,7 @@ export class SchemaHelpers {
      * @constructor
      */
     constructor(_ref) {
-        if (!_exists(_ref) || !(_ref instanceof Schema)) {
+        if (!_exists(_ref)) { // || !(_ref instanceof Schema)) {
             throw new Error("arguments[0] must be type 'Schema'");
         }
         this._ref = _ref;
@@ -46,10 +46,12 @@ export class SchemaHelpers {
         let _s = this.createSchemaChild(key, value, this._ref.options || {}, _mdData);
         if (typeof _s === "string") {
             return _s;
-        } else if (!_exists(_s) || typeof _s !== "object") {
-            return `"${key}" was invalid`;
+        } else if (!_exists(_s) ||
+            typeof _s !== "object") {
+            return `'${key}' was invalid`;
         }
-        return _s.model = value;
+        _s.model = value;
+        return _s.model;
     }
 
     /**
@@ -108,8 +110,13 @@ export class SchemaHelpers {
             _jsd: this._ref.jsd,
         }, metaData || {});
         let _md = new MetaData(this._ref, _d);
+        // tests for nested sub-elements with partial paths as keys
+        if (key.match(/.*\.+.*/) !== null) {
+            key = key.split(".").pop();
+        }
         // tests if value is not Array
-        if (!Array.isArray(value)) {
+        let _kS = this._ref.schema[key];
+        if (!Array.isArray(_kS) && !Array.isArray(value)) {
             let _schemaDef = this._ref.signature[key.split(".").pop()] ||
                 this._ref.signature["*"] ||
                 this._ref.signature;
@@ -119,17 +126,55 @@ export class SchemaHelpers {
                 return e.message;
             }
             return _s;
-        }
-        else {
+        } else {
             try {
-                let sig = this._ref.signature[key] || this._ref.signature;
+                let sig = this._ref.signature[key] ||
+                    this._ref.signature.elements ||
+                    this._ref.signature;
                 _s = new Set(sig, opts, _md);
             } catch (e) {
-                return e.message;
+                return e;
             }
             return _s;
         }
         return "unable to process value";
+    }
+
+    createSetElement(idx, value) {
+        let _d = Object.assign({
+            _path: `${this._ref.path}.${idx}`,
+            _root: this._ref.root,
+            _jsd: this._ref.jsd,
+        }, _mdRef.get(this) || {});
+        // let _md = new MetaData(this._ref, _d);
+        let _opts = _schemaOptions.get(this._ref);
+        let _sig = Object.assign({}, this._ref.signature);
+        let _ref;
+        //
+        // _sig = _sig["*"] || _sig.polymorphic || _sig;
+        if (!Array.isArray(value)) {
+            try {
+                _sig = _sig;
+                _ref = new Schema(_sig, _opts, _d);
+            } catch (e) {
+                this._ref.observerBuilder.error(this._ref.path, e);
+                return false;
+            }
+        }
+        else {
+            try {
+                _ref = new Set(_sig, _opts, _md);
+            } catch (e) {
+                this._ref.observerBuilder.error(this._ref.path, e);
+                return false;
+            }
+        }
+        try {
+            _ref.model = value;
+        } catch (e) {
+            return e;
+        }
+        return _ref.model;
     }
 
     /**
@@ -148,12 +193,14 @@ export class SchemaHelpers {
         // });
         for (let _i in _elements) {
             let _k = _elements[_i];
-            let objPath = _exists(path) ? (path.length ? `${path}.${_k}` : _k) : _k || "";
-            if (typeof _k === "object") {
+            let objPath = _exists(path) ?
+                (path.length ? `${path}.${_k}` : _k) : _k || "";
+            // tests for standard schema object with elements
+            if ((typeof _k === "object") && _k.hasOwnProperty("elements")) {
                 return this.walkSchema(_k.elements, objPath)
             }
             if (_k === "polymorphic") {
-                // test for probably element key rather than schema key
+                // tests for polymorphic element key rather than schema key
                 if (!Array.isArray(obj.polymorphic)) {
                     // if is element key, create validator and continue to next steps
                     this._ref.validatorBuilder.create(obj[_k], objPath, this._ref);
@@ -162,23 +209,26 @@ export class SchemaHelpers {
                 let cnt = 0;
                 obj.polymorphic.forEach((polyItm) => {
                     let polyPath = `${objPath}.${cnt++}`;
-                    let _o = {};
-                    _o[path] = polyItm;
                     this._ref.validatorBuilder.create(polyItm, polyPath, this._ref);
-                    if (polyItm.hasOwnProperty('elements')) {
+                    if (polyItm.hasOwnProperty("elements")) {
                         this.walkSchema(polyItm.elements, polyPath);
                     }
                 });
-                return;
+                // return;
             } else {
-                this._ref.validatorBuilder.create(obj[_k], objPath, this._ref);
+                if (this._ref instanceof Set) {
+                    this._ref.validatorBuilder.create(obj, `${this._ref.path}`, this._ref);
+                } else {
+                    this._ref.validatorBuilder.create(obj[_k], objPath, this._ref);
+                }
+                // return;
             }
             // tests for nested elements
-            if (_exists(obj[_k]) && typeof obj[_k].elements === "object") {
+            if (_exists(obj[_k]) &&
+                typeof obj[_k].elements === "object") {
                 this.walkSchema(obj[_k].elements, objPath);
             }
         }
-        // console.log(this._ref.validatorBuilder.list());
     }
 
 
@@ -258,7 +308,7 @@ export class SchemaHelpers {
                     // creates Validator for path
                     this._ref.validatorBuilder.create(_schema, _key, this._ref);
                 } else {
-                    if (_childSigs.hasOwnProperty('polymorphic')) {
+                    if (_childSigs.hasOwnProperty("polymorphic")) {
                         const pKey = `${_key}`.split(".").shift();
                         let _s = {};
                         _s[pKey] = _childSigs.polymorphic;

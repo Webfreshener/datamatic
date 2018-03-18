@@ -72,6 +72,9 @@ export class SchemaValidator {
                 if (_p === "default") {
                     return true;
                 }
+                if (Array.isArray(params)) {
+                    params = {polymorphic: params};
+                }
                 if (params.hasOwnProperty("polymorphic")) {
                     return this.validateSchemaEntry(key, params.polymorphic);
                 }
@@ -148,7 +151,8 @@ export class SchemaValidator {
             return true;
         }
         // rejects values for keys not found in Schema
-        if (sKey !== "*" && !_exists(_schemaKeys[sKey]) && opts.extensible === false) {
+        if (sKey !== "*" && !_exists(_schemaKeys[sKey]) &&
+            opts.extensible === false) {
             return `schema element '${key}.${sKey}' is not allowed`;
         }
         let eMsg = this.validateTypeString(`${key}.${sKey}`, params[sKey]);
@@ -170,7 +174,8 @@ export class SchemaValidator {
         var _type;
         let eMsg;
         // rejects unknown element if schema non-extensible
-        if (sKey !== "*" && !_exists(_schemaKeys[sKey]) && !_schemaOptions.get(this).extensible) {
+        if (sKey !== "*" && !_exists(_schemaKeys[sKey]) &&
+            !_schemaOptions.get(this).extensible) {
             return `schema element '${key}.${sKey}' is not allowed`;
         }
         // returns result of Params String Valdiation
@@ -214,12 +219,10 @@ export class SchemaValidator {
                 if (params.type === "*") {
                     return true;
                 } else if (_type.indexOf(params.type) < 0 ) {
-                    // console.log(`_schemaKeys['${sKey}']:\n\t_type: ${JSON.stringify(_type)}\n\tparams: ${JSON.stringify(params)}`);
                     return `type attribute was not defined for ${sKey}`;
                 }
             }
         }
-        // console.log(`failed to identify _schemaKeys['${sKey}']: ${JSON.stringify(params)}`);
         return true;
     }
 
@@ -255,9 +258,9 @@ export class SchemaValidator {
             }
             // handles child elements
             for (let sKey of Object.keys(params)) {
-                let _ = this.validateSchemaParam(key, sKey, _schemaKeys, params);
-                if (typeof _ === "string") {
-                    return _;
+                let __ = this.validateSchemaParam(key, sKey, _schemaKeys, params);
+                if (typeof __ === "string") {
+                    return __;
                 }
             }
             return true;

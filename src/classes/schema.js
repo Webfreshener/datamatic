@@ -1,6 +1,7 @@
 import {
     _mdRef, _required_elements, _object, _kinds, _exists,
-    _schemaHelpers, _schemaOptions, _schemaSignatures, _validPaths
+    _schemaHelpers, _schemaOptions, _schemaSignatures,
+    _validPaths, _vBuilders
 } from "./_references";
 import {MetaData} from "./_metaData";
 import {SchemaHelpers} from "./_schemaHelpers";
@@ -18,6 +19,7 @@ export class Schema extends Model {
      */
     constructor(_signature = Schema.defaultSignature, opts = Schema.defaultOptions) {
         super();
+
         var eMsg;
         if (!_exists(_signature)) {
             throw `Schema requires JSON object at arguments[0]. Got '${typeof _signature}'`;
@@ -55,7 +57,7 @@ export class Schema extends Model {
             _signature = _signature.elements;
             for (let _sigEl of Object.keys(_signature)) {
                 // -- tests for element `required`
-                if (_signature[_sigEl].hasOwnProperty('required') &&
+                if (_signature[_sigEl].hasOwnProperty("required") &&
                     _signature[_sigEl].required === true) {
                     // -- adds required element to list
                     _required_elements.get(this).splice(-1, 0, _sigEl);
@@ -77,12 +79,9 @@ export class Schema extends Model {
 
         // freezes schema signature to prevent modifications
         const _sig = Object.freeze(_signature || JSD.defaults);
-        _schemaSignatures.set(this, _sig);
+        _schemaSignatures.set(this, JSON.stringify(_sig));
         _schemaHelpers.set(this, new SchemaHelpers(this));
         _schemaHelpers.get(this).walkSchema(_sig, this.path);
-
-        // creates model
-        _object.set(this, new Proxy({}, this.handler));
         this.setDefaults();
     }
 
@@ -93,8 +92,8 @@ export class Schema extends Model {
     get handler() {
         return {
             get: (t, key) => {
-                const _m = t[key];
-                return _m instanceof Schema ? _m.model : _m;
+                const _m = key === "$ref" ? this: t[key];
+                return _m;
             },
             set: (t, key, value) => {
                 let _sH = _schemaHelpers.get(this);
@@ -148,7 +147,7 @@ export class Schema extends Model {
      * @returns schema signature object
      */
     get signature() {
-        return _schemaSignatures.get(this);
+        return JSON.parse(_schemaSignatures.get(this));
     }
 
     /**
@@ -166,7 +165,7 @@ export class Schema extends Model {
         let e;
         // -- reset the proxy model to initial object state if not locked
         if (!this.isLocked) {
-            _object.set(this, new Proxy({}, this.handler));
+            _object.set(this, new Proxy(Model.createRef(this), this.handler));
         }
         // -- preliminary setting of default values on initial object
         this.setDefaults();
@@ -190,7 +189,7 @@ export class Schema extends Model {
                 _validPaths.get(this.jsd)[this.path] = reqErr;
             }
 
-            // tests current state of calidation hash
+            // tests current state of validation hash
             e = this.validate();
             if (e === true) {
                 // tests for writeLock and locks model if set
@@ -231,7 +230,7 @@ export class Schema extends Model {
             _validPaths.get(this.jsd)[this.path] = -1;
             this.model[key] = value;
             let valid = this.validate();
-            if (typeof valid === 'string') {
+            if (typeof valid === "string") {
                 kPath = Schema.concatPathAddr(this.path, key);
                 this.observerBuilder.error(this.path, valid);
                 return false;
@@ -285,7 +284,7 @@ export class Schema extends Model {
      * @returns {*}
      */
     get schema() {
-        return _schemaSignatures.get(this);
+        return JSON.parse(_schemaSignatures.get(this));
     }
 
     /**

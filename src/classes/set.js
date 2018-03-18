@@ -1,9 +1,14 @@
-import {_mdRef, _object, _vectorTypes, _schemaOptions, _exists, _vBuilders, wf} from "./_references";
+import {
+    _mdRef, _object, _vectorTypes, _schemaOptions,
+    _exists, _vBuilders, wf, _schemaHelpers, _schemaSignatures
+} from "./_references";
 import {MetaData} from "./_metaData";
 import {SchemaValidator} from "./_schemaValidator";
 import {Schema} from "./schema";
 import {JSD} from "./jsd";
 import {Model} from "./model";
+import {SchemaHelpers} from "./_schemaHelpers";
+
 /**
  * @class Set
  */
@@ -35,24 +40,12 @@ export class Set extends Model {
 
         if (!_exists(_signature)) {
             _signature = [{type: "*"}];
-        } else {
-            switch (typeof _signature) {
-                case "object":
-                    if (!Array.isArray(_signature)) {
-                        _signature = [_signature];
-                    } else {
-                        _signature = _signature.map((sig) => {
-                            return typeof sig === "string" ? {type: sig} : sig;
-                        });
-                    }
-                    break;
-                case "string":
-                    _signature = [{type: _signature}];
-                    break;
-                default:
-                    throw `schema for ${this.path} was invalid`;
-            }
         }
+
+        // _signature = {elements: Array.isArray(_signature) ? _signature : [_signature]};
+        // console.log(`_signature: ${_signature}`);
+        _signature = {polymorphic: _signature};
+        // console.log(`_signature: ${JSON.stringify(_signature)}`);
         // attempts to validate provided `schema` entries
         let _sV = new SchemaValidator(_signature, Object.assign(this.options || {}, {
             jsd: _mdRef.get(this).jsd,
@@ -63,8 +56,10 @@ export class Set extends Model {
             throw eMsg;
         }
 
-        this.validatorBuilder.create(_signature, this.path, this);
-        _object.set(this, new Proxy([], this.handler));
+        const _sig = _signature || JSD.defaults;
+        _schemaSignatures.set(this, JSON.stringify(_sig));
+        _schemaHelpers.set(this, new SchemaHelpers(this));
+        _schemaHelpers.get(this).walkSchema(_sig, `${this.path}.*`);
     }
 
     /**
@@ -80,10 +75,13 @@ export class Set extends Model {
      */
     set model(value) {
         if (Array.isArray(value)) {
+            if (!this.isLocked) {
+                _object.set(this, new Proxy(Model.createRef(this), this.handler));
+            }
             try {
                 let cnt = 0;
                 value.forEach((val) => {
-                    this.model[cnt] = val;
+                    _object.get(this)[cnt] = val;
                     cnt++;
                 });
             } catch (e) {
@@ -91,6 +89,9 @@ export class Set extends Model {
             }
             if (this.isValid) {
                 this.observerBuilder.next(this.path, this);
+            } else {
+                this.observerBuilder.error(this.path, this.validate());
+                false;
             }
             return true;
         } else {
@@ -101,9 +102,10 @@ export class Set extends Model {
     get handler() {
         return {
             get: (t, idx) => {
-                if (typeof idx === "symbol") {
-                    idx = `${String(idx)}`;
-                }
+                // TODO: review for removal
+                // if (typeof idx === "symbol") {
+                //     idx = `${String(idx)}`;
+                // }
 
                 if (idx === "length") {
                     return t.length;
@@ -112,24 +114,31 @@ export class Set extends Model {
                 if (idx in Array.prototype) {
                     return t[idx];
                 }
-                if (parseInt(idx) !== NaN) {
-                    if (t[idx] instanceof Schema ||
-                        t[idx] instanceof Set) {
-                        return t[idx].model;
-                    }
-                    return t[idx];
+
+                if (idx === "$ref") {
+                    return this;
                 }
 
-                return null;
+                return t[idx];
             },
             set: (t, idx, value) => {
-                let msg = this.validatorBuilder.exec(this.path, value);
+                if (idx in Array.prototype) {
+                    // do nothing against proto props
+                    return true;
+                }
+
+                let msg = this.validatorBuilder.exec(`${this.path}.${idx}`, value);
                 if ((typeof msg) === "string") {
                     this.observerBuilder.error(this.path, msg);
                     return false;
                 }
+
+                if ((typeof value) === "object") {
+                    let _sH = _schemaHelpers.get(this);
+                    value = _sH.createSetElement(idx, value);
+                }
+
                 t[idx] = value;
-                // this.observerBuilder.next(this.path, t);
                 return true;
             },
             deleteProperty: (t, idx) => {
@@ -271,6 +280,14 @@ export class Set extends Model {
      */
     get length() {
         return this.model.length || 0;
+    }
+
+    get signature() {
+        return JSON.parse(_schemaSignatures.get(this));
+    }
+
+    get schema() {
+        return this.signature;
     }
 
 }

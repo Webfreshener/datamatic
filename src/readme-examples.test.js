@@ -1,7 +1,8 @@
-import {JSD} from './index';
-import {Set} from './classes/set';
-describe('README.md examples tests', () => {
-    it('main Schema example should work', (done) => {
+import {JSD} from "./index";
+import {Set} from "./classes/set";
+import {Schema} from "./classes/schema";
+describe("README.md examples tests", () => {
+    it("main Schema example should work", (done) => {
         const _schema = {
             "name": {
                 "type": "String",
@@ -14,7 +15,7 @@ describe('README.md examples tests', () => {
         };
         const _handlers = {
             next: function (schema) {
-                if (typeof schema !== 'undefined') {
+                if (typeof schema !== "undefined") {
                     // outputs: {"name":"Frank","age":23}
                     expect(schema.model.name).toBe("Frank");
                     expect(schema.model.age).toBe(23);
@@ -40,7 +41,7 @@ describe('README.md examples tests', () => {
         };
     });
 
-    it('JSD Array example should work', (done) => {
+    it("JSD Array example should work", (done) => {
         // we define an array that accepts objects comprised of a name string and numeric score
         const _schema = {
             type: "Array",
@@ -64,12 +65,14 @@ describe('README.md examples tests', () => {
         const _handler = {
             next: (val) => {
                 // outputs: {"values":[{"name":"Player 1","score":2000000},{"name":"Player 2","score":1100000},{"name":"Player 3","score":900000}]}
-                console.log(`${val}`);
+                console.log(`done: ${val}`);
+                // expect(val.model[0].("$ref")).toBe(true);
+                expect(val.model[0].$ref instanceof Schema).toBe(true);
                 done();
             },
             error: (e) => {
                 // error: 'score' expected number, type was '<string>'s
-                console.log(`error: ${e}`);
+                done(e);
             }
         };
 
@@ -79,20 +82,20 @@ describe('README.md examples tests', () => {
         _jsd.document.model = [{
             name: "Player 1",
             score: 2000000,
-        }, {
-            name: "Player 2",
-            score: 1100000
-        }, {
-            // this will error because score is a string value
-            name: "BOGUS",
-            score: "1100000"
-        }, {
-            name: "Player 3",
-            score: 900000
+        // }, {
+        //     name: "Player 2",
+        //     score: 1100000
+        // }, {
+        //     // this will error because score is a string value
+        //     name: "BOGUS",
+        //     score: "1100000"
+        // }, {
+        //     name: "Player 3",
+        //     score: 900000
         }];
     });
 
-    it('JSD Boolean example should work', (done) => {
+    it("JSD Boolean example should work", (done) => {
         const _schema = {
             value: {
                 type: "Boolean",
@@ -132,7 +135,7 @@ describe('README.md examples tests', () => {
         _jsd.document.model = {value: "true"};
     });
 
-    it('JSD Number example should work', (done) => {
+    it("JSD Number example should work", (done) => {
         const _schema = {
             value: {
                 type: "Number",
@@ -164,7 +167,7 @@ describe('README.md examples tests', () => {
         _jsd.document.model = {value: 1234};
     });
 
-    it('JSD String example should work', (done) => {
+    it("JSD String example should work", (done) => {
         const _schema = {
             value: {
                 type: "String",
@@ -196,7 +199,7 @@ describe('README.md examples tests', () => {
         _jsd.document.model = {value: "false"};
     });
 
-    it('JSD Object example should work', (done) => {
+    it("JSD Object example should work", (done) => {
         // we define an element named `value` that requires a name and optional active attributes
         const _schema = {
             value: {
@@ -256,7 +259,7 @@ describe('README.md examples tests', () => {
         };
     });
 
-    it('JSD Wildcard KEYS example should work', (done) => {
+    it("JSD Wildcard KEYS example should work", (done) => {
         // creates a schema that allows any key assignent, but value must be object
         const _schema = {
             "*": {
@@ -314,7 +317,7 @@ describe('README.md examples tests', () => {
         };
     });
 
-    it('JSD Wildcard TYPES example should work', (done) => {
+    it("JSD Wildcard TYPES example should work", (done) => {
         // creates a schema that lets key `value` be set to any scalar type (string, bool, number etc)
         const _schema = {
             value: {
@@ -361,7 +364,7 @@ describe('README.md examples tests', () => {
         };
     });
 
-    it('JSD Polymorphism example should work', (done) => {
+    it("JSD Polymorphism example should work", (done) => {
         const _schema = {
             polyValue: {
                 required: true,

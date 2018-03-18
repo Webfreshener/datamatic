@@ -22,15 +22,15 @@ describe("MetaData Units", () => {
     });
     describe( "Parameter Accessor Validation", ()=> {
         let _ = new Schema({}, null, new JSD());
-        let _md = new MetaData( _, { _path: "key", _root: _})
-        it('should access `root` property', function() {
+        let _md = new MetaData( _, { _path: "key", _root: _});
+        it("should access `root` property", function() {
             expect(_md.root === _).toBe(true);
         });
-        it('should access `path` property', function() {
+        it("should access `path` property", function() {
             expect(_md.path).toEqual("key");
         });
-        it('should access `parent` property', function() {
-            let _md = new MetaData( _, { _path: "", _root: _})
+        it("should access `parent` property", function() {
+            let _md = new MetaData( _, { _path: "", _root: _});
             expect(_md.parent).toEqual(_);
         });
     });

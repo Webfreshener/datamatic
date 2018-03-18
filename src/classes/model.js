@@ -2,8 +2,11 @@ import {_mdRef, _oBuilders, _vBuilders, _exists, _validPaths, _object} from "./_
 import {Schema} from "./schema";
 import {Set} from "./set";
 import {JSD} from "./jsd";
-import {Observable} from 'rxjs/Rx';
+import {Observable} from "rxjs/Rx";
 export class Model {
+    constructor() {
+        _object.set(this, new Proxy(Model.createRef(this), this.handler));
+    }
     /**
      * subscribes handler method to observer for model
      * @param func
@@ -38,13 +41,13 @@ export class Model {
             this.observerBuilder.create(path, this);
             _o = this.observerBuilder.get(path);
         }
-        if (func.hasOwnProperty('next')) {
+        if (func.hasOwnProperty("next")) {
             _o.onNext.subscribe({next: func.next});
         }
-        if (func.hasOwnProperty('error')) {
+        if (func.hasOwnProperty("error")) {
             _o.onError.subscribe({next: func.error});
         }
-        if (func.hasOwnProperty('complete')) {
+        if (func.hasOwnProperty("complete")) {
             _o.onComplete.subscribe({next: func.complete});
         }
         return this;
@@ -201,4 +204,18 @@ export class Model {
     get isLocked() {
         return Object.isFrozen(_object.get(this));
     }
+
+    /**
+     *
+     * @param ref
+     * @returns {{}}
+     */
+    static createRef(ref) {
+        let _o = ref instanceof Set ? [] : {};
+        Object.defineProperty(_o, "$ref", {
+            value: ref,
+            writable: false
+        });
+        return _o;
+    };
 }

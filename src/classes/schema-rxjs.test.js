@@ -31,9 +31,7 @@ describe("Schema RXJS Test Suite", () => {
             s.model = {
                 value: "test"
             };
-            //
-            // s.set("value", "test");
-            // // -- this must fail
+            // -- this must fail
             s.set("value", false);
         });
 
@@ -143,7 +141,7 @@ describe("Schema RXJS Test Suite", () => {
                     idInjection: true,
                     validateUpsert: false
                 },
-                validations: [],
+                // validations: [],
                 relations: {
                     myRelation: {
                         type: "foo",
