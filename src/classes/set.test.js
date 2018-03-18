@@ -4,10 +4,6 @@ import {Set} from "./set";
 
 describe("Set Class Test Suite", function () {
     describe("Initialization Tests", function () {
-        // it.only("should initialize without a type", function() {
-        //     let _set = new Set("*", new JSD());
-        //     expect(_set instanceof Set).toBe(true);
-        // });
 
         it("should initialize with typeof <String>", function () {
             let _set = new JSD([{type: "String"}]);
@@ -244,7 +240,7 @@ describe("Set Class Test Suite", function () {
         });
     });
 
-    describe.skip("back ref", () => {
+    describe("back ref", () => {
         it("should provide backref on model", (done) => {
             const _jsd = new JSD([{
                 type: "Object",
@@ -288,8 +284,8 @@ describe("Set Class Test Suite", function () {
                     expect(schema.model[2].value.subEl).toBe("foo");
                     expect(typeof schema.model[2].value.subObj).toBe("object");
                     expect(schema.model[2].value.subObj.subEl).toBe("bar");
-                    expect(schema.model[2].value.hasOwnProperty('$ref')).toBe(true);
-                    expect(schema.model[2].value.subObj.hasOwnProperty('$ref')).toBe(true);
+                    expect(schema.model[2].value.hasOwnProperty("$ref")).toBe(true);
+                    expect(schema.model[2].value.subObj.hasOwnProperty("$ref")).toBe(true);
                     done();
                 },
                 error: (e) => {

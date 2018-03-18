@@ -30,7 +30,7 @@ export class MetaData {
         }
 
         // ensures existance of writeLock param
-        if (!_data.hasOwnProperty('_writeLock') || _data._writeLock === void(0)) {
+        if (!_data.hasOwnProperty("_writeLock") || _data._writeLock === void(0)) {
             _data._writeLock = false;
         }
 

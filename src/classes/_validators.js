@@ -39,7 +39,7 @@ export class BaseValidator {
         if (_exists(__) && typeof __ === "function") {
             const e = __(value);
             // sets result of validation
-            this.validations[path] = ((typeof e) !== 'string') || e;
+            this.validations[path] = ((typeof e) !== "string") || e;
             return e;
         }
         // returns error message if unable to find validator for path
@@ -58,7 +58,7 @@ export class BaseValidator {
         let _eval = (type, value) => {
             let _x = (typeof type !== "string") ? this.jsd.getClass([type]) : type;
             // tests for special '*' (wildcard) type
-            if (_x === '*') {
+            if (_x === "*") {
                 return true;
             }
             // tests for explicit type match
@@ -114,7 +114,6 @@ Validator.Array = class Arr extends BaseValidator {
      */
     constructor(path, signature, jsd) {
         super(path, signature, jsd);
-        console.log(`\n\n--- CREATING ARRAY VALIDATOR at '${this.path}'`)
     }
 
     /**
@@ -185,7 +184,7 @@ Validator.Object = class Obj extends BaseValidator {
             else {
                 for (let __ in value) {
                     let e = this.call(this.path, value[__]);
-                    if (typeof e === 'string') {
+                    if (typeof e === "string") {
                         return e;
                     }
                 }
@@ -288,9 +287,9 @@ Validator.Number = class Num extends BaseValidator {
      * @returns {*}
      */
     exec(value) {
-        let _ = this.checkType("number", value);
-        if (typeof _ === "string") {
-            return _;
+        let __ = this.checkType("number", value);
+        if (typeof __ === "string") {
+            return __;
         }
         // attempts to cast to number
         return !isNaN(Number(value)) ? true : `${this.path} was unable to process '${value}' as Number`;
@@ -347,7 +346,7 @@ Validator.Default = class Def extends BaseValidator {
      */
     exec(value) {
         const _testValidator = (type, value) => {
-            if (type === '*') {
+            if (type === "*") {
                 return true;
             }
             let _val = Validator[wf.Str.capitalize(type)];
@@ -357,7 +356,7 @@ Validator.Default = class Def extends BaseValidator {
             let _ = new _val(this.path, this.signature);
             return _.exec(value);
         };
-        let _x = typeof this.signature.type === 'string'
+        let _x = typeof this.signature.type === "string"
             ? this.jsd.getClass(this.signature.type)
             : this.signature.type;
         let _tR = this.checkType(_x, value);

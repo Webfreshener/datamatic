@@ -52,22 +52,6 @@ describe("Schema Class Test Suite", function () {
         });
     });
     describe("Schema Data Validation Methods", function () {
-        /*
-         it("should validate data set to it", function () {
-         var _S = new Schema({
-         elements: {
-         value: "String"
-         }
-         });
-         (_S.set({value: 1}) instanceof Schema).should.be.false;
-         //    (_S.set( {value:"1"} ) instanceof Schema).should.be.true;
-         //    _S = new Schema({
-         //    	elements: {
-         //    		value:"Number" }});
-         //    (_S.set({value:1}) instanceof Schema).should.be.true;
-         //    (_S.set({value:"A String"}) instanceof Schema).should.be.false;
-         });
-         */
         it("should only allow valid types", () => {
             return expect(() => new Schema({value: {type: "Nada"}}, null, new JSD())).toThrow(
                 "value for schema element 'value' has invalid type '<Nada>'");
@@ -363,9 +347,9 @@ describe("Schema Class Test Suite", function () {
                 valueA: 10,
                 valueB: 12,
             };
-            expect(_schema.model.hasOwnProperty('valueA')).toBe(true);
-            expect(_schema.model.hasOwnProperty('valueB')).toBe(true);
-            expect(_schema.model.hasOwnProperty('valueC')).toBe(false);
+            expect(_schema.model.hasOwnProperty("valueA")).toBe(true);
+            expect(_schema.model.hasOwnProperty("valueB")).toBe(true);
+            expect(_schema.model.hasOwnProperty("valueC")).toBe(false);
         });
     });
 
@@ -375,7 +359,7 @@ describe("Schema Class Test Suite", function () {
             let cnt = 0;
             const _h = {
                 next: (model) => {
-                    expect(model.hasOwnProperty('valueD')).toBe(false);
+                    expect(model.hasOwnProperty("valueD")).toBe(false);
                     if (++cnt == 2) {
                         expect(_schema.isLocked).toBe(true);
                         done();
@@ -383,7 +367,7 @@ describe("Schema Class Test Suite", function () {
 
                 },
                 complete: (model) => {
-                    _schema.set('valueD', 4);
+                    _schema.set("valueD", 4);
                 },
             };
 
@@ -406,9 +390,9 @@ describe("Schema Class Test Suite", function () {
                     done()
                     if (++cnt < 2) {
                         expect(_schema.isLocked).toBe(true);
-                        _schema.set('valueD', 4);
+                        _schema.set("valueD", 4);
                     } else {
-                        expect(model.hasOwnProperty('valueD')).toBe(false);
+                        expect(model.hasOwnProperty("valueD")).toBe(false);
                     }
                 },
                 complete: (model) => {
@@ -450,7 +434,7 @@ describe("Schema Class Test Suite", function () {
             let cnt = 0;
             const _h = {
                 next: (schema) => {
-                    expect(schema.model.valueC.subObj.hasOwnProperty('$ref')).toBe(true);
+                    expect(schema.model.valueC.subObj.hasOwnProperty("$ref")).toBe(true);
                     expect(schema.model.valueC.subObj.$ref instanceof Schema).toBe(true);
                     done();
                 },

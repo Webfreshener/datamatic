@@ -104,11 +104,15 @@ export class JSD {
         _oBuilders.set(this, new ObserverBuilder());
         _vBuilders.set(this, new ValidatorBuilder());
         let _s;
-        if (!schema || schema.type !== &quot;Array&quot;) {
+        if (!Array.isArray(schema) &amp;&amp; schema.type !== &quot;Array&quot;) {
             _s = new Schema(schema, options || null, this);
         } else {
-            if (!schema.hasOwnProperty(&quot;elements&quot;)) {
-                schema.elements = [&quot;*&quot;];
+            if (!Array.isArray(schema)) {
+                if (!schema.hasOwnProperty(&quot;elements&quot;)) {
+                    schema.elements = [&quot;*&quot;];
+                }
+            } else {
+                schema = {elements: Array.isArray(schema) ? schema : [schema]};
             }
             _s = new Set(schema.elements, options || null, this);
         }

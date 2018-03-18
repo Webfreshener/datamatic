@@ -594,6 +594,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/classes/_schemahelpers.js~schemahelpers#createsetelement",
+    "class/src/classes/_schemaHelpers.js~SchemaHelpers.html#instance-method-createSetElement",
+    "src/classes/_schemaHelpers.js~SchemaHelpers#createSetElement",
+    "method"
+  ],
+  [
     "src/classes/_schemahelpers.js~schemahelpers#ensurekindisstring",
     "class/src/classes/_schemaHelpers.js~SchemaHelpers.html#instance-method-ensureKindIsString",
     "src/classes/_schemaHelpers.js~SchemaHelpers#ensureKindIsString",
@@ -762,6 +768,12 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/classes/_validators.js~basevalidator#_signature",
+    "class/src/classes/_validators.js~BaseValidator.html#instance-member-_signature",
+    "src/classes/_validators.js~BaseValidator#_signature",
+    "member"
+  ],
+  [
     "src/classes/_validators.js~basevalidator#call",
     "class/src/classes/_validators.js~BaseValidator.html#instance-method-call",
     "src/classes/_validators.js~BaseValidator#call",
@@ -799,7 +811,7 @@ window.esdocSearchIndex = [
   ],
   [
     "src/classes/_validators.js~basevalidator#signature",
-    "class/src/classes/_validators.js~BaseValidator.html#instance-member-signature",
+    "class/src/classes/_validators.js~BaseValidator.html#instance-get-signature",
     "src/classes/_validators.js~BaseValidator#signature",
     "member"
   ],
@@ -892,6 +904,12 @@ window.esdocSearchIndex = [
     "file/src/classes/model.js.html",
     "src/classes/model.js",
     "file"
+  ],
+  [
+    "src/classes/model.js~model#constructor",
+    "class/src/classes/model.js~Model.html#instance-constructor-constructor",
+    "src/classes/model.js~Model#constructor",
+    "method"
   ],
   [
     "src/classes/model.js~model#islocked",
@@ -1002,6 +1020,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/classes/model.js~model.createref",
+    "class/src/classes/model.js~Model.html#static-method-createRef",
+    "src/classes/model.js~Model.createRef",
+    "method"
+  ],
+  [
     "src/classes/schema.js",
     "file/src/classes/schema.js.html",
     "src/classes/schema.js",
@@ -1033,13 +1057,13 @@ window.esdocSearchIndex = [
   ],
   [
     "src/classes/schema.js~schema#model",
-    "class/src/classes/schema.js~Schema.html#instance-get-model",
+    "class/src/classes/schema.js~Schema.html#instance-set-model",
     "src/classes/schema.js~Schema#model",
     "member"
   ],
   [
     "src/classes/schema.js~schema#model",
-    "class/src/classes/schema.js~Schema.html#instance-set-model",
+    "class/src/classes/schema.js~Schema.html#instance-get-model",
     "src/classes/schema.js~Schema#model",
     "member"
   ],
@@ -1135,13 +1159,13 @@ window.esdocSearchIndex = [
   ],
   [
     "src/classes/set.js~set#model",
-    "class/src/classes/set.js~Set.html#instance-get-model",
+    "class/src/classes/set.js~Set.html#instance-set-model",
     "src/classes/set.js~Set#model",
     "member"
   ],
   [
     "src/classes/set.js~set#model",
-    "class/src/classes/set.js~Set.html#instance-set-model",
+    "class/src/classes/set.js~Set.html#instance-get-model",
     "src/classes/set.js~Set#model",
     "member"
   ],
@@ -1182,6 +1206,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/classes/set.js~set#schema",
+    "class/src/classes/set.js~Set.html#instance-get-schema",
+    "src/classes/set.js~Set#schema",
+    "member"
+  ],
+  [
     "src/classes/set.js~set#setitemat",
     "class/src/classes/set.js~Set.html#instance-method-setItemAt",
     "src/classes/set.js~Set#setItemAt",
@@ -1192,6 +1222,12 @@ window.esdocSearchIndex = [
     "class/src/classes/set.js~Set.html#instance-method-shift",
     "src/classes/set.js~Set#shift",
     "method"
+  ],
+  [
+    "src/classes/set.js~set#signature",
+    "class/src/classes/set.js~Set.html#instance-get-signature",
+    "src/classes/set.js~Set#signature",
+    "member"
   ],
   [
     "src/classes/set.js~set#sort",

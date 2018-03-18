@@ -68,7 +68,7 @@ export class ValidatorBuilder {
             throw "ValidatorBuilder create: object reference required at arguments[0]";
         }
         const formatSig = (sig) => {
-            return sig.hasOwnProperty('polymorphic') ?
+            return sig.hasOwnProperty("polymorphic") ?
                 sig.polymorphic : (Array.isArray(sig) ? sig : [sig]);
         }
         let _signatures = formatSig(ref);
@@ -88,12 +88,12 @@ export class ValidatorBuilder {
                     }
                     return;
                 }
-                if (sig.hasOwnProperty('type')) {
+                if (sig.hasOwnProperty("type")) {
                     let _typeof = wf.Str.capitalize(sig.type);
                     let _hasKey = (0 <= Object.keys(Validator).indexOf(_typeof));
                     let _v = new Validator[_hasKey ? _typeof : "Default"](path, sig, elRef.jsd || elRef);
                     _functs.push(_v);
-                    let _path = path.replace(/(.*)\.polymorphic\.\d(.*)/, '$1$2');
+                    let _path = path.replace(/(.*)\.polymorphic\.\d(.*)/, "$1$2");
                     _v = new Validator[_hasKey ? _typeof : "Default"](_path, sig, elRef.jsd || elRef);
                     _functs.push(_v);
                 }
@@ -116,7 +116,7 @@ export class ValidatorBuilder {
         };
 
         this.set(path, _f);
-        this.set(path.replace(/(.*)\.polymorphic\.\d(.*)/, '$1$2'), _f);
+        this.set(path.replace(/(.*)\.polymorphic\.\d(.*)/, "$1$2"), _f);
         // returns closure to caller
         return _f;
     }
@@ -127,7 +127,6 @@ export class ValidatorBuilder {
      * @param value
      */
     exec(path, value) {
-        // console.log(`exec: ${path} value: ${JSON.stringify(value)}`);
         let _v = _validators.get(this);
         let validators;
         if (!_v.hasOwnProperty(path)) {
@@ -144,24 +143,16 @@ export class ValidatorBuilder {
             const findPolyPaths = (_pPath, _eName) => {
                 _pPath = wf.Str.regexEscape(_pPath);
                 const rxStr = `^(${_pPath}\\.${_eName}+|${_pPath}\\.\\d+\\.${_eName}|${_pPath}\\.\\d+\.\\*)+`;
-                // console.log(`rxStr: ${rxStr}`);
-                // console.log(Object.keys(_v));
                 return Object.keys(_v).filter((v) => {
                     return v.match(new RegExp(rxStr)) !== null;
                 });
             }
             const lookupPolyPath = (polyPath) => {
                 if (_v.hasOwnProperty(polyPath)) {
-                    console.log(`found: ${polyPath}`);
                     let pathArr = `${polyPath}`.split(".");
-                    console.log(pathArr);
                     const elName = pathArr.pop();
-                    // if (pathA)
-                    // pathArr.push("polymorphic");
                     polyPath = pathArr.join(".");
-                    // console.log(`seek validators for ${polyPath}`);
                     validators = findPolyPaths(polyPath, elName);
-                    // console.log(`validators: ${validators}`);
                     if (validators.length) {
                         const res = polyValidate(validators);
                         return res;
@@ -178,13 +169,15 @@ export class ValidatorBuilder {
 
             const _tPath = `${path}`.replace(/(.*)(\.+.*)$/, "$1.*");
             if (_v.hasOwnProperty(_tPath)) {
-                console.log(`'${path} is now ${_tPath}`);
-                res = lookupPolyPath(`${_tPath}.polymorphic.0`);
-                console.log(`res: ${res}`);
-                if (res) {
+                let rxStr = wf.Str.regexEscape(`${_tPath}.polymorphic`);
+                rxStr = `^(${rxStr}+\\.\\d?|${wf.Str.regexEscape(_tPath)})$`;
+                validators =  Object.keys(_v).filter((v) => {
+                    return v.match(new RegExp(rxStr)) !== null;
+                });
+                if (validators.length) {
+                    const res = polyValidate(validators);
                     return res;
                 }
-                return _v[_tPath](value);
             }
             if (_v.hasOwnProperty(`${_tPath}.polymorphic.0`)) {
                 let _eName = _tPath.split(".").pop();

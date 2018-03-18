@@ -163,7 +163,6 @@ export class SchemaHelpers {
         }
         else {
             try {
-                console.log(`create child as SET`);
                 _ref = new Set(_sig, _opts, _md);
             } catch (e) {
                 this._ref.observerBuilder.error(this._ref.path, e);
@@ -230,7 +229,6 @@ export class SchemaHelpers {
                 this.walkSchema(obj[_k].elements, objPath);
             }
         }
-        // console.log(`\n\nvBuilders:\n${JSON.stringify(this._ref.validatorBuilder.list())}`);
     }
 
 
@@ -310,7 +308,7 @@ export class SchemaHelpers {
                     // creates Validator for path
                     this._ref.validatorBuilder.create(_schema, _key, this._ref);
                 } else {
-                    if (_childSigs.hasOwnProperty('polymorphic')) {
+                    if (_childSigs.hasOwnProperty("polymorphic")) {
                         const pKey = `${_key}`.split(".").shift();
                         let _s = {};
                         _s[pKey] = _childSigs.polymorphic;

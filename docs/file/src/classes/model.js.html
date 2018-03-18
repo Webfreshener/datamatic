@@ -67,6 +67,9 @@ import {Set} from &quot;./set&quot;;
 import {JSD} from &quot;./jsd&quot;;
 import {Observable} from &apos;rxjs/Rx&apos;;
 export class Model {
+    constructor() {
+        _object.set(this, new Proxy(Model.createRef(this), this.handler));
+    }
     /**
      * subscribes handler method to observer for model
      * @param func
@@ -264,6 +267,20 @@ export class Model {
     get isLocked() {
         return Object.isFrozen(_object.get(this));
     }
+
+    /**
+     *
+     * @param ref
+     * @returns {{}}
+     */
+    static createRef(ref) {
+        let _o = ref instanceof Set ? [] : {};
+        Object.defineProperty(_o, &apos;$ref&apos;, {
+            value: ref,
+            writable: false
+        });
+        return _o;
+    };
 }</code></pre>
 
 </div>

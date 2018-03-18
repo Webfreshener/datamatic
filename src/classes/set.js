@@ -115,7 +115,7 @@ export class Set extends Model {
                     return t[idx];
                 }
 
-                if (idx === '$ref') {
+                if (idx === "$ref") {
                     return this;
                 }
 

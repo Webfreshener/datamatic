@@ -219,12 +219,10 @@ export class SchemaValidator {
                 if (params.type === "*") {
                     return true;
                 } else if (_type.indexOf(params.type) < 0 ) {
-                    // console.log(`_schemaKeys['${sKey}']:\n\t_type: ${JSON.stringify(_type)}\n\tparams: ${JSON.stringify(params)}`);
                     return `type attribute was not defined for ${sKey}`;
                 }
             }
         }
-        // console.log(`failed to identify _schemaKeys['${sKey}']: ${JSON.stringify(params)}`);
         return true;
     }
 
