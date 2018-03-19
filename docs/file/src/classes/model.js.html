@@ -65,7 +65,7 @@
 import {Schema} from &quot;./schema&quot;;
 import {Set} from &quot;./set&quot;;
 import {JSD} from &quot;./jsd&quot;;
-import {Observable} from &apos;rxjs/Rx&apos;;
+import {Observable} from &quot;rxjs/Rx&quot;;
 export class Model {
     constructor() {
         _object.set(this, new Proxy(Model.createRef(this), this.handler));
@@ -104,13 +104,13 @@ export class Model {
             this.observerBuilder.create(path, this);
             _o = this.observerBuilder.get(path);
         }
-        if (func.hasOwnProperty(&apos;next&apos;)) {
+        if (func.hasOwnProperty(&quot;next&quot;)) {
             _o.onNext.subscribe({next: func.next});
         }
-        if (func.hasOwnProperty(&apos;error&apos;)) {
+        if (func.hasOwnProperty(&quot;error&quot;)) {
             _o.onError.subscribe({next: func.error});
         }
-        if (func.hasOwnProperty(&apos;complete&apos;)) {
+        if (func.hasOwnProperty(&quot;complete&quot;)) {
             _o.onComplete.subscribe({next: func.complete});
         }
         return this;
@@ -275,7 +275,7 @@ export class Model {
      */
     static createRef(ref) {
         let _o = ref instanceof Set ? [] : {};
-        Object.defineProperty(_o, &apos;$ref&apos;, {
+        Object.defineProperty(_o, &quot;$ref&quot;, {
             value: ref,
             writable: false
         });

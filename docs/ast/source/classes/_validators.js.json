@@ -2353,7 +2353,7 @@
                                     },
                                     "extra": {
                                       "rawValue": "string",
-                                      "raw": "'string'"
+                                      "raw": "\"string\""
                                     },
                                     "value": "string"
                                   },
@@ -3206,7 +3206,7 @@
                                       },
                                       "extra": {
                                         "rawValue": "*",
-                                        "raw": "'*'"
+                                        "raw": "\"*\""
                                       },
                                       "value": "*"
                                     },
@@ -9805,7 +9805,7 @@
                                               },
                                               "extra": {
                                                 "rawValue": "string",
-                                                "raw": "'string'"
+                                                "raw": "\"string\""
                                               },
                                               "value": "string"
                                             }
@@ -16526,7 +16526,7 @@
                                         },
                                         "extra": {
                                           "rawValue": "*",
-                                          "raw": "'*'"
+                                          "raw": "\"*\""
                                         },
                                         "value": "*"
                                       }
@@ -17525,7 +17525,7 @@
                                   },
                                   "extra": {
                                     "rawValue": "string",
-                                    "raw": "'string'"
+                                    "raw": "\"string\""
                                   },
                                   "value": "string"
                                 }

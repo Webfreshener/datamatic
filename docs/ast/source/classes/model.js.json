@@ -698,7 +698,7 @@
           },
           "extra": {
             "rawValue": "rxjs/Rx",
-            "raw": "'rxjs/Rx'"
+            "raw": "\"rxjs/Rx\""
           },
           "value": "rxjs/Rx"
         }
@@ -2907,7 +2907,7 @@
                             },
                             "extra": {
                               "rawValue": "next",
-                              "raw": "'next'"
+                              "raw": "\"next\""
                             },
                             "value": "next"
                           }
@@ -3245,7 +3245,7 @@
                             },
                             "extra": {
                               "rawValue": "error",
-                              "raw": "'error'"
+                              "raw": "\"error\""
                             },
                             "value": "error"
                           }
@@ -3583,7 +3583,7 @@
                             },
                             "extra": {
                               "rawValue": "complete",
-                              "raw": "'complete'"
+                              "raw": "\"complete\""
                             },
                             "value": "complete"
                           }
@@ -10499,7 +10499,7 @@
                             },
                             "extra": {
                               "rawValue": "$ref",
-                              "raw": "'$ref'"
+                              "raw": "\"$ref\""
                             },
                             "value": "$ref"
                           },

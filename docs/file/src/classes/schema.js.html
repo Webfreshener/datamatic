@@ -120,7 +120,7 @@ export class Schema extends Model {
             _signature = _signature.elements;
             for (let _sigEl of Object.keys(_signature)) {
                 // -- tests for element `required`
-                if (_signature[_sigEl].hasOwnProperty(&apos;required&apos;) &amp;&amp;
+                if (_signature[_sigEl].hasOwnProperty(&quot;required&quot;) &amp;&amp;
                     _signature[_sigEl].required === true) {
                     // -- adds required element to list
                     _required_elements.get(this).splice(-1, 0, _sigEl);
@@ -155,7 +155,7 @@ export class Schema extends Model {
     get handler() {
         return {
             get: (t, key) =&gt; {
-                const _m = key === &apos;$ref&apos; ? this: t[key];
+                const _m = key === &quot;$ref&quot; ? this: t[key];
                 return _m;
             },
             set: (t, key, value) =&gt; {
@@ -293,7 +293,7 @@ export class Schema extends Model {
             _validPaths.get(this.jsd)[this.path] = -1;
             this.model[key] = value;
             let valid = this.validate();
-            if (typeof valid === &apos;string&apos;) {
+            if (typeof valid === &quot;string&quot;) {
                 kPath = Schema.concatPathAddr(this.path, key);
                 this.observerBuilder.error(this.path, valid);
                 return false;
