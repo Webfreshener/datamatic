@@ -4,7 +4,13 @@
     "required": false,
     "extensible": true,
     "elements": {
-      "anArray": [{"type": "String"}],
+      "anArray": {
+        "type": "Array",
+        "required": true,
+        "elements": [{
+          "type": "String"
+        }]
+      },
       "anObject": {
         "type": "Object",
         "required": false,
