@@ -256,6 +256,10 @@ export class SchemaValidator {
             if ((this.jsd.getClass(params.type)) == null) {
                 return this.validateSchemaClass(key, params);
             }
+            if (Array.isArray(params.elements)) {
+                params.polymorphic = Object.assign({}, params.elements);
+                delete params.elements;
+            }
             // handles child elements
             for (let sKey of Object.keys(params)) {
                 let __ = this.validateSchemaParam(key, sKey, _schemaKeys, params);

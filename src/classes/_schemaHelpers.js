@@ -203,7 +203,9 @@ export class SchemaHelpers {
                 // tests for polymorphic element key rather than schema key
                 if (!Array.isArray(obj.polymorphic)) {
                     // if is element key, create validator and continue to next steps
-                    this._ref.validatorBuilder.create(obj[_k], objPath, this._ref);
+                    this._ref.validatorBuilder.create(obj[_k], `${objPath}`, this._ref);
+                    // this is a bit of a kludge to allow polymorphic child elements
+                    this._ref.validatorBuilder.create(obj[_k], `${objPath}.0`, this._ref);
                     continue;
                 }
                 let cnt = 0;
@@ -229,6 +231,7 @@ export class SchemaHelpers {
                 this.walkSchema(obj[_k].elements, objPath);
             }
         }
+        // console.log(this._ref.validatorBuilder.list());
     }
 
 

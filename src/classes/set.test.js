@@ -240,6 +240,36 @@ describe("Set Class Test Suite", function () {
         });
     });
 
+    describe("Nested Element", () => {
+        it("should support being nested in ohter elements", () => {
+            const _jsd = new JSD({
+                aString: {
+                    type: "String",
+                },
+                anArray: {
+                    type: "Array",
+                    required: true,
+                    elements: [{
+                        type: "Number",
+                    }],
+                },
+            });
+            _jsd.document.subscribe({
+                next: (val) => {
+                    console.log(`${val}`);
+                },
+                error: (e) => {
+                    console.log(`e: ${e}`);
+                }
+            });
+            _jsd.document.model = {
+                aString: "foo",
+                anArray: [1, 2, 3],
+            };
+            expect(_jsd.document.model.anArray.length).toBe(3);
+        });
+    });
+
     describe("back ref", () => {
         it("should provide backref on model", (done) => {
             const _jsd = new JSD([{
