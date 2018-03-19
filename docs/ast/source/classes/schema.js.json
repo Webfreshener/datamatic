@@ -3936,7 +3936,7 @@
                                           },
                                           "extra": {
                                             "rawValue": "required",
-                                            "raw": "'required'"
+                                            "raw": "\"required\""
                                           },
                                           "value": "required"
                                         }
@@ -6554,7 +6554,7 @@
                                               },
                                               "extra": {
                                                 "rawValue": "$ref",
-                                                "raw": "'$ref'"
+                                                "raw": "\"$ref\""
                                               },
                                               "value": "$ref"
                                             }
@@ -15550,7 +15550,7 @@
                                 },
                                 "extra": {
                                   "rawValue": "string",
-                                  "raw": "'string'"
+                                  "raw": "\"string\""
                                 },
                                 "value": "string"
                               }

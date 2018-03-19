@@ -282,12 +282,10 @@ export class SchemaValidator {
                 if (params.type === &quot;*&quot;) {
                     return true;
                 } else if (_type.indexOf(params.type) &lt; 0 ) {
-                    // console.log(`_schemaKeys[&apos;${sKey}&apos;]:\n\t_type: ${JSON.stringify(_type)}\n\tparams: ${JSON.stringify(params)}`);
                     return `type attribute was not defined for ${sKey}`;
                 }
             }
         }
-        // console.log(`failed to identify _schemaKeys[&apos;${sKey}&apos;]: ${JSON.stringify(params)}`);
         return true;
     }
 
@@ -320,6 +318,10 @@ export class SchemaValidator {
             // handles Classes/Functions
             if ((this.jsd.getClass(params.type)) == null) {
                 return this.validateSchemaClass(key, params);
+            }
+            if (Array.isArray(params.elements)) {
+                params.polymorphic = Object.assign({}, params.elements);
+                delete params.elements;
             }
             // handles child elements
             for (let sKey of Object.keys(params)) {

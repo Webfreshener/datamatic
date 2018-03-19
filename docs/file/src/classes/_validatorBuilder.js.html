@@ -131,7 +131,7 @@ export class ValidatorBuilder {
             throw &quot;ValidatorBuilder create: object reference required at arguments[0]&quot;;
         }
         const formatSig = (sig) =&gt; {
-            return sig.hasOwnProperty(&apos;polymorphic&apos;) ?
+            return sig.hasOwnProperty(&quot;polymorphic&quot;) ?
                 sig.polymorphic : (Array.isArray(sig) ? sig : [sig]);
         }
         let _signatures = formatSig(ref);
@@ -151,12 +151,12 @@ export class ValidatorBuilder {
                     }
                     return;
                 }
-                if (sig.hasOwnProperty(&apos;type&apos;)) {
+                if (sig.hasOwnProperty(&quot;type&quot;)) {
                     let _typeof = wf.Str.capitalize(sig.type);
                     let _hasKey = (0 &lt;= Object.keys(Validator).indexOf(_typeof));
                     let _v = new Validator[_hasKey ? _typeof : &quot;Default&quot;](path, sig, elRef.jsd || elRef);
                     _functs.push(_v);
-                    let _path = path.replace(/(.*)\.polymorphic\.\d(.*)/, &apos;$1$2&apos;);
+                    let _path = path.replace(/(.*)\.polymorphic\.\d(.*)/, &quot;$1$2&quot;);
                     _v = new Validator[_hasKey ? _typeof : &quot;Default&quot;](_path, sig, elRef.jsd || elRef);
                     _functs.push(_v);
                 }
@@ -179,7 +179,7 @@ export class ValidatorBuilder {
         };
 
         this.set(path, _f);
-        this.set(path.replace(/(.*)\.polymorphic\.\d(.*)/, &apos;$1$2&apos;), _f);
+        this.set(path.replace(/(.*)\.polymorphic\.\d(.*)/, &quot;$1$2&quot;), _f);
         // returns closure to caller
         return _f;
     }

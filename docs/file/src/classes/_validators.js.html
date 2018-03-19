@@ -102,7 +102,7 @@ export class BaseValidator {
         if (_exists(__) &amp;&amp; typeof __ === &quot;function&quot;) {
             const e = __(value);
             // sets result of validation
-            this.validations[path] = ((typeof e) !== &apos;string&apos;) || e;
+            this.validations[path] = ((typeof e) !== &quot;string&quot;) || e;
             return e;
         }
         // returns error message if unable to find validator for path
@@ -121,7 +121,7 @@ export class BaseValidator {
         let _eval = (type, value) =&gt; {
             let _x = (typeof type !== &quot;string&quot;) ? this.jsd.getClass([type]) : type;
             // tests for special &apos;*&apos; (wildcard) type
-            if (_x === &apos;*&apos;) {
+            if (_x === &quot;*&quot;) {
                 return true;
             }
             // tests for explicit type match
@@ -247,7 +247,7 @@ Validator.Object = class Obj extends BaseValidator {
             else {
                 for (let __ in value) {
                     let e = this.call(this.path, value[__]);
-                    if (typeof e === &apos;string&apos;) {
+                    if (typeof e === &quot;string&quot;) {
                         return e;
                     }
                 }
@@ -409,7 +409,7 @@ Validator.Default = class Def extends BaseValidator {
      */
     exec(value) {
         const _testValidator = (type, value) =&gt; {
-            if (type === &apos;*&apos;) {
+            if (type === &quot;*&quot;) {
                 return true;
             }
             let _val = Validator[wf.Str.capitalize(type)];
@@ -419,7 +419,7 @@ Validator.Default = class Def extends BaseValidator {
             let _ = new _val(this.path, this.signature);
             return _.exec(value);
         };
-        let _x = typeof this.signature.type === &apos;string&apos;
+        let _x = typeof this.signature.type === &quot;string&quot;
             ? this.jsd.getClass(this.signature.type)
             : this.signature.type;
         let _tR = this.checkType(_x, value);

@@ -7340,7 +7340,7 @@
                                         },
                                         "extra": {
                                           "rawValue": "$ref",
-                                          "raw": "'$ref'"
+                                          "raw": "\"$ref\""
                                         },
                                         "value": "$ref"
                                       }
