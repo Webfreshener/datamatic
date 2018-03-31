@@ -39,6 +39,10 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/schema.js~Schema.html">Schema</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/set.js~Set.html">Set</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ensureKindIsString">ensureKindIsString</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ensureRequiredFields">ensureRequiredFields</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getKinds">getKinds</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-remapPolypath">remapPolypath</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_kinds">_kinds</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span></li>
@@ -62,8 +66,7 @@
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/classes/_schemaValidator.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {wf, _exists, _schemaOptions} from &quot;./_references&quot;;
-// import {MetaData} from &quot;./_metaData&quot;;
-// import {JSD} from &quot;./jsd&quot;;
+
 /**
  * @private
  * @class
@@ -91,7 +94,7 @@ export class SchemaValidator {
         if (key.match(/\.?default+$/)) {
             return true;
         }
-        //- hanbdles restrictions defined in `restrict` object key
+        //- handles restrictions defined in `restrict` object key
         if (key.match(/\.?restrict+$/)) {
             if (typeof _type !== &quot;string&quot; || !_type.length) {
                 return &quot;restrict requires a Regular Expression String&quot;;

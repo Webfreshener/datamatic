@@ -39,6 +39,10 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/schema.js~Schema.html">Schema</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/set.js~Set.html">Set</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ensureKindIsString">ensureKindIsString</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ensureRequiredFields">ensureRequiredFields</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getKinds">getKinds</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-remapPolypath">remapPolypath</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_kinds">_kinds</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span></li>
@@ -61,13 +65,13 @@
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {SchemaHelpers} from &apos;<span><a href="file/src/classes/_schemaHelpers.js.html#lineNumber9">jsd/src/classes/_schemaHelpers.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {SchemaHelpers} from &apos;<span><a href="file/src/classes/_schemaHelpers.js.html#lineNumber10">jsd/src/classes/_schemaHelpers.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">private</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/src/classes/_schemaHelpers.js.html#lineNumber9">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/src/classes/_schemaHelpers.js.html#lineNumber10">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -245,91 +249,6 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/_schemaHelpers.js~SchemaHelpers.html#instance-method-ensureKindIsString">ensureKindIsString</a></span></span><span class="code" data-ice="signature">(itm: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          
-          <span class="code" data-ice="name"><span><a href="class/src/classes/_schemaHelpers.js~SchemaHelpers.html#instance-method-ensureRequiredFields">ensureRequiredFields</a></span></span><span class="code" data-ice="signature">(obj: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>): <span>true</span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        <div data-ice="description"><p>tests if required fields exist on object</p>
-</div>
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          
-          <span class="code" data-ice="name"><span><a href="class/src/classes/_schemaHelpers.js~SchemaHelpers.html#instance-method-getKinds">getKinds</a></span></span><span class="code" data-ice="signature">(_s: <span>*</span>): <span>array</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          
           <span class="code" data-ice="name"><span><a href="class/src/classes/_schemaHelpers.js~SchemaHelpers.html#instance-method-setChildObject">setChildObject</a></span></span><span class="code" data-ice="signature">(key: <span>*</span>, value: <span>*</span>): <span>*</span></span>
         </p>
       </div>
@@ -364,7 +283,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Sets Object key/vals upon Schema Reference</p>
+</div>
       </div>
     </td>
     <td>
@@ -449,7 +369,7 @@
       <div>
         
         
-        <div data-ice="description"><p>Traverses Schema Elements and builds validations for entries</p>
+        <div data-ice="description"><p>Traverses Schema Elements and builds Validations for entries</p>
 </div>
       </div>
     </td>
@@ -480,7 +400,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_schemaHelpers.js.html#lineNumber13">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_schemaHelpers.js.html#lineNumber14">source</a></span></span>
     </span>
   </h3>
 
@@ -526,7 +446,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_schemaHelpers.js.html#lineNumber17">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_schemaHelpers.js.html#lineNumber19">source</a></span></span>
     </span>
   </h3>
 
@@ -572,7 +492,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_schemaHelpers.js.html#lineNumber105">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_schemaHelpers.js.html#lineNumber70">source</a></span></span>
     </span>
   </h3>
 
@@ -662,7 +582,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_schemaHelpers.js.html#lineNumber143">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_schemaHelpers.js.html#lineNumber108">source</a></span></span>
     </span>
   </h3>
 
@@ -728,222 +648,6 @@
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-ensureKindIsString">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    
-    <span class="code" data-ice="name">ensureKindIsString</span><span class="code" data-ice="signature">(itm: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/classes/_schemaHelpers.js.html#lineNumber61">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  
-
-  
-
-  <div data-ice="properties"><div data-ice="properties">
-  <h4 data-ice="title">Params:</h4>
-  <table class="params">
-    <thead>
-    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-    
-    <tr data-ice="property" data-depth="0">
-      <td data-ice="name" class="code" data-depth="0">itm</td>
-      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
-    </tr>
-</tbody>
-  </table>
-</div>
-</div>
-
-  <div class="return-params" data-ice="returnParams">
-    <h4>Return:</h4>
-    <table>
-      <tbody>
-        <tr>
-          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">Boolean</a></span></td>
-          
-        </tr>
-      </tbody>
-    </table>
-    <div data-ice="returnProperties">
-</div>
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-ensureRequiredFields">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    
-    <span class="code" data-ice="name">ensureRequiredFields</span><span class="code" data-ice="signature">(obj: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>): <span>true</span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/classes/_schemaHelpers.js.html#lineNumber79">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  <div data-ice="description"><p>tests if required fields exist on object</p>
-</div>
-
-  
-
-  <div data-ice="properties"><div data-ice="properties">
-  <h4 data-ice="title">Params:</h4>
-  <table class="params">
-    <thead>
-    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-    
-    <tr data-ice="property" data-depth="0">
-      <td data-ice="name" class="code" data-depth="0">obj</td>
-      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
-    </tr>
-</tbody>
-  </table>
-</div>
-</div>
-
-  <div class="return-params" data-ice="returnParams">
-    <h4>Return:</h4>
-    <table>
-      <tbody>
-        <tr>
-          <td class="return-type code" data-ice="returnType"><span>true</span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
-          <td class="return-desc" data-ice="returnDescription"><p>returns true or error string</p>
-</td>
-        </tr>
-      </tbody>
-    </table>
-    <div data-ice="returnProperties">
-</div>
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-getKinds">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    
-    <span class="code" data-ice="name">getKinds</span><span class="code" data-ice="signature">(_s: <span>*</span>): <span>array</span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/classes/_schemaHelpers.js.html#lineNumber277">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  
-
-  
-
-  <div data-ice="properties"><div data-ice="properties">
-  <h4 data-ice="title">Params:</h4>
-  <table class="params">
-    <thead>
-    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-    
-    <tr data-ice="property" data-depth="0">
-      <td data-ice="name" class="code" data-depth="0">_s</td>
-      <td data-ice="type" class="code"><span>*</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
-    </tr>
-</tbody>
-  </table>
-</div>
-</div>
-
-  <div class="return-params" data-ice="returnParams">
-    <h4>Return:</h4>
-    <table>
-      <tbody>
-        <tr>
-          <td class="return-type code" data-ice="returnType"><span>array</span></td>
-          <td class="return-desc" data-ice="returnDescription"><p>list of types decalred by object</p>
-</td>
-        </tr>
-      </tbody>
-    </table>
-    <div data-ice="returnProperties">
-</div>
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="instance-method-setChildObject">
     <span class="access" data-ice="access">public</span>
     
@@ -955,7 +659,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_schemaHelpers.js.html#lineNumber44">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_schemaHelpers.js.html#lineNumber49">source</a></span></span>
     </span>
   </h3>
 
@@ -1032,14 +736,15 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_schemaHelpers.js.html#lineNumber23">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_schemaHelpers.js.html#lineNumber28">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Sets Object key/vals upon Schema Reference</p>
+</div>
 
   
 
@@ -1103,7 +808,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_schemaHelpers.js.html#lineNumber293">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_schemaHelpers.js.html#lineNumber253">source</a></span></span>
     </span>
   </h3>
 
@@ -1193,7 +898,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_schemaHelpers.js.html#lineNumber244">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_schemaHelpers.js.html#lineNumber215">source</a></span></span>
     </span>
   </h3>
 
@@ -1270,14 +975,14 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_schemaHelpers.js.html#lineNumber186">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_schemaHelpers.js.html#lineNumber150">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>Traverses Schema Elements and builds validations for entries</p>
+  <div data-ice="description"><p>Traverses Schema Elements and builds Validations for entries</p>
 </div>
 
   

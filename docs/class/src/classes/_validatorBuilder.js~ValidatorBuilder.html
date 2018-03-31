@@ -39,6 +39,10 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/schema.js~Schema.html">Schema</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/set.js~Set.html">Set</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ensureKindIsString">ensureKindIsString</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ensureRequiredFields">ensureRequiredFields</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getKinds">getKinds</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-remapPolypath">remapPolypath</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_kinds">_kinds</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span></li>
@@ -161,7 +165,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Creates new Validation for Schema/Set items</p>
+</div>
       </div>
     </td>
     <td>
@@ -189,7 +194,7 @@
       <div>
         
         
-        <div data-ice="description"><p>executes validator <code>value</code> with validator at <code>path</code></p>
+        <div data-ice="description"><p>Executes validator <code>value</code> with validator at <code>path</code></p>
 </div>
       </div>
     </td>
@@ -218,7 +223,7 @@
       <div>
         
         
-        <div data-ice="description"><p>gets Validator at <code>path</code> from Validator Hash</p>
+        <div data-ice="description"><p>Gets Validator at <code>path</code> from Validator Hash</p>
 </div>
       </div>
     </td>
@@ -241,13 +246,14 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/_validatorBuilder.js~ValidatorBuilder.html#instance-method-list">list</a></span></span><span class="code" data-ice="signature">(): <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/_validatorBuilder.js~ValidatorBuilder.html#instance-method-list">list</a></span></span><span class="code" data-ice="signature">(): <span>array</span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Returns list of validation paths</p>
+</div>
       </div>
     </td>
     <td>
@@ -275,7 +281,7 @@
       <div>
         
         
-        <div data-ice="description"><p>sets Validator at <code>path</code> in Validator Hash</p>
+        <div data-ice="description"><p>Sets Validator at <code>path</code> in Validator Hash</p>
 </div>
       </div>
     </td>
@@ -353,14 +359,15 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_validatorBuilder.js.html#lineNumber66">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_validatorBuilder.js.html#lineNumber60">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Creates new Validation for Schema/Set items</p>
+</div>
 
   
 
@@ -376,19 +383,22 @@
       <td data-ice="name" class="code" data-depth="0">ref</td>
       <td data-ice="type" class="code"><span>*</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>Schema Reference</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">path</td>
       <td data-ice="type" class="code"><span>*</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>Path to Element in Tree</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">elRef</td>
       <td data-ice="type" class="code"><span>*</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>Container Object Reference</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -436,14 +446,14 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_validatorBuilder.js.html#lineNumber129">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_validatorBuilder.js.html#lineNumber126">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>executes validator <code>value</code> with validator at <code>path</code></p>
+  <div data-ice="description"><p>Executes validator <code>value</code> with validator at <code>path</code></p>
 </div>
 
   
@@ -514,14 +524,14 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_validatorBuilder.js.html#lineNumber37">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_validatorBuilder.js.html#lineNumber33">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>gets Validator at <code>path</code> from Validator Hash</p>
+  <div data-ice="description"><p>Gets Validator at <code>path</code> from Validator Hash</p>
 </div>
 
   
@@ -583,18 +593,19 @@
     
     
     
-    <span class="code" data-ice="name">list</span><span class="code" data-ice="signature">(): <span>*</span></span>
+    <span class="code" data-ice="name">list</span><span class="code" data-ice="signature">(): <span>array</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_validatorBuilder.js.html#lineNumber26">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_validatorBuilder.js.html#lineNumber23">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Returns list of validation paths</p>
+</div>
 
   
 
@@ -606,9 +617,8 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span>*</span></td>
-          <td class="return-desc" data-ice="returnDescription"><p>list of validation paths</p>
-</td>
+          <td class="return-type code" data-ice="returnType"><span>array</span></td>
+          
         </tr>
       </tbody>
     </table>
@@ -643,14 +653,14 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_validatorBuilder.js.html#lineNumber48">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_validatorBuilder.js.html#lineNumber44">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>sets Validator at <code>path</code> in Validator Hash</p>
+  <div data-ice="description"><p>Sets Validator at <code>path</code> in Validator Hash</p>
 </div>
 
   

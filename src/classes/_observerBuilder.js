@@ -16,7 +16,7 @@ export class ObserverBuilder {
      */
     list() {
         let _v = _observers.get(this);
-        return object.keys(_v);
+        return Object.keys(_v);
     }
 
     /**

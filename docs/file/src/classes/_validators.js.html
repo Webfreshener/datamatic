@@ -39,6 +39,10 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/schema.js~Schema.html">Schema</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/set.js~Set.html">Set</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ensureKindIsString">ensureKindIsString</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ensureRequiredFields">ensureRequiredFields</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getKinds">getKinds</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-remapPolypath">remapPolypath</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_kinds">_kinds</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span></li>
@@ -62,10 +66,12 @@
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/classes/_validators.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {_exists, wf, _validPaths, _vBuilders} from &quot;./_references&quot;;
+
 /**
  * Holder for Validator Class References
  */
 export const Validator = {};
+
 /**
  * @private
  */
@@ -74,14 +80,14 @@ export class BaseValidator {
      * @constructor
      */
     constructor(path, signature, jsd) {
-        if (!jsd)
-        {
+        if (!jsd) {
             throw `JSD is required for &apos;${path}&apos;`;
         }
         this.path = path;
         this._signature = JSON.stringify(signature);
         this.jsd = jsd;
         this.validations[path] = -1;
+        Object.seal(this);
     }
 
     get signature() {
@@ -90,7 +96,6 @@ export class BaseValidator {
 
     /**
      * invokes `exec` for validator on object child elements
-     *
      * @param path
      * @param value
      * @returns {*}
@@ -136,10 +141,13 @@ export class BaseValidator {
             // -- NOTE: this should allow an Array of Types
             // -- might want re-evaluate this
             if (Array.isArray(type)) {
-                // tests each `type` specified in Set
-                return type.some((k) =&gt; {
-                   return _eval(type[k], value) === &quot;boolean&quot;
+                let _res;
+                // tests each `type` specified in Set until we find a true value
+                type.some((k) =&gt; {
+                    _res = _eval(k, value);
+                    return ((typeof _res) === &quot;boolean&quot;);
                 });
+                return _res;
             }
             // performs eval on type against value
             return _eval(type, value);
@@ -168,6 +176,7 @@ export class BaseValidator {
         return _validPaths.get(this.jsd);
     }
 }
+
 Validator.Array = class Arr extends BaseValidator {
     /**
      * @constructor
@@ -187,7 +196,7 @@ Validator.Array = class Arr extends BaseValidator {
      */
     exec(value) {
         if (!Array.isArray(value)) {
-            return `array expected t &apos;${this.path}&apos;`;
+            return `type of array was expected for &apos;${this.path}&apos;. type was &apos;&lt;${typeof value}&gt;&apos;`;
         }
         for (let __ in value) {
             let e = this.call(this.path, value[__]);
@@ -211,6 +220,7 @@ Validator.Object = class Obj extends BaseValidator {
     constructor(path, signature, jsd) {
         super(path, signature, jsd);
     }
+
     /**
      * validates Object datatypes
      *
@@ -255,7 +265,7 @@ Validator.Object = class Obj extends BaseValidator {
             return true;
         }
         else {
-            return `${this.path} expected value of type &apos;Object&apos;. Type was &apos;&lt;${typeof value}&gt;&apos;`;
+            return `&apos;${this.path}&apos; expected value of type &apos;Object&apos;. Type was &apos;&lt;${typeof value}&gt;&apos;`;
         }
     }
 };
@@ -272,6 +282,7 @@ Validator.Boolean = class Bool extends BaseValidator {
     constructor(path, signature, jsd) {
         super(path, signature, jsd);
     }
+
     /**
      * validates Boolean datatypes
      *
@@ -296,6 +307,7 @@ Validator.String = class Str extends BaseValidator {
     constructor(path, signature, jsd) {
         super(path, signature, jsd);
     }
+
     /**
      * validates String datatypes
      *
@@ -343,6 +355,7 @@ Validator.Number = class Num extends BaseValidator {
     constructor(path, signature, jsd) {
         super(path, signature, jsd);
     }
+
     /**
      * validates Number datatypes
      *
@@ -372,6 +385,7 @@ Validator.Function = class Fun extends BaseValidator {
     constructor(path, signature, jsd) {
         super(path, signature, jsd);
     }
+
     /**
      * validates Function datatypes
      *
@@ -401,9 +415,9 @@ Validator.Default = class Def extends BaseValidator {
     constructor(path, signature, jsd) {
         super(path, signature, jsd);
     }
+
     /**
-     * validates unknown (default) datatypes
-     *
+     * validates unknown (default) datatypess
      * @param value
      * @returns {*}
      */
@@ -416,7 +430,7 @@ Validator.Default = class Def extends BaseValidator {
             if (!_exists(_val)) {
                 return `&apos;${this.path}&apos; was unable to obtain validator for type &apos;&lt;${type}&gt;&apos;`;
             }
-            let _ = new _val(this.path, this.signature);
+            let _ = new _val(this.path, this.signature, this.jsd);
             return _.exec(value);
         };
         let _x = typeof this.signature.type === &quot;string&quot;

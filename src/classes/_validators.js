@@ -1,8 +1,10 @@
 import {_exists, wf, _validPaths, _vBuilders} from "./_references";
+
 /**
  * Holder for Validator Class References
  */
 export const Validator = {};
+
 /**
  * @private
  */
@@ -11,14 +13,14 @@ export class BaseValidator {
      * @constructor
      */
     constructor(path, signature, jsd) {
-        if (!jsd)
-        {
+        if (!jsd) {
             throw `JSD is required for '${path}'`;
         }
         this.path = path;
         this._signature = JSON.stringify(signature);
         this.jsd = jsd;
         this.validations[path] = -1;
+        Object.seal(this);
     }
 
     get signature() {
@@ -27,7 +29,6 @@ export class BaseValidator {
 
     /**
      * invokes `exec` for validator on object child elements
-     *
      * @param path
      * @param value
      * @returns {*}
@@ -73,10 +74,13 @@ export class BaseValidator {
             // -- NOTE: this should allow an Array of Types
             // -- might want re-evaluate this
             if (Array.isArray(type)) {
-                // tests each `type` specified in Set
-                return type.some((k) => {
-                   return _eval(type[k], value) === "boolean"
+                let _res;
+                // tests each `type` specified in Set until we find a true value
+                type.some((k) => {
+                    _res = _eval(k, value);
+                    return ((typeof _res) === "boolean");
                 });
+                return _res;
             }
             // performs eval on type against value
             return _eval(type, value);
@@ -105,6 +109,7 @@ export class BaseValidator {
         return _validPaths.get(this.jsd);
     }
 }
+
 Validator.Array = class Arr extends BaseValidator {
     /**
      * @constructor
@@ -124,7 +129,7 @@ Validator.Array = class Arr extends BaseValidator {
      */
     exec(value) {
         if (!Array.isArray(value)) {
-            return `array expected t '${this.path}'`;
+            return `type of array was expected for '${this.path}'. type was '<${typeof value}>'`;
         }
         for (let __ in value) {
             let e = this.call(this.path, value[__]);
@@ -148,6 +153,7 @@ Validator.Object = class Obj extends BaseValidator {
     constructor(path, signature, jsd) {
         super(path, signature, jsd);
     }
+
     /**
      * validates Object datatypes
      *
@@ -192,7 +198,7 @@ Validator.Object = class Obj extends BaseValidator {
             return true;
         }
         else {
-            return `${this.path} expected value of type 'Object'. Type was '<${typeof value}>'`;
+            return `'${this.path}' expected value of type 'Object'. Type was '<${typeof value}>'`;
         }
     }
 };
@@ -209,6 +215,7 @@ Validator.Boolean = class Bool extends BaseValidator {
     constructor(path, signature, jsd) {
         super(path, signature, jsd);
     }
+
     /**
      * validates Boolean datatypes
      *
@@ -233,6 +240,7 @@ Validator.String = class Str extends BaseValidator {
     constructor(path, signature, jsd) {
         super(path, signature, jsd);
     }
+
     /**
      * validates String datatypes
      *
@@ -280,6 +288,7 @@ Validator.Number = class Num extends BaseValidator {
     constructor(path, signature, jsd) {
         super(path, signature, jsd);
     }
+
     /**
      * validates Number datatypes
      *
@@ -309,6 +318,7 @@ Validator.Function = class Fun extends BaseValidator {
     constructor(path, signature, jsd) {
         super(path, signature, jsd);
     }
+
     /**
      * validates Function datatypes
      *
@@ -338,9 +348,9 @@ Validator.Default = class Def extends BaseValidator {
     constructor(path, signature, jsd) {
         super(path, signature, jsd);
     }
+
     /**
-     * validates unknown (default) datatypes
-     *
+     * validates unknown (default) datatypess
      * @param value
      * @returns {*}
      */
@@ -353,7 +363,7 @@ Validator.Default = class Def extends BaseValidator {
             if (!_exists(_val)) {
                 return `'${this.path}' was unable to obtain validator for type '<${type}>'`;
             }
-            let _ = new _val(this.path, this.signature);
+            let _ = new _val(this.path, this.signature, this.jsd);
             return _.exec(value);
         };
         let _x = typeof this.signature.type === "string"

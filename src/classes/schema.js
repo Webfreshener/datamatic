@@ -1,13 +1,14 @@
 import {
-    _mdRef, _required_elements, _object, _kinds, _exists,
-    _schemaHelpers, _schemaOptions, _schemaSignatures,
-    _validPaths, _vBuilders
+    _mdRef, _required_elements, _object, _exists, _schemaHelpers,
+    _schemaOptions, _schemaSignatures, _validPaths
 } from "./_references";
+import {ensureRequiredFields} from "./utils";
 import {MetaData} from "./_metaData";
 import {SchemaHelpers} from "./_schemaHelpers";
 import {SchemaValidator} from "./_schemaValidator";
 import {JSD} from "./jsd";
 import {Model} from "./model";
+
 /**
  * @class Schema
  */
@@ -81,7 +82,7 @@ export class Schema extends Model {
         const _sig = Object.freeze(_signature || JSD.defaults);
         _schemaSignatures.set(this, JSON.stringify(_sig));
         _schemaHelpers.set(this, new SchemaHelpers(this));
-        _schemaHelpers.get(this).walkSchema(_sig, this.path);
+        _schemaHelpers.get(this).walkSchema(_sig, this.validationPath.replace(/(\.\d\.)+/, ".*."));
         this.setDefaults();
     }
 
@@ -92,7 +93,7 @@ export class Schema extends Model {
     get handler() {
         return {
             get: (t, key) => {
-                const _m = key === "$ref" ? this: t[key];
+                const _m = key === "$ref" ? this : t[key];
                 return _m;
             },
             set: (t, key, value) => {
@@ -108,12 +109,18 @@ export class Schema extends Model {
 
                 let _childSigs = this.signature.elements || this.signature;
                 let _pathKeys = key.split(".");
-
-                if (_sH.testPathkeys(t, _pathKeys, _childSigs, value)) {
+                let _pKRes = _sH.testPathkeys(t, _pathKeys, _childSigs, value);
+                if (_pKRes) {
                     let kP = Schema.concatPathAddr(this.path, key);
                     _validPaths.get(this.jsd)[kP] = true;
-                    t[key] = ((typeof value) === "object") ?
-                        _sH.setChildObject(key, value) : value;
+                    if ((typeof value) === "object") {
+                        value = _sH.setChildObject(key, value);
+                        if ((typeof value) === "string") {
+                            this.observerBuilder.error(this.path, value);
+                            return false;
+                        }
+                    }
+                    t[key] = value;
                 }
 
                 const _e = this.validate();
@@ -124,10 +131,9 @@ export class Schema extends Model {
                         this.observerBuilder.next(_p, value);
                     }
                     return true;
-                } else {
-                    this.observerBuilder.error(this.path, _e);
-                    return false;
                 }
+                this.observerBuilder.error(this.path, _e);
+                return false;
             }
 
         };
@@ -183,7 +189,7 @@ export class Schema extends Model {
             }
 
             // final check for required field and setting of defaults
-            let reqErr = _schemaHelpers.get(this).ensureRequiredFields(value);
+            let reqErr = ensureRequiredFields(this, value);
             if ((typeof reqErr) === "string") {
                 // applies current state of `e` to validation hash
                 _validPaths.get(this.jsd)[this.path] = reqErr;
@@ -237,7 +243,7 @@ export class Schema extends Model {
             }
         } else {
             const _sH = _schemaHelpers.get(this);
-            let e = _sH.ensureRequiredFields(key);
+            let e = ensureRequiredFields(this, key);
             _validPaths.get(this.jsd)[this.path] = e;
             if (typeof e === "string") {
                 this.observerBuilder.error(this.path, e);
@@ -280,14 +286,6 @@ export class Schema extends Model {
     }
 
     /**
-     *
-     * @returns {*}
-     */
-    get schema() {
-        return JSON.parse(_schemaSignatures.get(this));
-    }
-
-    /**
      * sets default values for schema keys
      */
     setDefaults() {
@@ -307,7 +305,7 @@ export class Schema extends Model {
     static get defaultOptions() {
         return {
             extensible: false,
-            debug:false,
+            debug: false,
         };
     }
 

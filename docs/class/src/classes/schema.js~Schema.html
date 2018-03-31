@@ -39,6 +39,10 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/schema.js~Schema.html">Schema</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/set.js~Set.html">Set</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ensureKindIsString">ensureKindIsString</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ensureRequiredFields">ensureRequiredFields</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getKinds">getKinds</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-remapPolypath">remapPolypath</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_kinds">_kinds</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span></li>
@@ -61,13 +65,13 @@
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {Schema} from &apos;<span><a href="file/src/classes/schema.js.html#lineNumber14">jsd/src/classes/schema.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {Schema} from &apos;<span><a href="file/src/classes/schema.js.html#lineNumber15">jsd/src/classes/schema.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/src/classes/schema.js.html#lineNumber14">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/src/classes/schema.js.html#lineNumber15">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -398,34 +402,6 @@
           
           
           <span class="code" data-ice="name"><span><a href="class/src/classes/schema.js~Schema.html#instance-get-requiredFields">requiredFields</a></span></span><span class="code" data-ice="signature">: <span>*</span>: <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      <span class="kind" data-ice="kind">get</span>
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          
-          <span class="code" data-ice="name"><span><a href="class/src/classes/schema.js~Schema.html#instance-get-schema">schema</a></span></span><span class="code" data-ice="signature">: <span>*</span>: <span>*</span></span>
         </p>
       </div>
       <div>
@@ -839,6 +815,91 @@
           
           
           
+          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-get-schema">schema</a></span></span><span class="code" data-ice="signature">: <span>*</span>: <span>*</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      <span class="kind" data-ice="kind">get</span>
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-get-signature">signature</a></span></span><span class="code" data-ice="signature">: <span>*</span>: <span>*</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>TODO: remove and standardize around <code>schema</code></p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      <span class="kind" data-ice="kind">get</span>
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-get-validationPath">validationPath</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      <span class="kind" data-ice="kind">get</span>
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
           <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-get-validatorBuilder">validatorBuilder</a></span></span><span class="code" data-ice="signature">: <span><a href="class/src/classes/_validatorBuilder.js~ValidatorBuilder.html">ValidatorBuilder</a></span>: <span>*</span></span>
         </p>
       </div>
@@ -1013,64 +1074,6 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-method-unsubscribe">unsubscribe</a></span></span><span class="code" data-ice="signature">()</span>
-        </p>
-      </div>
-      <div>
-        
-        
-        <div data-ice="description"><p>unsubscribes from this object&quot;s observer</p>
-</div>
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          
-          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-method-unsubscribeFrom">unsubscribeFrom</a></span></span><span class="code" data-ice="signature">(path: <span>*</span>)</span>
-        </p>
-      </div>
-      <div>
-        
-        
-        <div data-ice="description"><p>unsubscribes from this observer for object at path</p>
-</div>
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          
           <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-method-validate">validate</a></span></span><span class="code" data-ice="signature">(): <span>true</span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
         </p>
       </div>
@@ -1132,7 +1135,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber307">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber305">source</a></span></span>
     </span>
   </h3>
 
@@ -1175,7 +1178,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber317">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber315">source</a></span></span>
     </span>
   </h3>
 
@@ -1222,7 +1225,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber142">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber148">source</a></span></span>
     </span>
   </h3>
 
@@ -1303,7 +1306,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber20">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber21">source</a></span></span>
     </span>
   </h3>
 
@@ -1373,7 +1376,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber92">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber93">source</a></span></span>
     </span>
   </h3>
 
@@ -1429,7 +1432,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber263">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber269">source</a></span></span>
     </span>
   </h3>
 
@@ -1485,7 +1488,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber156">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber162">source</a></span></span>
     </span>
   </h3>
 
@@ -1529,7 +1532,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber164">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber170">source</a></span></span>
     </span>
   </h3>
 
@@ -1573,7 +1576,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber271">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber277">source</a></span></span>
     </span>
   </h3>
 
@@ -1617,7 +1620,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber278">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber284">source</a></span></span>
     </span>
   </h3>
 
@@ -1662,61 +1665,6 @@
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-get-schema">
-    <span class="access" data-ice="access">public</span>
-    
-    <span class="kind" data-ice="kind">get</span>
-    
-    
-    
-    <span class="code" data-ice="name">schema</span><span class="code" data-ice="signature">: <span>*</span>: <span>*</span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber286">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  
-
-  
-
-  <div data-ice="properties">
-</div>
-
-  <div class="return-params" data-ice="returnParams">
-    <h4>Return:</h4>
-    <table>
-      <tbody>
-        <tr>
-          <td class="return-type code" data-ice="returnType"><span>*</span></td>
-          
-        </tr>
-      </tbody>
-    </table>
-    <div data-ice="returnProperties">
-</div>
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="instance-get-signature">
     <span class="access" data-ice="access">public</span>
     
@@ -1728,16 +1676,17 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber149">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber155">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>TODO: remove and standardize around <code>schema</code></p>
+</div>
 
-  
+  <div data-ice="override"><h4>Override:</h4><span><a href="class/src/classes/model.js~Model.html#instance-get-signature">Model#signature</a></span></div>
 
   <div data-ice="properties">
 </div>
@@ -1787,7 +1736,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber218">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber224">source</a></span></span>
     </span>
   </h3>
 
@@ -1858,7 +1807,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber227">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber233">source</a></span></span>
     </span>
   </h3>
 
@@ -1936,7 +1885,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber293">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber291">source</a></span></span>
     </span>
   </h3>
 

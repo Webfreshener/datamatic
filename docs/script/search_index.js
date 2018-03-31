@@ -156,6 +156,30 @@ window.esdocSearchIndex = [
     "variable"
   ],
   [
+    "jsd/src/classes/utils.js~ensurekindisstring",
+    "function/index.html#static-function-ensureKindIsString",
+    "<span>ensureKindIsString</span> <span class=\"search-result-import-path\">jsd/src/classes/utils.js</span>",
+    "function"
+  ],
+  [
+    "jsd/src/classes/utils.js~ensurerequiredfields",
+    "function/index.html#static-function-ensureRequiredFields",
+    "<span>ensureRequiredFields</span> <span class=\"search-result-import-path\">jsd/src/classes/utils.js</span>",
+    "function"
+  ],
+  [
+    "jsd/src/classes/utils.js~getkinds",
+    "function/index.html#static-function-getKinds",
+    "<span>getKinds</span> <span class=\"search-result-import-path\">jsd/src/classes/utils.js</span>",
+    "function"
+  ],
+  [
+    "jsd/src/classes/utils.js~remappolypath",
+    "function/index.html#static-function-remapPolypath",
+    "<span>remapPolypath</span> <span class=\"search-result-import-path\">jsd/src/classes/utils.js</span>",
+    "function"
+  ],
+  [
     "jsd/src/classes/_references.js~wf",
     "variable/index.html#static-variable-wf",
     "<span>wf</span> <span class=\"search-result-import-path\">jsd/src/classes/_references.js</span>",
@@ -600,24 +624,6 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "src/classes/_schemahelpers.js~schemahelpers#ensurekindisstring",
-    "class/src/classes/_schemaHelpers.js~SchemaHelpers.html#instance-method-ensureKindIsString",
-    "src/classes/_schemaHelpers.js~SchemaHelpers#ensureKindIsString",
-    "method"
-  ],
-  [
-    "src/classes/_schemahelpers.js~schemahelpers#ensurerequiredfields",
-    "class/src/classes/_schemaHelpers.js~SchemaHelpers.html#instance-method-ensureRequiredFields",
-    "src/classes/_schemaHelpers.js~SchemaHelpers#ensureRequiredFields",
-    "method"
-  ],
-  [
-    "src/classes/_schemahelpers.js~schemahelpers#getkinds",
-    "class/src/classes/_schemaHelpers.js~SchemaHelpers.html#instance-method-getKinds",
-    "src/classes/_schemaHelpers.js~SchemaHelpers#getKinds",
-    "method"
-  ],
-  [
     "src/classes/_schemahelpers.js~schemahelpers#setchildobject",
     "class/src/classes/_schemaHelpers.js~SchemaHelpers.html#instance-method-setChildObject",
     "src/classes/_schemaHelpers.js~SchemaHelpers#setChildObject",
@@ -966,6 +972,18 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
+    "src/classes/model.js~model#schema",
+    "class/src/classes/model.js~Model.html#instance-get-schema",
+    "src/classes/model.js~Model#schema",
+    "member"
+  ],
+  [
+    "src/classes/model.js~model#signature",
+    "class/src/classes/model.js~Model.html#instance-get-signature",
+    "src/classes/model.js~Model#signature",
+    "member"
+  ],
+  [
     "src/classes/model.js~model#subscribe",
     "class/src/classes/model.js~Model.html#instance-method-subscribe",
     "src/classes/model.js~Model#subscribe",
@@ -990,22 +1008,16 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "src/classes/model.js~model#unsubscribe",
-    "class/src/classes/model.js~Model.html#instance-method-unsubscribe",
-    "src/classes/model.js~Model#unsubscribe",
-    "method"
-  ],
-  [
-    "src/classes/model.js~model#unsubscribefrom",
-    "class/src/classes/model.js~Model.html#instance-method-unsubscribeFrom",
-    "src/classes/model.js~Model#unsubscribeFrom",
-    "method"
-  ],
-  [
     "src/classes/model.js~model#validate",
     "class/src/classes/model.js~Model.html#instance-method-validate",
     "src/classes/model.js~Model#validate",
     "method"
+  ],
+  [
+    "src/classes/model.js~model#validationpath",
+    "class/src/classes/model.js~Model.html#instance-get-validationPath",
+    "src/classes/model.js~Model#validationPath",
+    "member"
   ],
   [
     "src/classes/model.js~model#validatorbuilder",
@@ -1077,12 +1089,6 @@ window.esdocSearchIndex = [
     "src/classes/schema.js~schema#requiredfields",
     "class/src/classes/schema.js~Schema.html#instance-get-requiredFields",
     "src/classes/schema.js~Schema#requiredFields",
-    "member"
-  ],
-  [
-    "src/classes/schema.js~schema#schema",
-    "class/src/classes/schema.js~Schema.html#instance-get-schema",
-    "src/classes/schema.js~Schema#schema",
     "member"
   ],
   [
@@ -1206,12 +1212,6 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "src/classes/set.js~set#schema",
-    "class/src/classes/set.js~Set.html#instance-get-schema",
-    "src/classes/set.js~Set#schema",
-    "member"
-  ],
-  [
     "src/classes/set.js~set#setitemat",
     "class/src/classes/set.js~Set.html#instance-method-setItemAt",
     "src/classes/set.js~Set#setItemAt",
@@ -1224,12 +1224,6 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "src/classes/set.js~set#signature",
-    "class/src/classes/set.js~Set.html#instance-get-signature",
-    "src/classes/set.js~Set#signature",
-    "member"
-  ],
-  [
     "src/classes/set.js~set#sort",
     "class/src/classes/set.js~Set.html#instance-method-sort",
     "src/classes/set.js~Set#sort",
@@ -1240,6 +1234,12 @@ window.esdocSearchIndex = [
     "class/src/classes/set.js~Set.html#instance-method-unshift",
     "src/classes/set.js~Set#unshift",
     "method"
+  ],
+  [
+    "src/classes/utils.js",
+    "file/src/classes/utils.js.html",
+    "src/classes/utils.js",
+    "file"
   ],
   [
     "src/index.js",

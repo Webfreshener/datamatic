@@ -283,7 +283,7 @@ describe("README.md examples tests", () => {
             next: (val) => {
                 // {"1":{"name":"Big Daddy","score":2000000}, ...}
                 console.log(`${val}`);
-                _jsd.document.unsubscribe();
+                _sub.unsubscribe();
                 done()
             },
             error: (e) => {
@@ -293,7 +293,7 @@ describe("README.md examples tests", () => {
         };
 
         const _jsd = new JSD(_schema);
-        _jsd.document.subscribe(_handler);
+        const _sub = _jsd.document.subscribe(_handler);
 
         // this will fail because value is number, not an object
         _jsd.document.model = {
@@ -331,7 +331,7 @@ describe("README.md examples tests", () => {
                 // outputs: {"value":"A string"}
                 // outputs: {"value":false}
                 console.log(`${val}`);
-                _jsd.document.unsubscribe();
+                _sub.unsubscribe();
                 done()
             },
             error: (e) => {
@@ -341,7 +341,7 @@ describe("README.md examples tests", () => {
         };
 
         const _jsd = new JSD(_schema);
-        _jsd.document.subscribe(_handler);
+        const _sub = _jsd.document.subscribe(_handler);
 
         // any model with the key named `value` is ok
         _jsd.document.model = {

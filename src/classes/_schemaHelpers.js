@@ -1,4 +1,5 @@
-import {_exists, _mdRef, _validPaths, _required_elements, _object, _schemaOptions} from "./_references";
+import {_exists, _mdRef, _validPaths, _schemaOptions} from "./_references";
+import {ensureRequiredFields, remapPolypath} from "./utils";
 import {MetaData} from "./_metaData";
 import {Schema} from "./schema";
 import {Set} from "./set";
@@ -11,27 +12,31 @@ export class SchemaHelpers {
      * @constructor
      */
     constructor(_ref) {
-        if (!_exists(_ref)) { // || !(_ref instanceof Schema)) {
-            throw new Error("arguments[0] must be type 'Schema'");
+        if (!_exists(_ref) || (typeof _ref) !== "object") {
+            throw new Error("arguments[0] must be an object");
         }
+
         this._ref = _ref;
+        Object.seal(this);
     }
 
     /**
-     *
+     * Sets Object key/vals upon Schema Reference
+     * @param obj
+     * @returns {*}
      */
     setObject(obj) {
-        obj = this.ensureRequiredFields(obj);
+        obj = ensureRequiredFields(this._ref, obj);
         if (typeof obj === "string") {
             return obj;
         }
         // calls set with nested key value pair
-        for (var k in obj) {
+        Object.keys(obj).forEach((k) => {
             let eMsg = this._ref.set(k, obj[k]);
             if (typeof eMsg === "string") {
                 throw new Error(eMsg);
             }
-        }
+        });
         return this._ref;
     }
 
@@ -52,46 +57,6 @@ export class SchemaHelpers {
         }
         _s.model = value;
         return _s.model;
-    }
-
-    /**
-     * @param {Object} itm
-     * @returns {String|Boolean}
-     */
-    ensureKindIsString(itm) {
-        switch (typeof itm) {
-            case "string":
-                return itm;
-            case "object":
-                if (itm.hasOwnProperty("type")) {
-                    return this.ensureKindIsString(itm.type);
-                }
-                break;
-        }
-        return false;
-    }
-
-    /**
-     * tests if required fields exist on object
-     * @param {Object} obj
-     * @returns {true|string} - returns true or error string
-     */
-    ensureRequiredFields(obj) {
-        let oKeys = Object.keys(obj || {});
-        let _required = this._ref.requiredFields;
-
-        for (let __ in _required) {
-            let _key = _required[__];
-            let _path = this._ref.path.length ? this._ref.path : "root element";
-            if (0 > oKeys.indexOf(_key)) {
-                if (_exists(this._ref.signature[_key].default)) {
-                    obj[_key] = this._ref.signature[_key].default;
-                } else {
-                    return `required property "${_key}" is missing for '${_path}'`;
-                }
-            }
-        }
-        return obj;
     }
 
     /**
@@ -150,18 +115,17 @@ export class SchemaHelpers {
         let _opts = _schemaOptions.get(this._ref);
         let _sig = Object.assign({}, this._ref.signature);
         let _ref;
-        //
-        // _sig = _sig["*"] || _sig.polymorphic || _sig;
+
         if (!Array.isArray(value)) {
+            // handles nested Objects
             try {
-                _sig = _sig;
                 _ref = new Schema(_sig, _opts, _d);
             } catch (e) {
                 this._ref.observerBuilder.error(this._ref.path, e);
                 return false;
             }
-        }
-        else {
+        } else {
+            // handles nested Arrays
             try {
                 _ref = new Set(_sig, _opts, _md);
             } catch (e) {
@@ -178,23 +142,30 @@ export class SchemaHelpers {
     }
 
     /**
-     * Traverses Schema Elements and builds validations for entries
+     * Traverses Schema Elements and builds Validations for entries
      *
      * @param obj
      * @param path
      */
     walkSchema(obj, path) {
         let _elements = Array.isArray(obj) ? obj : Object.keys(obj);
-        // _elements = _elements.filter((el) => {
-        //     if (typeof el !== "string") {
-        //         return false;
-        //     }
-        //     return el.match(/^(type|required|default|extensible|restrict)$/) === null;
-        // });
+        _elements = _elements.filter((el) => {
+            if (typeof el !== "string") {
+                return false;
+            }
+
+            if (el === "type" && (typeof type) === "string") {
+                return false;
+            }
+
+            return el.match(/^(required|default|extensible|restrict)$/) === null;
+        });
         for (let _i in _elements) {
             let _k = _elements[_i];
             let objPath = _exists(path) ?
                 (path.length ? `${path}.${_k}` : _k) : _k || "";
+            // let objPath = `${path}`;
+            objPath = remapPolypath(objPath);
             // tests for standard schema object with elements
             if ((typeof _k === "object") && _k.hasOwnProperty("elements")) {
                 return this.walkSchema(_k.elements, objPath)
@@ -216,7 +187,6 @@ export class SchemaHelpers {
                         this.walkSchema(polyItm.elements, polyPath);
                     }
                 });
-                // return;
             } else {
                 if (this._ref instanceof Set) {
                     this._ref.validatorBuilder.create(obj, `${this._ref.path}`, this._ref);
@@ -225,6 +195,7 @@ export class SchemaHelpers {
                 }
                 // return;
             }
+
             // tests for nested elements
             if (_exists(obj[_k]) &&
                 typeof obj[_k].elements === "object") {
@@ -269,17 +240,6 @@ export class SchemaHelpers {
             return msg;
         }
         return true;
-    }
-
-    /**
-     * @returns {array} list of types decalred by object
-     */
-    getKinds(_s) {
-        var _elems = Object.keys(_s).map(key => {
-            return (key === "type") ? _s.type : _exists(_s[key].type) ? _s[key].type : null;
-        });
-        _elems = _elems.filter(elem => elem !== null);
-        return _elems.length ? _elems : null;
     }
 
     /**
