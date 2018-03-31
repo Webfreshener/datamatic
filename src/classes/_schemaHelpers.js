@@ -158,7 +158,11 @@ export class SchemaHelpers {
                 return false;
             }
 
-            return el.match(/^(required|default|extensible|restrict)$/) === null;
+            if (el.match(/^(required|default|extensible|restrict)$/) !== null) {
+                return ((typeof obj[el]) === "object");
+            }
+
+            return true;
         });
         for (let _i in _elements) {
             let _k = _elements[_i];
