@@ -1,6 +1,6 @@
 import {
-    _mdRef, _object, _vectorTypes, _schemaOptions,
-    _exists, _vBuilders, wf, _schemaHelpers, _schemaSignatures
+    _mdRef, _object, _schemaOptions,
+    _exists, _schemaHelpers, _schemaSignatures, _observers
 } from "./_references";
 import {MetaData} from "./_metaData";
 import {SchemaValidator} from "./_schemaValidator";
@@ -8,6 +8,8 @@ import {Schema} from "./schema";
 import {JSD} from "./jsd";
 import {Model} from "./model";
 import {SchemaHelpers} from "./_schemaHelpers";
+
+const _observerDelegates = new WeakMap();
 
 /**
  * @class Set
@@ -29,23 +31,26 @@ export class Set extends Model {
                 _jsd: arguments[2],
             });
         }
+
         else if (arguments[2] instanceof MetaData) {
             __ = arguments[2];
         } else {
             throw `Invalid constructor call for Set: ${JSON.stringify(arguments)}`;
         }
+
+        // stores our MetaData reference to WeakMap
         _mdRef.set(this, __);
+        // stores our user Options into Weakmap
         _schemaOptions.set(this, opts);
 
-
+        // creates a default signature if none present
         if (!_exists(_signature)) {
             _signature = [{type: "*"}];
         }
 
-        // _signature = {elements: Array.isArray(_signature) ? _signature : [_signature]};
-        // console.log(`_signature: ${_signature}`);
+        // internally we handle all Sets as Polymorphic elements
         _signature = {polymorphic: _signature};
-        // console.log(`_signature: ${JSON.stringify(_signature)}`);
+
         // attempts to validate provided `schema` entries
         let _sV = new SchemaValidator(_signature, Object.assign(this.options || {}, {
             jsd: _mdRef.get(this).jsd,
@@ -60,6 +65,8 @@ export class Set extends Model {
         _schemaSignatures.set(this, JSON.stringify(_sig));
         _schemaHelpers.set(this, new SchemaHelpers(this));
         _schemaHelpers.get(this).walkSchema(_sig, `${this.path}.*`);
+        // _schemaHelpers.get(this).walkSchema(_sig, this.validationPath);
+
     }
 
     /**
@@ -78,8 +85,23 @@ export class Set extends Model {
             if (!this.isLocked) {
                 _object.set(this, new Proxy(Model.createRef(this), this.handler));
             }
+
             try {
                 let cnt = 0;
+                // we delegate observation in the event of whole model replacement
+                // to prevent triggering a notification for each item
+                // if the user desires such behavior they can use `addItem` with an iterator
+                _observerDelegates.set(this, {
+                    next: (col) => {
+                        if (this.length === value.length) {
+                            _observerDelegates.delete(this);
+                        }
+                    },
+                    error: (e) => {
+                        _observerDelegates.delete(this);
+                        throw e;
+                    }
+                });
                 value.forEach((val) => {
                     _object.get(this)[cnt] = val;
                     cnt++;
@@ -87,13 +109,13 @@ export class Set extends Model {
             } catch (e) {
                 return this.observerBuilder.error(this.path, e);
             }
-            if (this.isValid) {
+            if ((typeof this.isValid) === "boolean") {
                 this.observerBuilder.next(this.path, this);
+                return true;
             } else {
                 this.observerBuilder.error(this.path, this.validate());
-                false;
+                return false;
             }
-            return true;
         } else {
             this.observerBuilder.error(this.path, `${this.path} requires Array`);
         }
@@ -127,9 +149,18 @@ export class Set extends Model {
                     return true;
                 }
 
+                let _oDel = _observerDelegates.get(this);
+                const sendErr = (e) => {
+                    if (_oDel) {
+                        _oDel.error(msg);
+                    } else {
+                        this.observerBuilder.error(this.path, msg);
+                    }
+                };
+
                 let msg = this.validatorBuilder.exec(`${this.path}.${idx}`, value);
                 if ((typeof msg) === "string") {
-                    this.observerBuilder.error(this.path, msg);
+                    sendErr(msg);
                     return false;
                 }
 
@@ -139,7 +170,18 @@ export class Set extends Model {
                 }
 
                 t[idx] = value;
-                return true;
+                msg = this.validate();
+                if ((typeof msg) === "boolean") {
+                    if (_oDel) {
+                        _oDel.next(this);
+                    } else {
+                        this.observerBuilder.next(this.path, this);
+                    }
+                    return true;
+                } else {
+                    sendErr(msg);
+                    return false;
+                }
             },
             deleteProperty: (t, idx) => {
                 if (idx >= t.length) {
@@ -187,10 +229,7 @@ export class Set extends Model {
      * @returns {Set} reference to self
      */
     replaceAll(array) {
-        this.reset();
-        for (let itm in array) {
-            this.addItem(array[itm]);
-        }
+        this.model = array;
         return this;
     }
 
@@ -254,6 +293,7 @@ export class Set extends Model {
         items.forEach(item => {
             return this.addItem(item);
         });
+        this.observerBuilder.next(this.path, this);
         return this;
     }
 
@@ -267,7 +307,7 @@ export class Set extends Model {
     }
 
     /**
-     * @param {function} func - sorrting function
+     * @param {function} func - sorting function
      * @returns {Set} reference to self
      */
     sort(func) {
@@ -281,13 +321,4 @@ export class Set extends Model {
     get length() {
         return this.model.length || 0;
     }
-
-    get signature() {
-        return JSON.parse(_schemaSignatures.get(this));
-    }
-
-    get schema() {
-        return this.signature;
-    }
-
 }

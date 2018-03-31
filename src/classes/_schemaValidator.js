@@ -1,6 +1,5 @@
 import {wf, _exists, _schemaOptions} from "./_references";
-// import {MetaData} from "./_metaData";
-// import {JSD} from "./jsd";
+
 /**
  * @private
  * @class
@@ -28,7 +27,7 @@ export class SchemaValidator {
         if (key.match(/\.?default+$/)) {
             return true;
         }
-        //- hanbdles restrictions defined in `restrict` object key
+        //- handles restrictions defined in `restrict` object key
         if (key.match(/\.?restrict+$/)) {
             if (typeof _type !== "string" || !_type.length) {
                 return "restrict requires a Regular Expression String";

@@ -39,6 +39,10 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/schema.js~Schema.html">Schema</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/set.js~Set.html">Set</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ensureKindIsString">ensureKindIsString</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ensureRequiredFields">ensureRequiredFields</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getKinds">getKinds</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-remapPolypath">remapPolypath</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_kinds">_kinds</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span></li>
@@ -61,11 +65,12 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/classes/model.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {_mdRef, _oBuilders, _vBuilders, _exists, _validPaths, _object} from &quot;./_references&quot;;
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {_mdRef, _oBuilders, _vBuilders, _exists, _validPaths, _object, _schemaSignatures} from &quot;./_references&quot;;
 import {Schema} from &quot;./schema&quot;;
 import {Set} from &quot;./set&quot;;
 import {JSD} from &quot;./jsd&quot;;
 import {Observable} from &quot;rxjs/Rx&quot;;
+import {remapPolypath} from &quot;./utils&quot;;
 export class Model {
     constructor() {
         _object.set(this, new Proxy(Model.createRef(this), this.handler));
@@ -80,51 +85,50 @@ export class Model {
     }
 
     /**
-     * unsubscribes from this object&quot;s observer
-     */
-    unsubscribe() {
-        let _o = this.observerBuilder.get(this.path);
-        if (!_o || _o === null) {
-            _o.unsubscribe();
-        }
-    }
-
-    /**
      * subscribes handler method to property observer for path
      * @param path
      * @param func
      * @returns {Observable}
      */
     subscribeTo(path, func) {
+        // throws if argument is not an object or function
         if ((typeof func).match(/^(function|object)$/) === null) {
             throw new Error(&quot;subscribeTo requires function&quot;);
         }
+
+        // creates an extensible object to hold our unsubscribe method
+        const _subs = class {};
+
+        // references the ObserverBuilder for the path
         let _o = this.observerBuilder.get(path);
+
         if (!_o || _o === null) {
             this.observerBuilder.create(path, this);
             _o = this.observerBuilder.get(path);
         }
+
+        // adds onNext handler if `next` prop is defined
         if (func.hasOwnProperty(&quot;next&quot;)) {
             _o.onNext.subscribe({next: func.next});
         }
+
+        // adds onError handler if `error` prop is defined
         if (func.hasOwnProperty(&quot;error&quot;)) {
             _o.onError.subscribe({next: func.error});
         }
+
+        // adds onComplete handler if `complete` prop is defined
         if (func.hasOwnProperty(&quot;complete&quot;)) {
             _o.onComplete.subscribe({next: func.complete});
         }
-        return this;
-    }
 
-    /**
-     * unsubscribes from this observer for object at path
-     * @param path
-     */
-    unsubscribeFrom(path) {
-        let _o = this.observerBuilder.get(path);
-        if (!_o || _o === null) {
-            _o.unsubscribe();
-        }
+        // adds unsubscribe to the Proto object
+        _subs.prototype.unsubscribe = () =&gt; {
+            _o.onNext.unsubscribe();
+            _o.onError.unsubscribe();
+            _o.onComplete.unsubscribe();
+        };
+        return new _subs();
     }
 
     /**
@@ -266,6 +270,32 @@ export class Model {
      */
     get isLocked() {
         return Object.isFrozen(_object.get(this));
+    }
+
+
+    get validationPath() {
+        let _p = remapPolypath(this.path);
+        if (Object.keys(this.schema).indexOf(&quot;polymorphic&quot;) &gt;= 0) {
+            _p = _p.replace(/(\.\d\.(?!polymorphic))+/, &quot;.*.polymorphic.&quot;);
+            // _schemaSignatures.set(this, _schemaSignatures.get(this).polymorphic);
+        }
+        return _p;
+    }
+
+    /**
+     *
+     * @returns {*}
+     */
+    get schema() {
+        return JSON.parse(_schemaSignatures.get(this));
+    }
+
+    /**
+     * TODO: remove and standardize around `schema`
+     * @returns {*}
+     */
+    get signature() {
+        return this.schema;
     }
 
     /**

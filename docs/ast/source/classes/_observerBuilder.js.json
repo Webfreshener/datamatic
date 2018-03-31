@@ -935,9 +935,9 @@
                                 "line": 19,
                                 "column": 21
                               },
-                              "identifierName": "object"
+                              "identifierName": "Object"
                             },
-                            "name": "object"
+                            "name": "Object"
                           },
                           "property": {
                             "type": "Identifier",
@@ -5583,7 +5583,7 @@
         "postfix": false,
         "binop": null
       },
-      "value": "object",
+      "value": "Object",
       "start": 405,
       "end": 411,
       "loc": {

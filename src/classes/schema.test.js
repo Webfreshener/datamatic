@@ -119,16 +119,15 @@ describe("Schema Class Test Suite", function () {
         it("should validate arbitrary wildcard elements", (done) => {
             const _h = {
                 next: (o) => {
-                    this.schema.unsubscribe();
+                    _sub.unsubscribe();
                     done("should have dispatched an error");
                 },
                 error: (e) => {
-                    this.schema.unsubscribe();
-                    console.log(`error: ${e}`);
+                    _sub.unsubscribe();
                     done();
                 }
             };
-            this.schema.subscribe(_h);
+            let _sub = this.schema.subscribe(_h);
             this.schema.model = {
                 foo: {
                     bar: {
@@ -143,10 +142,11 @@ describe("Schema Class Test Suite", function () {
     });
 
     describe("Polymorphism", function () {
+        const _s = require("../../fixtures/polymorphic.schema.json");
+        // this.schema = new Schema(_s, null, new JSD());
+        const _jsd = new JSD(_s);
         it("should initialize from polymorphic schema fixture", () => {
-            let _s = require("../../fixtures/polymorphic.schema.json");
-            this.schema = new Schema(_s, null, new JSD());
-            expect(this.schema instanceof Schema).toBe(true);
+            expect(_jsd.document instanceof Schema).toBe(true);
         });
 
         it("should check for polymorphic properties", (done) => {
@@ -159,13 +159,13 @@ describe("Schema Class Test Suite", function () {
                     done("did not fail badParam as expected");
                 },
                 error: (e) => {
-                    expect(e).toEqual("badParam expected value of type 'Object'. Type was '<boolean>'");
+                    expect(e).toBe("'badParam' expected value of type 'Object'. Type was '<boolean>'");
                     done();
                 }
             };
 
-            let _sub = this.schema.subscribe(_f);
-            this.schema.model = _d;
+            let _sub = _jsd.document.subscribe(_f);
+            _jsd.document.model = _d;
         });
     });
 
@@ -224,14 +224,14 @@ describe("Schema Class Test Suite", function () {
                     },
                 },
             });
-            _schema.document.subscribe({
-                next: (val) => {
-                    console.log(`${val}`);
-                },
-                error: (e) => {
-                    console.log(`e: ${e}`);
-                }
-            });
+            // _schema.document.subscribe({
+            //     next: (val) => {
+            //         console.log(`${val}`);
+            //     },
+            //     error: (e) => {
+            //         console.log(`e: ${e}`);
+            //     }
+            // });
             _schema.document.model = {
                 root: {
                     child: {
@@ -280,19 +280,29 @@ describe("Schema Class Test Suite", function () {
     });
 
     describe("Deep Object Nesting", function () {
-        it("should handle deep object nesting", () => {
-            const _s = require("../../fixtures/nested-elements.schema.json");
-            let _jsd = new JSD(_s);
+        let _schema;
+        let _data;
+        let _jsd;
+        beforeEach(() => {
+            _schema = require("../../fixtures/nested-elements.schema.json");
+            _data = require("../../fixtures/_nested.data.json");
+            _jsd = new JSD(_schema);
+        });
+        it("should handle deep object nesting", (done) => {
             _jsd.document.subscribe({
+                next: (doc) => {
+                    expect(_jsd.document.model.NestedObjects.anArray.length).toEqual(2);
+                    expect(_jsd.document.model.NestedObjects.anObject.aDeepObject.aDeeperObject).toBeTruthy();
+                    expect(_jsd.document.model.NestedObjects.anObject.aDeepObject.aDeeperObject.aDeepParam).toEqual("a deep param");
+                    done();
+                },
                 error: (e) => {
-                    console.log(`e: ${e}`);
+                    // console.log(`e: ${e}`);
+                    done(e);
                 }
-            })
+            });
             expect(_jsd.document instanceof Schema).toBe(true);
-            _jsd.document.model = require("../../fixtures/_nested.data.json");
-            expect(_jsd.document.model.NestedObjects.anArray.length).toEqual(2);
-            expect(_jsd.document.model.NestedObjects.anObject.aDeepObject.aDeeperObject).toBeTruthy();
-            expect(_jsd.document.model.NestedObjects.anObject.aDeepObject.aDeeperObject.aDeepParam).toEqual("a deep param");
+            _jsd.document.model = _data;
         });
     });
 
