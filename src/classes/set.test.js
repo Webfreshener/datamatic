@@ -332,4 +332,68 @@ describe("Set Class Test Suite", function () {
             ];
         });
     });
+
+    describe("long arrays", () => {
+        it("should handle array", (done) => {
+            let list = [{
+                name: "Alice",
+                value: 1,
+            }, {
+                name: "Bob",
+                value: 2,
+            }, {
+                name: "Charlie",
+                value: 3,
+            }, {
+                name: "Dave",
+                value: 4,
+            }, {
+                name: "Ed",
+                value: 5,
+            }, {
+                name: "Frank",
+                value: 6,
+            }, {
+                name: "Gary",
+                value: 7,
+            }, {
+                name: "Helen",
+                value: 8,
+            }, {
+                name: "Ike",
+                value: 9,
+            }, {
+                name: "Janet",
+                value: 10,
+            }, {
+                name: "Kim",
+                value: 11,
+            }];
+
+            const _jsd = new JSD([{
+                type: "Object",
+                elements: {
+                    name: {
+                        type: "String",
+                    },
+                    value: {
+                        type: "Number",
+                    },
+                },
+            }]);
+
+            _jsd.document.subscribe({
+                next: (doc) => {
+                    // console.log(`${doc}`);
+                    expect(doc.length).toBe(11);
+                    done()
+                },
+                error: (e) => {
+                    done(e);
+                },
+            });
+
+            _jsd.document.model = list;
+        });
+    });
 });
