@@ -124,10 +124,8 @@ export class ValidatorBuilder {
      * @param value
      */
     exec(path, value) {
-        console.log(`path: ${path}`);
         let _v = _validators.get(this);
         let validators;
-        console.log(`_v: ${JSON.stringify(_v)}`);
         if (!_v.hasOwnProperty(path)) {
             const polyValidate = (validators) => {
                 let eMsg = true;
@@ -163,13 +161,11 @@ export class ValidatorBuilder {
             };
 
             let polyPath = `${path}`.replace(/\.+.*$/, ".polymorphic.0");
-            console.log(`polyPath: ${polyPath}`);
             let res = lookupPolyPath(polyPath);
             if (res) {
                 return res;
             }
 
-            // const _tPath = `${path}`.replace(/(.*)(\.+.*)$/, "$1.*");
             let _tPath = remapPolypath(path);
             if (_v.hasOwnProperty(_tPath)) {
                 let rxStr = wf.Str.regexEscape(`${_tPath}.polymorphic`);
@@ -185,15 +181,11 @@ export class ValidatorBuilder {
             }
 
             let _nPath = _tPath.replace(/\.\d+(.*)/, ".*.polymorphic.0$1");
-            console.log(`_nPath: ${_nPath}`);
             if (_v.hasOwnProperty(_nPath)) {
                 rxStr = `${wf.Str.regexEscape(_nPath)}`.replace(/\d/, "\\d");
-                // rxStr = ;
                 validators = Object.keys(_v).filter((v) => {
-                    // console.log(`wants to match ${v} against ${rxStr}`);
                     return v.match(new RegExp(rxStr)) !== null;
                 });
-                // console.log(`validators: ${JSON.stringify(validators)}`);
                 if (validators.length) {
                     const res = polyValidate(validators);
                     return res;
@@ -207,10 +199,8 @@ export class ValidatorBuilder {
                 const _pPath = `${wf.Str.regexEscape(_tPath)}`;
                 const rxStr = `^(${_pPath}(\\.\\d)?|${_pPath}\\.\\*?)$`;
                 validators = Object.keys(_v).filter((v) => {
-                    // console.log(`wants to match ${v} againt ${rxStr}`);
                     return v.match(new RegExp(rxStr)) !== null;
                 });
-                // console.log(`validators: ${JSON.stringify(validators)}`);
                 if (validators.length) {
                     const res = polyValidate(validators);
                     return res;
