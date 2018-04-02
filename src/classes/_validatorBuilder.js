@@ -124,8 +124,10 @@ export class ValidatorBuilder {
      * @param value
      */
     exec(path, value) {
+        console.log(`path: ${path}`);
         let _v = _validators.get(this);
         let validators;
+        console.log(`_v: ${JSON.stringify(_v)}`);
         if (!_v.hasOwnProperty(path)) {
             const polyValidate = (validators) => {
                 let eMsg = true;
@@ -161,6 +163,7 @@ export class ValidatorBuilder {
             };
 
             let polyPath = `${path}`.replace(/\.+.*$/, ".polymorphic.0");
+            console.log(`polyPath: ${polyPath}`);
             let res = lookupPolyPath(polyPath);
             if (res) {
                 return res;
@@ -181,8 +184,8 @@ export class ValidatorBuilder {
                 }
             }
 
-            let _nPath = _tPath.replace(/\.\d(.*)/, ".*.polymorphic.0$1");
-            // console.log(`_nPath: ${_nPath}`);
+            let _nPath = _tPath.replace(/\.\d+(.*)/, ".*.polymorphic.0$1");
+            console.log(`_nPath: ${_nPath}`);
             if (_v.hasOwnProperty(_nPath)) {
                 rxStr = `${wf.Str.regexEscape(_nPath)}`.replace(/\d/, "\\d");
                 // rxStr = ;
