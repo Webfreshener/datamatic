@@ -149,7 +149,6 @@ export class Set extends Model {
                 };
 
                 let msg = this.validatorBuilder.exec(`${this.path}.${idx}`, value);
-                console.log(`set["${idx}"]: ${msg}`);
                 if ((typeof msg) === "string") {
                     sendErr(msg);
                     return false;

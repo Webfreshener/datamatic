@@ -72,7 +72,7 @@ export class ValidatorBuilder {
             return sig.hasOwnProperty("polymorphic") ?
                 sig.polymorphic : (Array.isArray(sig) ? sig : [sig]);
         };
-        let _signatures = ref; // formatSig(ref);
+        let _signatures = formatSig(ref);
         let _v = _validators.get(this);
         let _functs = [];
 

@@ -113,13 +113,13 @@ export class Schema extends Model {
                 if (_pKRes) {
                     let kP = Schema.concatPathAddr(this.path, key);
                     _validPaths.get(this.jsd)[kP] = true;
-                    // if ((typeof value) === "object") {
-                    //     value = _sH.setChildObject(key, value);
-                    //     if ((typeof value) === "string") {
-                    //         this.observerBuilder.error(this.path, value);
-                    //         return false;
-                    //     }
-                    // }
+                    if ((typeof value) === "object") {
+                        value = _sH.setChildObject(key, value);
+                        if ((typeof value) === "string") {
+                            this.observerBuilder.error(this.path, value);
+                            return false;
+                        }
+                    }
                     t[key] = value;
                 }
 

@@ -45,13 +45,12 @@ export class JSD {
             (schema.hasOwnProperty("type") && schema.type === "Array")) {
             _useSet = true;
             // internally we handle all Sets as Polymorphic elements
-            // schema = {polymorphic: Array.isArray(schema) ? schema : [schema]};
-            schema = {
-                type: "Array",
-                elements: schema,
-            };
+            schema = {"*": {polymorphic: Array.isArray(schema) ? schema : [schema]}};
+            // schema = {
+            //     type: "Array",
+            //     elements: schema,
+            // };
         }
-        console.log(`schema: ${JSON.stringify(schema)}`);
         const vBuilder = new ValidatorBuilder(this);
         _vBuilders.set(this, vBuilder);
         _validPaths.set(this, {});

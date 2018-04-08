@@ -138,7 +138,7 @@ describe("Schema Class Test Suite", function () {
         })
     });
 
-    describe("Getters/Setters",  () => {
+    describe.only("Getters/Setters",  () => {
         it("should set basic values on elements", () => {
             let _schema = new JSD({
                 bool: {type: "Boolean"},
@@ -168,7 +168,7 @@ describe("Schema Class Test Suite", function () {
             expect(JSON.parse(`${_schema.document}`).nested.name).toEqual("Ishmael");
         });
 
-        it("should set Array values on elements", () => {
+        it.only("should set Array values on elements", () => {
             let _schema = new JSD({
                 root: {
                     type: "Object",
@@ -397,27 +397,27 @@ describe("Schema Class Test Suite", function () {
             const _s = {
                 type: "Object",
                 elements: {
-                    "*": {
-                        polymorphic: [
-                            {
+                    root: {
+                        type: "Object",
+                        elements: {
+                            name: {
+                                type: "String"
+                            },
+                            value: {
                                 type: "Number"
-                            }, {
-                                type: "Object",
-                                elements: {
-                                    "*": {
-                                        type: "*"
-                                    },
-                                },
-                            }],
-                    },
+                            }
+                        }
+                    }
                 }
             };
-            const _schema = new Schema(_s, null, new JSD(_s));
+
+            const _jsd = new JSD(_s);
             let cnt = 0;
             const _h = {
                 next: (schema) => {
-                    expect(schema.model.valueC.subObj.hasOwnProperty("$ref")).toBe(true);
-                    expect(schema.model.valueC.subObj.$ref instanceof Schema).toBe(true);
+                    console.log(`${JSON.stringify(schema.model.root)}`);
+                    expect(schema.model.root.hasOwnProperty("$ref")).toBe(true);
+                    expect(schema.model.root.$ref instanceof Schema).toBe(true);
                     done();
                 },
                 error: (e) => {
@@ -425,17 +425,13 @@ describe("Schema Class Test Suite", function () {
                 },
             };
 
-            _schema.subscribe(_h);
+            _jsd.document.subscribe(_h);
 
-            _schema.model = {
-                valueA: 1,
-                valueB: 2,
-                valueC: {
-                    subEl: "foo",
-                    subObj: {
-                        subEl: "bar"
-                    }
-                }
+            _jsd.document.model = {
+                root: {
+                    name: "foo",
+                    value: 2,
+                },
             };
         });
     });

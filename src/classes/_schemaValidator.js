@@ -26,7 +26,7 @@ export class SchemaValidator {
         }
         // validates SCHEMA ENTRIES
         _errorMsg = SchemaValidator.eval(_schema, this);
-        console.log(_vBuilders.get(this.jsd).list());
+        // console.log(_vBuilders.get(this.jsd).list());
     }
 
     /**
@@ -181,7 +181,7 @@ export class SchemaValidator {
      * @returns {true|string}
      */
     validateSchemaParam(key, sKey, _schemaKeys, params) {
-        var _type;
+        let _type;
         let eMsg;
         // rejects unknown element if schema non-extensible
         if (sKey !== "*" && !_exists(_schemaKeys[sKey]) &&
@@ -194,6 +194,10 @@ export class SchemaValidator {
             if (typeof eMsg === "string") {
                 return eMsg;
             }
+        }
+
+        if (sKey === "polymorphic") {
+            return this.validatePolymorphicEntry(key, params);
         }
 
         // returns result of
@@ -232,7 +236,6 @@ export class SchemaValidator {
                 } else if (_type.indexOf(params.type) < 0) {
                     return `type attribute was not defined for ${sKey}`;
                 }
-                // return;
             }
         }
         _vBuilders.get(this.jsd).create(params, key);
@@ -272,17 +275,21 @@ export class SchemaValidator {
             if ((this.jsd.getClass(params.type)) == null) {
                 return this.validateSchemaClass(key, params);
             }
-            // console.log(`params.type: ${params.type}`);
-            // if (params.type === "Array") {
-            //     console.log(`>> ARRAY: ${key}`);
-            // //     key = `${key}.*`;
-            // //     if (!Array.isArray(params.elements)) {
-            // //         params.elements = [params.elements];
-            // //     }
-            // }
+            if (params.type === "Array") {
+                key = `${key}.*.polymorphic`;
+                if (params.hasOwnProperty("elements") &&
+                    !Array.isArray(params.elements)) {
+                    params.elements = [params.elements];
+                }
+                else if (params.hasOwnProperty("polymorphic")) {
+                    return this.validatePolymorphicEntry(key, params.polymorphic);
+                }
+            }
             if (Array.isArray(params.elements)) {
-                params.polymorphic = Object.assign({}, params.elements);
+                params.polymorphic = [].concat(params.elements);
                 delete params.elements;
+
+                return this.validatePolymorphicEntry(key, params.polymorphic);
             }
             // handles child elements
             for (let sKey of Object.keys(params)) {
@@ -327,10 +334,12 @@ export class SchemaValidator {
         let cnt = 0;
         try {
             params.forEach((entry) => {
-                let e = this.validateSchemaEntry(`${key}.${cnt}`, entry, opts);
+                let itmKey = `${key}.${cnt}`;
+                let e = this.validateSchemaEntry(itmKey, entry, opts);
                 if ((typeof e) === "string") {
                     throw e;
                 }
+                _vBuilders.get(this.jsd).create(entry, itmKey);
                 cnt++;
             });
         } catch (e) {
