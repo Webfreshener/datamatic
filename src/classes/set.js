@@ -1,14 +1,12 @@
 import {
     _mdRef, _object, _schemaOptions,
-    _exists, _schemaHelpers, _schemaSignatures, _observers
+    _schemaHelpers, _schemaSignatures
 } from "./_references";
 import {MetaData} from "./_metaData";
 import {SchemaValidator} from "./_schemaValidator";
-import {Schema} from "./schema";
 import {JSD} from "./jsd";
 import {Model} from "./model";
 import {SchemaHelpers} from "./_schemaHelpers";
-
 const _observerDelegates = new WeakMap();
 
 /**
@@ -43,30 +41,22 @@ export class Set extends Model {
         // stores our user Options into Weakmap
         _schemaOptions.set(this, opts);
 
-        // creates a default signature if none present
-        if (!_exists(_signature)) {
-            _signature = [{type: "*"}];
+        if (!_signature.hasOwnProperty("type")) {
+            _signature.type = "Array";
         }
-
-        // internally we handle all Sets as Polymorphic elements
-        _signature = {polymorphic: _signature};
-
         // attempts to validate provided `schema` entries
         let _sV = new SchemaValidator(_signature, Object.assign(this.options || {}, {
             jsd: _mdRef.get(this).jsd,
         }), this);
 
         // throws error if error message returned
-        if (typeof (eMsg = _sV.isValid()) === "string") {
+        if (typeof (eMsg = _sV.isValid) === "string") {
             throw eMsg;
         }
 
         const _sig = _signature || JSD.defaults;
         _schemaSignatures.set(this, JSON.stringify(_sig));
         _schemaHelpers.set(this, new SchemaHelpers(this));
-        _schemaHelpers.get(this).walkSchema(_sig, `${this.path}.*`);
-        // _schemaHelpers.get(this).walkSchema(_sig, this.validationPath);
-
     }
 
     /**
@@ -159,6 +149,7 @@ export class Set extends Model {
                 };
 
                 let msg = this.validatorBuilder.exec(`${this.path}.${idx}`, value);
+                console.log(`set["${idx}"]: ${msg}`);
                 if ((typeof msg) === "string") {
                     sendErr(msg);
                     return false;
@@ -171,6 +162,7 @@ export class Set extends Model {
 
                 t[idx] = value;
                 msg = this.validate();
+
                 if ((typeof msg) === "boolean") {
                     if (_oDel) {
                         _oDel.next(this);

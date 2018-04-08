@@ -142,75 +142,6 @@ export class SchemaHelpers {
     }
 
     /**
-     * Traverses Schema Elements and builds Validations for entries
-     *
-     * @param obj
-     * @param path
-     */
-    walkSchema(obj, path) {
-        let _elements = Array.isArray(obj) ? obj : Object.keys(obj);
-        _elements = _elements.filter((el) => {
-            if (typeof el !== "string") {
-                return false;
-            }
-
-            if (el === "type" && (typeof type) === "string") {
-                return false;
-            }
-
-            if (el.match(/^(required|default|extensible|restrict)$/) !== null) {
-                return ((typeof obj[el]) === "object");
-            }
-
-            return true;
-        });
-        for (let _i in _elements) {
-            let _k = _elements[_i];
-            let objPath = _exists(path) ?
-                (path.length ? `${path}.${_k}` : _k) : _k || "";
-            // let objPath = `${path}`;
-            objPath = remapPolypath(objPath);
-            // tests for standard schema object with elements
-            if ((typeof _k === "object") && _k.hasOwnProperty("elements")) {
-                return this.walkSchema(_k.elements, objPath)
-            }
-            if (_k === "polymorphic") {
-                // tests for polymorphic element key rather than schema key
-                if (!Array.isArray(obj.polymorphic)) {
-                    // if is element key, create validator and continue to next steps
-                    this._ref.validatorBuilder.create(obj[_k], `${objPath}`, this._ref);
-                    // this is a bit of a kludge to allow polymorphic child elements
-                    this._ref.validatorBuilder.create(obj[_k], `${objPath}.0`, this._ref);
-                    continue;
-                }
-                let cnt = 0;
-                obj.polymorphic.forEach((polyItm) => {
-                    let polyPath = `${objPath}.${cnt++}`;
-                    this._ref.validatorBuilder.create(polyItm, polyPath, this._ref);
-                    if (polyItm.hasOwnProperty("elements")) {
-                        this.walkSchema(polyItm.elements, polyPath);
-                    }
-                });
-            } else {
-                if (this._ref instanceof Set) {
-                    this._ref.validatorBuilder.create(obj, `${this._ref.path}`, this._ref);
-                } else {
-                    this._ref.validatorBuilder.create(obj[_k], objPath, this._ref);
-                }
-                // return;
-            }
-
-            // tests for nested elements
-            if (_exists(obj[_k]) &&
-                typeof obj[_k].elements === "object") {
-                this.walkSchema(obj[_k].elements, objPath);
-            }
-        }
-        // console.log(this._ref.validatorBuilder.list());
-    }
-
-
-    /**
      *
      * @param key
      * @param value
@@ -239,6 +170,7 @@ export class SchemaHelpers {
             }
             this._ref.validatorBuilder.set(key, _ref);
         }
+
         const msg = this._ref.validatorBuilder.exec(key, value);
         if ((typeof msg) === "string") {
             return msg;
@@ -263,7 +195,7 @@ export class SchemaHelpers {
             let _schema;
             // derives path for element
             let _key = this._ref.path.length ? `${this._ref.path}.${k}` : k;
-            let kP = Schema.concatPathAddr(this._ref.path, _key);
+
             if (_exists(_childSigs[`${k}`])) {
                 _schema = _childSigs[k];
             }
@@ -284,7 +216,7 @@ export class SchemaHelpers {
                     // rejects non-members of non-extensible schemas
                     if (!_exists(_schema) && !this._ref.isExtensible) {
                         const e = `element '${_key}' is not a valid element`;
-                        _validPaths.get(this._ref.jsd)[kP] = e;
+                        _validPaths.get(this._ref.jsd)[_key] = e;
                         return false;
                     }
                 }
@@ -300,32 +232,32 @@ export class SchemaHelpers {
                 // rejects non-members of non-extensible schemas
                 if (!this._ref.isExtensible) {
                     const e = `element '${_key}' is not a valid element`;
-                    _validPaths.get(this._ref.jsd)[kP] = e;
+                    _validPaths.get(this._ref.jsd)[_key] = e;
                     return false;
                 }
                 _schema = Schema.defaultSignature;
             }
 
             // handles child objects
-            if (typeof value === "object") {
-                value = this.setChildObject(_key, value);
-                if (typeof value === "string") {
-                    _validPaths.get(this._ref.jsd)[kP] = value;
-                    return false;
-                }
-                _validPaths.get(this._ref.jsd)[kP] = true;
-            }
+            // if (typeof value === "object") {
+            //     value = this.setChildObject(_key, value);
+            //     if (typeof value === "string") {
+            //         _validPaths.get(this._ref.jsd)[_key] = value;
+            //         return false;
+            //     }
+            //     _validPaths.get(this._ref.jsd)[_key] = true;
+            // }
             // handles scalar values (strings, numbers, booleans...)
-            else {
+            // else {
                 let eMsg = this.validate(_key, value);
                 _validPaths.get(this._ref.jsd)[_key] = eMsg;
                 if (typeof eMsg === "string") {
-                    _validPaths.get(this._ref.jsd)[kP] = eMsg;
-                    this._ref.observerBuilder.error(kP, eMsg);
+                    _validPaths.get(this._ref.jsd)[_key] = eMsg;
+                    this._ref.observerBuilder.error(_key, eMsg);
                     return false;
                 }
-                return _validPaths.get(this._ref.jsd)[kP] = true;
-            }
+                return _validPaths.get(this._ref.jsd)[_key] = true;
+            // }
         }
         return true;
     }

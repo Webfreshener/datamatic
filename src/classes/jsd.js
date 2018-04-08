@@ -13,7 +13,9 @@ import {ObserverBuilder} from "./_observerBuilder";
 import {ValidatorBuilder} from "./_validatorBuilder";
 import {Schema} from "./schema";
 import {Set} from "./set";
+
 const _documents = new WeakMap();
+
 /**
  * JSD Document Entrypoint
  * @public
@@ -36,24 +38,25 @@ export class JSD {
             "String": String,
             "Function": Function,
         });
-        const _ref = this;
+
+        let _useSet = false;
+
+        if ((Array.isArray(schema)) ||
+            (schema.hasOwnProperty("type") && schema.type === "Array")) {
+            _useSet = true;
+            // internally we handle all Sets as Polymorphic elements
+            // schema = {polymorphic: Array.isArray(schema) ? schema : [schema]};
+            schema = {
+                type: "Array",
+                elements: schema,
+            };
+        }
+        console.log(`schema: ${JSON.stringify(schema)}`);
+        const vBuilder = new ValidatorBuilder(this);
+        _vBuilders.set(this, vBuilder);
         _validPaths.set(this, {});
         _oBuilders.set(this, new ObserverBuilder());
-        _vBuilders.set(this, new ValidatorBuilder());
-        let _s;
-        if (!Array.isArray(schema) && schema.type !== "Array") {
-            _s = new Schema(schema, options || null, this);
-        } else {
-            if (!Array.isArray(schema)) {
-                if (!schema.hasOwnProperty("elements")) {
-                    schema.elements = ["*"];
-                }
-            } else {
-                schema = {elements: Array.isArray(schema) ? schema : [schema]};
-            }
-            _s = new Set(schema.elements, options || null, this);
-        }
-        _documents.set(this, _s);
+        _documents.set(this, new (!_useSet ? Schema : Set)(schema, options || null, this));
     }
 
     /**

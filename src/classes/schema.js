@@ -74,7 +74,7 @@ export class Schema extends Model {
         }));
 
         // throws error if error message returned
-        if (typeof (eMsg = _sV.isValid()) === "string") {
+        if (typeof (eMsg = _sV.isValid) === "string") {
             throw eMsg;
         }
 
@@ -82,7 +82,6 @@ export class Schema extends Model {
         const _sig = Object.freeze(_signature || JSD.defaults);
         _schemaSignatures.set(this, JSON.stringify(_sig));
         _schemaHelpers.set(this, new SchemaHelpers(this));
-        _schemaHelpers.get(this).walkSchema(_sig, this.validationPath.replace(/(\.\d\.)+/, ".*."));
         this.setDefaults();
     }
 
@@ -105,6 +104,7 @@ export class Schema extends Model {
                         return false;
                     }
                     _validPaths.get(this.jsd)[this.path] = true;
+                    return true;
                 }
 
                 let _childSigs = this.signature.elements || this.signature;
@@ -113,13 +113,13 @@ export class Schema extends Model {
                 if (_pKRes) {
                     let kP = Schema.concatPathAddr(this.path, key);
                     _validPaths.get(this.jsd)[kP] = true;
-                    if ((typeof value) === "object") {
-                        value = _sH.setChildObject(key, value);
-                        if ((typeof value) === "string") {
-                            this.observerBuilder.error(this.path, value);
-                            return false;
-                        }
-                    }
+                    // if ((typeof value) === "object") {
+                    //     value = _sH.setChildObject(key, value);
+                    //     if ((typeof value) === "string") {
+                    //         this.observerBuilder.error(this.path, value);
+                    //         return false;
+                    //     }
+                    // }
                     t[key] = value;
                 }
 
