@@ -41,7 +41,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/set.js~Set.html">Set</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ensureKindIsString">ensureKindIsString</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ensureRequiredFields">ensureRequiredFields</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getKinds">getKinds</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-remapPolypath">remapPolypath</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_kinds">_kinds</a></span></span></li>
@@ -55,10 +54,12 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaSignatures">_schemaSignatures</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_singletons">_singletons</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vBuilders">_vBuilders</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vPaths">_vPaths</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validPaths">_validPaths</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validators">_validators</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vectorTypes">_vectorTypes</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-wf">wf</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-rxRx">rxRx</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-Validator">Validator</a></span></span></li>
 </ul>
 </div>
@@ -68,9 +69,16 @@
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/**
  * @private
  */
-import {_exists, _validators, _validPaths, wf} from &quot;./_references&quot;;
+import {_exists, _validators,  wf} from &quot;./_references&quot;;
 import {remapPolypath} from &quot;./utils&quot;;
 import {Validator} from &quot;./_validators&quot;
+import {JSD} from &quot;./jsd&quot;;
+/**
+ * Regex that matches other Regex
+ * todo: look into IDEA&apos;s &quot;redundant escape character&quot; warning
+ * @type {RegExp}
+ */
+export const rxRx = /\/((?![*+?])(?:[^\r\n\[/\\]|\\.|\[(?:[^\r\n\]\\]|\\.)*\])+)\/((?:g(?:im?|mi?)?|i(?:gm?|mg?)?|m(?:gi?|ig?)?)?)/;
 
 /**
  * @private
@@ -79,8 +87,16 @@ export class ValidatorBuilder {
     /**
      * @constructor
      */
-    constructor() {
+    constructor(jsd) {
+        if ((!jsd) || !(jsd instanceof JSD)) {
+            throw &quot;JSD is required at arguments[0]&quot;;
+        }
+        Object.defineProperty(this, &quot;$jsd&quot;, {
+            get: () =&gt; jsd,
+            enumerable: false,
+        });
         _validators.set(this, {});
+        Object.seal(this);
     }
 
     /**
@@ -99,8 +115,7 @@ export class ValidatorBuilder {
      */
     get(path) {
         let _v = _validators.get(this);
-        let r = (_v.hasOwnProperty(path)) ? _v[path] : null;
-        return r;
+        return (_v.hasOwnProperty(path)) ? _v[path] : null;
     }
 
     /**
@@ -112,24 +127,40 @@ export class ValidatorBuilder {
         if (!_exists(func) || typeof func !== &quot;function&quot;) {
             return &quot;ValidatorBuilder set: expects a function at arguments[1]&quot;;
         }
+
         _validators.get(this)[path] = func;
         return this;
     }
 
+    /**
+     * resolves all paths that match registered validators
+     * @param path
+     * @param key
+     * @returns {string[]}
+     */
+    resolvePath(path, key) {
+        // escapes regex special chars on `path` string
+        path = wf.Str.regexEscape(`${path}`);
+        // escapes regex special chars on `key` string
+        key = wf.Str.regexEscape(`${key}`);
+        // matches path + key OR wildcard OR actual regexp as key
+        let rx = new RegExp(`${path}\\.?(${key}+|\\*|${rxRx.toString().replace(/\/(.*)+\//g, &apos;$1&apos;)})`);
+        // filter paths by Regexp.test
+        let _matches = this.list().filter((vItm) =&gt; rx.test(vItm));
+        // attempts to find an exact string match in the filtered results
+        let _exactMatch = _matches.find((vItm) =&gt; wf.Str.regexEscape(vItm) === `${path}\\.${key}`);
+        return _exactMatch ? [_exactMatch] : _matches;
+    }
 
     /**
      * Creates new Validation for Schema/Set items
-     * @param ref - Schema Reference
-     * @param path - Path to Element in Tree
-     * @param elRef - Container Object Reference
+     * @param ref
+     * @param path
      * @returns {function}
      */
-    create(ref, path, elRef) {
-        if (!_exists(ref)) {
-            throw &quot;ValidatorBuilder create: object reference required at arguments[0]&quot;;
-        }
+    create(ref, path) {
         const formatSig = (sig) =&gt; {
-            return sig.hasOwnProperty(&quot;polymorphic&quot;) ?
+            return !sig ? [] : sig.hasOwnProperty(&quot;polymorphic&quot;) ?
                 sig.polymorphic : (Array.isArray(sig) ? sig : [sig]);
         };
         let _signatures = formatSig(ref);
@@ -140,7 +171,7 @@ export class ValidatorBuilder {
             _sigs = formatSig(_sigs);
             _sigs.forEach(sig =&gt; {
                 if (typeof sig !== &quot;object&quot;) {
-                    _functs.push(new Validator[&quot;Default&quot;](path, sig, elRef.jsd || elRef));
+                    _functs.push(new Validator[&quot;Default&quot;](path, sig, this.$jsd ));
                 }
                 if (sig.hasOwnProperty(&quot;*&quot;)) {
                     createFuncts(sig[&quot;*&quot;].elements || sig[&quot;*&quot;].polymorphic || sig[&quot;*&quot;]);
@@ -154,28 +185,28 @@ export class ValidatorBuilder {
                     let _typeof = wf.Str.capitalize(sig.type);
                     let _hasKey = (0 &lt;= Object.keys(Validator).indexOf(_typeof));
                     let _path = remapPolypath(path);
-                    _v = new Validator[_hasKey ? _typeof : &quot;Default&quot;](_path, sig, elRef.jsd || elRef);
+                    _v = new Validator[_hasKey ? _typeof : &quot;Default&quot;](_path, sig, this.$jsd);
                     _functs.push(_v);
                 }
             });
         };
-
-        createFuncts(_signatures, path, elRef, []);
+        createFuncts(_signatures);
         // evaluates all defined functions, returning true or last error message
         const _f = (value) =&gt; {
             let _result;
             let e;
             for (let idx in _f.$functs) {
-                _result = _f.$functs[idx].exec(value);
-                if ((typeof _result) === &quot;boolean&quot;) {
-                    return _result
-                } else {
-                    e = _result;
+                if (_f.$functs.hasOwnProperty(idx)) {
+                    _result = _f.$functs[idx].exec(value);
+                    if ((typeof _result) === &quot;boolean&quot;) {
+                        return _result
+                    } else {
+                        e = _result;
+                    }
                 }
             }
             return e || true;
         };
-
         this.set(remapPolypath(path), _f);
         Object.defineProperty(_f, &quot;$functs&quot;, {
             get: () =&gt; _functs,
@@ -192,99 +223,13 @@ export class ValidatorBuilder {
      */
     exec(path, value) {
         let _v = _validators.get(this);
-        let validators;
         if (!_v.hasOwnProperty(path)) {
-            const polyValidate = (validators) =&gt; {
-                let eMsg = true;
-                validators.some((vPath) =&gt; {
-                    eMsg = _v[vPath](value);
-                    if ((typeof eMsg) === &quot;boolean&quot;) {
-                        return eMsg;
-                    }
-                });
-                return eMsg;
-            };
-
-            const findPolyPaths = (_pPath, _eName) =&gt; {
-                _pPath = wf.Str.regexEscape(_pPath);
-                const rxStr = `^(${_pPath}\\.${_eName}+|${_pPath}\\.\\d+\\.${_eName}|${_pPath}\\.\\d+\.\\*)+`;
-                return Object.keys(_v).filter((v) =&gt; {
-                    return v.match(new RegExp(rxStr)) !== null;
-                });
-            };
-
-            const lookupPolyPath = (polyPath) =&gt; {
-                if (_v.hasOwnProperty(polyPath)) {
-                    let pathArr = `${polyPath}`.split(&quot;.&quot;);
-                    const elName = pathArr.pop();
-                    polyPath = pathArr.join(&quot;.&quot;);
-                    validators = findPolyPaths(polyPath, elName);
-                    if (validators.length) {
-                        const res = polyValidate(validators);
-                        return res;
-                    }
-                }
-                return false;
-            };
-
-            let polyPath = `${path}`.replace(/\.+.*$/, &quot;.polymorphic.0&quot;);
-            let res = lookupPolyPath(polyPath);
-            if (res) {
-                return res;
-            }
-
-            // const _tPath = `${path}`.replace(/(.*)(\.+.*)$/, &quot;$1.*&quot;);
-            let _tPath = remapPolypath(path);
-            if (_v.hasOwnProperty(_tPath)) {
-                let rxStr = wf.Str.regexEscape(`${_tPath}.polymorphic`);
-                rxStr = `^(${rxStr}+\\.\\d?|${wf.Str.regexEscape(_tPath)})$`;
-                rxStr = new RegExp(rxStr);
-                validators = Object.keys(_v).filter((v) =&gt; {
-                    return v.match(rxStr) !== null;
-                });
-                if (validators.length) {
-                    const res = polyValidate(validators);
-                    return res;
-                }
-            }
-
-            let _nPath = _tPath.replace(/\.\d(.*)/, &quot;.*.polymorphic.0$1&quot;);
-            // console.log(`_nPath: ${_nPath}`);
-            if (_v.hasOwnProperty(_nPath)) {
-                rxStr = `${wf.Str.regexEscape(_nPath)}`.replace(/\d/, &quot;\\d&quot;);
-                // rxStr = ;
-                validators = Object.keys(_v).filter((v) =&gt; {
-                    // console.log(`wants to match ${v} against ${rxStr}`);
-                    return v.match(new RegExp(rxStr)) !== null;
-                });
-                // console.log(`validators: ${JSON.stringify(validators)}`);
-                if (validators.length) {
-                    const res = polyValidate(validators);
-                    return res;
-                }
-            }
-
-            _tPath = remapPolypath(`${_tPath}.polymorphic.0`);
-
-            if (_v.hasOwnProperty(_tPath)) {
-                let _eName = _tPath.split(&quot;.&quot;).pop();
-                const _pPath = `${wf.Str.regexEscape(_tPath)}`;
-                const rxStr = `^(${_pPath}(\\.\\d)?|${_pPath}\\.\\*?)$`;
-                validators = Object.keys(_v).filter((v) =&gt; {
-                    // console.log(`wants to match ${v} againt ${rxStr}`);
-                    return v.match(new RegExp(rxStr)) !== null;
-                });
-                // console.log(`validators: ${JSON.stringify(validators)}`);
-                if (validators.length) {
-                    const res = polyValidate(validators);
-                    return res;
-                }
-            }
             return `validator for &apos;${path}&apos; does not exist`;
         }
         return _v[path](value);
     }
-}</code></pre>
+}
+</code></pre>
 
 </div>
 

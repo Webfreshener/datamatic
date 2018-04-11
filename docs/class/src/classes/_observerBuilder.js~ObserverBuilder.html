@@ -41,7 +41,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/set.js~Set.html">Set</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ensureKindIsString">ensureKindIsString</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ensureRequiredFields">ensureRequiredFields</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getKinds">getKinds</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-remapPolypath">remapPolypath</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_kinds">_kinds</a></span></span></li>
@@ -55,23 +54,25 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaSignatures">_schemaSignatures</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_singletons">_singletons</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vBuilders">_vBuilders</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vPaths">_vPaths</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validPaths">_validPaths</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validators">_validators</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vectorTypes">_vectorTypes</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-wf">wf</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-rxRx">rxRx</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-Validator">Validator</a></span></span></li>
 </ul>
 </div>
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {ObserverBuilder} from &apos;<span><a href="file/src/classes/_observerBuilder.js.html#lineNumber6">jsd/src/classes/_observerBuilder.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {ObserverBuilder} from &apos;<span><a href="file/src/classes/_observerBuilder.js.html#lineNumber4">jsd/src/classes/_observerBuilder.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/src/classes/_observerBuilder.js.html#lineNumber6">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/src/classes/_observerBuilder.js.html#lineNumber4">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -245,7 +246,7 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/_observerBuilder.js~ObserverBuilder.html#instance-method-get">get</a></span></span><span class="code" data-ice="signature">(path: <span>*</span>): <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/_observerBuilder.js~ObserverBuilder.html#instance-method-get">get</a></span></span><span class="code" data-ice="signature">(path: <span>*</span>): <span>Observer</span></span>
         </p>
       </div>
       <div>
@@ -273,7 +274,7 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/_observerBuilder.js~ObserverBuilder.html#instance-method-list">list</a></span></span><span class="code" data-ice="signature">(): <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/_observerBuilder.js~ObserverBuilder.html#instance-method-list">list</a></span></span><span class="code" data-ice="signature">(): <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span><span>[]</span></span></span>
         </p>
       </div>
       <div>
@@ -338,7 +339,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_observerBuilder.js.html#lineNumber10">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_observerBuilder.js.html#lineNumber8">source</a></span></span>
     </span>
   </h3>
 
@@ -385,7 +386,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_observerBuilder.js.html#lineNumber65">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_observerBuilder.js.html#lineNumber60">source</a></span></span>
     </span>
   </h3>
 
@@ -409,13 +410,15 @@
       <td data-ice="name" class="code" data-depth="0">path</td>
       <td data-ice="type" class="code"><span>*</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>{string}</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">value</td>
       <td data-ice="type" class="code"><span>*</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>{*}</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -451,7 +454,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_observerBuilder.js.html#lineNumber36">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_observerBuilder.js.html#lineNumber34">source</a></span></span>
     </span>
   </h3>
 
@@ -474,13 +477,15 @@
       <td data-ice="name" class="code" data-depth="0">forPath</td>
       <td data-ice="type" class="code"><span>*</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>{string}</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">oRef</td>
       <td data-ice="type" class="code"><span>*</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>{Model|Schema|Set}</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -516,7 +521,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_observerBuilder.js.html#lineNumber77">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_observerBuilder.js.html#lineNumber72">source</a></span></span>
     </span>
   </h3>
 
@@ -540,13 +545,15 @@
       <td data-ice="name" class="code" data-depth="0">path</td>
       <td data-ice="type" class="code"><span>*</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>{string}</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">value</td>
       <td data-ice="type" class="code"><span>*</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>{*}</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -578,11 +585,11 @@
     
     
     
-    <span class="code" data-ice="name">get</span><span class="code" data-ice="signature">(path: <span>*</span>): <span>*</span></span>
+    <span class="code" data-ice="name">get</span><span class="code" data-ice="signature">(path: <span>*</span>): <span>Observer</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_observerBuilder.js.html#lineNumber26">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_observerBuilder.js.html#lineNumber24">source</a></span></span>
     </span>
   </h3>
 
@@ -605,7 +612,8 @@
       <td data-ice="name" class="code" data-depth="0">path</td>
       <td data-ice="type" class="code"><span>*</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>{string}</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -617,8 +625,8 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span>*</span></td>
-          <td class="return-desc" data-ice="returnDescription"><p>item at path reference</p>
+          <td class="return-type code" data-ice="returnType"><span>Observer</span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>Observer at path reference</p>
 </td>
         </tr>
       </tbody>
@@ -650,11 +658,11 @@
     
     
     
-    <span class="code" data-ice="name">list</span><span class="code" data-ice="signature">(): <span>*</span></span>
+    <span class="code" data-ice="name">list</span><span class="code" data-ice="signature">(): <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span><span>[]</span></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_observerBuilder.js.html#lineNumber17">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_observerBuilder.js.html#lineNumber15">source</a></span></span>
     </span>
   </h3>
 
@@ -673,8 +681,8 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span>*</span></td>
-          <td class="return-desc" data-ice="returnDescription"><p>list of validation paths</p>
+          <td class="return-type code" data-ice="returnType"><span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span><span>[]</span></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>of validation paths</p>
 </td>
         </tr>
       </tbody>
@@ -710,7 +718,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_observerBuilder.js.html#lineNumber53">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_observerBuilder.js.html#lineNumber48">source</a></span></span>
     </span>
   </h3>
 
@@ -734,13 +742,15 @@
       <td data-ice="name" class="code" data-depth="0">path</td>
       <td data-ice="type" class="code"><span>*</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>{string}</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">value</td>
       <td data-ice="type" class="code"><span>*</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>{*}</p>
+</td>
     </tr>
 </tbody>
   </table>

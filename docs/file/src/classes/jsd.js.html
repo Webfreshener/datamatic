@@ -41,7 +41,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/set.js~Set.html">Set</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ensureKindIsString">ensureKindIsString</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ensureRequiredFields">ensureRequiredFields</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getKinds">getKinds</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-remapPolypath">remapPolypath</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_kinds">_kinds</a></span></span></li>
@@ -55,10 +54,12 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaSignatures">_schemaSignatures</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_singletons">_singletons</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vBuilders">_vBuilders</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vPaths">_vPaths</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validPaths">_validPaths</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validators">_validators</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vectorTypes">_vectorTypes</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-wf">wf</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-rxRx">rxRx</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-Validator">Validator</a></span></span></li>
 </ul>
 </div>
@@ -80,7 +81,9 @@ import {ObserverBuilder} from &quot;./_observerBuilder&quot;;
 import {ValidatorBuilder} from &quot;./_validatorBuilder&quot;;
 import {Schema} from &quot;./schema&quot;;
 import {Set} from &quot;./set&quot;;
+
 const _documents = new WeakMap();
+
 /**
  * JSD Document Entrypoint
  * @public
@@ -103,24 +106,34 @@ export class JSD {
             &quot;String&quot;: String,
             &quot;Function&quot;: Function,
         });
-        const _ref = this;
+
+
+
+        let _useSet = false;
+
+        if ((Array.isArray(schema)) ||
+            (schema.hasOwnProperty(&quot;type&quot;) &amp;&amp; schema.type === &quot;Array&quot;)) {
+            _useSet = true;
+            // internally we handle all Sets as Polymorphic elements
+            schema = {&quot;*&quot;: {polymorphic: Array.isArray(schema) ? schema : [schema]}};
+        }
+
+        // // attempts to validate provided `schema` entries
+        // let _sV = new SchemaValidator(schema, Object.assign({}, this.options, {
+        //     jsd: this,
+        // }));
+        //
+        // let eMsg;
+        // // throws error if error message returned
+        // if (typeof (eMsg = _sV.isValid) === &quot;string&quot;) {
+        //     throw eMsg;
+        // }
+
+        const vBuilder = new ValidatorBuilder(this);
+        _vBuilders.set(this, vBuilder);
         _validPaths.set(this, {});
         _oBuilders.set(this, new ObserverBuilder());
-        _vBuilders.set(this, new ValidatorBuilder());
-        let _s;
-        if (!Array.isArray(schema) &amp;&amp; schema.type !== &quot;Array&quot;) {
-            _s = new Schema(schema, options || null, this);
-        } else {
-            if (!Array.isArray(schema)) {
-                if (!schema.hasOwnProperty(&quot;elements&quot;)) {
-                    schema.elements = [&quot;*&quot;];
-                }
-            } else {
-                schema = {elements: Array.isArray(schema) ? schema : [schema]};
-            }
-            _s = new Set(schema.elements, options || null, this);
-        }
-        _documents.set(this, _s);
+        _documents.set(this, new (!_useSet ? Schema : Set)(schema, options || null, this));
     }
 
     /**
@@ -131,26 +144,24 @@ export class JSD {
     }
 
     /**
-     *
-     * @returns {Schema}
+     * getter for Model document
+     * @returns {Schema|Set}
      */
     get document() {
         return _documents.get(this);
     }
 
+    /**
+     * getter for validation status
+     * @returns {boolean}
+     */
     get isValid() {
-        const v = this._validPaths.get(this);
-        for (path of v) {
-            if (!path) {
-                return false;
-            }
-        }
-        return true;
+        return this.document.isValid;
     }
 
     /**
-     * @param {string|function} classesOrNames
-     * @returns {function|string}
+     * @param {string|function|string[]} classesOrNames
+     * @returns {function|function[]|string|string[]|*[]}
      */
     getClass(classesOrNames) {
         let _k = _kinds.get(this);
@@ -223,7 +234,8 @@ export class JSD {
     }
 
     /**
-     * @return list of registered Class Names
+     * lists registered Class Names
+     * @return {string[]}
      */
     listClasses() {
         return Object.keys(_kinds.get(this));
@@ -232,9 +244,9 @@ export class JSD {
     /**
      * creates new Schema from JSON data
      * @param {string|object} json
-     * @returns Schema
+     * @returns {JSD}
      */
-    fromJSON(json) {
+    static fromJSON(json) {
         let _;
         if (_ = (typeof json).match(/^(string|object)+$/)) {
             return new JSD((_[1] === &quot;string&quot;) ? JSON.parse(json) : json);
@@ -243,7 +255,8 @@ export class JSD {
     }
 
     /**
-     * @returns {object} base schema element signature
+     * getter for base schema element signature
+     * @returns {object}
      */
     get schemaRef() {
         let _keys = [].concat(Object.keys(_kinds.get(this)));

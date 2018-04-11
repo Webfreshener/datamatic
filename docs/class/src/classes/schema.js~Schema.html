@@ -41,7 +41,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/set.js~Set.html">Set</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ensureKindIsString">ensureKindIsString</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ensureRequiredFields">ensureRequiredFields</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getKinds">getKinds</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-remapPolypath">remapPolypath</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_kinds">_kinds</a></span></span></li>
@@ -55,23 +54,25 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaSignatures">_schemaSignatures</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_singletons">_singletons</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vBuilders">_vBuilders</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vPaths">_vPaths</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validPaths">_validPaths</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validators">_validators</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vectorTypes">_vectorTypes</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-wf">wf</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-rxRx">rxRx</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-Validator">Validator</a></span></span></li>
 </ul>
 </div>
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {Schema} from &apos;<span><a href="file/src/classes/schema.js.html#lineNumber15">jsd/src/classes/schema.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {Schema} from &apos;<span><a href="file/src/classes/schema.js.html#lineNumber14">jsd/src/classes/schema.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/src/classes/schema.js.html#lineNumber15">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/src/classes/schema.js.html#lineNumber14">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -221,7 +222,7 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/schema.js~Schema.html#instance-constructor-constructor">constructor</a></span></span><span class="code" data-ice="signature">(_o: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, opts: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/schema.js~Schema.html#instance-constructor-constructor">constructor</a></span></span><span class="code" data-ice="signature">(_signature: <span>*</span>, opts: <span>*</span>)</span>
         </p>
       </div>
       <div>
@@ -558,13 +559,43 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#static-method-createRef">createRef</a></span></span><span class="code" data-ice="signature">(ref: <span>*</span>): {}</span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#static-method-createRef">createRef</a></span></span><span class="code" data-ice="signature">(ref: <span>*</span>, obj: <span>*</span>): <span>*</span></span>
         </p>
       </div>
       <div>
         
         
+        <div data-ice="description"><p>creates owner Model reference on Proxied data object</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      <span class="kind" data-ice="kind">get</span>
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-get-handler">handler</a></span></span><span class="code" data-ice="signature">: {get: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>, set: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>}</span>
+        </p>
+      </div>
+      <div>
         
+        
+        <div data-ice="description"><p>stub for sub-class implementation</p>
+</div>
       </div>
     </td>
     <td>
@@ -728,7 +759,7 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-get-parent">parent</a></span></span><span class="code" data-ice="signature">: <span><a href="class/src/classes/schema.js~Schema.html">Schema</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set">Set</a></span>: <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-get-parent">parent</a></span></span><span class="code" data-ice="signature">: <span><a href="class/src/classes/model.js~Model.html">Model</a></span>: <span>*</span></span>
         </p>
       </div>
       <div>
@@ -786,7 +817,7 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-get-root">root</a></span></span><span class="code" data-ice="signature">: <span><a href="class/src/classes/schema.js~Schema.html">Schema</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set">Set</a></span>: <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-get-root">root</a></span></span><span class="code" data-ice="signature">: <span><a href="class/src/classes/model.js~Model.html">Model</a></span>: <span>*</span></span>
         </p>
       </div>
       <div>
@@ -821,7 +852,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>TODO: remove and standardize around <code>signature</code></p>
+</div>
       </div>
     </td>
     <td>
@@ -849,8 +881,7 @@
       <div>
         
         
-        <div data-ice="description"><p>TODO: remove and standardize around <code>schema</code></p>
-</div>
+        
       </div>
     </td>
     <td>
@@ -958,7 +989,7 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-method-subscribe">subscribe</a></span></span><span class="code" data-ice="signature">(func: <span>*</span>): <span>Observable</span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-method-subscribe">subscribe</a></span></span><span class="code" data-ice="signature">(func: <span>*</span>): <span>_subs</span></span>
         </p>
       </div>
       <div>
@@ -987,7 +1018,7 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-method-subscribeTo">subscribeTo</a></span></span><span class="code" data-ice="signature">(path: <span>*</span>, func: <span>*</span>): <span>Observable</span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-method-subscribeTo">subscribeTo</a></span></span><span class="code" data-ice="signature">(path: <span>*</span>, func: <span>*</span>): <span>_subs</span></span>
         </p>
       </div>
       <div>
@@ -1074,7 +1105,7 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-method-validate">validate</a></span></span><span class="code" data-ice="signature">(): <span>true</span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-method-validate">validate</a></span></span><span class="code" data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
         </p>
       </div>
       <div>
@@ -1135,7 +1166,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber305">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber279">source</a></span></span>
     </span>
   </h3>
 
@@ -1178,7 +1209,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber315">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber289">source</a></span></span>
     </span>
   </h3>
 
@@ -1225,7 +1256,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber148">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber126">source</a></span></span>
     </span>
   </h3>
 
@@ -1302,11 +1333,11 @@
     
     
     
-    <span class="code" data-ice="name">constructor</span><span class="code" data-ice="signature">(_o: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, opts: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>)</span>
+    <span class="code" data-ice="name">constructor</span><span class="code" data-ice="signature">(_signature: <span>*</span>, opts: <span>*</span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber21">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber20">source</a></span></span>
     </span>
   </h3>
 
@@ -1326,17 +1357,17 @@
     <tbody>
     
     <tr data-ice="property" data-depth="0">
-      <td data-ice="name" class="code" data-depth="0">_o</td>
-      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
+      <td data-ice="name" class="code" data-depth="0">_signature</td>
+      <td data-ice="type" class="code"><span>*</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"><p>schema definition object</p>
+      <td data-ice="description"><p>{Object} - schema definition object</p>
 </td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">opts</td>
-      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span></td>
+      <td data-ice="type" class="code"><span>*</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"><p>schema options</p>
+      <td data-ice="description"><p>{Object} - schema options</p>
 </td>
     </tr>
 </tbody>
@@ -1376,7 +1407,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber93">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber68">source</a></span></span>
     </span>
   </h3>
 
@@ -1386,7 +1417,7 @@
   <div data-ice="description"><p>Handler for Object Proxy Evaluation</p>
 </div>
 
-  
+  <div data-ice="override"><h4>Override:</h4><span><a href="class/src/classes/model.js~Model.html#instance-get-handler">Model#handler</a></span></div>
 
   <div data-ice="properties">
 </div>
@@ -1432,7 +1463,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber269">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber244">source</a></span></span>
     </span>
   </h3>
 
@@ -1488,7 +1519,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber162">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber140">source</a></span></span>
     </span>
   </h3>
 
@@ -1532,7 +1563,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber170">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber148">source</a></span></span>
     </span>
   </h3>
 
@@ -1576,7 +1607,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber277">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber252">source</a></span></span>
     </span>
   </h3>
 
@@ -1620,7 +1651,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber284">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber259">source</a></span></span>
     </span>
   </h3>
 
@@ -1676,15 +1707,14 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber155">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber133">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>TODO: remove and standardize around <code>schema</code></p>
-</div>
+  
 
   <div data-ice="override"><h4>Override:</h4><span><a href="class/src/classes/model.js~Model.html#instance-get-signature">Model#signature</a></span></div>
 
@@ -1736,7 +1766,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber224">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber202">source</a></span></span>
     </span>
   </h3>
 
@@ -1807,7 +1837,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber233">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber211">source</a></span></span>
     </span>
   </h3>
 
@@ -1885,7 +1915,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber291">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/schema.js.html#lineNumber266">source</a></span></span>
     </span>
   </h3>
 

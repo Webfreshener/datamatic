@@ -41,7 +41,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/set.js~Set.html">Set</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ensureKindIsString">ensureKindIsString</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ensureRequiredFields">ensureRequiredFields</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getKinds">getKinds</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-remapPolypath">remapPolypath</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_kinds">_kinds</a></span></span></li>
@@ -55,10 +54,12 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaSignatures">_schemaSignatures</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_singletons">_singletons</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vBuilders">_vBuilders</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vPaths">_vPaths</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validPaths">_validPaths</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validators">_validators</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vectorTypes">_vectorTypes</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-wf">wf</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-rxRx">rxRx</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-Validator">Validator</a></span></span></li>
 </ul>
 </div>
@@ -117,8 +118,8 @@ export class BaseValidator {
     /**
      * tests typeof value reference
      *
-     * @param type
-     * @param value
+     * @param type {*}
+     * @param value {*}
      * @returns {Boolean|String}
      */
     checkType(type, value) {
@@ -141,7 +142,7 @@ export class BaseValidator {
             // -- NOTE: this should allow an Array of Types
             // -- might want re-evaluate this
             if (Array.isArray(type)) {
-                let _res;
+                let _res = &quot;unable to find type for Array values&quot;;
                 // tests each `type` specified in Set until we find a true value
                 type.some((k) =&gt; {
                     _res = _eval(k, value);
@@ -164,7 +165,7 @@ export class BaseValidator {
      * @returns {string}
      */
     exec(value) {
-        return `${wf.utils.Fun.getClassName(this)} requires override of &apos;exec&apos;`;
+        return `${wf.Fun.getConstructorName(this)} requires override of &apos;exec&apos;`;
     }
 
     /**
@@ -199,14 +200,17 @@ Validator.Array = class Arr extends BaseValidator {
             return `type of array was expected for &apos;${this.path}&apos;. type was &apos;&lt;${typeof value}&gt;&apos;`;
         }
         for (let __ in value) {
-            let e = this.call(this.path, value[__]);
-            if ((typeof e) === &quot;string&quot;) {
-                return e;
+            if (value.hasOwnProperty(__)) {
+                let e = this.call(this.path, value[__]);
+                if ((typeof e) === &quot;string&quot;) {
+                    return e;
+                }
             }
         }
         return true;
     }
-}
+};
+
 /**
  * @private
  */
@@ -248,17 +252,21 @@ Validator.Object = class Obj extends BaseValidator {
         if (typeof value === &quot;object&quot;) {
             if (!Array.isArray(value)) {
                 for (let _k in value) {
-                    let _res = _iterate(_k, value[_k]);
-                    if (typeof _res === &quot;string&quot;) {
-                        return _res;
+                    if (value.hasOwnProperty(_k)) {
+                        let _res = _iterate(_k, value[_k]);
+                        if (typeof _res === &quot;string&quot;) {
+                            return _res;
+                        }
                     }
                 }
             }
             else {
                 for (let __ in value) {
-                    let e = this.call(this.path, value[__]);
-                    if (typeof e === &quot;string&quot;) {
-                        return e;
+                    if (value.hasOwnProperty(__)) {
+                        let e = this.call(this.path, value[__]);
+                        if (typeof e === &quot;string&quot;) {
+                            return e;
+                        }
                     }
                 }
             }
@@ -333,7 +341,7 @@ Validator.String = class Str extends BaseValidator {
                 _rxStr = this.signature.restrict;
                 _rxFlags = &quot;&quot;;
             }
-
+            // todo: loo into IDEA&apos;s &quot;duplicate \\ character&quot; warning
             if (!_exists(new RegExp(_rxStr.replace(/[\\\\]{2,}/g, &quot;\\&quot;), _rxFlags).exec(value))) {
                 return `value &apos;${value}&apos; for ${this.path} did not match required expression`;
             }

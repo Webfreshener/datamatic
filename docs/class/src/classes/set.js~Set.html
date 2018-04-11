@@ -41,7 +41,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/set.js~Set.html">Set</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ensureKindIsString">ensureKindIsString</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ensureRequiredFields">ensureRequiredFields</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getKinds">getKinds</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-remapPolypath">remapPolypath</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_kinds">_kinds</a></span></span></li>
@@ -55,23 +54,25 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaSignatures">_schemaSignatures</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_singletons">_singletons</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vBuilders">_vBuilders</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vPaths">_vPaths</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validPaths">_validPaths</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validators">_validators</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vectorTypes">_vectorTypes</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-wf">wf</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-rxRx">rxRx</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-Validator">Validator</a></span></span></li>
 </ul>
 </div>
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {Set} from &apos;<span><a href="file/src/classes/set.js.html#lineNumber17">jsd/src/classes/set.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {Set} from &apos;<span><a href="file/src/classes/set.js.html#lineNumber16">jsd/src/classes/set.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/src/classes/set.js.html#lineNumber17">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/src/classes/set.js.html#lineNumber16">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -123,7 +124,7 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/set.js~Set.html#instance-constructor-constructor">constructor</a></span></span><span class="code" data-ice="signature">(_type: <span>any</span>, items: <span>any</span>)</span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/set.js~Set.html#instance-constructor-constructor">constructor</a></span></span><span class="code" data-ice="signature">(_signature: <span>*</span>, opts: <span>*</span>)</span>
         </p>
       </div>
       <div>
@@ -447,7 +448,7 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/set.js~Set.html#instance-method-replaceItemAt">replaceItemAt</a></span></span><span class="code" data-ice="signature">(idx: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, item: <span>any</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set">Set</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/set.js~Set.html#instance-method-replaceItemAt">replaceItemAt</a></span></span><span class="code" data-ice="signature">(idx: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, item: <span>any</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set">Set</a></span></span>
         </p>
       </div>
       <div>
@@ -475,7 +476,7 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/set.js~Set.html#instance-method-reset">reset</a></span></span><span class="code" data-ice="signature">(): <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/set.js~Set.html#instance-method-reset">reset</a></span></span><span class="code" data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set">Set</a></span></span>
         </p>
       </div>
       <div>
@@ -624,13 +625,43 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#static-method-createRef">createRef</a></span></span><span class="code" data-ice="signature">(ref: <span>*</span>): {}</span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#static-method-createRef">createRef</a></span></span><span class="code" data-ice="signature">(ref: <span>*</span>, obj: <span>*</span>): <span>*</span></span>
         </p>
       </div>
       <div>
         
         
+        <div data-ice="description"><p>creates owner Model reference on Proxied data object</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      <span class="kind" data-ice="kind">get</span>
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-get-handler">handler</a></span></span><span class="code" data-ice="signature">: {get: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>, set: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>}</span>
+        </p>
+      </div>
+      <div>
         
+        
+        <div data-ice="description"><p>stub for sub-class implementation</p>
+</div>
       </div>
     </td>
     <td>
@@ -794,7 +825,7 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-get-parent">parent</a></span></span><span class="code" data-ice="signature">: <span><a href="class/src/classes/schema.js~Schema.html">Schema</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set">Set</a></span>: <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-get-parent">parent</a></span></span><span class="code" data-ice="signature">: <span><a href="class/src/classes/model.js~Model.html">Model</a></span>: <span>*</span></span>
         </p>
       </div>
       <div>
@@ -852,7 +883,7 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-get-root">root</a></span></span><span class="code" data-ice="signature">: <span><a href="class/src/classes/schema.js~Schema.html">Schema</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set">Set</a></span>: <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-get-root">root</a></span></span><span class="code" data-ice="signature">: <span><a href="class/src/classes/model.js~Model.html">Model</a></span>: <span>*</span></span>
         </p>
       </div>
       <div>
@@ -887,7 +918,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>TODO: remove and standardize around <code>signature</code></p>
+</div>
       </div>
     </td>
     <td>
@@ -915,8 +947,7 @@
       <div>
         
         
-        <div data-ice="description"><p>TODO: remove and standardize around <code>schema</code></p>
-</div>
+        
       </div>
     </td>
     <td>
@@ -1024,7 +1055,7 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-method-subscribe">subscribe</a></span></span><span class="code" data-ice="signature">(func: <span>*</span>): <span>Observable</span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-method-subscribe">subscribe</a></span></span><span class="code" data-ice="signature">(func: <span>*</span>): <span>_subs</span></span>
         </p>
       </div>
       <div>
@@ -1053,7 +1084,7 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-method-subscribeTo">subscribeTo</a></span></span><span class="code" data-ice="signature">(path: <span>*</span>, func: <span>*</span>): <span>Observable</span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-method-subscribeTo">subscribeTo</a></span></span><span class="code" data-ice="signature">(path: <span>*</span>, func: <span>*</span>): <span>_subs</span></span>
         </p>
       </div>
       <div>
@@ -1140,7 +1171,7 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-method-validate">validate</a></span></span><span class="code" data-ice="signature">(): <span>true</span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-method-validate">validate</a></span></span><span class="code" data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
         </p>
       </div>
       <div>
@@ -1199,11 +1230,11 @@
     
     
     
-    <span class="code" data-ice="name">constructor</span><span class="code" data-ice="signature">(_type: <span>any</span>, items: <span>any</span>)</span>
+    <span class="code" data-ice="name">constructor</span><span class="code" data-ice="signature">(_signature: <span>*</span>, opts: <span>*</span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/set.js.html#lineNumber23">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/set.js.html#lineNumber22">source</a></span></span>
     </span>
   </h3>
 
@@ -1223,16 +1254,18 @@
     <tbody>
     
     <tr data-ice="property" data-depth="0">
-      <td data-ice="name" class="code" data-depth="0">_type</td>
-      <td data-ice="type" class="code"><span>any</span></td>
+      <td data-ice="name" class="code" data-depth="0">_signature</td>
+      <td data-ice="type" class="code"><span>*</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>{*}</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
-      <td data-ice="name" class="code" data-depth="0">items</td>
-      <td data-ice="type" class="code"><span>any</span></td>
+      <td data-ice="name" class="code" data-depth="0">opts</td>
+      <td data-ice="type" class="code"><span>*</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>{*}</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -1271,16 +1304,17 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/set.js.html#lineNumber124">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/set.js.html#lineNumber100">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>stub for sub-class implementation</p>
+</div>
 
-  
+  <div data-ice="override"><h4>Override:</h4><span><a href="class/src/classes/model.js~Model.html#instance-get-handler">Model#handler</a></span></div>
 
   <div data-ice="properties">
 </div>
@@ -1314,7 +1348,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/set.js.html#lineNumber321">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/set.js.html#lineNumber306">source</a></span></span>
     </span>
   </h3>
 
@@ -1370,7 +1404,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/set.js.html#lineNumber75">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/set.js.html#lineNumber53">source</a></span></span>
     </span>
   </h3>
 
@@ -1414,7 +1448,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/set.js.html#lineNumber83">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/set.js.html#lineNumber61">source</a></span></span>
     </span>
   </h3>
 
@@ -1461,7 +1495,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/set.js.html#lineNumber258">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/set.js.html#lineNumber243">source</a></span></span>
     </span>
   </h3>
 
@@ -1533,7 +1567,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/set.js.html#lineNumber203">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/set.js.html#lineNumber188">source</a></span></span>
     </span>
   </h3>
 
@@ -1605,7 +1639,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/set.js.html#lineNumber282">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/set.js.html#lineNumber267">source</a></span></span>
     </span>
   </h3>
 
@@ -1661,7 +1695,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/set.js.html#lineNumber292">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/set.js.html#lineNumber277">source</a></span></span>
     </span>
   </h3>
 
@@ -1734,7 +1768,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/set.js.html#lineNumber222">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/set.js.html#lineNumber207">source</a></span></span>
     </span>
   </h3>
 
@@ -1805,7 +1839,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/set.js.html#lineNumber231">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/set.js.html#lineNumber216">source</a></span></span>
     </span>
   </h3>
 
@@ -1873,11 +1907,11 @@
     
     
     
-    <span class="code" data-ice="name">replaceItemAt</span><span class="code" data-ice="signature">(idx: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, item: <span>any</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set">Set</a></span></span>
+    <span class="code" data-ice="name">replaceItemAt</span><span class="code" data-ice="signature">(idx: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Number">number</a></span>, item: <span>any</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set">Set</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/set.js.html#lineNumber241">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/set.js.html#lineNumber226">source</a></span></span>
     </span>
   </h3>
 
@@ -1918,7 +1952,7 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set">Set</a></span></td>
+          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set">Set</a></span></td>
           <td class="return-desc" data-ice="returnDescription"><p>reference to self</p>
 </td>
         </tr>
@@ -1951,11 +1985,11 @@
     
     
     
-    <span class="code" data-ice="name">reset</span><span class="code" data-ice="signature">(): <span>*</span></span>
+    <span class="code" data-ice="name">reset</span><span class="code" data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set">Set</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/set.js.html#lineNumber304">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/set.js.html#lineNumber289">source</a></span></span>
     </span>
   </h3>
 
@@ -1975,7 +2009,7 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span>*</span></td>
+          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set">Set</a></span></td>
           <td class="return-desc" data-ice="returnDescription"><p>reference to self</p>
 </td>
         </tr>
@@ -2012,7 +2046,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/set.js.html#lineNumber212">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/set.js.html#lineNumber197">source</a></span></span>
     </span>
   </h3>
 
@@ -2090,7 +2124,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/set.js.html#lineNumber266">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/set.js.html#lineNumber251">source</a></span></span>
     </span>
   </h3>
 
@@ -2146,7 +2180,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/set.js.html#lineNumber313">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/set.js.html#lineNumber298">source</a></span></span>
     </span>
   </h3>
 
@@ -2219,7 +2253,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/set.js.html#lineNumber274">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/set.js.html#lineNumber259">source</a></span></span>
     </span>
   </h3>
 

@@ -41,7 +41,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/set.js~Set.html">Set</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ensureKindIsString">ensureKindIsString</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ensureRequiredFields">ensureRequiredFields</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getKinds">getKinds</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-remapPolypath">remapPolypath</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_kinds">_kinds</a></span></span></li>
@@ -55,23 +54,25 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaSignatures">_schemaSignatures</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_singletons">_singletons</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vBuilders">_vBuilders</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vPaths">_vPaths</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validPaths">_validPaths</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validators">_validators</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vectorTypes">_vectorTypes</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-wf">wf</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-rxRx">rxRx</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-Validator">Validator</a></span></span></li>
 </ul>
 </div>
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {ValidatorBuilder} from &apos;<span><a href="file/src/classes/_validatorBuilder.js.html#lineNumber11">jsd/src/classes/_validatorBuilder.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {ValidatorBuilder} from &apos;<span><a href="file/src/classes/_validatorBuilder.js.html#lineNumber18">jsd/src/classes/_validatorBuilder.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">private</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/src/classes/_validatorBuilder.js.html#lineNumber11">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/src/classes/_validatorBuilder.js.html#lineNumber18">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -159,7 +160,7 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/_validatorBuilder.js~ValidatorBuilder.html#instance-method-create">create</a></span></span><span class="code" data-ice="signature">(ref: <span>*</span>, path: <span>*</span>, elRef: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/_validatorBuilder.js~ValidatorBuilder.html#instance-method-create">create</a></span></span><span class="code" data-ice="signature">(ref: <span>*</span>, path: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span></span>
         </p>
       </div>
       <div>
@@ -275,6 +276,35 @@
           
           
           
+          <span class="code" data-ice="name"><span><a href="class/src/classes/_validatorBuilder.js~ValidatorBuilder.html#instance-method-resolvePath">resolvePath</a></span></span><span class="code" data-ice="signature">(path: <span>*</span>, key: <span>*</span>): <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span><span>[]</span></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>resolves all paths that match registered validators</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
           <span class="code" data-ice="name"><span><a href="class/src/classes/_validatorBuilder.js~ValidatorBuilder.html#instance-method-set">set</a></span></span><span class="code" data-ice="signature">(path: <span>*</span>, func: <span>*</span>): <span>*</span></span>
         </p>
       </div>
@@ -312,7 +342,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_validatorBuilder.js.html#lineNumber15">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_validatorBuilder.js.html#lineNumber22">source</a></span></span>
     </span>
   </h3>
 
@@ -355,11 +385,11 @@
     
     
     
-    <span class="code" data-ice="name">create</span><span class="code" data-ice="signature">(ref: <span>*</span>, path: <span>*</span>, elRef: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span></span>
+    <span class="code" data-ice="name">create</span><span class="code" data-ice="signature">(ref: <span>*</span>, path: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_validatorBuilder.js.html#lineNumber60">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_validatorBuilder.js.html#lineNumber93">source</a></span></span>
     </span>
   </h3>
 
@@ -383,22 +413,13 @@
       <td data-ice="name" class="code" data-depth="0">ref</td>
       <td data-ice="type" class="code"><span>*</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"><p>Schema Reference</p>
-</td>
+      <td data-ice="description"></td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">path</td>
       <td data-ice="type" class="code"><span>*</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"><p>Path to Element in Tree</p>
-</td>
-    </tr>
-<tr data-ice="property" data-depth="0">
-      <td data-ice="name" class="code" data-depth="0">elRef</td>
-      <td data-ice="type" class="code"><span>*</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"><p>Container Object Reference</p>
-</td>
+      <td data-ice="description"></td>
     </tr>
 </tbody>
   </table>
@@ -446,7 +467,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_validatorBuilder.js.html#lineNumber126">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_validatorBuilder.js.html#lineNumber156">source</a></span></span>
     </span>
   </h3>
 
@@ -524,7 +545,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_validatorBuilder.js.html#lineNumber33">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_validatorBuilder.js.html#lineNumber48">source</a></span></span>
     </span>
   </h3>
 
@@ -597,7 +618,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_validatorBuilder.js.html#lineNumber23">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_validatorBuilder.js.html#lineNumber38">source</a></span></span>
     </span>
   </h3>
 
@@ -642,6 +663,84 @@
   
 </div>
 <div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-resolvePath">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">resolvePath</span><span class="code" data-ice="signature">(path: <span>*</span>, key: <span>*</span>): <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span><span>[]</span></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/classes/_validatorBuilder.js.html#lineNumber73">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>resolves all paths that match registered validators</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">path</td>
+      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"></td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">key</td>
+      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"></td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span><span>[]</span></span></td>
+          
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="instance-method-set">
     <span class="access" data-ice="access">public</span>
     
@@ -653,7 +752,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_validatorBuilder.js.html#lineNumber44">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_validatorBuilder.js.html#lineNumber58">source</a></span></span>
     </span>
   </h3>
 

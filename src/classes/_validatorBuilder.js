@@ -88,7 +88,7 @@ export class ValidatorBuilder {
      * Creates new Validation for Schema/Set items
      * @param ref
      * @param path
-     * @returns {function(*=)}
+     * @returns {function}
      */
     create(ref, path) {
         const formatSig = (sig) => {
