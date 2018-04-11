@@ -5,7 +5,6 @@ import {_vBuilders} from "./_references";
 
 describe("Set Class Test Suite", function () {
     describe("Initialization Tests", function () {
-
         it("should initialize with typeof <String>", function () {
             let _set = new JSD([{type: "String"}]);
             expect(_set.document instanceof Set).toBe(true);
@@ -259,12 +258,12 @@ describe("Set Class Test Suite", function () {
                 aString: "foo",
                 anArray: [1, 2, 3],
             };
-            console.log(_vBuilders.get(_jsd).list());
+
         });
     });
 
-    describe("back ref", () => {
-        it("should provide backref on model", (done) => {
+    describe("Polymorphic Elements", () => {
+        it("should allow for multiple types of elements", (done) => {
             const _jsd = new JSD([{
                 type: "Object",
                 elements: {
@@ -296,7 +295,6 @@ describe("Set Class Test Suite", function () {
             let cnt = 0;
             const _h = {
                 next: (schema) => {
-                    console.log(`\n\n=== schema: ${schema}`);
                     expect(schema.model[0].$ref instanceof Schema).toBe(true);
                     expect(schema.model[0].value).toBe(1);
                     expect(schema.model[1].value).toBe(2);
@@ -326,6 +324,40 @@ describe("Set Class Test Suite", function () {
                         }
                     }
                 },
+            ];
+        });
+    });
+
+    describe("back ref", () => {
+        it("should provide backref on model", (done) => {
+            const _jsd = new JSD([{
+                type: "Object",
+                elements: {
+                    value: {
+                        type: "Number",
+                    },
+                },
+            }]);
+            let cnt = 0;
+            const _h = {
+                next: (schema) => {
+                    console.log(_vBuilders.get(_jsd).list());
+                    console.log(schema.validate());
+                    console.log(`${schema}`);
+                    expect(schema.model[0].$ref instanceof Schema).toBe(true);
+                    expect(schema.model[0].value).toBe(1);
+                    expect(schema.model[1].value).toBe(2);
+                    expect(schema.model[1].$ref instanceof Schema).toBe(true);
+                    done();
+                },
+                error: (e) => {
+                    done(`error: ${e}`);
+                },
+            };
+            _jsd.document.subscribe(_h);
+            _jsd.document.model = [
+                {value: 1},
+                {value: 2},
             ];
         });
     });
@@ -381,7 +413,6 @@ describe("Set Class Test Suite", function () {
 
             _jsd.document.subscribe({
                 next: (doc) => {
-                    // console.log(`${doc}`);
                     expect(doc.length).toBe(11);
                     done()
                 },

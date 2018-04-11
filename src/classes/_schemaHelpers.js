@@ -113,10 +113,7 @@ export class SchemaHelpers {
             }
         } else {
             try {
-                let sig = this._ref.signature[key] ||
-                    this._ref.signature.elements ||
-                    this._ref.signature;
-                _s = new Set(sig, opts, _md);
+                _s = new Set({"*": this._ref.signature[key]}, opts, _md);
             } catch (e) {
                 return e;
             }
@@ -133,10 +130,9 @@ export class SchemaHelpers {
     validate(key, value) {
         const _vBuilder = this._ref.validatorBuilder;
         let msg = `unable to resolve path for "${key}"`;
-        console.log(`validate: ${_vBuilder.resolvePath(this._ref.validationPath, key)}`);
+        console.log(`resolvePath for "${key}" ${_vBuilder.resolvePath(this._ref.validationPath, key)}`);
         _vBuilder.resolvePath(this._ref.validationPath, key)
             .some((path) => {
-                console.log("exec called via _sH.validate");
                 msg = this._ref.validatorBuilder.exec(path, value);
                 return (msg);
             });

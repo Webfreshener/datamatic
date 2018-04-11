@@ -125,6 +125,7 @@ export class ValidatorBuilder {
         createFuncts(_signatures);
         // evaluates all defined functions, returning true or last error message
         const _f = (value) => {
+            console.log(`_f value: ${value}`);
             let _result;
             let e;
             for (let idx in _f.$functs) {

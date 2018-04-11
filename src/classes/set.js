@@ -1,7 +1,7 @@
 import {
     _mdRef, _object, _schemaOptions,
     _schemaHelpers, _schemaSignatures,
-    _vPaths
+    _vPaths, _validPaths
 } from "./_references";
 import {SchemaValidator} from "./_schemaValidator";
 import {JSD} from "./jsd";
@@ -75,14 +75,15 @@ export class Set extends Model {
                             this.observerBuilder.next(this.path, this);
                         }
                     },
-                    error: (e) => {
-                        this.observerBuilder.error(this.path, e);
+                    error: () => {
+                        // this is a no-op, we will dispatch error later in the setter pipe
                     }
                 });
                 value.forEach((val) => {
                     _object.get(this)[cnt++] = val;
                 });
             } catch (e) {
+                console.log(`MODEL caught: ${e}`);
                 return this.observerBuilder.error(this.path, e);
             }
             if ((typeof this.isValid) === "boolean") {
@@ -126,7 +127,8 @@ export class Set extends Model {
                 }
 
                 let _oDel = _observerDelegates.get(this);
-                const sendErr = () => {
+                const sendErr = (msg) => {
+                    _validPaths.get(this.jsd)[this.path] = msg;
                     if (_oDel) {
                         _oDel.error(msg);
                     } else {
@@ -157,6 +159,7 @@ export class Set extends Model {
                 t[idx] = value;
                 msg = this.validate();
                 if ((typeof msg) === "boolean") {
+                    _validPaths.get(this.jsd)[this.path] = true;
                     if (_oDel) {
                         _oDel.next(this);
                     } else {

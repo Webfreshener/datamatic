@@ -278,6 +278,7 @@ export class SchemaValidator {
                 return this.validateSchemaClass(key, params);
             }
             if (params.type === "Array") {
+                _vBuilders.get(this.jsd).create(params, key);
                 key = `${key}.*.polymorphic`;
                 if (params.hasOwnProperty("elements") &&
                     !Array.isArray(params.elements)) {

@@ -98,6 +98,7 @@ export class Schema extends Model {
                     }
                     t[key] = value;
                 } else {
+                    console.log(`schema ERRORED setting "${keyPath}"\nmessage: ${_isValid}\nis Array: ${Array.isArray(value)}`);
                     _validPaths.get(this.jsd)[this.path] = _isValid;
                 }
 
