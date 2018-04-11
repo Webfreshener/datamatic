@@ -50,8 +50,8 @@ export class BaseValidator {
     /**
      * tests typeof value reference
      *
-     * @param type
-     * @param value
+     * @param type {*}
+     * @param value {*}
      * @returns {Boolean|String}
      */
     checkType(type, value) {
@@ -74,7 +74,7 @@ export class BaseValidator {
             // -- NOTE: this should allow an Array of Types
             // -- might want re-evaluate this
             if (Array.isArray(type)) {
-                let _res;
+                let _res = "unable to find type for Array values";
                 // tests each `type` specified in Set until we find a true value
                 type.some((k) => {
                     _res = _eval(k, value);
@@ -97,7 +97,7 @@ export class BaseValidator {
      * @returns {string}
      */
     exec(value) {
-        return `${wf.utils.Fun.getClassName(this)} requires override of 'exec'`;
+        return `${wf.Fun.getConstructorName(this)} requires override of 'exec'`;
     }
 
     /**
@@ -132,14 +132,17 @@ Validator.Array = class Arr extends BaseValidator {
             return `type of array was expected for '${this.path}'. type was '<${typeof value}>'`;
         }
         for (let __ in value) {
-            let e = this.call(this.path, value[__]);
-            if ((typeof e) === "string") {
-                return e;
+            if (value.hasOwnProperty(__)) {
+                let e = this.call(this.path, value[__]);
+                if ((typeof e) === "string") {
+                    return e;
+                }
             }
         }
         return true;
     }
-}
+};
+
 /**
  * @private
  */
@@ -181,17 +184,21 @@ Validator.Object = class Obj extends BaseValidator {
         if (typeof value === "object") {
             if (!Array.isArray(value)) {
                 for (let _k in value) {
-                    let _res = _iterate(_k, value[_k]);
-                    if (typeof _res === "string") {
-                        return _res;
+                    if (value.hasOwnProperty(_k)) {
+                        let _res = _iterate(_k, value[_k]);
+                        if (typeof _res === "string") {
+                            return _res;
+                        }
                     }
                 }
             }
             else {
                 for (let __ in value) {
-                    let e = this.call(this.path, value[__]);
-                    if (typeof e === "string") {
-                        return e;
+                    if (value.hasOwnProperty(__)) {
+                        let e = this.call(this.path, value[__]);
+                        if (typeof e === "string") {
+                            return e;
+                        }
                     }
                 }
             }
@@ -266,7 +273,7 @@ Validator.String = class Str extends BaseValidator {
                 _rxStr = this.signature.restrict;
                 _rxFlags = "";
             }
-
+            // todo: loo into IDEA's "duplicate \\ character" warning
             if (!_exists(new RegExp(_rxStr.replace(/[\\\\]{2,}/g, "\\"), _rxFlags).exec(value))) {
                 return `value '${value}' for ${this.path} did not match required expression`;
             }

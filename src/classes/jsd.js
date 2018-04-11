@@ -39,6 +39,8 @@ export class JSD {
             "Function": Function,
         });
 
+
+
         let _useSet = false;
 
         if ((Array.isArray(schema)) ||
@@ -46,11 +48,19 @@ export class JSD {
             _useSet = true;
             // internally we handle all Sets as Polymorphic elements
             schema = {"*": {polymorphic: Array.isArray(schema) ? schema : [schema]}};
-            // schema = {
-            //     type: "Array",
-            //     elements: schema,
-            // };
         }
+
+        // // attempts to validate provided `schema` entries
+        // let _sV = new SchemaValidator(schema, Object.assign({}, this.options, {
+        //     jsd: this,
+        // }));
+        //
+        // let eMsg;
+        // // throws error if error message returned
+        // if (typeof (eMsg = _sV.isValid) === "string") {
+        //     throw eMsg;
+        // }
+
         const vBuilder = new ValidatorBuilder(this);
         _vBuilders.set(this, vBuilder);
         _validPaths.set(this, {});
@@ -66,26 +76,24 @@ export class JSD {
     }
 
     /**
-     *
-     * @returns {Schema}
+     * getter for Model document
+     * @returns {Schema|Set}
      */
     get document() {
         return _documents.get(this);
     }
 
+    /**
+     * getter for validation status
+     * @returns {boolean}
+     */
     get isValid() {
-        const v = this._validPaths.get(this);
-        for (path of v) {
-            if (!path) {
-                return false;
-            }
-        }
-        return true;
+        return this.document.isValid;
     }
 
     /**
-     * @param {string|function} classesOrNames
-     * @returns {function|string}
+     * @param {string|function|string[]} classesOrNames
+     * @returns {function|function[]|string|string[]|*[]}
      */
     getClass(classesOrNames) {
         let _k = _kinds.get(this);
@@ -158,7 +166,8 @@ export class JSD {
     }
 
     /**
-     * @return list of registered Class Names
+     * lists registered Class Names
+     * @return {string[]}
      */
     listClasses() {
         return Object.keys(_kinds.get(this));
@@ -167,9 +176,9 @@ export class JSD {
     /**
      * creates new Schema from JSON data
      * @param {string|object} json
-     * @returns Schema
+     * @returns {JSD}
      */
-    fromJSON(json) {
+    static fromJSON(json) {
         let _;
         if (_ = (typeof json).match(/^(string|object)+$/)) {
             return new JSD((_[1] === "string") ? JSON.parse(json) : json);
@@ -178,7 +187,8 @@ export class JSD {
     }
 
     /**
-     * @returns {object} base schema element signature
+     * getter for base schema element signature
+     * @returns {object}
      */
     get schemaRef() {
         let _keys = [].concat(Object.keys(_kinds.get(this)));

@@ -106,6 +106,18 @@ describe("SchemaValidator Class Tests", () => {
             expect(list[1]).toBe("relations.*");
             expect(list[2]).toBe("relations.*.type");
         });
+        it("should handle nested wildcard schema", () => {
+            const _s = require("../../fixtures/wildcard.schema.json");
+            let _jsd = new JSD(_s);
+            let list = _vBuilders.get(_jsd).list();
+            expect(list.length).toBe(6);
+            expect(list[0]).toBe("*");
+            expect(list[1]).toBe("*.*");
+            expect(list[2]).toBe("*.*.name");
+            expect(list[3]).toBe("*.*.*.polymorphic.0");
+            expect(list[4]).toBe("*.*.*.polymorphic.1");
+            expect(list[5]).toBe("*.*.*.polymorphic.2");
+        });
     });
     describe("Nested Elements", () => {
         it("should FAIL if invalid types are found in nested elements", () => {

@@ -1,7 +1,12 @@
 import {_exists} from "./_references";
 
-const _remapRx = /(.*)\d\.polymorphic+(.*)/;
+/**
+ * method for reformatting polymorphic paths
+ * @param path (string}
+ */
 export const remapPolypath = (path) => {
+    // regex for reformatting polymorphic path entries
+    const _remapRx = /(.*)\d\.polymorphic+(.*)/;
     return ((path) => {
         let matched = false;
         path = path.replace(_remapRx, function (match, $1, $2) {
@@ -18,18 +23,18 @@ export const remapPolypath = (path) => {
 };
 
 /**
- * @param {Object} itm
- * @returns {String|Boolean}
+ * @param itm {Object}
+ * @returns {string|boolean}
  */
 export const ensureKindIsString = (itm) => {
     switch (typeof itm) {
         case "string":
-            return itm;
+            // wrapped value in template string per lint griping about return type
+            return `${itm}`;
         case "object":
             if (itm.hasOwnProperty("type")) {
                 return this.ensureKindIsString(itm.type);
             }
-            break;
     }
     return false;
 };
@@ -39,7 +44,7 @@ export const ensureKindIsString = (itm) => {
  * sets default values upon sample object if present
  * @param {Schema} ref - reference object
  * @param {Object} obj - object for evaluation
- * @returns {true|string} - returns true or error string
+ * @returns {Object|string} - returns true or error string
  */
 export const ensureRequiredFields = (ref, obj) => {
     let oKeys = Object.keys(obj || {});
@@ -61,18 +66,4 @@ export const ensureRequiredFields = (ref, obj) => {
     }
 
     return obj;
-};
-
-/**
- * TODO: evaluate for removal -- not showing up in search
- * @returns {array} list of types declared by object
- */
-export const getKinds = (_s) => {
-    var _elems = Object.keys(_s).map(key => {
-        return (key === "type") ?
-            _s.type : _exists(_s[key].type) ?
-                _s[key].type : null;
-    });
-    _elems = _elems.filter(elem => elem !== null);
-    return _elems.length ? _elems : null;
 };

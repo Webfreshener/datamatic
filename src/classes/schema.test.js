@@ -1,5 +1,6 @@
 import {Schema} from "./schema";
 import {JSD} from "./jsd";
+import {_vBuilders} from "./_references";
 
 describe("Schema Class Test Suite", function () {
     describe("Schema Validation Methods", function () {
@@ -78,7 +79,13 @@ describe("Schema Class Test Suite", function () {
                     type: "String"
                 }
             });
-            _schema.document.set("value", "test");
+
+            console.log(_vBuilders.get(_schema).list());
+            // _schema.document.set("value", "test");
+            _schema.document.model = {
+                value: "test",
+            };
+            console.log(_schema.document.validate());
             expect(_schema.document.isValid).toEqual(true);
         });
     });
@@ -108,11 +115,13 @@ describe("Schema Class Test Suite", function () {
     });
 
     describe("Wildcards", function () {
+        let _jsd;
         it("should initialize from wildcard schema fixture", () => {
             let _s = require("../../fixtures/wildcard.schema.json");
-            this.schema = new Schema(_s, null, new JSD());
-            expect(this.schema instanceof Schema).toBe(true);
+            _jsd = new JSD(_s);
+            expect(_jsd.document instanceof Schema).toBe(true);
         });
+
         it("should validate arbitrary wildcard elements", (done) => {
             const _h = {
                 next: (o) => {
@@ -120,12 +129,14 @@ describe("Schema Class Test Suite", function () {
                     done("should have dispatched an error");
                 },
                 error: (e) => {
+                    console.log(e)
                     _sub.unsubscribe();
                     done();
                 }
             };
-            let _sub = this.schema.subscribe(_h);
-            this.schema.model = {
+
+            let _sub = _jsd.document.subscribe(_h);
+            _jsd.document.model = {
                 foo: {
                     bar: {
                         active: {
@@ -138,7 +149,7 @@ describe("Schema Class Test Suite", function () {
         })
     });
 
-    describe.only("Getters/Setters",  () => {
+    describe("Getters/Setters", () => {
         it("should set basic values on elements", () => {
             let _schema = new JSD({
                 bool: {type: "Boolean"},
@@ -168,7 +179,7 @@ describe("Schema Class Test Suite", function () {
             expect(JSON.parse(`${_schema.document}`).nested.name).toEqual("Ishmael");
         });
 
-        it.only("should set Array values on elements", () => {
+        it("should set Array values on elements", () => {
             let _schema = new JSD({
                 root: {
                     type: "Object",
@@ -182,14 +193,17 @@ describe("Schema Class Test Suite", function () {
                                 },
                             },
                         },
-                        nested: [{
-                            type: "Object",
+                        nested: {
+                            type: "Array",
                             elements: {
-                                name: {
-                                    type: "String",
+                                type: "Object",
+                                elements: {
+                                    name: {
+                                        type: "String",
+                                    },
                                 },
                             },
-                        }],
+                        },
                     },
                 },
             });
@@ -209,11 +223,12 @@ describe("Schema Class Test Suite", function () {
                     nested: [{name: "Ishmael"}],
                 },
             };
-            // console.log(`validate: ${_schema.document.validate()}`);
+            _schema.document.model.root.$ref.set("nested", [{name: "Ishmael"}]);
+            console.log(`validate: ${_schema.document.validate()}`);
             expect(Array.isArray(_schema.document.model.root.nested)).toBe(true);
             expect(_schema.document.model.root.nested.length).toBe(1);
             expect(_schema.document.model.root.nested[0].name).toEqual("Ishmael");
-            // _schema.document.model.root.$ref.set("nested", {name: "Ishmael"});
+
             // expect(Array.isArray(_schema.document.model.root.nested)).toBe(true);
             // expect(_schema.document.model.root.nested.length).toBe(0);
         })

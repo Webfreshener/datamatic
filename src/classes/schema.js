@@ -1,9 +1,8 @@
 import {
     _mdRef, _required_elements, _object, _exists, _schemaHelpers,
-    _schemaOptions, _schemaSignatures, _validPaths
+    _schemaOptions, _schemaSignatures, _validPaths, _vPaths
 } from "./_references";
 import {ensureRequiredFields} from "./utils";
-import {MetaData} from "./_metaData";
 import {SchemaHelpers} from "./_schemaHelpers";
 import {SchemaValidator} from "./_schemaValidator";
 import {JSD} from "./jsd";
@@ -14,75 +13,52 @@ import {Model} from "./model";
  */
 export class Schema extends Model {
     /**
-     * @constructor
-     * @param {Object} _o - schema definition object
-     * @param {Object} opts - schema options
+     *
+     * @param _signature {Object} - schema definition object
+     * @param opts {Object} - schema options
      */
     constructor(_signature = Schema.defaultSignature, opts = Schema.defaultOptions) {
-        super();
+        super(_signature.writeLock || false, arguments[2]);
 
-        var eMsg;
         if (!_exists(_signature)) {
             throw `Schema requires JSON object at arguments[0]. Got '${typeof _signature}'`;
         }
+
+        // creates instance of SchemaHelpers
+        const _sH = new SchemaHelpers(this);
+
         // freezes Options object to prevent modification
         _schemaOptions.set(this, Object.freeze(opts));
+
+        // initialized Required Elements reference
         _required_elements.set(this, []);
 
-        // tests for metadata
-        if (!(this instanceof MetaData)) {
-            let _md;
-            if (arguments[2] instanceof JSD) {
-                _md = new MetaData(this, {
-                    _path: "",
-                    _root: this,
-                    _writeLock: _signature.writeLock,
-                    _jsd: arguments[2],
-                });
-            }
-            else if (typeof arguments[2] == "object") {
-                if (arguments[2] instanceof MetaData) {
-                    _md = arguments[2];
-                } else {
-                    _md = new MetaData(this, arguments[2]);
-                }
-            } else {
-                throw "Invalid attempt to construct Schema. tip: use `new JSD([schema])` instead"
-            }
-            // saves metadata object to global reference
-            _mdRef.set(this, _md);
-        }
-
-        // traverses elements of schema checking for elements marked as reqiured
-        if (_exists(_signature.elements)) {
-            _signature = _signature.elements;
-            for (let _sigEl of Object.keys(_signature)) {
-                // -- tests for element `required`
-                if (_signature[_sigEl].hasOwnProperty("required") &&
-                    _signature[_sigEl].required === true) {
-                    // -- adds required element to list
-                    _required_elements.get(this).splice(-1, 0, _sigEl);
-                }
-            }
-            // freezes req'd elements object to prevent modification
-            _required_elements.set(this, Object.freeze(_required_elements.get(this)));
-        }
+        // stores SchemaHelpers reference for later use
+        _schemaHelpers.set(this, _sH);
 
         // attempts to validate provided `schema` entries
         let _sV = new SchemaValidator(_signature, Object.assign({}, this.options, {
             jsd: _mdRef.get(this).jsd,
         }));
 
+        let eMsg;
         // throws error if error message returned
         if (typeof (eMsg = _sV.isValid) === "string") {
             throw eMsg;
         }
 
+        // populates Required Elements reference from schema values
+        _sH.referenceRequiredElements(_signature);
+
+        _vPaths.set(this, this.path);
+
         // freezes schema signature to prevent modifications
         const _sig = Object.freeze(_signature || JSD.defaults);
         _schemaSignatures.set(this, JSON.stringify(_sig));
-        _schemaHelpers.set(this, new SchemaHelpers(this));
+
+        // applies default values (if any) on the model
         this.setDefaults();
+        _object.set(this, new Proxy(Model.createRef(this, {}), this.handler));
     }
 
     /**
@@ -92,8 +68,7 @@ export class Schema extends Model {
     get handler() {
         return {
             get: (t, key) => {
-                const _m = key === "$ref" ? this : t[key];
-                return _m;
+                return key === "$ref" ? this : t[key];
             },
             set: (t, key, value) => {
                 let _sH = _schemaHelpers.get(this);
@@ -107,12 +82,13 @@ export class Schema extends Model {
                     return true;
                 }
 
-                let _childSigs = this.signature.elements || this.signature;
-                let _pathKeys = key.split(".");
-                let _pKRes = _sH.testPathkeys(t, _pathKeys, _childSigs, value);
-                if (_pKRes) {
-                    let kP = Schema.concatPathAddr(this.path, key);
-                    _validPaths.get(this.jsd)[kP] = true;
+                const keyPath = `${this.validationPath}.${key}`.replace(/^\.?(.*)$/, "$1");
+                // determines if parent element is Array (Set)
+                const inSet = Array.isArray(this.parent.model);
+                // calls validate with either full path if in Schema or key if nested in Set
+                const _isValid = _sH.validate((!inSet ? keyPath : key), value);
+                if ((typeof _isValid) !== "string") {
+                    _validPaths.get(this.jsd)[keyPath] = true;
                     if ((typeof value) === "object") {
                         value = _sH.setChildObject(key, value);
                         if ((typeof value) === "string") {
@@ -121,6 +97,8 @@ export class Schema extends Model {
                         }
                     }
                     t[key] = value;
+                } else {
+                    _validPaths.get(this.jsd)[this.path] = _isValid;
                 }
 
                 const _e = this.validate();
@@ -171,7 +149,7 @@ export class Schema extends Model {
         let e;
         // -- reset the proxy model to initial object state if not locked
         if (!this.isLocked) {
-            _object.set(this, new Proxy(Model.createRef(this), this.handler));
+            _object.set(this, new Proxy(Model.createRef(this, {}), this.handler));
         }
         // -- preliminary setting of default values on initial object
         this.setDefaults();
@@ -231,18 +209,15 @@ export class Schema extends Model {
      * @param {any} value
      */
     set(key, value) {
-        let kPath = this.path;
         if (typeof key === "string") {
             _validPaths.get(this.jsd)[this.path] = -1;
             this.model[key] = value;
             let valid = this.validate();
             if (typeof valid === "string") {
-                kPath = Schema.concatPathAddr(this.path, key);
                 this.observerBuilder.error(this.path, valid);
                 return false;
             }
         } else {
-            const _sH = _schemaHelpers.get(this);
             let e = ensureRequiredFields(this, key);
             _validPaths.get(this.jsd)[this.path] = e;
             if (typeof e === "string") {
@@ -296,7 +271,6 @@ export class Schema extends Model {
             let _default = _sig[_sigEl].default;
             if (_exists(_default)) {
                 // sets default value for key on model
-                let _p = _sigEl.split(".");
                 this.set(_sigEl, _default);
             }
         }

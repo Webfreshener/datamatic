@@ -1,10 +1,12 @@
 import {Schema} from "./schema";
 import {JSD} from "./jsd";
+import {default as polymorphicSchema} from "../../fixtures/polymorphic.schema";
+import {_vBuilders} from "./_references";
 describe("Schema Polymorphism Tests", () => {
-    describe.only("Polymorphism", () => {
-        const _s = require("../../fixtures/polymorphic.schema.json");
-        // this.schema = new Schema(_s, null, new JSD());
-        const _jsd = new JSD(_s);
+    describe("Polymorphism", () => {
+        const _jsd = new JSD(polymorphicSchema);
+        const _vBuilder = _vBuilders.get(_jsd);
+        console.log(_vBuilder.list());
         it("should initialize from polymorphic schema fixture", () => {
             expect(_jsd.document instanceof Schema).toBe(true);
         });
@@ -19,7 +21,7 @@ describe("Schema Polymorphism Tests", () => {
                     done("did not fail badParam as expected");
                 },
                 error: (e) => {
-                    expect(e).toBe("'badParam' expected value of type 'Object'. Type was '<boolean>'");
+                    expect(e).toBe("'*.polymorphic.0' expected string, type was '<boolean>'");
                     done();
                 }
             };
