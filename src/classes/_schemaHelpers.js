@@ -77,10 +77,7 @@ export class SchemaHelpers {
             typeof _s !== "object") {
             return `'${key}' was invalid`;
         }
-        console.log(`\n\nsetChildObject setting value: ${JSON.stringify(value)}\nkey: ${key}\nsig: ${JSON.stringify(_s.signature)}`);
-        console.log(_vBuilders.get(this._ref.jsd).list());
         _s.model = value;
-        console.log(`_s validate: ${_s.validate()} ${_s}\n\n`);
         return _s.model;
     }
 
@@ -118,7 +115,6 @@ export class SchemaHelpers {
      * @returns {Schema|Set|string} - Schema, Set or error string
      */
     createSchemaChild(key, value, opts, metaData) {
-        console.log(`createSchemaChild key: ${key}`);
         let _s; // will be set with Schema | Set
         let _d = Object.assign({
             _path: key,
@@ -135,16 +131,13 @@ export class SchemaHelpers {
         }
         // tests if value is not Array
         let _kS =  this.getSchemaElement(key);
-        // console.log(`_kS: ${JSON.stringify(_kS)}`);
         if (_kS.type !== "Array" && !Array.isArray(_kS) && !Array.isArray(value)) {
-            // let _schemaDef = this._ref.signature[key.split(".").pop()] ||
-            //     this._ref.signature["*"] ||
-            //     this._ref.signature;
-            let _schemaDef = _kS.elements[key.split(".").pop()] ||
+            let _schemaDef = (_kS.hasOwnProperty("elements") ? _kS.elements[key.split(".").pop()] : false) ||
                 _kS["*"] || _kS;
             try {
                 _s = new Schema(_schemaDef, opts, _md);
             } catch (e) {
+
                 return e.message;
             }
         } else {

@@ -84,7 +84,6 @@ export class ValidatorBuilder {
 
         // filter paths by Regexp.test
         let _matches = this.list().filter((vItm) => rx.test(vItm));
-        console.log(`\npath: ${path} key: ${key} matches: ${_matches}`);
         // attempts to find an exact string match in the filtered results
         let _exactMatch = _matches.find((vItm) => wf.Str.regexEscape(vItm) === `${path}\\.${key}`);
 

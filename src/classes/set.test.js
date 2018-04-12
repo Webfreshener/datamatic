@@ -253,7 +253,7 @@ describe("Set Class Test Suite", function () {
             });
             _jsd.document.subscribe({
                 next: (val) => {
-                    console.log(`${val}`);
+                    console.log(`${_jsd.document.validate()}`);
                     expect(_jsd.document.model.anArray.length).toBe(3);
                     done();
                 },
@@ -302,12 +302,14 @@ describe("Set Class Test Suite", function () {
             let cnt = 0;
             const _h = {
                 next: (schema) => {
+                    console.log(`${schema}`);
                     expect(schema.model[0].$ref instanceof Schema).toBe(true);
                     expect(schema.model[0].value).toBe(1);
                     expect(schema.model[1].value).toBe(2);
                     expect(schema.model[1].$ref instanceof Schema).toBe(true);
-                    expect(typeof schema.model[2].value).toBe("object");
                     expect(schema.model[2].$ref instanceof Schema).toBe(true);
+                    expect(typeof schema.model[2].value).toBe("object");
+                    expect(schema.model[2].value.$ref instanceof Schema).toBe(true);
                     expect(schema.model[2].value.subEl).toBe("foo");
                     expect(typeof schema.model[2].value.subObj).toBe("object");
                     expect(schema.model[2].value.subObj.subEl).toBe("bar");

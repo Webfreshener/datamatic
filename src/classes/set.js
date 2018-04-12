@@ -127,11 +127,10 @@ export class Set extends Model {
                 let keyPath = `${_vPaths.get(this)}`.replace(/^\.?(.*)$/, "$1");
                 let cnt = 0;
                 let msg = `unable to validate "${this.path}"`;
-                this.schema.polymorphic.some(() => {
+                (this.schema.polymorphic || this.schema).some(() => {
                     msg = this.validatorBuilder.exec(`${keyPath}.${cnt++}`, value);
                     return (msg === true);
                 });
-
                 // if error message is present we do error handling and return
                 if ((typeof msg) === "string") {
                     sendErr(msg);
@@ -142,10 +141,9 @@ export class Set extends Model {
                 if ((typeof value) === "object") {
                     let _sH = _schemaHelpers.get(this);
                     // note we use the last value of `cnt` and walk back one iteration
-                    console.log(`${idx} is an OBJECT sending ${JSON.stringify(value)} to setChildObject`);
                     value = _sH.setChildObject(`${keyPath}.${cnt - 1}`, value);
                 }
-                console.log(`setting ${idx} on SET: ${JSON.stringify(value)}`);
+                // console.log(`setting "${idx}" on SET: ${JSON.stringify(value)}`);
                 t[idx] = value;
                 msg = this.validate();
                 if ((typeof msg) === "boolean") {

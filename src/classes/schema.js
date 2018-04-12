@@ -76,7 +76,6 @@ export class Schema extends Model {
                 const inSet = Array.isArray(this.parent.model);
                 // calls validate with either full path if in Schema or key if nested in Set
                 const _isValid = _sH.validate((!inSet ? keyPath : key), value);
-                console.log(`"${key} _isValid: ${_isValid}`);
                 if ((typeof _isValid) !== "string") {
                     _validPaths.get(this.jsd)[this.path] = true;
                     if ((typeof value) === "object") {
@@ -136,7 +135,6 @@ export class Schema extends Model {
      * @param value
      */
     set model(value) {
-        console.log((`SETTING MODEL: ${JSON.stringify(value)}`));
         let e;
         // -- reset the proxy model to initial object state if not locked
         if (!this.isLocked) {
@@ -150,11 +148,10 @@ export class Schema extends Model {
                 keys.forEach((k) => {
                     // -- added try/catch to avoid error in jsfiddle
                     try {
-                        console.log(`setting value on model: ${JSON.stringify(value)}`);
+                        console.log(`value[${k}]: ${JSON.stringify(value[k])}`);
                         this.model[k] = value[k];
                     } catch (e) {
                         console.trace(e);
-                        console.log(`CAUGHT e: ${e}`);
                         // -- no-op
                     }
                 });
