@@ -1,8 +1,9 @@
-import {_exists, _mdRef, _required_elements} from "./_references";
+import {_exists, _mdRef, _required_elements, _vBuilders} from "./_references";
 import {ensureRequiredFields} from "./utils";
 import {MetaData} from "./_metaData";
 import {Schema} from "./schema";
 import {Set} from "./set";
+import {JSD} from "./jsd";
 
 /**
  * @private
@@ -76,9 +77,37 @@ export class SchemaHelpers {
             typeof _s !== "object") {
             return `'${key}' was invalid`;
         }
+        console.log(`\n\nsetChildObject setting value: ${JSON.stringify(value)}\nkey: ${key}\nsig: ${JSON.stringify(_s.signature)}`);
+        console.log(_vBuilders.get(this._ref.jsd).list());
         _s.model = value;
+        console.log(`_s validate: ${_s.validate()} ${_s}\n\n`);
         return _s.model;
     }
+
+    /**
+     * retrieves child element from Model signature
+     * @param key {string) key for Model's Child element
+     * @returns {Object|Boolean}
+     */
+    getSchemaElement(key) {
+        const _schemaRef = this._ref.schema;
+        if (key === "polymorphic") {
+            return _schemaRef.polymorphic[0];// {"*": {type: "Array", polymorphic: _schemaRef.polymorphic}};
+        }
+        if (_schemaRef.hasOwnProperty(key)) {
+            return _schemaRef[key];
+        }
+
+        if (_schemaRef.hasOwnProperty("elements")) {
+            return _schemaRef.elements[key] || _schemaRef.elements;
+        }
+
+        if (_schemaRef.hasOwnProperty("polymorphic")) {
+            return { type: "Array", polymorphic: _schemaRef.polymorphic}; // _schemaRef.polymorphic[key] || _schemaRef.polymorphic;
+        }
+
+        return this._ref.options.extensible ? JSD.defaults : false;
+    };
 
     /**
      *
@@ -89,6 +118,7 @@ export class SchemaHelpers {
      * @returns {Schema|Set|string} - Schema, Set or error string
      */
     createSchemaChild(key, value, opts, metaData) {
+        console.log(`createSchemaChild key: ${key}`);
         let _s; // will be set with Schema | Set
         let _d = Object.assign({
             _path: key,
@@ -97,15 +127,21 @@ export class SchemaHelpers {
         }, metaData || {});
         let _md = new MetaData(this._ref, _d);
         // tests for nested sub-elements with partial paths as keys
-        if (key.match(/.*\.+.*/) !== null) {
+        if (key.match(/\.?polymorphic\.\d$/) !== null) {
+                key = "polymorphic";
+        }
+        else if (key.match(/.*\.+.*/) !== null) {
             key = key.split(".").pop();
         }
         // tests if value is not Array
-        let _kS = this._ref.schema[key];
-        if (!Array.isArray(_kS) && !Array.isArray(value)) {
-            let _schemaDef = this._ref.signature[key.split(".").pop()] ||
-                this._ref.signature["*"] ||
-                this._ref.signature;
+        let _kS =  this.getSchemaElement(key);
+        // console.log(`_kS: ${JSON.stringify(_kS)}`);
+        if (_kS.type !== "Array" && !Array.isArray(_kS) && !Array.isArray(value)) {
+            // let _schemaDef = this._ref.signature[key.split(".").pop()] ||
+            //     this._ref.signature["*"] ||
+            //     this._ref.signature;
+            let _schemaDef = _kS.elements[key.split(".").pop()] ||
+                _kS["*"] || _kS;
             try {
                 _s = new Schema(_schemaDef, opts, _md);
             } catch (e) {
@@ -113,7 +149,8 @@ export class SchemaHelpers {
             }
         } else {
             try {
-                _s = new Set({"*": this._ref.signature[key]}, opts, _md);
+                let _sig = this._ref.signature[key].polymorphic || this._ref.signature[key];
+                _s = new Set({"*": _sig}, opts, _md);
             } catch (e) {
                 return e;
             }
@@ -130,7 +167,7 @@ export class SchemaHelpers {
     validate(key, value) {
         const _vBuilder = this._ref.validatorBuilder;
         let msg = `unable to resolve path for "${key}"`;
-        console.log(`resolvePath for "${key}" ${_vBuilder.resolvePath(this._ref.validationPath, key)}`);
+        let _list = `${JSON.stringify(_vBuilders.get(this._ref.jsd).list())}`;
         _vBuilder.resolvePath(this._ref.validationPath, key)
             .some((path) => {
                 msg = this._ref.validatorBuilder.exec(path, value);

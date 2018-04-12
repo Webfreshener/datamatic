@@ -149,7 +149,7 @@ describe("Schema Class Test Suite", function () {
         })
     });
 
-    describe("Getters/Setters", () => {
+    describe.only("Getters/Setters", () => {
         it("should set basic values on elements", () => {
             let _schema = new JSD({
                 bool: {type: "Boolean"},
@@ -179,7 +179,7 @@ describe("Schema Class Test Suite", function () {
             expect(JSON.parse(`${_schema.document}`).nested.name).toEqual("Ishmael");
         });
 
-        it("should set Array values on elements", () => {
+        it.only("should set Array values on elements", () => {
             let _schema = new JSD({
                 root: {
                     type: "Object",
@@ -224,7 +224,7 @@ describe("Schema Class Test Suite", function () {
                 },
             };
             _schema.document.model.root.$ref.set("nested", [{name: "Ishmael"}]);
-            console.log(`validate: ${_schema.document.validate()}`);
+            console.log(`results: ${_schema.document}`);
             expect(Array.isArray(_schema.document.model.root.nested)).toBe(true);
             expect(_schema.document.model.root.nested.length).toBe(1);
             expect(_schema.document.model.root.nested[0].name).toEqual("Ishmael");

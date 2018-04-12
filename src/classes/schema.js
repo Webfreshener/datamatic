@@ -36,17 +36,6 @@ export class Schema extends Model {
         // stores SchemaHelpers reference for later use
         _schemaHelpers.set(this, _sH);
 
-        // attempts to validate provided `schema` entries
-        let _sV = new SchemaValidator(_signature, Object.assign({}, this.options, {
-            jsd: _mdRef.get(this).jsd,
-        }));
-
-        let eMsg;
-        // throws error if error message returned
-        if (typeof (eMsg = _sV.isValid) === "string") {
-            throw eMsg;
-        }
-
         // populates Required Elements reference from schema values
         _sH.referenceRequiredElements(_signature);
 
@@ -87,8 +76,9 @@ export class Schema extends Model {
                 const inSet = Array.isArray(this.parent.model);
                 // calls validate with either full path if in Schema or key if nested in Set
                 const _isValid = _sH.validate((!inSet ? keyPath : key), value);
+                console.log(`"${key} _isValid: ${_isValid}`);
                 if ((typeof _isValid) !== "string") {
-                    _validPaths.get(this.jsd)[keyPath] = true;
+                    _validPaths.get(this.jsd)[this.path] = true;
                     if ((typeof value) === "object") {
                         value = _sH.setChildObject(key, value);
                         if ((typeof value) === "string") {
@@ -98,7 +88,6 @@ export class Schema extends Model {
                     }
                     t[key] = value;
                 } else {
-                    console.log(`schema ERRORED setting "${keyPath}"\nmessage: ${_isValid}\nis Array: ${Array.isArray(value)}`);
                     _validPaths.get(this.jsd)[this.path] = _isValid;
                 }
 
@@ -147,6 +136,7 @@ export class Schema extends Model {
      * @param value
      */
     set model(value) {
+        console.log((`SETTING MODEL: ${JSON.stringify(value)}`));
         let e;
         // -- reset the proxy model to initial object state if not locked
         if (!this.isLocked) {
@@ -160,8 +150,11 @@ export class Schema extends Model {
                 keys.forEach((k) => {
                     // -- added try/catch to avoid error in jsfiddle
                     try {
+                        console.log(`setting value on model: ${JSON.stringify(value)}`);
                         this.model[k] = value[k];
                     } catch (e) {
+                        console.trace(e);
+                        console.log(`CAUGHT e: ${e}`);
                         // -- no-op
                     }
                 });

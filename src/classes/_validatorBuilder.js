@@ -1,10 +1,11 @@
 /**
  * @private
  */
-import {_exists, _validators,  wf} from "./_references";
+import {_exists, _validators, wf} from "./_references";
 import {remapPolypath} from "./utils";
 import {Validator} from "./_validators"
 import {JSD} from "./jsd";
+
 /**
  * Regex that matches other Regex
  * todo: look into IDEA's "redundant escape character" warning
@@ -71,16 +72,22 @@ export class ValidatorBuilder {
      * @returns {string[]}
      */
     resolvePath(path, key) {
+        key = `${key}`.replace(new RegExp(`^${wf.Str.regexEscape(path)}\\.(.*)`), "$1");
         // escapes regex special chars on `path` string
         path = wf.Str.regexEscape(`${path}`);
+
         // escapes regex special chars on `key` string
         key = wf.Str.regexEscape(`${key}`);
+
         // matches path + key OR wildcard OR actual regexp as key
         let rx = new RegExp(`${path}\\.?(${key}+|\\*|${rxRx.toString().replace(/\/(.*)+\//g, '$1')})`);
+
         // filter paths by Regexp.test
         let _matches = this.list().filter((vItm) => rx.test(vItm));
+        console.log(`\npath: ${path} key: ${key} matches: ${_matches}`);
         // attempts to find an exact string match in the filtered results
         let _exactMatch = _matches.find((vItm) => wf.Str.regexEscape(vItm) === `${path}\\.${key}`);
+
         return _exactMatch ? [_exactMatch] : _matches;
     }
 
@@ -103,7 +110,7 @@ export class ValidatorBuilder {
             _sigs = formatSig(_sigs);
             _sigs.forEach(sig => {
                 if (typeof sig !== "object") {
-                    _functs.push(new Validator["Default"](path, sig, this.$jsd ));
+                    _functs.push(new Validator["Default"](path, sig, this.$jsd));
                 }
                 if (sig.hasOwnProperty("*")) {
                     createFuncts(sig["*"].elements || sig["*"].polymorphic || sig["*"]);
@@ -125,7 +132,6 @@ export class ValidatorBuilder {
         createFuncts(_signatures);
         // evaluates all defined functions, returning true or last error message
         const _f = (value) => {
-            console.log(`_f value: ${value}`);
             let _result;
             let e;
             for (let idx in _f.$functs) {

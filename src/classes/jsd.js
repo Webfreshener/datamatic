@@ -13,6 +13,7 @@ import {ObserverBuilder} from "./_observerBuilder";
 import {ValidatorBuilder} from "./_validatorBuilder";
 import {Schema} from "./schema";
 import {Set} from "./set";
+import {SchemaValidator} from "./_schemaValidator";
 
 const _documents = new WeakMap();
 
@@ -40,6 +41,10 @@ export class JSD {
         });
 
 
+        const vBuilder = new ValidatorBuilder(this);
+        _vBuilders.set(this, vBuilder);
+        _validPaths.set(this, {});
+        _oBuilders.set(this, new ObserverBuilder());
 
         let _useSet = false;
 
@@ -50,21 +55,17 @@ export class JSD {
             schema = {"*": {polymorphic: Array.isArray(schema) ? schema : [schema]}};
         }
 
-        // // attempts to validate provided `schema` entries
-        // let _sV = new SchemaValidator(schema, Object.assign({}, this.options, {
-        //     jsd: this,
-        // }));
-        //
-        // let eMsg;
-        // // throws error if error message returned
-        // if (typeof (eMsg = _sV.isValid) === "string") {
-        //     throw eMsg;
-        // }
+        // attempts to validate provided `schema` entries
+        let _sV = new SchemaValidator(schema, Object.assign({}, this.options, {
+            jsd: this,
+        }));
 
-        const vBuilder = new ValidatorBuilder(this);
-        _vBuilders.set(this, vBuilder);
-        _validPaths.set(this, {});
-        _oBuilders.set(this, new ObserverBuilder());
+        let eMsg;
+        // throws error if error message returned
+        if (typeof (eMsg = _sV.isValid) === "string") {
+            throw eMsg;
+        }
+
         _documents.set(this, new (!_useSet ? Schema : Set)(schema, options || null, this));
     }
 

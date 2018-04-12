@@ -28,16 +28,6 @@ export class Set extends Model {
         if (!_signature.hasOwnProperty("type")) {
             _signature.type = "Array";
         }
-        // attempts to validate provided `schema` entries
-        let _sV = new SchemaValidator(_signature, Object.assign(this.options || {}, {
-            jsd: _mdRef.get(this).jsd,
-        }));
-
-        let eMsg;
-        // throws error if error message returned
-        if (typeof (eMsg = _sV.isValid) === "string") {
-            throw eMsg;
-        }
 
         _vPaths.set(this, `${this.path}.*.polymorphic`);
 
@@ -83,7 +73,6 @@ export class Set extends Model {
                     _object.get(this)[cnt++] = val;
                 });
             } catch (e) {
-                console.log(`MODEL caught: ${e}`);
                 return this.observerBuilder.error(this.path, e);
             }
             if ((typeof this.isValid) === "boolean") {
@@ -153,9 +142,10 @@ export class Set extends Model {
                 if ((typeof value) === "object") {
                     let _sH = _schemaHelpers.get(this);
                     // note we use the last value of `cnt` and walk back one iteration
+                    console.log(`${idx} is an OBJECT sending ${JSON.stringify(value)} to setChildObject`);
                     value = _sH.setChildObject(`${keyPath}.${cnt - 1}`, value);
                 }
-
+                console.log(`setting ${idx} on SET: ${JSON.stringify(value)}`);
                 t[idx] = value;
                 msg = this.validate();
                 if ((typeof msg) === "boolean") {
