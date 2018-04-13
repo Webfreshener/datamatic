@@ -45,9 +45,10 @@ export class Schema extends Model {
         const _sig = Object.freeze(_signature || JSD.defaults);
         _schemaSignatures.set(this, JSON.stringify(_sig));
 
+        _object.set(this, new Proxy(Model.createRef(this, {}), this.handler));
+
         // applies default values (if any) on the model
         this.setDefaults();
-        _object.set(this, new Proxy(Model.createRef(this, {}), this.handler));
     }
 
     /**
@@ -205,6 +206,7 @@ export class Schema extends Model {
     set(key, value) {
         if (typeof key === "string") {
             _validPaths.get(this.jsd)[this.path] = -1;
+            console.log(`this.model: ${this.model}`);
             this.model[key] = value;
             let valid = this.validate();
             if (typeof valid === "string") {

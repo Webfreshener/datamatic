@@ -249,13 +249,13 @@ describe("Schema Class Test Suite", function () {
                 }
             };
             let _ = new JSD(_jsd);
-            _.model = {value: 123};
-            expect(_.model.value).toEqual(123);
-            expect(_.model.str).toEqual("DEFAULT VALUE");
-            expect(_.model.active).toEqual(false);
-            _.model = {value: 456, str: "USER VALUE", active: true};
-            expect(_.model.str).toEqual("USER VALUE");
-            expect(_.model.active).toEqual(true);
+            _.document.model = {value: 123};
+            expect(_.document.model.value).toEqual(123);
+            expect(_.document.model.str).toEqual("DEFAULT VALUE");
+            expect(_.document.model.active).toEqual(false);
+            _.document.model = {value: 456, str: "USER VALUE", active: true};
+            expect(_.document.model.str).toEqual("USER VALUE");
+            expect(_.document.model.active).toEqual(true);
         });
     });
 
@@ -426,5 +426,4 @@ describe("Schema Class Test Suite", function () {
             };
         });
     });
-
 });
