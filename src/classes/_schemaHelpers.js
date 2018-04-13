@@ -77,7 +77,9 @@ export class SchemaHelpers {
             typeof _s !== "object") {
             return `'${key}' was invalid`;
         }
+        console.log(value);
         _s.model = value;
+        console.log(`_s: ${JSON.stringify(_s)}`);
         return _s.model;
     }
 
@@ -102,8 +104,8 @@ export class SchemaHelpers {
         if (_schemaRef.hasOwnProperty("polymorphic")) {
             return { type: "Array", polymorphic: _schemaRef.polymorphic}; // _schemaRef.polymorphic[key] || _schemaRef.polymorphic;
         }
-
-        return this._ref.options.extensible ? JSD.defaults : false;
+        const _opts = this._ref.options || Schema.defaultOptions;
+        return _opts.extensible ? JSD.defaults : false;
     };
 
     /**

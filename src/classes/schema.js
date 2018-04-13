@@ -25,11 +25,11 @@ export class Schema extends Model {
 
         _init.set(this, false);
 
-        // creates instance of SchemaHelpers
-        const _sH = new SchemaHelpers(this);
-
         // freezes Options object to prevent modification
         _schemaOptions.set(this, Object.freeze(opts));
+
+        // creates instance of SchemaHelpers
+        const _sH = new SchemaHelpers(this);
 
         // initialized Required Elements reference
         _required_elements.set(this, []);
@@ -238,13 +238,6 @@ export class Schema extends Model {
     get isExtensible() {
         return _exists(this.signature.extensible) ?
             this.signature.extensible : this.options.extensible || false;
-    }
-
-    /**
-     * get options (if any) for this model"s schema
-     */
-    get options() {
-        return _schemaOptions.get(this);
     }
 
     /**

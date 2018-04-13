@@ -27,7 +27,7 @@ export class JSD {
      * @param schema
      * @param options
      */
-    constructor(schema = JSD.defaults, options = {extensible: false, debug: false}) {
+    constructor(schema = JSD.defaults, options = Schema.defaultOption) {
         _kinds.set(this, {
             "Array": Array,
             "ArrayBuffer": ArrayBuffer,
@@ -66,7 +66,7 @@ export class JSD {
             throw eMsg;
         }
 
-        _documents.set(this, new (!_useSet ? Schema : Set)(schema, options || null, this));
+        _documents.set(this, new (!_useSet ? Schema : Set)(schema, options, this));
     }
 
     /**

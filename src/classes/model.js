@@ -1,6 +1,7 @@
 import {
     _mdRef, _oBuilders, _vBuilders, _exists,
-    _validPaths, _object, _schemaSignatures
+    _validPaths, _object, _schemaSignatures,
+    _schemaOptions
 } from "./_references";
 import {JSD} from "./jsd";
 import {remapPolypath} from "./utils";
@@ -218,6 +219,13 @@ export class Model {
      */
     get jsd() {
         return _mdRef.get(this).jsd;
+    }
+
+    /**
+     * get options (if any) for this model"s schema
+     */
+    get options() {
+        return _schemaOptions.get(this);
     }
 
     /**
