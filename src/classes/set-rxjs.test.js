@@ -64,19 +64,5 @@ describe("Set RXJS Test Suite", function () {
             _set.document.replaceAll(["A", "B", "C"]);
         });
 
-        it("should observe list replacement error", (done) => {
-            _set.document.model = ["1", "2", "3", "4"];
-            const _sub = _set.document.subscribe({
-                next: (collection) => {
-                    done("should not have succeeded");
-                },
-                error: (e) => {
-                    _sub.unsubscribe();
-                    expect(e).toBe("'.*.polymorphic.0' expected string, type was '<number>'");
-                    done();
-                },
-            });
-            expect(() => _set.document.replaceAll(["A", 2, "C"])).not.toThrow();
-        });
     });
 });

@@ -71,6 +71,15 @@ describe("Set Class Test Suite", function () {
             console.log(_set.document.validate());
             expect(_set.document.model.length).toEqual(1);
         });
+
+        it("should set invalid items to null", () => {
+            let _set = new JSD([{type: "String"}]);
+            _set.document.model = ["1", "2", "3", "4"];
+            _set.document.replaceAll(["A", 2, "C"]);
+            expect(_set.document.model[0]).toBe("A");
+            expect(_set.document.model[1]).toBe(void(0));
+            expect(_set.document.model[2]).toBe("C");
+        });
     });
 
     describe("Method Tests", function () {
