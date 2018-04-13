@@ -1,35 +1,36 @@
 import {Schema} from "./schema";
 import {JSD} from "./jsd";
 import {_vBuilders} from "./_references";
+import {default as deepEqual} from "deep-equal";
 
 describe("Schema Class Test Suite", function () {
     describe("Schema Validation Methods", function () {
         it("should not allow Elements without a type or type parameter", function () {
-            expect(() => new Schema({value: {foo: "test"}}, null, new JSD())).toThrow(
+            expect(() => new JSD({value: {foo: "test"}})).toThrow(
                 "value for schema element 'value' was malformed. Property 'type' was missing");
         });
         it("should not allow Elements with a valid type parameter", function () {
-            expect(() => new Schema({value: {type: "String"}}, null, new JSD())).not.toThrow(
+            expect(() => new JSD({value: {type: "String"}})).not.toThrow(
                 "value for schema element 'value' was malformed. Property 'type' was missing");
         });
         it("should not allow invalid Element Types", () => {
-            expect(() => new Schema({value: "test"}, null, new JSD())).toThrow(
+            expect(() => new JSD({value: "test"})).toThrow(
                 "type '<test>' for schema element 'value' was invalid");
         });
         it("should allow String type", function () {
-            expect(() => new Schema({value: "String"}, null, new JSD())).not.toThrow(
+            expect(() => new JSD({value: "String"})).not.toThrow(
                 "schema element was malformed");
         });
         it("should allow Numeric type", function () {
-            expect(() => new Schema({value: "Number"}, null, new JSD())).not.toThrow(
+            expect(() => new JSD({value: "Number"})).not.toThrow(
                 "schema element was malformed");
         });
         it("should allow Boolean type", function () {
-            expect(() => new Schema({value: "Boolean"}, null, new JSD())).not.toThrow(
+            expect(() => new JSD({value: "Boolean"})).not.toThrow(
                 "schema element was malformed");
         });
         it("should allow Object type", function () {
-            expect(() => new Schema({value: "Object"}, null, new JSD())).not.toThrow(
+            expect(() => new JSD({value: "Object"})).not.toThrow(
                 "schema element was malformed");
         });
         let o = {
@@ -39,37 +40,32 @@ describe("Schema Class Test Suite", function () {
             }
         };
         it("should accept only valid keys on nested objects", function () {
-            expect(() => new Schema(o, null, new JSD())).toThrow(
+            expect(() => new JSD(o)).toThrow(
                 "schema element 'value.foo' is not allowed");
         });
         it("should ensure only valid types on nested elements", function () {
-            expect(() => new Schema(o, {extensible: true}, new JSD())).toThrow(
-                "type '<test>' for schema element 'value.foo' was invalid");
-        });
-        it("should allow propery types elements to be added if schema node is extensible", function () {
-            o.value.foo = "String";
-            expect(() => new Schema(o, {extensible: true}, new JSD())).not.toThrow(
+            expect(() => new JSD(o, {extensible: true})).toThrow(
                 "schema element 'value.foo' is not allowed");
         });
     });
     describe("Schema Data Validation Methods", function () {
         it("should only allow valid types", () => {
-            return expect(() => new Schema({value: {type: "Nada"}}, null, new JSD())).toThrow(
+            return expect(() => new JSD({value: {type: "Nada"}})).toThrow(
                 "value for schema element 'value' has invalid type '<Nada>'");
         });
 
         it("should init with valid schema", () => {
-            expect(() => new Schema({value: {type: "String"}}, null, new JSD())).not.toThrow(
+            expect(() => new JSD({value: {type: "String"}})).not.toThrow(
                 "invalid schema element 'value' requires type 'String,Function,Object' type was '<String>'");
         });
 
         it("should allow a function type", () => {
-            expect(() => new Schema({
+            expect(() => new JSD({
                 value: {
                     type() {
                     }
                 }
-            }, null, new JSD())).not.toThrow(
+            })).not.toThrow(
                 "invalid schema element 'type' requires one of [String,Function,Object] type was '<Function>'");
         });
 
@@ -149,7 +145,7 @@ describe("Schema Class Test Suite", function () {
         })
     });
 
-    describe.only("Getters/Setters", () => {
+    describe("Getters/Setters", () => {
         it("should set basic values on elements", () => {
             let _schema = new JSD({
                 bool: {type: "Boolean"},
@@ -179,7 +175,7 @@ describe("Schema Class Test Suite", function () {
             expect(JSON.parse(`${_schema.document}`).nested.name).toEqual("Ishmael");
         });
 
-        it.only("should set Array values on elements", () => {
+        it("should set Array values on elements", () => {
             let _schema = new JSD({
                 root: {
                     type: "Object",
@@ -252,7 +248,7 @@ describe("Schema Class Test Suite", function () {
                     default: false,
                 }
             };
-            let _ = new Schema(_jsd, null, new JSD());
+            let _ = new JSD(_jsd);
             _.model = {value: 123};
             expect(_.model.value).toEqual(123);
             expect(_.model.str).toEqual("DEFAULT VALUE");
@@ -263,18 +259,15 @@ describe("Schema Class Test Suite", function () {
         });
     });
 
-    describe.skip("Deep Object Nesting", function () {
-        let _schema;
-        let _data;
-        let _jsd;
-        beforeEach(() => {
-            _schema = require("../../fixtures/nested-elements.schema.json");
-            _data = require("../../fixtures/_nested.data.json");
-            _jsd = new JSD(_schema);
-        });
+    describe("Deep Object Nesting", function () {
+        const _schema = require("../../fixtures/nested-elements.schema.json");
+        const _data = require("../../fixtures/_nested.data.json");
+        const _jsd = new JSD(_schema);
+
         it("should handle deep object nesting", (done) => {
             _jsd.document.subscribe({
                 next: (doc) => {
+                    console.log(`${doc.validate()}`);
                     expect(_jsd.document.model.NestedObjects.anArray.length).toEqual(2);
                     expect(_jsd.document.model.NestedObjects.anObject.aDeepObject.aDeeperObject).toBeTruthy();
                     expect(_jsd.document.model.NestedObjects.anObject.aDeepObject.aDeeperObject.aDeepParam).toEqual("a deep param");
@@ -290,32 +283,15 @@ describe("Schema Class Test Suite", function () {
         });
     });
 
-    describe.skip("casting to values", () => {
-        let _schema;
-        const _ts = JSON.stringify({
-            NestedObjects: {
-                anObject: {
-                    aString: "TEST",
-                    aObject: {},
-                    aDeepObject: {
-                        aDeepParam: "testing 123",
-                        aDeeperObject: {
-                            aDeepParam: "a deep param"
-                        }
-                    }
-                },
-                anArray: ["string 1", "string 2"],
-            },
-        });
-        beforeEach(() => {
-            _schema = new Schema(require("../../fixtures/nested-elements.schema.json"), null, new JSD());
-            _schema.model = require("../../fixtures/_nested.data.json");
-        });
+    describe("casting to values", () => {
+        const _schema = new JSD(require("../../fixtures/nested-elements.schema.json"));
+        const _ts = require("../../fixtures/_nested.data.json");
+        _schema.document.model = _ts;
         it("should provide JSON from toJSON", () => {
-            expect(JSON.stringify(_schema.toJSON())).toEqual(_ts);
+            expect(deepEqual(_schema.document.toJSON(), _ts)).toEqual(true);
         });
         it("should provide JSON String from toString", () => {
-            expect(_schema.toString()).toEqual(_ts);
+            expect(deepEqual(JSON.parse(`${_schema.document}`), _ts)).toEqual(true);
         });
     });
 

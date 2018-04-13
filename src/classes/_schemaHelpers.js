@@ -34,7 +34,7 @@ export class SchemaHelpers {
                 if (_signature[_sigEl].hasOwnProperty("required") &&
                     _signature[_sigEl].required === true) {
                     // -- adds required element to list
-                    _required_elements.get(this).splice(-1, 0, _sigEl);
+                    _required_elements.get(this._ref).splice(-1, 0, _sigEl);
                 }
             }
             // freezes req'd elements object to prevent modification

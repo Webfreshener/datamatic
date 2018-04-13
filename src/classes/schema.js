@@ -76,15 +76,18 @@ export class Schema extends Model {
                 const inSet = Array.isArray(this.parent.model);
                 // calls validate with either full path if in Schema or key if nested in Set
                 const _isValid = _sH.validate((!inSet ? keyPath : key), value);
+                console.log(`${key} _isValid: "${_isValid}"`);
                 if ((typeof _isValid) !== "string") {
                     _validPaths.get(this.jsd)[this.path] = true;
                     if ((typeof value) === "object") {
                         value = _sH.setChildObject(key, value);
                         if ((typeof value) === "string") {
+                            _validPaths.get(this.jsd)[this.path] = value;
                             this.observerBuilder.error(this.path, value);
                             return false;
                         }
                     }
+                    console.log(`setting ${key} on "${this.path}"`);
                     t[key] = value;
                 } else {
                     _validPaths.get(this.jsd)[this.path] = _isValid;
@@ -148,11 +151,11 @@ export class Schema extends Model {
                 keys.forEach((k) => {
                     // -- added try/catch to avoid error in jsfiddle
                     try {
-                        console.log(`value[${k}]: ${JSON.stringify(value[k])}`);
                         this.model[k] = value[k];
                     } catch (e) {
-                        console.trace(e);
-                        // -- no-op
+                        _validPaths.get(this.jsd)[this.path] = e;
+                        this.observerBuilder.error(this.path, e);
+                        return false;
                     }
                 });
             }

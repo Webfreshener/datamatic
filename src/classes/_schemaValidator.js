@@ -277,23 +277,25 @@ export class SchemaValidator {
             if ((this.jsd.getClass(params.type)) == null) {
                 return this.validateSchemaClass(key, params);
             }
+
             if (params.type === "Array") {
+                // Arrays are dealt with as polymorphic elements internally
+                if (params.hasOwnProperty("elements")) {
+                    params.polymorphic = Array.isArray(params.elements) ?
+                        [].concat(params.elements) : [Object.assign({}, params.elements)];
+                    delete params.elements;
+                }
                 _vBuilders.get(this.jsd).create(params, key);
                 key = `${key}.*.polymorphic`;
-                if (params.hasOwnProperty("elements") &&
-                    !Array.isArray(params.elements)) {
-                    params.elements = [params.elements];
-                }
-                else if (params.hasOwnProperty("polymorphic")) {
+
+                if (params.hasOwnProperty("polymorphic")) {
+                    if (!Array.isArray(params.polymorphic)) {
+                        params.polymorphic = [params.elements];
+                    }
                     return this.validatePolymorphicEntry(key, params.polymorphic);
                 }
             }
-            if (Array.isArray(params.elements)) {
-                params.polymorphic = [].concat(params.elements);
-                delete params.elements;
 
-                return this.validatePolymorphicEntry(key, params.polymorphic);
-            }
             // handles child elements
             for (let sKey of Object.keys(params)) {
                 let __ = this.validateSchemaParam(key, sKey, _schemaKeys, params);
@@ -347,7 +349,6 @@ export class SchemaValidator {
             return e;
         }
 
-        // should not have gotten here -- so flag it as error
         return true;
     }
 

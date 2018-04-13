@@ -85,7 +85,10 @@ export class ValidatorBuilder {
         // filter paths by Regexp.test
         let _matches = this.list().filter((vItm) => rx.test(vItm));
         // attempts to find an exact string match in the filtered results
-        let _exactMatch = _matches.find((vItm) => wf.Str.regexEscape(vItm) === `${path}\\.${key}`);
+        let _exactMatch = _matches.find((vItm) => {
+            let _path = path !== "" ? `${path}\\.${key}` : `${key}`;
+            return wf.Str.regexEscape(vItm) === _path;
+        });
 
         return _exactMatch ? [_exactMatch] : _matches;
     }
@@ -101,12 +104,13 @@ export class ValidatorBuilder {
             return !sig ? [] : sig.hasOwnProperty("polymorphic") ?
                 sig.polymorphic : (Array.isArray(sig) ? sig : [sig]);
         };
-        let _signatures = formatSig(ref);
-        let _v = _validators.get(this);
-        let _functs = [];
 
         const createFuncts = (_sigs) => {
-            _sigs = formatSig(_sigs);
+            if (!_sigs.hasOwnProperty("type") || _sigs.type !== "Array") {
+                _sigs = formatSig(_sigs);
+            } else {
+                _sigs = [_sigs];
+            }
             _sigs.forEach(sig => {
                 if (typeof sig !== "object") {
                     _functs.push(new Validator["Default"](path, sig, this.$jsd));
@@ -128,7 +132,16 @@ export class ValidatorBuilder {
                 }
             });
         };
-        createFuncts(_signatures);
+
+        let _v = _validators.get(this);
+        let _functs = [];
+
+        if (ref.hasOwnProperty("type") && ref.type === "Array") {
+            createFuncts(ref);
+        } else {
+            createFuncts(formatSig(ref));
+        }
+
         // evaluates all defined functions, returning true or last error message
         const _f = (value) => {
             let _result;
