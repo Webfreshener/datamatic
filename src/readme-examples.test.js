@@ -1,6 +1,7 @@
 import {JSD} from "./index";
 import {Set} from "./classes/set";
 import {Schema} from "./classes/schema";
+import {_vBuilders} from "./classes/_references";
 
 describe("README.md examples tests", () => {
     it("main Schema example should work", (done) => {
@@ -362,7 +363,7 @@ describe("README.md examples tests", () => {
         };
     });
 
-    it("JSD Polymorphism example should work", (done) => {
+    it.only("JSD Polymorphism example should work", (done) => {
         const _schema = {
             polyValue: {
                 required: true,
@@ -422,7 +423,7 @@ describe("README.md examples tests", () => {
 
         const _jsd = new JSD(_schema, {debug: true});
         _jsd.document.subscribe(_handler);
-
+        console.log(_vBuilders.get(_jsd).list());
         // will set default value
         _jsd.document.model = {};
 
