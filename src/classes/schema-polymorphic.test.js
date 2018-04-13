@@ -3,7 +3,7 @@ import {JSD} from "./jsd";
 import {default as polymorphicSchema} from "../../fixtures/polymorphic.schema";
 import {_vBuilders} from "./_references";
 describe("Schema Polymorphism Tests", () => {
-    describe("Polymorphism", () => {
+    describe.skip("Polymorphism", () => {
         const _jsd = new JSD(polymorphicSchema);
         const _vBuilder = _vBuilders.get(_jsd);
         console.log(_vBuilder.list());

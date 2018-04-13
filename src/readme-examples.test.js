@@ -362,7 +362,7 @@ describe("README.md examples tests", () => {
         };
     });
 
-    it.only("JSD Polymorphism example should work", (done) => {
+    it("JSD Polymorphism example should work", (done) => {
         const _schema = {
             polyValue: {
                 required: true,
