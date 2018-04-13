@@ -120,7 +120,7 @@ describe("ValidatorBuilder Class Tests", () => {
                 };
                 const polyValue2 = {
                     id: 123,
-                    actve: false,
+                    active: false,
                 };
                 expect(_vBuilder.exec("*.polymorphic.0", "string")).toBe(true);
                 expect(_vBuilder.exec("*.polymorphic.1", polyValue1)).toBe(true);
