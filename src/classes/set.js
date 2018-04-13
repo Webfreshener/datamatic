@@ -143,7 +143,6 @@ export class Set extends Model {
                     // note we use the last value of `cnt` and walk back one iteration
                     value = _sH.setChildObject(`${keyPath}.${cnt - 1}`, value);
                 }
-                console.log(`setting "${idx}" on SET: ${JSON.stringify(value)}`);
                 t[idx] = value;
                 msg = this.validate();
                 if ((typeof msg) === "boolean") {

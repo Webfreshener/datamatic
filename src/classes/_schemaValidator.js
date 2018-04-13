@@ -170,6 +170,7 @@ export class SchemaValidator {
         if (typeof eMsg === "string") {
             return eMsg;
         }
+        _vBuilders.get(this.jsd).create(params, key);
         return true;
     }
 
@@ -189,7 +190,7 @@ export class SchemaValidator {
             !_schemaOptions.get(this).extensible) {
             return `schema element '${key}.${sKey}' is not allowed`;
         }
-        // returns result of Params String Valdiation
+        // returns result of Params String Validation
         if (typeof params[sKey] === "string") {
             let eMsg = this.validateSchemaParamString(key, sKey, params);
             if (typeof eMsg === "string") {
@@ -274,7 +275,7 @@ export class SchemaValidator {
                 return this.validateUntypedMembers(key, params);
             }
             // handles Classes/Functions
-            if ((this.jsd.getClass(params.type)) == null) {
+            if ((this.jsd.getClass(params.type)) === null) {
                 return this.validateSchemaClass(key, params);
             }
 

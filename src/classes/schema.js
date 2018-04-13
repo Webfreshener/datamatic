@@ -4,10 +4,9 @@ import {
 } from "./_references";
 import {ensureRequiredFields} from "./utils";
 import {SchemaHelpers} from "./_schemaHelpers";
-import {SchemaValidator} from "./_schemaValidator";
 import {JSD} from "./jsd";
 import {Model} from "./model";
-
+const _init = new WeakMap()
 /**
  * @class Schema
  */
@@ -23,6 +22,8 @@ export class Schema extends Model {
         if (!_exists(_signature)) {
             throw `Schema requires JSON object at arguments[0]. Got '${typeof _signature}'`;
         }
+
+        _init.set(this, false);
 
         // creates instance of SchemaHelpers
         const _sH = new SchemaHelpers(this);
@@ -46,7 +47,6 @@ export class Schema extends Model {
         _schemaSignatures.set(this, JSON.stringify(_sig));
 
         _object.set(this, new Proxy(Model.createRef(this, {}), this.handler));
-
         // applies default values (if any) on the model
         this.setDefaults();
     }
@@ -77,7 +77,6 @@ export class Schema extends Model {
                 const inSet = Array.isArray(this.parent.model);
                 // calls validate with either full path if in Schema or key if nested in Set
                 const _isValid = _sH.validate((!inSet ? keyPath : key), value);
-                console.log(`${key} _isValid: "${_isValid}"`);
                 if ((typeof _isValid) !== "string") {
                     _validPaths.get(this.jsd)[this.path] = true;
                     if ((typeof value) === "object") {
@@ -88,7 +87,6 @@ export class Schema extends Model {
                             return false;
                         }
                     }
-                    console.log(`setting ${key} on "${this.path}"`);
                     t[key] = value;
                 } else {
                     _validPaths.get(this.jsd)[this.path] = _isValid;
@@ -143,9 +141,9 @@ export class Schema extends Model {
         // -- reset the proxy model to initial object state if not locked
         if (!this.isLocked) {
             _object.set(this, new Proxy(Model.createRef(this, {}), this.handler));
+            // -- preliminary setting of default values on initial object
+            this.setDefaults();
         }
-        // -- preliminary setting of default values on initial object
-        this.setDefaults();
         if (typeof value === "object") {
             const keys = Object.keys(value);
             if (keys.length) {
@@ -160,7 +158,6 @@ export class Schema extends Model {
                     }
                 });
             }
-
             // final check for required field and setting of defaults
             let reqErr = ensureRequiredFields(this, value);
             if ((typeof reqErr) === "string") {
@@ -170,7 +167,7 @@ export class Schema extends Model {
 
             // tests current state of validation hash
             e = this.validate();
-            if (e === true) {
+            if ((typeof e) !== "string") {
                 // tests for writeLock and locks model if set
                 if (_mdRef.get(this).writeLock && !this.isLocked) {
                     this.lock();
@@ -206,7 +203,6 @@ export class Schema extends Model {
     set(key, value) {
         if (typeof key === "string") {
             _validPaths.get(this.jsd)[this.path] = -1;
-            console.log(`this.model: ${this.model}`);
             this.model[key] = value;
             let valid = this.validate();
             if (typeof valid === "string") {
@@ -224,13 +220,15 @@ export class Schema extends Model {
                 this.model[_k] = key[_k];
             });
         }
-        if (this.isValid) {
-            this.observerBuilder.next(this.path, this);
-            return this;
+        if (_init.get(this)) {
+            if (this.isValid) {
+                this.observerBuilder.next(this.path, this);
+                return this;
+            }
+            let eMsg = this.validate();
+            this.observerBuilder.error(this.path, eMsg);
+            return false;
         }
-        let eMsg = this.validate();
-        this.observerBuilder.error(this.path, eMsg);
-        return false;
     }
 
     /**
@@ -260,6 +258,7 @@ export class Schema extends Model {
      * sets default values for schema keys
      */
     setDefaults() {
+        _init.set(this, false);
         const _sig = this.schema;
         // attempts to set default value
         for (let _sigEl of Object.keys(_sig)) {
@@ -270,6 +269,7 @@ export class Schema extends Model {
                 this.set(_sigEl, _default);
             }
         }
+        _init.set(this, true);
     }
 
     static get defaultOptions() {

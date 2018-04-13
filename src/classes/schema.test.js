@@ -142,6 +142,15 @@ describe("Schema Class Test Suite", function () {
                     }
                 }
             };
+        });
+
+        it("should validate Wildcard Types", () => {
+            _jsd = new JSD({foo: {type: "*"}});
+            _jsd.document.model = {
+                foo: 123,
+            };
+            expect(_jsd.document.model.foo).toBe(123);
+
         })
     });
 

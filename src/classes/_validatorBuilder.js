@@ -84,6 +84,7 @@ export class ValidatorBuilder {
 
         // filter paths by Regexp.test
         let _matches = this.list().filter((vItm) => rx.test(vItm));
+
         // attempts to find an exact string match in the filtered results
         let _exactMatch = _matches.find((vItm) => {
             let _path = path !== "" ? `${path}\\.${key}` : `${key}`;
@@ -101,6 +102,7 @@ export class ValidatorBuilder {
      */
     create(ref, path) {
         const formatSig = (sig) => {
+            // todo: remove condition for polymorphic and refactor code below
             return !sig ? [] : sig.hasOwnProperty("polymorphic") ?
                 sig.polymorphic : (Array.isArray(sig) ? sig : [sig]);
         };
