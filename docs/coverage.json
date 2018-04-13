@@ -1,51 +1,49 @@
 {
-  "coverage": "84.97%",
-  "expectCount": 173,
-  "actualCount": 147,
+  "coverage": "88.06%",
+  "expectCount": 176,
+  "actualCount": 155,
   "files": {
     "src/classes/_metaData.js": {
       "expectCount": 13,
       "actualCount": 10,
       "undocumentLines": [
         4,
-        26,
-        112
+        22,
+        109
       ]
     },
     "src/classes/_observerBuilder.js": {
       "expectCount": 8,
       "actualCount": 7,
       "undocumentLines": [
-        6
+        4
       ]
     },
     "src/classes/_references.js": {
-      "expectCount": 16,
-      "actualCount": 14,
+      "expectCount": 17,
+      "actualCount": 15,
       "undocumentLines": [
         5,
         6
       ]
     },
     "src/classes/_schemaHelpers.js": {
-      "expectCount": 10,
+      "expectCount": 9,
       "actualCount": 8,
       "undocumentLines": [
-        19,
-        108
+        20
       ]
     },
     "src/classes/_schemaValidator.js": {
       "expectCount": 12,
-      "actualCount": 10,
+      "actualCount": 11,
       "undocumentLines": [
-        16,
-        125
+        138
       ]
     },
     "src/classes/_validatorBuilder.js": {
-      "expectCount": 7,
-      "actualCount": 7,
+      "expectCount": 9,
+      "actualCount": 9,
       "undocumentLines": []
     },
     "src/classes/_validators.js": {
@@ -61,44 +59,40 @@
     },
     "src/classes/jsd.js": {
       "expectCount": 14,
-      "actualCount": 11,
+      "actualCount": 12,
       "undocumentLines": [
-        16,
-        74,
-        144
+        18,
+        155
       ]
     },
     "src/classes/model.js": {
-      "expectCount": 22,
-      "actualCount": 19,
+      "expectCount": 25,
+      "actualCount": 23,
       "undocumentLines": [
-        7,
-        8,
-        209
+        48,
+        269
       ]
     },
     "src/classes/schema.js": {
       "expectCount": 15,
-      "actualCount": 14,
+      "actualCount": 13,
       "undocumentLines": [
-        305
+        9,
+        268
       ]
     },
     "src/classes/set.js": {
       "expectCount": 19,
       "actualCount": 17,
       "undocumentLines": [
-        12,
-        124
+        11,
+        90
       ]
     },
     "src/classes/utils.js": {
-      "expectCount": 5,
+      "expectCount": 3,
       "actualCount": 3,
-      "undocumentLines": [
-        3,
-        4
-      ]
+      "undocumentLines": []
     }
   }
 }

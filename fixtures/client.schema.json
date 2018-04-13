@@ -5,7 +5,7 @@
       "type": "Object",
       "required": false,
       "elements": {
-        "type": "Schema",
+        "type": "Object",
         "required": false,
         "extensible": true
       }

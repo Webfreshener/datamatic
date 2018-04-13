@@ -41,7 +41,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/set.js~Set.html">Set</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ensureKindIsString">ensureKindIsString</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ensureRequiredFields">ensureRequiredFields</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getKinds">getKinds</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-remapPolypath">remapPolypath</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_kinds">_kinds</a></span></span></li>
@@ -55,10 +54,12 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaSignatures">_schemaSignatures</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_singletons">_singletons</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vBuilders">_vBuilders</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vPaths">_vPaths</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validPaths">_validPaths</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validators">_validators</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vectorTypes">_vectorTypes</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-wf">wf</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-rxRx">rxRx</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-Validator">Validator</a></span></span></li>
 </ul>
 </div>
@@ -67,8 +68,13 @@
 <div class="content" data-ice="content"><h1 data-ice="title">src/classes/utils.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {_exists} from &quot;./_references&quot;;
 
-const _remapRx = /(.*)\d\.polymorphic+(.*)/;
+/**
+ * method for reformatting polymorphic paths
+ * @param path (string}
+ */
 export const remapPolypath = (path) =&gt; {
+    // regex for reformatting polymorphic path entries
+    const _remapRx = /(.*)\d\.polymorphic+(.*)/;
     return ((path) =&gt; {
         let matched = false;
         path = path.replace(_remapRx, function (match, $1, $2) {
@@ -85,18 +91,18 @@ export const remapPolypath = (path) =&gt; {
 };
 
 /**
- * @param {Object} itm
- * @returns {String|Boolean}
+ * @param itm {Object}
+ * @returns {string|boolean}
  */
 export const ensureKindIsString = (itm) =&gt; {
     switch (typeof itm) {
         case &quot;string&quot;:
-            return itm;
+            // wrapped value in template string per lint griping about return type
+            return `${itm}`;
         case &quot;object&quot;:
             if (itm.hasOwnProperty(&quot;type&quot;)) {
                 return this.ensureKindIsString(itm.type);
             }
-            break;
     }
     return false;
 };
@@ -106,7 +112,7 @@ export const ensureKindIsString = (itm) =&gt; {
  * sets default values upon sample object if present
  * @param {Schema} ref - reference object
  * @param {Object} obj - object for evaluation
- * @returns {true|string} - returns true or error string
+ * @returns {Object|string} - returns true or error string
  */
 export const ensureRequiredFields = (ref, obj) =&gt; {
     let oKeys = Object.keys(obj || {});
@@ -128,20 +134,6 @@ export const ensureRequiredFields = (ref, obj) =&gt; {
     }
 
     return obj;
-};
-
-/**
- * TODO: evaluate for removal -- not showing up in search
- * @returns {array} list of types declared by object
- */
-export const getKinds = (_s) =&gt; {
-    var _elems = Object.keys(_s).map(key =&gt; {
-        return (key === &quot;type&quot;) ?
-            _s.type : _exists(_s[key].type) ?
-                _s[key].type : null;
-    });
-    _elems = _elems.filter(elem =&gt; elem !== null);
-    return _elems.length ? _elems : null;
 };
 </code></pre>
 

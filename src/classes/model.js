@@ -1,27 +1,79 @@
-import {_mdRef, _oBuilders, _vBuilders, _exists, _validPaths, _object, _schemaSignatures} from "./_references";
-import {Schema} from "./schema";
-import {Set} from "./set";
+import {
+    _mdRef, _oBuilders, _vBuilders, _exists,
+    _validPaths, _object, _schemaSignatures,
+    _schemaOptions
+} from "./_references";
 import {JSD} from "./jsd";
-import {Observable} from "rxjs/Rx";
 import {remapPolypath} from "./utils";
-export class Model {
-    constructor() {
-        _object.set(this, new Proxy(Model.createRef(this), this.handler));
+import {MetaData} from "./_metaData";
+
+/**
+ *
+ * @param ref
+ * @param writeLock
+ * @param metaRef
+ */
+const createMetaDataRef = (ref, writeLock, metaRef) => {
+    let _md;
+    if (metaRef instanceof JSD) {
+        // root elements are handed the JSD object
+        // will create new MetaData and set reference as root element
+        _md = new MetaData(ref, {
+            _path: "",
+            _root: ref,
+            _writeLock: writeLock,
+            _jsd: metaRef,
+        });
     }
+    else if ((typeof metaRef) === "object") {
+        // extends MetaData reference
+        if (metaRef instanceof MetaData) {
+            _md = metaRef;
+        } else {
+            // todo: re-evaluate this line for possible removal
+            _md = new MetaData(this, metaRef);
+        }
+    } else {
+        throw "Invalid attempt to construct Model." +
+        "tip: use `new JSD([schema])` instead"
+    }
+    // sets MetaData object to global reference
+    _mdRef.set(ref, _md);
+};
+
+/**
+ *
+ */
+export class Model {
+    constructor(writeLock = false) {
+        // tests if this is instance of MetaData
+        if (!(this instanceof MetaData)) {
+            createMetaDataRef(this, writeLock, arguments[1]);
+        }
+    }
+
     /**
      * subscribes handler method to observer for model
      * @param func
-     * @returns {Observable}
+     * @returns {_subs}
      */
     subscribe(func) {
         return this.subscribeTo(this.path, func);
     }
 
     /**
+     * stub for sub-class implementation
+     * @returns {{get: function, set: function}}
+     */
+    get handler() {
+        throw "Model requires sub-classed implmentation of handler getter"
+    }
+
+    /**
      * subscribes handler method to property observer for path
      * @param path
      * @param func
-     * @returns {Observable}
+     * @returns {_subs}
      */
     subscribeTo(path, func) {
         // throws if argument is not an object or function
@@ -31,7 +83,7 @@ export class Model {
 
         // creates an extensible object to hold our unsubscribe method
         const _subs = class {};
-
+        const _subRefs = [];
         // references the ObserverBuilder for the path
         let _o = this.observerBuilder.get(path);
 
@@ -42,30 +94,30 @@ export class Model {
 
         // adds onNext handler if `next` prop is defined
         if (func.hasOwnProperty("next")) {
-            _o.onNext.subscribe({next: func.next});
+            _subRefs.push(_o.onNext.subscribe({next: func.next}));
         }
 
         // adds onError handler if `error` prop is defined
         if (func.hasOwnProperty("error")) {
-            _o.onError.subscribe({next: func.error});
+            _subRefs.push(_o.onError.subscribe({next: func.error}));
         }
 
         // adds onComplete handler if `complete` prop is defined
         if (func.hasOwnProperty("complete")) {
-            _o.onComplete.subscribe({next: func.complete});
+            _subRefs.push(_o.onComplete.subscribe({next: func.complete}));
         }
 
         // adds unsubscribe to the Proto object
         _subs.prototype.unsubscribe = () => {
-            _o.onNext.unsubscribe();
-            _o.onError.unsubscribe();
-            _o.onComplete.unsubscribe();
+            _subRefs.forEach((sub) => {
+                sub.unsubscribe();
+            });
         };
         return new _subs();
     }
 
     /**
-     * @returns {true|string} returns error string or true
+     * @returns {boolean|string} returns error string or true
      */
     validate() {
         const paths = _validPaths.get(this.jsd);
@@ -91,9 +143,10 @@ export class Model {
 
     /**
      * gets raw value of this model
+     * @returns {*}
      */
     valueOf() {
-        return this.model;
+        return _object.get(this);
     }
 
     /**
@@ -101,16 +154,16 @@ export class Model {
      */
     toJSON() {
         let _derive = (itm) => {
-            if (itm instanceof Schema) {
-                return itm.toJSON();
-            }
-            if (itm instanceof Set) {
+            if (itm.hasOwnProperty("toJSON") &&
+                (typeof this.toJSON) === "function") {
                 return itm.toJSON();
             }
             if (typeof itm === "object") {
                 const _o = !Array.isArray(itm) ? {} : [];
                 for (let k in itm) {
-                    _o[k] = _derive(itm[k]);
+                    if (itm.hasOwnProperty(k)) {
+                        _o[k] = _derive(itm[k]);
+                    }
                 }
                 return _o;
             }
@@ -136,7 +189,7 @@ export class Model {
 
     /**
      * getter for document root element
-     * @returns {Schema|Set}
+     * @returns {Model}
      */
     get root() {
         return _mdRef.get(this).root || this;
@@ -153,7 +206,7 @@ export class Model {
 
     /**
      * getter for models parent Schema or Set element
-     * @returns {Schema|Set}
+     * @returns {Model}
      */
     get parent() {
         let __ = _mdRef.get(this).root;
@@ -166,6 +219,13 @@ export class Model {
      */
     get jsd() {
         return _mdRef.get(this).jsd;
+    }
+
+    /**
+     * get options (if any) for this model"s schema
+     */
+    get options() {
+        return _schemaOptions.get(this);
     }
 
     /**
@@ -208,15 +268,15 @@ export class Model {
 
     get validationPath() {
         let _p = remapPolypath(this.path);
-        if (Object.keys(this.schema).indexOf("polymorphic") >= 0) {
+        if (this.schema.hasOwnProperty("polymorphic")) {
             _p = _p.replace(/(\.\d\.(?!polymorphic))+/, ".*.polymorphic.");
-            // _schemaSignatures.set(this, _schemaSignatures.get(this).polymorphic);
         }
+
         return _p;
     }
 
     /**
-     *
+     * TODO: remove and standardize around `signature`
      * @returns {*}
      */
     get schema() {
@@ -224,7 +284,7 @@ export class Model {
     }
 
     /**
-     * TODO: remove and standardize around `schema`
+     *
      * @returns {*}
      */
     get signature() {
@@ -232,16 +292,16 @@ export class Model {
     }
 
     /**
-     *
+     * creates owner Model reference on Proxied data object
      * @param ref
-     * @returns {{}}
+     * @param obj
+     * @returns {*}
      */
-    static createRef(ref) {
-        let _o = ref instanceof Set ? [] : {};
-        Object.defineProperty(_o, "$ref", {
+    static createRef(ref, obj) {
+        Object.defineProperty(obj, "$ref", {
             value: ref,
             writable: false
         });
-        return _o;
+        return obj;
     };
 }

@@ -100,3 +100,9 @@ export const _oBuilders = new WeakMap();
  * @private
  */
 export const _vBuilders = new WeakMap();
+/**
+ * Holder for Validation Paths
+ * @type {WeakMap}
+ * @private
+ */
+export const _vPaths = new WeakMap();

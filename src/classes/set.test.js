@@ -1,10 +1,10 @@
 import {JSD} from "./jsd";
 import {Schema} from "./schema";
 import {Set} from "./set";
+import {_vBuilders} from "./_references";
 
 describe("Set Class Test Suite", function () {
     describe("Initialization Tests", function () {
-
         it("should initialize with typeof <String>", function () {
             let _set = new JSD([{type: "String"}]);
             expect(_set.document instanceof Set).toBe(true);
@@ -27,8 +27,8 @@ describe("Set Class Test Suite", function () {
 
         it("should not initialize with invalid type", function () {
             expect(() => {
-                new Set("INVALID", null, new JSD())
-            }).toThrow("type '<INVALID>' for schema element 'polymorphic' was invalid");
+                new Set("INVALID", null, new JSD("INVALID"));
+            }).toThrow("Schema was invalid. JSON object or formatted string is required");
         });
     });
 
@@ -36,8 +36,9 @@ describe("Set Class Test Suite", function () {
         "use strict";
         it("should validate for Strings", function () {
             let _set = new JSD([{type: "String"}]);
-            _set.document.addItem(1);
+            // _set.document.addItem(1);
             _set.document.addItem("1");
+            console.log(_vBuilders.get(_set).list());
             expect(_set.document.model.length).toEqual(1);
         });
 
@@ -60,14 +61,24 @@ describe("Set Class Test Suite", function () {
                 }
             }];
             let _set = new JSD(_schema);
-            _set.document.model = [
-                {value: 1234},
-            ];
-            expect(_set.document.model.length).toEqual(0);
+            // _set.document.model = [
+            //     {value: 1234},
+            // ];
+            // expect(_set.document.model.length).toEqual(0);
             _set.document.model = [
                 {value: "1234"},
             ];
+            console.log(_set.document.validate());
             expect(_set.document.model.length).toEqual(1);
+        });
+
+        it("should set invalid items to null", () => {
+            let _set = new JSD([{type: "String"}]);
+            _set.document.model = ["1", "2", "3", "4"];
+            _set.document.replaceAll(["A", 2, "C"]);
+            expect(_set.document.model[0]).toBe("A");
+            expect(_set.document.model[1]).toBe(void(0));
+            expect(_set.document.model[2]).toBe("C");
         });
     });
 
@@ -131,7 +142,7 @@ describe("Set Class Test Suite", function () {
                     expect(v.model[0]).toEqual(123);
                 },
                 error: (e) => {
-                    expect(e).toEqual("'.*.polymorphic.0' expected number, type was '<string>'");
+                    expect(e).toEqual("'*.polymorphic.0' expected number, type was '<string>'");
                     done()
                 }
             });
@@ -152,14 +163,18 @@ describe("Set Class Test Suite", function () {
             }];
             const _h = {
                 next: (schema) => {
+                    console.log(_vBuilders.get(_jsd).list());
+                    console.log(schema.validate());
+                    console.log(`${schema}`);
                     expect(schema.model[0].valueA).toBe(1);
                     expect(schema.model[1].valueB).toBe(2);
-                    expect(schema.model[0].$ref instanceof Schema).toBe(true);
-                    expect(schema.model[1].$ref instanceof Schema).toBe(true);
+                    console.log(schema.model[0].$ref);
+                    // expect(schema.model[0].$ref instanceof Schema).toBe(true);
+                    // expect(schema.model[1].$ref instanceof Schema).toBe(true);
                     done();
                 },
                 error: (e) => {
-                    done(`error: ${e}`);
+                    done(e);
                 },
             };
             const _jsd = new JSD(_schema);
@@ -167,13 +182,6 @@ describe("Set Class Test Suite", function () {
             _jsd.document.model = [
                 {valueA: 1},
                 {valueB: 2},
-                // {valueC: {
-                //         subEl: "foo",
-                //         subObj: {
-                //             subEl: "bar"
-                //         }
-                //     }
-                // }
             ];
         });
         it("should support wildcard types", (done) => {
@@ -198,12 +206,13 @@ describe("Set Class Test Suite", function () {
                 },
             };
             const _jsd = new JSD(_schema);
+
             _jsd.document.subscribe(_h);
             _jsd.document.model = [
                 {value: 1},
                 {value: "2"},
-
             ];
+
         });
 
         it("should support wildcard keys and types", (done) => {
@@ -238,7 +247,7 @@ describe("Set Class Test Suite", function () {
     });
 
     describe("Nested Element", () => {
-        it("should support being nested in ohter elements", (done) => {
+        it("should support being nested in other elements", (done) => {
             const _jsd = new JSD({
                 aString: {
                     type: "String",
@@ -253,6 +262,7 @@ describe("Set Class Test Suite", function () {
             });
             _jsd.document.subscribe({
                 next: (val) => {
+                    console.log(`${_jsd.document.validate()}`);
                     expect(_jsd.document.model.anArray.length).toBe(3);
                     done();
                 },
@@ -264,12 +274,20 @@ describe("Set Class Test Suite", function () {
                 aString: "foo",
                 anArray: [1, 2, 3],
             };
+
         });
     });
 
-    describe("back ref", () => {
-        it("should provide backref on model", (done) => {
+    describe("Polymorphic Elements", () => {
+        it("should allow for multiple types of elements", (done) => {
             const _jsd = new JSD([{
+                type: "Object",
+                elements: {
+                    value: {
+                        type: "Number",
+                    },
+                },
+            }, {
                 type: "Object",
                 elements: {
                     value: {
@@ -289,28 +307,23 @@ describe("Set Class Test Suite", function () {
                         },
                     },
                 },
-            }, {
-                type: "Object",
-                elements: {
-                    value: {
-                        type: "Number",
-                    },
-                },
             },]);
             let cnt = 0;
             const _h = {
                 next: (schema) => {
-                    // expect(schema.model[0].$ref instanceof Schema).toBe(true);
-                    // expect(schema.model[0].value).toBe(1);
-                    // expect(schema.model[1].value).toBe(2);
-                    // expect(schema.model[1].$ref instanceof Schema).toBe(true);
-                    // expect(typeof schema.model[2].value).toBe("object");
-                    // expect(schema.model[2].$ref instanceof Schema).toBe(true);
-                    // expect(schema.model[2].value.subEl).toBe("foo");
-                    // expect(typeof schema.model[2].value.subObj).toBe("object");
-                    // expect(schema.model[2].value.subObj.subEl).toBe("bar");
-                    // expect(schema.model[2].value.hasOwnProperty("$ref")).toBe(true);
-                    // expect(schema.model[2].value.subObj.hasOwnProperty("$ref")).toBe(true);
+                    console.log(`${schema}`);
+                    expect(schema.model[0].$ref instanceof Schema).toBe(true);
+                    expect(schema.model[0].value).toBe(1);
+                    expect(schema.model[1].value).toBe(2);
+                    expect(schema.model[1].$ref instanceof Schema).toBe(true);
+                    expect(schema.model[2].$ref instanceof Schema).toBe(true);
+                    expect(typeof schema.model[2].value).toBe("object");
+                    expect(schema.model[2].value.$ref instanceof Schema).toBe(true);
+                    expect(schema.model[2].value.subEl).toBe("foo");
+                    expect(typeof schema.model[2].value.subObj).toBe("object");
+                    expect(schema.model[2].value.subObj.subEl).toBe("bar");
+                    expect(schema.model[2].value.hasOwnProperty("$ref")).toBe(true);
+                    expect(schema.model[2].value.subObj.hasOwnProperty("$ref")).toBe(true);
                     done();
                 },
                 error: (e) => {
@@ -329,6 +342,37 @@ describe("Set Class Test Suite", function () {
                         }
                     }
                 },
+            ];
+        });
+    });
+
+    describe("back ref", () => {
+        it("should provide backref on model", (done) => {
+            const _jsd = new JSD([{
+                type: "Object",
+                elements: {
+                    value: {
+                        type: "Number",
+                    },
+                },
+            }]);
+            let cnt = 0;
+            const _h = {
+                next: (schema) => {
+                    expect(schema.model[0].$ref instanceof Schema).toBe(true);
+                    expect(schema.model[0].value).toBe(1);
+                    expect(schema.model[1].value).toBe(2);
+                    expect(schema.model[1].$ref instanceof Schema).toBe(true);
+                    done();
+                },
+                error: (e) => {
+                    done(`error: ${e}`);
+                },
+            };
+            _jsd.document.subscribe(_h);
+            _jsd.document.model = [
+                {value: 1},
+                {value: 2},
             ];
         });
     });
@@ -384,7 +428,6 @@ describe("Set Class Test Suite", function () {
 
             _jsd.document.subscribe({
                 next: (doc) => {
-                    // console.log(`${doc}`);
                     expect(doc.length).toBe(11);
                     done()
                 },

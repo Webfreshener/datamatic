@@ -25,14 +25,14 @@ describe("Schema RXJS Test Suite", () => {
                 }
             };
 
-            const s = new Schema(_schema, null, new JSD());
-            s.subscribe(_h);
+            const s = new JSD(_schema);
+            s.document.subscribe(_h);
             // -- this must pass
-            s.model = {
+            s.document.model = {
                 value: "test"
             };
             // -- this must fail
-            s.set("value", false);
+            s.document.set("value", false);
         });
 
         it("should validate numeric values", (done) => {
@@ -47,10 +47,10 @@ describe("Schema RXJS Test Suite", () => {
             };
             const _s = Object.assign({}, _schema);
             _s.elements.value.type = "Number";
-            const s = new Schema(_s, null, new JSD());
-            s.subscribe(_h);
-            s.set("value", 123);
-            s.set("value", "fails");
+            const s = new JSD(_s);
+            s.document.subscribe(_h);
+            s.document.set("value", 123);
+            s.document.set("value", "fails");
         });
 
         it("should validate boolean values", (done) => {
@@ -65,15 +65,15 @@ describe("Schema RXJS Test Suite", () => {
             };
             const _s = Object.assign({}, _schema);
             _s.elements.value.type = "Boolean";
-            const s = new Schema(_s, null, new JSD());
-            s.subscribe(_h);
-            s.set("value", false);
-            s.set("value", 0);
+            const s = new JSD(_s);
+            s.document.subscribe(_h);
+            s.document.set("value", false);
+            s.document.set("value", 0);
         });
 
         it("should value mixed objects", (done) => {
             const _h = {
-                next: () => {
+                next: (s) => {
                     expect(s.model.obj.objValue).toEqual("Object Value");
                     done();
                 },
@@ -93,9 +93,9 @@ describe("Schema RXJS Test Suite", () => {
                     }
                 }
             };
-            const s = new Schema(_s, null, new JSD());
-            s.subscribe(_h);
-            s.model = {
+            const jsd = new JSD(_s);
+            jsd.document.subscribe(_h);
+            jsd.document.model = {
                 value: "A Value",
                 obj: {
                     objValue: "Object Value"
@@ -106,28 +106,11 @@ describe("Schema RXJS Test Suite", () => {
         });
     });
 
-    describe("Client Schema", function () {
-        it("should initialize from client.schema schema fixture", () => {
-            let _s = require("../../fixtures/client.schema.json");
-            this.schema = new Schema(_s, null, new JSD());
-            let _sub= this.schema.subscribeTo("__OPTIONS__.ALLOWED", {
-                next: (v) => {
-                    console.log(`next: ${JSON.stringify(v)}`);
-                },
-                error: (e) => {
-                    console.log(`e ${e}`);
-                }
-            });
-            expect(this.schema instanceof Schema).toBe(true);
-            expect(this.schema.model.__OPTIONS__.CRUD_METHODS.create).toEqual("POST");
-        });
-    });
-
     describe("Client Collection", function () {
         let _schema;
         beforeEach(() => {
             let _s = require("../../fixtures/client_collection.schema.json");
-            _schema = new Schema(_s, null, new JSD());
+            _schema = new JSD(_s);
         });
 
         it("should check for valid properties", (done) => {
@@ -157,17 +140,18 @@ describe("Schema RXJS Test Suite", () => {
             };
             const _h = {
                 next: (model) => {
-                    console.log(`\n\nmodel: ${JSON.stringify(model)}\n`);
-                    // done("error was expected");
-                    done();
+                    console.log(`\n\nmodel: ${model}\n`);
+                    done("error was expected");
+                    // done();
                 },
                 error: (e) => {
-                    expect(e).toEqual("http expected value of type 'Object'. Type was '<boolean>'");
+                    console.log(`\n\nmodel: ${_schema.document}\n`);
+                    expect(e).toEqual("'http' expected value of type 'Object'. Type was '<boolean>'");
                     done();
                 }
             };
-            _schema.subscribe(_h);
-            _schema.model = _d;
+            _schema.document.subscribe(_h);
+            _schema.document.model = _d;
         });
 
         it("should pass valid models", (done) => {
@@ -205,31 +189,68 @@ describe("Schema RXJS Test Suite", () => {
                     done(`error '${e}' was given`);
                 }
             };
-            _schema.subscribe(_h);
-            _schema.model = _d;
+            _schema.document.subscribe(_h);
+            _schema.document.model = _d;
         });
     });
 
     describe("sequential operation", () => {
         it("should allow updated from within notifications", (done) => {
-            const _schema = new Schema({"*": {type: "*"}}, null, new JSD());
+            const _schema = new JSD({"*": {type: "*"}});
             let cnt = 0;
             const _h = {
                 next: (model) => {
                     if (++cnt < 2) {
-                        _schema.set("valueD", 4);
+                        _schema.document.set("valueD", 4);
                     } else {
                         done();
                     }
                 },
+                error: (e) => {
+                    done(`${e}`);
+                }
             };
 
-            _schema.subscribe(_h);
-            _schema.model = {
+            _schema.document.subscribe(_h);
+            _schema.document.model = {
                 valueA: 1,
                 valueB: 2,
                 valueC: 3
             };
         });
     });
+
+    describe("Rxjs Unsubscribe", () => {
+        it("should Unsubscribe from notifications", (done) => {
+            const _schema = new JSD({"*": {type: "*"}});
+            let cnt = 0;
+            const _h1 = {
+                next: (model) => {
+                    if (++cnt < 2) {
+                        _sub.unsubscribe();
+                        _schema.document.subscribe(_h2);
+                        _schema.document.set("valueD", 4);
+                    } else {
+                        done("should not have recieved notification");
+                    }
+                },
+                error: (e) => {
+                    done(`${e}`);
+                }
+            };
+
+            const _h2 = {
+                next: (model) => {
+                        done();
+                },
+            };
+
+            const _sub = _schema.document.subscribe(_h1);
+            _schema.document.model = {
+                valueA: 1,
+                valueB: 2,
+                valueC: 3
+            };
+        });
+    })
 });

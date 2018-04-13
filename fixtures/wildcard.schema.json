@@ -1,31 +1,27 @@
 {
-  "type": "Object",
-  "required": true,
-  "elements": {
-    "*": {
-      "type": "Object",
-      "elements": {
-        "*": {
-          "type": "Object",
-          "required": true,
-          "elements": {
-            "name": {
-              "type": "String",
-              "required": true
-            },
-            "*": {
-              "polymorphic": [
-                {
-                  "type": "Boolean"
-                },
-                {
-                  "type": "Number"
-                },
-                {
-                  "type": "String"
-                }
-              ]
-            }
+  "*": {
+    "type": "Object",
+    "elements": {
+      "*": {
+        "type": "Object",
+        "required": true,
+        "elements": {
+          "name": {
+            "type": "String",
+            "required": true
+          },
+          "*": {
+            "polymorphic": [
+              {
+                "type": "Boolean"
+              },
+              {
+                "type": "Number"
+              },
+              {
+                "type": "String"
+              }
+            ]
           }
         }
       }

@@ -1,6 +1,4 @@
 import {_exists, _observers} from "./_references";
-import {Set} from "./set";
-import {Schema} from "./schema";
 import {BehaviorSubject} from "rxjs/Rx";
 
 export class ObserverBuilder {
@@ -12,7 +10,7 @@ export class ObserverBuilder {
     }
 
     /**
-     * @returns list of validation paths
+     * @returns {string[]} of validation paths
      */
     list() {
         let _v = _observers.get(this);
@@ -20,8 +18,8 @@ export class ObserverBuilder {
     }
 
     /**
-     * @param path
-     * @returns item at path reference
+     * @param path {string}
+     * @returns {Observer} Observer at path reference
      */
     get(path) {
         let _o = _observers.get(this);
@@ -30,25 +28,22 @@ export class ObserverBuilder {
 
     /**
      *
-     * @param forPath
-     * @param oRef
+     * @param forPath {string}
+     * @param oRef {Model|Schema|Set}
      */
     create(forPath, oRef) {
-        if (!(oRef instanceof Schema || oRef instanceof Set)) {
-            throw "oRef must be instance of Schema or Set";
-        }
         let _o = _observers.get(this);
         _o[forPath] = {
-            onNext: new BehaviorSubject().skip(1),
-            onError: new BehaviorSubject().skip(1),
-            onComplete: new BehaviorSubject().skip(1),
+            onNext: new BehaviorSubject(null).skip(1),
+            onError: new BehaviorSubject(null).skip(1),
+            onComplete: new BehaviorSubject(null).skip(1),
         }
     }
 
     /**
      * calls next on Next Subject
-     * @param path
-     * @param value
+     * @param path {string}
+     * @param value {*}
      */
     next(path, value) {
         let _o = this.get(path);
@@ -59,8 +54,8 @@ export class ObserverBuilder {
 
     /**
      * calls next on Complete Subject
-     * @param path
-     * @param value
+     * @param path {string}
+     * @param value {*}
      */
     complete(path, value) {
         let _o = this.get(path);
@@ -71,8 +66,8 @@ export class ObserverBuilder {
 
     /**
      * calls next on Error Subject
-     * @param path
-     * @param value
+     * @param path {string}
+     * @param value {*}
      */
     error(path, value) {
         let _o = this.get(path);

@@ -1,6 +1,7 @@
 import {JSD} from "./index";
 import {Set} from "./classes/set";
 import {Schema} from "./classes/schema";
+
 describe("README.md examples tests", () => {
     it("main Schema example should work", (done) => {
         const _schema = {
@@ -43,24 +44,20 @@ describe("README.md examples tests", () => {
 
     it("JSD Array example should work", (done) => {
         // we define an array that accepts objects comprised of a name string and numeric score
-        const _schema = {
-            type: "Array",
-            default: [],
-            elements: [{
-                type: "Object",
-                elements: {
-                    name: {
-                        type: "String",
-                        required: true,
-                        restrict: "^[a-zA-Z0-9\\-\\s]{1,24}$"
-                    },
-                    score: {
-                        type: "Number",
-                        required: true
-                    },
+        const _schema = [{
+            type: "Object",
+            elements: {
+                name: {
+                    type: "String",
+                    required: true,
+                    restrict: "^[a-zA-Z0-9\\-\\s]{1,24}$"
                 },
-            }],
-        };
+                score: {
+                    type: "Number",
+                    required: true
+                },
+            },
+        }];
 
         const _handler = {
             next: (val) => {
@@ -82,16 +79,16 @@ describe("README.md examples tests", () => {
         _jsd.document.model = [{
             name: "Player 1",
             score: 2000000,
-        // }, {
-        //     name: "Player 2",
-        //     score: 1100000
-        // }, {
-        //     // this will error because score is a string value
-        //     name: "BOGUS",
-        //     score: "1100000"
-        // }, {
-        //     name: "Player 3",
-        //     score: 900000
+        }, {
+            name: "Player 2",
+            score: 1100000
+        }, {
+            // this will error because score is a string value
+            name: "BOGUS",
+            score: "1100000"
+        }, {
+            name: "Player 3",
+            score: 900000
         }];
     });
 
@@ -315,6 +312,7 @@ describe("README.md examples tests", () => {
                 score: 900000
             },
         };
+        console.log(_jsd.document.validate());
     });
 
     it("JSD Wildcard TYPES example should work", (done) => {

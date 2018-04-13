@@ -1,10 +1,9 @@
 import {
     _mdRef, _object, _schemaOptions,
-    _exists, _schemaHelpers, _schemaSignatures, _observers
+    _schemaHelpers, _schemaSignatures,
+    _vPaths, _validPaths
 } from "./_references";
-import {MetaData} from "./_metaData";
 import {SchemaValidator} from "./_schemaValidator";
-import {Schema} from "./schema";
 import {JSD} from "./jsd";
 import {Model} from "./model";
 import {SchemaHelpers} from "./_schemaHelpers";
@@ -17,56 +16,25 @@ const _observerDelegates = new WeakMap();
 export class Set extends Model {
     /**
      * @constructor
-     * @param {any} _type
-     * @param {any} items
+     * @param _signature {*}
+     * @param opts {*}
      */
     constructor(_signature, opts = {}) {
-        super();
-        // tests for metadata
-        let __;
-        if (arguments[2] instanceof JSD) {
-            __ = new MetaData(this, {
-                _path: "",
-                _root: this,
-                _jsd: arguments[2],
-            });
-        }
-
-        else if (arguments[2] instanceof MetaData) {
-            __ = arguments[2];
-        } else {
-            throw `Invalid constructor call for Set: ${JSON.stringify(arguments)}`;
-        }
-
-        // stores our MetaData reference to WeakMap
-        _mdRef.set(this, __);
+        super(_signature.writeLock || false, arguments[2]);
         // stores our user Options into Weakmap
         _schemaOptions.set(this, opts);
-
-        // creates a default signature if none present
-        if (!_exists(_signature)) {
-            _signature = [{type: "*"}];
-        }
-
-        // internally we handle all Sets as Polymorphic elements
-        _signature = {polymorphic: _signature};
-
-        // attempts to validate provided `schema` entries
-        let _sV = new SchemaValidator(_signature, Object.assign(this.options || {}, {
-            jsd: _mdRef.get(this).jsd,
-        }), this);
-
-        // throws error if error message returned
-        if (typeof (eMsg = _sV.isValid()) === "string") {
-            throw eMsg;
-        }
-
-        const _sig = _signature || JSD.defaults;
-        _schemaSignatures.set(this, JSON.stringify(_sig));
         _schemaHelpers.set(this, new SchemaHelpers(this));
-        _schemaHelpers.get(this).walkSchema(_sig, `${this.path}.*`);
-        // _schemaHelpers.get(this).walkSchema(_sig, this.validationPath);
 
+        if (!_signature.hasOwnProperty("type")) {
+            _signature.type = "Array";
+        }
+
+        _vPaths.set(this, `${this.path}.*.polymorphic`);
+
+        const _sig = _signature["*"] || JSD.defaults;
+        _schemaSignatures.set(this, JSON.stringify(_sig));
+
+        _object.set(this, new Proxy(Model.createRef(this, []), this.handler));
     }
 
     /**
@@ -83,7 +51,7 @@ export class Set extends Model {
     set model(value) {
         if (Array.isArray(value)) {
             if (!this.isLocked) {
-                _object.set(this, new Proxy(Model.createRef(this), this.handler));
+                _object.set(this, new Proxy(Model.createRef(this, []), this.handler));
             }
 
             try {
@@ -92,19 +60,17 @@ export class Set extends Model {
                 // to prevent triggering a notification for each item
                 // if the user desires such behavior they can use `addItem` with an iterator
                 _observerDelegates.set(this, {
-                    next: (col) => {
+                    next: () => {
                         if (this.length === value.length) {
-                            _observerDelegates.delete(this);
+                            this.observerBuilder.next(this.path, this);
                         }
                     },
-                    error: (e) => {
-                        _observerDelegates.delete(this);
-                        throw e;
+                    error: () => {
+                        // this is a no-op, we will dispatch error later in the setter pipe
                     }
                 });
                 value.forEach((val) => {
-                    _object.get(this)[cnt] = val;
-                    cnt++;
+                    _object.get(this)[cnt++] = val;
                 });
             } catch (e) {
                 return this.observerBuilder.error(this.path, e);
@@ -150,28 +116,37 @@ export class Set extends Model {
                 }
 
                 let _oDel = _observerDelegates.get(this);
-                const sendErr = (e) => {
+                const sendErr = (msg) => {
+                    _validPaths.get(this.jsd)[this.path] = msg;
                     if (_oDel) {
                         _oDel.error(msg);
                     } else {
                         this.observerBuilder.error(this.path, msg);
                     }
                 };
-
-                let msg = this.validatorBuilder.exec(`${this.path}.${idx}`, value);
+                let keyPath = `${_vPaths.get(this)}`.replace(/^\.?(.*)$/, "$1");
+                let cnt = 0;
+                let msg = `unable to validate "${this.path}"`;
+                (this.schema.polymorphic || this.schema).some(() => {
+                    msg = this.validatorBuilder.exec(`${keyPath}.${cnt++}`, value);
+                    return (msg === true);
+                });
+                // if error message is present we do error handling and return
                 if ((typeof msg) === "string") {
                     sendErr(msg);
                     return false;
                 }
 
+                // we set the value on the array with success
                 if ((typeof value) === "object") {
                     let _sH = _schemaHelpers.get(this);
-                    value = _sH.createSetElement(idx, value);
+                    // note we use the last value of `cnt` and walk back one iteration
+                    value = _sH.setChildObject(`${keyPath}.${cnt - 1}`, value);
                 }
-
                 t[idx] = value;
                 msg = this.validate();
                 if ((typeof msg) === "boolean") {
+                    _validPaths.get(this.jsd)[this.path] = true;
                     if (_oDel) {
                         _oDel.next(this);
                     } else {
@@ -236,7 +211,7 @@ export class Set extends Model {
     /**
      * @param {number} idx
      * @param {any} item
-     * @returns {Set} reference to self
+     * @returns {boolean|Set} reference to self
      */
     replaceItemAt(idx, item) {
         if (!this.validatorBuilder.exec(this.path, item)) {
@@ -299,10 +274,10 @@ export class Set extends Model {
 
     /**
      * resets list to empty array
-     * @returns reference to self
+     * @returns {Set} reference to self
      */
     reset() {
-        _object.set(this, new Proxy([], this.handler));
+        _object.set(this, new Proxy(Model.createRef(this, []), this.handler));
         return this;
     }
 

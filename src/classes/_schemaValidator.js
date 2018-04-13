@@ -1,4 +1,4 @@
-import {wf, _exists, _schemaOptions} from "./_references";
+import {wf, _exists, _schemaOptions, _vBuilders} from "./_references";
 
 /**
  * @private
@@ -6,15 +6,28 @@ import {wf, _exists, _schemaOptions} from "./_references";
  */
 export class SchemaValidator {
     /**
-     * @constructor
-     * @param {object} schema
-     * @param {object} options
+     *
+     * @param _schema {object}
+     * @param opts {object}
      */
     constructor(_schema = {}, opts = {extensible: false}) {
+        let _errorMsg;
         _schemaOptions.set(this, opts);
-        let _errorMsg = null;
-        this.isValid = () => _errorMsg || true;
-        // validates SCHEMA ENTRIES
+        Object.defineProperty(this, "isValid", {
+            get: () => _errorMsg || true,
+            enumerable: false,
+        });
+        // schema is expected to be object
+        if ((typeof _schema) !== "object") {
+            try {
+                // attempts to parse JSON formatted string...
+                _schema = JSON.parse(_schema.toString());
+            } catch (e) {
+                // throws error and aborts if parsing failed
+                throw "Schema was invalid. JSON object or formatted string is required";
+            }
+        }
+        // inits validation of Schema entries
         _errorMsg = SchemaValidator.eval(_schema, this);
     }
 
@@ -53,13 +66,13 @@ export class SchemaValidator {
      *
      * @param key
      * @param params
-     * @returns {true|string}
+     * @returns {boolean|string}
      */
     validateUntypedMembers(key, params) {
         if (Array.isArray(params)) {
             for (let item of params) {
-                var _res;
-                if (typeof (_res = this.validateSchemaEntry(key, item)) === "string") {
+                let _res;
+                if (typeof (_res = this.validateSchemaEntry(`${key}`, item)) === "string") {
                     return _res;
                 }
             }
@@ -75,13 +88,13 @@ export class SchemaValidator {
                     params = {polymorphic: params};
                 }
                 if (params.hasOwnProperty("polymorphic")) {
-                    return this.validateSchemaEntry(key, params.polymorphic);
+                    return this.validatePolymorphicEntry(`${key}.polymorphic`, params.polymorphic);
                 }
                 return `value for schema element '${key}' was malformed. Property 'type' was missing`;
             }
             else {
                 for (let param of Object.keys(params)) {
-                    var _res;
+                    let _res;
                     let _keys = [].concat(keyPath).concat(param);
                     if (typeof (_res = this.validateSchemaEntry(`${_keys.join(".")}`, params[param])) === "string") {
                         return _res;
@@ -96,7 +109,7 @@ export class SchemaValidator {
      *
      * @param key
      * @param params
-     * @returns {true|string}
+     * @returns {boolean|string}
      */
     validateSchemaClass(key, params) {
         if (!_exists(key)) {
@@ -136,7 +149,6 @@ export class SchemaValidator {
      * @param {object} params
      */
     validateSchemaParamString(key, sKey, params) {
-        let _kind = wf.Str.capitalize(params[sKey]);
         let _schemaKeys = this.jsd.schemaRef;
         let opts = _schemaOptions.get(this);
         // handles special `restrict` key
@@ -158,6 +170,7 @@ export class SchemaValidator {
         if (typeof eMsg === "string") {
             return eMsg;
         }
+        _vBuilders.get(this.jsd).create(params, key);
         return true;
     }
 
@@ -167,22 +180,26 @@ export class SchemaValidator {
      * @param sKey
      * @param _schemaKeys
      * @param params
-     * @returns {true|string}
+     * @returns {boolean|string}
      */
     validateSchemaParam(key, sKey, _schemaKeys, params) {
-        var _type;
+        let _type;
         let eMsg;
         // rejects unknown element if schema non-extensible
         if (sKey !== "*" && !_exists(_schemaKeys[sKey]) &&
             !_schemaOptions.get(this).extensible) {
             return `schema element '${key}.${sKey}' is not allowed`;
         }
-        // returns result of Params String Valdiation
+        // returns result of Params String Validation
         if (typeof params[sKey] === "string") {
             let eMsg = this.validateSchemaParamString(key, sKey, params);
             if (typeof eMsg === "string") {
                 return eMsg;
             }
+        }
+
+        if (sKey === "polymorphic") {
+            return this.validatePolymorphicEntry(key, params);
         }
 
         // returns result of
@@ -211,17 +228,20 @@ export class SchemaValidator {
                 if (!_exists(_type)) {
                     return `type attribute was not defined for ${key}`;
                 }
+
                 if (!Array.isArray(_type)) {
                     _type = _type.type;
                 }
 
                 if (params.type === "*") {
                     return true;
-                } else if (_type.indexOf(params.type) < 0 ) {
+                } else if (_type.indexOf(params.type) < 0) {
                     return `type attribute was not defined for ${sKey}`;
                 }
             }
         }
+        // creates validator for all paths that pass schema validation
+        _vBuilders.get(this.jsd).create(params, key);
         return true;
     }
 
@@ -230,35 +250,53 @@ export class SchemaValidator {
      * @param key
      * @param params
      * @param opts
-     * @returns {true|string}
+     * @returns {boolean|string}
      */
     validateSchemaEntry(key, params, opts) {
         let _schemaKeys = this.jsd.schemaRef;
         if (!_exists(opts)) {
             opts = _schemaOptions.get(this);
         }
+        if (key === "polymorphic") {
+            return this.validatePolymorphicEntry(`${key}`, params, opts);
+        }
         if (!_exists(params)) {
             return `${key} was null or undefined`;
         }
-        if (typeof params === "boolean") {
+        if ((typeof params) === "boolean") {
             return true;
         }
-        if (typeof params === "string") {
+        if ((typeof params) === "string") {
             return this.validateTypeString(`${key}`, params);
         }
-        if (typeof params === "object") {
+        if ((typeof params) === "object") {
             // handled Objects with no `type` element
             if (!params.hasOwnProperty("type")) {
                 return this.validateUntypedMembers(key, params);
             }
             // handles Classes/Functions
-            if ((this.jsd.getClass(params.type)) == null) {
+            if ((this.jsd.getClass(params.type)) === null) {
                 return this.validateSchemaClass(key, params);
             }
-            if (Array.isArray(params.elements)) {
-                params.polymorphic = Object.assign({}, params.elements);
-                delete params.elements;
+
+            if (params.type === "Array") {
+                // Arrays are dealt with as polymorphic elements internally
+                if (params.hasOwnProperty("elements")) {
+                    params.polymorphic = Array.isArray(params.elements) ?
+                        [].concat(params.elements) : [Object.assign({}, params.elements)];
+                    delete params.elements;
+                }
+                _vBuilders.get(this.jsd).create(params, key);
+                key = `${key}.*.polymorphic`;
+
+                if (params.hasOwnProperty("polymorphic")) {
+                    if (!Array.isArray(params.polymorphic)) {
+                        params.polymorphic = [params.elements];
+                    }
+                    return this.validatePolymorphicEntry(key, params.polymorphic);
+                }
             }
+
             // handles child elements
             for (let sKey of Object.keys(params)) {
                 let __ = this.validateSchemaParam(key, sKey, _schemaKeys, params);
@@ -287,13 +325,37 @@ export class SchemaValidator {
             }
             return true;
         }
-        // should not have gotten here -- so flag it as error
-        return `unable to process schema element '${key}'`;
     }
 
     /**
      *
-     * @returns {*|JSD|*|JSD}
+     * @param key
+     * @param params
+     * @param opts
+     * @returns {boolean|string}
+     */
+    validatePolymorphicEntry(key, params, opts) {
+        let cnt = 0;
+        try {
+            params.forEach((entry) => {
+                let itmKey = `${key}.${cnt}`;
+                let e = this.validateSchemaEntry(itmKey, entry, opts);
+                if ((typeof e) === "string") {
+                    throw e;
+                }
+                _vBuilders.get(this.jsd).create(entry, itmKey);
+                cnt++;
+            });
+        } catch (e) {
+            return e;
+        }
+
+        return true;
+    }
+
+    /**
+     *
+     * @returns {JSD}
      */
     get jsd() {
         return _schemaOptions.get(this).jsd;
@@ -335,12 +397,18 @@ export class SchemaValidator {
                         }
                     }
                     else {
+                        if (_oKey === "polymorphic") {
+                            return caller.validatePolymorphicEntry(_oKey, _schema[_oKey]);
+                        }
                         for (let _s of _schema[_oKey]) {
                             if (typeof _schema[_oKey][_s] === "string") {
                                 _errorMsg = caller.validateTypeString(_oKey, _s);
                             }
                             else {
                                 _errorMsg = caller.validateSchemaEntry(_oKey, _s);
+                            }
+                            if ((typeof _errorMsg) === "string") {
+                                return _errorMsg;
                             }
                         }
                     }
@@ -350,6 +418,9 @@ export class SchemaValidator {
                     break;
                 default:
                     _errorMsg = `value for schema element '${_oKey}' was invalid`;
+            }
+            if ((typeof _errorMsg) === "string") {
+                return _errorMsg;
             }
         }
         return _errorMsg;

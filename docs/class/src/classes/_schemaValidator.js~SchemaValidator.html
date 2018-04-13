@@ -41,7 +41,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/set.js~Set.html">Set</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ensureKindIsString">ensureKindIsString</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ensureRequiredFields">ensureRequiredFields</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getKinds">getKinds</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-remapPolypath">remapPolypath</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_kinds">_kinds</a></span></span></li>
@@ -55,10 +54,12 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaSignatures">_schemaSignatures</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_singletons">_singletons</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vBuilders">_vBuilders</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vPaths">_vPaths</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validPaths">_validPaths</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validators">_validators</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vectorTypes">_vectorTypes</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-wf">wf</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-rxRx">rxRx</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-Validator">Validator</a></span></span></li>
 </ul>
 </div>
@@ -157,7 +158,7 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/_schemaValidator.js~SchemaValidator.html#instance-constructor-constructor">constructor</a></span></span><span class="code" data-ice="signature">(schema: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>, options: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>)</span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/_schemaValidator.js~SchemaValidator.html#instance-constructor-constructor">constructor</a></span></span><span class="code" data-ice="signature">(_schema: <span>*</span>, opts: <span>*</span>)</span>
         </p>
       </div>
       <div>
@@ -182,34 +183,6 @@
     <td>
       <span class="access" data-ice="access">public</span>
       
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          
-          <span class="code" data-ice="name"><span><a href="class/src/classes/_schemaValidator.js~SchemaValidator.html#instance-member-isValid">isValid</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
       <span class="kind" data-ice="kind">get</span>
       
       <span class="override" data-ice="override"></span>
@@ -220,7 +193,7 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/_schemaValidator.js~SchemaValidator.html#instance-get-jsd">jsd</a></span></span><span class="code" data-ice="signature">: <span>*</span> | <span><a href="class/src/classes/jsd.js~JSD.html">JSD</a></span> | <span>*</span> | <span><a href="class/src/classes/jsd.js~JSD.html">JSD</a></span>: <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/_schemaValidator.js~SchemaValidator.html#instance-get-jsd">jsd</a></span></span><span class="code" data-ice="signature">: <span><a href="class/src/classes/jsd.js~JSD.html">JSD</a></span>: <span>*</span></span>
         </p>
       </div>
       <div>
@@ -289,7 +262,7 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/_schemaValidator.js~SchemaValidator.html#instance-method-validateSchemaClass">validateSchemaClass</a></span></span><span class="code" data-ice="signature">(key: <span>*</span>, params: <span>*</span>): <span>true</span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/_schemaValidator.js~SchemaValidator.html#instance-method-validatePolymorphicEntry">validatePolymorphicEntry</a></span></span><span class="code" data-ice="signature">(key: <span>*</span>, params: <span>*</span>, opts: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
         </p>
       </div>
       <div>
@@ -317,7 +290,7 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/_schemaValidator.js~SchemaValidator.html#instance-method-validateSchemaEntry">validateSchemaEntry</a></span></span><span class="code" data-ice="signature">(key: <span>*</span>, params: <span>*</span>, opts: <span>*</span>): <span>true</span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/_schemaValidator.js~SchemaValidator.html#instance-method-validateSchemaClass">validateSchemaClass</a></span></span><span class="code" data-ice="signature">(key: <span>*</span>, params: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
         </p>
       </div>
       <div>
@@ -345,7 +318,35 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/_schemaValidator.js~SchemaValidator.html#instance-method-validateSchemaParam">validateSchemaParam</a></span></span><span class="code" data-ice="signature">(key: <span>*</span>, sKey: <span>*</span>, _schemaKeys: <span>*</span>, params: <span>*</span>): <span>true</span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/_schemaValidator.js~SchemaValidator.html#instance-method-validateSchemaEntry">validateSchemaEntry</a></span></span><span class="code" data-ice="signature">(key: <span>*</span>, params: <span>*</span>, opts: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/src/classes/_schemaValidator.js~SchemaValidator.html#instance-method-validateSchemaParam">validateSchemaParam</a></span></span><span class="code" data-ice="signature">(key: <span>*</span>, sKey: <span>*</span>, _schemaKeys: <span>*</span>, params: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
         </p>
       </div>
       <div>
@@ -429,7 +430,7 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/_schemaValidator.js~SchemaValidator.html#instance-method-validateUntypedMembers">validateUntypedMembers</a></span></span><span class="code" data-ice="signature">(key: <span>*</span>, params: <span>*</span>): <span>true</span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/_schemaValidator.js~SchemaValidator.html#instance-method-validateUntypedMembers">validateUntypedMembers</a></span></span><span class="code" data-ice="signature">(key: <span>*</span>, params: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
         </p>
       </div>
       <div>
@@ -464,7 +465,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_schemaValidator.js.html#lineNumber308">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_schemaValidator.js.html#lineNumber370">source</a></span></span>
     </span>
   </h3>
 
@@ -540,7 +541,7 @@
     
     
     
-    <span class="code" data-ice="name">constructor</span><span class="code" data-ice="signature">(schema: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>, options: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>)</span>
+    <span class="code" data-ice="name">constructor</span><span class="code" data-ice="signature">(_schema: <span>*</span>, opts: <span>*</span>)</span>
     <span class="right-info">
       
       
@@ -564,16 +565,18 @@
     <tbody>
     
     <tr data-ice="property" data-depth="0">
-      <td data-ice="name" class="code" data-depth="0">schema</td>
-      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></td>
+      <td data-ice="name" class="code" data-depth="0">_schema</td>
+      <td data-ice="type" class="code"><span>*</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>{object}</p>
+</td>
     </tr>
 <tr data-ice="property" data-depth="0">
-      <td data-ice="name" class="code" data-depth="0">options</td>
-      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></td>
+      <td data-ice="name" class="code" data-depth="0">opts</td>
+      <td data-ice="type" class="code"><span>*</span></td>
       <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
+      <td data-ice="description"><p>{object}</p>
+</td>
     </tr>
 </tbody>
   </table>
@@ -601,49 +604,6 @@
 <div data-ice="memberDetails"><h2 data-ice="title">Public Members</h2>
 
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-member-isValid">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    
-    <span class="code" data-ice="name">isValid</span><span class="code" data-ice="signature">: <span>*</span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/classes/_schemaValidator.js.html#lineNumber16">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  
-
-  
-
-  <div data-ice="properties">
-</div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="instance-get-jsd">
     <span class="access" data-ice="access">public</span>
     
@@ -651,11 +611,11 @@
     
     
     
-    <span class="code" data-ice="name">jsd</span><span class="code" data-ice="signature">: <span>*</span> | <span><a href="class/src/classes/jsd.js~JSD.html">JSD</a></span> | <span>*</span> | <span><a href="class/src/classes/jsd.js~JSD.html">JSD</a></span>: <span>*</span></span>
+    <span class="code" data-ice="name">jsd</span><span class="code" data-ice="signature">: <span><a href="class/src/classes/jsd.js~JSD.html">JSD</a></span>: <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_schemaValidator.js.html#lineNumber298">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_schemaValidator.js.html#lineNumber360">source</a></span></span>
     </span>
   </h3>
 
@@ -674,7 +634,7 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span>*</span> | <span><a href="class/src/classes/jsd.js~JSD.html">JSD</a></span> | <span>*</span> | <span><a href="class/src/classes/jsd.js~JSD.html">JSD</a></span></td>
+          <td class="return-type code" data-ice="returnType"><span><a href="class/src/classes/jsd.js~JSD.html">JSD</a></span></td>
           
         </tr>
       </tbody>
@@ -712,7 +672,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_schemaValidator.js.html#lineNumber125">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_schemaValidator.js.html#lineNumber138">source</a></span></span>
     </span>
   </h3>
 
@@ -747,95 +707,18 @@
 <div data-ice="methodDetails"><h2 data-ice="title">Public Methods</h2>
 
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-validateSchemaClass">
+  <h3 data-ice="anchor" id="instance-method-validatePolymorphicEntry">
     <span class="access" data-ice="access">public</span>
     
     
     
     
     
-    <span class="code" data-ice="name">validateSchemaClass</span><span class="code" data-ice="signature">(key: <span>*</span>, params: <span>*</span>): <span>true</span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+    <span class="code" data-ice="name">validatePolymorphicEntry</span><span class="code" data-ice="signature">(key: <span>*</span>, params: <span>*</span>, opts: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_schemaValidator.js.html#lineNumber101">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  
-
-  
-
-  <div data-ice="properties"><div data-ice="properties">
-  <h4 data-ice="title">Params:</h4>
-  <table class="params">
-    <thead>
-    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-    
-    <tr data-ice="property" data-depth="0">
-      <td data-ice="name" class="code" data-depth="0">key</td>
-      <td data-ice="type" class="code"><span>*</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
-    </tr>
-<tr data-ice="property" data-depth="0">
-      <td data-ice="name" class="code" data-depth="0">params</td>
-      <td data-ice="type" class="code"><span>*</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
-    </tr>
-</tbody>
-  </table>
-</div>
-</div>
-
-  <div class="return-params" data-ice="returnParams">
-    <h4>Return:</h4>
-    <table>
-      <tbody>
-        <tr>
-          <td class="return-type code" data-ice="returnType"><span>true</span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
-          
-        </tr>
-      </tbody>
-    </table>
-    <div data-ice="returnProperties">
-</div>
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-validateSchemaEntry">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    
-    <span class="code" data-ice="name">validateSchemaEntry</span><span class="code" data-ice="signature">(key: <span>*</span>, params: <span>*</span>, opts: <span>*</span>): <span>true</span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/classes/_schemaValidator.js.html#lineNumber235">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_schemaValidator.js.html#lineNumber337">source</a></span></span>
     </span>
   </h3>
 
@@ -882,7 +765,167 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span>true</span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+          
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-validateSchemaClass">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">validateSchemaClass</span><span class="code" data-ice="signature">(key: <span>*</span>, params: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/classes/_schemaValidator.js.html#lineNumber114">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">key</td>
+      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"></td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">params</td>
+      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"></td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+          
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-validateSchemaEntry">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">validateSchemaEntry</span><span class="code" data-ice="signature">(key: <span>*</span>, params: <span>*</span>, opts: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/classes/_schemaValidator.js.html#lineNumber255">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">key</td>
+      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"></td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">params</td>
+      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"></td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">opts</td>
+      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"></td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
           
         </tr>
       </tbody>
@@ -914,11 +957,11 @@
     
     
     
-    <span class="code" data-ice="name">validateSchemaParam</span><span class="code" data-ice="signature">(key: <span>*</span>, sKey: <span>*</span>, _schemaKeys: <span>*</span>, params: <span>*</span>): <span>true</span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+    <span class="code" data-ice="name">validateSchemaParam</span><span class="code" data-ice="signature">(key: <span>*</span>, sKey: <span>*</span>, _schemaKeys: <span>*</span>, params: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_schemaValidator.js.html#lineNumber172">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_schemaValidator.js.html#lineNumber185">source</a></span></span>
     </span>
   </h3>
 
@@ -971,7 +1014,7 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span>true</span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
           
         </tr>
       </tbody>
@@ -1007,7 +1050,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_schemaValidator.js.html#lineNumber138">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_schemaValidator.js.html#lineNumber151">source</a></span></span>
     </span>
   </h3>
 
@@ -1090,7 +1133,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_schemaValidator.js.html#lineNumber25">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_schemaValidator.js.html#lineNumber38">source</a></span></span>
     </span>
   </h3>
 
@@ -1163,11 +1206,11 @@
     
     
     
-    <span class="code" data-ice="name">validateUntypedMembers</span><span class="code" data-ice="signature">(key: <span>*</span>, params: <span>*</span>): <span>true</span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+    <span class="code" data-ice="name">validateUntypedMembers</span><span class="code" data-ice="signature">(key: <span>*</span>, params: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_schemaValidator.js.html#lineNumber58">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_schemaValidator.js.html#lineNumber71">source</a></span></span>
     </span>
   </h3>
 
@@ -1208,7 +1251,7 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span>true</span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
           
         </tr>
       </tbody>
