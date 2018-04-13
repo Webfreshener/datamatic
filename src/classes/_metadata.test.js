@@ -4,10 +4,6 @@ import {JSD} from "./jsd";
 describe("MetaData Units", () => {
     let _md = null;
     describe( "SubClass Validation", ()=> {
-        it( "should not accept objects that are not subclasses of Schema or Set", function() {
-            const _e = "new MetaData() argument 1 requires subclass Schema or Set. Was subclass of '<Object>'";
-            expect(() => _md = new MetaData({}, {})).toThrow(_e);
-        });
         it( "should accept objects that are subclasses of Schema", function() {
             let _ = new Schema({extensible: true}, null, new JSD());
             !expect(() => _md = new MetaData(_, {_path: "", _root: _})).not.toThrow(
