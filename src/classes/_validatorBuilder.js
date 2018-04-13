@@ -12,7 +12,6 @@ import {JSD} from "./jsd";
  * @type {RegExp}
  */
 export const rxRx = /\/((?![*+?])(?:[^\r\n\[/\\]|\\.|\[(?:[^\r\n\]\\]|\\.)*\])+)\/((?:g(?:im?|mi?)?|i(?:gm?|mg?)?|m(?:gi?|ig?)?)?)/;
-
 /**
  * @private
  */
@@ -86,10 +85,16 @@ export class ValidatorBuilder {
         let _matches = this.list().filter((vItm) => rx.test(vItm));
 
         // todo: work in a more elegant solution
+
         // if no matches are found, we attempt to match against nested wildcards...
         if (!_matches.length) {
-            let wPath = path.replace(/([^\.]+\.?)/g, "*.").replace(/^(.*)\.+$/, "$1");
+            let wPath =  wf.Str.regexEscape(path.replace(/([^\.]+\.?)/g, "*.").replace(/^(.*)\.+$/, "$1"));
             rx = new RegExp(`${wPath}\\.?(${key}+|\\*|${rxRx.toString().replace(/\/(.*)+\//g, '$1')})`);
+            _matches = this.list().filter((vItm) => rx.test(vItm));
+        }
+        // and lastly, we try polymorphics
+        if (!_matches.length) {
+            let rx = new RegExp(`${path}\\.polymorphic\\.\\d?\\.?(${key}+|\\*?|${rxRx.toString().replace(/\/(.*)+\//g, '$1')})`);
             _matches = this.list().filter((vItm) => rx.test(vItm));
         }
 
