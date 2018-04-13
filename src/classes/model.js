@@ -82,7 +82,7 @@ export class Model {
 
         // creates an extensible object to hold our unsubscribe method
         const _subs = class {};
-
+        const _subRefs = [];
         // references the ObserverBuilder for the path
         let _o = this.observerBuilder.get(path);
 
@@ -93,24 +93,24 @@ export class Model {
 
         // adds onNext handler if `next` prop is defined
         if (func.hasOwnProperty("next")) {
-            _o.onNext.subscribe({next: func.next});
+            _subRefs.push(_o.onNext.subscribe({next: func.next}));
         }
 
         // adds onError handler if `error` prop is defined
         if (func.hasOwnProperty("error")) {
-            _o.onError.subscribe({next: func.error});
+            _subRefs.push(_o.onError.subscribe({next: func.error}));
         }
 
         // adds onComplete handler if `complete` prop is defined
         if (func.hasOwnProperty("complete")) {
-            _o.onComplete.subscribe({next: func.complete});
+            _subRefs.push(_o.onComplete.subscribe({next: func.complete}));
         }
 
         // adds unsubscribe to the Proto object
         _subs.prototype.unsubscribe = () => {
-            _o.onNext.unsubscribe();
-            _o.onError.unsubscribe();
-            _o.onComplete.unsubscribe();
+            _subRefs.forEach((sub) => {
+                sub.unsubscribe();
+            });
         };
         return new _subs();
     }

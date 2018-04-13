@@ -85,6 +85,14 @@ export class ValidatorBuilder {
         // filter paths by Regexp.test
         let _matches = this.list().filter((vItm) => rx.test(vItm));
 
+        // todo: work in a more elegant solution
+        // if no matches are found, we attempt to match against nested wildcards...
+        if (!_matches.length) {
+            let wPath = path.replace(/([^\.]+\.?)/g, "*.").replace(/^(.*)\.+$/, "$1");
+            rx = new RegExp(`${wPath}\\.?(${key}+|\\*|${rxRx.toString().replace(/\/(.*)+\//g, '$1')})`);
+            _matches = this.list().filter((vItm) => rx.test(vItm));
+        }
+
         // attempts to find an exact string match in the filtered results
         let _exactMatch = _matches.find((vItm) => {
             let _path = path !== "" ? `${path}\\.${key}` : `${key}`;

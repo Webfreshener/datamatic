@@ -219,4 +219,38 @@ describe("Schema RXJS Test Suite", () => {
             };
         });
     });
+
+    describe("Rxjs Unsubscribe", () => {
+        it("should Unsubscribe from notifications", (done) => {
+            const _schema = new JSD({"*": {type: "*"}});
+            let cnt = 0;
+            const _h1 = {
+                next: (model) => {
+                    if (++cnt < 2) {
+                        _sub.unsubscribe();
+                        _schema.document.subscribe(_h2);
+                        _schema.document.set("valueD", 4);
+                    } else {
+                        done("should not have recieved notification");
+                    }
+                },
+                error: (e) => {
+                    done(`${e}`);
+                }
+            };
+
+            const _h2 = {
+                next: (model) => {
+                        done();
+                },
+            };
+
+            const _sub = _schema.document.subscribe(_h1);
+            _schema.document.model = {
+                valueA: 1,
+                valueB: 2,
+                valueC: 3
+            };
+        });
+    })
 });

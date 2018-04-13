@@ -160,11 +160,10 @@ export class SchemaHelpers {
     validate(key, value) {
         const _vBuilder = this._ref.validatorBuilder;
         let msg = `unable to resolve path for "${key}"`;
-        let _list = `${JSON.stringify(_vBuilders.get(this._ref.jsd).list())}`;
         _vBuilder.resolvePath(this._ref.validationPath, key)
             .some((path) => {
                 msg = this._ref.validatorBuilder.exec(path, value);
-                return (msg);
+                return (msg === true);
             });
         return msg;
     }

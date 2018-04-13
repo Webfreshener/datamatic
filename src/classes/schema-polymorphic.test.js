@@ -17,7 +17,8 @@ describe("Schema Polymorphism Tests", () => {
             };
 
             let _f = {
-                next: () => {
+                next: (val) => {
+                    console.log(`val: ${val}`);
                     done("did not fail badParam as expected");
                 },
                 error: (e) => {

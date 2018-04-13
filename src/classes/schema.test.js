@@ -112,10 +112,9 @@ describe("Schema Class Test Suite", function () {
 
     describe("Wildcards", function () {
         let _jsd;
-        it("should initialize from wildcard schema fixture", () => {
+        beforeEach(() => {
             let _s = require("../../fixtures/wildcard.schema.json");
             _jsd = new JSD(_s);
-            expect(_jsd.document instanceof Schema).toBe(true);
         });
 
         it("should validate arbitrary wildcard elements", (done) => {
@@ -125,7 +124,6 @@ describe("Schema Class Test Suite", function () {
                     done("should have dispatched an error");
                 },
                 error: (e) => {
-                    console.log(e)
                     _sub.unsubscribe();
                     done();
                 }
@@ -139,6 +137,30 @@ describe("Schema Class Test Suite", function () {
                             foo: "bar"
                         },
                         name: 123,
+                    }
+                }
+            };
+        });
+
+        it("should validate nested wildcard elements", (done) => {
+            const _h = {
+                next: (o) => {
+                    _sub.unsubscribe();
+                    done();
+                },
+                error: (e) => {
+                    console.log(e);
+                    _sub.unsubscribe();
+                    done(`${e}`);
+                }
+            };
+
+            let _sub = _jsd.document.subscribe(_h);
+            _jsd.document.model = {
+                foo: {
+                    bar: {
+                        active: true,
+                        name: "Sam",
                     }
                 }
             };
