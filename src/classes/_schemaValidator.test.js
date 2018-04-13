@@ -216,9 +216,10 @@ describe("SchemaValidator Class Tests", () => {
             };
             let _jsd = new JSD(_s);
             let list = _vBuilders.get(_jsd).list();
-            expect(list.length).toBe(2);
+            expect(list.length).toBe(3);
             expect(list[0]).toBe("subObj");
-            expect(list[1]).toBe("subObj.subEl.*.polymorphic.0");
+            expect(list[1]).toBe("subObj.subEl");
+            expect(list[2]).toBe("subObj.subEl.*.polymorphic.0");
         });
     });
     describe("Polymorphic Elements", () => {
