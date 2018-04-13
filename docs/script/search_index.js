@@ -624,6 +624,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/classes/_schemahelpers.js~schemahelpers#getschemaelement",
+    "class/src/classes/_schemaHelpers.js~SchemaHelpers.html#instance-method-getSchemaElement",
+    "src/classes/_schemaHelpers.js~SchemaHelpers#getSchemaElement",
+    "method"
+  ],
+  [
     "src/classes/_schemahelpers.js~schemahelpers#referencerequiredelements",
     "class/src/classes/_schemaHelpers.js~SchemaHelpers.html#instance-method-referenceRequiredElements",
     "src/classes/_schemaHelpers.js~SchemaHelpers#referenceRequiredElements",
@@ -960,6 +966,12 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
+    "src/classes/model.js~model#options",
+    "class/src/classes/model.js~Model.html#instance-get-options",
+    "src/classes/model.js~Model#options",
+    "member"
+  ],
+  [
     "src/classes/model.js~model#parent",
     "class/src/classes/model.js~Model.html#instance-get-parent",
     "src/classes/model.js~Model#parent",
@@ -1075,20 +1087,14 @@ window.esdocSearchIndex = [
   ],
   [
     "src/classes/schema.js~schema#model",
-    "class/src/classes/schema.js~Schema.html#instance-set-model",
-    "src/classes/schema.js~Schema#model",
-    "member"
-  ],
-  [
-    "src/classes/schema.js~schema#model",
     "class/src/classes/schema.js~Schema.html#instance-get-model",
     "src/classes/schema.js~Schema#model",
     "member"
   ],
   [
-    "src/classes/schema.js~schema#options",
-    "class/src/classes/schema.js~Schema.html#instance-get-options",
-    "src/classes/schema.js~Schema#options",
+    "src/classes/schema.js~schema#model",
+    "class/src/classes/schema.js~Schema.html#instance-set-model",
+    "src/classes/schema.js~Schema#model",
     "member"
   ],
   [
@@ -1171,13 +1177,13 @@ window.esdocSearchIndex = [
   ],
   [
     "src/classes/set.js~set#model",
-    "class/src/classes/set.js~Set.html#instance-get-model",
+    "class/src/classes/set.js~Set.html#instance-set-model",
     "src/classes/set.js~Set#model",
     "member"
   ],
   [
     "src/classes/set.js~set#model",
-    "class/src/classes/set.js~Set.html#instance-set-model",
+    "class/src/classes/set.js~Set.html#instance-get-model",
     "src/classes/set.js~Set#model",
     "member"
   ],

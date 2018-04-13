@@ -69,10 +69,11 @@
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/**
  * @private
  */
-import {_exists, _validators,  wf} from &quot;./_references&quot;;
+import {_exists, _validators, wf} from &quot;./_references&quot;;
 import {remapPolypath} from &quot;./utils&quot;;
 import {Validator} from &quot;./_validators&quot;
 import {JSD} from &quot;./jsd&quot;;
+
 /**
  * Regex that matches other Regex
  * todo: look into IDEA&apos;s &quot;redundant escape character&quot; warning
@@ -139,16 +140,33 @@ export class ValidatorBuilder {
      * @returns {string[]}
      */
     resolvePath(path, key) {
+        key = `${key}`.replace(new RegExp(`^${wf.Str.regexEscape(path)}\\.(.*)`), &quot;$1&quot;);
         // escapes regex special chars on `path` string
         path = wf.Str.regexEscape(`${path}`);
+
         // escapes regex special chars on `key` string
         key = wf.Str.regexEscape(`${key}`);
+
         // matches path + key OR wildcard OR actual regexp as key
         let rx = new RegExp(`${path}\\.?(${key}+|\\*|${rxRx.toString().replace(/\/(.*)+\//g, &apos;$1&apos;)})`);
+
         // filter paths by Regexp.test
         let _matches = this.list().filter((vItm) =&gt; rx.test(vItm));
+
+        // todo: work in a more elegant solution
+        // if no matches are found, we attempt to match against nested wildcards...
+        if (!_matches.length) {
+            let wPath = path.replace(/([^\.]+\.?)/g, &quot;*.&quot;).replace(/^(.*)\.+$/, &quot;$1&quot;);
+            rx = new RegExp(`${wPath}\\.?(${key}+|\\*|${rxRx.toString().replace(/\/(.*)+\//g, &apos;$1&apos;)})`);
+            _matches = this.list().filter((vItm) =&gt; rx.test(vItm));
+        }
+
         // attempts to find an exact string match in the filtered results
-        let _exactMatch = _matches.find((vItm) =&gt; wf.Str.regexEscape(vItm) === `${path}\\.${key}`);
+        let _exactMatch = _matches.find((vItm) =&gt; {
+            let _path = path !== &quot;&quot; ? `${path}\\.${key}` : `${key}`;
+            return wf.Str.regexEscape(vItm) === _path;
+        });
+
         return _exactMatch ? [_exactMatch] : _matches;
     }
 
@@ -160,18 +178,20 @@ export class ValidatorBuilder {
      */
     create(ref, path) {
         const formatSig = (sig) =&gt; {
+            // todo: remove condition for polymorphic and refactor code below
             return !sig ? [] : sig.hasOwnProperty(&quot;polymorphic&quot;) ?
                 sig.polymorphic : (Array.isArray(sig) ? sig : [sig]);
         };
-        let _signatures = formatSig(ref);
-        let _v = _validators.get(this);
-        let _functs = [];
 
         const createFuncts = (_sigs) =&gt; {
-            _sigs = formatSig(_sigs);
+            if (!_sigs.hasOwnProperty(&quot;type&quot;) || _sigs.type !== &quot;Array&quot;) {
+                _sigs = formatSig(_sigs);
+            } else {
+                _sigs = [_sigs];
+            }
             _sigs.forEach(sig =&gt; {
                 if (typeof sig !== &quot;object&quot;) {
-                    _functs.push(new Validator[&quot;Default&quot;](path, sig, this.$jsd ));
+                    _functs.push(new Validator[&quot;Default&quot;](path, sig, this.$jsd));
                 }
                 if (sig.hasOwnProperty(&quot;*&quot;)) {
                     createFuncts(sig[&quot;*&quot;].elements || sig[&quot;*&quot;].polymorphic || sig[&quot;*&quot;]);
@@ -190,7 +210,16 @@ export class ValidatorBuilder {
                 }
             });
         };
-        createFuncts(_signatures);
+
+        let _v = _validators.get(this);
+        let _functs = [];
+
+        if (ref.hasOwnProperty(&quot;type&quot;) &amp;&amp; ref.type === &quot;Array&quot;) {
+            createFuncts(ref);
+        } else {
+            createFuncts(formatSig(ref));
+        }
+
         // evaluates all defined functions, returning true or last error message
         const _f = (value) =&gt; {
             let _result;

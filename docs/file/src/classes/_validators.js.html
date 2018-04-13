@@ -199,14 +199,6 @@ Validator.Array = class Arr extends BaseValidator {
         if (!Array.isArray(value)) {
             return `type of array was expected for &apos;${this.path}&apos;. type was &apos;&lt;${typeof value}&gt;&apos;`;
         }
-        for (let __ in value) {
-            if (value.hasOwnProperty(__)) {
-                let e = this.call(this.path, value[__]);
-                if ((typeof e) === &quot;string&quot;) {
-                    return e;
-                }
-            }
-        }
         return true;
     }
 };

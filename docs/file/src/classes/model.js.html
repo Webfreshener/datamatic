@@ -68,7 +68,8 @@
 <div class="content" data-ice="content"><h1 data-ice="title">src/classes/model.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {
     _mdRef, _oBuilders, _vBuilders, _exists,
-    _validPaths, _object, _schemaSignatures
+    _validPaths, _object, _schemaSignatures,
+    _schemaOptions
 } from &quot;./_references&quot;;
 import {JSD} from &quot;./jsd&quot;;
 import {remapPolypath} from &quot;./utils&quot;;
@@ -150,7 +151,7 @@ export class Model {
 
         // creates an extensible object to hold our unsubscribe method
         const _subs = class {};
-
+        const _subRefs = [];
         // references the ObserverBuilder for the path
         let _o = this.observerBuilder.get(path);
 
@@ -161,24 +162,24 @@ export class Model {
 
         // adds onNext handler if `next` prop is defined
         if (func.hasOwnProperty(&quot;next&quot;)) {
-            _o.onNext.subscribe({next: func.next});
+            _subRefs.push(_o.onNext.subscribe({next: func.next}));
         }
 
         // adds onError handler if `error` prop is defined
         if (func.hasOwnProperty(&quot;error&quot;)) {
-            _o.onError.subscribe({next: func.error});
+            _subRefs.push(_o.onError.subscribe({next: func.error}));
         }
 
         // adds onComplete handler if `complete` prop is defined
         if (func.hasOwnProperty(&quot;complete&quot;)) {
-            _o.onComplete.subscribe({next: func.complete});
+            _subRefs.push(_o.onComplete.subscribe({next: func.complete}));
         }
 
         // adds unsubscribe to the Proto object
         _subs.prototype.unsubscribe = () =&gt; {
-            _o.onNext.unsubscribe();
-            _o.onError.unsubscribe();
-            _o.onComplete.unsubscribe();
+            _subRefs.forEach((sub) =&gt; {
+                sub.unsubscribe();
+            });
         };
         return new _subs();
     }
@@ -286,6 +287,13 @@ export class Model {
      */
     get jsd() {
         return _mdRef.get(this).jsd;
+    }
+
+    /**
+     * get options (if any) for this model&quot;s schema
+     */
+    get options() {
+        return _schemaOptions.get(this);
     }
 
     /**

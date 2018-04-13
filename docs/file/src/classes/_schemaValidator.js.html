@@ -238,6 +238,7 @@ export class SchemaValidator {
         if (typeof eMsg === &quot;string&quot;) {
             return eMsg;
         }
+        _vBuilders.get(this.jsd).create(params, key);
         return true;
     }
 
@@ -257,7 +258,7 @@ export class SchemaValidator {
             !_schemaOptions.get(this).extensible) {
             return `schema element &apos;${key}.${sKey}&apos; is not allowed`;
         }
-        // returns result of Params String Valdiation
+        // returns result of Params String Validation
         if (typeof params[sKey] === &quot;string&quot;) {
             let eMsg = this.validateSchemaParamString(key, sKey, params);
             if (typeof eMsg === &quot;string&quot;) {
@@ -342,25 +343,28 @@ export class SchemaValidator {
                 return this.validateUntypedMembers(key, params);
             }
             // handles Classes/Functions
-            if ((this.jsd.getClass(params.type)) == null) {
+            if ((this.jsd.getClass(params.type)) === null) {
                 return this.validateSchemaClass(key, params);
             }
+
             if (params.type === &quot;Array&quot;) {
-                key = `${key}.*.polymorphic`;
-                if (params.hasOwnProperty(&quot;elements&quot;) &amp;&amp;
-                    !Array.isArray(params.elements)) {
-                    params.elements = [params.elements];
+                // Arrays are dealt with as polymorphic elements internally
+                if (params.hasOwnProperty(&quot;elements&quot;)) {
+                    params.polymorphic = Array.isArray(params.elements) ?
+                        [].concat(params.elements) : [Object.assign({}, params.elements)];
+                    delete params.elements;
                 }
-                else if (params.hasOwnProperty(&quot;polymorphic&quot;)) {
+                _vBuilders.get(this.jsd).create(params, key);
+                key = `${key}.*.polymorphic`;
+
+                if (params.hasOwnProperty(&quot;polymorphic&quot;)) {
+                    if (!Array.isArray(params.polymorphic)) {
+                        params.polymorphic = [params.elements];
+                    }
                     return this.validatePolymorphicEntry(key, params.polymorphic);
                 }
             }
-            if (Array.isArray(params.elements)) {
-                params.polymorphic = [].concat(params.elements);
-                delete params.elements;
 
-                return this.validatePolymorphicEntry(key, params.polymorphic);
-            }
             // handles child elements
             for (let sKey of Object.keys(params)) {
                 let __ = this.validateSchemaParam(key, sKey, _schemaKeys, params);
@@ -414,7 +418,6 @@ export class SchemaValidator {
             return e;
         }
 
-        // should not have gotten here -- so flag it as error
         return true;
     }
 

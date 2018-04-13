@@ -69,7 +69,7 @@
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {
     _mdRef, _object, _schemaOptions,
     _schemaHelpers, _schemaSignatures,
-    _vPaths
+    _vPaths, _validPaths
 } from &quot;./_references&quot;;
 import {SchemaValidator} from &quot;./_schemaValidator&quot;;
 import {JSD} from &quot;./jsd&quot;;
@@ -95,16 +95,6 @@ export class Set extends Model {
 
         if (!_signature.hasOwnProperty(&quot;type&quot;)) {
             _signature.type = &quot;Array&quot;;
-        }
-        // attempts to validate provided `schema` entries
-        let _sV = new SchemaValidator(_signature, Object.assign(this.options || {}, {
-            jsd: _mdRef.get(this).jsd,
-        }));
-
-        let eMsg;
-        // throws error if error message returned
-        if (typeof (eMsg = _sV.isValid) === &quot;string&quot;) {
-            throw eMsg;
         }
 
         _vPaths.set(this, `${this.path}.*.polymorphic`);
@@ -143,8 +133,8 @@ export class Set extends Model {
                             this.observerBuilder.next(this.path, this);
                         }
                     },
-                    error: (e) =&gt; {
-                        this.observerBuilder.error(this.path, e);
+                    error: () =&gt; {
+                        // this is a no-op, we will dispatch error later in the setter pipe
                     }
                 });
                 value.forEach((val) =&gt; {
@@ -194,7 +184,8 @@ export class Set extends Model {
                 }
 
                 let _oDel = _observerDelegates.get(this);
-                const sendErr = () =&gt; {
+                const sendErr = (msg) =&gt; {
+                    _validPaths.get(this.jsd)[this.path] = msg;
                     if (_oDel) {
                         _oDel.error(msg);
                     } else {
@@ -204,11 +195,10 @@ export class Set extends Model {
                 let keyPath = `${_vPaths.get(this)}`.replace(/^\.?(.*)$/, &quot;$1&quot;);
                 let cnt = 0;
                 let msg = `unable to validate &quot;${this.path}&quot;`;
-                this.schema.polymorphic.some(() =&gt; {
+                (this.schema.polymorphic || this.schema).some(() =&gt; {
                     msg = this.validatorBuilder.exec(`${keyPath}.${cnt++}`, value);
                     return (msg === true);
                 });
-
                 // if error message is present we do error handling and return
                 if ((typeof msg) === &quot;string&quot;) {
                     sendErr(msg);
@@ -221,10 +211,10 @@ export class Set extends Model {
                     // note we use the last value of `cnt` and walk back one iteration
                     value = _sH.setChildObject(`${keyPath}.${cnt - 1}`, value);
                 }
-
                 t[idx] = value;
                 msg = this.validate();
                 if ((typeof msg) === &quot;boolean&quot;) {
+                    _validPaths.get(this.jsd)[this.path] = true;
                     if (_oDel) {
                         _oDel.next(this);
                     } else {

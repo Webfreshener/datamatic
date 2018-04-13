@@ -81,6 +81,7 @@ import {ObserverBuilder} from &quot;./_observerBuilder&quot;;
 import {ValidatorBuilder} from &quot;./_validatorBuilder&quot;;
 import {Schema} from &quot;./schema&quot;;
 import {Set} from &quot;./set&quot;;
+import {SchemaValidator} from &quot;./_schemaValidator&quot;;
 
 const _documents = new WeakMap();
 
@@ -94,7 +95,7 @@ export class JSD {
      * @param schema
      * @param options
      */
-    constructor(schema = JSD.defaults, options = {extensible: false, debug: false}) {
+    constructor(schema = JSD.defaults, options = Schema.defaultOption) {
         _kinds.set(this, {
             &quot;Array&quot;: Array,
             &quot;ArrayBuffer&quot;: ArrayBuffer,
@@ -108,6 +109,10 @@ export class JSD {
         });
 
 
+        const vBuilder = new ValidatorBuilder(this);
+        _vBuilders.set(this, vBuilder);
+        _validPaths.set(this, {});
+        _oBuilders.set(this, new ObserverBuilder());
 
         let _useSet = false;
 
@@ -118,22 +123,18 @@ export class JSD {
             schema = {&quot;*&quot;: {polymorphic: Array.isArray(schema) ? schema : [schema]}};
         }
 
-        // // attempts to validate provided `schema` entries
-        // let _sV = new SchemaValidator(schema, Object.assign({}, this.options, {
-        //     jsd: this,
-        // }));
-        //
-        // let eMsg;
-        // // throws error if error message returned
-        // if (typeof (eMsg = _sV.isValid) === &quot;string&quot;) {
-        //     throw eMsg;
-        // }
+        // attempts to validate provided `schema` entries
+        let _sV = new SchemaValidator(schema, Object.assign({}, this.options, {
+            jsd: this,
+        }));
 
-        const vBuilder = new ValidatorBuilder(this);
-        _vBuilders.set(this, vBuilder);
-        _validPaths.set(this, {});
-        _oBuilders.set(this, new ObserverBuilder());
-        _documents.set(this, new (!_useSet ? Schema : Set)(schema, options || null, this));
+        let eMsg;
+        // throws error if error message returned
+        if (typeof (eMsg = _sV.isValid) === &quot;string&quot;) {
+            throw eMsg;
+        }
+
+        _documents.set(this, new (!_useSet ? Schema : Set)(schema, options, this));
     }
 
     /**

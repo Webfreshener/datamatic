@@ -66,11 +66,12 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/classes/_schemaHelpers.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {_exists, _mdRef, _required_elements} from &quot;./_references&quot;;
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {_exists, _mdRef, _required_elements, _vBuilders} from &quot;./_references&quot;;
 import {ensureRequiredFields} from &quot;./utils&quot;;
 import {MetaData} from &quot;./_metaData&quot;;
 import {Schema} from &quot;./schema&quot;;
 import {Set} from &quot;./set&quot;;
+import {JSD} from &quot;./jsd&quot;;
 
 /**
  * @private
@@ -101,7 +102,7 @@ export class SchemaHelpers {
                 if (_signature[_sigEl].hasOwnProperty(&quot;required&quot;) &amp;&amp;
                     _signature[_sigEl].required === true) {
                     // -- adds required element to list
-                    _required_elements.get(this).splice(-1, 0, _sigEl);
+                    _required_elements.get(this._ref).splice(-1, 0, _sigEl);
                 }
             }
             // freezes req&apos;d elements object to prevent modification
@@ -149,6 +150,31 @@ export class SchemaHelpers {
     }
 
     /**
+     * retrieves child element from Model signature
+     * @param key {string) key for Model&apos;s Child element
+     * @returns {Object|Boolean}
+     */
+    getSchemaElement(key) {
+        const _schemaRef = this._ref.schema;
+        if (key === &quot;polymorphic&quot;) {
+            return _schemaRef.polymorphic[0];// {&quot;*&quot;: {type: &quot;Array&quot;, polymorphic: _schemaRef.polymorphic}};
+        }
+        if (_schemaRef.hasOwnProperty(key)) {
+            return _schemaRef[key];
+        }
+
+        if (_schemaRef.hasOwnProperty(&quot;elements&quot;)) {
+            return _schemaRef.elements[key] || _schemaRef.elements;
+        }
+
+        if (_schemaRef.hasOwnProperty(&quot;polymorphic&quot;)) {
+            return { type: &quot;Array&quot;, polymorphic: _schemaRef.polymorphic}; // _schemaRef.polymorphic[key] || _schemaRef.polymorphic;
+        }
+        const _opts = this._ref.options || Schema.defaultOptions;
+        return _opts.extensible ? JSD.defaults : false;
+    };
+
+    /**
      *
      * @param key
      * @param value
@@ -165,26 +191,27 @@ export class SchemaHelpers {
         }, metaData || {});
         let _md = new MetaData(this._ref, _d);
         // tests for nested sub-elements with partial paths as keys
-        if (key.match(/.*\.+.*/) !== null) {
+        if (key.match(/\.?polymorphic\.\d$/) !== null) {
+                key = &quot;polymorphic&quot;;
+        }
+        else if (key.match(/.*\.+.*/) !== null) {
             key = key.split(&quot;.&quot;).pop();
         }
         // tests if value is not Array
-        let _kS = this._ref.schema[key];
-        if (!Array.isArray(_kS) &amp;&amp; !Array.isArray(value)) {
-            let _schemaDef = this._ref.signature[key.split(&quot;.&quot;).pop()] ||
-                this._ref.signature[&quot;*&quot;] ||
-                this._ref.signature;
+        let _kS =  this.getSchemaElement(key);
+        if (_kS.type !== &quot;Array&quot; &amp;&amp; !Array.isArray(_kS) &amp;&amp; !Array.isArray(value)) {
+            let _schemaDef = (_kS.hasOwnProperty(&quot;elements&quot;) ? _kS.elements[key.split(&quot;.&quot;).pop()] : false) ||
+                _kS[&quot;*&quot;] || _kS;
             try {
                 _s = new Schema(_schemaDef, opts, _md);
             } catch (e) {
+
                 return e.message;
             }
         } else {
             try {
-                let sig = this._ref.signature[key] ||
-                    this._ref.signature.elements ||
-                    this._ref.signature;
-                _s = new Set(sig, opts, _md);
+                let _sig = this._ref.signature[key].polymorphic || this._ref.signature[key];
+                _s = new Set({&quot;*&quot;: _sig}, opts, _md);
             } catch (e) {
                 return e;
             }
@@ -201,12 +228,10 @@ export class SchemaHelpers {
     validate(key, value) {
         const _vBuilder = this._ref.validatorBuilder;
         let msg = `unable to resolve path for &quot;${key}&quot;`;
-        console.log(`validate: ${_vBuilder.resolvePath(this._ref.validationPath, key)}`);
         _vBuilder.resolvePath(this._ref.validationPath, key)
             .some((path) =&gt; {
-                console.log(&quot;exec called via _sH.validate&quot;);
                 msg = this._ref.validatorBuilder.exec(path, value);
-                return (msg);
+                return (msg === true);
             });
         return msg;
     }

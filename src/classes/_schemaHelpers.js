@@ -77,9 +77,7 @@ export class SchemaHelpers {
             typeof _s !== "object") {
             return `'${key}' was invalid`;
         }
-        console.log(value);
         _s.model = value;
-        console.log(`_s: ${JSON.stringify(_s)}`);
         return _s.model;
     }
 
