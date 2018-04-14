@@ -1,7 +1,10 @@
 const path = require("path");
 const webpack = require("webpack");
-
+const webpackRxjsExternals = require("webpack-rxjs-externals");
 module.exports = [{
+    externals: [
+        webpackRxjsExternals(),
+    ],
 	output: {
         path: path.join(__dirname, "dist"),
         filename: 'jsd.js',
@@ -20,6 +23,9 @@ module.exports = [{
         ]
     },
 }, {
+    externals: [
+        webpackRxjsExternals(),
+    ],
     output: {
         path: path.join(__dirname, "dist"),
         filename: 'jsd.node.js',
