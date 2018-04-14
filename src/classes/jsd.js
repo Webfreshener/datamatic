@@ -247,3 +247,51 @@ export class JSD {
         };
     }
 }
+
+/**
+ * AJV Options Config in it's entirely for reference
+ * only JSD specific option changes are enabled
+ * @type {{extendRefs: string, useDefaults: boolean}}
+ * @private
+ */
+const _ajvOptions = {
+    // // validation and reporting options:
+    // $data:            false,
+    // allErrors:        false,
+    // verbose:          false,
+    // $comment:         false, // NEW in Ajv version 6.0
+    // jsonPointers:     false,
+    // uniqueItems:      true,
+    // unicode:          true,
+    // format:           'fast',
+    // formats:          {},
+    // unknownFormats:   true,
+    // schemas:          {},
+    // logger:           undefined,
+    // referenced schema options:
+    // schemaId:         '$id',
+    // missingRefs:      true,
+    extendRefs:       'fail', // default 'ignore'
+    // loadSchema:       undefined, // function(uri: string): Promise {}
+    // options to modify validated data:
+    // removeAdditional: false,
+    useDefaults:      true,
+    // coerceTypes:      false,
+    // asynchronous validation options:
+    // transpile:        undefined, // requires ajv-async package
+    // advanced options:
+    // meta:             true,
+    // validateSchema:   true,
+    // addUsedSchema:    true,
+    // inlineRefs:       true,
+    // passContext:      false,
+    // loopRequired:     Infinity,
+    // ownProperties:    false,
+    // multipleOfPrecision: false,
+    // errorDataPath:    'object', // deprecated
+    // messages:         true,
+    // sourceCode:       false,
+    // processCode:      undefined, // function (str: string): string {}
+    // cache:            new Cache,
+    // serialize:        undefined
+};
