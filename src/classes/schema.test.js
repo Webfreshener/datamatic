@@ -8,10 +8,12 @@ describe("Schema Class Test Suite", function () {
     beforeEach(() => {
         this.jsd = new JSD(jsonSchema);
     });
-    describe("LifeCycle: Create", () => {
+    describe("LifeCycle: Creation", () => {
         it("should initialize a schema and and a schema object", () => {
             expect(this.jsd.document).toBeDefined();
             expect(this.jsd.document instanceof Schema).toBe(true);
+            expect(this.jsd.document.model.$ref).toBeDefined();
+            expect(this.jsd.document.model.$ref instanceof Schema).toBe(true);
         });
         it("should not initialize a invalid schema and schema object", () => {
             let badSchema = Object.assign({}, jsonSchema, {
@@ -26,10 +28,22 @@ describe("Schema Class Test Suite", function () {
     });
     describe("LifeCycle: Population", () => {
         it("should populate with valid data and make that data accessible", () => {
-
+            const _d = {
+                name: "Ed Testy",
+                age: 99,
+                active: true,
+            };
+            this.jsd.document.model = _d;
+            expect(deepEqual(this.jsd.document.model, _d)).toBe(true);
         });
         it("should reject invalid data and leave model pristine", () => {
-
+            const _d = {
+                name: "Ed Testy",
+                age: 99,
+                active: "123",
+            };
+            this.jsd.document.model = _d;
+            expect(deepEqual(this.jsd.document.model, {})).toBe(true);
         });
     });
 });

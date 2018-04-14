@@ -227,22 +227,6 @@ export class Model {
     }
 
     /**
-     * getter for ValidatorBuilder reference
-     * @returns {ValidatorBuilder}
-     */
-    get validatorBuilder() {
-        return _vBuilders.get(this.jsd);
-    }
-
-    /**
-     * getter for ObserverBuilder reference
-     * @returns {ObserverBuilder}
-     */
-    get observerBuilder() {
-        return _oBuilders.get(this.jsd);
-    }
-
-    /**
      * applies Object.freeze to model and triggers complete notification
      * @returns {Model}
      */
@@ -268,7 +252,7 @@ export class Model {
      * @return {string}
      */
     get validationPath() {
-        return `#/${this.path.replace(/\./, '/')}`;
+        return `root#/${this.path.replace(/\./, '/properties/')}`;
     }
 
     /**

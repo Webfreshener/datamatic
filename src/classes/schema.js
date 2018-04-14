@@ -12,10 +12,12 @@ import {Model} from "./model";
  * @return {boolean}
  */
 const refValidation = (model, value) => {
+    const path = (model instanceof Model) ? model.validationPath : `${model}`;
+    const _v = _validators.get(model.jsd);
     // tests data against schema for validation
-    if (!_validators.get(model.jsd).validate(model.path, value)) {
+    if (!_v.exec(path, value)) {
         // in case of error, update Observers and return false
-        _oBuilders.get(model.jsd).error(this.path, e);
+        _oBuilders.get(model.jsd).error(model.path, _v.errors);
         return false;
     }
     return true;
@@ -59,7 +61,7 @@ export class Schema extends Model {
                 if (typeof key === "object") {
                     const e = _sH.setObject(key);
                     if (typeof e === "string") {
-                        this.observerBuilder.error(this.path, e);
+                        _oBuilders.get(this.jsd).error(this.path, e);
                         return false;
                     }
                     _validPaths.get(this.jsd)[this.path] = true;
@@ -71,7 +73,7 @@ export class Schema extends Model {
                     value = _sH.setChildObject(key, value);
                     if ((typeof value) === "string") {
                         _validPaths.get(this.jsd)[this.path] = value;
-                        this.observerBuilder.error(this.path, value);
+                        _oBuilders.get(this.jsd).error(this.path, value);
                         return false;
                     }
                 }
@@ -133,7 +135,7 @@ export class Schema extends Model {
                     this.model[k] = value[k];
                 } catch (e) {
                     _validPaths.get(this.jsd)[this.path] = e;
-                    this.observerBuilder.error(this.path, e);
+                    _oBuilders.get(this.jsd).error(this.path, e);
                     return false;
                 }
             });
@@ -142,9 +144,9 @@ export class Schema extends Model {
         // update the flag on this node as being in sync with tree
         // -- validation is complete and are models set
         _validPaths.get(this.jsd)[this.path] = true;
-
+        
         // calls next's observable to update subscribers
-        this.observerBuilder.next(this.path, this);
+        _oBuilders.get(this.jsd).next(this.path, this);
         return true;
     }
 
@@ -163,7 +165,7 @@ export class Schema extends Model {
      */
     set(key, value) {
         // attempts validaton of value against schema
-        if (!refValidation(`root/${this.path}/${key}`, value)) {
+        if (!_validators.get(this.jsd).exec(`${this.validationPath}/${key}`, value)) {
             return false;
         }
 
@@ -171,10 +173,9 @@ export class Schema extends Model {
         this.model[key] = value;
 
         // updates observers
-        this.observerBuilder.next(this.path, this);
+        _oBuilders.get(this.jsd).next(this.path, this);
 
         // returns chainable reference
         return this;
     }
-
 }
