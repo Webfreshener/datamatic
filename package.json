@@ -71,3 +71,4 @@
     "coverageCollector": "jest-babel-istanbul"
   }
 }
+
