@@ -16,7 +16,7 @@ import {MetaData} from "./_metaData";
 const createMetaDataRef = (ref, writeLock, metaRef) => {
     let _md;
     if (metaRef instanceof JSD) {
-        // root elements are handed the JSD object
+        // root properties are handed the JSD object
         // will create new MetaData and set reference as root element
         _md = new MetaData(ref, {
             _path: "",

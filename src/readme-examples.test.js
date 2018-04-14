@@ -47,7 +47,7 @@ describe("README.md examples tests", () => {
         // we define an array that accepts objects comprised of a name string and numeric score
         const _schema = [{
             type: "Object",
-            elements: {
+            properties: {
                 name: {
                     type: "String",
                     required: true,
@@ -203,7 +203,7 @@ describe("README.md examples tests", () => {
             value: {
                 type: "Object",
                 required: false,
-                elements: {
+                properties: {
                     name: {
                         type: "String",
                         required: true
@@ -263,7 +263,7 @@ describe("README.md examples tests", () => {
             "*": {
                 type: "Object",
                 extensible: true,
-                elements: {
+                properties: {
                     name: {
                         type: "String",
                         required: true,
@@ -375,10 +375,10 @@ describe("README.md examples tests", () => {
                         restrict: "^[a-zA-Z0-9_\\s]+$",
 
                     },
-                    // ... or and object with `name` and `description` elements
+                    // ... or and object with `name` and `description` properties
                     {
                         type: "Object",
-                        elements: {
+                        properties: {
                             name: {
                                 type: "String",
                                 required: true,
@@ -394,7 +394,7 @@ describe("README.md examples tests", () => {
                     // ... or a wildcard key & numeric value pair
                     {
                         type: "Object",
-                        elements: {
+                        properties: {
                             "*": {
                                 type: "Number"
                             },
@@ -433,7 +433,7 @@ describe("README.md examples tests", () => {
             "polyValue": "HeavyMetalPrincess",
         }
 
-        // can be an object with `name` and `description` elements
+        // can be an object with `name` and `description` properties
         _jsd.document.model = {
             "polyValue": {
                 "name": "HeavyMetalPrincess",

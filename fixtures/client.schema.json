@@ -1,10 +1,10 @@
 {
   "type": "Object",
-  "elements": {
+  "properties": {
     "__COLLECTIONS__": {
       "type": "Object",
       "required": false,
-      "elements": {
+      "properties": {
         "type": "Object",
         "required": false,
         "extensible": true
@@ -23,11 +23,11 @@
           "destroy": "DELETE"
         }
       },
-      "elements": {
+      "properties": {
         "ALLOWED": {
           "type": "Array",
           "required": false,
-          "elements": {
+          "properties": {
             "type": "String",
             "required": false
           }
@@ -143,7 +143,7 @@
           "type": "Object",
           "required": true,
           "extensible": false,
-          "elements": {
+          "properties": {
             "create": {
               "type": "String",
               "required": false,

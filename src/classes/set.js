@@ -291,7 +291,7 @@ export class Set extends Model {
     }
 
     /**
-     * @returns {number} number of elements in list
+     * @returns {number} number of properties in list
      */
     get length() {
         return this.model.length || 0;

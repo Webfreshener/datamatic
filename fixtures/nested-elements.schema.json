@@ -3,11 +3,11 @@
     "type": "Object",
     "required": false,
     "extensible": true,
-    "elements": {
+    "properties": {
       "anArray": {
         "type": "Array",
         "required": true,
-        "elements": [{
+        "properties": [{
           "type": "String"
         }]
       },
@@ -27,7 +27,7 @@
             }
           }
         },
-        "elements": {
+        "properties": {
           "aString": {
             "type": "String",
             "required": true,
@@ -42,7 +42,7 @@
             "type": "Object",
             "required": true,
             "extensible": false,
-            "elements": {
+            "properties": {
               "aDeepParam": {
                 "type": "String",
                 "required": true,
@@ -52,7 +52,7 @@
                 "type": "Object",
                 "required": false,
                 "extensible": false,
-                "elements": {
+                "properties": {
                   "aDeepParam": {
                     "type": "String",
                     "required": true,

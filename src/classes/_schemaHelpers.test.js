@@ -6,7 +6,7 @@ import {MetaData} from "./_metaData";
 import {SchemaHelpers} from "./_schemaHelpers";
 
 describe("SchemaHelpers Class Tests", () => {
-    const _sig = {"*": {type: "*", elements: {"*": {type: "*"}}}};
+    const _sig = {"*": {type: "*", properties: {"*": {type: "*"}}}};
     let _jsd, _schema, _sH;
 
     beforeEach(() => {
@@ -67,7 +67,7 @@ describe("SchemaHelpers Class Tests", () => {
             let _sig = {
                 "*": {
                     type: "*",
-                    elements: {
+                    properties: {
                         type: "*",
                         "*": {
                             type: "*",
@@ -100,7 +100,7 @@ describe("SchemaHelpers Class Tests", () => {
 });
 
 // it("testing actual schema nesting", () => {
-//     let jsd = new JSD({"*": {type: "*", elements: {"*": {type: "*"}}}});
+//     let jsd = new JSD({"*": {type: "*", properties: {"*": {type: "*"}}}});
 //     jsd.document.model = {
 //         foo: {
 //             bar: "baz",

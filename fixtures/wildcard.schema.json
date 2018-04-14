@@ -1,11 +1,11 @@
 {
   "*": {
     "type": "Object",
-    "elements": {
+    "properties": {
       "*": {
         "type": "Object",
         "required": true,
-        "elements": {
+        "properties": {
           "name": {
             "type": "String",
             "required": true

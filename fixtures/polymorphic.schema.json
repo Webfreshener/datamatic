@@ -7,7 +7,7 @@
       },
       {
         "type": "Object",
-        "elements": {
+        "properties": {
           "id": {
             "type": "Number",
             "required": true
@@ -25,7 +25,7 @@
       },
       {
         "type": "Object",
-        "elements": {
+        "properties": {
           "id": {
             "type": "Number",
             "required": true

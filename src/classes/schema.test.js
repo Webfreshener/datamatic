@@ -5,11 +5,11 @@ import {default as deepEqual} from "deep-equal";
 
 describe("Schema Class Test Suite", function () {
     describe("Schema Validation Methods", function () {
-        it("should not allow Elements without a type or type parameter", function () {
+        it("should not allow properties without a type or type parameter", function () {
             expect(() => new JSD({value: {foo: "test"}})).toThrow(
                 "value for schema element 'value' was malformed. Property 'type' was missing");
         });
-        it("should not allow Elements with a valid type parameter", function () {
+        it("should not allow properties with a valid type parameter", function () {
             expect(() => new JSD({value: {type: "String"}})).not.toThrow(
                 "value for schema element 'value' was malformed. Property 'type' was missing");
         });
@@ -43,7 +43,7 @@ describe("Schema Class Test Suite", function () {
             expect(() => new JSD(o)).toThrow(
                 "schema element 'value.foo' is not allowed");
         });
-        it("should ensure only valid types on nested elements", function () {
+        it("should ensure only valid types on nested properties", function () {
             expect(() => new JSD(o, {extensible: true})).toThrow(
                 "schema element 'value.foo' is not allowed");
         });
@@ -117,7 +117,7 @@ describe("Schema Class Test Suite", function () {
             _jsd = new JSD(_s);
         });
 
-        it("should validate arbitrary wildcard elements", (done) => {
+        it("should validate arbitrary wildcard properties", (done) => {
             const _h = {
                 next: (o) => {
                     _sub.unsubscribe();
@@ -142,7 +142,7 @@ describe("Schema Class Test Suite", function () {
             };
         });
 
-        it("should validate nested wildcard elements", (done) => {
+        it("should validate nested wildcard properties", (done) => {
             const _h = {
                 next: (o) => {
                     _sub.unsubscribe();
@@ -177,7 +177,7 @@ describe("Schema Class Test Suite", function () {
     });
 
     describe("Getters/Setters", () => {
-        it("should set basic values on elements", () => {
+        it("should set basic values on properties", () => {
             let _schema = new JSD({
                 bool: {type: "Boolean"},
                 num: {type: "Number"},
@@ -191,11 +191,11 @@ describe("Schema Class Test Suite", function () {
             expect(_schema.document.get("str")).toEqual("test");
         });
 
-        it("should set object values on elements", () => {
+        it("should set object values on properties", () => {
             let _schema = new JSD({
                 nested: {
                     type: "Object",
-                    elements: {
+                    properties: {
                         name: {
                             type: "String"
                         }
@@ -206,14 +206,14 @@ describe("Schema Class Test Suite", function () {
             expect(JSON.parse(`${_schema.document}`).nested.name).toEqual("Ishmael");
         });
 
-        it("should set Array values on elements", () => {
+        it("should set Array values on properties", () => {
             let _schema = new JSD({
                 root: {
                     type: "Object",
-                    elements: {
+                    properties: {
                         child: {
                             type: "Object",
-                            elements: {
+                            properties: {
                                 value: {
                                     type: "String",
                                     required: true,
@@ -222,9 +222,9 @@ describe("Schema Class Test Suite", function () {
                         },
                         nested: {
                             type: "Array",
-                            elements: {
+                            properties: {
                                 type: "Object",
-                                elements: {
+                                properties: {
                                     name: {
                                         type: "String",
                                     },
@@ -384,7 +384,7 @@ describe("Schema Class Test Suite", function () {
         });
 
         it("should lock model via Schema  and trigger notification", (done) => {
-            const _schema = new Schema({writeLock: true, elements: {"*": {type: "*"}}}, null, new JSD());
+            const _schema = new Schema({writeLock: true, properties: {"*": {type: "*"}}}, null, new JSD());
             let cnt = 0;
             const _h = {
                 next: (model) => {
@@ -418,10 +418,10 @@ describe("Schema Class Test Suite", function () {
         it("should provide backref on model", (done) => {
             const _s = {
                 type: "Object",
-                elements: {
+                properties: {
                     root: {
                         type: "Object",
-                        elements: {
+                        properties: {
                             name: {
                                 type: "String"
                             },

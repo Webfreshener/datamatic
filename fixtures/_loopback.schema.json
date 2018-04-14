@@ -1,6 +1,6 @@
 {
 	"type": "Object",
-	"elements": {
+	"properties": {
 		"name": {
 			"type": "String",
 			"required": true,
@@ -30,7 +30,7 @@
 		"http": {
 			"type": "Object",
 			"required": false,
-			"elements": {
+			"properties": {
 				"path": {
 					"type": "String",
 					"required": true,
@@ -51,7 +51,7 @@
 			"default": {
 				"idInjection": false
 			},
-			"elements": {
+			"properties": {
 				"idInjection": {
 					"type": "Boolean",
 					"required": false,
@@ -67,7 +67,7 @@
 					"required": false,
 					"extensible": true,
 					"default": {},
-					"elements":{
+					"properties":{
 						"type": {
 							"type": "String",
 							"required": true,
@@ -91,7 +91,7 @@
 							{
 							"type": "Object",
 							"required": false,
-							"elements": {
+							"properties": {
 								"as": {
 									"type": "String",
 									"required": true,
@@ -117,11 +117,11 @@
 			"type": "Object",
 			"required": true,
 			"extensible": true,
-			"elements": {
+			"properties": {
 				"*": {
 					"type": "Object",
 					"required": false,
-					"elements": {
+					"properties": {
 						"default": {
 							"type": "Boolean",
 							"required": false
@@ -139,7 +139,7 @@
 						"id": {
 							"type": ["Boolean", "Object"],
 							"required": false,
-							"elements": {
+							"properties": {
 								"type": {
 									"type": "String",
 									"required": true,
@@ -192,11 +192,11 @@
 			"type": "Array",
 			"required": false,
 			"default": [],
-			"elements": {
+			"properties": {
 				"*": {
 					"type": "Object",
 					"required": false,
-					"elements": {
+					"properties": {
 						"default": {
 							"type": "*",
 							"required": true
@@ -230,7 +230,7 @@
 			"type": "Object",
 			"required": false,
 			"extensible": false,
-			"elements": [{
+			"properties": [{
 				"type": "Object",
 				"required": false
 			}]
@@ -240,7 +240,7 @@
 			"required": false,
 			"default": {},
 			"extensible": true,
-			"elements": [{
+			"properties": [{
 				"type": "Object",
 				"required": false
 			}]
@@ -250,7 +250,7 @@
 			"required": false,
 			"default": {},
 			"extensible": false,
-			"elements": {
+			"properties": {
 				"accessType": {
 					"type": "String",
 					"required": true,

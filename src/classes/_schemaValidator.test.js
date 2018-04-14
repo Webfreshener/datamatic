@@ -8,7 +8,7 @@ describe("SchemaValidator Class Tests", () => {
             const _s = {
                 array: {
                     type: "Array",
-                    elements: {
+                    properties: {
                         type: "*"
                     },
                 },
@@ -23,7 +23,7 @@ describe("SchemaValidator Class Tests", () => {
                 },
                 object: {
                     type: "Object",
-                    elements: {
+                    properties: {
                         type: "*"
                     },
                 },
@@ -35,7 +35,7 @@ describe("SchemaValidator Class Tests", () => {
             let _s = {
                 array: {
                     type: "Array",
-                    elements: {
+                    properties: {
                         type: "*"
                     },
                 },
@@ -50,7 +50,7 @@ describe("SchemaValidator Class Tests", () => {
                 },
                 object: {
                     type: "Object",
-                    elements: {
+                    properties: {
                         type: "*"
                     },
                 },
@@ -60,11 +60,11 @@ describe("SchemaValidator Class Tests", () => {
         });
     });
     describe("Wildcard Keys", () => {
-        it("should handle wildcard elements", () => {
+        it("should handle wildcard properties", () => {
             const _s = {
                 "*": {
                     "type": "Object",
-                    "elements": {
+                    "properties": {
                         "type": {
                             "type": "String",
                             "required": true,
@@ -80,15 +80,15 @@ describe("SchemaValidator Class Tests", () => {
             expect(list[1]).toBe("*.type");
 
         });
-        it("should handle nested wildcard elements", () => {
+        it("should handle nested wildcard properties", () => {
             const _s = {
                 "relations": {
                     "type": "Object",
                     "required": false,
-                    "elements": {
+                    "properties": {
                         "*": {
                             "type": "Object",
-                            "elements": {
+                            "properties": {
                                 "type": {
                                     "type": "String",
                                     "required": true,
@@ -119,15 +119,15 @@ describe("SchemaValidator Class Tests", () => {
             expect(list[5]).toBe("*.*.*.polymorphic.2");
         });
     });
-    describe("Nested Elements", () => {
-        it("should FAIL if invalid types are found in nested elements", () => {
+    describe("Nested properties", () => {
+        it("should FAIL if invalid types are found in nested properties", () => {
             const _s = {
                 root: {
                     type: "Object",
-                    elements: {
+                    properties: {
                         subObj: {
                             type: "Object",
-                            elements: {
+                            properties: {
                                 subEl: {
                                     type: "BOGUS",
                                 }
@@ -139,14 +139,14 @@ describe("SchemaValidator Class Tests", () => {
             let _e = "value for schema element 'root.subObj.subEl' has invalid type '<BOGUS>'";
             expect(() => new SchemaValidator(_s, {jsd: new JSD(_s)})).toThrow(_e);
         });
-        it("should traverse nested elements", () => {
+        it("should traverse nested properties", () => {
             const _s = {
                 root: {
                     type: "Object",
-                    elements: {
+                    properties: {
                         subObj: {
                             type: "Object",
-                            elements: {
+                            properties: {
                                 subEl: {
                                     type: "String",
                                 },
@@ -159,14 +159,14 @@ describe("SchemaValidator Class Tests", () => {
             expect(_sV.isValid).toBe(true);
         });
     });
-    describe("Array Elements", () => {
+    describe("Array properties", () => {
         it("should FAIL if invalid types are found in Arrays", () => {
             const _s = [{
                 type: "Object",
-                elements: {
+                properties: {
                     subObj: {
                         type: "Object",
-                        elements: {
+                        properties: {
                             subEl: {
                                 type: "BOGUS",
                             },
@@ -182,10 +182,10 @@ describe("SchemaValidator Class Tests", () => {
         it("should SUCCEED if valid types are found in Arrays", () => {
             const _s = [{
                 type: "Object",
-                elements: {
+                properties: {
                     subObj: {
                         type: "Object",
-                        elements: {
+                        properties: {
                             subEl: {
                                 type: "String",
                             },
@@ -204,10 +204,10 @@ describe("SchemaValidator Class Tests", () => {
             const _s = {
                 subObj: {
                     type: "Object",
-                    elements: {
+                    properties: {
                         subEl: {
                             type: "Array",
-                            elements: {
+                            properties: {
                                 type: "String",
                             }
                         },
@@ -222,17 +222,17 @@ describe("SchemaValidator Class Tests", () => {
             expect(list[2]).toBe("subObj.subEl.*.polymorphic.0");
         });
     });
-    describe("Polymorphic Elements", () => {
-        it("should FAIL if invalid types are found in nested elements", () => {
+    describe("Polymorphic properties", () => {
+        it("should FAIL if invalid types are found in nested properties", () => {
             const _s = {
                 polymorphic: [{
                     type: "Boolean",
                 }, {
                     type: "Object",
-                    elements: {
+                    properties: {
                         subObj: {
                             type: "Object",
-                            elements: {
+                            properties: {
                                 subEl: {
                                     type: "BOGUS",
                                 },
@@ -244,16 +244,16 @@ describe("SchemaValidator Class Tests", () => {
             let _e = "value for schema element 'polymorphic.1.subObj.subEl' has invalid type '<BOGUS>'";
             expect(() => new SchemaValidator(_s, {jsd: new JSD(_s)})).toThrow(_e);
         });
-        it("should SUCCEED if valid types are found in nested elements", () => {
+        it("should SUCCEED if valid types are found in nested properties", () => {
             const _s = {
                 polymorphic: [{
                     type: "Boolean",
                 }, {
                     type: "Object",
-                    elements: {
+                    properties: {
                         subObj: {
                             type: "Object",
-                            elements: {
+                            properties: {
                                 subEl: {
                                     type: "String",
                                 },
@@ -266,20 +266,20 @@ describe("SchemaValidator Class Tests", () => {
             expect(_sV.isValid).toBe(true);
         });
     });
-    describe("Nested Polymorphic Elements", () => {
-        it("should FAIL if invalid types are found in nested elements", () => {
+    describe("Nested Polymorphic properties", () => {
+        it("should FAIL if invalid types are found in nested properties", () => {
             const _s = {
                 polymorphic: [{
                     type: "Boolean",
                 }, {
                     type: "Object",
-                    elements: {
+                    properties: {
                         subObj: {
                             polymorphic: [{
                                 // type: "Array",
-                                // elements: {
+                                // properties: {
                                     type: "Object",
-                                    elements: {
+                                    properties: {
                                         name: {
                                             type: "BOGUS",
                                         },
@@ -295,19 +295,19 @@ describe("SchemaValidator Class Tests", () => {
             let _e = "value for schema element 'polymorphic.1.subObj.polymorphic.0.name' has invalid type '<BOGUS>'";
             expect(() => new SchemaValidator(_s, {jsd: new JSD(_s)})).toThrow(_e);
         });
-        it("should SUCCEED if valid types are found in nested elements", () => {
+        it("should SUCCEED if valid types are found in nested properties", () => {
             const _s = {
                 polymorphic: [{
                     type: "Boolean",
                 }, {
                     type: "Object",
-                    elements: {
+                    properties: {
                         subObj: {
                             polymorphic: [{
                                 type: "Array",
-                                elements: {
+                                properties: {
                                     type: "Object",
-                                    elements: {
+                                    properties: {
                                         name: {
                                             type: "String",
                                         },

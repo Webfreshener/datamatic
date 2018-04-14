@@ -29,7 +29,7 @@ export const _object = new WeakMap();
  */
 export const _mdRef = new WeakMap();
 /**
- * Holder for lists of required elements for each Schema Node
+ * Holder for lists of required properties for each Schema Node
  *
  * @type {WeakMap}
  * @private

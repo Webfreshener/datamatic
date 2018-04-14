@@ -28,7 +28,7 @@ export class BaseValidator {
     }
 
     /**
-     * invokes `exec` for validator on object child elements
+     * invokes `exec` for validator on object child properties
      * @param path
      * @param value
      * @returns {*}
@@ -164,7 +164,7 @@ Validator.Object = class Obj extends BaseValidator {
             // tests for Validator for path
             if (!_v.get(_p)) {
                 // creates new Validator for path using signature for key
-                let _sig = this.signature.elements[key] || this.signature.elements["*"];
+                let _sig = this.signature.properties[key] || this.signature.properties["*"];
                 _vBuilders.get(this.jsd).create(_sig, _p, this.jsd);
             }
             // calls the validator with path and value

@@ -3,11 +3,11 @@
 		"type": "Object",
 		"required": true,
 		"extensible": true,
-		"elements": {
+		"properties": {
 			"type": "Object",
 			"required": false,
 			"extensible": true,
-			"elements": {
+			"properties": {
 				"default": {
 					"type": "Boolean",
 					"required": true
@@ -25,7 +25,7 @@
 				"id": {
 					"type": ["Boolean", "Object"],
 					"required": false,
-					"elements": [{
+					"properties": [{
 						"type": {
 							"type": "String",
 							"required": true,

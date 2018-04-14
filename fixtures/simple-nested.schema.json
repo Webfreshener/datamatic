@@ -1,13 +1,13 @@
 {
-  "elements": {
+  "properties": {
     "aObject": {
       "type": "Object",
       "required": true,
       "extensible": true,
-      "elements": {
+      "properties": {
         "someValue": {
           "type": "Object",
-          "elements": {
+          "properties": {
             "deepValue": {
               "type": "Number"
             }

@@ -31,13 +31,13 @@ export class Schema extends Model {
         // creates instance of SchemaHelpers
         const _sH = new SchemaHelpers(this);
 
-        // initialized Required Elements reference
+        // initialized Required properties reference
         _required_elements.set(this, []);
 
         // stores SchemaHelpers reference for later use
         _schemaHelpers.set(this, _sH);
 
-        // populates Required Elements reference from schema values
+        // populates Required properties reference from schema values
         _sH.referenceRequiredElements(_signature);
 
         _vPaths.set(this, this.path);
@@ -241,7 +241,7 @@ export class Schema extends Model {
     }
 
     /**
-     * @returns list of required elements on this Schema
+     * @returns list of required properties on this Schema
      */
     get requiredFields() {
         return _required_elements.get(this);

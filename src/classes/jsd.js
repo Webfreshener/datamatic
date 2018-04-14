@@ -14,6 +14,7 @@ import {ValidatorBuilder} from "./_validatorBuilder";
 import {Schema} from "./schema";
 import {Set} from "./set";
 import {SchemaValidator} from "./_schemaValidator";
+import {default as Ajv} from "ajv";
 
 const _documents = new WeakMap();
 
@@ -40,6 +41,7 @@ export class JSD {
             "Function": Function,
         });
 
+        const _ajv = new Ajv({allErrors: false});
 
         const vBuilder = new ValidatorBuilder(this);
         _vBuilders.set(this, vBuilder);
@@ -51,7 +53,7 @@ export class JSD {
         if ((Array.isArray(schema)) ||
             (schema.hasOwnProperty("type") && schema.type === "Array")) {
             _useSet = true;
-            // internally we handle all Sets as Polymorphic elements
+            // internally we handle all Sets as Polymorphic properties
             schema = {"*": {polymorphic: Array.isArray(schema) ? schema : [schema]}};
         }
 
@@ -116,9 +118,9 @@ export class JSD {
                 if (Array.isArray(arg)) {
                     //- holds the results set
                     let _r = [];
-                    // traverses array elements
+                    // traverses array properties
                     for (let n of arg) {
-                        //- tests elements
+                        //- tests properties
                         switch (typeof n) {
                             //- operates on string
                             case "string":
@@ -202,11 +204,11 @@ export class JSD {
             extensible: "Boolean",
             restrict: "String",
             default: "*",
-            elements: ["Object", "Array"],
+            properties: ["Object", "Array"],
             polymorphic: {
                 type: ["Object", "Array"],
                 required: false,
-                elements: {
+                properties: {
                     type: {
                         type: this.listClasses(),
                         required: true
@@ -215,7 +217,7 @@ export class JSD {
                     restrict: "String",
                     validate: "Function",
                     default: "*",
-                    elements: ["Object", "Array"]
+                    properties: ["Object", "Array"]
                 }
             }
         };
@@ -235,7 +237,7 @@ export class JSD {
             required: false,
             extensible: true,
             writeLock: false,
-            elements: {
+            properties: {
                 "*": {
                     type: "*",
                     required: false,

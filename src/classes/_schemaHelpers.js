@@ -22,13 +22,13 @@ export class SchemaHelpers {
     }
 
     /**
-     * traverses schema node and builds list of required elements for reference
+     * traverses schema node and builds list of required properties for reference
      * @param _signature
      */
     referenceRequiredElements(_signature) {
-        // traverses elements of schema checking for elements marked as required
-        if (_exists(_signature.elements)) {
-            _signature = _signature.elements;
+        // traverses properties of schema checking for properties marked as required
+        if (_exists(_signature.properties)) {
+            _signature = _signature.properties;
             for (let _sigEl of Object.keys(_signature)) {
                 // -- tests for element `required`
                 if (_signature[_sigEl].hasOwnProperty("required") &&
@@ -37,7 +37,7 @@ export class SchemaHelpers {
                     _required_elements.get(this._ref).splice(-1, 0, _sigEl);
                 }
             }
-            // freezes req'd elements object to prevent modification
+            // freezes req'd properties object to prevent modification
             _required_elements.set(this._ref, Object.freeze(_required_elements.get(this._ref)));
         }
     }
@@ -95,8 +95,8 @@ export class SchemaHelpers {
             return _schemaRef[key];
         }
 
-        if (_schemaRef.hasOwnProperty("elements")) {
-            return _schemaRef.elements[key] || _schemaRef.elements;
+        if (_schemaRef.hasOwnProperty("properties")) {
+            return _schemaRef.properties[key] || _schemaRef.properties;
         }
 
         if (_schemaRef.hasOwnProperty("polymorphic")) {
@@ -122,7 +122,7 @@ export class SchemaHelpers {
             _jsd: this._ref.jsd,
         }, metaData || {});
         let _md = new MetaData(this._ref, _d);
-        // tests for nested sub-elements with partial paths as keys
+        // tests for nested sub-properties with partial paths as keys
         if (key.match(/\.?polymorphic\.\d$/) !== null) {
                 key = "polymorphic";
         }
@@ -132,7 +132,7 @@ export class SchemaHelpers {
         // tests if value is not Array
         let _kS =  this.getSchemaElement(key);
         if (_kS.type !== "Array" && !Array.isArray(_kS) && !Array.isArray(value)) {
-            let _schemaDef = (_kS.hasOwnProperty("elements") ? _kS.elements[key.split(".").pop()] : false) ||
+            let _schemaDef = (_kS.hasOwnProperty("properties") ? _kS.properties[key.split(".").pop()] : false) ||
                 _kS["*"] || _kS;
             try {
                 _s = new Schema(_schemaDef, opts, _md);

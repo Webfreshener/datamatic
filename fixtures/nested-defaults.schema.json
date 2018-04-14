@@ -2,7 +2,7 @@
   "__COLLECTIONS__": {
     "type": "Object",
     "required": false,
-    "elements": {
+    "properties": {
       "type": "Schema",
       "required": false,
       "extensible": true
@@ -12,11 +12,11 @@
     "type": "Object",
     "required": true,
     "extensible": true,
-    "elements": {
+    "properties": {
       "ALLOWED": {
         "type": "Array",
         "required": true,
-        "elements": {
+        "properties": {
           "type": "String",
           "required": false
         }
@@ -135,7 +135,7 @@
           "update": "PUT",
           "destroy": "DELETE"
         },
-        "elements": {
+        "properties": {
           "create": {
             "type": "String",
             "required": false,

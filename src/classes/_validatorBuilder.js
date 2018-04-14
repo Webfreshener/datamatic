@@ -131,10 +131,10 @@ export class ValidatorBuilder {
                     _functs.push(new Validator["Default"](path, sig, this.$jsd));
                 }
                 if (sig.hasOwnProperty("*")) {
-                    createFuncts(sig["*"].elements || sig["*"].polymorphic || sig["*"]);
+                    createFuncts(sig["*"].properties || sig["*"].polymorphic || sig["*"]);
                     delete sig["*"];
                     if (Object.keys(sig) > 0) {
-                        createFuncts(sig.elements || sig.polymorphic || sig);
+                        createFuncts(sig.properties || sig.polymorphic || sig);
                     }
                     return;
                 }

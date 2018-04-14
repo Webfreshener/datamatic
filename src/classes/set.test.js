@@ -53,7 +53,7 @@ describe("Set Class Test Suite", function () {
         it("should validate for Objects", function () {
             const _schema = [{
                 type: "Object",
-                elements: {
+                properties: {
                     value: {
                         type: "String",
                         required: true,
@@ -155,7 +155,7 @@ describe("Set Class Test Suite", function () {
         it("should support wildcard keys", (done) => {
             const _schema = [{
                 type: "Object",
-                elements: {
+                properties: {
                     "*": {
                         type: "Number",
                     },
@@ -187,7 +187,7 @@ describe("Set Class Test Suite", function () {
         it("should support wildcard types", (done) => {
             const _schema = [{
                 type: "Object",
-                elements: {
+                properties: {
                     "value": {
                         type: "*",
                     },
@@ -218,7 +218,7 @@ describe("Set Class Test Suite", function () {
         it("should support wildcard keys and types", (done) => {
             const _schema = [{
                 type: "Object",
-                elements: {
+                properties: {
                     "*": {
                         type: "*",
                     },
@@ -247,7 +247,7 @@ describe("Set Class Test Suite", function () {
     });
 
     describe("Nested Element", () => {
-        it("should support being nested in other elements", (done) => {
+        it("should support being nested in other properties", (done) => {
             const _jsd = new JSD({
                 aString: {
                     type: "String",
@@ -255,7 +255,7 @@ describe("Set Class Test Suite", function () {
                 anArray: {
                     type: "Array",
                     required: true,
-                    elements: [{
+                    properties: [{
                         type: "Number",
                     }],
                 },
@@ -278,27 +278,27 @@ describe("Set Class Test Suite", function () {
         });
     });
 
-    describe("Polymorphic Elements", () => {
-        it("should allow for multiple types of elements", (done) => {
+    describe("Polymorphic properties", () => {
+        it("should allow for multiple types of properties", (done) => {
             const _jsd = new JSD([{
                 type: "Object",
-                elements: {
+                properties: {
                     value: {
                         type: "Number",
                     },
                 },
             }, {
                 type: "Object",
-                elements: {
+                properties: {
                     value: {
                         type: "Object",
-                        elements: {
+                        properties: {
                             subEl: {
                                 type: "String",
                             },
                             subObj: {
                                 type: "Object",
-                                elements: {
+                                properties: {
                                     subEl: {
                                         type: "String",
                                     },
@@ -350,7 +350,7 @@ describe("Set Class Test Suite", function () {
         it("should provide backref on model", (done) => {
             const _jsd = new JSD([{
                 type: "Object",
-                elements: {
+                properties: {
                     value: {
                         type: "Number",
                     },
@@ -416,7 +416,7 @@ describe("Set Class Test Suite", function () {
 
             const _jsd = new JSD([{
                 type: "Object",
-                elements: {
+                properties: {
                     name: {
                         type: "String",
                     },

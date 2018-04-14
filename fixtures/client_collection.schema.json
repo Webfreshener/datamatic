@@ -23,7 +23,7 @@
   "http": {
     "type": "Object",
     "required": false,
-    "elements": {
+    "properties": {
       "path": {
         "type": "String",
         "required": true
@@ -46,7 +46,7 @@
     "type": "Object",
     "required": false,
     "extensible": true,
-    "elements": {
+    "properties": {
       "idInjection": {
         "type": "Boolean",
         "required": false,
@@ -63,10 +63,10 @@
     "type": "Object",
     "required": true,
     "extensible": true,
-    "elements": {
+    "properties": {
       "*": {
         "type": "Object",
-        "elements": {
+        "properties": {
           "default": {
             "type": "Boolean",
             "required": false
@@ -89,7 +89,7 @@
               },
               {
                 "type": "Object",
-                "elements": {
+                "properties": {
                   "type": {
                     "type": "String",
                     "required": true,
@@ -143,11 +143,11 @@
   "validations": {
     "type": "Array",
     "required": false,
-    "elements": [
+    "properties": [
       {
         "type": "Object",
         "required": false,
-        "elements": {
+        "properties": {
           "default": {
             "type": "*",
             "required": true
@@ -179,10 +179,10 @@
   "relations": {
     "type": "Object",
     "required": false,
-    "elements": {
+    "properties": {
       "*": {
         "type": "Object",
-        "elements": {
+        "properties": {
           "type": {
             "type": "String",
             "required": true,
@@ -215,7 +215,7 @@
               },
               {
                 "type": "Object",
-                "elements": {
+                "properties": {
                   "as": {
                     "type": "String",
                     "required": true,
@@ -242,7 +242,7 @@
     "type": "Object",
     "required": false,
     "extensible": false,
-    "elements": {
+    "properties": {
       "*": {
         "type": "Object",
         "required": false
@@ -253,7 +253,7 @@
     "type": "Object",
     "required": false,
     "extensible": true,
-    "elements": {
+    "properties": {
       "*": {
         "type": "Object",
         "required": false

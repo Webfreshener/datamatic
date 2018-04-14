@@ -62,7 +62,7 @@ describe("ValidatorBuilder Class Tests", () => {
                 const _jsd = new JSD({
                     root: {
                         type: "Object",
-                        elements: {
+                        properties: {
                             name: {
                                 type: "String"
                             }

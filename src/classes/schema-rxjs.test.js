@@ -6,7 +6,7 @@ describe("Schema RXJS Test Suite", () => {
         let _schema;
         beforeEach(() => {
             _schema = {
-                elements: {
+                properties: {
                     value: {
                         type: "String"
                     }
@@ -46,7 +46,7 @@ describe("Schema RXJS Test Suite", () => {
                 }
             };
             const _s = Object.assign({}, _schema);
-            _s.elements.value.type = "Number";
+            _s.properties.value.type = "Number";
             const s = new JSD(_s);
             s.document.subscribe(_h);
             s.document.set("value", 123);
@@ -64,7 +64,7 @@ describe("Schema RXJS Test Suite", () => {
                 }
             };
             const _s = Object.assign({}, _schema);
-            _s.elements.value.type = "Boolean";
+            _s.properties.value.type = "Boolean";
             const s = new JSD(_s);
             s.document.subscribe(_h);
             s.document.set("value", false);
@@ -83,10 +83,10 @@ describe("Schema RXJS Test Suite", () => {
                 }
             };
             const _s = Object.assign({}, _schema);
-            _s.elements.obj = {
+            _s.properties.obj = {
                 type: "Object",
                 required: true,
-                elements: {
+                properties: {
                     objValue: {
                         type: "String",
                         required: true,
