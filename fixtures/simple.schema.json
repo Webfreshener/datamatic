@@ -1,7 +1,13 @@
 {
-	"name": {
-		"type": "Boolean",
-		"required": true,
-		"restrict": "^[a-zA-Z-0-9_]+$"
-	}
+  "properties": {
+    "name": {
+      "type": "string"
+    },
+    "age": {
+      "type": "number"
+    },
+    "active": {
+      "type": "boolean"
+    }
+  }
 }

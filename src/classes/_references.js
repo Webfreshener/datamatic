@@ -8,13 +8,7 @@ export const wf = {
     Obj: Obj,
     Str: Str
 };
-/**
- * Holder for registered JS Object references
- *
- * @type {WeakMap}
- * @private
- */
-export const _kinds = new WeakMap();
+
 /**
  * Holder for Schema and Set instance references
  *
@@ -28,6 +22,12 @@ export const _object = new WeakMap();
  * @private
  */
 export const _mdRef = new WeakMap();
+/**
+ * Holder for AjvWrapper references
+ * @type {WeakMap<Object, any>}
+ * @private
+ */
+export const _ajvRef = new WeakMap();
 /**
  * Holder for lists of required properties for each Schema Node
  *
@@ -94,12 +94,6 @@ export const _validPaths = new WeakMap();
  * @private
  */
 export const _oBuilders = new WeakMap();
-/**
- * Holder for Validator Builders
- * @type {WeakMap}
- * @private
- */
-export const _vBuilders = new WeakMap();
 /**
  * Holder for Validation Paths
  * @type {WeakMap}

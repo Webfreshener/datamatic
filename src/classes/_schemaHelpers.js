@@ -1,9 +1,7 @@
-import {_exists, _mdRef, _required_elements, _vBuilders} from "./_references";
-import {ensureRequiredFields} from "./utils";
+import {_exists, _mdRef, _required_elements, _validators} from "./_references";
 import {MetaData} from "./_metaData";
 import {Schema} from "./schema";
 import {Set} from "./set";
-import {JSD} from "./jsd";
 
 /**
  * @private
@@ -48,7 +46,6 @@ export class SchemaHelpers {
      * @returns {*}
      */
     setObject(obj) {
-        obj = ensureRequiredFields(this._ref, obj);
         if (typeof obj === "string") {
             return obj;
         }
@@ -83,14 +80,11 @@ export class SchemaHelpers {
 
     /**
      * retrieves child element from Model signature
-     * @param key {string) key for Model's Child element
+     * @param key - key for Model's Child element path
      * @returns {Object|Boolean}
      */
     getSchemaElement(key) {
         const _schemaRef = this._ref.schema;
-        if (key === "polymorphic") {
-            return _schemaRef.polymorphic[0];// {"*": {type: "Array", polymorphic: _schemaRef.polymorphic}};
-        }
         if (_schemaRef.hasOwnProperty(key)) {
             return _schemaRef[key];
         }
@@ -99,11 +93,7 @@ export class SchemaHelpers {
             return _schemaRef.properties[key] || _schemaRef.properties;
         }
 
-        if (_schemaRef.hasOwnProperty("polymorphic")) {
-            return { type: "Array", polymorphic: _schemaRef.polymorphic}; // _schemaRef.polymorphic[key] || _schemaRef.polymorphic;
-        }
-        const _opts = this._ref.options || Schema.defaultOptions;
-        return _opts.extensible ? JSD.defaults : false;
+        return null;
     };
 
     /**
@@ -122,13 +112,11 @@ export class SchemaHelpers {
             _jsd: this._ref.jsd,
         }, metaData || {});
         let _md = new MetaData(this._ref, _d);
-        // tests for nested sub-properties with partial paths as keys
-        if (key.match(/\.?polymorphic\.\d$/) !== null) {
-                key = "polymorphic";
-        }
-        else if (key.match(/.*\.+.*/) !== null) {
+
+        if (key.match(/.*\.+.*/) !== null) {
             key = key.split(".").pop();
         }
+
         // tests if value is not Array
         let _kS =  this.getSchemaElement(key);
         if (_kS.type !== "Array" && !Array.isArray(_kS) && !Array.isArray(value)) {
@@ -155,16 +143,14 @@ export class SchemaHelpers {
      *
      * @param key
      * @param value
-     * @returns {*}
+     * @return {boolean|string[]}
      */
     validate(key, value) {
-        const _vBuilder = this._ref.validatorBuilder;
-        let msg = `unable to resolve path for "${key}"`;
-        _vBuilder.resolvePath(this._ref.validationPath, key)
-            .some((path) => {
-                msg = this._ref.validatorBuilder.exec(path, value);
-                return (msg === true);
-            });
-        return msg;
+        const _v = _validators.get(this._ref.jsd);
+        if (!_v.validate(`${this._ref.validationPath}/`, value)) {
+            return _v.errors;
+        }
+
+        return true;
     }
 }

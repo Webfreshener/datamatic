@@ -25,11 +25,6 @@ export class MetaData {
             };
         }
 
-        // ensures existance of writeLock param
-        if (!_data.hasOwnProperty("_writeLock") || _data._writeLock === void(0)) {
-            _data._writeLock = false;
-        }
-
         _data = Object.assign({}, _data, {
             _id: this._createID(),
             _className: _cName,
@@ -96,14 +91,6 @@ export class MetaData {
         let _p = _.split(".");
         _p = (_p.length > 1) ? _p.slice(0, _p.length - 2).join(".") : _p[0];
         return _p.length ? this.root.get(_p) : this.root;
-    }
-
-    /**
-     *
-     * @returns {*}
-     */
-    get writeLock() {
-        return this.get("_writeLock");
     }
 
     toString() {

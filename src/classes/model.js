@@ -1,10 +1,9 @@
 import {
-    _mdRef, _oBuilders, _vBuilders, _exists,
+    _mdRef, _oBuilders, _exists,
     _validPaths, _object, _schemaSignatures,
     _schemaOptions
 } from "./_references";
 import {JSD} from "./jsd";
-import {remapPolypath} from "./utils";
 import {MetaData} from "./_metaData";
 
 /**
@@ -13,7 +12,7 @@ import {MetaData} from "./_metaData";
  * @param writeLock
  * @param metaRef
  */
-const createMetaDataRef = (ref, writeLock, metaRef) => {
+const createMetaDataRef = (ref, metaRef) => {
     let _md;
     if (metaRef instanceof JSD) {
         // root properties are handed the JSD object
@@ -21,7 +20,6 @@ const createMetaDataRef = (ref, writeLock, metaRef) => {
         _md = new MetaData(ref, {
             _path: "",
             _root: ref,
-            _writeLock: writeLock,
             _jsd: metaRef,
         });
     }
@@ -45,10 +43,10 @@ const createMetaDataRef = (ref, writeLock, metaRef) => {
  *
  */
 export class Model {
-    constructor(writeLock = false) {
+    constructor() {
         // tests if this is instance of MetaData
         if (!(this instanceof MetaData)) {
-            createMetaDataRef(this, writeLock, arguments[1]);
+            createMetaDataRef(this, arguments[0]);
         }
     }
 
@@ -85,11 +83,11 @@ export class Model {
         const _subs = class {};
         const _subRefs = [];
         // references the ObserverBuilder for the path
-        let _o = this.observerBuilder.get(path);
+        let _o = _oBuilders.get(this.jsd).get(path);
 
         if (!_o || _o === null) {
-            this.observerBuilder.create(path, this);
-            _o = this.observerBuilder.get(path);
+            _oBuilders.get(this.jsd).create(path, this);
+            _o = _oBuilders.get(this.jsd).get(path);
         }
 
         // adds onNext handler if `next` prop is defined
@@ -252,7 +250,7 @@ export class Model {
         Object.freeze(_object.get(this));
         const _self = this;
         setTimeout(()=> {
-            _self.observerBuilder.complete(_self.path, _self);
+            _oBuilders.get(_self.jsd).complete(_self.path, _self);
         }, 0);
         return this;
     }
@@ -265,14 +263,12 @@ export class Model {
         return Object.isFrozen(_object.get(this));
     }
 
-
+    /**
+     * provides formatted string for json-schema lookup
+     * @return {string}
+     */
     get validationPath() {
-        let _p = remapPolypath(this.path);
-        if (this.schema.hasOwnProperty("polymorphic")) {
-            _p = _p.replace(/(\.\d\.(?!polymorphic))+/, ".*.polymorphic.");
-        }
-
-        return _p;
+        return `#/${this.path.replace(/\./, '/')}`;
     }
 
     /**

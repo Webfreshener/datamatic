@@ -1,10 +1,6 @@
 import {
-    _mdRef, _object, _schemaOptions,
-    _schemaHelpers, _schemaSignatures,
-    _vPaths, _validPaths
+    _object, _schemaHelpers, _vPaths, _validPaths
 } from "./_references";
-import {SchemaValidator} from "./_schemaValidator";
-import {JSD} from "./jsd";
 import {Model} from "./model";
 import {SchemaHelpers} from "./_schemaHelpers";
 
@@ -16,23 +12,10 @@ const _observerDelegates = new WeakMap();
 export class Set extends Model {
     /**
      * @constructor
-     * @param _signature {*}
-     * @param opts {*}
      */
-    constructor(_signature, opts = {}) {
-        super(_signature.writeLock || false, arguments[2]);
-        // stores our user Options into Weakmap
-        _schemaOptions.set(this, opts);
+    constructor() {
+        super(arguments[0]);
         _schemaHelpers.set(this, new SchemaHelpers(this));
-
-        if (!_signature.hasOwnProperty("type")) {
-            _signature.type = "Array";
-        }
-
-        _vPaths.set(this, `${this.path}.*.polymorphic`);
-
-        const _sig = _signature["*"] || JSD.defaults;
-        _schemaSignatures.set(this, JSON.stringify(_sig));
 
         _object.set(this, new Proxy(Model.createRef(this, []), this.handler));
     }
@@ -49,42 +32,36 @@ export class Set extends Model {
      * @param value
      */
     set model(value) {
-        if (Array.isArray(value)) {
-            if (!this.isLocked) {
-                _object.set(this, new Proxy(Model.createRef(this, []), this.handler));
-            }
-
-            try {
-                let cnt = 0;
-                // we delegate observation in the event of whole model replacement
-                // to prevent triggering a notification for each item
-                // if the user desires such behavior they can use `addItem` with an iterator
-                _observerDelegates.set(this, {
-                    next: () => {
-                        if (this.length === value.length) {
-                            this.observerBuilder.next(this.path, this);
-                        }
-                    },
-                    error: () => {
-                        // this is a no-op, we will dispatch error later in the setter pipe
-                    }
-                });
-                value.forEach((val) => {
-                    _object.get(this)[cnt++] = val;
-                });
-            } catch (e) {
-                return this.observerBuilder.error(this.path, e);
-            }
-            if ((typeof this.isValid) === "boolean") {
-                this.observerBuilder.next(this.path, this);
-                return true;
-            } else {
-                this.observerBuilder.error(this.path, this.validate());
-                return false;
-            }
-        } else {
-            this.observerBuilder.error(this.path, `${this.path} requires Array`);
+        if (!Array.isArray(value) || this.isLocked) {
+            return false;
         }
+
+        _object.set(this, new Proxy(Model.createRef(this, []), this.handler));
+
+        try {
+            let cnt = 0;
+            // we delegate observation in the event of whole model replacement
+            // to prevent triggering a notification for each item
+            // if the user desires such behavior they can use `addItem` with an iterator
+            _observerDelegates.set(this, {
+                next: () => {
+                    if (this.length === value.length) {
+                        this.observerBuilder.next(this.path, this);
+                    }
+                },
+                error: () => {
+                    // this is a no-op, we dispatch error earlier in the setter pipe
+                }
+            });
+            value.forEach((val) => {
+                _object.get(this)[cnt++] = val;
+            });
+        } catch (e) {
+            return this.observerBuilder.error(this.path, e);
+        }
+
+        this.observerBuilder.next(this.path, this);
+        return true;
     }
 
     get handler() {
