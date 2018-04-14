@@ -1,4 +1,4 @@
-import {_exists, _mdRef, _required_elements, _validators} from "./_references";
+import {_exists, _mdRef, _validators} from "./_references";
 import {MetaData} from "./_metaData";
 import {Schema} from "./schema";
 import {Set} from "./set";
@@ -17,27 +17,6 @@ export class SchemaHelpers {
 
         this._ref = _ref;
         Object.seal(this);
-    }
-
-    /**
-     * traverses schema node and builds list of required properties for reference
-     * @param _signature
-     */
-    referenceRequiredElements(_signature) {
-        // traverses properties of schema checking for properties marked as required
-        if (_exists(_signature.properties)) {
-            _signature = _signature.properties;
-            for (let _sigEl of Object.keys(_signature)) {
-                // -- tests for element `required`
-                if (_signature[_sigEl].hasOwnProperty("required") &&
-                    _signature[_sigEl].required === true) {
-                    // -- adds required element to list
-                    _required_elements.get(this._ref).splice(-1, 0, _sigEl);
-                }
-            }
-            // freezes req'd properties object to prevent modification
-            _required_elements.set(this._ref, Object.freeze(_required_elements.get(this._ref)));
-        }
     }
 
     /**
@@ -60,14 +39,14 @@ export class SchemaHelpers {
     }
 
     /**
-     *
+     * Creates Child Model and set data on it
      * @param key
      * @param value
      * @returns {*}
      */
     setChildObject(key, value) {
         let _mdData = _mdRef.get(this._ref);
-        let _s = this.createSchemaChild(key, value, this._ref.options || {}, _mdData);
+        let _s = this.createSchemaChild(key, value, _mdData);
         if (typeof _s === "string") {
             return _s;
         } else if (!_exists(_s) ||
@@ -79,68 +58,29 @@ export class SchemaHelpers {
     }
 
     /**
-     * retrieves child element from Model signature
-     * @param key - key for Model's Child element path
-     * @returns {Object|Boolean}
+     * Creates Child Model
+     * @param {string} key
+     * @param {*} value
+     * @param {MetaData} metaData
+     * @returns {Model|string} - Schema, Set or error string
      */
-    getSchemaElement(key) {
-        const _schemaRef = this._ref.schema;
-        if (_schemaRef.hasOwnProperty(key)) {
-            return _schemaRef[key];
-        }
-
-        if (_schemaRef.hasOwnProperty("properties")) {
-            return _schemaRef.properties[key] || _schemaRef.properties;
-        }
-
-        return null;
-    };
-
-    /**
-     *
-     * @param key
-     * @param value
-     * @param opts
-     * @param metaData
-     * @returns {Schema|Set|string} - Schema, Set or error string
-     */
-    createSchemaChild(key, value, opts, metaData) {
-        let _s; // will be set with Schema | Set
+    createSchemaChild(key, value, metaData) {
+        // populates MetaData config object
         let _d = Object.assign({
             _path: key,
             _root: this._ref.root,
             _jsd: this._ref.jsd,
         }, metaData || {});
+
+        // constructs new MetaData object with owner as reference point for chaining
         let _md = new MetaData(this._ref, _d);
 
-        if (key.match(/.*\.+.*/) !== null) {
-            key = key.split(".").pop();
-        }
-
-        // tests if value is not Array
-        let _kS =  this.getSchemaElement(key);
-        if (_kS.type !== "Array" && !Array.isArray(_kS) && !Array.isArray(value)) {
-            let _schemaDef = (_kS.hasOwnProperty("properties") ? _kS.properties[key.split(".").pop()] : false) ||
-                _kS["*"] || _kS;
-            try {
-                _s = new Schema(_schemaDef, opts, _md);
-            } catch (e) {
-
-                return e.message;
-            }
-        } else {
-            try {
-                let _sig = this._ref.signature[key].polymorphic || this._ref.signature[key];
-                _s = new Set({"*": _sig}, opts, _md);
-            } catch (e) {
-                return e;
-            }
-        }
-        return _s;
+        // returns new child Model
+        return new ((!Array.isArray(value)) ? Schema : Set)(_md);
     }
 
     /**
-     *
+     * Validates data on owner model against schema
      * @param key
      * @param value
      * @return {boolean|string[]}

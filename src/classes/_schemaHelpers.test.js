@@ -46,7 +46,7 @@ describe("SchemaHelpers Class Tests", () => {
 
         describe("Create Object", () => {
             it("should create Child Schema Object", () => {
-                let _sC = _sH.createSchemaChild("foo", {}, {extensible: false}, _mdRef.get(_schema));
+                let _sC = _sH.createSchemaChild("foo", {}, _mdRef.get(_schema));
                 expect((typeof _sC) === "string").toBe(false);
                 expect(_sC instanceof Schema).toBe(true);
             });

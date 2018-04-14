@@ -1,22 +1,15 @@
 {
   "properties": {
     "aObject": {
-      "type": "Object",
-      "required": true,
-      "extensible": true,
+      "type": "object",
       "properties": {
-        "someValue": {
+        "bObject": {
           "type": "Object",
           "properties": {
-            "deepValue": {
+            "bValue": {
               "type": "Number"
             }
           }
-        }
-      },
-      "default": {
-        "someValue": {
-          "deepValue": 0
         }
       }
     }

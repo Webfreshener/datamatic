@@ -1,6 +1,6 @@
 import {
     _mdRef, _oBuilders, _exists,
-    _validPaths, _object, _schemaSignatures,
+    _validPaths, _object,
     _schemaOptions
 } from "./_references";
 import {JSD} from "./jsd";
@@ -9,7 +9,6 @@ import {MetaData} from "./_metaData";
 /**
  *
  * @param ref
- * @param writeLock
  * @param metaRef
  */
 const createMetaDataRef = (ref, metaRef) => {
@@ -53,7 +52,7 @@ export class Model {
     /**
      * subscribes handler method to observer for model
      * @param func
-     * @returns {_subs}
+     * @returns {Observable}
      */
     subscribe(func) {
         return this.subscribeTo(this.path, func);
@@ -71,7 +70,7 @@ export class Model {
      * subscribes handler method to property observer for path
      * @param path
      * @param func
-     * @returns {_subs}
+     * @return {Observable}
      */
     subscribeTo(path, func) {
         // throws if argument is not an object or function
@@ -79,38 +78,37 @@ export class Model {
             throw new Error("subscribeTo requires function");
         }
 
-        // creates an extensible object to hold our unsubscribe method
-        const _subs = class {};
-        const _subRefs = [];
         // references the ObserverBuilder for the path
         let _o = _oBuilders.get(this.jsd).get(path);
 
+        // creates observer reference for given `path` value
         if (!_o || _o === null) {
             _oBuilders.get(this.jsd).create(path, this);
             _o = _oBuilders.get(this.jsd).get(path);
         }
 
-        // adds onNext handler if `next` prop is defined
-        if (func.hasOwnProperty("next")) {
-            _subRefs.push(_o.onNext.subscribe({next: func.next}));
-        }
+        // references to subsciptions for unsub
+        const _subRefs = [];
 
-        // adds onError handler if `error` prop is defined
-        if (func.hasOwnProperty("error")) {
-            _subRefs.push(_o.onError.subscribe({next: func.error}));
-        }
+        // inits observer handlers if defined on passed `func` object
+        [
+            {call: "onNext", func: "next"},
+            {call: "onError", func: "error"},
+            {call: "onComplete", func: "complete"},
+        ].forEach((obs) => {
+            if (func.hasOwnProperty(obs.func)) {
+                _subRefs.push(_o[obs.call].subscribe({next: func[obs.func]}));
+            }
+        });
 
-        // adds onComplete handler if `complete` prop is defined
-        if (func.hasOwnProperty("complete")) {
-            _subRefs.push(_o.onComplete.subscribe({next: func.complete}));
-        }
-
-        // adds unsubscribe to the Proto object
-        _subs.prototype.unsubscribe = () => {
+        // creates an extensible object to hold our unsubscribe method
+        // and adds unsubscribe calls to the Proto object
+        const _subs = (class {}).prototype.unsubscribe = () => {
             _subRefs.forEach((sub) => {
                 sub.unsubscribe();
             });
         };
+
         return new _subs();
     }
 
@@ -221,6 +219,8 @@ export class Model {
 
     /**
      * get options (if any) for this model"s schema
+     * todo: review relevency for possible removal
+     * @return {any}
      */
     get options() {
         return _schemaOptions.get(this);
@@ -228,19 +228,21 @@ export class Model {
 
     /**
      * applies Object.freeze to model and triggers complete notification
+     * todo: review name refactor to `freeze`
      * @returns {Model}
      */
     lock() {
         Object.freeze(_object.get(this));
         const _self = this;
-        setTimeout(()=> {
+        setTimeout(() => {
             _oBuilders.get(_self.jsd).complete(_self.path, _self);
         }, 0);
         return this;
     }
 
     /**
-     *
+     * getter for locked status
+     * todo: review name refactor to `isFrozen`
      * @returns {boolean}
      */
     get isLocked() {
@@ -256,15 +258,15 @@ export class Model {
     }
 
     /**
-     * TODO: remove and standardize around `signature`
+     * todo: implement with ajv
      * @returns {*}
      */
     get schema() {
-        return JSON.parse(_schemaSignatures.get(this));
+        return this; //JSON.parse(_schemaSignatures.get(this));
     }
 
     /**
-     *
+     * todo: remove and standardize around `schema`
      * @returns {*}
      */
     get signature() {
