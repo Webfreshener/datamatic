@@ -51,7 +51,7 @@ export class Model {
     }
 
     /**
-     * subscribes handler method to observer for model
+     * Subscribes handler method to observer for model
      * @param func
      * @returns {Observable}
      */
@@ -60,15 +60,15 @@ export class Model {
     }
 
     /**
-     * stub for sub-class implementation
+     * Stub for sub-class implementation
      * @returns {{get: function, set: function}}
      */
     get handler() {
-        throw "Model requires sub-classed implmentation of handler getter"
+        throw "Model requires sub-classed implementation of handler getter"
     }
 
     /**
-     * subscribes handler method to property observer for path
+     * Subscribes handler method to property observer for path
      * @param path
      * @param func
      * @return {Observable}
@@ -88,10 +88,10 @@ export class Model {
             _o = _oBuilders.get(this.jsd).get(path);
         }
 
-        // references to subsciptions for unsub
+        // references to subscriptions for Observable
         const _subRefs = [];
 
-        // inits observer handlers if defined on passed `func` object
+        // init's observer handlers if defined on passed `func` object
         [
             {call: "onNext", func: "next"},
             {call: "onError", func: "error"},
@@ -114,6 +114,8 @@ export class Model {
     }
 
     /**
+     * Performs validation on present Model's State
+     * todo: review for removal
      * @returns {boolean|string} returns error string or true
      */
     validate() {
@@ -132,6 +134,7 @@ export class Model {
     }
 
     /**
+     *
      * @returns {boolean}
      */
     get isValid() {
@@ -139,7 +142,7 @@ export class Model {
     }
 
     /**
-     * gets raw value of this model
+     * Raw value of this Model
      * @returns {*}
      */
     valueOf() {
@@ -147,7 +150,7 @@ export class Model {
     }
 
     /**
-     * JSONifies Schema Model
+     * Provides JSON object representation of Model
      */
     toJSON() {
         let _derive = (itm) => {
@@ -174,7 +177,7 @@ export class Model {
                 // returns new JSON tree
                 return _o;
             }
-            // hands back itm if value wan't usable
+            // hands back itm if value wasn't usable
             return itm;
         };
 
@@ -183,7 +186,7 @@ export class Model {
     }
 
     /**
-     * JSON stringifies primitive value
+     * Provides JSON String representation of Model
      * @param pretty - `prettifies` JSON output for readability
      */
     toString(pretty = false) {
@@ -191,14 +194,15 @@ export class Model {
     }
 
     /**
-     * @returns {string} Object ID for Schema
+     * Getter for Model's Unique Object ID
+     * @returns {string} Object ID for Model
      */
     get objectID() {
         return _mdRef.get(this)._id;
     }
 
     /**
-     * getter for document root element
+     * Getter for root element of Model hierarchy
      * @returns {Model}
      */
     get root() {
@@ -206,7 +210,7 @@ export class Model {
     }
 
     /**
-     * getter for `path` to current Element
+     * Getter for `path` to current Element
      * @returns {string}
      */
     get path() {
@@ -215,7 +219,7 @@ export class Model {
     }
 
     /**
-     * getter for models parent Schema or Set element
+     * Getter for Model's parent
      * @returns {Model}
      */
     get parent() {
@@ -224,7 +228,7 @@ export class Model {
     }
 
     /**
-     * returns model status for ancestor hierarchy
+     * Getter for Model validation status for hierarchy
      * @return {boolean}
      */
     get isDirty() {
@@ -233,7 +237,7 @@ export class Model {
     }
 
     /**
-     * getter for model"s JSD owner object
+     * Getter for model's JSD owner object
      * @returns {JSD}
      */
     get jsd() {
@@ -241,8 +245,8 @@ export class Model {
     }
 
     /**
-     * get options (if any) for this model"s schema
-     * todo: review relevency for possible removal
+     * Get options (if any) for this model's schema
+     * todo: review for possible removal
      * @return {any}
      */
     get options() {
@@ -250,7 +254,7 @@ export class Model {
     }
 
     /**
-     * applies Object.freeze to model and triggers complete notification
+     * Applies Object.freeze to model and triggers complete notification
      * todo: review name refactor to `freeze`
      * @returns {Model}
      */
@@ -264,16 +268,17 @@ export class Model {
     }
 
     /**
-     * getter for locked status
+     * Getter for locked status
      * todo: review name refactor to `isFrozen`
      * @returns {boolean}
      */
     get isLocked() {
-        return Object.isFrozen(_object.get(this));
+        let _res = Object.isFrozen(_object.get(this));
+        return !_res ? ((this.parent === null) ? false : this.parent.isLocked) : _res;
     }
 
     /**
-     * provides formatted string for json-schema lookup
+     * Provides formatted string for json-schema lookup
      * @return {string}
      */
     get validationPath() {

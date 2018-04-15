@@ -13,7 +13,7 @@ describe("Schema Class Suite", function () {
             this.jsd = new JSD(jsonSchema);
         });
 
-        describe("LifeCycle: Creation", () => {
+        describe("LifeCycle: Instantiation", () => {
             it("should initialize a schema and a schema object", () => {
                 expect(this.jsd.document).toBeDefined();
                 expect(this.jsd.document instanceof Schema).toBe(true);
@@ -33,7 +33,7 @@ describe("Schema Class Suite", function () {
             });
         });
 
-        describe("LifeCycle: Population", () => {
+        describe("LifeCycle: Creation", () => {
 
             let _d;
 
@@ -66,7 +66,7 @@ describe("Schema Class Suite", function () {
             this.jsd = new JSD(nestedSchema);
         });
 
-        describe("LifeCycle: Creation", () => {
+        describe("LifeCycle: Instantiation", () => {
             it("should initialize a valid schema and a schema object", () => {
                 expect(this.jsd.document).toBeDefined();
                 expect(this.jsd.document instanceof Schema).toBe(true);
@@ -75,7 +75,7 @@ describe("Schema Class Suite", function () {
             });
         });
 
-        describe("LifeCycle: Population", () => {
+        describe("LifeCycle: Create", () => {
 
             let _d;
 
@@ -112,7 +112,7 @@ describe("Schema Class Suite", function () {
 
             let _d;
 
-            it("should updated nested parameter models with valid data and pass validation", () => {
+            it("should updated nested property models with valid data and pass validation", () => {
                 _d = {
                     aObject: {
                         bObject: {
@@ -131,6 +131,6 @@ describe("Schema Class Suite", function () {
                 expect(this.jsd.errors).toBe(null);
                 expect(deepEqual(this.jsd.document.model.aObject.bObject, _d)).toBe(true);
             });
-        })
+        });
     });
 });
