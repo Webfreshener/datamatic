@@ -290,7 +290,7 @@ export class Model {
      * @returns {*}
      */
     get schema() {
-        return this; //JSON.parse(_schemaSignatures.get(this));
+        return this; // _validators.get(this.jsd).$ajv.compile({$ref: this.validationPath});
     }
 
     /**

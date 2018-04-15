@@ -1,6 +1,5 @@
 import {
-    _object, _schemaHelpers, _schemaSignatures,
-    _vPaths, _oBuilders,
+    _object, _schemaHelpers, _vPaths, _oBuilders,
 } from "./_references";
 import {SchemaHelpers} from "./_schemaHelpers";
 import {Model} from "./model";
@@ -60,10 +59,24 @@ export class Schema extends Model {
                     }
                 }
 
+                // performs the operation on Model
                 t[key] = value;
                 return true;
-            }
+            },
+            deleteProperty: (t, key) => {
+                // creates mock of future Model state for evaluation
+                let _o = Object.assign({}, this.model);
+                delete _o[key];
 
+                // validates model with value removed
+                if (!this.test(_o)) {
+                    return false;
+                }
+
+                // performs the operation on Model
+                delete t[key];
+                return true;
+            }
         };
     }
 
@@ -75,13 +88,6 @@ export class Schema extends Model {
      */
     static concatPathAddr(path, addr) {
         return path.length ? `${path}/${addr}` : `${addr}`;
-    }
-
-    /**
-     * @returns schema signature object
-     */
-    get signature() {
-        return JSON.parse(_schemaSignatures.get(this));
     }
 
     /**
@@ -154,5 +160,25 @@ export class Schema extends Model {
         makeClean(this);
 
         return this;
+    }
+
+    /**
+     * Tests value for validation without setting value to Model
+     * @param {JSON} value - JSON value to test for validity
+     * @return {boolean}
+     */
+    test(value) {
+        try {
+            if (!refValidation(this, value)) {
+                // explicit failure on validation
+                return false;
+            }
+        } catch (e) {
+            // couldn't find schema, so is Additional Properties
+            // todo: review `removeAdditional` ajv option for related behavior
+            return true;
+        }
+
+        return true;
     }
 }

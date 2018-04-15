@@ -3,9 +3,8 @@
  */
 import {_ajvRef} from "./_references";
 import {JSD} from "./jsd";
-// import {default as Ajv} from "ajv";
-const Ajv = require('ajv');
-const _schemas = new WeakMap();
+import Ajv from "ajv";
+
 /**
  * Wrapper for Ajv JSON-Schema Validator
  * @private
@@ -33,7 +32,7 @@ export class AjvWrapper {
         const opts = Object.assign(_ajvOptions, ajvOptions);
 
         const _ajv = new Ajv(opts);
-        // initializes Ajv instance for this Doc and stores it to Weakmap
+        // initializes Ajv instance for this Doc and stores it to WeakMap
         _ajvRef.set(this, _ajv);
 
         // tests for schema and sets provided schema as the "root" schema
@@ -47,6 +46,7 @@ export class AjvWrapper {
 
     /**
      * helper method to derive path for given model
+     * todo: review for removal
      * @param model
      * @return {string}
      */
@@ -57,7 +57,7 @@ export class AjvWrapper {
     /**
      * getter for captive Ajv validator
      * -- use this for Ajv API Methods
-     * @returns {Ajv}
+     * @returns {ajv}
      */
     get $ajv() {
         return _ajvRef.get(this);
@@ -76,7 +76,7 @@ export class AjvWrapper {
 /**
  * AJV Options Config in it's entirely for reference
  * only JSD specific option changes are enabled
- * @type {{extendRefs: string, useDefaults: boolean}}
+ * @type {*}
  * @private
  */
 const _ajvOptions = {

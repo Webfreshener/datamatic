@@ -81,13 +81,17 @@ export class MetaData {
     }
 
     /**
-     * getter for parent model
+     * Getter for parent model
      * @returns {string | null}
      */
     get parent() {
         return this.get("_parent");
     }
 
+    /**
+     * Provides representation of Model as JSON string
+     * @return {string}
+     */
     toString() {
         return JSON.stringify(_mData.get(this));
     }

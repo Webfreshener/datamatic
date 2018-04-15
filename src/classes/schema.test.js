@@ -8,7 +8,6 @@ import {default as nestedSchema} from "../../fixtures/simple-nested.schema";
 describe("Schema Class Suite", function () {
 
     describe("Simple Schema Tests", () => {
-
         beforeEach(() => {
             this.jsd = new JSD(jsonSchema);
         });
@@ -130,6 +129,36 @@ describe("Schema Class Suite", function () {
                 this.jsd.document.model.aObject.bObject = _d;
                 expect(this.jsd.errors).toBe(null);
                 expect(deepEqual(this.jsd.document.model.aObject.bObject, _d)).toBe(true);
+            });
+        });
+
+        describe("LifeCycle: Delete", () => {
+
+            let _d = {
+                aObject: {
+                    bObject: {
+                        bValue: 1234,
+                    },
+                },
+                extraObject: {
+                    someValue: "test",
+                },
+            };
+
+            it("should allow deletion of nested properties that are not required", () => {
+                this.jsd.document.model = _d;
+                expect(this.jsd.document.model.extraObject.someValue).toBe("test");
+                delete this.jsd.document.model.extraObject.someValue;
+                expect(this.jsd.errors).toBe(null);
+                expect(this.jsd.document.model.extraObject.someValue).toBe(void(0));
+            });
+
+            it("should prevent deletion of nested properties that are required", () => {
+                this.jsd.document.model = _d;
+                expect(this.jsd.document.model.aObject.bObject.bValue).toBe(1234);
+                delete this.jsd.document.model.aObject.bObject.bValue;
+                expect(typeof this.jsd.errors).toBe("object");
+                expect(this.jsd.document.model.aObject.bObject.bValue).toBe(1234);
             });
         });
     });

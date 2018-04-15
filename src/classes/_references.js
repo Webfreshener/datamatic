@@ -24,7 +24,7 @@ export const _object = new WeakMap();
 export const _mdRef = new WeakMap();
 /**
  * Holder for AjvWrapper references
- * @type {WeakMap<Object, any>}
+ * @type {WeakMap<Object, ajv>}
  * @private
  */
 export const _ajvRef = new WeakMap();

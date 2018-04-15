@@ -1,5 +1,4 @@
 /**
- * Strict JS Objects and Collections created from JSON Schema Definitions
  * @class JSD
  * @example const _jsd = new JSD();
  * _jsd.document = {name: "test"};
@@ -16,7 +15,7 @@ import {AjvWrapper} from "./_ajvWrapper";
 const _documents = new WeakMap();
 
 /**
- * JSD Document Entrypoint
+ * JSD Document Entry-point
  * @public
  */
 export class JSD {
@@ -128,7 +127,7 @@ export class JSD {
         let __ = (typeof json).match(/^(string|object)+$/);
 
         if (__) {
-            // attemptes to parse if type is string and create JSD from JSON
+            // attempts to parse if type is string and create JSD from JSON
             return new JSD((__[1] === "string") ? JSON.parse(json) : json, options);
         }
 
