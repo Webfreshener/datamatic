@@ -67,7 +67,7 @@ export class SchemaHelpers {
     createSchemaChild(key, value, metaData) {
         // populates MetaData config object
         let _d = Object.assign({
-            _path: key,
+            _path: `${this._ref.path}.${key}`,
             _parent: this._ref,
             _root: this._ref.root,
             _jsd: this._ref.jsd,

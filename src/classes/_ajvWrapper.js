@@ -69,7 +69,7 @@ export class AjvWrapper {
      * @param value
      */
     exec(path, value) {
-        return this.$ajv.validate("root", value);
+        return this.$ajv.validate(path, value);
     }
 }
 

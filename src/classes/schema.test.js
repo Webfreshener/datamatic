@@ -1,10 +1,8 @@
 import {Schema} from "./schema";
 import {JSD} from "./jsd";
-import {_vBuilders} from "./_references";
 import {default as deepEqual} from "deep-equal";
 import {default as jsonSchema} from "../../fixtures/simple.schema";
 import {default as nestedSchema} from "../../fixtures/simple-nested.schema";
-import {default as nestedRequire} from "./nested-require.schema";
 
 
 describe("Schema Class Suite", function () {
@@ -37,22 +35,26 @@ describe("Schema Class Suite", function () {
 
         describe("LifeCycle: Population", () => {
 
+            let _d;
+
             it("should populate with valid data and make that data accessible", () => {
-                const _d = {
+                _d = {
                     name: "Ed Testy",
                     age: 99,
                     active: true,
                 };
+
                 this.jsd.document.model = _d;
                 expect(deepEqual(this.jsd.document.model, _d)).toBe(true);
             });
 
             it("should reject invalid data and leave model pristine", () => {
-                const _d = {
+                _d = {
                     name: "Ed Testy",
                     age: 99,
                     active: "123",
                 };
+
                 this.jsd.document.model = _d;
                 expect(deepEqual(this.jsd.document.model, {})).toBe(true);
             });
@@ -75,24 +77,25 @@ describe("Schema Class Suite", function () {
 
         describe("LifeCycle: Population", () => {
 
+            let _d;
+
             it("should populate with valid data and make that data accessible", () => {
-                const _d = {
+                _d = {
                     aObject: {
                         bObject: {
                             bValue: 1234,
                         },
                     },
                 };
-                // const _d = {"foo": "abc", "bar": 2, "lala": {"aValue": 2}};
+
                 this.jsd.document.model = _d;
-                console.log(this.jsd.errors);
                 expect(deepEqual(this.jsd.document.model, _d)).toBe(true);
-                // expect(this.jsd.document.model.aObject.bObject.$ref).toBeDefined();
-                // expect(this.jsd.document.model.aObject.bObject.$ref instanceof Schema).toBe(true)
+                expect(this.jsd.document.model.aObject.bObject.$ref).toBeDefined();
+                expect(this.jsd.document.model.aObject.bObject.$ref instanceof Schema).toBe(true)
             });
 
             it("should reject invalid data and leave model pristine", () => {
-                const _d = {
+                _d = {
                     aObject: {
                         bObject: {
                             bValue: "1234",
@@ -100,11 +103,34 @@ describe("Schema Class Suite", function () {
                     },
                 };
 
-                // const _d = {"foo": "abc", "bar": 2, "lala": {"aValue": "2"}};
-
                 this.jsd.document.model = _d;
                 expect(deepEqual(this.jsd.document.model, {})).toBe(true);
             });
         });
+
+        describe("LifeCycle: Update", () => {
+
+            let _d;
+
+            it("should updated nested parameter models with valid data and pass validation", () => {
+                _d = {
+                    aObject: {
+                        bObject: {
+                            bValue: 1234,
+                        },
+                    },
+                };
+
+                this.jsd.document.model = _d;
+
+                _d = {
+                    bValue: 4321,
+                };
+
+                this.jsd.document.model.aObject.bObject = _d;
+                expect(this.jsd.errors).toBe(null);
+                expect(deepEqual(this.jsd.document.model.aObject.bObject, _d)).toBe(true);
+            });
+        })
     });
 });

@@ -277,7 +277,7 @@ export class Model {
      * @return {string}
      */
     get validationPath() {
-        return `root#/${this.path.replace(/\./, '/properties/')}`;
+        return this.path === "" ? "root#/" : `root#${this.path.replace(/\./g, '/properties/')}`;
     }
 
     /**

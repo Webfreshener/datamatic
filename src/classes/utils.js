@@ -61,19 +61,8 @@ export const refAtKeyValidation = (model, key, value) => {
     // obtains validator reference
     const _v = _validators.get(model.jsd);
 
-    // -- attempts to reformat data payload to validate with -- //
-
-    // creates payload object
-    let _data = {};
-
-    // attempts to get parameter name from path
-    let param = model.path.split(".").pop();
-
-    // if param exists, we pack in the payload / else we set it with value
-    (param.length) ? _data[param] = value : _data = value;
-
     // runs validation...
-    const _res = _v.exec(path, _data);
+    const _res = _v.exec(path, value);
 
     // tests our results for failure
     if (!_res) {
