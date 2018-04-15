@@ -1,7 +1,7 @@
 import {
     _mdRef, _oBuilders, _exists,
     _validPaths, _object,
-    _schemaOptions
+    _schemaOptions, _dirtyModels
 } from "./_references";
 import {JSD} from "./jsd";
 import {MetaData} from "./_metaData";
@@ -18,6 +18,7 @@ const createMetaDataRef = (ref, metaRef) => {
         // will create new MetaData and set reference as root element
         _md = new MetaData(ref, {
             _path: "",
+            _parent: null,
             _root: ref,
             _jsd: metaRef,
         });
@@ -150,21 +151,34 @@ export class Model {
      */
     toJSON() {
         let _derive = (itm) => {
+
+            // uses toJSON impl if defined
             if (itm.hasOwnProperty("toJSON") &&
                 (typeof this.toJSON) === "function") {
                 return itm.toJSON();
             }
+
+            // builds new JSON tree if value is object
             if (typeof itm === "object") {
                 const _o = !Array.isArray(itm) ? {} : [];
                 for (let k in itm) {
+
+                    // we test for property to avoid warnings
                     if (itm.hasOwnProperty(k)) {
+
+                        // applies property to tree
                         _o[k] = _derive(itm[k]);
                     }
                 }
+
+                // returns new JSON tree
                 return _o;
             }
+            // hands back itm if value wan't usable
             return itm;
         };
+
+        // uses closure for evaluation
         return _derive(this.valueOf());
     }
 
@@ -205,8 +219,17 @@ export class Model {
      * @returns {Model}
      */
     get parent() {
-        let __ = _mdRef.get(this).root;
-        return _exists(__) ? __ : this;
+        // attempts to get parent
+        return _mdRef.get(this).parent;
+    }
+
+    /**
+     * returns model status for ancestor hierarchy
+     * @return {boolean}
+     */
+    get isDirty() {
+        let _res = _dirtyModels.get(this.jsd)[this.path];
+        return _res === void(0) ? ((this.parent === null) ? false : this.parent.isDirty) : _res;
     }
 
     /**

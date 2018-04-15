@@ -4,14 +4,18 @@
       "type": "object",
       "properties": {
         "bObject": {
-          "type": "Object",
+          "type": "object",
           "properties": {
             "bValue": {
-              "type": "Number"
+              "type": "integer"
             }
-          }
+          },
+          "required": ["bValue"]
         }
       }
+    ,
+      "required": ["bObject"]
     }
-  }
+  },
+  "required": ["aObject"]
 }

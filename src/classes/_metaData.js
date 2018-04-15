@@ -1,6 +1,4 @@
 import {wf, _mdRef} from "./_references";
-// import {Schema} from "./schema";
-// import {Set} from "./set";
 const _mData = new WeakMap();
 /**
  * @private
@@ -83,14 +81,11 @@ export class MetaData {
     }
 
     /**
-     * path to parent element
-     * @returns {string}
+     * getter for parent model
+     * @returns {string | null}
      */
     get parent() {
-        let _ = this.path || "";
-        let _p = _.split(".");
-        _p = (_p.length > 1) ? _p.slice(0, _p.length - 2).join(".") : _p[0];
-        return _p.length ? this.root.get(_p) : this.root;
+        return this.get("_parent");
     }
 
     toString() {

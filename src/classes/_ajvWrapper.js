@@ -1,10 +1,11 @@
 /**
  * @private
  */
-import {_ajvRef, _validators} from "./_references";
+import {_ajvRef} from "./_references";
 import {JSD} from "./jsd";
-import {default as Ajv} from "ajv";
-
+// import {default as Ajv} from "ajv";
+const Ajv = require('ajv');
+const _schemas = new WeakMap();
 /**
  * Wrapper for Ajv JSON-Schema Validator
  * @private
@@ -31,12 +32,13 @@ export class AjvWrapper {
         // applies user specified options over our default Ajv Options
         const opts = Object.assign(_ajvOptions, ajvOptions);
 
+        const _ajv = new Ajv(opts);
         // initializes Ajv instance for this Doc and stores it to Weakmap
-        _ajvRef.set(this, new Ajv(opts));
+        _ajvRef.set(this, _ajv);
 
         // tests for schema and sets provided schema as the "root" schema
         if (schema !== void(0)) {
-            this.validator.addSchema(schema, "root", false, false);
+            _ajv.addSchema(schema, "root");
         }
 
         // accept no further modifications to this object
@@ -57,7 +59,7 @@ export class AjvWrapper {
      * -- use this for Ajv API Methods
      * @returns {Ajv}
      */
-    get validator() {
+    get $ajv() {
         return _ajvRef.get(this);
     }
 
@@ -67,7 +69,7 @@ export class AjvWrapper {
      * @param value
      */
     exec(path, value) {
-        return this.validator.validate({$ref: path}, value);
+        return this.$ajv.validate("root", value);
     }
 }
 
@@ -79,11 +81,11 @@ export class AjvWrapper {
  */
 const _ajvOptions = {
     // // validation and reporting options:
-    // $data:            false,
-    // allErrors:        false,
-    // verbose:          false,
+    $data:            true,
+    // allErrors:        true,
+    // verbose:          true,
     // $comment:         false, // NEW in Ajv version 6.0
-    // jsonPointers:     false,
+    jsonPointers:     true,
     // uniqueItems:      true,
     // unicode:          true,
     // format:           'fast',
@@ -94,11 +96,11 @@ const _ajvOptions = {
     // referenced schema options:
     // schemaId:         '$id',
     // missingRefs:      true,
-    extendRefs:       'fail', // default 'ignore'
+    // extendRefs:       'fail', // default 'ignore'
     // loadSchema:       undefined, // function(uri: string): Promise {}
     // options to modify validated data:
     // removeAdditional: false,
-    useDefaults:      true,
+    // useDefaults:      true,
     // coerceTypes:      false,
     // asynchronous validation options:
     // transpile:        undefined, // requires ajv-async package

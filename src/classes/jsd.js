@@ -8,12 +8,11 @@
  * console.log(`${jsd.document.get("."}`);
  * // -> Schema
  */
-import {_validPaths, _oBuilders, _validators, _schemaSignatures} from "./_references";
+import {_validPaths, _oBuilders, _validators, _schemaSignatures, _dirtyModels} from "./_references";
 import {ObserverBuilder} from "./_observerBuilder";
 import {Schema} from "./schema";
 import {Set} from "./set";
 import {AjvWrapper} from "./_ajvWrapper";
-
 const _documents = new WeakMap();
 
 /**
@@ -28,7 +27,8 @@ export class JSD {
      */
     constructor(schema, options = {}) {
         // attempts t get user passes Avj options
-        let ajvOptions = options.ajvOptions || null;
+        let ajvOptions = options.hasOwnProperty("ajvOptions") ?
+            options["ajvOptions"] : null;
 
         // defines AjvWrapper instance for this Document and it's Schemas
         const _ajv = new AjvWrapper(this, schema, ajvOptions);
@@ -37,8 +37,8 @@ export class JSD {
         _validators.set(this, _ajv);
 
         // throws error if error message returned
-        if (!_validators.get(this).validator.validateSchema(schema)) {
-            throw _validators.get(this).errors;
+        if (!_ajv.$ajv.validateSchema(schema, false)) {
+            throw _ajv.$ajv.errors;
         }
 
         Object.freeze(schema);
@@ -56,7 +56,10 @@ export class JSD {
             _useSet = true;
         }
 
-        // creates root level document and sets it to this scope's document reference
+        // creates holder for dirty model flags in this scope
+        _dirtyModels.set(this, {});
+
+        // creates root level document and sets it to this scope
         _documents.set(this, new (!_useSet ? Schema : Set)(this));
     }
 
@@ -78,6 +81,24 @@ export class JSD {
      */
     get isValid() {
         return this.document.isValid;
+    }
+
+    /**
+     * validates data against named schema
+     * @param path
+     * @param value
+     * @return {*|void|RegExpExecArray}
+     */
+    validate(path, value) {
+        return _validators.get(this).exec(path, value);
+    }
+
+    /**
+     * getter for Ajv validation error messages
+     * @return {error[] | null}
+     */
+    get errors() {
+        return _validators.get(this).$ajv.errors || null;
     }
 
     /**
@@ -103,10 +124,15 @@ export class JSD {
      * @returns {JSD}
      */
     static fromJSON(json, options) {
+        // quick peek at json param to ensure it looks ok
         let __ = (typeof json).match(/^(string|object)+$/);
+
         if (__) {
+            // attemptes to parse if type is string and create JSD from JSON
             return new JSD((__[1] === "string") ? JSON.parse(json) : json, options);
         }
+
+        // throws error if something didn't look right with the json param
         throw new Error("json must be either JSON formatted string or object");
     }
 }

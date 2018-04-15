@@ -29,25 +29,19 @@ export const _mdRef = new WeakMap();
  */
 export const _ajvRef = new WeakMap();
 /**
- * Holder for lists of required properties for each Schema Node
+ * Holder for models in transition
  *
  * @type {WeakMap}
  * @private
  */
-export const _required_elements = new WeakMap();
+export const _dirtyModels = new WeakMap();
 /**
  * Holder for Schema Validators
  * @type {WeakMap}
  * @private
  */
 export const _validators = new WeakMap();
-/**
- * Holder for Singleton instance references
- *
- * @type {WeakMap}
- * @private
- */
-export const _singletons = new WeakMap();
+
 /**
  * Holder for `Set` element types
  *
