@@ -1,11 +1,10 @@
 import {
     _object, _schemaHelpers, _schemaSignatures,
-    _vPaths, _validators, _oBuilders,
-    _dirtyModels,
+    _vPaths, _oBuilders,
 } from "./_references";
 import {SchemaHelpers} from "./_schemaHelpers";
 import {Model} from "./model";
-import {makeClean, makeDirty, refAtKeyValidation, refValidation} from "./utils";
+import {makeClean, refAtKeyValidation, refValidation} from "./utils";
 
 /**
  * @class Schema
@@ -43,7 +42,7 @@ export class Schema extends Model {
                 let _sH = _schemaHelpers.get(this);
 
                 // refAtKeyValidation(this, key, value);
-                // if key is type'object', we will set directly
+                // if key is type 'object', we will set directly
                 if (typeof key === "object") {
                     const e = _sH.setObject(key);
                     if (typeof e === "string") {
@@ -109,7 +108,7 @@ export class Schema extends Model {
         _object.set(this, new Proxy(Model.createRef(this, {}), this.handler));
 
         Object.keys(value).forEach((k) => {
-            // -- added try/catch to avoid error in jsfiddle
+            // -- added try/catch to avoid error in JSFiddle
             try {
                 this.model[k] = value[k];
             } catch (e) {
@@ -140,7 +139,7 @@ export class Schema extends Model {
      * @param {any} value
      */
     set(key, value) {
-        // attempts validaton of value against schema
+        // attempts validation of value against schema
         if (!refAtKeyValidation(this, key, value)) {
             return false;
         }
@@ -154,7 +153,6 @@ export class Schema extends Model {
         // removes dirtiness
         makeClean(this);
 
-        // returns chainable reference
         return this;
     }
 }
