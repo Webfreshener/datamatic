@@ -9,7 +9,7 @@ import {Model} from "./model";
 
 describe("Set Class Suite", function () {
 
-    describe.only("Simple Set Tests", () => {
+    describe("Simple Set Tests", () => {
         beforeEach(() => {
             this.jsd = new JSD(stringsCollection);
         });
@@ -31,7 +31,7 @@ describe("Set Class Suite", function () {
             });
         });
 
-        describe.only("LifeCycle: Creation", () => {
+        describe("LifeCycle: Creation", () => {
 
             let _d;
 
@@ -51,7 +51,7 @@ describe("Set Class Suite", function () {
         });
     });
 
-    describe.only("Nested Elements Tests", () => {
+    describe("Nested Elements Tests", () => {
         beforeEach(() => {
             this.jsd = new JSD(objectCollection);
         });

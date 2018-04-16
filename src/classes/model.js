@@ -263,8 +263,8 @@ export class Model {
      * @returns {boolean}
      */
     get isFrozen() {
-        let _res = Object.isFrozen(_object.get(this.model));
-        return !_res ? ((this.parent === null) ? false : this.parent.model.isFrozen) : _res;
+        let _res = Object.isFrozen(_object.get(this));
+        return !_res ? ((this.parent === null) ? false : this.parent.isFrozen) : _res;
     }
 
     /**
