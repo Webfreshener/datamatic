@@ -23,7 +23,7 @@ export const makeClean = (model) => {
  * Performs model data validation against json-schema
  * @private
  * @param {Model} model
- * @param {JSON|Boolean|Number|String} value
+ * @param {json|array|boolean|number|string} value
  * @return {boolean}
  */
 export const refValidation = (model, value) => {

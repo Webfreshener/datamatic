@@ -1,5 +1,5 @@
 import {
-    _object, _schemaHelpers, _vPaths, _validPaths, _oBuilders
+    _object, _schemaHelpers, _oBuilders
 } from "./_references";
 import {Model} from "./model";
 import {SchemaHelpers} from "./_schemaHelpers";
@@ -103,14 +103,6 @@ export class Set extends Model {
 
                 let _oDel = _observerDelegates.get(this);
 
-                const sendErr = (msg) => {
-                    if (_oDel) {
-                        _oDel.error(msg);
-                    } else {
-                        _oBuilders.get(this.jsd).error(this.path, msg);
-                    }
-                };
-
                 // we set the value on the array with success
                 if ((typeof value) === "object") {
                     let _sH = _schemaHelpers.get(this);
@@ -160,128 +152,16 @@ export class Set extends Model {
     }
 
     /**
-     * @param {number} idx
-     * @returns {any} element at index if found
-     */
-    getItemAt(idx) {
-        return this.model[idx];
-    }
-
-    /**
-     * @param {number} idx
-     * @param {any} item
-     * @returns {Set} reference to self
-     */
-    setItemAt(idx, item) {
-        this.model[idx] = item;
-        return this;
-    }
-
-    /**
-     *
-     * @param idx
-     * @returns {Set}
-     */
-    removeItemAt(idx) {
-        delete this.model[idx];
-        return this;
-    }
-
-    /**
-     * @param {Array} array
-     * @returns {Set} reference to self
-     */
-    replaceAll(array) {
-        this.model = array;
-        return this;
-    }
-
-    /**
-     * @param {number} idx
-     * @param {any} item
-     * @returns {boolean|Set} reference to self
-     */
-    replaceItemAt(idx, item) {
-        if (!this.validatorBuilder.exec(this.path, item)) {
-            return false;
-        }
-        if (idx > this.model.length) {
-            return false;
-        }
-        if (idx <= this.model.length) {
-            this.model[idx] = item;
-        }
-        return this;
-    }
-
-    /**
-     * @param {any} item
-     * @returns {Set} reference to self
-     */
-    addItem(item) {
-        this.setItemAt(this.model.length, item);
-        return this;
-    }
-
-    /**
-     * @returns {any} item removed from start of list
-     */
-    shift() {
-        return Reflect.apply(Array.prototype.shift, this.model, []);
-    };
-
-    /**
-     * @param {any} items to be added
-     * @returns {Set} reference to self
-     */
-    unshift(...items) {
-        Reflect.apply(Array.prototype.unshift, this.model, arguments);
-        return this;
-    }
-
-    /**
-     * @returns {any} items removed from end of list
-     */
-    pop() {
-        const v = this.model[this.model.length - 1];
-        delete this.model[this.model.length - 1];
-        return v
-    }
-
-    /**
-     * @param {any} items to be added at end of list
-     * @returns {Set} reference to self
-     */
-    push(...items) {
-        items.forEach(item => {
-            return this.addItem(item);
-        });
-        _oBuilders.get(this.jsd).next(this.path, this);
-        return this;
-    }
-
-    /**
      * resets list to empty array
      * @returns {Set} reference to self
      */
     reset() {
+        if (!this.test([])) {
+            _oBuilders.get(this.jsd).error(this.path, this.jsd.errors);
+            return this;
+        }
         _object.set(this, new Proxy(Model.createRef(this, []), this.handler));
         return this;
     }
 
-    /**
-     * @param {function} func - sorting function
-     * @returns {Set} reference to self
-     */
-    sort(func) {
-        this.model.sort(func);
-        return this;
-    }
-
-    /**
-     * @returns {number} number of properties in list
-     */
-    get length() {
-        return this.model.length || 0;
-    }
 }
