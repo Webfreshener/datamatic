@@ -1,15 +1,13 @@
 import {Schema} from "./schema";
 import {JSD} from "./jsd";
 import {default as deepEqual} from "deep-equal";
-import {default as jsonSchema} from "../../fixtures/simple.schema";
-import {default as nestedSchema} from "../../fixtures/simple-nested.schema";
-
+import {basicModel, nestedModel} from "../../fixtures/PropertiesModel.schemas";
 
 describe("Schema Class Suite", function () {
 
     describe("Simple Schema Tests", () => {
         beforeEach(() => {
-            this.jsd = new JSD(jsonSchema);
+            this.jsd = new JSD(basicModel);
         });
 
         describe("LifeCycle: Instantiation", () => {
@@ -21,7 +19,7 @@ describe("Schema Class Suite", function () {
             });
 
             it("should not initialize a invalid schema and schema object", () => {
-                let badSchema = Object.assign({}, jsonSchema, {
+                let badSchema = Object.assign({}, basicModel, {
                     properties: {
                         "bad thing": {
                             type: "INVALID",
@@ -62,7 +60,7 @@ describe("Schema Class Suite", function () {
 
     describe("Nested Schema Tests", () => {
         beforeEach(() => {
-            this.jsd = new JSD(nestedSchema);
+            this.jsd = new JSD(nestedModel);
         });
 
         describe("LifeCycle: Instantiation", () => {

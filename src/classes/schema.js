@@ -1,9 +1,10 @@
 import {
     _object, _schemaHelpers, _vPaths, _oBuilders,
 } from "./_references";
+import {makeClean, refAtKeyValidation, refValidation} from "./utils";
 import {SchemaHelpers} from "./_schemaHelpers";
 import {Model} from "./model";
-import {makeClean, refAtKeyValidation, refValidation} from "./utils";
+
 
 /**
  * @class Schema
@@ -15,11 +16,8 @@ export class Schema extends Model {
     constructor() {
         super(arguments[0]);
 
-        // creates instance of SchemaHelpers
-        const _sH = new SchemaHelpers(this);
-
-        // stores SchemaHelpers reference for later use
-        _schemaHelpers.set(this, _sH);
+        // stores SchemaHelpers reference for use
+        _schemaHelpers.set(this, new SchemaHelpers(this));
 
         // sets validation status reference to map
         _vPaths.set(this, this.path);
@@ -40,7 +38,9 @@ export class Schema extends Model {
             set: (t, key, value) => {
                 let _sH = _schemaHelpers.get(this);
 
+                // todo: review for removal -- is superfluous?
                 // refAtKeyValidation(this, key, value);
+
                 // if key is type 'object', we will set directly
                 if (typeof key === "object") {
                     const e = _sH.setObject(key);
@@ -160,25 +160,5 @@ export class Schema extends Model {
         makeClean(this);
 
         return this;
-    }
-
-    /**
-     * Tests value for validation without setting value to Model
-     * @param {JSON} value - JSON value to test for validity
-     * @return {boolean}
-     */
-    test(value) {
-        try {
-            if (!refValidation(this, value)) {
-                // explicit failure on validation
-                return false;
-            }
-        } catch (e) {
-            // couldn't find schema, so is Additional Properties
-            // todo: review `removeAdditional` ajv option for related behavior
-            return true;
-        }
-
-        return true;
     }
 }

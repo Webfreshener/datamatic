@@ -48,6 +48,7 @@ export class JSD {
 
         let _useSet = false;
 
+
         // if value of type is "array" or an array of items is defined,
         // we handle as Array
         if ((schema.hasOwnProperty("type") && schema.type === "array") ||

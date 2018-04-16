@@ -1,5 +1,5 @@
 import {_dirtyModels, _oBuilders, _validators} from "./_references";
-import {Model} from "./model";
+// import {Model} from "./model";
 
 /**
  * flags `model` node as being out of sync with tree
@@ -38,9 +38,9 @@ export const refValidation = (model, value) => {
  * @return {boolean}
  */
 export const refAtKeyValidation = (model, key, value) => {
-    if (!(model instanceof Model)) {
-        return false;
-    }
+    // if (!(model instanceof Model)) {
+    //     return false;
+    // }
 
     // we don't validate if model is dirty
     if (model.isDirty) {

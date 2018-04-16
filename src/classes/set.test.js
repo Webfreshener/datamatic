@@ -1,442 +1,174 @@
 import {JSD} from "./jsd";
-import {Schema} from "./schema";
-import {Set} from "./set";
-import {_vBuilders} from "./_references";
+import {default as deepEqual} from "deep-equal";
+import {
+    stringsCollection,
+    stringsMinMaxCollection,
+    objectCollection
+} from "../../fixtures/ItemsModel.schemas";
+import {Model} from "./model";
 
-describe("Set Class Test Suite", function () {
-    describe("Initialization Tests", function () {
-        it("should initialize with typeof <String>", function () {
-            let _set = new JSD([{type: "String"}]);
-            expect(_set.document instanceof Set).toBe(true);
+describe("Set Class Suite", function () {
+
+    describe.only("Simple Set Tests", () => {
+        beforeEach(() => {
+            this.jsd = new JSD(stringsCollection);
         });
 
-        it("should initialize with typeof <Number>", function () {
-            let _set = new JSD([{type: "Number"}]);
-            expect(_set.document instanceof Set).toBe(true);
-        });
-
-        it("should initialize with typeof <Object>", function () {
-            let _set = new JSD([{type: "String"}]);
-            expect(_set.document instanceof Set).toBe(true);
-        });
-
-        it("should initialize with special type " * "", function () {
-            let _set = new JSD([{type: "*"}]);
-            expect(_set.document instanceof Set).toBe(true);
-        });
-
-        it("should not initialize with invalid type", function () {
-            expect(() => {
-                new Set("INVALID", null, new JSD("INVALID"));
-            }).toThrow("Schema was invalid. JSON object or formatted string is required");
-        });
-    });
-
-    describe("Validation Tests", function () {
-        "use strict";
-        it("should validate for Strings", function () {
-            let _set = new JSD([{type: "String"}]);
-            // _set.document.addItem(1);
-            _set.document.addItem("1");
-            console.log(_vBuilders.get(_set).list());
-            expect(_set.document.model.length).toEqual(1);
-        });
-
-        it("should validate for Numbers", function () {
-            let _set = new JSD([{type: "Number"}]);
-            _set.document.addItem("1");
-            expect(_set.document.model.length).toEqual(0);
-            _set.document.addItem(1);
-            expect(_set.document.model.length).toEqual(1);
-        });
-
-        it("should validate for Objects", function () {
-            const _schema = [{
-                type: "Object",
-                properties: {
-                    value: {
-                        type: "String",
-                        required: true,
-                    }
-                }
-            }];
-            let _set = new JSD(_schema);
-            // _set.document.model = [
-            //     {value: 1234},
-            // ];
-            // expect(_set.document.model.length).toEqual(0);
-            _set.document.model = [
-                {value: "1234"},
-            ];
-            console.log(_set.document.validate());
-            expect(_set.document.model.length).toEqual(1);
-        });
-
-        it("should set invalid items to null", () => {
-            let _set = new JSD([{type: "String"}]);
-            _set.document.model = ["1", "2", "3", "4"];
-            _set.document.replaceAll(["A", 2, "C"]);
-            expect(_set.document.model[0]).toBe("A");
-            expect(_set.document.model[1]).toBe(void(0));
-            expect(_set.document.model[2]).toBe("C");
-        });
-    });
-
-    describe("Method Tests", function () {
-        "use strict";
-        let _set = new JSD([{type: "*"}]);
-        it("should add items with addItems", function () {
-            _set.document.addItem("A String");
-            expect(_set.document.model.length).toEqual(1);
-        });
-
-        it("should get an item with getItemAt", function () {
-            expect(_set.document.getItemAt(0)).toEqual("A String");
-        });
-
-        it("should replace items with replaceItemAt", function () {
-            _set.document.replaceItemAt(0, "New String");
-            expect(_set.document.model.length).toEqual(1);
-            expect(_set.document.getItemAt(0)).toEqual("New String");
-        });
-
-        it("should remove items with removeItemAt", function () {
-            _set.document.removeItemAt(0);
-            expect(_set.document.model.length).toEqual(0);
-        });
-
-        it("should push items with push", function () {
-            _set.document.push("one potato", "two potato", "three potato", "four");
-            expect(_set.document.model.length).toEqual(4);
-        });
-
-        it("should remove and return the first item from the list with shift", function () {
-            let _val = _set.document.shift();
-            expect(_val).toEqual("one potato");
-            expect(_set.document.model.length).toEqual(3);
-        });
-
-        it("should remove and return the last item from the list with pop", function () {
-            let _val = _set.document.pop();
-            expect(_val).toEqual("four");
-            expect(_set.document.model.length).toEqual(2);
-        });
-
-        it("should insert items to the beginning of the list with unshift", function () {
-            _set.document.unshift("four potato", "five potato");
-            expect(_set.document.model[1]).toEqual("five potato");
-            expect(_set.document.model.length).toEqual(4);
-        });
-        it("should reset list to an empty array with reset", function () {
-            _set.document.reset();
-            expect(_set.document.model.length).toEqual(0);
-        });
-    });
-
-    describe("rxjs tests", () => {
-        it("should subscribe observers", (done) => {
-            let _set = new JSD([{type: "Number"}]);
-            _set.document.subscribe({
-                next: (v) => {
-                    expect(v.model.length).toEqual(1);
-                    expect(v.model[0]).toEqual(123);
-                },
-                error: (e) => {
-                    expect(e).toEqual("'*.polymorphic.0' expected number, type was '<string>'");
-                    done()
-                }
-            });
-            _set.document.addItem(123);
-            _set.document.addItem("fail");
-        });
-    });
-
-    describe("wildcard types and keys", () => {
-        it("should support wildcard keys", (done) => {
-            const _schema = [{
-                type: "Object",
-                properties: {
-                    "*": {
-                        type: "Number",
-                    },
-                },
-            }];
-            const _h = {
-                next: (schema) => {
-                    console.log(_vBuilders.get(_jsd).list());
-                    console.log(schema.validate());
-                    console.log(`${schema}`);
-                    expect(schema.model[0].valueA).toBe(1);
-                    expect(schema.model[1].valueB).toBe(2);
-                    console.log(schema.model[0].$ref);
-                    // expect(schema.model[0].$ref instanceof Schema).toBe(true);
-                    // expect(schema.model[1].$ref instanceof Schema).toBe(true);
-                    done();
-                },
-                error: (e) => {
-                    done(e);
-                },
-            };
-            const _jsd = new JSD(_schema);
-            _jsd.document.subscribe(_h);
-            _jsd.document.model = [
-                {valueA: 1},
-                {valueB: 2},
-            ];
-        });
-        it("should support wildcard types", (done) => {
-            const _schema = [{
-                type: "Object",
-                properties: {
-                    "value": {
-                        type: "*",
-                    },
-                },
-            }];
-            const _h = {
-                next: (schema) => {
-                    expect(schema.model[0].value).toBe(1);
-                    expect(schema.model[1].value).toBe("2");
-                    expect(schema.model[0].$ref instanceof Schema).toBe(true);
-                    expect(schema.model[1].$ref instanceof Schema).toBe(true);
-                    done();
-                },
-                error: (e) => {
-                    done(`error: ${e}`);
-                },
-            };
-            const _jsd = new JSD(_schema);
-
-            _jsd.document.subscribe(_h);
-            _jsd.document.model = [
-                {value: 1},
-                {value: "2"},
-            ];
-
-        });
-
-        it("should support wildcard keys and types", (done) => {
-            const _schema = [{
-                type: "Object",
-                properties: {
-                    "*": {
-                        type: "*",
-                    },
-                }
-            }];
-            const _h = {
-                next: (schema) => {
-                    expect(schema.model[0].valueA).toBe(1);
-                    expect(schema.model[1].valueB).toBe("2");
-                    expect(schema.model[0].$ref instanceof Schema).toBe(true);
-                    expect(schema.model[1].$ref instanceof Schema).toBe(true);
-                    done();
-                },
-                error: (e) => {
-                    done(`error: ${e}`);
-                },
-            };
-            const _jsd = new JSD(_schema);
-            _jsd.document.subscribe(_h);
-            _jsd.document.model = [
-                {valueA: 1},
-                {valueB: "2"},
-
-            ];
-        });
-    });
-
-    describe("Nested Element", () => {
-        it("should support being nested in other properties", (done) => {
-            const _jsd = new JSD({
-                aString: {
-                    type: "String",
-                },
-                anArray: {
-                    type: "Array",
-                    required: true,
-                    properties: [{
-                        type: "Number",
-                    }],
-                },
-            });
-            _jsd.document.subscribe({
-                next: (val) => {
-                    console.log(`${_jsd.document.validate()}`);
-                    expect(_jsd.document.model.anArray.length).toBe(3);
-                    done();
-                },
-                error: (e) => {
-                    done(e);
-                }
-            });
-            _jsd.document.model = {
-                aString: "foo",
-                anArray: [1, 2, 3],
-            };
-
-        });
-    });
-
-    describe("Polymorphic properties", () => {
-        it("should allow for multiple types of properties", (done) => {
-            const _jsd = new JSD([{
-                type: "Object",
-                properties: {
-                    value: {
-                        type: "Number",
-                    },
-                },
-            }, {
-                type: "Object",
-                properties: {
-                    value: {
-                        type: "Object",
-                        properties: {
-                            subEl: {
-                                type: "String",
-                            },
-                            subObj: {
-                                type: "Object",
-                                properties: {
-                                    subEl: {
-                                        type: "String",
-                                    },
-                                },
-                            },
-                        },
-                    },
-                },
-            },]);
-            let cnt = 0;
-            const _h = {
-                next: (schema) => {
-                    console.log(`${schema}`);
-                    expect(schema.model[0].$ref instanceof Schema).toBe(true);
-                    expect(schema.model[0].value).toBe(1);
-                    expect(schema.model[1].value).toBe(2);
-                    expect(schema.model[1].$ref instanceof Schema).toBe(true);
-                    expect(schema.model[2].$ref instanceof Schema).toBe(true);
-                    expect(typeof schema.model[2].value).toBe("object");
-                    expect(schema.model[2].value.$ref instanceof Schema).toBe(true);
-                    expect(schema.model[2].value.subEl).toBe("foo");
-                    expect(typeof schema.model[2].value.subObj).toBe("object");
-                    expect(schema.model[2].value.subObj.subEl).toBe("bar");
-                    expect(schema.model[2].value.hasOwnProperty("$ref")).toBe(true);
-                    expect(schema.model[2].value.subObj.hasOwnProperty("$ref")).toBe(true);
-                    done();
-                },
-                error: (e) => {
-                    done(`error: ${e}`);
-                },
-            };
-            _jsd.document.subscribe(_h);
-            _jsd.document.model = [
-                {value: 1},
-                {value: 2},
-                {
-                    value: {
-                        subEl: "foo",
-                        subObj: {
-                            subEl: "bar"
-                        }
-                    }
-                },
-            ];
-        });
-    });
-
-    describe("back ref", () => {
-        it("should provide backref on model", (done) => {
-            const _jsd = new JSD([{
-                type: "Object",
-                properties: {
-                    value: {
-                        type: "Number",
-                    },
-                },
-            }]);
-            let cnt = 0;
-            const _h = {
-                next: (schema) => {
-                    expect(schema.model[0].$ref instanceof Schema).toBe(true);
-                    expect(schema.model[0].value).toBe(1);
-                    expect(schema.model[1].value).toBe(2);
-                    expect(schema.model[1].$ref instanceof Schema).toBe(true);
-                    done();
-                },
-                error: (e) => {
-                    done(`error: ${e}`);
-                },
-            };
-            _jsd.document.subscribe(_h);
-            _jsd.document.model = [
-                {value: 1},
-                {value: 2},
-            ];
-        });
-    });
-
-    describe("long arrays", () => {
-        it("should handle array", (done) => {
-            let list = [{
-                name: "Alice",
-                value: 1,
-            }, {
-                name: "Bob",
-                value: 2,
-            }, {
-                name: "Charlie",
-                value: 3,
-            }, {
-                name: "Dave",
-                value: 4,
-            }, {
-                name: "Ed",
-                value: 5,
-            }, {
-                name: "Frank",
-                value: 6,
-            }, {
-                name: "Gary",
-                value: 7,
-            }, {
-                name: "Helen",
-                value: 8,
-            }, {
-                name: "Ike",
-                value: 9,
-            }, {
-                name: "Janet",
-                value: 10,
-            }, {
-                name: "Kim",
-                value: 11,
-            }];
-
-            const _jsd = new JSD([{
-                type: "Object",
-                properties: {
-                    name: {
-                        type: "String",
-                    },
-                    value: {
-                        type: "Number",
-                    },
-                },
-            }]);
-
-            _jsd.document.subscribe({
-                next: (doc) => {
-                    expect(doc.length).toBe(11);
-                    done()
-                },
-                error: (e) => {
-                    done(e);
-                },
+        describe("LifeCycle: Instantiation", () => {
+            it("should initialize a schema and a schema object", () => {
+                expect(this.jsd.document).toBeDefined();
+                expect(this.jsd.document instanceof Model).toBe(true);
+                expect(Array.isArray(this.jsd.document.model)).toBe(true);
+                expect(this.jsd.document.model.$ref).toBeDefined();
+                expect(this.jsd.document.model.$ref instanceof Model).toBe(true);
             });
 
-            _jsd.document.model = list;
+            it("should not initialize a invalid schema and schema object", () => {
+                let badSchema = Object.assign({}, stringsCollection, {
+                    items: [{type: "INVALID"}],
+                });
+                expect(() => new JSD(badSchema)).toThrow();
+            });
+        });
+
+        describe.only("LifeCycle: Creation", () => {
+
+            let _d;
+
+            it("should populate with valid data and make that data accessible", () => {
+                _d = ["abc", "def", "ghi"];
+
+                this.jsd.document.model = _d;
+                expect(deepEqual(this.jsd.document.model, _d)).toBe(true);
+            });
+
+            it("should reject invalid data and leave model pristine", () => {
+                _d = [99, 100, 101];
+
+                this.jsd.document.model = _d;
+                expect(deepEqual(this.jsd.document.model, {})).toBe(true);
+            });
+        });
+    });
+
+    describe.only("Nested Elements Tests", () => {
+        beforeEach(() => {
+            this.jsd = new JSD(objectCollection);
+        });
+
+        describe("LifeCycle: Instantiation", () => {
+            it("should initialize a valid schema and a schema object", () => {
+                expect(this.jsd.document).toBeDefined();
+                expect(this.jsd.document instanceof Model).toBe(true);
+                expect(this.jsd.document.model.$ref).toBeDefined();
+                expect(this.jsd.document.model.$ref instanceof Model).toBe(true);
+            });
+        });
+
+        describe("LifeCycle: Create", () => {
+
+            let _d;
+
+            it("should populate with valid data and make that data accessible", () => {
+                _d = [{
+                    name: "Item A",
+                    value: 1,
+                }, {
+                    name: "Item B",
+                }, {
+                    name: "Item C",
+                    value: 2,
+                }];
+
+                this.jsd.document.model = _d;
+                expect(deepEqual(this.jsd.document.model, _d)).toBe(true);
+            });
+
+            it("should reject invalid data and leave model pristine", () => {
+                _d = [{
+                    name: 123,
+                    value: 1,
+                }, {
+                    value: "Item B",
+                }, {
+                    value: 2,
+                }];
+
+                this.jsd.document.model = _d;
+                expect(typeof this.jsd.errors).toBe("object");
+                expect(deepEqual(this.jsd.document.model, [])).toBe(true);
+            });
+        });
+
+        describe("LifeCycle: Update", () => {
+
+            let _d;
+
+            it("should updated nested item objects with valid data and pass validation", () => {
+                _d = [{
+                    name: "Item A",
+                    value: 1,
+                }, {
+                    name: "Item B",
+                }, {
+                    name: "Item C",
+                    value: 2,
+                }];
+
+                this.jsd.document.model = _d;
+
+                this.jsd.document.model[1] = {
+                    name: "Item B",
+                    value: 3
+                };
+
+                expect(this.jsd.errors).toBe(null);
+                expect(this.jsd.document.model[1]).toEqual({name: "Item B", value: 3});
+            });
+
+            it("should updated properties in nested objects with valid data and pass validation", () => {
+                _d = [{
+                    name: "Item A",
+                    value: 1,
+                }, {
+                    name: "Item B",
+                }, {
+                    name: "Item C",
+                    value: 2,
+                }];
+
+                this.jsd.document.model = _d;
+
+                this.jsd.document.model[1].value = 3;
+
+
+                expect(this.jsd.errors).toBe(null);
+                expect(this.jsd.document.model[1]).toEqual({name: "Item B", value: 3});
+            });
+        });
+
+        describe("LifeCycle: Delete", () => {
+            beforeEach(() => {
+                this.jsd = new JSD(stringsMinMaxCollection);
+            });
+
+            _d = ["Item A", "Item B", "Item C"];
+
+            it("should allow deletion of nested properties that are not required", () => {
+                this.jsd.document.model = _d;
+                delete this.jsd.document.model[1];
+                expect(this.jsd.errors).toBe(null);
+                expect(this.jsd.document.model.length).toBe(2);
+            });
+
+            it("should prevent deletion of nested properties that are required", () => {
+                this.jsd.document.model = _d;
+                delete this.jsd.document.model[0];
+                delete this.jsd.document.model[1];
+                delete this.jsd.document.model[2];
+                expect(typeof this.jsd.errors).toBe("object");
+                expect(this.jsd.document.model.length).toBe(1);
+            });
         });
     });
 });

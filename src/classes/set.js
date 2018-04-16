@@ -1,8 +1,9 @@
 import {
-    _object, _schemaHelpers, _vPaths, _validPaths
+    _object, _schemaHelpers, _vPaths, _validPaths, _oBuilders
 } from "./_references";
 import {Model} from "./model";
 import {SchemaHelpers} from "./_schemaHelpers";
+import {makeClean, refAtKeyValidation, refValidation} from "./utils";
 
 const _observerDelegates = new WeakMap();
 
@@ -16,7 +17,6 @@ export class Set extends Model {
     constructor() {
         super(arguments[0]);
         _schemaHelpers.set(this, new SchemaHelpers(this));
-
         _object.set(this, new Proxy(Model.createRef(this, []), this.handler));
     }
 
@@ -32,7 +32,8 @@ export class Set extends Model {
      * @param value
      */
     set model(value) {
-        if (!Array.isArray(value) || this.isLocked) {
+        if (!Array.isArray(value) || this.isLocked ||
+            !refValidation(this, value)) {
             return false;
         }
 
@@ -46,7 +47,8 @@ export class Set extends Model {
             _observerDelegates.set(this, {
                 next: () => {
                     if (this.length === value.length) {
-                        this.observerBuilder.next(this.path, this);
+                        makeClean(this);
+                        _oBuilders.get(this.jsd).next(this.path, this);
                     }
                 },
                 error: () => {
@@ -57,10 +59,13 @@ export class Set extends Model {
                 _object.get(this)[cnt++] = val;
             });
         } catch (e) {
-            return this.observerBuilder.error(this.path, e);
+            console.error(e);
+            // return _oBuilders.get(this.jsd).error(this.path, e);
         }
 
-        this.observerBuilder.next(this.path, this);
+        makeClean(this);
+
+        _oBuilders.get(this.jsd).next(this.path, this);
         return true;
     }
 
@@ -92,57 +97,63 @@ export class Set extends Model {
                     return true;
                 }
 
+                if (!refAtKeyValidation(this, "items", value)) {
+                    return false;
+                }
+
                 let _oDel = _observerDelegates.get(this);
+
                 const sendErr = (msg) => {
-                    _validPaths.get(this.jsd)[this.path] = msg;
                     if (_oDel) {
                         _oDel.error(msg);
                     } else {
-                        this.observerBuilder.error(this.path, msg);
+                        _oBuilders.get(this.jsd).error(this.path, msg);
                     }
                 };
-                let keyPath = `${_vPaths.get(this)}`.replace(/^\.?(.*)$/, "$1");
-                let cnt = 0;
-                let msg = `unable to validate "${this.path}"`;
-                (this.schema.polymorphic || this.schema).some(() => {
-                    msg = this.validatorBuilder.exec(`${keyPath}.${cnt++}`, value);
-                    return (msg === true);
-                });
-                // if error message is present we do error handling and return
-                if ((typeof msg) === "string") {
-                    sendErr(msg);
-                    return false;
-                }
 
                 // we set the value on the array with success
                 if ((typeof value) === "object") {
                     let _sH = _schemaHelpers.get(this);
                     // note we use the last value of `cnt` and walk back one iteration
-                    value = _sH.setChildObject(`${keyPath}.${cnt - 1}`, value);
+                    value = _sH.setChildObject(`${this.path}`, value);
                 }
+
                 t[idx] = value;
-                msg = this.validate();
-                if ((typeof msg) === "boolean") {
-                    _validPaths.get(this.jsd)[this.path] = true;
-                    if (_oDel) {
-                        _oDel.next(this);
-                    } else {
-                        this.observerBuilder.next(this.path, this);
-                    }
-                    return true;
-                } else {
-                    sendErr(msg);
-                    return false;
+
+                // makes clean if not serial operation
+                if (!_oDel) {
+                    makeClean(this);
                 }
+
+                // updates observers
+                _oBuilders.get(this.jsd).next(this.path, this);
+                return true;
             },
             deleteProperty: (t, idx) => {
-                if (idx >= t.length) {
-                    const e = `index ${idx} is out of bounds on ${this.path}`;
-                    this.observerBuilder.error(this.path, e);
+                // creates mock of future Model state for evaluation
+                let _o = [].concat(this.model);
+                _o.splice(idx, 1);
+
+                // validates mock of change state
+                if (!refValidation(this, _o)) {
                     return false;
                 }
+
+                // ensures index of operation is in range
+                if (idx >= t.length) {
+                    const e = `index ${idx} is out of bounds on ${this.path}`;
+                    _oBuilders.get(this.jsd).error(this.path, e);
+                    return false;
+                }
+
+                // applies operation
                 t.splice(idx, 1);
-                this.observerBuilder.next(this.path, t);
+
+                // flags model as in sync with tree
+                makeClean(this);
+
+                // updates observers
+                _oBuilders.get(this.jsd).next(this.path, t);
                 return true;
             }
         };
@@ -245,7 +256,7 @@ export class Set extends Model {
         items.forEach(item => {
             return this.addItem(item);
         });
-        this.observerBuilder.next(this.path, this);
+        _oBuilders.get(this.jsd).next(this.path, this);
         return this;
     }
 

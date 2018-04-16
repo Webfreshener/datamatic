@@ -65,9 +65,11 @@ export class SchemaHelpers {
      * @returns {Model|string} - Schema, Set or error string
      */
     createSchemaChild(key, value, metaData) {
+        let path = !Array.isArray(this._ref.model) ?
+            `${this._ref.path}/properties/${key}` : `${this._ref.path}/items`;
         // populates MetaData config object
         let _d = Object.assign({
-            _path: `${this._ref.path}.${key}`,
+            _path: path,
             _parent: this._ref,
             _root: this._ref.root,
             _jsd: this._ref.jsd,
@@ -88,7 +90,7 @@ export class SchemaHelpers {
      */
     validate(key, value) {
         const _v = _validators.get(this._ref.jsd);
-        if (!_v.validate(`${this._ref.validationPath}/`, value)) {
+        if (!_v.validate(`${this._ref.path}/`, value)) {
             return _v.errors;
         }
 

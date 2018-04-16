@@ -5,6 +5,7 @@ import {
 } from "./_references";
 import {JSD} from "./jsd";
 import {MetaData} from "./_metaData";
+import {refValidation} from "./utils";
 
 /**
  *
@@ -282,7 +283,8 @@ export class Model {
      * @return {string}
      */
     get validationPath() {
-        return this.path === "" ? "root#/" : `root#${this.path.replace(/\./g, '/properties/')}`;
+        return this.path === "" ? "root#/" : `root#${this.path}`;
+            // `root#${this.path.replace(/\./g, '/properties/')}`;
     }
 
     /**
@@ -299,6 +301,26 @@ export class Model {
      */
     get signature() {
         return this.schema;
+    }
+
+    /**
+     * Tests value for validation without setting value to Model
+     * @param {JSON} value - JSON value to test for validity
+     * @return {boolean}
+     */
+    test(value) {
+        try {
+            if (!refValidation(this, value)) {
+                // explicit failure on validation
+                return false;
+            }
+        } catch (e) {
+            // couldn't find schema, so is Additional Properties
+            // todo: review `removeAdditional` ajv option for related behavior
+            return true;
+        }
+
+        return true;
     }
 
     /**
