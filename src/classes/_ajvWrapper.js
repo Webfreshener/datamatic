@@ -31,6 +31,12 @@ export class AjvWrapper {
         // applies user specified options over our default Ajv Options
         const opts = Object.assign(_ajvOptions, ajvOptions);
 
+        // makes user defined options object accessible for evaluation
+        Object.defineProperty(this, "options", {
+           get: () => opts,
+           enumerable: true,
+        });
+
         const _ajv = new Ajv(opts);
         // initializes Ajv instance for this Doc and stores it to WeakMap
         _ajvRef.set(this, _ajv);

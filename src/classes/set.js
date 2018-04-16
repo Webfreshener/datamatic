@@ -70,7 +70,7 @@ export class Set extends Model {
     }
 
     get handler() {
-        return {
+        return Object.assign(super.handler, {
             get: (t, idx) => {
                 // TODO: review for removal
                 // if (typeof idx === "symbol") {
@@ -84,8 +84,8 @@ export class Set extends Model {
                 if (idx in Array.prototype) {
                     if (["pop", "push", "shift", "splice"].indexOf(idx) > -1) {
                         return () => {
-                            let _arr = [].concat(this.model);
-                            const _res = _arr[idx].apply(this.model, arguments);
+                            let _arr = [].concat(this.model.toJSON());
+                            const _res = _arr[idx].apply(_arr, arguments);
 
                             if (!this.test(_arr)) {
                                 _oBuilders.get(this.jsd).error(this.path, this.jsd.errors);
@@ -168,20 +168,6 @@ export class Set extends Model {
                 _oBuilders.get(this.jsd).next(this.path, t);
                 return true;
             }
-        };
+        });
     }
-
-    /**
-     * resets list to empty array
-     * @returns {Set} reference to self
-     */
-    reset() {
-        if (!this.test([])) {
-            _oBuilders.get(this.jsd).error(this.path, this.jsd.errors);
-            return this;
-        }
-        _object.set(this, new Proxy(Model.createRef(this, []), this.handler));
-        return this;
-    }
-
 }

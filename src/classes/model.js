@@ -1,11 +1,10 @@
 import {
     _mdRef, _oBuilders, _exists,
-    _validPaths, _object,
-    _schemaOptions, _dirtyModels
+    _object, _schemaOptions, _dirtyModels
 } from "./_references";
 import {JSD} from "./jsd";
 import {MetaData} from "./_metaData";
-import {refValidation} from "./utils";
+import {makeClean, makeDirty, refValidation} from "./utils";
 
 /**
  *
@@ -61,11 +60,20 @@ export class Model {
     }
 
     /**
-     * Stub for sub-class implementation
-     * @returns {{get: function, set: function}}
+     *
+     * @return {object}
      */
     get handler() {
-        throw "Model requires sub-classed implementation of handler getter"
+        return {
+            setPrototypeOf: () => false,
+            isExtensible: (t) => Object.isExtensible(t),
+            preventExtensions: (t) => Object.preventExtensions(t),
+            getOwnPropertyDescriptor: (t, key) => Object.getOwnPropertyDescriptor(t, key),
+            defineProperty: () => false,
+            has: (t, key) => key in t,
+            ownKeys: (t) => Reflect.ownKeys(t),
+            apply: () => false,
+        };
     }
 
     /**
@@ -105,7 +113,8 @@ export class Model {
 
         // creates an extensible object to hold our unsubscribe method
         // and adds unsubscribe calls to the Proto object
-        const _subs = (class {}).prototype.unsubscribe = () => {
+        const _subs = (class {
+        }).prototype.unsubscribe = () => {
             _subRefs.forEach((sub) => {
                 sub.unsubscribe();
             });
@@ -115,31 +124,11 @@ export class Model {
     }
 
     /**
-     * Performs validation on present Model's State
-     * todo: review for removal
-     * @returns {boolean|string} returns error string or true
+     * stub for model getter, overridden by Model sub-class
+     * @return {object|array|null}
      */
-    validate() {
-        const paths = _validPaths.get(this.jsd);
-        try {
-            Object.keys(paths).forEach((k) => {
-                const _t = typeof paths[k];
-                if (_t === "string") {
-                    throw paths[k];
-                }
-            });
-        } catch (e) {
-            return e;
-        }
-        return true;
-    }
-
-    /**
-     *
-     * @returns {boolean}
-     */
-    get isValid() {
-        return (typeof this.validate() !== "string");
+    get model() {
+        return null;
     }
 
     /**
@@ -256,12 +245,12 @@ export class Model {
 
     /**
      * Applies Object.freeze to model and triggers complete notification
-     * -- unlike Object.freeze, this prvents modification
+     * -- unlike Object.freeze, this prevents modification
      * -- to all children in Model hierarchy
      * @returns {Model}
      */
     freeze() {
-        Object.freeze(_object.get(this));
+        Object.freeze(_object.get(this.model));
         const _self = this;
         setTimeout(() => {
             _oBuilders.get(_self.jsd).complete(_self.path, _self);
@@ -274,8 +263,8 @@ export class Model {
      * @returns {boolean}
      */
     get isFrozen() {
-        let _res = Object.isFrozen(_object.get(this));
-        return !_res ? ((this.parent === null) ? false : this.parent.isFrozen) : _res;
+        let _res = Object.isFrozen(_object.get(this.model));
+        return !_res ? ((this.parent === null) ? false : this.parent.model.isFrozen) : _res;
     }
 
     /**
@@ -284,7 +273,6 @@ export class Model {
      */
     get validationPath() {
         return this.path === "" ? "root#/" : `root#${this.path}`;
-            // `root#${this.path.replace(/\./g, '/properties/')}`;
     }
 
     /**
@@ -305,7 +293,7 @@ export class Model {
 
     /**
      * Tests value for validation without setting value to Model
-     * @param {JSON} value - JSON value to test for validity
+     * @param {json} value - JSON value to test for validity
      * @return {boolean}
      */
     test(value) {
@@ -321,6 +309,50 @@ export class Model {
         }
 
         return true;
+    }
+
+    /**
+     * resets Model to empty value
+     * @return {Model}
+     */
+    reset() {
+        const _isArray = Array.isArray(this.model);
+        const _o = !_isArray ? {} : [];
+
+        // validates that this model be returned to an empty value
+        if (!this.test(_o)) {
+            _oBuilders.get(this.jsd).error(this.path, this.jsd.errors);
+            return this;
+        }
+
+        // marks this model as out of sync with tree
+        makeDirty(this);
+
+        // closure to handle the freeze operation safely
+        const _freeze = (itm) => {
+            if (!Object.isFrozen(itm)) {
+               itm.freeze();
+            }
+        };
+
+        // freezes all child Model/Elements
+        // -- prevent changes to Children
+        // -- sends "complete" notification to their Observers
+        // -- revokes their Models if revocable
+        const _i = !_isArray ? Object.keys(this.model) : this.model;
+        _i.forEach((itm) => _freeze((!_isArray) ? _i[itm] : itm));
+
+        // creates new Proxied Model to operate on
+        const _p = new Proxy(Model.createRef(this, _o), this.handler);
+        _object.set(this, _p);
+
+        // marks this model as back in sync with tree
+        makeClean(this);
+
+        // sends notification of model change
+        _oBuilders.get(this.jsd).next(this.path, this);
+
+        return this;
     }
 
     /**

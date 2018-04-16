@@ -31,7 +31,7 @@ export class Schema extends Model {
      * @returns {{get: function, set: function}}
      */
     get handler() {
-        return {
+        return Object.assign(super.handler, {
             get: (t, key) => {
                 return key === "$ref" ? this : t[key];
             },
@@ -77,7 +77,7 @@ export class Schema extends Model {
                 delete t[key];
                 return true;
             }
-        };
+        });
     }
 
     /**
