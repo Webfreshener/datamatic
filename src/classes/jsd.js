@@ -7,7 +7,10 @@
  * console.log(`${jsd.document.get("."}`);
  * // -> Schema
  */
-import {_validPaths, _oBuilders, _validators, _schemaSignatures, _dirtyModels} from "./_references";
+import {
+    _oBuilders, _validators,
+    _dirtyModels, _schemaSignatures
+} from "./_references";
 import {ObserverBuilder} from "./_observerBuilder";
 import {Schema} from "./schema";
 import {Set} from "./set";
@@ -43,7 +46,6 @@ export class JSD {
         Object.freeze(schema);
         _schemaSignatures.set(this, schema);
 
-        _validPaths.set(this, {});
         _oBuilders.set(this, new ObserverBuilder());
 
         let _useSet = false;

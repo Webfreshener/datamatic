@@ -1,28 +1,28 @@
 {
   "type": "File",
   "start": 0,
-  "end": 2015,
+  "end": 1375,
   "loc": {
     "start": {
       "line": 1,
       "column": 0
     },
     "end": {
-      "line": 109,
+      "line": 76,
       "column": 0
     }
   },
   "program": {
     "type": "Program",
     "start": 0,
-    "end": 2015,
+    "end": 1375,
     "loc": {
       "start": {
         "line": 1,
         "column": 0
       },
       "end": {
-        "line": 109,
+        "line": 76,
         "column": 0
       }
     },
@@ -608,16 +608,16 @@
           "trailingComments": [
             {
               "type": "CommentBlock",
-              "value": "*\n * Holder for registered JS Object references\n *\n * @type {WeakMap}\n * @private\n ",
-              "start": 176,
-              "end": 263,
+              "value": "*\n * Holder for Schema and Set instance references\n *\n * @type {WeakMap}\n * @private\n ",
+              "start": 177,
+              "end": 267,
               "loc": {
                 "start": {
-                  "line": 11,
+                  "line": 12,
                   "column": 0
                 },
                 "end": {
-                  "line": 16,
+                  "line": 17,
                   "column": 3
                 }
               }
@@ -628,190 +628,16 @@
         "trailingComments": [
           {
             "type": "CommentBlock",
-            "value": "*\n * Holder for registered JS Object references\n *\n * @type {WeakMap}\n * @private\n ",
-            "start": 176,
-            "end": 263,
-            "loc": {
-              "start": {
-                "line": 11,
-                "column": 0
-              },
-              "end": {
-                "line": 16,
-                "column": 3
-              }
-            }
-          }
-        ]
-      },
-      {
-        "type": "ExportNamedDeclaration",
-        "start": 264,
-        "end": 300,
-        "loc": {
-          "start": {
-            "line": 17,
-            "column": 0
-          },
-          "end": {
-            "line": 17,
-            "column": 36
-          }
-        },
-        "specifiers": [],
-        "source": null,
-        "declaration": {
-          "type": "VariableDeclaration",
-          "start": 271,
-          "end": 300,
-          "loc": {
-            "start": {
-              "line": 17,
-              "column": 7
-            },
-            "end": {
-              "line": 17,
-              "column": 36
-            }
-          },
-          "declarations": [
-            {
-              "type": "VariableDeclarator",
-              "start": 277,
-              "end": 299,
-              "loc": {
-                "start": {
-                  "line": 17,
-                  "column": 13
-                },
-                "end": {
-                  "line": 17,
-                  "column": 35
-                }
-              },
-              "id": {
-                "type": "Identifier",
-                "start": 277,
-                "end": 283,
-                "loc": {
-                  "start": {
-                    "line": 17,
-                    "column": 13
-                  },
-                  "end": {
-                    "line": 17,
-                    "column": 19
-                  },
-                  "identifierName": "_kinds"
-                },
-                "name": "_kinds",
-                "leadingComments": null
-              },
-              "init": {
-                "type": "NewExpression",
-                "start": 286,
-                "end": 299,
-                "loc": {
-                  "start": {
-                    "line": 17,
-                    "column": 22
-                  },
-                  "end": {
-                    "line": 17,
-                    "column": 35
-                  }
-                },
-                "callee": {
-                  "type": "Identifier",
-                  "start": 290,
-                  "end": 297,
-                  "loc": {
-                    "start": {
-                      "line": 17,
-                      "column": 26
-                    },
-                    "end": {
-                      "line": 17,
-                      "column": 33
-                    },
-                    "identifierName": "WeakMap"
-                  },
-                  "name": "WeakMap"
-                },
-                "arguments": []
-              },
-              "leadingComments": null
-            }
-          ],
-          "kind": "const",
-          "leadingComments": [
-            {
-              "type": "CommentBlock",
-              "value": "*\n * Holder for registered JS Object references\n *\n * @type {WeakMap}\n * @private\n ",
-              "start": 176,
-              "end": 263,
-              "loc": {
-                "start": {
-                  "line": 11,
-                  "column": 0
-                },
-                "end": {
-                  "line": 16,
-                  "column": 3
-                }
-              }
-            }
-          ],
-          "trailingComments": [
-            {
-              "type": "CommentBlock",
-              "value": "*\n * Holder for Schema and Set instance references\n *\n * @type {WeakMap}\n * @private\n ",
-              "start": 301,
-              "end": 391,
-              "loc": {
-                "start": {
-                  "line": 18,
-                  "column": 0
-                },
-                "end": {
-                  "line": 23,
-                  "column": 3
-                }
-              }
-            }
-          ]
-        },
-        "leadingComments": [
-          {
-            "type": "CommentBlock",
-            "value": "*\n * Holder for registered JS Object references\n *\n * @type {WeakMap}\n * @private\n ",
-            "start": 176,
-            "end": 263,
-            "loc": {
-              "start": {
-                "line": 11,
-                "column": 0
-              },
-              "end": {
-                "line": 16,
-                "column": 3
-              }
-            }
-          }
-        ],
-        "trailingComments": [
-          {
-            "type": "CommentBlock",
             "value": "*\n * Holder for Schema and Set instance references\n *\n * @type {WeakMap}\n * @private\n ",
-            "start": 301,
-            "end": 391,
+            "start": 177,
+            "end": 267,
             "loc": {
               "start": {
-                "line": 18,
+                "line": 12,
                 "column": 0
               },
               "end": {
-                "line": 23,
+                "line": 17,
                 "column": 3
               }
             }
@@ -820,15 +646,15 @@
       },
       {
         "type": "ExportNamedDeclaration",
-        "start": 392,
-        "end": 429,
+        "start": 268,
+        "end": 305,
         "loc": {
           "start": {
-            "line": 24,
+            "line": 18,
             "column": 0
           },
           "end": {
-            "line": 24,
+            "line": 18,
             "column": 37
           }
         },
@@ -836,44 +662,44 @@
         "source": null,
         "declaration": {
           "type": "VariableDeclaration",
-          "start": 399,
-          "end": 429,
+          "start": 275,
+          "end": 305,
           "loc": {
             "start": {
-              "line": 24,
+              "line": 18,
               "column": 7
             },
             "end": {
-              "line": 24,
+              "line": 18,
               "column": 37
             }
           },
           "declarations": [
             {
               "type": "VariableDeclarator",
-              "start": 405,
-              "end": 428,
+              "start": 281,
+              "end": 304,
               "loc": {
                 "start": {
-                  "line": 24,
+                  "line": 18,
                   "column": 13
                 },
                 "end": {
-                  "line": 24,
+                  "line": 18,
                   "column": 36
                 }
               },
               "id": {
                 "type": "Identifier",
-                "start": 405,
-                "end": 412,
+                "start": 281,
+                "end": 288,
                 "loc": {
                   "start": {
-                    "line": 24,
+                    "line": 18,
                     "column": 13
                   },
                   "end": {
-                    "line": 24,
+                    "line": 18,
                     "column": 20
                   },
                   "identifierName": "_object"
@@ -883,29 +709,29 @@
               },
               "init": {
                 "type": "NewExpression",
-                "start": 415,
-                "end": 428,
+                "start": 291,
+                "end": 304,
                 "loc": {
                   "start": {
-                    "line": 24,
+                    "line": 18,
                     "column": 23
                   },
                   "end": {
-                    "line": 24,
+                    "line": 18,
                     "column": 36
                   }
                 },
                 "callee": {
                   "type": "Identifier",
-                  "start": 419,
-                  "end": 426,
+                  "start": 295,
+                  "end": 302,
                   "loc": {
                     "start": {
-                      "line": 24,
+                      "line": 18,
                       "column": 27
                     },
                     "end": {
-                      "line": 24,
+                      "line": 18,
                       "column": 34
                     },
                     "identifierName": "WeakMap"
@@ -922,15 +748,15 @@
             {
               "type": "CommentBlock",
               "value": "*\n * Holder for Schema and Set instance references\n *\n * @type {WeakMap}\n * @private\n ",
-              "start": 301,
-              "end": 391,
+              "start": 177,
+              "end": 267,
               "loc": {
                 "start": {
-                  "line": 18,
+                  "line": 12,
                   "column": 0
                 },
                 "end": {
-                  "line": 23,
+                  "line": 17,
                   "column": 3
                 }
               }
@@ -940,15 +766,15 @@
             {
               "type": "CommentBlock",
               "value": "*\n * Holder for MetaData references\n * @type {WeakMap}\n * @private\n ",
-              "start": 430,
-              "end": 502,
+              "start": 306,
+              "end": 378,
               "loc": {
                 "start": {
-                  "line": 25,
+                  "line": 19,
                   "column": 0
                 },
                 "end": {
-                  "line": 29,
+                  "line": 23,
                   "column": 3
                 }
               }
@@ -959,15 +785,15 @@
           {
             "type": "CommentBlock",
             "value": "*\n * Holder for Schema and Set instance references\n *\n * @type {WeakMap}\n * @private\n ",
-            "start": 301,
-            "end": 391,
+            "start": 177,
+            "end": 267,
             "loc": {
               "start": {
-                "line": 18,
+                "line": 12,
                 "column": 0
               },
               "end": {
-                "line": 23,
+                "line": 17,
                 "column": 3
               }
             }
@@ -977,15 +803,15 @@
           {
             "type": "CommentBlock",
             "value": "*\n * Holder for MetaData references\n * @type {WeakMap}\n * @private\n ",
-            "start": 430,
-            "end": 502,
+            "start": 306,
+            "end": 378,
             "loc": {
               "start": {
-                "line": 25,
+                "line": 19,
                 "column": 0
               },
               "end": {
-                "line": 29,
+                "line": 23,
                 "column": 3
               }
             }
@@ -994,15 +820,15 @@
       },
       {
         "type": "ExportNamedDeclaration",
-        "start": 503,
-        "end": 539,
+        "start": 379,
+        "end": 415,
         "loc": {
           "start": {
-            "line": 30,
+            "line": 24,
             "column": 0
           },
           "end": {
-            "line": 30,
+            "line": 24,
             "column": 36
           }
         },
@@ -1010,44 +836,44 @@
         "source": null,
         "declaration": {
           "type": "VariableDeclaration",
-          "start": 510,
-          "end": 539,
+          "start": 386,
+          "end": 415,
           "loc": {
             "start": {
-              "line": 30,
+              "line": 24,
               "column": 7
             },
             "end": {
-              "line": 30,
+              "line": 24,
               "column": 36
             }
           },
           "declarations": [
             {
               "type": "VariableDeclarator",
-              "start": 516,
-              "end": 538,
+              "start": 392,
+              "end": 414,
               "loc": {
                 "start": {
-                  "line": 30,
+                  "line": 24,
                   "column": 13
                 },
                 "end": {
-                  "line": 30,
+                  "line": 24,
                   "column": 35
                 }
               },
               "id": {
                 "type": "Identifier",
-                "start": 516,
-                "end": 522,
+                "start": 392,
+                "end": 398,
                 "loc": {
                   "start": {
-                    "line": 30,
+                    "line": 24,
                     "column": 13
                   },
                   "end": {
-                    "line": 30,
+                    "line": 24,
                     "column": 19
                   },
                   "identifierName": "_mdRef"
@@ -1057,29 +883,29 @@
               },
               "init": {
                 "type": "NewExpression",
-                "start": 525,
-                "end": 538,
+                "start": 401,
+                "end": 414,
                 "loc": {
                   "start": {
-                    "line": 30,
+                    "line": 24,
                     "column": 22
                   },
                   "end": {
-                    "line": 30,
+                    "line": 24,
                     "column": 35
                   }
                 },
                 "callee": {
                   "type": "Identifier",
-                  "start": 529,
-                  "end": 536,
+                  "start": 405,
+                  "end": 412,
                   "loc": {
                     "start": {
-                      "line": 30,
+                      "line": 24,
                       "column": 26
                     },
                     "end": {
-                      "line": 30,
+                      "line": 24,
                       "column": 33
                     },
                     "identifierName": "WeakMap"
@@ -1096,8 +922,182 @@
             {
               "type": "CommentBlock",
               "value": "*\n * Holder for MetaData references\n * @type {WeakMap}\n * @private\n ",
-              "start": 430,
-              "end": 502,
+              "start": 306,
+              "end": 378,
+              "loc": {
+                "start": {
+                  "line": 19,
+                  "column": 0
+                },
+                "end": {
+                  "line": 23,
+                  "column": 3
+                }
+              }
+            }
+          ],
+          "trailingComments": [
+            {
+              "type": "CommentBlock",
+              "value": "*\n * Holder for AjvWrapper references\n * @type {WeakMap<Object, ajv>}\n * @private\n ",
+              "start": 416,
+              "end": 503,
+              "loc": {
+                "start": {
+                  "line": 25,
+                  "column": 0
+                },
+                "end": {
+                  "line": 29,
+                  "column": 3
+                }
+              }
+            }
+          ]
+        },
+        "leadingComments": [
+          {
+            "type": "CommentBlock",
+            "value": "*\n * Holder for MetaData references\n * @type {WeakMap}\n * @private\n ",
+            "start": 306,
+            "end": 378,
+            "loc": {
+              "start": {
+                "line": 19,
+                "column": 0
+              },
+              "end": {
+                "line": 23,
+                "column": 3
+              }
+            }
+          }
+        ],
+        "trailingComments": [
+          {
+            "type": "CommentBlock",
+            "value": "*\n * Holder for AjvWrapper references\n * @type {WeakMap<Object, ajv>}\n * @private\n ",
+            "start": 416,
+            "end": 503,
+            "loc": {
+              "start": {
+                "line": 25,
+                "column": 0
+              },
+              "end": {
+                "line": 29,
+                "column": 3
+              }
+            }
+          }
+        ]
+      },
+      {
+        "type": "ExportNamedDeclaration",
+        "start": 504,
+        "end": 541,
+        "loc": {
+          "start": {
+            "line": 30,
+            "column": 0
+          },
+          "end": {
+            "line": 30,
+            "column": 37
+          }
+        },
+        "specifiers": [],
+        "source": null,
+        "declaration": {
+          "type": "VariableDeclaration",
+          "start": 511,
+          "end": 541,
+          "loc": {
+            "start": {
+              "line": 30,
+              "column": 7
+            },
+            "end": {
+              "line": 30,
+              "column": 37
+            }
+          },
+          "declarations": [
+            {
+              "type": "VariableDeclarator",
+              "start": 517,
+              "end": 540,
+              "loc": {
+                "start": {
+                  "line": 30,
+                  "column": 13
+                },
+                "end": {
+                  "line": 30,
+                  "column": 36
+                }
+              },
+              "id": {
+                "type": "Identifier",
+                "start": 517,
+                "end": 524,
+                "loc": {
+                  "start": {
+                    "line": 30,
+                    "column": 13
+                  },
+                  "end": {
+                    "line": 30,
+                    "column": 20
+                  },
+                  "identifierName": "_ajvRef"
+                },
+                "name": "_ajvRef",
+                "leadingComments": null
+              },
+              "init": {
+                "type": "NewExpression",
+                "start": 527,
+                "end": 540,
+                "loc": {
+                  "start": {
+                    "line": 30,
+                    "column": 23
+                  },
+                  "end": {
+                    "line": 30,
+                    "column": 36
+                  }
+                },
+                "callee": {
+                  "type": "Identifier",
+                  "start": 531,
+                  "end": 538,
+                  "loc": {
+                    "start": {
+                      "line": 30,
+                      "column": 27
+                    },
+                    "end": {
+                      "line": 30,
+                      "column": 34
+                    },
+                    "identifierName": "WeakMap"
+                  },
+                  "name": "WeakMap"
+                },
+                "arguments": []
+              },
+              "leadingComments": null
+            }
+          ],
+          "kind": "const",
+          "leadingComments": [
+            {
+              "type": "CommentBlock",
+              "value": "*\n * Holder for AjvWrapper references\n * @type {WeakMap<Object, ajv>}\n * @private\n ",
+              "start": 416,
+              "end": 503,
               "loc": {
                 "start": {
                   "line": 25,
@@ -1113,9 +1113,9 @@
           "trailingComments": [
             {
               "type": "CommentBlock",
-              "value": "*\n * Holder for lists of required elements for each Schema Node\n *\n * @type {WeakMap}\n * @private\n ",
-              "start": 540,
-              "end": 643,
+              "value": "*\n * Holder for models in transition\n *\n * @type {WeakMap}\n * @private\n ",
+              "start": 542,
+              "end": 618,
               "loc": {
                 "start": {
                   "line": 31,
@@ -1132,9 +1132,9 @@
         "leadingComments": [
           {
             "type": "CommentBlock",
-            "value": "*\n * Holder for MetaData references\n * @type {WeakMap}\n * @private\n ",
-            "start": 430,
-            "end": 502,
+            "value": "*\n * Holder for AjvWrapper references\n * @type {WeakMap<Object, ajv>}\n * @private\n ",
+            "start": 416,
+            "end": 503,
             "loc": {
               "start": {
                 "line": 25,
@@ -1150,9 +1150,9 @@
         "trailingComments": [
           {
             "type": "CommentBlock",
-            "value": "*\n * Holder for lists of required elements for each Schema Node\n *\n * @type {WeakMap}\n * @private\n ",
-            "start": 540,
-            "end": 643,
+            "value": "*\n * Holder for models in transition\n *\n * @type {WeakMap}\n * @private\n ",
+            "start": 542,
+            "end": 618,
             "loc": {
               "start": {
                 "line": 31,
@@ -1168,8 +1168,8 @@
       },
       {
         "type": "ExportNamedDeclaration",
-        "start": 644,
-        "end": 692,
+        "start": 619,
+        "end": 661,
         "loc": {
           "start": {
             "line": 37,
@@ -1177,15 +1177,15 @@
           },
           "end": {
             "line": 37,
-            "column": 48
+            "column": 42
           }
         },
         "specifiers": [],
         "source": null,
         "declaration": {
           "type": "VariableDeclaration",
-          "start": 651,
-          "end": 692,
+          "start": 626,
+          "end": 661,
           "loc": {
             "start": {
               "line": 37,
@@ -1193,14 +1193,14 @@
             },
             "end": {
               "line": 37,
-              "column": 48
+              "column": 42
             }
           },
           "declarations": [
             {
               "type": "VariableDeclarator",
-              "start": 657,
-              "end": 691,
+              "start": 632,
+              "end": 660,
               "loc": {
                 "start": {
                   "line": 37,
@@ -1208,13 +1208,13 @@
                 },
                 "end": {
                   "line": 37,
-                  "column": 47
+                  "column": 41
                 }
               },
               "id": {
                 "type": "Identifier",
-                "start": 657,
-                "end": 675,
+                "start": 632,
+                "end": 644,
                 "loc": {
                   "start": {
                     "line": 37,
@@ -1222,39 +1222,39 @@
                   },
                   "end": {
                     "line": 37,
-                    "column": 31
+                    "column": 25
                   },
-                  "identifierName": "_required_elements"
+                  "identifierName": "_dirtyModels"
                 },
-                "name": "_required_elements",
+                "name": "_dirtyModels",
                 "leadingComments": null
               },
               "init": {
                 "type": "NewExpression",
-                "start": 678,
-                "end": 691,
+                "start": 647,
+                "end": 660,
                 "loc": {
                   "start": {
                     "line": 37,
-                    "column": 34
+                    "column": 28
                   },
                   "end": {
                     "line": 37,
-                    "column": 47
+                    "column": 41
                   }
                 },
                 "callee": {
                   "type": "Identifier",
-                  "start": 682,
-                  "end": 689,
+                  "start": 651,
+                  "end": 658,
                   "loc": {
                     "start": {
                       "line": 37,
-                      "column": 38
+                      "column": 32
                     },
                     "end": {
                       "line": 37,
-                      "column": 45
+                      "column": 39
                     },
                     "identifierName": "WeakMap"
                   },
@@ -1269,9 +1269,9 @@
           "leadingComments": [
             {
               "type": "CommentBlock",
-              "value": "*\n * Holder for lists of required elements for each Schema Node\n *\n * @type {WeakMap}\n * @private\n ",
-              "start": 540,
-              "end": 643,
+              "value": "*\n * Holder for models in transition\n *\n * @type {WeakMap}\n * @private\n ",
+              "start": 542,
+              "end": 618,
               "loc": {
                 "start": {
                   "line": 31,
@@ -1288,8 +1288,8 @@
             {
               "type": "CommentBlock",
               "value": "*\n * Holder for Schema Validators\n * @type {WeakMap}\n * @private\n ",
-              "start": 693,
-              "end": 763,
+              "start": 662,
+              "end": 732,
               "loc": {
                 "start": {
                   "line": 38,
@@ -1306,9 +1306,9 @@
         "leadingComments": [
           {
             "type": "CommentBlock",
-            "value": "*\n * Holder for lists of required elements for each Schema Node\n *\n * @type {WeakMap}\n * @private\n ",
-            "start": 540,
-            "end": 643,
+            "value": "*\n * Holder for models in transition\n *\n * @type {WeakMap}\n * @private\n ",
+            "start": 542,
+            "end": 618,
             "loc": {
               "start": {
                 "line": 31,
@@ -1325,8 +1325,8 @@
           {
             "type": "CommentBlock",
             "value": "*\n * Holder for Schema Validators\n * @type {WeakMap}\n * @private\n ",
-            "start": 693,
-            "end": 763,
+            "start": 662,
+            "end": 732,
             "loc": {
               "start": {
                 "line": 38,
@@ -1342,8 +1342,8 @@
       },
       {
         "type": "ExportNamedDeclaration",
-        "start": 764,
-        "end": 805,
+        "start": 733,
+        "end": 774,
         "loc": {
           "start": {
             "line": 43,
@@ -1358,8 +1358,8 @@
         "source": null,
         "declaration": {
           "type": "VariableDeclaration",
-          "start": 771,
-          "end": 805,
+          "start": 740,
+          "end": 774,
           "loc": {
             "start": {
               "line": 43,
@@ -1373,8 +1373,8 @@
           "declarations": [
             {
               "type": "VariableDeclarator",
-              "start": 777,
-              "end": 804,
+              "start": 746,
+              "end": 773,
               "loc": {
                 "start": {
                   "line": 43,
@@ -1387,8 +1387,8 @@
               },
               "id": {
                 "type": "Identifier",
-                "start": 777,
-                "end": 788,
+                "start": 746,
+                "end": 757,
                 "loc": {
                   "start": {
                     "line": 43,
@@ -1405,8 +1405,8 @@
               },
               "init": {
                 "type": "NewExpression",
-                "start": 791,
-                "end": 804,
+                "start": 760,
+                "end": 773,
                 "loc": {
                   "start": {
                     "line": 43,
@@ -1419,8 +1419,8 @@
                 },
                 "callee": {
                   "type": "Identifier",
-                  "start": 795,
-                  "end": 802,
+                  "start": 764,
+                  "end": 771,
                   "loc": {
                     "start": {
                       "line": 43,
@@ -1444,8 +1444,8 @@
             {
               "type": "CommentBlock",
               "value": "*\n * Holder for Schema Validators\n * @type {WeakMap}\n * @private\n ",
-              "start": 693,
-              "end": 763,
+              "start": 662,
+              "end": 732,
               "loc": {
                 "start": {
                   "line": 38,
@@ -1461,9 +1461,9 @@
           "trailingComments": [
             {
               "type": "CommentBlock",
-              "value": "*\n * Holder for Singleton instance references\n *\n * @type {WeakMap}\n * @private\n ",
-              "start": 806,
-              "end": 891,
+              "value": "*\n * Holder for Schema options refeerences\n *\n * @type {WeakMap}\n * @private\n ",
+              "start": 775,
+              "end": 857,
               "loc": {
                 "start": {
                   "line": 44,
@@ -1481,8 +1481,8 @@
           {
             "type": "CommentBlock",
             "value": "*\n * Holder for Schema Validators\n * @type {WeakMap}\n * @private\n ",
-            "start": 693,
-            "end": 763,
+            "start": 662,
+            "end": 732,
             "loc": {
               "start": {
                 "line": 38,
@@ -1498,9 +1498,9 @@
         "trailingComments": [
           {
             "type": "CommentBlock",
-            "value": "*\n * Holder for Singleton instance references\n *\n * @type {WeakMap}\n * @private\n ",
-            "start": 806,
-            "end": 891,
+            "value": "*\n * Holder for Schema options refeerences\n *\n * @type {WeakMap}\n * @private\n ",
+            "start": 775,
+            "end": 857,
             "loc": {
               "start": {
                 "line": 44,
@@ -1516,8 +1516,8 @@
       },
       {
         "type": "ExportNamedDeclaration",
-        "start": 892,
-        "end": 933,
+        "start": 858,
+        "end": 902,
         "loc": {
           "start": {
             "line": 50,
@@ -1525,15 +1525,15 @@
           },
           "end": {
             "line": 50,
-            "column": 41
+            "column": 44
           }
         },
         "specifiers": [],
         "source": null,
         "declaration": {
           "type": "VariableDeclaration",
-          "start": 899,
-          "end": 933,
+          "start": 865,
+          "end": 902,
           "loc": {
             "start": {
               "line": 50,
@@ -1541,14 +1541,14 @@
             },
             "end": {
               "line": 50,
-              "column": 41
+              "column": 44
             }
           },
           "declarations": [
             {
               "type": "VariableDeclarator",
-              "start": 905,
-              "end": 932,
+              "start": 871,
+              "end": 901,
               "loc": {
                 "start": {
                   "line": 50,
@@ -1556,13 +1556,13 @@
                 },
                 "end": {
                   "line": 50,
-                  "column": 40
+                  "column": 43
                 }
               },
               "id": {
                 "type": "Identifier",
-                "start": 905,
-                "end": 916,
+                "start": 871,
+                "end": 885,
                 "loc": {
                   "start": {
                     "line": 50,
@@ -1570,39 +1570,39 @@
                   },
                   "end": {
                     "line": 50,
-                    "column": 24
+                    "column": 27
                   },
-                  "identifierName": "_singletons"
+                  "identifierName": "_schemaOptions"
                 },
-                "name": "_singletons",
+                "name": "_schemaOptions",
                 "leadingComments": null
               },
               "init": {
                 "type": "NewExpression",
-                "start": 919,
-                "end": 932,
+                "start": 888,
+                "end": 901,
                 "loc": {
                   "start": {
                     "line": 50,
-                    "column": 27
+                    "column": 30
                   },
                   "end": {
                     "line": 50,
-                    "column": 40
+                    "column": 43
                   }
                 },
                 "callee": {
                   "type": "Identifier",
-                  "start": 923,
-                  "end": 930,
+                  "start": 892,
+                  "end": 899,
                   "loc": {
                     "start": {
                       "line": 50,
-                      "column": 31
+                      "column": 34
                     },
                     "end": {
                       "line": 50,
-                      "column": 38
+                      "column": 41
                     },
                     "identifierName": "WeakMap"
                   },
@@ -1617,9 +1617,9 @@
           "leadingComments": [
             {
               "type": "CommentBlock",
-              "value": "*\n * Holder for Singleton instance references\n *\n * @type {WeakMap}\n * @private\n ",
-              "start": 806,
-              "end": 891,
+              "value": "*\n * Holder for Schema options refeerences\n *\n * @type {WeakMap}\n * @private\n ",
+              "start": 775,
+              "end": 857,
               "loc": {
                 "start": {
                   "line": 44,
@@ -1635,9 +1635,9 @@
           "trailingComments": [
             {
               "type": "CommentBlock",
-              "value": "*\n * Holder for `Set` element types\n *\n * @type {WeakMap}\n * @private\n ",
-              "start": 934,
-              "end": 1009,
+              "value": "*\n * Holder for Schema Helpers references\n *\n * @type {WeakMap}\n * @private\n ",
+              "start": 903,
+              "end": 984,
               "loc": {
                 "start": {
                   "line": 51,
@@ -1654,9 +1654,9 @@
         "leadingComments": [
           {
             "type": "CommentBlock",
-            "value": "*\n * Holder for Singleton instance references\n *\n * @type {WeakMap}\n * @private\n ",
-            "start": 806,
-            "end": 891,
+            "value": "*\n * Holder for Schema options refeerences\n *\n * @type {WeakMap}\n * @private\n ",
+            "start": 775,
+            "end": 857,
             "loc": {
               "start": {
                 "line": 44,
@@ -1672,9 +1672,9 @@
         "trailingComments": [
           {
             "type": "CommentBlock",
-            "value": "*\n * Holder for `Set` element types\n *\n * @type {WeakMap}\n * @private\n ",
-            "start": 934,
-            "end": 1009,
+            "value": "*\n * Holder for Schema Helpers references\n *\n * @type {WeakMap}\n * @private\n ",
+            "start": 903,
+            "end": 984,
             "loc": {
               "start": {
                 "line": 51,
@@ -1690,8 +1690,8 @@
       },
       {
         "type": "ExportNamedDeclaration",
-        "start": 1010,
-        "end": 1052,
+        "start": 985,
+        "end": 1029,
         "loc": {
           "start": {
             "line": 57,
@@ -1699,15 +1699,15 @@
           },
           "end": {
             "line": 57,
-            "column": 42
+            "column": 44
           }
         },
         "specifiers": [],
         "source": null,
         "declaration": {
           "type": "VariableDeclaration",
-          "start": 1017,
-          "end": 1052,
+          "start": 992,
+          "end": 1029,
           "loc": {
             "start": {
               "line": 57,
@@ -1715,14 +1715,14 @@
             },
             "end": {
               "line": 57,
-              "column": 42
+              "column": 44
             }
           },
           "declarations": [
             {
               "type": "VariableDeclarator",
-              "start": 1023,
-              "end": 1051,
+              "start": 998,
+              "end": 1028,
               "loc": {
                 "start": {
                   "line": 57,
@@ -1730,13 +1730,13 @@
                 },
                 "end": {
                   "line": 57,
-                  "column": 41
+                  "column": 43
                 }
               },
               "id": {
                 "type": "Identifier",
-                "start": 1023,
-                "end": 1035,
+                "start": 998,
+                "end": 1012,
                 "loc": {
                   "start": {
                     "line": 57,
@@ -1744,39 +1744,39 @@
                   },
                   "end": {
                     "line": 57,
-                    "column": 25
+                    "column": 27
                   },
-                  "identifierName": "_vectorTypes"
+                  "identifierName": "_schemaHelpers"
                 },
-                "name": "_vectorTypes",
+                "name": "_schemaHelpers",
                 "leadingComments": null
               },
               "init": {
                 "type": "NewExpression",
-                "start": 1038,
-                "end": 1051,
+                "start": 1015,
+                "end": 1028,
                 "loc": {
                   "start": {
                     "line": 57,
-                    "column": 28
+                    "column": 30
                   },
                   "end": {
                     "line": 57,
-                    "column": 41
+                    "column": 43
                   }
                 },
                 "callee": {
                   "type": "Identifier",
-                  "start": 1042,
-                  "end": 1049,
+                  "start": 1019,
+                  "end": 1026,
                   "loc": {
                     "start": {
                       "line": 57,
-                      "column": 32
+                      "column": 34
                     },
                     "end": {
                       "line": 57,
-                      "column": 39
+                      "column": 41
                     },
                     "identifierName": "WeakMap"
                   },
@@ -1791,9 +1791,9 @@
           "leadingComments": [
             {
               "type": "CommentBlock",
-              "value": "*\n * Holder for `Set` element types\n *\n * @type {WeakMap}\n * @private\n ",
-              "start": 934,
-              "end": 1009,
+              "value": "*\n * Holder for Schema Helpers references\n *\n * @type {WeakMap}\n * @private\n ",
+              "start": 903,
+              "end": 984,
               "loc": {
                 "start": {
                   "line": 51,
@@ -1809,16 +1809,16 @@
           "trailingComments": [
             {
               "type": "CommentBlock",
-              "value": "*\n * Holder for Schema options refeerences\n *\n * @type {WeakMap}\n * @private\n ",
-              "start": 1053,
-              "end": 1135,
+              "value": "*\n * Holder for RXJS Observer references\n * @type {WeakMap}\n * @private\n ",
+              "start": 1030,
+              "end": 1107,
               "loc": {
                 "start": {
                   "line": 58,
                   "column": 0
                 },
                 "end": {
-                  "line": 63,
+                  "line": 62,
                   "column": 3
                 }
               }
@@ -1828,9 +1828,9 @@
         "leadingComments": [
           {
             "type": "CommentBlock",
-            "value": "*\n * Holder for `Set` element types\n *\n * @type {WeakMap}\n * @private\n ",
-            "start": 934,
-            "end": 1009,
+            "value": "*\n * Holder for Schema Helpers references\n *\n * @type {WeakMap}\n * @private\n ",
+            "start": 903,
+            "end": 984,
             "loc": {
               "start": {
                 "line": 51,
@@ -1846,16 +1846,16 @@
         "trailingComments": [
           {
             "type": "CommentBlock",
-            "value": "*\n * Holder for Schema options refeerences\n *\n * @type {WeakMap}\n * @private\n ",
-            "start": 1053,
-            "end": 1135,
+            "value": "*\n * Holder for RXJS Observer references\n * @type {WeakMap}\n * @private\n ",
+            "start": 1030,
+            "end": 1107,
             "loc": {
               "start": {
                 "line": 58,
                 "column": 0
               },
               "end": {
-                "line": 63,
+                "line": 62,
                 "column": 3
               }
             }
@@ -1864,93 +1864,93 @@
       },
       {
         "type": "ExportNamedDeclaration",
-        "start": 1136,
-        "end": 1180,
+        "start": 1108,
+        "end": 1148,
         "loc": {
           "start": {
-            "line": 64,
+            "line": 63,
             "column": 0
           },
           "end": {
-            "line": 64,
-            "column": 44
+            "line": 63,
+            "column": 40
           }
         },
         "specifiers": [],
         "source": null,
         "declaration": {
           "type": "VariableDeclaration",
-          "start": 1143,
-          "end": 1180,
+          "start": 1115,
+          "end": 1148,
           "loc": {
             "start": {
-              "line": 64,
+              "line": 63,
               "column": 7
             },
             "end": {
-              "line": 64,
-              "column": 44
+              "line": 63,
+              "column": 40
             }
           },
           "declarations": [
             {
               "type": "VariableDeclarator",
-              "start": 1149,
-              "end": 1179,
+              "start": 1121,
+              "end": 1147,
               "loc": {
                 "start": {
-                  "line": 64,
+                  "line": 63,
                   "column": 13
                 },
                 "end": {
-                  "line": 64,
-                  "column": 43
+                  "line": 63,
+                  "column": 39
                 }
               },
               "id": {
                 "type": "Identifier",
-                "start": 1149,
-                "end": 1163,
+                "start": 1121,
+                "end": 1131,
                 "loc": {
                   "start": {
-                    "line": 64,
+                    "line": 63,
                     "column": 13
                   },
                   "end": {
-                    "line": 64,
-                    "column": 27
+                    "line": 63,
+                    "column": 23
                   },
-                  "identifierName": "_schemaOptions"
+                  "identifierName": "_observers"
                 },
-                "name": "_schemaOptions",
+                "name": "_observers",
                 "leadingComments": null
               },
               "init": {
                 "type": "NewExpression",
-                "start": 1166,
-                "end": 1179,
+                "start": 1134,
+                "end": 1147,
                 "loc": {
                   "start": {
-                    "line": 64,
-                    "column": 30
+                    "line": 63,
+                    "column": 26
                   },
                   "end": {
-                    "line": 64,
-                    "column": 43
+                    "line": 63,
+                    "column": 39
                   }
                 },
                 "callee": {
                   "type": "Identifier",
-                  "start": 1170,
-                  "end": 1177,
+                  "start": 1138,
+                  "end": 1145,
                   "loc": {
                     "start": {
-                      "line": 64,
-                      "column": 34
+                      "line": 63,
+                      "column": 30
                     },
                     "end": {
-                      "line": 64,
-                      "column": 41
+                      "line": 63,
+                      "column": 37
                     },
                     "identifierName": "WeakMap"
                   },
@@ -1965,16 +1965,16 @@
           "leadingComments": [
             {
               "type": "CommentBlock",
-              "value": "*\n * Holder for Schema options refeerences\n *\n * @type {WeakMap}\n * @private\n ",
-              "start": 1053,
-              "end": 1135,
+              "value": "*\n * Holder for RXJS Observer references\n * @type {WeakMap}\n * @private\n ",
+              "start": 1030,
+              "end": 1107,
               "loc": {
                 "start": {
                   "line": 58,
                   "column": 0
                 },
                 "end": {
-                  "line": 63,
+                  "line": 62,
                   "column": 3
                 }
               }
@@ -1983,16 +1983,16 @@
           "trailingComments": [
             {
               "type": "CommentBlock",
-              "value": "*\n * Holder for Schema Helpers references\n *\n * @type {WeakMap}\n * @private\n ",
-              "start": 1181,
-              "end": 1262,
+              "value": "*\n * Holder for Observer Builders\n * @type {WeakMap}\n * @private\n ",
+              "start": 1149,
+              "end": 1219,
               "loc": {
                 "start": {
-                  "line": 65,
+                  "line": 64,
                   "column": 0
                 },
                 "end": {
-                  "line": 70,
+                  "line": 68,
                   "column": 3
                 }
               }
@@ -2002,16 +2002,16 @@
         "leadingComments": [
           {
             "type": "CommentBlock",
-            "value": "*\n * Holder for Schema options refeerences\n *\n * @type {WeakMap}\n * @private\n ",
-            "start": 1053,
-            "end": 1135,
+            "value": "*\n * Holder for RXJS Observer references\n * @type {WeakMap}\n * @private\n ",
+            "start": 1030,
+            "end": 1107,
             "loc": {
               "start": {
                 "line": 58,
                 "column": 0
               },
               "end": {
-                "line": 63,
+                "line": 62,
                 "column": 3
               }
             }
@@ -2020,16 +2020,16 @@
         "trailingComments": [
           {
             "type": "CommentBlock",
-            "value": "*\n * Holder for Schema Helpers references\n *\n * @type {WeakMap}\n * @private\n ",
-            "start": 1181,
-            "end": 1262,
+            "value": "*\n * Holder for Observer Builders\n * @type {WeakMap}\n * @private\n ",
+            "start": 1149,
+            "end": 1219,
             "loc": {
               "start": {
-                "line": 65,
+                "line": 64,
                 "column": 0
               },
               "end": {
-                "line": 70,
+                "line": 68,
                 "column": 3
               }
             }
@@ -2038,93 +2038,93 @@
       },
       {
         "type": "ExportNamedDeclaration",
-        "start": 1263,
-        "end": 1307,
+        "start": 1220,
+        "end": 1260,
         "loc": {
           "start": {
-            "line": 71,
+            "line": 69,
             "column": 0
           },
           "end": {
-            "line": 71,
-            "column": 44
+            "line": 69,
+            "column": 40
           }
         },
         "specifiers": [],
         "source": null,
         "declaration": {
           "type": "VariableDeclaration",
-          "start": 1270,
-          "end": 1307,
+          "start": 1227,
+          "end": 1260,
           "loc": {
             "start": {
-              "line": 71,
+              "line": 69,
               "column": 7
             },
             "end": {
-              "line": 71,
-              "column": 44
+              "line": 69,
+              "column": 40
             }
           },
           "declarations": [
             {
               "type": "VariableDeclarator",
-              "start": 1276,
-              "end": 1306,
+              "start": 1233,
+              "end": 1259,
               "loc": {
                 "start": {
-                  "line": 71,
+                  "line": 69,
                   "column": 13
                 },
                 "end": {
-                  "line": 71,
-                  "column": 43
+                  "line": 69,
+                  "column": 39
                 }
               },
               "id": {
                 "type": "Identifier",
-                "start": 1276,
-                "end": 1290,
+                "start": 1233,
+                "end": 1243,
                 "loc": {
                   "start": {
-                    "line": 71,
+                    "line": 69,
                     "column": 13
                   },
                   "end": {
-                    "line": 71,
-                    "column": 27
+                    "line": 69,
+                    "column": 23
                   },
-                  "identifierName": "_schemaHelpers"
+                  "identifierName": "_oBuilders"
                 },
-                "name": "_schemaHelpers",
+                "name": "_oBuilders",
                 "leadingComments": null
               },
               "init": {
                 "type": "NewExpression",
-                "start": 1293,
-                "end": 1306,
+                "start": 1246,
+                "end": 1259,
                 "loc": {
                   "start": {
-                    "line": 71,
-                    "column": 30
+                    "line": 69,
+                    "column": 26
                   },
                   "end": {
-                    "line": 71,
-                    "column": 43
+                    "line": 69,
+                    "column": 39
                   }
                 },
                 "callee": {
                   "type": "Identifier",
-                  "start": 1297,
-                  "end": 1304,
+                  "start": 1250,
+                  "end": 1257,
                   "loc": {
                     "start": {
-                      "line": 71,
-                      "column": 34
+                      "line": 69,
+                      "column": 30
                     },
                     "end": {
-                      "line": 71,
-                      "column": 41
+                      "line": 69,
+                      "column": 37
                     },
                     "identifierName": "WeakMap"
                   },
@@ -2139,16 +2139,16 @@
           "leadingComments": [
             {
               "type": "CommentBlock",
-              "value": "*\n * Holder for Schema Helpers references\n *\n * @type {WeakMap}\n * @private\n ",
-              "start": 1181,
-              "end": 1262,
+              "value": "*\n * Holder for Observer Builders\n * @type {WeakMap}\n * @private\n ",
+              "start": 1149,
+              "end": 1219,
               "loc": {
                 "start": {
-                  "line": 65,
+                  "line": 64,
                   "column": 0
                 },
                 "end": {
-                  "line": 70,
+                  "line": 68,
                   "column": 3
                 }
               }
@@ -2157,16 +2157,16 @@
           "trailingComments": [
             {
               "type": "CommentBlock",
-              "value": "*\n * Holder for Schema Signatures references\n *\n * @type {WeakMap}\n * @private\n ",
-              "start": 1308,
-              "end": 1392,
+              "value": "*\n * Holder for JSON-Schemas\n * @type {WeakMap}\n * @private\n ",
+              "start": 1261,
+              "end": 1326,
               "loc": {
                 "start": {
-                  "line": 72,
+                  "line": 70,
                   "column": 0
                 },
                 "end": {
-                  "line": 77,
+                  "line": 74,
                   "column": 3
                 }
               }
@@ -2176,16 +2176,16 @@
         "leadingComments": [
           {
             "type": "CommentBlock",
-            "value": "*\n * Holder for Schema Helpers references\n *\n * @type {WeakMap}\n * @private\n ",
-            "start": 1181,
-            "end": 1262,
+            "value": "*\n * Holder for Observer Builders\n * @type {WeakMap}\n * @private\n ",
+            "start": 1149,
+            "end": 1219,
             "loc": {
               "start": {
-                "line": 65,
+                "line": 64,
                 "column": 0
               },
               "end": {
-                "line": 70,
+                "line": 68,
                 "column": 3
               }
             }
@@ -2194,16 +2194,16 @@
         "trailingComments": [
           {
             "type": "CommentBlock",
-            "value": "*\n * Holder for Schema Signatures references\n *\n * @type {WeakMap}\n * @private\n ",
-            "start": 1308,
-            "end": 1392,
+            "value": "*\n * Holder for JSON-Schemas\n * @type {WeakMap}\n * @private\n ",
+            "start": 1261,
+            "end": 1326,
             "loc": {
               "start": {
-                "line": 72,
+                "line": 70,
                 "column": 0
               },
               "end": {
-                "line": 77,
+                "line": 74,
                 "column": 3
               }
             }
@@ -2212,15 +2212,15 @@
       },
       {
         "type": "ExportNamedDeclaration",
-        "start": 1393,
-        "end": 1440,
+        "start": 1327,
+        "end": 1374,
         "loc": {
           "start": {
-            "line": 78,
+            "line": 75,
             "column": 0
           },
           "end": {
-            "line": 78,
+            "line": 75,
             "column": 47
           }
         },
@@ -2228,44 +2228,44 @@
         "source": null,
         "declaration": {
           "type": "VariableDeclaration",
-          "start": 1400,
-          "end": 1440,
+          "start": 1334,
+          "end": 1374,
           "loc": {
             "start": {
-              "line": 78,
+              "line": 75,
               "column": 7
             },
             "end": {
-              "line": 78,
+              "line": 75,
               "column": 47
             }
           },
           "declarations": [
             {
               "type": "VariableDeclarator",
-              "start": 1406,
-              "end": 1439,
+              "start": 1340,
+              "end": 1373,
               "loc": {
                 "start": {
-                  "line": 78,
+                  "line": 75,
                   "column": 13
                 },
                 "end": {
-                  "line": 78,
+                  "line": 75,
                   "column": 46
                 }
               },
               "id": {
                 "type": "Identifier",
-                "start": 1406,
-                "end": 1423,
+                "start": 1340,
+                "end": 1357,
                 "loc": {
                   "start": {
-                    "line": 78,
+                    "line": 75,
                     "column": 13
                   },
                   "end": {
-                    "line": 78,
+                    "line": 75,
                     "column": 30
                   },
                   "identifierName": "_schemaSignatures"
@@ -2275,29 +2275,29 @@
               },
               "init": {
                 "type": "NewExpression",
-                "start": 1426,
-                "end": 1439,
+                "start": 1360,
+                "end": 1373,
                 "loc": {
                   "start": {
-                    "line": 78,
+                    "line": 75,
                     "column": 33
                   },
                   "end": {
-                    "line": 78,
+                    "line": 75,
                     "column": 46
                   }
                 },
                 "callee": {
                   "type": "Identifier",
-                  "start": 1430,
-                  "end": 1437,
+                  "start": 1364,
+                  "end": 1371,
                   "loc": {
                     "start": {
-                      "line": 78,
+                      "line": 75,
                       "column": 37
                     },
                     "end": {
-                      "line": 78,
+                      "line": 75,
                       "column": 44
                     },
                     "identifierName": "WeakMap"
@@ -2313,886 +2313,16 @@
           "leadingComments": [
             {
               "type": "CommentBlock",
-              "value": "*\n * Holder for Schema Signatures references\n *\n * @type {WeakMap}\n * @private\n ",
-              "start": 1308,
-              "end": 1392,
+              "value": "*\n * Holder for JSON-Schemas\n * @type {WeakMap}\n * @private\n ",
+              "start": 1261,
+              "end": 1326,
               "loc": {
                 "start": {
-                  "line": 72,
+                  "line": 70,
                   "column": 0
                 },
                 "end": {
-                  "line": 77,
-                  "column": 3
-                }
-              }
-            }
-          ],
-          "trailingComments": [
-            {
-              "type": "CommentBlock",
-              "value": "*\n * Holder for RXJS Observer references\n * @type {WeakMap}\n * @private\n ",
-              "start": 1441,
-              "end": 1518,
-              "loc": {
-                "start": {
-                  "line": 79,
-                  "column": 0
-                },
-                "end": {
-                  "line": 83,
-                  "column": 3
-                }
-              }
-            }
-          ]
-        },
-        "leadingComments": [
-          {
-            "type": "CommentBlock",
-            "value": "*\n * Holder for Schema Signatures references\n *\n * @type {WeakMap}\n * @private\n ",
-            "start": 1308,
-            "end": 1392,
-            "loc": {
-              "start": {
-                "line": 72,
-                "column": 0
-              },
-              "end": {
-                "line": 77,
-                "column": 3
-              }
-            }
-          }
-        ],
-        "trailingComments": [
-          {
-            "type": "CommentBlock",
-            "value": "*\n * Holder for RXJS Observer references\n * @type {WeakMap}\n * @private\n ",
-            "start": 1441,
-            "end": 1518,
-            "loc": {
-              "start": {
-                "line": 79,
-                "column": 0
-              },
-              "end": {
-                "line": 83,
-                "column": 3
-              }
-            }
-          }
-        ]
-      },
-      {
-        "type": "ExportNamedDeclaration",
-        "start": 1519,
-        "end": 1559,
-        "loc": {
-          "start": {
-            "line": 84,
-            "column": 0
-          },
-          "end": {
-            "line": 84,
-            "column": 40
-          }
-        },
-        "specifiers": [],
-        "source": null,
-        "declaration": {
-          "type": "VariableDeclaration",
-          "start": 1526,
-          "end": 1559,
-          "loc": {
-            "start": {
-              "line": 84,
-              "column": 7
-            },
-            "end": {
-              "line": 84,
-              "column": 40
-            }
-          },
-          "declarations": [
-            {
-              "type": "VariableDeclarator",
-              "start": 1532,
-              "end": 1558,
-              "loc": {
-                "start": {
-                  "line": 84,
-                  "column": 13
-                },
-                "end": {
-                  "line": 84,
-                  "column": 39
-                }
-              },
-              "id": {
-                "type": "Identifier",
-                "start": 1532,
-                "end": 1542,
-                "loc": {
-                  "start": {
-                    "line": 84,
-                    "column": 13
-                  },
-                  "end": {
-                    "line": 84,
-                    "column": 23
-                  },
-                  "identifierName": "_observers"
-                },
-                "name": "_observers",
-                "leadingComments": null
-              },
-              "init": {
-                "type": "NewExpression",
-                "start": 1545,
-                "end": 1558,
-                "loc": {
-                  "start": {
-                    "line": 84,
-                    "column": 26
-                  },
-                  "end": {
-                    "line": 84,
-                    "column": 39
-                  }
-                },
-                "callee": {
-                  "type": "Identifier",
-                  "start": 1549,
-                  "end": 1556,
-                  "loc": {
-                    "start": {
-                      "line": 84,
-                      "column": 30
-                    },
-                    "end": {
-                      "line": 84,
-                      "column": 37
-                    },
-                    "identifierName": "WeakMap"
-                  },
-                  "name": "WeakMap"
-                },
-                "arguments": []
-              },
-              "leadingComments": null
-            }
-          ],
-          "kind": "const",
-          "leadingComments": [
-            {
-              "type": "CommentBlock",
-              "value": "*\n * Holder for RXJS Observer references\n * @type {WeakMap}\n * @private\n ",
-              "start": 1441,
-              "end": 1518,
-              "loc": {
-                "start": {
-                  "line": 79,
-                  "column": 0
-                },
-                "end": {
-                  "line": 83,
-                  "column": 3
-                }
-              }
-            }
-          ],
-          "trailingComments": [
-            {
-              "type": "CommentBlock",
-              "value": "*\n * Holder for Validation path references\n * @type {WeakMap}\n * @private\n ",
-              "start": 1560,
-              "end": 1639,
-              "loc": {
-                "start": {
-                  "line": 85,
-                  "column": 0
-                },
-                "end": {
-                  "line": 89,
-                  "column": 3
-                }
-              }
-            }
-          ]
-        },
-        "leadingComments": [
-          {
-            "type": "CommentBlock",
-            "value": "*\n * Holder for RXJS Observer references\n * @type {WeakMap}\n * @private\n ",
-            "start": 1441,
-            "end": 1518,
-            "loc": {
-              "start": {
-                "line": 79,
-                "column": 0
-              },
-              "end": {
-                "line": 83,
-                "column": 3
-              }
-            }
-          }
-        ],
-        "trailingComments": [
-          {
-            "type": "CommentBlock",
-            "value": "*\n * Holder for Validation path references\n * @type {WeakMap}\n * @private\n ",
-            "start": 1560,
-            "end": 1639,
-            "loc": {
-              "start": {
-                "line": 85,
-                "column": 0
-              },
-              "end": {
-                "line": 89,
-                "column": 3
-              }
-            }
-          }
-        ]
-      },
-      {
-        "type": "ExportNamedDeclaration",
-        "start": 1640,
-        "end": 1681,
-        "loc": {
-          "start": {
-            "line": 90,
-            "column": 0
-          },
-          "end": {
-            "line": 90,
-            "column": 41
-          }
-        },
-        "specifiers": [],
-        "source": null,
-        "declaration": {
-          "type": "VariableDeclaration",
-          "start": 1647,
-          "end": 1681,
-          "loc": {
-            "start": {
-              "line": 90,
-              "column": 7
-            },
-            "end": {
-              "line": 90,
-              "column": 41
-            }
-          },
-          "declarations": [
-            {
-              "type": "VariableDeclarator",
-              "start": 1653,
-              "end": 1680,
-              "loc": {
-                "start": {
-                  "line": 90,
-                  "column": 13
-                },
-                "end": {
-                  "line": 90,
-                  "column": 40
-                }
-              },
-              "id": {
-                "type": "Identifier",
-                "start": 1653,
-                "end": 1664,
-                "loc": {
-                  "start": {
-                    "line": 90,
-                    "column": 13
-                  },
-                  "end": {
-                    "line": 90,
-                    "column": 24
-                  },
-                  "identifierName": "_validPaths"
-                },
-                "name": "_validPaths",
-                "leadingComments": null
-              },
-              "init": {
-                "type": "NewExpression",
-                "start": 1667,
-                "end": 1680,
-                "loc": {
-                  "start": {
-                    "line": 90,
-                    "column": 27
-                  },
-                  "end": {
-                    "line": 90,
-                    "column": 40
-                  }
-                },
-                "callee": {
-                  "type": "Identifier",
-                  "start": 1671,
-                  "end": 1678,
-                  "loc": {
-                    "start": {
-                      "line": 90,
-                      "column": 31
-                    },
-                    "end": {
-                      "line": 90,
-                      "column": 38
-                    },
-                    "identifierName": "WeakMap"
-                  },
-                  "name": "WeakMap"
-                },
-                "arguments": []
-              },
-              "leadingComments": null
-            }
-          ],
-          "kind": "const",
-          "leadingComments": [
-            {
-              "type": "CommentBlock",
-              "value": "*\n * Holder for Validation path references\n * @type {WeakMap}\n * @private\n ",
-              "start": 1560,
-              "end": 1639,
-              "loc": {
-                "start": {
-                  "line": 85,
-                  "column": 0
-                },
-                "end": {
-                  "line": 89,
-                  "column": 3
-                }
-              }
-            }
-          ],
-          "trailingComments": [
-            {
-              "type": "CommentBlock",
-              "value": "*\n * Holder for Observer Builders\n * @type {WeakMap}\n * @private\n ",
-              "start": 1682,
-              "end": 1752,
-              "loc": {
-                "start": {
-                  "line": 91,
-                  "column": 0
-                },
-                "end": {
-                  "line": 95,
-                  "column": 3
-                }
-              }
-            }
-          ]
-        },
-        "leadingComments": [
-          {
-            "type": "CommentBlock",
-            "value": "*\n * Holder for Validation path references\n * @type {WeakMap}\n * @private\n ",
-            "start": 1560,
-            "end": 1639,
-            "loc": {
-              "start": {
-                "line": 85,
-                "column": 0
-              },
-              "end": {
-                "line": 89,
-                "column": 3
-              }
-            }
-          }
-        ],
-        "trailingComments": [
-          {
-            "type": "CommentBlock",
-            "value": "*\n * Holder for Observer Builders\n * @type {WeakMap}\n * @private\n ",
-            "start": 1682,
-            "end": 1752,
-            "loc": {
-              "start": {
-                "line": 91,
-                "column": 0
-              },
-              "end": {
-                "line": 95,
-                "column": 3
-              }
-            }
-          }
-        ]
-      },
-      {
-        "type": "ExportNamedDeclaration",
-        "start": 1753,
-        "end": 1793,
-        "loc": {
-          "start": {
-            "line": 96,
-            "column": 0
-          },
-          "end": {
-            "line": 96,
-            "column": 40
-          }
-        },
-        "specifiers": [],
-        "source": null,
-        "declaration": {
-          "type": "VariableDeclaration",
-          "start": 1760,
-          "end": 1793,
-          "loc": {
-            "start": {
-              "line": 96,
-              "column": 7
-            },
-            "end": {
-              "line": 96,
-              "column": 40
-            }
-          },
-          "declarations": [
-            {
-              "type": "VariableDeclarator",
-              "start": 1766,
-              "end": 1792,
-              "loc": {
-                "start": {
-                  "line": 96,
-                  "column": 13
-                },
-                "end": {
-                  "line": 96,
-                  "column": 39
-                }
-              },
-              "id": {
-                "type": "Identifier",
-                "start": 1766,
-                "end": 1776,
-                "loc": {
-                  "start": {
-                    "line": 96,
-                    "column": 13
-                  },
-                  "end": {
-                    "line": 96,
-                    "column": 23
-                  },
-                  "identifierName": "_oBuilders"
-                },
-                "name": "_oBuilders",
-                "leadingComments": null
-              },
-              "init": {
-                "type": "NewExpression",
-                "start": 1779,
-                "end": 1792,
-                "loc": {
-                  "start": {
-                    "line": 96,
-                    "column": 26
-                  },
-                  "end": {
-                    "line": 96,
-                    "column": 39
-                  }
-                },
-                "callee": {
-                  "type": "Identifier",
-                  "start": 1783,
-                  "end": 1790,
-                  "loc": {
-                    "start": {
-                      "line": 96,
-                      "column": 30
-                    },
-                    "end": {
-                      "line": 96,
-                      "column": 37
-                    },
-                    "identifierName": "WeakMap"
-                  },
-                  "name": "WeakMap"
-                },
-                "arguments": []
-              },
-              "leadingComments": null
-            }
-          ],
-          "kind": "const",
-          "leadingComments": [
-            {
-              "type": "CommentBlock",
-              "value": "*\n * Holder for Observer Builders\n * @type {WeakMap}\n * @private\n ",
-              "start": 1682,
-              "end": 1752,
-              "loc": {
-                "start": {
-                  "line": 91,
-                  "column": 0
-                },
-                "end": {
-                  "line": 95,
-                  "column": 3
-                }
-              }
-            }
-          ],
-          "trailingComments": [
-            {
-              "type": "CommentBlock",
-              "value": "*\n * Holder for Validator Builders\n * @type {WeakMap}\n * @private\n ",
-              "start": 1794,
-              "end": 1865,
-              "loc": {
-                "start": {
-                  "line": 97,
-                  "column": 0
-                },
-                "end": {
-                  "line": 101,
-                  "column": 3
-                }
-              }
-            }
-          ]
-        },
-        "leadingComments": [
-          {
-            "type": "CommentBlock",
-            "value": "*\n * Holder for Observer Builders\n * @type {WeakMap}\n * @private\n ",
-            "start": 1682,
-            "end": 1752,
-            "loc": {
-              "start": {
-                "line": 91,
-                "column": 0
-              },
-              "end": {
-                "line": 95,
-                "column": 3
-              }
-            }
-          }
-        ],
-        "trailingComments": [
-          {
-            "type": "CommentBlock",
-            "value": "*\n * Holder for Validator Builders\n * @type {WeakMap}\n * @private\n ",
-            "start": 1794,
-            "end": 1865,
-            "loc": {
-              "start": {
-                "line": 97,
-                "column": 0
-              },
-              "end": {
-                "line": 101,
-                "column": 3
-              }
-            }
-          }
-        ]
-      },
-      {
-        "type": "ExportNamedDeclaration",
-        "start": 1866,
-        "end": 1906,
-        "loc": {
-          "start": {
-            "line": 102,
-            "column": 0
-          },
-          "end": {
-            "line": 102,
-            "column": 40
-          }
-        },
-        "specifiers": [],
-        "source": null,
-        "declaration": {
-          "type": "VariableDeclaration",
-          "start": 1873,
-          "end": 1906,
-          "loc": {
-            "start": {
-              "line": 102,
-              "column": 7
-            },
-            "end": {
-              "line": 102,
-              "column": 40
-            }
-          },
-          "declarations": [
-            {
-              "type": "VariableDeclarator",
-              "start": 1879,
-              "end": 1905,
-              "loc": {
-                "start": {
-                  "line": 102,
-                  "column": 13
-                },
-                "end": {
-                  "line": 102,
-                  "column": 39
-                }
-              },
-              "id": {
-                "type": "Identifier",
-                "start": 1879,
-                "end": 1889,
-                "loc": {
-                  "start": {
-                    "line": 102,
-                    "column": 13
-                  },
-                  "end": {
-                    "line": 102,
-                    "column": 23
-                  },
-                  "identifierName": "_vBuilders"
-                },
-                "name": "_vBuilders",
-                "leadingComments": null
-              },
-              "init": {
-                "type": "NewExpression",
-                "start": 1892,
-                "end": 1905,
-                "loc": {
-                  "start": {
-                    "line": 102,
-                    "column": 26
-                  },
-                  "end": {
-                    "line": 102,
-                    "column": 39
-                  }
-                },
-                "callee": {
-                  "type": "Identifier",
-                  "start": 1896,
-                  "end": 1903,
-                  "loc": {
-                    "start": {
-                      "line": 102,
-                      "column": 30
-                    },
-                    "end": {
-                      "line": 102,
-                      "column": 37
-                    },
-                    "identifierName": "WeakMap"
-                  },
-                  "name": "WeakMap"
-                },
-                "arguments": []
-              },
-              "leadingComments": null
-            }
-          ],
-          "kind": "const",
-          "leadingComments": [
-            {
-              "type": "CommentBlock",
-              "value": "*\n * Holder for Validator Builders\n * @type {WeakMap}\n * @private\n ",
-              "start": 1794,
-              "end": 1865,
-              "loc": {
-                "start": {
-                  "line": 97,
-                  "column": 0
-                },
-                "end": {
-                  "line": 101,
-                  "column": 3
-                }
-              }
-            }
-          ],
-          "trailingComments": [
-            {
-              "type": "CommentBlock",
-              "value": "*\n * Holder for Validation Paths\n * @type {WeakMap}\n * @private\n ",
-              "start": 1907,
-              "end": 1976,
-              "loc": {
-                "start": {
-                  "line": 103,
-                  "column": 0
-                },
-                "end": {
-                  "line": 107,
-                  "column": 3
-                }
-              }
-            }
-          ]
-        },
-        "leadingComments": [
-          {
-            "type": "CommentBlock",
-            "value": "*\n * Holder for Validator Builders\n * @type {WeakMap}\n * @private\n ",
-            "start": 1794,
-            "end": 1865,
-            "loc": {
-              "start": {
-                "line": 97,
-                "column": 0
-              },
-              "end": {
-                "line": 101,
-                "column": 3
-              }
-            }
-          }
-        ],
-        "trailingComments": [
-          {
-            "type": "CommentBlock",
-            "value": "*\n * Holder for Validation Paths\n * @type {WeakMap}\n * @private\n ",
-            "start": 1907,
-            "end": 1976,
-            "loc": {
-              "start": {
-                "line": 103,
-                "column": 0
-              },
-              "end": {
-                "line": 107,
-                "column": 3
-              }
-            }
-          }
-        ]
-      },
-      {
-        "type": "ExportNamedDeclaration",
-        "start": 1977,
-        "end": 2014,
-        "loc": {
-          "start": {
-            "line": 108,
-            "column": 0
-          },
-          "end": {
-            "line": 108,
-            "column": 37
-          }
-        },
-        "specifiers": [],
-        "source": null,
-        "declaration": {
-          "type": "VariableDeclaration",
-          "start": 1984,
-          "end": 2014,
-          "loc": {
-            "start": {
-              "line": 108,
-              "column": 7
-            },
-            "end": {
-              "line": 108,
-              "column": 37
-            }
-          },
-          "declarations": [
-            {
-              "type": "VariableDeclarator",
-              "start": 1990,
-              "end": 2013,
-              "loc": {
-                "start": {
-                  "line": 108,
-                  "column": 13
-                },
-                "end": {
-                  "line": 108,
-                  "column": 36
-                }
-              },
-              "id": {
-                "type": "Identifier",
-                "start": 1990,
-                "end": 1997,
-                "loc": {
-                  "start": {
-                    "line": 108,
-                    "column": 13
-                  },
-                  "end": {
-                    "line": 108,
-                    "column": 20
-                  },
-                  "identifierName": "_vPaths"
-                },
-                "name": "_vPaths",
-                "leadingComments": null
-              },
-              "init": {
-                "type": "NewExpression",
-                "start": 2000,
-                "end": 2013,
-                "loc": {
-                  "start": {
-                    "line": 108,
-                    "column": 23
-                  },
-                  "end": {
-                    "line": 108,
-                    "column": 36
-                  }
-                },
-                "callee": {
-                  "type": "Identifier",
-                  "start": 2004,
-                  "end": 2011,
-                  "loc": {
-                    "start": {
-                      "line": 108,
-                      "column": 27
-                    },
-                    "end": {
-                      "line": 108,
-                      "column": 34
-                    },
-                    "identifierName": "WeakMap"
-                  },
-                  "name": "WeakMap"
-                },
-                "arguments": []
-              },
-              "leadingComments": null
-            }
-          ],
-          "kind": "const",
-          "leadingComments": [
-            {
-              "type": "CommentBlock",
-              "value": "*\n * Holder for Validation Paths\n * @type {WeakMap}\n * @private\n ",
-              "start": 1907,
-              "end": 1976,
-              "loc": {
-                "start": {
-                  "line": 103,
-                  "column": 0
-                },
-                "end": {
-                  "line": 107,
+                  "line": 74,
                   "column": 3
                 }
               }
@@ -3203,16 +2333,16 @@
         "leadingComments": [
           {
             "type": "CommentBlock",
-            "value": "*\n * Holder for Validation Paths\n * @type {WeakMap}\n * @private\n ",
-            "start": 1907,
-            "end": 1976,
+            "value": "*\n * Holder for JSON-Schemas\n * @type {WeakMap}\n * @private\n ",
+            "start": 1261,
+            "end": 1326,
             "loc": {
               "start": {
-                "line": 103,
+                "line": 70,
                 "column": 0
               },
               "end": {
-                "line": 107,
+                "line": 74,
                 "column": 3
               }
             }
@@ -3241,28 +2371,28 @@
     },
     {
       "type": "CommentBlock",
-      "value": "*\n * Holder for registered JS Object references\n *\n * @type {WeakMap}\n * @private\n ",
-      "start": 176,
-      "end": 263,
+      "value": "*\n * Holder for Schema and Set instance references\n *\n * @type {WeakMap}\n * @private\n ",
+      "start": 177,
+      "end": 267,
       "loc": {
         "start": {
-          "line": 11,
+          "line": 12,
           "column": 0
         },
         "end": {
-          "line": 16,
+          "line": 17,
           "column": 3
         }
       }
     },
     {
       "type": "CommentBlock",
-      "value": "*\n * Holder for Schema and Set instance references\n *\n * @type {WeakMap}\n * @private\n ",
-      "start": 301,
-      "end": 391,
+      "value": "*\n * Holder for MetaData references\n * @type {WeakMap}\n * @private\n ",
+      "start": 306,
+      "end": 378,
       "loc": {
         "start": {
-          "line": 18,
+          "line": 19,
           "column": 0
         },
         "end": {
@@ -3273,9 +2403,9 @@
     },
     {
       "type": "CommentBlock",
-      "value": "*\n * Holder for MetaData references\n * @type {WeakMap}\n * @private\n ",
-      "start": 430,
-      "end": 502,
+      "value": "*\n * Holder for AjvWrapper references\n * @type {WeakMap<Object, ajv>}\n * @private\n ",
+      "start": 416,
+      "end": 503,
       "loc": {
         "start": {
           "line": 25,
@@ -3289,9 +2419,9 @@
     },
     {
       "type": "CommentBlock",
-      "value": "*\n * Holder for lists of required elements for each Schema Node\n *\n * @type {WeakMap}\n * @private\n ",
-      "start": 540,
-      "end": 643,
+      "value": "*\n * Holder for models in transition\n *\n * @type {WeakMap}\n * @private\n ",
+      "start": 542,
+      "end": 618,
       "loc": {
         "start": {
           "line": 31,
@@ -3306,8 +2436,8 @@
     {
       "type": "CommentBlock",
       "value": "*\n * Holder for Schema Validators\n * @type {WeakMap}\n * @private\n ",
-      "start": 693,
-      "end": 763,
+      "start": 662,
+      "end": 732,
       "loc": {
         "start": {
           "line": 38,
@@ -3321,9 +2451,9 @@
     },
     {
       "type": "CommentBlock",
-      "value": "*\n * Holder for Singleton instance references\n *\n * @type {WeakMap}\n * @private\n ",
-      "start": 806,
-      "end": 891,
+      "value": "*\n * Holder for Schema options refeerences\n *\n * @type {WeakMap}\n * @private\n ",
+      "start": 775,
+      "end": 857,
       "loc": {
         "start": {
           "line": 44,
@@ -3337,9 +2467,9 @@
     },
     {
       "type": "CommentBlock",
-      "value": "*\n * Holder for `Set` element types\n *\n * @type {WeakMap}\n * @private\n ",
-      "start": 934,
-      "end": 1009,
+      "value": "*\n * Holder for Schema Helpers references\n *\n * @type {WeakMap}\n * @private\n ",
+      "start": 903,
+      "end": 984,
       "loc": {
         "start": {
           "line": 51,
@@ -3353,80 +2483,16 @@
     },
     {
       "type": "CommentBlock",
-      "value": "*\n * Holder for Schema options refeerences\n *\n * @type {WeakMap}\n * @private\n ",
-      "start": 1053,
-      "end": 1135,
+      "value": "*\n * Holder for RXJS Observer references\n * @type {WeakMap}\n * @private\n ",
+      "start": 1030,
+      "end": 1107,
       "loc": {
         "start": {
           "line": 58,
           "column": 0
         },
         "end": {
-          "line": 63,
-          "column": 3
-        }
-      }
-    },
-    {
-      "type": "CommentBlock",
-      "value": "*\n * Holder for Schema Helpers references\n *\n * @type {WeakMap}\n * @private\n ",
-      "start": 1181,
-      "end": 1262,
-      "loc": {
-        "start": {
-          "line": 65,
-          "column": 0
-        },
-        "end": {
-          "line": 70,
-          "column": 3
-        }
-      }
-    },
-    {
-      "type": "CommentBlock",
-      "value": "*\n * Holder for Schema Signatures references\n *\n * @type {WeakMap}\n * @private\n ",
-      "start": 1308,
-      "end": 1392,
-      "loc": {
-        "start": {
-          "line": 72,
-          "column": 0
-        },
-        "end": {
-          "line": 77,
-          "column": 3
-        }
-      }
-    },
-    {
-      "type": "CommentBlock",
-      "value": "*\n * Holder for RXJS Observer references\n * @type {WeakMap}\n * @private\n ",
-      "start": 1441,
-      "end": 1518,
-      "loc": {
-        "start": {
-          "line": 79,
-          "column": 0
-        },
-        "end": {
-          "line": 83,
-          "column": 3
-        }
-      }
-    },
-    {
-      "type": "CommentBlock",
-      "value": "*\n * Holder for Validation path references\n * @type {WeakMap}\n * @private\n ",
-      "start": 1560,
-      "end": 1639,
-      "loc": {
-        "start": {
-          "line": 85,
-          "column": 0
-        },
-        "end": {
-          "line": 89,
+          "line": 62,
           "column": 3
         }
       }
@@ -3434,47 +2500,31 @@
     {
       "type": "CommentBlock",
       "value": "*\n * Holder for Observer Builders\n * @type {WeakMap}\n * @private\n ",
-      "start": 1682,
-      "end": 1752,
+      "start": 1149,
+      "end": 1219,
       "loc": {
         "start": {
-          "line": 91,
+          "line": 64,
           "column": 0
         },
         "end": {
-          "line": 95,
+          "line": 68,
           "column": 3
         }
       }
     },
     {
       "type": "CommentBlock",
-      "value": "*\n * Holder for Validator Builders\n * @type {WeakMap}\n * @private\n ",
-      "start": 1794,
-      "end": 1865,
+      "value": "*\n * Holder for JSON-Schemas\n * @type {WeakMap}\n * @private\n ",
+      "start": 1261,
+      "end": 1326,
       "loc": {
         "start": {
-          "line": 97,
+          "line": 70,
           "column": 0
         },
         "end": {
-          "line": 101,
-          "column": 3
-        }
-      }
-    },
-    {
-      "type": "CommentBlock",
-      "value": "*\n * Holder for Validation Paths\n * @type {WeakMap}\n * @private\n ",
-      "start": 1907,
-      "end": 1976,
-      "loc": {
-        "start": {
-          "line": 103,
-          "column": 0
-        },
-        "end": {
-          "line": 107,
+          "line": 74,
           "column": 3
         }
       }
@@ -4470,16 +3520,16 @@
     },
     {
       "type": "CommentBlock",
-      "value": "*\n * Holder for registered JS Object references\n *\n * @type {WeakMap}\n * @private\n ",
-      "start": 176,
-      "end": 263,
+      "value": "*\n * Holder for Schema and Set instance references\n *\n * @type {WeakMap}\n * @private\n ",
+      "start": 177,
+      "end": 267,
       "loc": {
         "start": {
-          "line": 11,
+          "line": 12,
           "column": 0
         },
         "end": {
-          "line": 16,
+          "line": 17,
           "column": 3
         }
       }
@@ -4499,15 +3549,15 @@
         "updateContext": null
       },
       "value": "export",
-      "start": 264,
-      "end": 270,
+      "start": 268,
+      "end": 274,
       "loc": {
         "start": {
-          "line": 17,
+          "line": 18,
           "column": 0
         },
         "end": {
-          "line": 17,
+          "line": 18,
           "column": 6
         }
       }
@@ -4527,15 +3577,15 @@
         "updateContext": null
       },
       "value": "const",
-      "start": 271,
-      "end": 276,
+      "start": 275,
+      "end": 280,
       "loc": {
         "start": {
-          "line": 17,
+          "line": 18,
           "column": 7
         },
         "end": {
-          "line": 17,
+          "line": 18,
           "column": 12
         }
       }
@@ -4552,17 +3602,17 @@
         "postfix": false,
         "binop": null
       },
-      "value": "_kinds",
-      "start": 277,
-      "end": 283,
+      "value": "_object",
+      "start": 281,
+      "end": 288,
       "loc": {
         "start": {
-          "line": 17,
+          "line": 18,
           "column": 13
         },
         "end": {
-          "line": 17,
-          "column": 19
+          "line": 18,
+          "column": 20
         }
       }
     },
@@ -4580,16 +3630,16 @@
         "updateContext": null
       },
       "value": "=",
-      "start": 284,
-      "end": 285,
+      "start": 289,
+      "end": 290,
       "loc": {
         "start": {
-          "line": 17,
-          "column": 20
+          "line": 18,
+          "column": 21
         },
         "end": {
-          "line": 17,
-          "column": 21
+          "line": 18,
+          "column": 22
         }
       }
     },
@@ -4608,16 +3658,16 @@
         "updateContext": null
       },
       "value": "new",
-      "start": 286,
-      "end": 289,
+      "start": 291,
+      "end": 294,
       "loc": {
         "start": {
-          "line": 17,
-          "column": 22
+          "line": 18,
+          "column": 23
         },
         "end": {
-          "line": 17,
-          "column": 25
+          "line": 18,
+          "column": 26
         }
       }
     },
@@ -4634,16 +3684,16 @@
         "binop": null
       },
       "value": "WeakMap",
-      "start": 290,
-      "end": 297,
+      "start": 295,
+      "end": 302,
       "loc": {
         "start": {
-          "line": 17,
-          "column": 26
+          "line": 18,
+          "column": 27
         },
         "end": {
-          "line": 17,
-          "column": 33
+          "line": 18,
+          "column": 34
         }
       }
     },
@@ -4659,16 +3709,16 @@
         "postfix": false,
         "binop": null
       },
-      "start": 297,
-      "end": 298,
+      "start": 302,
+      "end": 303,
       "loc": {
         "start": {
-          "line": 17,
-          "column": 33
+          "line": 18,
+          "column": 34
         },
         "end": {
-          "line": 17,
-          "column": 34
+          "line": 18,
+          "column": 35
         }
       }
     },
@@ -4684,16 +3734,16 @@
         "postfix": false,
         "binop": null
       },
-      "start": 298,
-      "end": 299,
+      "start": 303,
+      "end": 304,
       "loc": {
         "start": {
-          "line": 17,
-          "column": 34
+          "line": 18,
+          "column": 35
         },
         "end": {
-          "line": 17,
-          "column": 35
+          "line": 18,
+          "column": 36
         }
       }
     },
@@ -4710,27 +3760,27 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 299,
-      "end": 300,
+      "start": 304,
+      "end": 305,
       "loc": {
         "start": {
-          "line": 17,
-          "column": 35
+          "line": 18,
+          "column": 36
         },
         "end": {
-          "line": 17,
-          "column": 36
+          "line": 18,
+          "column": 37
         }
       }
     },
     {
       "type": "CommentBlock",
-      "value": "*\n * Holder for Schema and Set instance references\n *\n * @type {WeakMap}\n * @private\n ",
-      "start": 301,
-      "end": 391,
+      "value": "*\n * Holder for MetaData references\n * @type {WeakMap}\n * @private\n ",
+      "start": 306,
+      "end": 378,
       "loc": {
         "start": {
-          "line": 18,
+          "line": 19,
           "column": 0
         },
         "end": {
@@ -4754,8 +3804,8 @@
         "updateContext": null
       },
       "value": "export",
-      "start": 392,
-      "end": 398,
+      "start": 379,
+      "end": 385,
       "loc": {
         "start": {
           "line": 24,
@@ -4782,8 +3832,8 @@
         "updateContext": null
       },
       "value": "const",
-      "start": 399,
-      "end": 404,
+      "start": 386,
+      "end": 391,
       "loc": {
         "start": {
           "line": 24,
@@ -4807,9 +3857,9 @@
         "postfix": false,
         "binop": null
       },
-      "value": "_object",
-      "start": 405,
-      "end": 412,
+      "value": "_mdRef",
+      "start": 392,
+      "end": 398,
       "loc": {
         "start": {
           "line": 24,
@@ -4817,7 +3867,7 @@
         },
         "end": {
           "line": 24,
-          "column": 20
+          "column": 19
         }
       }
     },
@@ -4835,16 +3885,16 @@
         "updateContext": null
       },
       "value": "=",
-      "start": 413,
-      "end": 414,
+      "start": 399,
+      "end": 400,
       "loc": {
         "start": {
           "line": 24,
-          "column": 21
+          "column": 20
         },
         "end": {
           "line": 24,
-          "column": 22
+          "column": 21
         }
       }
     },
@@ -4863,16 +3913,16 @@
         "updateContext": null
       },
       "value": "new",
-      "start": 415,
-      "end": 418,
+      "start": 401,
+      "end": 404,
       "loc": {
         "start": {
           "line": 24,
-          "column": 23
+          "column": 22
         },
         "end": {
           "line": 24,
-          "column": 26
+          "column": 25
         }
       }
     },
@@ -4889,16 +3939,16 @@
         "binop": null
       },
       "value": "WeakMap",
-      "start": 419,
-      "end": 426,
+      "start": 405,
+      "end": 412,
       "loc": {
         "start": {
           "line": 24,
-          "column": 27
+          "column": 26
         },
         "end": {
           "line": 24,
-          "column": 34
+          "column": 33
         }
       }
     },
@@ -4914,16 +3964,16 @@
         "postfix": false,
         "binop": null
       },
-      "start": 426,
-      "end": 427,
+      "start": 412,
+      "end": 413,
       "loc": {
         "start": {
           "line": 24,
-          "column": 34
+          "column": 33
         },
         "end": {
           "line": 24,
-          "column": 35
+          "column": 34
         }
       }
     },
@@ -4939,16 +3989,16 @@
         "postfix": false,
         "binop": null
       },
-      "start": 427,
-      "end": 428,
+      "start": 413,
+      "end": 414,
       "loc": {
         "start": {
           "line": 24,
-          "column": 35
+          "column": 34
         },
         "end": {
           "line": 24,
-          "column": 36
+          "column": 35
         }
       }
     },
@@ -4965,24 +4015,24 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 428,
-      "end": 429,
+      "start": 414,
+      "end": 415,
       "loc": {
         "start": {
           "line": 24,
-          "column": 36
+          "column": 35
         },
         "end": {
           "line": 24,
-          "column": 37
+          "column": 36
         }
       }
     },
     {
       "type": "CommentBlock",
-      "value": "*\n * Holder for MetaData references\n * @type {WeakMap}\n * @private\n ",
-      "start": 430,
-      "end": 502,
+      "value": "*\n * Holder for AjvWrapper references\n * @type {WeakMap<Object, ajv>}\n * @private\n ",
+      "start": 416,
+      "end": 503,
       "loc": {
         "start": {
           "line": 25,
@@ -5009,8 +4059,8 @@
         "updateContext": null
       },
       "value": "export",
-      "start": 503,
-      "end": 509,
+      "start": 504,
+      "end": 510,
       "loc": {
         "start": {
           "line": 30,
@@ -5037,8 +4087,8 @@
         "updateContext": null
       },
       "value": "const",
-      "start": 510,
-      "end": 515,
+      "start": 511,
+      "end": 516,
       "loc": {
         "start": {
           "line": 30,
@@ -5062,9 +4112,9 @@
         "postfix": false,
         "binop": null
       },
-      "value": "_mdRef",
-      "start": 516,
-      "end": 522,
+      "value": "_ajvRef",
+      "start": 517,
+      "end": 524,
       "loc": {
         "start": {
           "line": 30,
@@ -5072,7 +4122,7 @@
         },
         "end": {
           "line": 30,
-          "column": 19
+          "column": 20
         }
       }
     },
@@ -5090,16 +4140,16 @@
         "updateContext": null
       },
       "value": "=",
-      "start": 523,
-      "end": 524,
+      "start": 525,
+      "end": 526,
       "loc": {
         "start": {
           "line": 30,
-          "column": 20
+          "column": 21
         },
         "end": {
           "line": 30,
-          "column": 21
+          "column": 22
         }
       }
     },
@@ -5118,16 +4168,16 @@
         "updateContext": null
       },
       "value": "new",
-      "start": 525,
-      "end": 528,
+      "start": 527,
+      "end": 530,
       "loc": {
         "start": {
           "line": 30,
-          "column": 22
+          "column": 23
         },
         "end": {
           "line": 30,
-          "column": 25
+          "column": 26
         }
       }
     },
@@ -5144,16 +4194,16 @@
         "binop": null
       },
       "value": "WeakMap",
-      "start": 529,
-      "end": 536,
+      "start": 531,
+      "end": 538,
       "loc": {
         "start": {
           "line": 30,
-          "column": 26
+          "column": 27
         },
         "end": {
           "line": 30,
-          "column": 33
+          "column": 34
         }
       }
     },
@@ -5169,16 +4219,16 @@
         "postfix": false,
         "binop": null
       },
-      "start": 536,
-      "end": 537,
+      "start": 538,
+      "end": 539,
       "loc": {
         "start": {
           "line": 30,
-          "column": 33
+          "column": 34
         },
         "end": {
           "line": 30,
-          "column": 34
+          "column": 35
         }
       }
     },
@@ -5194,16 +4244,16 @@
         "postfix": false,
         "binop": null
       },
-      "start": 537,
-      "end": 538,
+      "start": 539,
+      "end": 540,
       "loc": {
         "start": {
           "line": 30,
-          "column": 34
+          "column": 35
         },
         "end": {
           "line": 30,
-          "column": 35
+          "column": 36
         }
       }
     },
@@ -5220,24 +4270,24 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 538,
-      "end": 539,
+      "start": 540,
+      "end": 541,
       "loc": {
         "start": {
           "line": 30,
-          "column": 35
+          "column": 36
         },
         "end": {
           "line": 30,
-          "column": 36
+          "column": 37
         }
       }
     },
     {
       "type": "CommentBlock",
-      "value": "*\n * Holder for lists of required elements for each Schema Node\n *\n * @type {WeakMap}\n * @private\n ",
-      "start": 540,
-      "end": 643,
+      "value": "*\n * Holder for models in transition\n *\n * @type {WeakMap}\n * @private\n ",
+      "start": 542,
+      "end": 618,
       "loc": {
         "start": {
           "line": 31,
@@ -5264,8 +4314,8 @@
         "updateContext": null
       },
       "value": "export",
-      "start": 644,
-      "end": 650,
+      "start": 619,
+      "end": 625,
       "loc": {
         "start": {
           "line": 37,
@@ -5292,8 +4342,8 @@
         "updateContext": null
       },
       "value": "const",
-      "start": 651,
-      "end": 656,
+      "start": 626,
+      "end": 631,
       "loc": {
         "start": {
           "line": 37,
@@ -5317,9 +4367,9 @@
         "postfix": false,
         "binop": null
       },
-      "value": "_required_elements",
-      "start": 657,
-      "end": 675,
+      "value": "_dirtyModels",
+      "start": 632,
+      "end": 644,
       "loc": {
         "start": {
           "line": 37,
@@ -5327,7 +4377,7 @@
         },
         "end": {
           "line": 37,
-          "column": 31
+          "column": 25
         }
       }
     },
@@ -5345,16 +4395,16 @@
         "updateContext": null
       },
       "value": "=",
-      "start": 676,
-      "end": 677,
+      "start": 645,
+      "end": 646,
       "loc": {
         "start": {
           "line": 37,
-          "column": 32
+          "column": 26
         },
         "end": {
           "line": 37,
-          "column": 33
+          "column": 27
         }
       }
     },
@@ -5373,16 +4423,16 @@
         "updateContext": null
       },
       "value": "new",
-      "start": 678,
-      "end": 681,
+      "start": 647,
+      "end": 650,
       "loc": {
         "start": {
           "line": 37,
-          "column": 34
+          "column": 28
         },
         "end": {
           "line": 37,
-          "column": 37
+          "column": 31
         }
       }
     },
@@ -5399,16 +4449,16 @@
         "binop": null
       },
       "value": "WeakMap",
-      "start": 682,
-      "end": 689,
+      "start": 651,
+      "end": 658,
       "loc": {
         "start": {
           "line": 37,
-          "column": 38
+          "column": 32
         },
         "end": {
           "line": 37,
-          "column": 45
+          "column": 39
         }
       }
     },
@@ -5424,16 +4474,16 @@
         "postfix": false,
         "binop": null
       },
-      "start": 689,
-      "end": 690,
+      "start": 658,
+      "end": 659,
       "loc": {
         "start": {
           "line": 37,
-          "column": 45
+          "column": 39
         },
         "end": {
           "line": 37,
-          "column": 46
+          "column": 40
         }
       }
     },
@@ -5449,16 +4499,16 @@
         "postfix": false,
         "binop": null
       },
-      "start": 690,
-      "end": 691,
+      "start": 659,
+      "end": 660,
       "loc": {
         "start": {
           "line": 37,
-          "column": 46
+          "column": 40
         },
         "end": {
           "line": 37,
-          "column": 47
+          "column": 41
         }
       }
     },
@@ -5475,24 +4525,24 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 691,
-      "end": 692,
+      "start": 660,
+      "end": 661,
       "loc": {
         "start": {
           "line": 37,
-          "column": 47
+          "column": 41
         },
         "end": {
           "line": 37,
-          "column": 48
+          "column": 42
         }
       }
     },
     {
       "type": "CommentBlock",
       "value": "*\n * Holder for Schema Validators\n * @type {WeakMap}\n * @private\n ",
-      "start": 693,
-      "end": 763,
+      "start": 662,
+      "end": 732,
       "loc": {
         "start": {
           "line": 38,
@@ -5519,8 +4569,8 @@
         "updateContext": null
       },
       "value": "export",
-      "start": 764,
-      "end": 770,
+      "start": 733,
+      "end": 739,
       "loc": {
         "start": {
           "line": 43,
@@ -5547,8 +4597,8 @@
         "updateContext": null
       },
       "value": "const",
-      "start": 771,
-      "end": 776,
+      "start": 740,
+      "end": 745,
       "loc": {
         "start": {
           "line": 43,
@@ -5573,8 +4623,8 @@
         "binop": null
       },
       "value": "_validators",
-      "start": 777,
-      "end": 788,
+      "start": 746,
+      "end": 757,
       "loc": {
         "start": {
           "line": 43,
@@ -5600,8 +4650,8 @@
         "updateContext": null
       },
       "value": "=",
-      "start": 789,
-      "end": 790,
+      "start": 758,
+      "end": 759,
       "loc": {
         "start": {
           "line": 43,
@@ -5628,8 +4678,8 @@
         "updateContext": null
       },
       "value": "new",
-      "start": 791,
-      "end": 794,
+      "start": 760,
+      "end": 763,
       "loc": {
         "start": {
           "line": 43,
@@ -5654,8 +4704,8 @@
         "binop": null
       },
       "value": "WeakMap",
-      "start": 795,
-      "end": 802,
+      "start": 764,
+      "end": 771,
       "loc": {
         "start": {
           "line": 43,
@@ -5679,8 +4729,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 802,
-      "end": 803,
+      "start": 771,
+      "end": 772,
       "loc": {
         "start": {
           "line": 43,
@@ -5704,8 +4754,8 @@
         "postfix": false,
         "binop": null
       },
-      "start": 803,
-      "end": 804,
+      "start": 772,
+      "end": 773,
       "loc": {
         "start": {
           "line": 43,
@@ -5730,8 +4780,8 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 804,
-      "end": 805,
+      "start": 773,
+      "end": 774,
       "loc": {
         "start": {
           "line": 43,
@@ -5745,9 +4795,9 @@
     },
     {
       "type": "CommentBlock",
-      "value": "*\n * Holder for Singleton instance references\n *\n * @type {WeakMap}\n * @private\n ",
-      "start": 806,
-      "end": 891,
+      "value": "*\n * Holder for Schema options refeerences\n *\n * @type {WeakMap}\n * @private\n ",
+      "start": 775,
+      "end": 857,
       "loc": {
         "start": {
           "line": 44,
@@ -5774,8 +4824,8 @@
         "updateContext": null
       },
       "value": "export",
-      "start": 892,
-      "end": 898,
+      "start": 858,
+      "end": 864,
       "loc": {
         "start": {
           "line": 50,
@@ -5802,8 +4852,8 @@
         "updateContext": null
       },
       "value": "const",
-      "start": 899,
-      "end": 904,
+      "start": 865,
+      "end": 870,
       "loc": {
         "start": {
           "line": 50,
@@ -5827,9 +4877,9 @@
         "postfix": false,
         "binop": null
       },
-      "value": "_singletons",
-      "start": 905,
-      "end": 916,
+      "value": "_schemaOptions",
+      "start": 871,
+      "end": 885,
       "loc": {
         "start": {
           "line": 50,
@@ -5837,7 +4887,7 @@
         },
         "end": {
           "line": 50,
-          "column": 24
+          "column": 27
         }
       }
     },
@@ -5855,16 +4905,16 @@
         "updateContext": null
       },
       "value": "=",
-      "start": 917,
-      "end": 918,
+      "start": 886,
+      "end": 887,
       "loc": {
         "start": {
           "line": 50,
-          "column": 25
+          "column": 28
         },
         "end": {
           "line": 50,
-          "column": 26
+          "column": 29
         }
       }
     },
@@ -5883,16 +4933,16 @@
         "updateContext": null
       },
       "value": "new",
-      "start": 919,
-      "end": 922,
+      "start": 888,
+      "end": 891,
       "loc": {
         "start": {
           "line": 50,
-          "column": 27
+          "column": 30
         },
         "end": {
           "line": 50,
-          "column": 30
+          "column": 33
         }
       }
     },
@@ -5909,16 +4959,16 @@
         "binop": null
       },
       "value": "WeakMap",
-      "start": 923,
-      "end": 930,
+      "start": 892,
+      "end": 899,
       "loc": {
         "start": {
           "line": 50,
-          "column": 31
+          "column": 34
         },
         "end": {
           "line": 50,
-          "column": 38
+          "column": 41
         }
       }
     },
@@ -5934,16 +4984,16 @@
         "postfix": false,
         "binop": null
       },
-      "start": 930,
-      "end": 931,
+      "start": 899,
+      "end": 900,
       "loc": {
         "start": {
           "line": 50,
-          "column": 38
+          "column": 41
         },
         "end": {
           "line": 50,
-          "column": 39
+          "column": 42
         }
       }
     },
@@ -5959,16 +5009,16 @@
         "postfix": false,
         "binop": null
       },
-      "start": 931,
-      "end": 932,
+      "start": 900,
+      "end": 901,
       "loc": {
         "start": {
           "line": 50,
-          "column": 39
+          "column": 42
         },
         "end": {
           "line": 50,
-          "column": 40
+          "column": 43
         }
       }
     },
@@ -5985,24 +5035,24 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 932,
-      "end": 933,
+      "start": 901,
+      "end": 902,
       "loc": {
         "start": {
           "line": 50,
-          "column": 40
+          "column": 43
         },
         "end": {
           "line": 50,
-          "column": 41
+          "column": 44
         }
       }
     },
     {
       "type": "CommentBlock",
-      "value": "*\n * Holder for `Set` element types\n *\n * @type {WeakMap}\n * @private\n ",
-      "start": 934,
-      "end": 1009,
+      "value": "*\n * Holder for Schema Helpers references\n *\n * @type {WeakMap}\n * @private\n ",
+      "start": 903,
+      "end": 984,
       "loc": {
         "start": {
           "line": 51,
@@ -6029,8 +5079,8 @@
         "updateContext": null
       },
       "value": "export",
-      "start": 1010,
-      "end": 1016,
+      "start": 985,
+      "end": 991,
       "loc": {
         "start": {
           "line": 57,
@@ -6057,8 +5107,8 @@
         "updateContext": null
       },
       "value": "const",
-      "start": 1017,
-      "end": 1022,
+      "start": 992,
+      "end": 997,
       "loc": {
         "start": {
           "line": 57,
@@ -6066,516 +5116,6 @@
         },
         "end": {
           "line": 57,
-          "column": 12
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "name",
-        "beforeExpr": false,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null
-      },
-      "value": "_vectorTypes",
-      "start": 1023,
-      "end": 1035,
-      "loc": {
-        "start": {
-          "line": 57,
-          "column": 13
-        },
-        "end": {
-          "line": 57,
-          "column": 25
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "=",
-        "beforeExpr": true,
-        "startsExpr": false,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": true,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "value": "=",
-      "start": 1036,
-      "end": 1037,
-      "loc": {
-        "start": {
-          "line": 57,
-          "column": 26
-        },
-        "end": {
-          "line": 57,
-          "column": 27
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "new",
-        "keyword": "new",
-        "beforeExpr": true,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "value": "new",
-      "start": 1038,
-      "end": 1041,
-      "loc": {
-        "start": {
-          "line": 57,
-          "column": 28
-        },
-        "end": {
-          "line": 57,
-          "column": 31
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "name",
-        "beforeExpr": false,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null
-      },
-      "value": "WeakMap",
-      "start": 1042,
-      "end": 1049,
-      "loc": {
-        "start": {
-          "line": 57,
-          "column": 32
-        },
-        "end": {
-          "line": 57,
-          "column": 39
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "(",
-        "beforeExpr": true,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null
-      },
-      "start": 1049,
-      "end": 1050,
-      "loc": {
-        "start": {
-          "line": 57,
-          "column": 39
-        },
-        "end": {
-          "line": 57,
-          "column": 40
-        }
-      }
-    },
-    {
-      "type": {
-        "label": ")",
-        "beforeExpr": false,
-        "startsExpr": false,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null
-      },
-      "start": 1050,
-      "end": 1051,
-      "loc": {
-        "start": {
-          "line": 57,
-          "column": 40
-        },
-        "end": {
-          "line": 57,
-          "column": 41
-        }
-      }
-    },
-    {
-      "type": {
-        "label": ";",
-        "beforeExpr": true,
-        "startsExpr": false,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "start": 1051,
-      "end": 1052,
-      "loc": {
-        "start": {
-          "line": 57,
-          "column": 41
-        },
-        "end": {
-          "line": 57,
-          "column": 42
-        }
-      }
-    },
-    {
-      "type": "CommentBlock",
-      "value": "*\n * Holder for Schema options refeerences\n *\n * @type {WeakMap}\n * @private\n ",
-      "start": 1053,
-      "end": 1135,
-      "loc": {
-        "start": {
-          "line": 58,
-          "column": 0
-        },
-        "end": {
-          "line": 63,
-          "column": 3
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "export",
-        "keyword": "export",
-        "beforeExpr": false,
-        "startsExpr": false,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "value": "export",
-      "start": 1136,
-      "end": 1142,
-      "loc": {
-        "start": {
-          "line": 64,
-          "column": 0
-        },
-        "end": {
-          "line": 64,
-          "column": 6
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "const",
-        "keyword": "const",
-        "beforeExpr": false,
-        "startsExpr": false,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "value": "const",
-      "start": 1143,
-      "end": 1148,
-      "loc": {
-        "start": {
-          "line": 64,
-          "column": 7
-        },
-        "end": {
-          "line": 64,
-          "column": 12
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "name",
-        "beforeExpr": false,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null
-      },
-      "value": "_schemaOptions",
-      "start": 1149,
-      "end": 1163,
-      "loc": {
-        "start": {
-          "line": 64,
-          "column": 13
-        },
-        "end": {
-          "line": 64,
-          "column": 27
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "=",
-        "beforeExpr": true,
-        "startsExpr": false,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": true,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "value": "=",
-      "start": 1164,
-      "end": 1165,
-      "loc": {
-        "start": {
-          "line": 64,
-          "column": 28
-        },
-        "end": {
-          "line": 64,
-          "column": 29
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "new",
-        "keyword": "new",
-        "beforeExpr": true,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "value": "new",
-      "start": 1166,
-      "end": 1169,
-      "loc": {
-        "start": {
-          "line": 64,
-          "column": 30
-        },
-        "end": {
-          "line": 64,
-          "column": 33
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "name",
-        "beforeExpr": false,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null
-      },
-      "value": "WeakMap",
-      "start": 1170,
-      "end": 1177,
-      "loc": {
-        "start": {
-          "line": 64,
-          "column": 34
-        },
-        "end": {
-          "line": 64,
-          "column": 41
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "(",
-        "beforeExpr": true,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null
-      },
-      "start": 1177,
-      "end": 1178,
-      "loc": {
-        "start": {
-          "line": 64,
-          "column": 41
-        },
-        "end": {
-          "line": 64,
-          "column": 42
-        }
-      }
-    },
-    {
-      "type": {
-        "label": ")",
-        "beforeExpr": false,
-        "startsExpr": false,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null
-      },
-      "start": 1178,
-      "end": 1179,
-      "loc": {
-        "start": {
-          "line": 64,
-          "column": 42
-        },
-        "end": {
-          "line": 64,
-          "column": 43
-        }
-      }
-    },
-    {
-      "type": {
-        "label": ";",
-        "beforeExpr": true,
-        "startsExpr": false,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "start": 1179,
-      "end": 1180,
-      "loc": {
-        "start": {
-          "line": 64,
-          "column": 43
-        },
-        "end": {
-          "line": 64,
-          "column": 44
-        }
-      }
-    },
-    {
-      "type": "CommentBlock",
-      "value": "*\n * Holder for Schema Helpers references\n *\n * @type {WeakMap}\n * @private\n ",
-      "start": 1181,
-      "end": 1262,
-      "loc": {
-        "start": {
-          "line": 65,
-          "column": 0
-        },
-        "end": {
-          "line": 70,
-          "column": 3
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "export",
-        "keyword": "export",
-        "beforeExpr": false,
-        "startsExpr": false,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "value": "export",
-      "start": 1263,
-      "end": 1269,
-      "loc": {
-        "start": {
-          "line": 71,
-          "column": 0
-        },
-        "end": {
-          "line": 71,
-          "column": 6
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "const",
-        "keyword": "const",
-        "beforeExpr": false,
-        "startsExpr": false,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "value": "const",
-      "start": 1270,
-      "end": 1275,
-      "loc": {
-        "start": {
-          "line": 71,
-          "column": 7
-        },
-        "end": {
-          "line": 71,
           "column": 12
         }
       }
@@ -6593,15 +5133,15 @@
         "binop": null
       },
       "value": "_schemaHelpers",
-      "start": 1276,
-      "end": 1290,
+      "start": 998,
+      "end": 1012,
       "loc": {
         "start": {
-          "line": 71,
+          "line": 57,
           "column": 13
         },
         "end": {
-          "line": 71,
+          "line": 57,
           "column": 27
         }
       }
@@ -6620,15 +5160,15 @@
         "updateContext": null
       },
       "value": "=",
-      "start": 1291,
-      "end": 1292,
+      "start": 1013,
+      "end": 1014,
       "loc": {
         "start": {
-          "line": 71,
+          "line": 57,
           "column": 28
         },
         "end": {
-          "line": 71,
+          "line": 57,
           "column": 29
         }
       }
@@ -6648,15 +5188,15 @@
         "updateContext": null
       },
       "value": "new",
-      "start": 1293,
-      "end": 1296,
+      "start": 1015,
+      "end": 1018,
       "loc": {
         "start": {
-          "line": 71,
+          "line": 57,
           "column": 30
         },
         "end": {
-          "line": 71,
+          "line": 57,
           "column": 33
         }
       }
@@ -6674,15 +5214,15 @@
         "binop": null
       },
       "value": "WeakMap",
-      "start": 1297,
-      "end": 1304,
+      "start": 1019,
+      "end": 1026,
       "loc": {
         "start": {
-          "line": 71,
+          "line": 57,
           "column": 34
         },
         "end": {
-          "line": 71,
+          "line": 57,
           "column": 41
         }
       }
@@ -6699,15 +5239,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 1304,
-      "end": 1305,
+      "start": 1026,
+      "end": 1027,
       "loc": {
         "start": {
-          "line": 71,
+          "line": 57,
           "column": 41
         },
         "end": {
-          "line": 71,
+          "line": 57,
           "column": 42
         }
       }
@@ -6724,15 +5264,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 1305,
-      "end": 1306,
+      "start": 1027,
+      "end": 1028,
       "loc": {
         "start": {
-          "line": 71,
+          "line": 57,
           "column": 42
         },
         "end": {
-          "line": 71,
+          "line": 57,
           "column": 43
         }
       }
@@ -6750,31 +5290,31 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 1306,
-      "end": 1307,
+      "start": 1028,
+      "end": 1029,
       "loc": {
         "start": {
-          "line": 71,
+          "line": 57,
           "column": 43
         },
         "end": {
-          "line": 71,
+          "line": 57,
           "column": 44
         }
       }
     },
     {
       "type": "CommentBlock",
-      "value": "*\n * Holder for Schema Signatures references\n *\n * @type {WeakMap}\n * @private\n ",
-      "start": 1308,
-      "end": 1392,
+      "value": "*\n * Holder for RXJS Observer references\n * @type {WeakMap}\n * @private\n ",
+      "start": 1030,
+      "end": 1107,
       "loc": {
         "start": {
-          "line": 72,
+          "line": 58,
           "column": 0
         },
         "end": {
-          "line": 77,
+          "line": 62,
           "column": 3
         }
       }
@@ -6794,15 +5334,15 @@
         "updateContext": null
       },
       "value": "export",
-      "start": 1393,
-      "end": 1399,
+      "start": 1108,
+      "end": 1114,
       "loc": {
         "start": {
-          "line": 78,
+          "line": 63,
           "column": 0
         },
         "end": {
-          "line": 78,
+          "line": 63,
           "column": 6
         }
       }
@@ -6822,15 +5362,525 @@
         "updateContext": null
       },
       "value": "const",
-      "start": 1400,
-      "end": 1405,
+      "start": 1115,
+      "end": 1120,
       "loc": {
         "start": {
-          "line": 78,
+          "line": 63,
           "column": 7
         },
         "end": {
-          "line": 78,
+          "line": 63,
+          "column": 12
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "name",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "value": "_observers",
+      "start": 1121,
+      "end": 1131,
+      "loc": {
+        "start": {
+          "line": 63,
+          "column": 13
+        },
+        "end": {
+          "line": 63,
+          "column": 23
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "=",
+        "beforeExpr": true,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": true,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "value": "=",
+      "start": 1132,
+      "end": 1133,
+      "loc": {
+        "start": {
+          "line": 63,
+          "column": 24
+        },
+        "end": {
+          "line": 63,
+          "column": 25
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "new",
+        "keyword": "new",
+        "beforeExpr": true,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "value": "new",
+      "start": 1134,
+      "end": 1137,
+      "loc": {
+        "start": {
+          "line": 63,
+          "column": 26
+        },
+        "end": {
+          "line": 63,
+          "column": 29
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "name",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "value": "WeakMap",
+      "start": 1138,
+      "end": 1145,
+      "loc": {
+        "start": {
+          "line": 63,
+          "column": 30
+        },
+        "end": {
+          "line": 63,
+          "column": 37
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "(",
+        "beforeExpr": true,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "start": 1145,
+      "end": 1146,
+      "loc": {
+        "start": {
+          "line": 63,
+          "column": 37
+        },
+        "end": {
+          "line": 63,
+          "column": 38
+        }
+      }
+    },
+    {
+      "type": {
+        "label": ")",
+        "beforeExpr": false,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "start": 1146,
+      "end": 1147,
+      "loc": {
+        "start": {
+          "line": 63,
+          "column": 38
+        },
+        "end": {
+          "line": 63,
+          "column": 39
+        }
+      }
+    },
+    {
+      "type": {
+        "label": ";",
+        "beforeExpr": true,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "start": 1147,
+      "end": 1148,
+      "loc": {
+        "start": {
+          "line": 63,
+          "column": 39
+        },
+        "end": {
+          "line": 63,
+          "column": 40
+        }
+      }
+    },
+    {
+      "type": "CommentBlock",
+      "value": "*\n * Holder for Observer Builders\n * @type {WeakMap}\n * @private\n ",
+      "start": 1149,
+      "end": 1219,
+      "loc": {
+        "start": {
+          "line": 64,
+          "column": 0
+        },
+        "end": {
+          "line": 68,
+          "column": 3
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "export",
+        "keyword": "export",
+        "beforeExpr": false,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "value": "export",
+      "start": 1220,
+      "end": 1226,
+      "loc": {
+        "start": {
+          "line": 69,
+          "column": 0
+        },
+        "end": {
+          "line": 69,
+          "column": 6
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "const",
+        "keyword": "const",
+        "beforeExpr": false,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "value": "const",
+      "start": 1227,
+      "end": 1232,
+      "loc": {
+        "start": {
+          "line": 69,
+          "column": 7
+        },
+        "end": {
+          "line": 69,
+          "column": 12
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "name",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "value": "_oBuilders",
+      "start": 1233,
+      "end": 1243,
+      "loc": {
+        "start": {
+          "line": 69,
+          "column": 13
+        },
+        "end": {
+          "line": 69,
+          "column": 23
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "=",
+        "beforeExpr": true,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": true,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "value": "=",
+      "start": 1244,
+      "end": 1245,
+      "loc": {
+        "start": {
+          "line": 69,
+          "column": 24
+        },
+        "end": {
+          "line": 69,
+          "column": 25
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "new",
+        "keyword": "new",
+        "beforeExpr": true,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "value": "new",
+      "start": 1246,
+      "end": 1249,
+      "loc": {
+        "start": {
+          "line": 69,
+          "column": 26
+        },
+        "end": {
+          "line": 69,
+          "column": 29
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "name",
+        "beforeExpr": false,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "value": "WeakMap",
+      "start": 1250,
+      "end": 1257,
+      "loc": {
+        "start": {
+          "line": 69,
+          "column": 30
+        },
+        "end": {
+          "line": 69,
+          "column": 37
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "(",
+        "beforeExpr": true,
+        "startsExpr": true,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "start": 1257,
+      "end": 1258,
+      "loc": {
+        "start": {
+          "line": 69,
+          "column": 37
+        },
+        "end": {
+          "line": 69,
+          "column": 38
+        }
+      }
+    },
+    {
+      "type": {
+        "label": ")",
+        "beforeExpr": false,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null
+      },
+      "start": 1258,
+      "end": 1259,
+      "loc": {
+        "start": {
+          "line": 69,
+          "column": 38
+        },
+        "end": {
+          "line": 69,
+          "column": 39
+        }
+      }
+    },
+    {
+      "type": {
+        "label": ";",
+        "beforeExpr": true,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "start": 1259,
+      "end": 1260,
+      "loc": {
+        "start": {
+          "line": 69,
+          "column": 39
+        },
+        "end": {
+          "line": 69,
+          "column": 40
+        }
+      }
+    },
+    {
+      "type": "CommentBlock",
+      "value": "*\n * Holder for JSON-Schemas\n * @type {WeakMap}\n * @private\n ",
+      "start": 1261,
+      "end": 1326,
+      "loc": {
+        "start": {
+          "line": 70,
+          "column": 0
+        },
+        "end": {
+          "line": 74,
+          "column": 3
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "export",
+        "keyword": "export",
+        "beforeExpr": false,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "value": "export",
+      "start": 1327,
+      "end": 1333,
+      "loc": {
+        "start": {
+          "line": 75,
+          "column": 0
+        },
+        "end": {
+          "line": 75,
+          "column": 6
+        }
+      }
+    },
+    {
+      "type": {
+        "label": "const",
+        "keyword": "const",
+        "beforeExpr": false,
+        "startsExpr": false,
+        "rightAssociative": false,
+        "isLoop": false,
+        "isAssign": false,
+        "prefix": false,
+        "postfix": false,
+        "binop": null,
+        "updateContext": null
+      },
+      "value": "const",
+      "start": 1334,
+      "end": 1339,
+      "loc": {
+        "start": {
+          "line": 75,
+          "column": 7
+        },
+        "end": {
+          "line": 75,
           "column": 12
         }
       }
@@ -6848,15 +5898,15 @@
         "binop": null
       },
       "value": "_schemaSignatures",
-      "start": 1406,
-      "end": 1423,
+      "start": 1340,
+      "end": 1357,
       "loc": {
         "start": {
-          "line": 78,
+          "line": 75,
           "column": 13
         },
         "end": {
-          "line": 78,
+          "line": 75,
           "column": 30
         }
       }
@@ -6875,15 +5925,15 @@
         "updateContext": null
       },
       "value": "=",
-      "start": 1424,
-      "end": 1425,
+      "start": 1358,
+      "end": 1359,
       "loc": {
         "start": {
-          "line": 78,
+          "line": 75,
           "column": 31
         },
         "end": {
-          "line": 78,
+          "line": 75,
           "column": 32
         }
       }
@@ -6903,15 +5953,15 @@
         "updateContext": null
       },
       "value": "new",
-      "start": 1426,
-      "end": 1429,
+      "start": 1360,
+      "end": 1363,
       "loc": {
         "start": {
-          "line": 78,
+          "line": 75,
           "column": 33
         },
         "end": {
-          "line": 78,
+          "line": 75,
           "column": 36
         }
       }
@@ -6929,15 +5979,15 @@
         "binop": null
       },
       "value": "WeakMap",
-      "start": 1430,
-      "end": 1437,
+      "start": 1364,
+      "end": 1371,
       "loc": {
         "start": {
-          "line": 78,
+          "line": 75,
           "column": 37
         },
         "end": {
-          "line": 78,
+          "line": 75,
           "column": 44
         }
       }
@@ -6954,15 +6004,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 1437,
-      "end": 1438,
+      "start": 1371,
+      "end": 1372,
       "loc": {
         "start": {
-          "line": 78,
+          "line": 75,
           "column": 44
         },
         "end": {
-          "line": 78,
+          "line": 75,
           "column": 45
         }
       }
@@ -6979,15 +6029,15 @@
         "postfix": false,
         "binop": null
       },
-      "start": 1438,
-      "end": 1439,
+      "start": 1372,
+      "end": 1373,
       "loc": {
         "start": {
-          "line": 78,
+          "line": 75,
           "column": 45
         },
         "end": {
-          "line": 78,
+          "line": 75,
           "column": 46
         }
       }
@@ -7005,1291 +6055,16 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 1439,
-      "end": 1440,
+      "start": 1373,
+      "end": 1374,
       "loc": {
         "start": {
-          "line": 78,
+          "line": 75,
           "column": 46
         },
         "end": {
-          "line": 78,
+          "line": 75,
           "column": 47
-        }
-      }
-    },
-    {
-      "type": "CommentBlock",
-      "value": "*\n * Holder for RXJS Observer references\n * @type {WeakMap}\n * @private\n ",
-      "start": 1441,
-      "end": 1518,
-      "loc": {
-        "start": {
-          "line": 79,
-          "column": 0
-        },
-        "end": {
-          "line": 83,
-          "column": 3
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "export",
-        "keyword": "export",
-        "beforeExpr": false,
-        "startsExpr": false,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "value": "export",
-      "start": 1519,
-      "end": 1525,
-      "loc": {
-        "start": {
-          "line": 84,
-          "column": 0
-        },
-        "end": {
-          "line": 84,
-          "column": 6
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "const",
-        "keyword": "const",
-        "beforeExpr": false,
-        "startsExpr": false,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "value": "const",
-      "start": 1526,
-      "end": 1531,
-      "loc": {
-        "start": {
-          "line": 84,
-          "column": 7
-        },
-        "end": {
-          "line": 84,
-          "column": 12
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "name",
-        "beforeExpr": false,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null
-      },
-      "value": "_observers",
-      "start": 1532,
-      "end": 1542,
-      "loc": {
-        "start": {
-          "line": 84,
-          "column": 13
-        },
-        "end": {
-          "line": 84,
-          "column": 23
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "=",
-        "beforeExpr": true,
-        "startsExpr": false,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": true,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "value": "=",
-      "start": 1543,
-      "end": 1544,
-      "loc": {
-        "start": {
-          "line": 84,
-          "column": 24
-        },
-        "end": {
-          "line": 84,
-          "column": 25
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "new",
-        "keyword": "new",
-        "beforeExpr": true,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "value": "new",
-      "start": 1545,
-      "end": 1548,
-      "loc": {
-        "start": {
-          "line": 84,
-          "column": 26
-        },
-        "end": {
-          "line": 84,
-          "column": 29
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "name",
-        "beforeExpr": false,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null
-      },
-      "value": "WeakMap",
-      "start": 1549,
-      "end": 1556,
-      "loc": {
-        "start": {
-          "line": 84,
-          "column": 30
-        },
-        "end": {
-          "line": 84,
-          "column": 37
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "(",
-        "beforeExpr": true,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null
-      },
-      "start": 1556,
-      "end": 1557,
-      "loc": {
-        "start": {
-          "line": 84,
-          "column": 37
-        },
-        "end": {
-          "line": 84,
-          "column": 38
-        }
-      }
-    },
-    {
-      "type": {
-        "label": ")",
-        "beforeExpr": false,
-        "startsExpr": false,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null
-      },
-      "start": 1557,
-      "end": 1558,
-      "loc": {
-        "start": {
-          "line": 84,
-          "column": 38
-        },
-        "end": {
-          "line": 84,
-          "column": 39
-        }
-      }
-    },
-    {
-      "type": {
-        "label": ";",
-        "beforeExpr": true,
-        "startsExpr": false,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "start": 1558,
-      "end": 1559,
-      "loc": {
-        "start": {
-          "line": 84,
-          "column": 39
-        },
-        "end": {
-          "line": 84,
-          "column": 40
-        }
-      }
-    },
-    {
-      "type": "CommentBlock",
-      "value": "*\n * Holder for Validation path references\n * @type {WeakMap}\n * @private\n ",
-      "start": 1560,
-      "end": 1639,
-      "loc": {
-        "start": {
-          "line": 85,
-          "column": 0
-        },
-        "end": {
-          "line": 89,
-          "column": 3
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "export",
-        "keyword": "export",
-        "beforeExpr": false,
-        "startsExpr": false,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "value": "export",
-      "start": 1640,
-      "end": 1646,
-      "loc": {
-        "start": {
-          "line": 90,
-          "column": 0
-        },
-        "end": {
-          "line": 90,
-          "column": 6
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "const",
-        "keyword": "const",
-        "beforeExpr": false,
-        "startsExpr": false,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "value": "const",
-      "start": 1647,
-      "end": 1652,
-      "loc": {
-        "start": {
-          "line": 90,
-          "column": 7
-        },
-        "end": {
-          "line": 90,
-          "column": 12
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "name",
-        "beforeExpr": false,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null
-      },
-      "value": "_validPaths",
-      "start": 1653,
-      "end": 1664,
-      "loc": {
-        "start": {
-          "line": 90,
-          "column": 13
-        },
-        "end": {
-          "line": 90,
-          "column": 24
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "=",
-        "beforeExpr": true,
-        "startsExpr": false,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": true,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "value": "=",
-      "start": 1665,
-      "end": 1666,
-      "loc": {
-        "start": {
-          "line": 90,
-          "column": 25
-        },
-        "end": {
-          "line": 90,
-          "column": 26
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "new",
-        "keyword": "new",
-        "beforeExpr": true,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "value": "new",
-      "start": 1667,
-      "end": 1670,
-      "loc": {
-        "start": {
-          "line": 90,
-          "column": 27
-        },
-        "end": {
-          "line": 90,
-          "column": 30
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "name",
-        "beforeExpr": false,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null
-      },
-      "value": "WeakMap",
-      "start": 1671,
-      "end": 1678,
-      "loc": {
-        "start": {
-          "line": 90,
-          "column": 31
-        },
-        "end": {
-          "line": 90,
-          "column": 38
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "(",
-        "beforeExpr": true,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null
-      },
-      "start": 1678,
-      "end": 1679,
-      "loc": {
-        "start": {
-          "line": 90,
-          "column": 38
-        },
-        "end": {
-          "line": 90,
-          "column": 39
-        }
-      }
-    },
-    {
-      "type": {
-        "label": ")",
-        "beforeExpr": false,
-        "startsExpr": false,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null
-      },
-      "start": 1679,
-      "end": 1680,
-      "loc": {
-        "start": {
-          "line": 90,
-          "column": 39
-        },
-        "end": {
-          "line": 90,
-          "column": 40
-        }
-      }
-    },
-    {
-      "type": {
-        "label": ";",
-        "beforeExpr": true,
-        "startsExpr": false,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "start": 1680,
-      "end": 1681,
-      "loc": {
-        "start": {
-          "line": 90,
-          "column": 40
-        },
-        "end": {
-          "line": 90,
-          "column": 41
-        }
-      }
-    },
-    {
-      "type": "CommentBlock",
-      "value": "*\n * Holder for Observer Builders\n * @type {WeakMap}\n * @private\n ",
-      "start": 1682,
-      "end": 1752,
-      "loc": {
-        "start": {
-          "line": 91,
-          "column": 0
-        },
-        "end": {
-          "line": 95,
-          "column": 3
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "export",
-        "keyword": "export",
-        "beforeExpr": false,
-        "startsExpr": false,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "value": "export",
-      "start": 1753,
-      "end": 1759,
-      "loc": {
-        "start": {
-          "line": 96,
-          "column": 0
-        },
-        "end": {
-          "line": 96,
-          "column": 6
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "const",
-        "keyword": "const",
-        "beforeExpr": false,
-        "startsExpr": false,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "value": "const",
-      "start": 1760,
-      "end": 1765,
-      "loc": {
-        "start": {
-          "line": 96,
-          "column": 7
-        },
-        "end": {
-          "line": 96,
-          "column": 12
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "name",
-        "beforeExpr": false,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null
-      },
-      "value": "_oBuilders",
-      "start": 1766,
-      "end": 1776,
-      "loc": {
-        "start": {
-          "line": 96,
-          "column": 13
-        },
-        "end": {
-          "line": 96,
-          "column": 23
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "=",
-        "beforeExpr": true,
-        "startsExpr": false,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": true,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "value": "=",
-      "start": 1777,
-      "end": 1778,
-      "loc": {
-        "start": {
-          "line": 96,
-          "column": 24
-        },
-        "end": {
-          "line": 96,
-          "column": 25
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "new",
-        "keyword": "new",
-        "beforeExpr": true,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "value": "new",
-      "start": 1779,
-      "end": 1782,
-      "loc": {
-        "start": {
-          "line": 96,
-          "column": 26
-        },
-        "end": {
-          "line": 96,
-          "column": 29
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "name",
-        "beforeExpr": false,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null
-      },
-      "value": "WeakMap",
-      "start": 1783,
-      "end": 1790,
-      "loc": {
-        "start": {
-          "line": 96,
-          "column": 30
-        },
-        "end": {
-          "line": 96,
-          "column": 37
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "(",
-        "beforeExpr": true,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null
-      },
-      "start": 1790,
-      "end": 1791,
-      "loc": {
-        "start": {
-          "line": 96,
-          "column": 37
-        },
-        "end": {
-          "line": 96,
-          "column": 38
-        }
-      }
-    },
-    {
-      "type": {
-        "label": ")",
-        "beforeExpr": false,
-        "startsExpr": false,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null
-      },
-      "start": 1791,
-      "end": 1792,
-      "loc": {
-        "start": {
-          "line": 96,
-          "column": 38
-        },
-        "end": {
-          "line": 96,
-          "column": 39
-        }
-      }
-    },
-    {
-      "type": {
-        "label": ";",
-        "beforeExpr": true,
-        "startsExpr": false,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "start": 1792,
-      "end": 1793,
-      "loc": {
-        "start": {
-          "line": 96,
-          "column": 39
-        },
-        "end": {
-          "line": 96,
-          "column": 40
-        }
-      }
-    },
-    {
-      "type": "CommentBlock",
-      "value": "*\n * Holder for Validator Builders\n * @type {WeakMap}\n * @private\n ",
-      "start": 1794,
-      "end": 1865,
-      "loc": {
-        "start": {
-          "line": 97,
-          "column": 0
-        },
-        "end": {
-          "line": 101,
-          "column": 3
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "export",
-        "keyword": "export",
-        "beforeExpr": false,
-        "startsExpr": false,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "value": "export",
-      "start": 1866,
-      "end": 1872,
-      "loc": {
-        "start": {
-          "line": 102,
-          "column": 0
-        },
-        "end": {
-          "line": 102,
-          "column": 6
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "const",
-        "keyword": "const",
-        "beforeExpr": false,
-        "startsExpr": false,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "value": "const",
-      "start": 1873,
-      "end": 1878,
-      "loc": {
-        "start": {
-          "line": 102,
-          "column": 7
-        },
-        "end": {
-          "line": 102,
-          "column": 12
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "name",
-        "beforeExpr": false,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null
-      },
-      "value": "_vBuilders",
-      "start": 1879,
-      "end": 1889,
-      "loc": {
-        "start": {
-          "line": 102,
-          "column": 13
-        },
-        "end": {
-          "line": 102,
-          "column": 23
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "=",
-        "beforeExpr": true,
-        "startsExpr": false,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": true,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "value": "=",
-      "start": 1890,
-      "end": 1891,
-      "loc": {
-        "start": {
-          "line": 102,
-          "column": 24
-        },
-        "end": {
-          "line": 102,
-          "column": 25
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "new",
-        "keyword": "new",
-        "beforeExpr": true,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "value": "new",
-      "start": 1892,
-      "end": 1895,
-      "loc": {
-        "start": {
-          "line": 102,
-          "column": 26
-        },
-        "end": {
-          "line": 102,
-          "column": 29
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "name",
-        "beforeExpr": false,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null
-      },
-      "value": "WeakMap",
-      "start": 1896,
-      "end": 1903,
-      "loc": {
-        "start": {
-          "line": 102,
-          "column": 30
-        },
-        "end": {
-          "line": 102,
-          "column": 37
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "(",
-        "beforeExpr": true,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null
-      },
-      "start": 1903,
-      "end": 1904,
-      "loc": {
-        "start": {
-          "line": 102,
-          "column": 37
-        },
-        "end": {
-          "line": 102,
-          "column": 38
-        }
-      }
-    },
-    {
-      "type": {
-        "label": ")",
-        "beforeExpr": false,
-        "startsExpr": false,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null
-      },
-      "start": 1904,
-      "end": 1905,
-      "loc": {
-        "start": {
-          "line": 102,
-          "column": 38
-        },
-        "end": {
-          "line": 102,
-          "column": 39
-        }
-      }
-    },
-    {
-      "type": {
-        "label": ";",
-        "beforeExpr": true,
-        "startsExpr": false,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "start": 1905,
-      "end": 1906,
-      "loc": {
-        "start": {
-          "line": 102,
-          "column": 39
-        },
-        "end": {
-          "line": 102,
-          "column": 40
-        }
-      }
-    },
-    {
-      "type": "CommentBlock",
-      "value": "*\n * Holder for Validation Paths\n * @type {WeakMap}\n * @private\n ",
-      "start": 1907,
-      "end": 1976,
-      "loc": {
-        "start": {
-          "line": 103,
-          "column": 0
-        },
-        "end": {
-          "line": 107,
-          "column": 3
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "export",
-        "keyword": "export",
-        "beforeExpr": false,
-        "startsExpr": false,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "value": "export",
-      "start": 1977,
-      "end": 1983,
-      "loc": {
-        "start": {
-          "line": 108,
-          "column": 0
-        },
-        "end": {
-          "line": 108,
-          "column": 6
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "const",
-        "keyword": "const",
-        "beforeExpr": false,
-        "startsExpr": false,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "value": "const",
-      "start": 1984,
-      "end": 1989,
-      "loc": {
-        "start": {
-          "line": 108,
-          "column": 7
-        },
-        "end": {
-          "line": 108,
-          "column": 12
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "name",
-        "beforeExpr": false,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null
-      },
-      "value": "_vPaths",
-      "start": 1990,
-      "end": 1997,
-      "loc": {
-        "start": {
-          "line": 108,
-          "column": 13
-        },
-        "end": {
-          "line": 108,
-          "column": 20
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "=",
-        "beforeExpr": true,
-        "startsExpr": false,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": true,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "value": "=",
-      "start": 1998,
-      "end": 1999,
-      "loc": {
-        "start": {
-          "line": 108,
-          "column": 21
-        },
-        "end": {
-          "line": 108,
-          "column": 22
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "new",
-        "keyword": "new",
-        "beforeExpr": true,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "value": "new",
-      "start": 2000,
-      "end": 2003,
-      "loc": {
-        "start": {
-          "line": 108,
-          "column": 23
-        },
-        "end": {
-          "line": 108,
-          "column": 26
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "name",
-        "beforeExpr": false,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null
-      },
-      "value": "WeakMap",
-      "start": 2004,
-      "end": 2011,
-      "loc": {
-        "start": {
-          "line": 108,
-          "column": 27
-        },
-        "end": {
-          "line": 108,
-          "column": 34
-        }
-      }
-    },
-    {
-      "type": {
-        "label": "(",
-        "beforeExpr": true,
-        "startsExpr": true,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null
-      },
-      "start": 2011,
-      "end": 2012,
-      "loc": {
-        "start": {
-          "line": 108,
-          "column": 34
-        },
-        "end": {
-          "line": 108,
-          "column": 35
-        }
-      }
-    },
-    {
-      "type": {
-        "label": ")",
-        "beforeExpr": false,
-        "startsExpr": false,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null
-      },
-      "start": 2012,
-      "end": 2013,
-      "loc": {
-        "start": {
-          "line": 108,
-          "column": 35
-        },
-        "end": {
-          "line": 108,
-          "column": 36
-        }
-      }
-    },
-    {
-      "type": {
-        "label": ";",
-        "beforeExpr": true,
-        "startsExpr": false,
-        "rightAssociative": false,
-        "isLoop": false,
-        "isAssign": false,
-        "prefix": false,
-        "postfix": false,
-        "binop": null,
-        "updateContext": null
-      },
-      "start": 2013,
-      "end": 2014,
-      "loc": {
-        "start": {
-          "line": 108,
-          "column": 36
-        },
-        "end": {
-          "line": 108,
-          "column": 37
         }
       }
     },
@@ -8306,15 +6081,15 @@
         "binop": null,
         "updateContext": null
       },
-      "start": 2015,
-      "end": 2015,
+      "start": 1375,
+      "end": 1375,
       "loc": {
         "start": {
-          "line": 109,
+          "line": 76,
           "column": 0
         },
         "end": {
-          "line": 109,
+          "line": 76,
           "column": 0
         }
       }

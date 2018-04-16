@@ -1,5 +1,5 @@
 import {
-    _object, _schemaHelpers, _vPaths, _oBuilders,
+    _object, _schemaHelpers, _oBuilders,
 } from "./_references";
 import {makeClean, refAtKeyValidation, refValidation} from "./utils";
 import {SchemaHelpers} from "./_schemaHelpers";
@@ -19,9 +19,6 @@ export class Schema extends Model {
         // stores SchemaHelpers reference for use
         _schemaHelpers.set(this, new SchemaHelpers(this));
 
-        // sets validation status reference to map
-        _vPaths.set(this, this.path);
-
         // sets Proxy Model reference on map
         _object.set(this, new Proxy(Model.createRef(this, {}), this.handler));
     }
@@ -38,8 +35,10 @@ export class Schema extends Model {
             set: (t, key, value) => {
                 let _sH = _schemaHelpers.get(this);
 
-                // todo: review for removal -- is superfluous?
-                // refAtKeyValidation(this, key, value);
+                // -- ensures we aren't in a frozen hierarchy branch
+                if (this.isFrozen) {
+                    return false;
+                }
 
                 // if key is type 'object', we will set directly
                 if (typeof key === "object") {

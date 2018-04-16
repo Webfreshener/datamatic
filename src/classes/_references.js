@@ -41,14 +41,6 @@ export const _dirtyModels = new WeakMap();
  * @private
  */
 export const _validators = new WeakMap();
-
-/**
- * Holder for `Set` element types
- *
- * @type {WeakMap}
- * @private
- */
-export const _vectorTypes = new WeakMap();
 /**
  * Holder for Schema options refeerences
  *
@@ -64,24 +56,11 @@ export const _schemaOptions = new WeakMap();
  */
 export const _schemaHelpers = new WeakMap();
 /**
- * Holder for Schema Signatures references
- *
- * @type {WeakMap}
- * @private
- */
-export const _schemaSignatures = new WeakMap();
-/**
  * Holder for RXJS Observer references
  * @type {WeakMap}
  * @private
  */
 export const _observers = new WeakMap();
-/**
- * Holder for Validation path references
- * @type {WeakMap}
- * @private
- */
-export const _validPaths = new WeakMap();
 /**
  * Holder for Observer Builders
  * @type {WeakMap}
@@ -89,8 +68,8 @@ export const _validPaths = new WeakMap();
  */
 export const _oBuilders = new WeakMap();
 /**
- * Holder for Validation Paths
+ * Holder for JSON-Schemas
  * @type {WeakMap}
  * @private
  */
-export const _vPaths = new WeakMap();
+export const _schemaSignatures = new WeakMap();

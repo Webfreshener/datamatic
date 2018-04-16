@@ -1,10 +1,11 @@
 import {JSD} from "./jsd"
+import {basicModel} from "../../fixtures/PropertiesModel.schemas";
 
 describe("JSD Instance Test", () => {
     let _jsd;
 
     beforeEach(() => {
-        _jsd = new JSD();
+        _jsd = new JSD(basicModel);
     });
 
     it("expects a valid JSD instance",() => {

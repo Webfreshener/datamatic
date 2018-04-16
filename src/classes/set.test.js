@@ -223,5 +223,63 @@ describe("Set Class Suite", function () {
             expect(typeof this.jsd.errors).toBe("object");
             expect(this.jsd.document.model.length).toBe(3);
         });
-    })
+    });
+
+    describe("Model Class methods ", () => {
+
+        it("should not reset if it would invalidate model", () => {
+            expect(this.jsd.document.model.length).toBe(3);
+            this.jsd.document.model.$ref.reset();
+            expect(this.jsd.document.model.length).toBe(3);
+        });
+
+        it("should reset it's collection if allowed", () => {
+            this.jsd = new JSD(stringsCollection);
+            this.jsd.document.model = ["Item A", "Item B", "Item C"];
+            expect(this.jsd.document.model.length).toBe(3);
+            this.jsd.document.model.$ref.reset();
+            expect(this.jsd.document.model.length).toBe(0);
+        });
+
+        it("should quietly validate data with the test method", () => {
+            expect(this.jsd.document.model.$ref.test([1, 2, 3])).toBe(false);
+            expect(this.jsd.document.model.$ref.test(["1", "2", "3"])).toBe(true);
+        });
+
+        it("should freeze it's model", () => {
+            this.jsd.document.model = ["Item A", "Item B", "Item C"];
+            this.jsd.document.model.$ref.freeze();
+            expect(this.jsd.document.model.$ref.isFrozen).toBe(true);
+            this.jsd.document.model = ["1", "2", "3"];
+            expect(deepEqual(this.jsd.document.model, ["Item A", "Item B", "Item C"])).toBe(true);
+        });
+
+        it("should freeze it's model hierarchy", () => {
+            this.jsd = new JSD(objectCollection);
+            const _orig = [{
+                name: "My Name",
+                active: true,
+            }];
+
+            this.jsd.document.model = _orig;
+            this.jsd.document.model.$ref.freeze();
+
+            expect(this.jsd.document.model.$ref.isFrozen).toBe(true);
+            // should not allow array to be overriden
+            this.jsd.document.model = [{
+                name: "Your Name",
+                active: false,
+            }];
+            expect(deepEqual(this.jsd.document.model, _orig)).toBe(true);
+            // should not allow array item to be overriden
+            this.jsd.document.model[0] = {
+                name: "Your Name",
+                active: false,
+            };
+            expect(deepEqual(this.jsd.document.model, _orig)).toBe(true);
+            // should not set attributes on nested object properties
+            this.jsd.document.model[0].name = "Other Name";
+            expect(deepEqual(this.jsd.document.model, _orig)).toBe(true);
+        });
+    });
 });

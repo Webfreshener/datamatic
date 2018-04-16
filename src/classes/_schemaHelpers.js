@@ -1,4 +1,4 @@
-import {_exists, _mdRef, _validators} from "./_references";
+import {_exists, _mdRef} from "./_references";
 import {MetaData} from "./_metaData";
 import {Schema} from "./schema";
 import {Set} from "./set";
@@ -20,7 +20,7 @@ export class SchemaHelpers {
     }
 
     /**
-     * Sets Object key/vals upon Schema Reference
+     * Sets Object key/values upon Schema Reference
      * @param obj
      * @returns {*}
      */
@@ -80,20 +80,5 @@ export class SchemaHelpers {
 
         // returns new child Model
         return new ((!Array.isArray(value)) ? Schema : Set)(_md);
-    }
-
-    /**
-     * Validates data on owner model against schema
-     * @param key
-     * @param value
-     * @return {boolean|string[]}
-     */
-    validate(key, value) {
-        const _v = _validators.get(this._ref.jsd);
-        if (!_v.validate(`${this._ref.path}/`, value)) {
-            return _v.errors;
-        }
-
-        return true;
     }
 }

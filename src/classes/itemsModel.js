@@ -118,6 +118,11 @@ export class Set extends Model {
                     return true;
                 }
 
+                // -- ensures we aren't in a frozen hierarchy branch
+                if (this.isFrozen) {
+                    return false;
+                }
+
                 if (!refAtKeyValidation(this, "items", value)) {
                     return false;
                 }

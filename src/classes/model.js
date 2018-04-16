@@ -69,7 +69,7 @@ export class Model {
             isExtensible: (t) => Object.isExtensible(t),
             preventExtensions: (t) => Object.preventExtensions(t),
             getOwnPropertyDescriptor: (t, key) => Object.getOwnPropertyDescriptor(t, key),
-            defineProperty: () => false,
+            defineProperty: (t, key, desc) => Object.defineProperty(t, key, desc),
             has: (t, key) => key in t,
             ownKeys: (t) => Reflect.ownKeys(t),
             apply: () => false,
@@ -250,7 +250,7 @@ export class Model {
      * @returns {Model}
      */
     freeze() {
-        Object.freeze(_object.get(this.model));
+        Object.freeze(_object.get(this));
         const _self = this;
         setTimeout(() => {
             _oBuilders.get(_self.jsd).complete(_self.path, _self);

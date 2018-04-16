@@ -1,15 +1,19 @@
 var JSD = require('../index').JSD;
 
 var _schema = {
-    "name": {
-        "type": "String",
-        "required": true
+    type: "object",
+    properties: {
+        name: {
+            "type": "string",
+        },
+        score: {
+            type: "integer",
+            default: 0,
+        },
     },
-    "age": {
-        "type": "Number",
-        "required": true
-    }
+    required: ["name"],
 };
+
 var _handlers = {
     next: function (schema) {
         if (typeof schema !== 'undefined') {
