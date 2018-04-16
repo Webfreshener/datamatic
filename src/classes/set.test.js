@@ -172,13 +172,19 @@ describe("Set Class Suite", function () {
         });
     });
 
-    describe.only("Array Prototype method tests", () => {
+    describe("Array Prototype method tests", () => {
         beforeEach(() => {
             this.jsd = new JSD(stringsMinMaxCollection);
+            this.jsd.document.model = ["Item A", "Item B", "Item C"];
+        });
+
+        it("should fill with validation", () => {
+            this.jsd.document.model.fill(["Item A", "Item B", "Item C", "Item D"]);
+            expect(typeof this.jsd.errors).toBe("object");
+            expect(this.jsd.document.model.length).toBe(3);
         });
 
         it("should pop with validation", () => {
-            this.jsd.document.model = ["Item A", "Item B", "Item C"];
             this.jsd.document.model.pop();
             this.jsd.document.model.pop();
             this.jsd.document.model.pop();
@@ -187,7 +193,6 @@ describe("Set Class Suite", function () {
         });
 
         it("should push with validation", () => {
-            this.jsd.document.model = ["Item A", "Item B", "Item C"];
             this.jsd.document.model.push("Item D");
             expect(typeof this.jsd.errors).toBe("object");
             expect(this.jsd.document.model.length).toBe(3);
@@ -195,7 +200,6 @@ describe("Set Class Suite", function () {
         });
 
         it("should shift with validation", () => {
-            this.jsd.document.model = ["Item A", "Item B", "Item C"];
             this.jsd.document.model.shift();
             this.jsd.document.model.shift();
             this.jsd.document.model.shift();
@@ -204,13 +208,18 @@ describe("Set Class Suite", function () {
         });
 
         it("should splice with validation", () => {
-            this.jsd.document.model = ["Item A", "Item B", "Item C"];
             // remove all..
             this.jsd.document.model.splice(0, -1);
             expect(typeof this.jsd.errors).toBe("object");
             expect(this.jsd.document.model.length).toBe(3);
             // append element...
             this.jsd.document.model.splice(-1, 0, "Item D");
+            expect(typeof this.jsd.errors).toBe("object");
+            expect(this.jsd.document.model.length).toBe(3);
+        });
+
+        it("should unshift with validation", () => {
+            this.jsd.document.model.unshift("Item Z");
             expect(typeof this.jsd.errors).toBe("object");
             expect(this.jsd.document.model.length).toBe(3);
         });

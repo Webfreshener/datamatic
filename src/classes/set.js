@@ -82,7 +82,8 @@ export class Set extends Model {
                 }
 
                 if (idx in Array.prototype) {
-                    if (["pop", "push", "shift", "splice"].indexOf(idx) > -1) {
+                    // only handle methods that modify the reference array
+                    if (["fill", "pop", "push", "shift", "splice", "unshift"].indexOf(idx) > -1) {
                         return () => {
                             let _arr = [].concat(t);
                             const _res = _arr[idx].apply(_arr, arguments);
