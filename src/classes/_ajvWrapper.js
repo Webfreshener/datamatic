@@ -6,7 +6,7 @@ import {JSD} from "./jsd";
 import Ajv from "ajv";
 
 /**
- * Wrapper for Ajv JSON-Schema Validator
+ * Wrapper for Ajv JSON-PropertiesModel Validator
  * @private
  */
 export class AjvWrapper {
@@ -70,7 +70,7 @@ export class AjvWrapper {
     }
 
     /**
-     * Executes validator at Schema $ref `path` against `value`
+     * Executes validator at PropertiesModel $ref `path` against `value`
      * @param path
      * @param value
      */

@@ -1,6 +1,6 @@
 import {ObserverBuilder} from "./_observerBuilder";
 import {JSD} from "./jsd";
-import {Schema} from "./schema";
+import {PropertiesModel} from "./propertiesModel";
 
 describe("ObserverBuilder Unit Test Suite", () => {
     describe("Builder Methods", () => {
@@ -9,7 +9,7 @@ describe("ObserverBuilder Unit Test Suite", () => {
 
         beforeEach(function () {
             _observer = null;
-            _schema = new Schema({
+            _schema = new PropertiesModel({
                 name: {
                     required: true,
                     type: "String",

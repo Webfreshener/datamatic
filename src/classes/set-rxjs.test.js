@@ -1,7 +1,7 @@
 import {JSD} from "./jsd";
 
-describe("Set RXJS Test Suite", function () {
-    describe("Set Item Operations", () => {
+describe("ItemsModel RXJS Test Suite", function () {
+    describe("ItemsModel Item Operations", () => {
         it("should have some tests", () => {
 
         });

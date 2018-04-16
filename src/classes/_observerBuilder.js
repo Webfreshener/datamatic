@@ -29,7 +29,7 @@ export class ObserverBuilder {
     /**
      *
      * @param forPath {string}
-     * @param oRef {Model|Schema|Set}
+     * @param oRef {Model|PropertiesModel|Set}
      */
     create(forPath, oRef) {
         let _o = _observers.get(this);

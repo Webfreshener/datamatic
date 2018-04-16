@@ -1,7 +1,7 @@
 import {_exists, _mdRef} from "./_references";
 import {MetaData} from "./_metaData";
-import {Schema} from "./schema";
-import {Set} from "./set";
+import {PropertiesModel} from "./propertiesModel";
+import {ItemsModel} from "./itemsModel";
 
 /**
  * @private
@@ -20,7 +20,7 @@ export class SchemaHelpers {
     }
 
     /**
-     * Sets Object key/values upon Schema Reference
+     * Sets Object key/values upon PropertiesModel Reference
      * @param obj
      * @returns {*}
      */
@@ -62,7 +62,7 @@ export class SchemaHelpers {
      * @param {string} key
      * @param {*} value
      * @param {MetaData} metaData
-     * @returns {Model|string} - Schema, Set or error string
+     * @returns {Model|string} - PropertiesModel, ItemsModel or error string
      */
     createSchemaChild(key, value, metaData) {
         let path = !Array.isArray(this._ref.model) ?
@@ -79,6 +79,6 @@ export class SchemaHelpers {
         let _md = new MetaData(this._ref, _d);
 
         // returns new child Model
-        return new ((!Array.isArray(value)) ? Schema : Set)(_md);
+        return new ((!Array.isArray(value)) ? PropertiesModel : ItemsModel)(_md);
     }
 }

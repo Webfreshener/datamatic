@@ -6,8 +6,8 @@ const _mData = new WeakMap();
 export class MetaData {
     /**
      * @constructor
-     * @param {Schema|Set} _oRef -- Object Reference to item being described
-     * @param {object} _data -- Initial Data {parent:Schema|Set}
+     * @param {PropertiesModel|Set} _oRef -- Object Reference to item being described
+     * @param {object} _data -- Initial Data {parent:PropertiesModel|ItemsModel}
      */
     constructor(_oRef, _data = {}) {
         let _cName = wf.Fun.getConstructorName(_oRef);
@@ -57,8 +57,8 @@ export class MetaData {
     }
 
     /**
-     * Root Schema element
-     * @returns {Schema|Set}
+     * Root PropertiesModel element
+     * @returns {PropertiesModel|Set}
      */
     get root() {
         return this.get("_root");

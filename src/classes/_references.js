@@ -10,7 +10,7 @@ export const wf = {
 };
 
 /**
- * Holder for Schema and Set instance references
+ * Holder for PropertiesModel and ItemsModel instance references
  *
  * @type {WeakMap}
  * @private
@@ -36,20 +36,20 @@ export const _ajvRef = new WeakMap();
  */
 export const _dirtyModels = new WeakMap();
 /**
- * Holder for Schema Validators
+ * Holder for PropertiesModel Validators
  * @type {WeakMap}
  * @private
  */
 export const _validators = new WeakMap();
 /**
- * Holder for Schema options refeerences
+ * Holder for PropertiesModel options refeerences
  *
  * @type {WeakMap}
  * @private
  */
 export const _schemaOptions = new WeakMap();
 /**
- * Holder for Schema Helpers references
+ * Holder for PropertiesModel Helpers references
  *
  * @type {WeakMap}
  * @private

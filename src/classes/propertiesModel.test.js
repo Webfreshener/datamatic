@@ -1,11 +1,11 @@
-import {Schema} from "./schema";
+import {PropertiesModel} from "./propertiesModel";
 import {JSD} from "./jsd";
 import {default as deepEqual} from "deep-equal";
 import {basicModel, nestedModel} from "../../fixtures/PropertiesModel.schemas";
 
-describe("Schema Class Suite", function () {
+describe("PropertiesModel Class Suite", function () {
 
-    describe("Simple Schema Tests", () => {
+    describe("Simple PropertiesModel Tests", () => {
         beforeEach(() => {
             this.jsd = new JSD(basicModel);
         });
@@ -13,9 +13,9 @@ describe("Schema Class Suite", function () {
         describe("LifeCycle: Instantiation", () => {
             it("should initialize a schema and a schema object", () => {
                 expect(this.jsd.document).toBeDefined();
-                expect(this.jsd.document instanceof Schema).toBe(true);
+                expect(this.jsd.document instanceof PropertiesModel).toBe(true);
                 expect(this.jsd.document.model.$ref).toBeDefined();
-                expect(this.jsd.document.model.$ref instanceof Schema).toBe(true);
+                expect(this.jsd.document.model.$ref instanceof PropertiesModel).toBe(true);
             });
 
             it("should not initialize a invalid schema and schema object", () => {
@@ -58,7 +58,7 @@ describe("Schema Class Suite", function () {
         });
     });
 
-    describe("Nested Schema Tests", () => {
+    describe("Nested PropertiesModel Tests", () => {
         beforeEach(() => {
             this.jsd = new JSD(nestedModel);
         });
@@ -66,9 +66,9 @@ describe("Schema Class Suite", function () {
         describe("LifeCycle: Instantiation", () => {
             it("should initialize a valid schema and a schema object", () => {
                 expect(this.jsd.document).toBeDefined();
-                expect(this.jsd.document instanceof Schema).toBe(true);
+                expect(this.jsd.document instanceof PropertiesModel).toBe(true);
                 expect(this.jsd.document.model.$ref).toBeDefined();
-                expect(this.jsd.document.model.$ref instanceof Schema).toBe(true);
+                expect(this.jsd.document.model.$ref instanceof PropertiesModel).toBe(true);
             });
         });
 
@@ -88,7 +88,7 @@ describe("Schema Class Suite", function () {
                 this.jsd.document.model = _d;
                 expect(deepEqual(this.jsd.document.model, _d)).toBe(true);
                 expect(this.jsd.document.model.aObject.bObject.$ref).toBeDefined();
-                expect(this.jsd.document.model.aObject.bObject.$ref instanceof Schema).toBe(true)
+                expect(this.jsd.document.model.aObject.bObject.$ref instanceof PropertiesModel).toBe(true)
             });
 
             it("should reject invalid data and leave model pristine", () => {

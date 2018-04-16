@@ -8,9 +8,9 @@ import {makeClean, makeDirty, refAtKeyValidation, refValidation} from "./utils";
 const _observerDelegates = new WeakMap();
 
 /**
- * @class Set
+ * @class ItemsModel
  */
-export class Set extends Model {
+export class ItemsModel extends Model {
     /**
      * @constructor
      */

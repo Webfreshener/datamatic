@@ -31,8 +31,8 @@ window.esdocSearchIndex = [
   ],
   [
     "jsd/src/classes/schema.js~schema",
-    "class/src/classes/schema.js~Schema.html",
-    "<span>Schema</span> <span class=\"search-result-import-path\">jsd/src/classes/schema.js</span>",
+    "class/src/classes/schema.js~PropertiesModel.html",
+    "<span>PropertiesModel</span> <span class=\"search-result-import-path\">jsd/src/classes/schema.js</span>",
     "class"
   ],
   [
@@ -43,8 +43,8 @@ window.esdocSearchIndex = [
   ],
   [
     "jsd/src/classes/set.js~set",
-    "class/src/classes/set.js~Set.html",
-    "<span>Set</span> <span class=\"search-result-import-path\">jsd/src/classes/set.js</span>",
+    "class/src/classes/set.js~ItemsModel.html",
+    "<span>ItemsModel</span> <span class=\"search-result-import-path\">jsd/src/classes/set.js</span>",
     "class"
   ],
   [
@@ -313,8 +313,8 @@ window.esdocSearchIndex = [
   ],
   [
     "src/.external-ecmascript.js~set",
-    "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Set",
-    "src/.external-ecmascript.js~Set",
+    "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/ItemsModel",
+    "src/.external-ecmascript.js~ItemsModel",
     "external"
   ],
   [
@@ -823,44 +823,44 @@ window.esdocSearchIndex = [
   ],
   [
     "src/classes/schema.js~schema#constructor",
-    "class/src/classes/schema.js~Schema.html#instance-constructor-constructor",
-    "src/classes/schema.js~Schema#constructor",
+    "class/src/classes/schema.js~PropertiesModel.html#instance-constructor-constructor",
+    "src/classes/schema.js~PropertiesModel#constructor",
     "method"
   ],
   [
     "src/classes/schema.js~schema#get",
-    "class/src/classes/schema.js~Schema.html#instance-method-get",
-    "src/classes/schema.js~Schema#get",
+    "class/src/classes/schema.js~PropertiesModel.html#instance-method-get",
+    "src/classes/schema.js~PropertiesModel#get",
     "method"
   ],
   [
     "src/classes/schema.js~schema#handler",
-    "class/src/classes/schema.js~Schema.html#instance-get-handler",
-    "src/classes/schema.js~Schema#handler",
+    "class/src/classes/schema.js~PropertiesModel.html#instance-get-handler",
+    "src/classes/schema.js~PropertiesModel#handler",
     "member"
   ],
   [
     "src/classes/schema.js~schema#model",
-    "class/src/classes/schema.js~Schema.html#instance-set-model",
-    "src/classes/schema.js~Schema#model",
+    "class/src/classes/schema.js~PropertiesModel.html#instance-set-model",
+    "src/classes/schema.js~PropertiesModel#model",
     "member"
   ],
   [
     "src/classes/schema.js~schema#model",
-    "class/src/classes/schema.js~Schema.html#instance-get-model",
-    "src/classes/schema.js~Schema#model",
+    "class/src/classes/schema.js~PropertiesModel.html#instance-get-model",
+    "src/classes/schema.js~PropertiesModel#model",
     "member"
   ],
   [
     "src/classes/schema.js~schema#set",
-    "class/src/classes/schema.js~Schema.html#instance-method-set",
-    "src/classes/schema.js~Schema#set",
+    "class/src/classes/schema.js~PropertiesModel.html#instance-method-set",
+    "src/classes/schema.js~PropertiesModel#set",
     "method"
   ],
   [
     "src/classes/schema.js~schema.concatpathaddr",
-    "class/src/classes/schema.js~Schema.html#static-method-concatPathAddr",
-    "src/classes/schema.js~Schema.concatPathAddr",
+    "class/src/classes/schema.js~PropertiesModel.html#static-method-concatPathAddr",
+    "src/classes/schema.js~PropertiesModel.concatPathAddr",
     "method"
   ],
   [
@@ -871,26 +871,26 @@ window.esdocSearchIndex = [
   ],
   [
     "src/classes/set.js~set#constructor",
-    "class/src/classes/set.js~Set.html#instance-constructor-constructor",
-    "src/classes/set.js~Set#constructor",
+    "class/src/classes/set.js~ItemsModel.html#instance-constructor-constructor",
+    "src/classes/set.js~ItemsModel#constructor",
     "method"
   ],
   [
     "src/classes/set.js~set#handler",
-    "class/src/classes/set.js~Set.html#instance-get-handler",
-    "src/classes/set.js~Set#handler",
+    "class/src/classes/set.js~ItemsModel.html#instance-get-handler",
+    "src/classes/set.js~ItemsModel#handler",
     "member"
   ],
   [
     "src/classes/set.js~set#model",
-    "class/src/classes/set.js~Set.html#instance-set-model",
-    "src/classes/set.js~Set#model",
+    "class/src/classes/set.js~ItemsModel.html#instance-set-model",
+    "src/classes/set.js~ItemsModel#model",
     "member"
   ],
   [
     "src/classes/set.js~set#model",
-    "class/src/classes/set.js~Set.html#instance-get-model",
-    "src/classes/set.js~Set#model",
+    "class/src/classes/set.js~ItemsModel.html#instance-get-model",
+    "src/classes/set.js~ItemsModel#model",
     "member"
   ],
   [

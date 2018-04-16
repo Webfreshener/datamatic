@@ -7,9 +7,9 @@ import {
 } from "../../fixtures/ItemsModel.schemas";
 import {Model} from "./model";
 
-describe("Set Class Suite", function () {
+describe("ItemsModel Class Suite", function () {
 
-    describe("Simple Set Tests", () => {
+    describe("Simple ItemsModel Tests", () => {
         beforeEach(() => {
             this.jsd = new JSD(stringsCollection);
         });

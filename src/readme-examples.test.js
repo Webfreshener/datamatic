@@ -1,10 +1,10 @@
 import {JSD} from "./index";
-import {Set} from "./classes/set";
-import {Schema} from "./classes/schema";
+import {ItemsModel} from "./classes/itemsModel";
+import {PropertiesModel} from "./classes/propertiesModel";
 import {_vBuilders} from "./classes/_references";
 
 describe("README.md examples tests", () => {
-    it("main Schema example should work", (done) => {
+    it("main PropertiesModel example should work", (done) => {
         const _schema = {
             "name": {
                 "type": "String",
@@ -65,7 +65,7 @@ describe("README.md examples tests", () => {
                 // outputs: {"values":[{"name":"Player 1","score":2000000},{"name":"Player 2","score":1100000},{"name":"Player 3","score":900000}]}
                 console.log(`done: ${val}`);
                 // expect(val.model[0].("$ref")).toBe(true);
-                expect(val.model[0].$ref instanceof Schema).toBe(true);
+                expect(val.model[0].$ref instanceof PropertiesModel).toBe(true);
                 done();
             },
             error: (e) => {

@@ -12,8 +12,8 @@ import {
     _dirtyModels, _schemaSignatures
 } from "./_references";
 import {ObserverBuilder} from "./_observerBuilder";
-import {Schema} from "./schema";
-import {Set} from "./set";
+import {PropertiesModel} from "./propertiesModel";
+import {ItemsModel} from "./itemsModel";
 import {AjvWrapper} from "./_ajvWrapper";
 const _documents = new WeakMap();
 
@@ -62,12 +62,12 @@ export class JSD {
         _dirtyModels.set(this, {});
 
         // creates root level document and sets it to this scope
-        _documents.set(this, new (!_useSet ? Schema : Set)(this));
+        _documents.set(this, new (!_useSet ? PropertiesModel : ItemsModel)(this));
     }
 
     /**
      * getter for Model document
-     * @returns {Schema|Set}
+     * @returns {PropertiesModel|ItemsModel}
      */
     get document() {
         return _documents.get(this);
@@ -120,7 +120,7 @@ export class JSD {
     }
 
     /**
-     * creates new Schema from JSON data
+     * creates new PropertiesModel from JSON data
      * @param {string|object} json -- JSON Object or String
      * @param {object} options - JSD options object
      * @returns {JSD}

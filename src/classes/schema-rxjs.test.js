@@ -1,7 +1,7 @@
-import {Schema} from "./schema";
+import {PropertiesModel} from "./propertiesModel";
 import {JSD} from "./jsd";
 
-describe("Schema RXJS Test Suite", () => {
+describe("PropertiesModel RXJS Test Suite", () => {
     describe("Data Validation", () => {
         it("should have some tests", () => {
 

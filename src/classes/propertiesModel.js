@@ -7,9 +7,9 @@ import {Model} from "./model";
 
 
 /**
- * @class Schema
+ * @class PropertiesModel
  */
-export class Schema extends Model {
+export class PropertiesModel extends Model {
     /**
      *
      */
@@ -49,7 +49,7 @@ export class Schema extends Model {
                     }
                     return true;
                 }
-                // calls validate with either full path if in Schema or key if nested in Set
+                // calls validate with either full path if in PropertiesModel or key if nested in ItemsModel
                 if ((typeof value) === "object") {
                     value = _sH.setChildObject(key, value);
                     if ((typeof value) === "string") {
