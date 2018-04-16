@@ -104,7 +104,7 @@ export class Schema extends Model {
     set model(value) {
         // fails on attempts to set scalar value
         // or if this node is locked or fails validation
-        if ((typeof value) !== "object" || this.isLocked ||
+        if ((typeof value) !== "object" || this.isFrozen ||
             !refValidation(this, value)) {
             return false;
         }

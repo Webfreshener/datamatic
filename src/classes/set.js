@@ -3,7 +3,7 @@ import {
 } from "./_references";
 import {Model} from "./model";
 import {SchemaHelpers} from "./_schemaHelpers";
-import {makeClean, refAtKeyValidation, refValidation} from "./utils";
+import {makeClean, makeDirty, refAtKeyValidation, refValidation} from "./utils";
 
 const _observerDelegates = new WeakMap();
 
@@ -32,7 +32,7 @@ export class Set extends Model {
      * @param value
      */
     set model(value) {
-        if (!Array.isArray(value) || this.isLocked ||
+        if (!Array.isArray(value) || this.isFrozen ||
             !refValidation(this, value)) {
             return false;
         }
@@ -82,7 +82,27 @@ export class Set extends Model {
                 }
 
                 if (idx in Array.prototype) {
-                    return t[idx];
+                    if (["pop", "push", "shift", "splice"].indexOf(idx) > -1) {
+                        return () => {
+                            let _arr = [].concat(this.model);
+                            const _res = _arr[idx].apply(this.model, arguments);
+
+                            if (!this.test(_arr)) {
+                                _oBuilders.get(this.jsd).error(this.path, this.jsd.errors);
+                                return false;
+                            }
+                            // prevents subsequent validation on this object
+                            makeDirty(this);
+
+                            // appies modified array to element
+                            this.model = _arr;
+
+                            // returns result of operation
+                            return _res;
+                        }
+                    } else {
+                        return t[idx];
+                    }
                 }
 
                 if (idx === "$ref") {

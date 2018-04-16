@@ -256,10 +256,11 @@ export class Model {
 
     /**
      * Applies Object.freeze to model and triggers complete notification
-     * todo: review name refactor to `freeze`
+     * -- unlike Object.freeze, this prvents modification
+     * -- to all children in Model hierarchy
      * @returns {Model}
      */
-    lock() {
+    freeze() {
         Object.freeze(_object.get(this));
         const _self = this;
         setTimeout(() => {
@@ -269,13 +270,12 @@ export class Model {
     }
 
     /**
-     * Getter for locked status
-     * todo: review name refactor to `isFrozen`
+     * Getter for Object.isFrozen status of this node and it's ancestors
      * @returns {boolean}
      */
     get isLocked() {
         let _res = Object.isFrozen(_object.get(this));
-        return !_res ? ((this.parent === null) ? false : this.parent.isLocked) : _res;
+        return !_res ? ((this.parent === null) ? false : this.parent.isFrozen) : _res;
     }
 
     /**
