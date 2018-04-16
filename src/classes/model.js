@@ -273,7 +273,7 @@ export class Model {
      * Getter for Object.isFrozen status of this node and it's ancestors
      * @returns {boolean}
      */
-    get isLocked() {
+    get isFrozen() {
         let _res = Object.isFrozen(_object.get(this));
         return !_res ? ((this.parent === null) ? false : this.parent.isFrozen) : _res;
     }
