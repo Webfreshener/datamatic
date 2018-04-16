@@ -84,7 +84,7 @@ export class Set extends Model {
                 if (idx in Array.prototype) {
                     if (["pop", "push", "shift", "splice"].indexOf(idx) > -1) {
                         return () => {
-                            let _arr = [].concat(this.model.toJSON());
+                            let _arr = [].concat(t);
                             const _res = _arr[idx].apply(_arr, arguments);
 
                             if (!this.test(_arr)) {

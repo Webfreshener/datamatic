@@ -171,4 +171,48 @@ describe("Set Class Suite", function () {
             });
         });
     });
+
+    describe.only("Array Prototype method tests", () => {
+        beforeEach(() => {
+            this.jsd = new JSD(stringsMinMaxCollection);
+        });
+
+        it("should pop with validation", () => {
+            this.jsd.document.model = ["Item A", "Item B", "Item C"];
+            this.jsd.document.model.pop();
+            this.jsd.document.model.pop();
+            this.jsd.document.model.pop();
+            expect(typeof this.jsd.errors).toBe("object");
+            expect(this.jsd.document.model.length).toBe(1);
+        });
+
+        it("should push with validation", () => {
+            this.jsd.document.model = ["Item A", "Item B", "Item C"];
+            this.jsd.document.model.push("Item D");
+            expect(typeof this.jsd.errors).toBe("object");
+            expect(this.jsd.document.model.length).toBe(3);
+            expect(this.jsd.document.model[2]).toBe("Item C");
+        });
+
+        it("should shift with validation", () => {
+            this.jsd.document.model = ["Item A", "Item B", "Item C"];
+            this.jsd.document.model.shift();
+            this.jsd.document.model.shift();
+            this.jsd.document.model.shift();
+            expect(typeof this.jsd.errors).toBe("object");
+            expect(this.jsd.document.model.length).toBe(1);
+        });
+
+        it("should splice with validation", () => {
+            this.jsd.document.model = ["Item A", "Item B", "Item C"];
+            // remove all..
+            this.jsd.document.model.splice(0, -1);
+            expect(typeof this.jsd.errors).toBe("object");
+            expect(this.jsd.document.model.length).toBe(3);
+            // append element...
+            this.jsd.document.model.splice(-1, 0, "Item D");
+            expect(typeof this.jsd.errors).toBe("object");
+            expect(this.jsd.document.model.length).toBe(3);
+        });
+    })
 });
