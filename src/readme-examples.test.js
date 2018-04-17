@@ -30,14 +30,14 @@ describe("README.md examples tests", () => {
             }
         };
         const _jsd = new JSD(_schema);
-        _jsd.document.subscribe(_handlers);
+        _jsd.model.$ref.subscribe(_handlers);
         // set invalid data to the model to trigger error handler
-        _jsd.document.model = {
+        _jsd.model = {
             "name": "Frank",
             "age": "23"
         };
         // set valid data to the model to trigger next handler
-        _jsd.document.model = {
+        _jsd.model = {
             "name": "Frank",
             "age": 23
         };
@@ -75,9 +75,9 @@ describe("README.md examples tests", () => {
         };
 
         const _jsd = new JSD(_schema);
-        _jsd.document.subscribe(_handler);
+        _jsd.model.$ref.subscribe(_handler);
 
-        _jsd.document.model = [{
+        _jsd.model = [{
             name: "Player 1",
             score: 2000000,
         }, {
@@ -118,19 +118,19 @@ describe("README.md examples tests", () => {
 
 
         const _jsd = new JSD(_schema);
-        _jsd.document.subscribe(_handler);
+        _jsd.model.$ref.subscribe(_handler);
 
         // - this will trigger the default value
-        _jsd.document.model = {};
+        _jsd.model = {};
 
         // set value to true
-        _jsd.document.model = {value: true};
+        _jsd.model = {value: true};
 
         // set value to false
-        _jsd.document.model = {value: false};
+        _jsd.model = {value: false};
 
         // triggers error due to type mismatch
-        _jsd.document.model = {value: "true"};
+        _jsd.model = {value: "true"};
     });
 
     it("JSD Number example should work", (done) => {
@@ -156,13 +156,13 @@ describe("README.md examples tests", () => {
 
 
         const _jsd = new JSD(_schema);
-        _jsd.document.subscribe(_handler);
+        _jsd.model.$ref.subscribe(_handler);
 
         // this fails because the value is a string
-        _jsd.document.model = {value: "1234"};
+        _jsd.model = {value: "1234"};
 
         // this will succeed
-        _jsd.document.model = {value: 1234};
+        _jsd.model = {value: 1234};
     });
 
     it("JSD String example should work", (done) => {
@@ -188,13 +188,13 @@ describe("README.md examples tests", () => {
 
 
         const _jsd = new JSD(_schema);
-        _jsd.document.subscribe(_handler);
+        _jsd.model.$ref.subscribe(_handler);
 
         // this fails because type is boolean
-        _jsd.document.model = {value: true};
+        _jsd.model = {value: true};
 
         // this will succeeed
-        _jsd.document.model = {value: "false"};
+        _jsd.model = {value: "false"};
     });
 
     it("JSD Object example should work", (done) => {
@@ -231,10 +231,10 @@ describe("README.md examples tests", () => {
         };
 
         const _jsd = new JSD(_schema);
-        _jsd.document.subscribe(_handler);
+        _jsd.model.$ref.subscribe(_handler);
 
         // this will error since `active` is a number
-        _jsd.document.model = {
+        _jsd.model = {
             value: {
                 name: "Alice",
                 active: 1,
@@ -242,7 +242,7 @@ describe("README.md examples tests", () => {
         };
 
         // this will pass
-        _jsd.document.model = {
+        _jsd.model = {
             value: {
                 name: "Alice",
                 active: true
@@ -250,7 +250,7 @@ describe("README.md examples tests", () => {
         };
 
         // this will also pass since `active` is optional
-        _jsd.document.model = {
+        _jsd.model = {
             value: {
                 name: "Bob",
             }
@@ -291,15 +291,15 @@ describe("README.md examples tests", () => {
         };
 
         const _jsd = new JSD(_schema);
-        const _sub = _jsd.document.subscribe(_handler);
+        const _sub = _jsd.model.$ref.subscribe(_handler);
 
         // this will fail because value is number, not an object
-        _jsd.document.model = {
+        _jsd.model = {
             1: 900000,
         };
 
         // this succeeds
-        _jsd.document.model = {
+        _jsd.model = {
             1: {
                 name: "Big Daddy",
                 score: 2000000
@@ -313,7 +313,7 @@ describe("README.md examples tests", () => {
                 score: 900000
             },
         };
-        console.log(_jsd.document.validate());
+        console.log(_jsd.model.$ref.validate());
     });
 
     it("JSD Wildcard TYPES example should work", (done) => {
@@ -340,25 +340,25 @@ describe("README.md examples tests", () => {
         };
 
         const _jsd = new JSD(_schema);
-        const _sub = _jsd.document.subscribe(_handler);
+        const _sub = _jsd.model.$ref.subscribe(_handler);
 
         // any model with the key named `value` is ok
-        _jsd.document.model = {
+        _jsd.model = {
             value: 900000,
         };
 
         // any model with the key named `value` is ok
-        _jsd.document.model = {
+        _jsd.model = {
             value: "A string",
         };
 
         // any model with the key named `value` is ok
-        _jsd.document.model = {
+        _jsd.model = {
             value: false,
         };
 
         // this will fail because key `bogus` is not allowed
-        _jsd.document.model = {
+        _jsd.model = {
             bogus: "false",
         };
     });

@@ -19,7 +19,7 @@ describe("MetaData Units", () => {
     });
     describe( "Parameter Accessor Validation", ()=> {
         const jsd = new JSD(basicModel);
-        let _ = jsd.document;
+        let _ = jsd.model.$ref;
         const _md = new MetaData( new PropertiesModel(jsd), {_path: "key", _root: _, _parent: _});
         it("should access `root` property", function() {
             expect(typeof _md.root).toBe("object");

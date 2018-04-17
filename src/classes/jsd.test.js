@@ -14,9 +14,9 @@ describe("JSD Instance Test", () => {
 
     it("expects JSD Instances to create a valid JSD Document", () => {
 
-        _jsd.document.model = {
+        _jsd.model = {
             "name": "test",
         };
-        expect(`${_jsd.document.model.name}`).toEqual("test");
+        expect(`${_jsd.model.name}`).toEqual("test");
     });
 });

@@ -28,6 +28,7 @@ export class PropertiesModel extends Model {
      * @returns {{get: function, set: function}}
      */
     get handler() {
+        const _self = this;
         return Object.assign(super.handler, {
             get: (t, key) => {
                 return key === "$ref" ? this : t[key];
@@ -40,11 +41,24 @@ export class PropertiesModel extends Model {
                     return false;
                 }
 
+                // checks for branch update status
+                if (!this.isDirty) {
+                    let _o = Object.assign({}, t);
+                    _o[key] = value;
+                    // attempts validation of value update
+                    if (refValidation(this, _o) !== true) {
+                        makeClean(this);
+                        _oBuilders.get(this.jsd).error(_self, this.jsd.errors);
+                        return false;
+                    }
+                }
+
                 // if key is type 'object', we will set directly
                 if (typeof key === "object") {
                     const e = _sH.setObject(key);
                     if (typeof e === "string") {
-                        _oBuilders.get(this.jsd).error(this.path, e);
+                        makeClean(this);
+                        _oBuilders.get(this.jsd).error(_self, e);
                         return false;
                     }
                     return true;
@@ -53,7 +67,8 @@ export class PropertiesModel extends Model {
                 if ((typeof value) === "object") {
                     value = _sH.setChildObject(key, value);
                     if ((typeof value) === "string") {
-                        _oBuilders.get(this.jsd).error(this.path, value);
+                        makeClean(this);
+                        _oBuilders.get(this.jsd).error(_self, value);
                         return false;
                     }
                 }
@@ -68,7 +83,7 @@ export class PropertiesModel extends Model {
                 delete _o[key];
 
                 // validates model with value removed
-                if (!this.test(_o)) {
+                if (!this.validate(_o)) {
                     return false;
                 }
 
@@ -117,7 +132,8 @@ export class PropertiesModel extends Model {
             try {
                 this.model[k] = value[k];
             } catch (e) {
-                _oBuilders.get(this.jsd).error(this.path, e);
+                makeClean(this);s
+                _oBuilders.get(this.jsd).error(this, e);
                 return false;
             }
         });
@@ -126,7 +142,7 @@ export class PropertiesModel extends Model {
         makeClean(this);
 
         // calls next's observable to update subscribers
-        _oBuilders.get(this.jsd).next(this.path, this);
+        _oBuilders.get(this.jsd).next(this);
         return true;
     }
 
@@ -153,7 +169,7 @@ export class PropertiesModel extends Model {
         this.model[key] = value;
 
         // updates observers
-        _oBuilders.get(this.jsd).next(this.path, this);
+        _oBuilders.get(this.jsd).next(this);
 
         // removes dirtiness
         makeClean(this);

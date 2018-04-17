@@ -61,6 +61,15 @@ export const _schemaHelpers = new WeakMap();
  * @private
  */
 export const _observers = new WeakMap();
+
+/**
+ * Holder for RXJS Observer references
+ * @type {WeakMap}
+ * @private
+ */
+export const _observerPaths = new WeakMap();
+
+
 /**
  * Holder for Observer Builders
  * @type {WeakMap}

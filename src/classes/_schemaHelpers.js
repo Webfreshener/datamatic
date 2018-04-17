@@ -1,4 +1,4 @@
-import {_exists, _mdRef} from "./_references";
+import {_exists, _mdRef, _oBuilders} from "./_references";
 import {MetaData} from "./_metaData";
 import {PropertiesModel} from "./propertiesModel";
 import {ItemsModel} from "./itemsModel";
@@ -47,6 +47,10 @@ export class SchemaHelpers {
     setChildObject(key, value) {
         let _mdData = _mdRef.get(this._ref);
         let _s = this.createSchemaChild(key, value, _mdData);
+
+        // creates Observables for new Child Model
+        _oBuilders.get(this._ref.jsd).create(_s);
+
         if (typeof _s === "string") {
             return _s;
         } else if (!_exists(_s) ||

@@ -48,7 +48,7 @@ export class ItemsModel extends Model {
                 next: () => {
                     if (this.length === value.length) {
                         makeClean(this);
-                        _oBuilders.get(this.jsd).next(this.path, this);
+                        _oBuilders.get(this.jsd).next(this);
                     }
                 },
                 error: () => {
@@ -59,13 +59,13 @@ export class ItemsModel extends Model {
                 _object.get(this)[cnt++] = val;
             });
         } catch (e) {
-            console.error(e);
-            // return _oBuilders.get(this.jsd).error(this.path, e);
+            makeClean(this);
+            _oBuilders.get(this.jsd).error(this, e);
+            return false;
         }
 
         makeClean(this);
-
-        _oBuilders.get(this.jsd).next(this.path, this);
+        _oBuilders.get(this.jsd).next(this);
         return true;
     }
 
@@ -84,22 +84,25 @@ export class ItemsModel extends Model {
                 if (idx in Array.prototype) {
                     // only handle methods that modify the reference array
                     if (["fill", "pop", "push", "shift", "splice", "unshift"].indexOf(idx) > -1) {
-                        return () => {
-                            let _arr = [].concat(t);
-                            const _res = _arr[idx].apply(_arr, arguments);
+                        return (...args) => {
+                            const _arr = [].concat(t);
+                            const _val = t[idx].apply(_arr, args);
+                            const _res = refValidation(this, _arr);
 
-                            if (!this.test(_arr)) {
-                                _oBuilders.get(this.jsd).error(this.path, this.jsd.errors);
+                            if (_res !== true) {
+                                makeClean(this);
+                                _oBuilders.get(this.jsd).error(this, this.jsd.errors);
                                 return false;
                             }
-                            // prevents subsequent validation on this object
-                            makeDirty(this);
 
-                            // appies modified array to element
+                            // applies modified array to element
                             this.model = _arr;
 
+                            makeClean(this);
+                            _oBuilders.get(this.jsd).next(this);
+
                             // returns result of operation
-                            return _res;
+                            return _val;
                         }
                     } else {
                         return t[idx];
@@ -124,6 +127,10 @@ export class ItemsModel extends Model {
                 }
 
                 if (!refAtKeyValidation(this, "items", value)) {
+                    if (!_oDel) {
+                        makeClean(this);
+                        _oBuilders.get(this.jsd).error(this, this.jsd.errors);
+                    }
                     return false;
                 }
 
@@ -144,7 +151,7 @@ export class ItemsModel extends Model {
                 }
 
                 // updates observers
-                _oBuilders.get(this.jsd).next(this.path, this);
+                _oBuilders.get(this.jsd).next(this);
                 return true;
             },
             deleteProperty: (t, idx) => {
@@ -154,13 +161,21 @@ export class ItemsModel extends Model {
 
                 // validates mock of change state
                 if (!refValidation(this, _o)) {
+                    // makes clean if not serial operation
+                    if (!_oDel) {
+                        makeClean(this);
+                    }
                     return false;
                 }
 
                 // ensures index of operation is in range
                 if (idx >= t.length) {
+                    // makes clean if not serial operation
+                    if (!_oDel) {
+                        makeClean(this);
+                    }
                     const e = `index ${idx} is out of bounds on ${this.path}`;
-                    _oBuilders.get(this.jsd).error(this.path, e);
+                    _oBuilders.get(this.jsd).error(this, e);
                     return false;
                 }
 
@@ -171,7 +186,7 @@ export class ItemsModel extends Model {
                 makeClean(this);
 
                 // updates observers
-                _oBuilders.get(this.jsd).next(this.path, t);
+                _oBuilders.get(this.jsd).next(this, t);
                 return true;
             }
         });

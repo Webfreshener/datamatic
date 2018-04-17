@@ -33,3 +33,31 @@ export const nestedModel = {
     },
     "required": ["aObject"],
 };
+
+export const scoresModel = {
+    "type": "object",
+    "properties": {
+        "name": {
+            "type": "string",
+        },
+        "topScores": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 3,
+            "items": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "score": {
+                        "type": "integer",
+                        "default": 0
+                    }
+                },
+                "required": ["name"]
+            }
+        }
+    },
+    required: ["name", "topScores"],
+};

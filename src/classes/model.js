@@ -4,7 +4,7 @@ import {
 } from "./_references";
 import {JSD} from "./jsd";
 import {MetaData} from "./_metaData";
-import {makeClean, makeDirty, refValidation} from "./utils";
+import {makeClean, makeDirty, validate} from "./utils";
 
 /**
  *
@@ -60,42 +60,14 @@ export class Model {
     }
 
     /**
-     *
-     * @return {object}
-     */
-    get handler() {
-        return {
-            setPrototypeOf: () => false,
-            isExtensible: (t) => Object.isExtensible(t),
-            preventExtensions: (t) => Object.preventExtensions(t),
-            getOwnPropertyDescriptor: (t, key) => Object.getOwnPropertyDescriptor(t, key),
-            defineProperty: (t, key, desc) => Object.defineProperty(t, key, desc),
-            has: (t, key) => key in t,
-            ownKeys: (t) => Reflect.ownKeys(t),
-            apply: () => false,
-        };
-    }
-
-    /**
      * Subscribes handler method to property observer for path
      * @param path
      * @param func
      * @return {Observable}
      */
     subscribeTo(path, func) {
-        // throws if argument is not an object or function
-        if ((typeof func).match(/^(function|object)$/) === null) {
-            throw new Error("subscribeTo requires function");
-        }
-
-        // references the ObserverBuilder for the path
-        let _o = _oBuilders.get(this.jsd).get(path);
-
-        // creates observer reference for given `path` value
-        if (!_o || _o === null) {
-            _oBuilders.get(this.jsd).create(path, this);
-            _o = _oBuilders.get(this.jsd).get(path);
-        }
+        const _oBuilder = _oBuilders.get(this.jsd);
+        const _o = _oBuilder.getObserverForPath(path);
 
         // references to subscriptions for Observable
         const _subRefs = [];
@@ -113,8 +85,10 @@ export class Model {
 
         // creates an extensible object to hold our unsubscribe method
         // and adds unsubscribe calls to the Proto object
-        const _subs = (class {
-        }).prototype.unsubscribe = () => {
+        const _subs = class {};
+
+        // adds unsubscribe to the Proto object
+        _subs.prototype.unsubscribe = () => {
             _subRefs.forEach((sub) => {
                 sub.unsubscribe();
             });
@@ -124,11 +98,64 @@ export class Model {
     }
 
     /**
-     * stub for model getter, overridden by Model sub-class
-     * @return {object|array|null}
+     * Tests value for validation without setting value to Model
+     * @param {json} value - JSON value to validate for validity
+     * @return {boolean}
      */
-    get model() {
-        return null;
+    validate(value) {
+        try {
+           return validate(this, this.validationPath, value);
+        } catch (e) {
+            // couldn't find schema, so is Additional Properties
+            // todo: review `removeAdditional` ajv option for related behavior
+            return true;
+        }
+
+
+    }
+
+    /**
+     * resets Model to empty value
+     * @return {Model}
+     */
+    reset() {
+        const _isArray = Array.isArray(this.model);
+        const _o = !_isArray ? {} : [];
+
+        // validates that this model be returned to an empty value
+        if (!this.validate(_o)) {
+            _oBuilders.get(this.jsd).error(this, this.jsd.errors);
+            return this;
+        }
+
+        // marks this model as out of sync with tree
+        makeDirty(this);
+
+        // closure to handle the freeze operation safely
+        const _freeze = (itm) => {
+            if (!Object.isFrozen(itm)) {
+                itm.freeze();
+            }
+        };
+
+        // freezes all child Model/Elements
+        // -- prevent changes to Children
+        // -- sends "complete" notification to their Observers
+        // -- revokes their Models if revocable
+        const _i = !_isArray ? Object.keys(this.model) : this.model;
+        _i.forEach((itm) => _freeze((!_isArray) ? _i[itm] : itm));
+
+        // creates new Proxied Model to operate on
+        const _p = new Proxy(Model.createRef(this, _o), this.handler);
+        _object.set(this, _p);
+
+        // marks this model as back in sync with tree
+        makeClean(this);
+
+        // sends notification of model change
+        _oBuilders.get(this.jsd).next(this);
+
+        return this;
     }
 
     /**
@@ -156,7 +183,7 @@ export class Model {
                 const _o = !Array.isArray(itm) ? {} : [];
                 for (let k in itm) {
 
-                    // we test for property to avoid warnings
+                    // we validate for property to avoid warnings
                     if (itm.hasOwnProperty(k)) {
 
                         // applies property to tree
@@ -184,6 +211,43 @@ export class Model {
     }
 
     /**
+     * Applies Object.freeze to model and triggers complete notification
+     * -- unlike Object.freeze, this prevents modification
+     * -- to all children in Model hierarchy
+     * @returns {Model}
+     */
+    freeze() {
+        Object.freeze(_object.get(this));
+        _oBuilders.get(this.jsd).complete(this);
+        return this;
+    }
+
+    /**
+     *
+     * @return {object}
+     */
+    get handler() {
+        return {
+            setPrototypeOf: () => false,
+            isExtensible: (t) => Object.isExtensible(t),
+            preventExtensions: (t) => Object.preventExtensions(t),
+            getOwnPropertyDescriptor: (t, key) => Object.getOwnPropertyDescriptor(t, key),
+            defineProperty: (t, key, desc) => Object.defineProperty(t, key, desc),
+            has: (t, key) => key in t,
+            ownKeys: (t) => Reflect.ownKeys(t),
+            apply: () => false,
+        };
+    }
+
+    /**
+     * stub for model getter, overridden by Model sub-class
+     * @return {object|array|null}
+     */
+    get model() {
+        return null;
+    }
+
+    /**
      * Getter for Model's Unique Object ID
      * @returns {string} Object ID for Model
      */
@@ -204,8 +268,7 @@ export class Model {
      * @returns {string}
      */
     get path() {
-        let __ = _mdRef.get(this).path;
-        return _exists(__) ? __ : "";
+        return _mdRef.get(this).path || "";
     }
 
     /**
@@ -214,7 +277,7 @@ export class Model {
      */
     get parent() {
         // attempts to get parent
-        return _mdRef.get(this).parent;
+        return _mdRef.get(this).parent || null;
     }
 
     /**
@@ -241,21 +304,6 @@ export class Model {
      */
     get options() {
         return _schemaOptions.get(this);
-    }
-
-    /**
-     * Applies Object.freeze to model and triggers complete notification
-     * -- unlike Object.freeze, this prevents modification
-     * -- to all children in Model hierarchy
-     * @returns {Model}
-     */
-    freeze() {
-        Object.freeze(_object.get(this));
-        const _self = this;
-        setTimeout(() => {
-            _oBuilders.get(_self.jsd).complete(_self.path, _self);
-        }, 0);
-        return this;
     }
 
     /**
@@ -289,70 +337,6 @@ export class Model {
      */
     get signature() {
         return this.schema;
-    }
-
-    /**
-     * Tests value for validation without setting value to Model
-     * @param {json} value - JSON value to test for validity
-     * @return {boolean}
-     */
-    test(value) {
-        try {
-            if (!refValidation(this, value)) {
-                // explicit failure on validation
-                return false;
-            }
-        } catch (e) {
-            // couldn't find schema, so is Additional Properties
-            // todo: review `removeAdditional` ajv option for related behavior
-            return true;
-        }
-
-        return true;
-    }
-
-    /**
-     * resets Model to empty value
-     * @return {Model}
-     */
-    reset() {
-        const _isArray = Array.isArray(this.model);
-        const _o = !_isArray ? {} : [];
-
-        // validates that this model be returned to an empty value
-        if (!this.test(_o)) {
-            _oBuilders.get(this.jsd).error(this.path, this.jsd.errors);
-            return this;
-        }
-
-        // marks this model as out of sync with tree
-        makeDirty(this);
-
-        // closure to handle the freeze operation safely
-        const _freeze = (itm) => {
-            if (!Object.isFrozen(itm)) {
-               itm.freeze();
-            }
-        };
-
-        // freezes all child Model/Elements
-        // -- prevent changes to Children
-        // -- sends "complete" notification to their Observers
-        // -- revokes their Models if revocable
-        const _i = !_isArray ? Object.keys(this.model) : this.model;
-        _i.forEach((itm) => _freeze((!_isArray) ? _i[itm] : itm));
-
-        // creates new Proxied Model to operate on
-        const _p = new Proxy(Model.createRef(this, _o), this.handler);
-        _object.set(this, _p);
-
-        // marks this model as back in sync with tree
-        makeClean(this);
-
-        // sends notification of model change
-        _oBuilders.get(this.jsd).next(this.path, this);
-
-        return this;
     }
 
     /**

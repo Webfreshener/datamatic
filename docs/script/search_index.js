@@ -780,9 +780,9 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "src/classes/model.js~model#test",
-    "class/src/classes/model.js~Model.html#instance-method-test",
-    "src/classes/model.js~Model#test",
+    "src/classes/model.js~model#validate",
+    "class/src/classes/model.js~Model.html#instance-method-validate",
+    "src/classes/model.js~Model#validate",
     "method"
   ],
   [

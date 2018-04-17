@@ -1,12 +1,3 @@
-/**
- * @class JSD
- * @example const _jsd = new JSD();
- * _jsd.document = {name: "test"};
- * console.log(`${jsd.document.name}`);
- * // -> "test"
- * console.log(`${jsd.document.get("."}`);
- * // -> Schema
- */
 import {
     _oBuilders, _validators,
     _dirtyModels, _schemaSignatures
@@ -24,8 +15,8 @@ const _documents = new WeakMap();
 export class JSD {
     /**
      * @constructor
-     * @param schema
-     * @param options
+     * @param {json} schema
+     * @param {object} options
      */
     constructor(schema, options = {}) {
         // attempts t get user passes Avj options
@@ -53,40 +44,71 @@ export class JSD {
 
         // if value of type is "array" or an array of items is defined,
         // we handle as Array
-        if ((schema.hasOwnProperty("type") && schema.type === "array") ||
-            (schema.hasOwnProperty("items") && Array.isArray(schema.items))) {
+        if ((schema.hasOwnProperty("type") && schema["type"] === "array") ||
+            (schema.hasOwnProperty("items") && Array.isArray(schema["items"]))) {
             _useSet = true;
         }
 
         // creates holder for dirty model flags in this scope
         _dirtyModels.set(this, {});
 
-        // creates root level document and sets it to this scope
-        _documents.set(this, new (!_useSet ? PropertiesModel : ItemsModel)(this));
+        // creates root level document
+        const _doc = new (!_useSet ? PropertiesModel : ItemsModel)(this);
+
+        // applies Subject Observables
+        _oBuilders.get(this).create(_doc);
+
+        // sets document to this scope
+        _documents.set(this, _doc);
+
     }
 
     /**
-     * getter for Model document
-     * @returns {PropertiesModel|ItemsModel}
+     * Getter for root Model
+     * @returns {object|array}
      */
-    get document() {
-        return _documents.get(this);
+    get model() {
+        return _documents.get(this).model;
     }
 
+
+    /**
+     * Setter for root Model value
+     * @param {object|array} value
+     */
+    set model(value) {
+        _documents.get(this).model = value;
+    }
+
+    /**
+     * Subscribes observer to root Model
+     * @param observer
+     * @returns {Observable}
+     */
+    subscribe(observer) {
+        return _documents.get(this).subscribe(observer);
+    }
+
+    /**
+     * Subscribes observer to Model at path
+     * @param path
+     * @param observer
+     * @returns {Observable}
+     */
+    subscribeTo(path, observer) {
+        return _documents.get(this).subscribe(path, observer);
+    }
+
+    /**
+     *
+     * @return {any}
+     */
     get schema() {
         return _schemaSignatures.get(this);
     }
 
     /**
-     * getter for validation status
-     * @returns {boolean}
-     */
-    get isValid() {
-        return this.document.isValid;
-    }
-
-    /**
-     * validates data against named schema
+     * Validates data against named schema
      * @param path
      * @param value
      * @return {*|void|RegExpExecArray}
@@ -96,7 +118,7 @@ export class JSD {
     }
 
     /**
-     * getter for Ajv validation error messages
+     * Getter for Ajv validation error messages
      * @return {error[] | null}
      */
     get errors() {
@@ -104,34 +126,35 @@ export class JSD {
     }
 
     /**
-     * implements toString
+     * Implements toString
      * @return {string}
      */
     toString() {
-        return `${this.document}`;
+        return `${this.model.$ref}`;
     }
 
     /**
-     * implements toJSON
+     * Implements toJSON
      * @return {*}
      */
     toJSON() {
-        return this.document.toJSON();
+        return this.model.$ref.toJSON();
     }
 
     /**
-     * creates new PropertiesModel from JSON data
-     * @param {string|object} json -- JSON Object or String
+     * Creates new PropertiesModel from JSON data
+     * @param {string|json} json -- JSON Object or String
      * @param {object} options - JSD options object
      * @returns {JSD}
      */
     static fromJSON(json, options) {
         // quick peek at json param to ensure it looks ok
-        let __ = (typeof json).match(/^(string|object)+$/);
+        const __ = (typeof json).match(/^(string|object)+$/);
 
         if (__) {
-            // attempts to parse if type is string and create JSD from JSON
-            return new JSD((__[1] === "string") ? JSON.parse(json) : json, options);
+            // attempts to create JSD from JSON or JSON string
+            return new JSD((__[1] === "string") ?
+                JSON.parse(json) : json, options);
         }
 
         // throws error if something didn't look right with the json param

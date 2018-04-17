@@ -23,7 +23,7 @@ export const makeClean = (model) => {
  * @private
  * @param {Model} model
  * @param {json|array|boolean|number|string} value
- * @return {boolean}
+ * @return {boolean|string|object[]}
  */
 export const refValidation = (model, value) => {
     return refAtKeyValidation(model, "", value);
@@ -34,7 +34,7 @@ export const refValidation = (model, value) => {
  * @param model
  * @param key
  * @param value
- * @return {boolean}
+ * @return {boolean|string|string[]}
  */
 export const refAtKeyValidation = (model, key, value) => {
     // we don't validate if model is dirty
@@ -53,19 +53,23 @@ export const refAtKeyValidation = (model, key, value) => {
         path = `${path}/${key}`;
     }
 
-    // obtains validator reference
-    const _v = _validators.get(model.jsd);
-
-    // runs validation...
-    const _res = _v.exec(path, value);
+    const _res = validate(model, path, value);
 
     // tests our results for failure
-    if (!_res) {
-        // obtains errors if available
-        const _e = _v.$ajv.errorsText(_res.errors) || "unknown validation error";
-        // in case of error, update Observers and return false
-        _oBuilders.get(model.jsd).error(model.path, _e);
-        return false;
+    if (_res !== true) {
+        return _res;
+    }
+
+    return true;
+};
+
+export const validate = (model, path, value) => {
+    // obtains validator reference
+    const _v = _validators.get(model.jsd);
+    const _res = _v.exec(path, value);
+    // runs validation and returns
+    if (_res !== true) {
+        return _v.$ajv.errorsText(_res.errors) || "unknown validation error";
     }
 
     return true;

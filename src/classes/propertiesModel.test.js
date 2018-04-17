@@ -5,17 +5,17 @@ import {basicModel, nestedModel} from "../../fixtures/PropertiesModel.schemas";
 
 describe("PropertiesModel Class Suite", function () {
 
-    describe("Simple PropertiesModel Tests", () => {
+    describe.only("Simple PropertiesModel Tests", () => {
         beforeEach(() => {
             this.jsd = new JSD(basicModel);
         });
 
         describe("LifeCycle: Instantiation", () => {
             it("should initialize a schema and a schema object", () => {
-                expect(this.jsd.document).toBeDefined();
-                expect(this.jsd.document instanceof PropertiesModel).toBe(true);
-                expect(this.jsd.document.model.$ref).toBeDefined();
-                expect(this.jsd.document.model.$ref instanceof PropertiesModel).toBe(true);
+                expect(this.jsd.model.$ref).toBeDefined();
+                expect(this.jsd.model.$ref instanceof PropertiesModel).toBe(true);
+                expect(this.jsd.model.$ref).toBeDefined();
+                expect(this.jsd.model.$ref instanceof PropertiesModel).toBe(true);
             });
 
             it("should not initialize a invalid schema and schema object", () => {
@@ -41,8 +41,8 @@ describe("PropertiesModel Class Suite", function () {
                     active: true,
                 };
 
-                this.jsd.document.model = _d;
-                expect(deepEqual(this.jsd.document.model, _d)).toBe(true);
+                this.jsd.model = _d;
+                expect(deepEqual(this.jsd.model, _d)).toBe(true);
             });
 
             it("should reject invalid data and leave model pristine", () => {
@@ -52,8 +52,30 @@ describe("PropertiesModel Class Suite", function () {
                     active: "123",
                 };
 
-                this.jsd.document.model = _d;
-                expect(deepEqual(this.jsd.document.model, {})).toBe(true);
+                this.jsd.model = _d;
+                expect(deepEqual(this.jsd.model, {})).toBe(true);
+            });
+        });
+
+        describe.only("LifeCycle: Update", () => {
+            const _d = {
+                name: "Ed Testy",
+                age: 99,
+                active: true,
+            };
+
+            beforeEach(() => {
+                this.jsd.model = _d;
+            });
+
+            it("should update with valid data", () => {
+                this.jsd.model.active = false;
+                expect(deepEqual(this.jsd.model, _d)).toBe(false);
+            });
+
+            it.only("should reject invalid data update", () => {
+                this.jsd.model.active = "false";
+                expect(deepEqual(this.jsd.model, _d)).toBe(true);
             });
         });
     });
@@ -65,10 +87,10 @@ describe("PropertiesModel Class Suite", function () {
 
         describe("LifeCycle: Instantiation", () => {
             it("should initialize a valid schema and a schema object", () => {
-                expect(this.jsd.document).toBeDefined();
-                expect(this.jsd.document instanceof PropertiesModel).toBe(true);
-                expect(this.jsd.document.model.$ref).toBeDefined();
-                expect(this.jsd.document.model.$ref instanceof PropertiesModel).toBe(true);
+                expect(this.jsd.model.$ref).toBeDefined();
+                expect(this.jsd.model.$ref instanceof PropertiesModel).toBe(true);
+                expect(this.jsd.model.$ref).toBeDefined();
+                expect(this.jsd.model.$ref instanceof PropertiesModel).toBe(true);
             });
         });
 
@@ -85,10 +107,10 @@ describe("PropertiesModel Class Suite", function () {
                     },
                 };
 
-                this.jsd.document.model = _d;
-                expect(deepEqual(this.jsd.document.model, _d)).toBe(true);
-                expect(this.jsd.document.model.aObject.bObject.$ref).toBeDefined();
-                expect(this.jsd.document.model.aObject.bObject.$ref instanceof PropertiesModel).toBe(true)
+                this.jsd.model = _d;
+                expect(deepEqual(this.jsd.model, _d)).toBe(true);
+                expect(this.jsd.model.aObject.bObject.$ref).toBeDefined();
+                expect(this.jsd.model.aObject.bObject.$ref instanceof PropertiesModel).toBe(true)
             });
 
             it("should reject invalid data and leave model pristine", () => {
@@ -100,8 +122,8 @@ describe("PropertiesModel Class Suite", function () {
                     },
                 };
 
-                this.jsd.document.model = _d;
-                expect(deepEqual(this.jsd.document.model, {})).toBe(true);
+                this.jsd.model = _d;
+                expect(deepEqual(this.jsd.model, {})).toBe(true);
             });
         });
 
@@ -118,15 +140,15 @@ describe("PropertiesModel Class Suite", function () {
                     },
                 };
 
-                this.jsd.document.model = _d;
+                this.jsd.model = _d;
 
                 _d = {
                     bValue: 4321,
                 };
 
-                this.jsd.document.model.aObject.bObject = _d;
+                this.jsd.model.aObject.bObject = _d;
                 expect(this.jsd.errors).toBe(null);
-                expect(deepEqual(this.jsd.document.model.aObject.bObject, _d)).toBe(true);
+                expect(deepEqual(this.jsd.model.aObject.bObject, _d)).toBe(true);
             });
         });
 
@@ -144,19 +166,19 @@ describe("PropertiesModel Class Suite", function () {
             };
 
             it("should allow deletion of nested properties that are not required", () => {
-                this.jsd.document.model = _d;
-                expect(this.jsd.document.model.extraObject.someValue).toBe("test");
-                delete this.jsd.document.model.extraObject.someValue;
+                this.jsd.model = _d;
+                expect(this.jsd.model.extraObject.someValue).toBe("test");
+                delete this.jsd.model.extraObject.someValue;
                 expect(this.jsd.errors).toBe(null);
-                expect(this.jsd.document.model.extraObject.someValue).toBe(void(0));
+                expect(this.jsd.model.extraObject.someValue).toBe(void(0));
             });
 
             it("should prevent deletion of nested properties that are required", () => {
-                this.jsd.document.model = _d;
-                expect(this.jsd.document.model.aObject.bObject.bValue).toBe(1234);
-                delete this.jsd.document.model.aObject.bObject.bValue;
+                this.jsd.model = _d;
+                expect(this.jsd.model.aObject.bObject.bValue).toBe(1234);
+                delete this.jsd.model.aObject.bObject.bValue;
                 expect(typeof this.jsd.errors).toBe("object");
-                expect(this.jsd.document.model.aObject.bObject.bValue).toBe(1234);
+                expect(this.jsd.model.aObject.bObject.bValue).toBe(1234);
             });
         });
     });
