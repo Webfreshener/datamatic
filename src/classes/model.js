@@ -68,6 +68,9 @@ export class Model {
     subscribeTo(path, func) {
         const _oBuilder = _oBuilders.get(this.jsd);
         const _o = _oBuilder.getObserverForPath(path);
+        if (_o === null) {
+            return _o;
+        }
 
         // references to subscriptions for Observable
         const _subRefs = [];
@@ -121,10 +124,10 @@ export class Model {
     reset() {
         const _isArray = Array.isArray(this.model);
         const _o = !_isArray ? {} : [];
-
+        const _res = this.validate(_o);
         // validates that this model be returned to an empty value
-        if (!this.validate(_o)) {
-            _oBuilders.get(this.jsd).error(this, this.jsd.errors);
+        if (_res !== true) {
+            _oBuilders.get(this.jsd).error(this, _res);
             return this;
         }
 
@@ -285,8 +288,8 @@ export class Model {
      * @return {boolean}
      */
     get isDirty() {
-        let _res = _dirtyModels.get(this.jsd)[this.path];
-        return _res === void(0) ? ((this.parent === null) ? false : this.parent.isDirty) : _res;
+        let _res = _dirtyModels.get(this.jsd)[this.path] || false;
+        return _res || ((this.parent === null) ? false : this.parent.isDirty);
     }
 
     /**

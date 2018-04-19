@@ -1,13 +1,12 @@
 import {
-    _oBuilders, _validators,
-    _dirtyModels, _schemaSignatures
+    _oBuilders, _validators, _observers,
+    _dirtyModels, _schemaSignatures, _jsdDocs
 } from "./_references";
 import {ObserverBuilder} from "./_observerBuilder";
 import {PropertiesModel} from "./propertiesModel";
 import {ItemsModel} from "./itemsModel";
 import {AjvWrapper} from "./_ajvWrapper";
 const _documents = new WeakMap();
-
 /**
  * JSD Document Entry-point
  * @public
@@ -55,11 +54,22 @@ export class JSD {
         // creates root level document
         const _doc = new (!_useSet ? PropertiesModel : ItemsModel)(this);
 
-        // applies Subject Observables
+        // applies Subject Handlers to root document
         _oBuilders.get(this).create(_doc);
 
         // sets document to this scope
         _documents.set(this, _doc);
+
+        const _self = this;
+        const clazz = class {
+            getRef(atPath) {
+                let _target = Object.assign({}, _self.model);
+                (atPath.split(".")).forEach((part) => {
+                    _target = _target[part];
+                    console.log(`${_target}`);
+                });
+            }
+        };
 
     }
 
@@ -96,7 +106,7 @@ export class JSD {
      * @returns {Observable}
      */
     subscribeTo(path, observer) {
-        return _documents.get(this).subscribe(path, observer);
+        return _documents.get(this).subscribeTo(path, observer);
     }
 
     /**

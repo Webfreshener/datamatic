@@ -82,3 +82,5 @@ export const _oBuilders = new WeakMap();
  * @private
  */
 export const _schemaSignatures = new WeakMap();
+
+export const _jsdDocs = new WeakMap();

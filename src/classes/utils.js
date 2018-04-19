@@ -1,4 +1,4 @@
-import {_dirtyModels, _oBuilders, _validators} from "./_references";
+import {_dirtyModels, _validators} from "./_references";
 
 /**
  * flags `model` node as being out of sync with tree
@@ -16,6 +16,10 @@ export const makeClean = (model) => {
     if (model.isDirty && _dirtyModels.get(model.jsd)[model.path]) {
         delete _dirtyModels.get(model.jsd)[model.path];
     }
+};
+
+export const listDirtyItems = (model) => {
+    return Object.keys(_dirtyModels.get(model.jsd));
 };
 
 /**
@@ -41,9 +45,6 @@ export const refAtKeyValidation = (model, key, value) => {
     if (model.isDirty) {
         return true;
     }
-
-    // marks model as dirty to prevent cascading validation calls
-    makeDirty(model);
 
     // obtains preliminary model path
     let path = `${model.validationPath}`;
@@ -73,4 +74,8 @@ export const validate = (model, path, value) => {
     }
 
     return true;
+};
+
+export const getRoot = (model) => {
+    return Object.assign({}, model.jsd.model);
 };

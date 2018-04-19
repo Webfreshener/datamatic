@@ -1,6 +1,8 @@
 import {_observers} from "./_references";
 import {BehaviorSubject} from "rxjs/Rx";
+
 const _observerPaths = new WeakMap();
+
 export class ObserverBuilder {
     /**
      * @constructor
@@ -25,7 +27,7 @@ export class ObserverBuilder {
      * @returns {*}
      */
     getObserverForPath(path) {
-        const _itm = _observerPaths.get(this).find((o) => o[0] === `${path}` );
+        const _itm = _observerPaths.get(this).find((o) => o[0] === `${path}`);
         return _itm && _itm.length > 1 ? this.get(_itm[1]) : null;
     }
 
@@ -56,10 +58,11 @@ export class ObserverBuilder {
     next(target) {
         let _o = this.get(target);
         if (_o) {
-            _o.onNext.next(target.model);
-            if (!target.isDirty && target.parent !== null) {
-                this.next(target.parent);
-            }
+            _o.onNext.next(target);
+
+            // if (!target.isDirty && target.parent !== null) {
+            //     this.next(target.parent);
+            // }
         }
     }
 
@@ -71,9 +74,9 @@ export class ObserverBuilder {
         let _o = this.get(target);
         if (_o !== null) {
             _o.onComplete.next(target.model);
-            if (!target.isDirty && target.parent !== null) {
-                this.complete(target.parent);
-            }
+            // if (!target.isDirty && target.parent !== null) {
+            //     this.complete(target.parent);
+            // }
         }
     }
 
@@ -86,9 +89,9 @@ export class ObserverBuilder {
         let _o = this.get(target);
         if (_o !== null) {
             _o.onError.next(message);
-            if (!target.isDirty && target.parent !== null) {
-                this.error(target.parent, message);
-            }
+            // if (!target.isDirty && target.parent !== null) {
+            //     this.error(target.parent, message);
+            // }
         }
     }
 }

@@ -1,10 +1,9 @@
 import {
     _object, _schemaHelpers, _oBuilders,
 } from "./_references";
-import {makeClean, refAtKeyValidation, refValidation} from "./utils";
+import {makeClean, makeDirty, refAtKeyValidation, refValidation} from "./utils";
 import {SchemaHelpers} from "./_schemaHelpers";
 import {Model} from "./model";
-
 
 /**
  * @class PropertiesModel
@@ -35,6 +34,11 @@ export class PropertiesModel extends Model {
             },
             set: (t, key, value) => {
                 let _sH = _schemaHelpers.get(this);
+
+                if (key in Object.prototype) {
+                    // do nothing against proto props
+                    return true;
+                }
 
                 // -- ensures we aren't in a frozen hierarchy branch
                 if (this.isFrozen) {
@@ -67,7 +71,10 @@ export class PropertiesModel extends Model {
                 if ((typeof value) === "object") {
                     value = _sH.setChildObject(key, value);
                     if ((typeof value) === "string") {
+                        // marks model as clean
                         makeClean(this);
+
+                        // sends notifications
                         _oBuilders.get(this.jsd).error(_self, value);
                         return false;
                     }
@@ -78,7 +85,7 @@ export class PropertiesModel extends Model {
                 return true;
             },
             deleteProperty: (t, key) => {
-                // creates mock of future Model state for evaluation
+                // creates mock of future model state for evaluation
                 let _o = Object.assign({}, this.model);
                 delete _o[key];
 
@@ -87,7 +94,7 @@ export class PropertiesModel extends Model {
                     return false;
                 }
 
-                // performs the operation on Model
+                // performs delete operation on model
                 delete t[key];
                 return true;
             }
@@ -118,21 +125,34 @@ export class PropertiesModel extends Model {
     set model(value) {
         // fails on attempts to set scalar value
         // or if this node is locked or fails validation
-        if ((typeof value) !== "object" || this.isFrozen ||
-            !refValidation(this, value)) {
+        if ((typeof value) !== "object" || this.isFrozen) {
             return false;
+        }
+
+        if (refValidation(this, value) !== true) {
+            _oBuilders.get(this.jsd).error(this, this.jsd.errors);
+            return false;
+        }
+
+        if (!this.isDirty) {
+            // marks model as dirty to prevent cascading validation calls
+            makeDirty(this);
         }
 
         // defines new Proxy Object for data modeling
         // todo: replace proxy with Object Delegation
-        _object.set(this, new Proxy(Model.createRef(this, {}), this.handler));
+        _object.set(this,
+            new Proxy(Model.createRef(this, {}), this.handler));
 
         Object.keys(value).forEach((k) => {
             // -- added try/catch to avoid error in JSFiddle
             try {
                 this.model[k] = value[k];
             } catch (e) {
-                makeClean(this);s
+                // marks model as clean
+                makeClean(this);
+
+                // sends notications
                 _oBuilders.get(this.jsd).error(this, e);
                 return false;
             }
@@ -142,7 +162,10 @@ export class PropertiesModel extends Model {
         makeClean(this);
 
         // calls next's observable to update subscribers
-        _oBuilders.get(this.jsd).next(this);
+        // if (!this.isDirty) {
+            _oBuilders.get(this.jsd).next(this);
+        // }
+
         return true;
     }
 
@@ -163,6 +186,11 @@ export class PropertiesModel extends Model {
         // attempts validation of value against schema
         if (!refAtKeyValidation(this, key, value)) {
             return false;
+        }
+
+        if (!this.isDirty) {
+            // marks model as dirty to prevent cascading validation calls
+            makeDirty(this);
         }
 
         // applies validated value to model

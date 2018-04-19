@@ -242,8 +242,8 @@ describe("ItemsModel Class Suite", function () {
         });
 
         it("should quietly validate data with the validate method", () => {
-            expect(this.jsd.model.$ref.test([1, 2, 3])).toBe(false);
-            expect(this.jsd.model.$ref.test(["1", "2", "3"])).toBe(true);
+            expect(this.jsd.model.$ref.validate([1, 2, 3])).toBe("data/0 should be string");
+            expect(this.jsd.model.$ref.validate(["1", "2", "3"])).toBe(true);
         });
 
         it("should freeze it's model", () => {

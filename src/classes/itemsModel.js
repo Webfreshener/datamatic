@@ -32,9 +32,18 @@ export class ItemsModel extends Model {
      * @param value
      */
     set model(value) {
-        if (!Array.isArray(value) || this.isFrozen ||
-            !refValidation(this, value)) {
+        if (!Array.isArray(value) || this.isFrozen) {
             return false;
+        }
+
+        if (refValidation(this, value) !== true) {
+            _oBuilders.get(this.jsd).error(this, this.jsd.errors);
+            return false;
+        }
+
+        if (!this.isDirty) {
+            // marks model as dirty to prevent cascading validation calls
+            makeDirty(this);
         }
 
         _object.set(this, new Proxy(Model.createRef(this, []), this.handler));
@@ -58,6 +67,8 @@ export class ItemsModel extends Model {
             value.forEach((val) => {
                 _object.get(this)[cnt++] = val;
             });
+
+
         } catch (e) {
             makeClean(this);
             _oBuilders.get(this.jsd).error(this, e);
@@ -65,7 +76,9 @@ export class ItemsModel extends Model {
         }
 
         makeClean(this);
+
         _oBuilders.get(this.jsd).next(this);
+
         return true;
     }
 
@@ -84,24 +97,32 @@ export class ItemsModel extends Model {
                 if (idx in Array.prototype) {
                     // only handle methods that modify the reference array
                     if (["fill", "pop", "push", "shift", "splice", "unshift"].indexOf(idx) > -1) {
+                        // returns closure analog to referenced method
                         return (...args) => {
+                            // mocks current model state
                             const _arr = [].concat(t);
+
+                            // applies method to model state
                             const _val = t[idx].apply(_arr, args);
+
+                            // validates updated mock
                             const _res = refValidation(this, _arr);
 
+                            // in event of validation failure
                             if (_res !== true) {
+                                // .. marks model as clean
                                 makeClean(this);
-                                _oBuilders.get(this.jsd).error(this, this.jsd.errors);
+
+                                // .. sends notifications
+                                _oBuilders.get(this.jsd).error(this,
+                                    this.jsd.errors);
+
                                 return false;
                             }
 
                             // applies modified array to element
                             this.model = _arr;
 
-                            makeClean(this);
-                            _oBuilders.get(this.jsd).next(this);
-
-                            // returns result of operation
                             return _val;
                         }
                     } else {
@@ -126,7 +147,7 @@ export class ItemsModel extends Model {
                     return false;
                 }
 
-                if (!refAtKeyValidation(this, "items", value)) {
+                if (refAtKeyValidation(this, "items", value) !== true) {
                     if (!_oDel) {
                         makeClean(this);
                         _oBuilders.get(this.jsd).error(this, this.jsd.errors);
@@ -139,7 +160,6 @@ export class ItemsModel extends Model {
                 // we set the value on the array with success
                 if ((typeof value) === "object") {
                     let _sH = _schemaHelpers.get(this);
-                    // note we use the last value of `cnt` and walk back one iteration
                     value = _sH.setChildObject(`${this.path}`, value);
                 }
 
@@ -148,34 +168,39 @@ export class ItemsModel extends Model {
                 // makes clean if not serial operation
                 if (!_oDel) {
                     makeClean(this);
+                    // updates observers
+                    _oBuilders.get(this.jsd).next(this);
                 }
 
-                // updates observers
-                _oBuilders.get(this.jsd).next(this);
                 return true;
             },
             deleteProperty: (t, idx) => {
+                let _oDel = _observerDelegates.get(this);
                 // creates mock of future Model state for evaluation
-                let _o = [].concat(this.model);
-                _o.splice(idx, 1);
-
-                // validates mock of change state
-                if (!refValidation(this, _o)) {
-                    // makes clean if not serial operation
+                let _o = [].concat(t);
+                try {
+                    // attempts splice method to
+                    // remove item at given index index
+                    _o.splice(idx, 1);
+                } catch (e) {
                     if (!_oDel) {
                         makeClean(this);
+                        _oBuilders.get(this.jsd).error(this, e);
                     }
                     return false;
                 }
 
-                // ensures index of operation is in range
-                if (idx >= t.length) {
-                    // makes clean if not serial operation
+                // validates mock of change state
+                const _res = refValidation(this, _o);
+
+
+                if (_res !== true) {
+                    // makes clean and notifies
+                    // if not serial operation
                     if (!_oDel) {
                         makeClean(this);
+                        _oBuilders.get(this.jsd).error(this, _res);
                     }
-                    const e = `index ${idx} is out of bounds on ${this.path}`;
-                    _oBuilders.get(this.jsd).error(this, e);
                     return false;
                 }
 
