@@ -8,8 +8,7 @@ RxJS + JSON-Schema (Ajv) Based Observable Data Models
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/c665c70dfeb144319bc5bbd58695eb90)](https://www.codacy.com/app/vanschroeder/RxVO?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Webfreshener/RxVO&amp;utm_campaign=Badge_Grade)
 [![Maintainability](https://api.codeclimate.com/v1/badges/625326e1880421ccc809/maintainability)](https://codeclimate.com/github/Webfreshener/RxVO/maintainability)
 
-[Online Developer Documentation](https://webfreshener.github.io/RxJO/)
-
+[Online Developer Documentation](https://webfreshener.github.io/RxVO/)
 
 ## &#9888; Caution!
 This utility is not meant for general purpose use. It leverages several technologies such as RxJS, JSON-Schema and Proxy. As such it is not performant or suitable for applications that require a high degree of efficiency. However it should be fine for prototyping and single-user use in browsers or other sandboxed environments
