@@ -4,6 +4,4 @@
 *.iml
 package-lock.json
 node_modules/*
-test/_orig
-coverage/*
 

@@ -1,0 +1,1157 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for RxVO/src/classes/model.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">All files</a> / <a href="index.html">RxVO/src/classes</a> model.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">83.15% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>74/89</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">69.81% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>37/53</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">79.49% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>31/39</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">82.95% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>73/88</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364
+365</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">64x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">43x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">64x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">64x</span>
+<span class="cline-any cline-yes">64x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">109x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">227x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">103x</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">30x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">905x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">107x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">736x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">461x</span>
+<span class="cline-any cline-yes">461x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">849x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">227x</span>
+<span class="cline-any cline-yes">227x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">98x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">109x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">109x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import {
+    _mdRef, _oBuilders, _object, _schemaOptions, _dirtyModels
+} from "./_references";
+import {RxVO} from "./rxvo";
+import {MetaData} from "./_metaData";
+import {makeClean, makeDirty, validate} from "./utils";
+&nbsp;
+/**
+ *
+ * @param ref
+ * @param metaRef
+ */
+const createMetaDataRef = (ref, metaRef) =&gt; {
+    let _md;
+    if (metaRef instanceof RxVO) {
+        // root properties are handed the RxVO object
+        // will create new MetaData and set reference as root element
+        _md = new MetaData(ref, {
+            _path: "",
+            _parent: null,
+            _root: ref,
+            _rxvo: metaRef,
+        });
+    }
+    else <span class="missing-if-branch" title="else path not taken" >E</span>if ((typeof metaRef) === "object") {
+        // extends MetaData reference
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (metaRef instanceof MetaData) {
+            _md = metaRef;
+        } else {
+            // todo: re-evaluate this line for possible removal
+<span class="cstat-no" title="statement not covered" >            _md = new MetaData(this, metaRef);</span>
+        }
+    } else {
+<span class="cstat-no" title="statement not covered" >        throw "Invalid attempt to construct Model." +</span>
+        "tip: use `new RxVO([schema])` instead"
+    }
+    // sets MetaData object to global reference
+    _mdRef.set(ref, _md);
+};
+&nbsp;
+/**
+ *
+ */
+export class Model {
+    constructor() {
+        // tests if this is instance of MetaData
+        <span class="missing-if-branch" title="else path not taken" >E</span>if (!(this instanceof MetaData)) {
+            createMetaDataRef(this, arguments[0]);
+        }
+    }
+&nbsp;
+    /**
+     * Subscribes handler method to observer for model
+     * @param func
+     * @returns {object}
+     */
+    subscribe(func) {
+        return this.subscribeTo(this.path, func);
+    }
+&nbsp;
+    /**
+     * Subscribes handler method to property observer for path
+     * @param path
+     * @param func
+     * @return {object}
+     */
+    subscribeTo(path, func) {
+        const _oBuilder = _oBuilders.get(this.rxvo);
+        const _o = _oBuilder.getObserverForPath(path);
+        <span class="missing-if-branch" title="if path not taken" >I</span>if (_o === null) {
+<span class="cstat-no" title="statement not covered" >            return _o;</span>
+        }
+&nbsp;
+        // references to subscriptions for Observable
+        const _subRefs = [];
+&nbsp;
+        // init's observer handlers if defined on passed `func` object
+        [
+            {call: "onNext", func: "next"},
+            {call: "onError", func: "error"},
+            {call: "onComplete", func: "complete"},
+        ].forEach((obs) =&gt; {
+            if (func.hasOwnProperty(obs.func)) {
+                _subRefs.push(_o[obs.call].subscribe({next: func[obs.func]}));
+            }
+        });
+&nbsp;
+        // creates an extensible object to hold our unsubscribe method
+        // and adds unsubscribe calls to the Proto object
+        const _subs = class {};
+&nbsp;
+        // adds unsubscribe to the Proto object
+        _subs.prototype.unsubscribe = () =&gt; {
+            _subRefs.forEach((sub) =&gt; {
+                sub.unsubscribe();
+            });
+        };
+&nbsp;
+        return new _subs();
+    }
+&nbsp;
+    /**
+     * Tests value for validation without setting value to Model
+     * @param {json} value - JSON value to validate for validity
+     * @return {boolean}
+     */
+    validate(value) {
+        try {
+           return validate(this, this.validationPath, value);
+        } catch (e) {
+            // couldn't find schema, so is Additional Properties
+            // todo: review `removeAdditional` ajv option for related behavior
+<span class="cstat-no" title="statement not covered" >            return true;</span>
+        }
+&nbsp;
+&nbsp;
+    }
+&nbsp;
+    /**
+     * resets Model to empty value
+     * @return {Model}
+     */
+    reset() {
+        const _isArray = Array.isArray(this.model);
+        const _o = !_isArray ? <span class="branch-0 cbranch-no" title="branch not covered" >{} </span>: [];
+        const _res = this.validate(_o);
+        // validates that this model be returned to an empty value
+        if (_res !== true) {
+            _oBuilders.get(this.rxvo).error(this, _res);
+            return this;
+        }
+&nbsp;
+        // marks this model as out of sync with tree
+        makeDirty(this);
+&nbsp;
+        // closure to handle the freeze operation safely
+        const _freeze = (itm) =&gt; {
+            <span class="missing-if-branch" title="if path not taken" >I</span>if (!Object.isFrozen(itm)) {
+<span class="cstat-no" title="statement not covered" >                itm.freeze();</span>
+            }
+        };
+&nbsp;
+        // freezes all child Model/Elements
+        // -- prevent changes to Children
+        // -- sends "complete" notification to their Observers
+        // -- revokes their Models if revocable
+        const _i = !_isArray ? <span class="branch-0 cbranch-no" title="branch not covered" >Object.keys(this.model) </span>: this.model;
+        _i.forEach((itm) =&gt; _freeze((!_isArray) ? <span class="branch-0 cbranch-no" title="branch not covered" >_i[itm] </span>: itm));
+&nbsp;
+        // creates new Proxied Model to operate on
+        const _p = new Proxy(Model.createRef(this, _o), this.handler);
+        _object.set(this, _p);
+&nbsp;
+        // marks this model as back in sync with tree
+        makeClean(this);
+&nbsp;
+        // sends notification of model change
+        _oBuilders.get(this.rxvo).next(this);
+&nbsp;
+        return this;
+    }
+&nbsp;
+    /**
+     * Raw value of this Model
+     * @returns {*}
+     */
+    valueOf() {
+        return _object.get(this);
+    }
+&nbsp;
+    /**
+     * Provides JSON object representation of Model
+     */
+    toJSON() {
+        let _derive = (itm) =&gt; {
+&nbsp;
+            // uses toJSON impl if defined
+            <span class="missing-if-branch" title="if path not taken" >I</span>if (itm.hasOwnProperty("toJSON") &amp;&amp;
+<span class="branch-1 cbranch-no" title="branch not covered" >                (typeof this.toJSON) === "function")</span> {
+<span class="cstat-no" title="statement not covered" >                return itm.toJSON();</span>
+            }
+&nbsp;
+            // builds new JSON tree if value is object
+            if (typeof itm === "object") {
+                const _o = !Array.isArray(itm) ? {} : <span class="branch-1 cbranch-no" title="branch not covered" >[];</span>
+                for (let k in itm) {
+&nbsp;
+                    // we validate for property to avoid warnings
+                    <span class="missing-if-branch" title="else path not taken" >E</span>if (itm.hasOwnProperty(k)) {
+&nbsp;
+                        // applies property to tree
+                        _o[k] = _derive(itm[k]);
+                    }
+                }
+&nbsp;
+                // returns new JSON tree
+                return _o;
+            }
+            // hands back itm if value wasn't usable
+            return itm;
+        };
+&nbsp;
+        // uses closure for evaluation
+        return _derive(this.valueOf());
+    }
+&nbsp;
+    /**
+     * Provides JSON String representation of Model
+     * @param pretty - `prettifies` JSON output for readability
+     */
+<span class="fstat-no" title="function not covered" >    to</span>String(pretty = <span class="branch-0 cbranch-no" title="branch not covered" >false)</span> {
+<span class="cstat-no" title="statement not covered" >        console.log(this.toJSON());</span>
+<span class="cstat-no" title="statement not covered" >        return JSON.stringify(this.toJSON(), null, (pretty ? 2 : void(0)));</span>
+    }
+&nbsp;
+    /**
+     * Applies Object.freeze to model and triggers complete notification
+     * -- unlike Object.freeze, this prevents modification
+     * -- to all children in Model hierarchy
+     * @returns {Model}
+     */
+    freeze() {
+        Object.freeze(_object.get(this));
+        _oBuilders.get(this.rxvo).complete(this);
+        return this;
+    }
+&nbsp;
+    /**
+     *
+     * @return {object}
+     */
+    get handler() {
+        return {
+            setPrototypeOf: <span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >false,</span>
+            isExtensible: (t) =&gt; Object.isExtensible(t),
+            preventExtensions: (t) =&gt; Object.preventExtensions(t),
+            getOwnPropertyDescriptor: (t, key) =&gt; Object.getOwnPropertyDescriptor(t, key),
+            defineProperty: (t, key, desc) =&gt; Object.defineProperty(t, key, desc),
+            has: (t, key) =&gt; key in t,
+            ownKeys: (t) =&gt; Reflect.ownKeys(t),
+            apply: <span class="fstat-no" title="function not covered" >()</span> =&gt; <span class="cstat-no" title="statement not covered" >false,</span>
+        };
+    }
+&nbsp;
+    /**
+     * stub for model getter, overridden by Model sub-class
+     * @return {object|array|null}
+     */
+<span class="fstat-no" title="function not covered" >    ge</span>t model() {
+<span class="cstat-no" title="statement not covered" >        return null;</span>
+    }
+&nbsp;
+    /**
+     * Getter for Model's Unique Object ID
+     * @returns {string} Object ID for Model
+     */
+<span class="fstat-no" title="function not covered" >    ge</span>t objectID() {
+<span class="cstat-no" title="statement not covered" >        return _mdRef.get(this)._id;</span>
+    }
+&nbsp;
+    /**
+     * Getter for root element of Model hierarchy
+     * @returns {Model}
+     */
+    get root() {
+        return _mdRef.get(this).root || <span class="branch-1 cbranch-no" title="branch not covered" >this;</span>
+    }
+&nbsp;
+    /**
+     * Getter for `path` to current Element
+     * @returns {string}
+     */
+    get path() {
+        return _mdRef.get(this).path || "";
+    }
+&nbsp;
+    /**
+     * Getter for path to JSON Object for Model
+     * @returns {string}
+     */
+    get jsonPath() {
+        return this.path.replace(/\/?(properties|items)+\/?/g, ".").replace(/^\./, "");
+    }
+    /**
+     * Getter for Model's parent
+     * @returns {Model}
+     */
+    get parent() {
+        // attempts to get parent
+        return _mdRef.get(this).parent || null;
+    }
+&nbsp;
+    /**
+     * Getter for Model validation status for hierarchy
+     * @return {boolean}
+     */
+    get isDirty() {
+        let _res = _dirtyModels.get(this.rxvo)[this.path] || false;
+        return _res || ((this.parent === null) ? false : this.parent.isDirty);
+    }
+&nbsp;
+    /**
+     * Getter for model's RxVO owner object
+     * @returns {RxVO}
+     */
+    get rxvo() {
+        return _mdRef.get(this).rxvo;
+    }
+&nbsp;
+    /**
+     * Get options (if any) for this model's schema
+     * todo: review for possible removal
+     * @return {any}
+     */
+<span class="fstat-no" title="function not covered" >    ge</span>t options() {
+<span class="cstat-no" title="statement not covered" >        return _schemaOptions.get(this);</span>
+    }
+&nbsp;
+    /**
+     * Getter for Object.isFrozen status of this node and it's ancestors
+     * @returns {boolean}
+     */
+    get isFrozen() {
+        let _res = Object.isFrozen(_object.get(this));
+        return !_res ? ((this.parent === null) ? false : this.parent.isFrozen) : _res;
+    }
+&nbsp;
+    /**
+     * Provides formatted string for json-schema lookup
+     * @return {string}
+     */
+    get validationPath() {
+        return this.path === "" ? "root#/" : `root#${this.path}`;
+    }
+&nbsp;
+    /**
+     * todo: implement with ajv
+     * @returns {*}
+     */
+<span class="fstat-no" title="function not covered" >    ge</span>t schema() {
+<span class="cstat-no" title="statement not covered" >        return this; </span>// _validators.get(this.rxvo).$ajv.compile({$model: this.validationPath});
+    }
+&nbsp;
+    /**
+     * todo: remove and standardize around `schema`
+     * @returns {*}
+     */
+<span class="fstat-no" title="function not covered" >    ge</span>t signature() {
+<span class="cstat-no" title="statement not covered" >        return this.schema;</span>
+    }
+&nbsp;
+    /**
+     * creates owner Model reference on Proxied data object
+     * @param ref
+     * @param obj
+     * @returns {*}
+     */
+    static createRef(ref, obj) {
+        Object.defineProperty(obj, "$model", {
+            value: ref,
+            writable: false
+        });
+        return obj;
+    };
+}</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sat Apr 21 2018 16:05:12 GMT-0500 (CDT)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>

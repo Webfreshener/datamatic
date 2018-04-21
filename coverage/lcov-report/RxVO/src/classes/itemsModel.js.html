@@ -1,0 +1,713 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for RxVO/src/classes/itemsModel.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../../prettify.css" />
+    <link rel="stylesheet" href="../../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../../index.html">All files</a> / <a href="index.html">RxVO/src/classes</a> itemsModel.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">79.76% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>67/84</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">76.32% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>29/38</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>9/9</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">79.76% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>67/84</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line medium'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">23x</span>
+<span class="cline-any cline-yes">23x</span>
+<span class="cline-any cline-yes">23x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">97x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">26x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">24x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">22x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">21x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">22x</span>
+<span class="cline-any cline-yes">22x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">22x</span>
+<span class="cline-any cline-yes">22x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">22x</span>
+<span class="cline-any cline-yes">57x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">22x</span>
+<span class="cline-any cline-yes">22x</span>
+<span class="cline-any cline-yes">22x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">22x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">46x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">126x</span>
+<span class="cline-any cline-yes">22x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">104x</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">13x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">91x</span>
+<span class="cline-any cline-yes">38x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">53x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">59x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">59x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">58x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">58x</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">58x</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">58x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">58x</span>
+<span class="cline-any cline-yes">57x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">57x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">58x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import {
+    _object, _schemaHelpers
+} from "./_references";
+import {Model} from "./model";
+import {SchemaHelpers} from "./_schemaHelpers";
+import {makeClean, makeDirty, refAtKeyValidation, refValidation} from "./utils";
+import Notifiers from "./_branchNotifier";
+&nbsp;
+const _observerDelegates = new WeakMap();
+&nbsp;
+/**
+ * @class ItemsModel
+ */
+export class ItemsModel extends Model {
+    /**
+     * @constructor
+     */
+    constructor() {
+        super(arguments[0]);
+        _schemaHelpers.set(this, new SchemaHelpers(this));
+        _object.set(this, new Proxy(Model.createRef(this, []), this.handler));
+    }
+&nbsp;
+    /**
+     * getter for object model
+     */
+    get model() {
+        return _object.get(this);
+    }
+&nbsp;
+    /**
+     * setter for object model
+     * @param value
+     */
+    set model(value) {
+        if (!Array.isArray(value) || this.isFrozen) {
+            return false;
+        }
+&nbsp;
+        if (refValidation(this, value) !== true) {
+            Notifiers.get(this.rxvo).sendError(this.jsonPath, this.rxvo.errors);
+            return false;
+        }
+&nbsp;
+        if (!this.isDirty) {
+            // marks model as dirty to prevent cascading validation calls
+            makeDirty(this);
+        }
+&nbsp;
+        _object.set(this, new Proxy(Model.createRef(this, []), this.handler));
+        _observerDelegates.set(this, true);
+&nbsp;
+        try {
+            let cnt = 0;
+&nbsp;
+            value.forEach((val) =&gt; {
+                _object.get(this)[cnt++] = val;
+            });
+&nbsp;
+        } catch (e) {
+<span class="cstat-no" title="statement not covered" >            makeClean(this);</span>
+<span class="cstat-no" title="statement not covered" >            console.log(e);</span>
+<span class="cstat-no" title="statement not covered" >            (Notifiers.get(this.rxvo).sendError.bind(this))(this.jsonPath, e);</span>
+<span class="cstat-no" title="statement not covered" >            return false;</span>
+        }
+&nbsp;
+        makeClean(this);
+        Notifiers.get(this.rxvo).sendNext(this.jsonPath);
+        _observerDelegates.delete(this);
+&nbsp;
+        return true;
+    }
+&nbsp;
+    get handler() {
+        return Object.assign(super.handler, {
+            get: (t, idx) =&gt; {
+                // TODO: review for removal
+                // if (typeof idx === "symbol") {
+                //     idx = `${String(idx)}`;
+                // }
+&nbsp;
+                if (idx === "length") {
+                    return t.length;
+                }
+&nbsp;
+                if (idx in Array.prototype) {
+                    const _self = this;
+                    // only handle methods that modify the reference array
+                    if (["fill", "pop", "push", "shift", "splice", "unshift"].indexOf(idx) &gt; -1) {
+                        // returns closure analog to referenced method
+                        return (...args) =&gt; {
+                            // mocks current model state
+                            const _arr = [].concat(t);
+&nbsp;
+                            // applies method to model state
+                            const _val = t[idx].apply(_arr, args);
+&nbsp;
+                            // validates updated mock
+                            const _res = refValidation(_self, _arr);
+&nbsp;
+                            // in event of validation failure
+                            if (_res !== true) {
+                                // .. marks model as clean
+                                makeClean(_self);
+&nbsp;
+                                // .. sends notifications
+                                Notifiers.get(this.rxvo).sendError(_self.jsonPath,
+                                    _self.rxvo.errors);
+&nbsp;
+                                return false;
+                            }
+&nbsp;
+                            // this is a kludge to handle updates from proto methods
+                            if (this.parent !== null) {
+                                // applies change to parent object if this is not root context
+                                this.parent.model[this.jsonPath.split(".").pop()] = _arr;
+                            } else {
+                                // applies change to RxVO instance
+                                this.rxvo.model = _arr;
+                            }
+&nbsp;
+                            return _val;
+                        }
+                    } else {
+                        return t[idx];
+                    }
+                }
+&nbsp;
+                if (idx === "$model") {
+                    return this;
+                }
+&nbsp;
+                return t[idx];
+            },
+            set: (t, idx, value) =&gt; {
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (idx in Array.prototype) {
+                    // do nothing against proto props
+<span class="cstat-no" title="statement not covered" >                    return true;</span>
+                }
+&nbsp;
+                // -- ensures we aren't in a frozen hierarchy branch
+                if (this.isFrozen) {
+                    return false;
+                }
+&nbsp;
+                let _oDel = _observerDelegates.get(this);
+&nbsp;
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (refAtKeyValidation(this, "items", value) !== true) {
+<span class="cstat-no" title="statement not covered" >                    if (_oDel !== void(0)) {</span>
+<span class="cstat-no" title="statement not covered" >                        makeClean(this);</span>
+<span class="cstat-no" title="statement not covered" >                        Notifiers.get(this.rxvo).sendError(this.jsonPath, this.rxvo.errors);</span>
+                    }
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+&nbsp;
+                // we set the value on the array with success
+                if ((typeof value) === "object") {
+                    let _sH = _schemaHelpers.get(this);
+                    value = _sH.setChildObject(`${this.path}`, value);
+                }
+&nbsp;
+                t[idx] = value;
+&nbsp;
+                // makes clean if not serial operation
+                if (_oDel !== void(0)) {
+                    makeClean(this);
+                    // updates observers
+                    Notifiers.get(this.rxvo).sendNext(this.jsonPath);
+                }
+&nbsp;
+                return true;
+            },
+&nbsp;
+            deleteProperty: (t, idx) =&gt; {
+                let _oDel = _observerDelegates.get(this);
+                // creates mock of future Model state for evaluation
+                let _o = [].concat(t);
+                try {
+                    // attempts splice method to
+                    // remove item at given index index
+                    _o.splice(idx, 1);
+                } catch (e) {
+<span class="cstat-no" title="statement not covered" >                    if (!_oDel) {</span>
+<span class="cstat-no" title="statement not covered" >                        makeClean(this);</span>
+<span class="cstat-no" title="statement not covered" >                        Notifiers.get(this.rxvo).sendError(this.jsonPath, e);</span>
+                    }
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+&nbsp;
+                // validates mock of change state
+                const _res = refValidation(this, _o);
+&nbsp;
+&nbsp;
+                <span class="missing-if-branch" title="if path not taken" >I</span>if (_res !== true) {
+                    // makes clean and notifies
+                    // if not serial operation
+<span class="cstat-no" title="statement not covered" >                    if (!_oDel) {</span>
+<span class="cstat-no" title="statement not covered" >                        makeClean(this);</span>
+<span class="cstat-no" title="statement not covered" >                        Notifiers.get(this.rxvo).sendError(this.jsonPath, _res);</span>
+                    }
+<span class="cstat-no" title="statement not covered" >                    return false;</span>
+                }
+&nbsp;
+                // applies operation
+                t.splice(idx, 1);
+&nbsp;
+                // flags model as in sync with tree
+                makeClean(this);
+&nbsp;
+                // updates observers
+                Notifiers.get(this.rxvo).sendNext(this.jsonPath);
+                return true;
+            }
+        });
+    }
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sat Apr 21 2018 16:05:12 GMT-0500 (CDT)
+</div>
+</div>
+<script src="../../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../../sorter.js"></script>
+</body>
+</html>
