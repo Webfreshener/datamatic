@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../">
-  <title data-ice="title">Variable | jsd</title>
+  <title data-ice="title">Variable | rxvo</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
   <script src="script/manual.js"></script>
-<meta name="description" content="Schema Generation and Data Validation with object virtualization"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="jsd"><meta property="twitter:description" content="Schema Generation and Data Validation with object virtualization"></head>
+<meta name="description" content="RxJS + JSON-Schema Based Observable Data Models"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="rxvo"><meta property="twitter:description" content="RxJS + JSON-Schema Based Observable Data Models"></head>
 <body class="layout-container" data-ice="rootContainer">
 
 <header>
@@ -30,23 +30,29 @@
   <ul>
     
   <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#classes">classes</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_branchNotifier.js~Notifier.html">Notifier</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_metaData.js~MetaData.html">MetaData</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_observerBuilder.js~ObserverBuilder.html">ObserverBuilder</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_schemaHelpers.js~SchemaHelpers.html">SchemaHelpers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/itemsModel.js~ItemsModel.html">ItemsModel</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/jsd.js~JSD.html">JSD</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/schema.js~Schema.html">Schema</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/set.js~Set.html">Set</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getRoot">getRoot</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-listDirtyItems">listDirtyItems</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeClean">makeClean</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeDirty">makeDirty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refAtKeyValidation">refAtKeyValidation</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refValidation">refValidation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-validate">validate</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ajvRef">_ajvRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_dirtyModels">_dirtyModels</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_jsdDocs">_jsdDocs</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_oBuilders">_oBuilders</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_object">_object</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_observerPaths">_observerPaths</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_observers">_observers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaHelpers">_schemaHelpers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaOptions">_schemaOptions</a></span></span></li>
@@ -196,6 +202,34 @@
           
           
           
+          <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-_jsdDocs">_jsdDocs</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">private</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
           <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">WeakMap</a></span></span>
         </p>
       </div>
@@ -260,7 +294,36 @@
       <div>
         
         
-        <div data-ice="description"><p>Holder for Schema and Set instance references</p>
+        <div data-ice="description"><p>Holder for PropertiesModel and ItemsModel instance references</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">private</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-_observerPaths">_observerPaths</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">WeakMap</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Holder for RXJS Observer references</p>
 </div>
       </div>
     </td>
@@ -318,7 +381,7 @@
       <div>
         
         
-        <div data-ice="description"><p>Holder for Schema Helpers references</p>
+        <div data-ice="description"><p>Holder for PropertiesModel Helpers references</p>
 </div>
       </div>
     </td>
@@ -347,7 +410,7 @@
       <div>
         
         
-        <div data-ice="description"><p>Holder for Schema options refeerences</p>
+        <div data-ice="description"><p>Holder for PropertiesModel options refeerences</p>
 </div>
       </div>
     </td>
@@ -405,7 +468,7 @@
       <div>
         
         
-        <div data-ice="description"><p>Holder for Schema Validators</p>
+        <div data-ice="description"><p>Holder for PropertiesModel Validators</p>
 </div>
       </div>
     </td>
@@ -435,7 +498,7 @@
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {wf} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber6">jsd/src/classes/_references.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {wf} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber6">rxvo/src/classes/_references.js</a></span>&apos;</code></pre></div>
   
   
   
@@ -480,7 +543,7 @@
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_ajvRef} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber30">jsd/src/classes/_references.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_ajvRef} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber30">rxvo/src/classes/_references.js</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>Holder for AjvWrapper references</p>
@@ -524,7 +587,7 @@
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_dirtyModels} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber37">jsd/src/classes/_references.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_dirtyModels} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber37">rxvo/src/classes/_references.js</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>Holder for models in transition</p>
@@ -568,7 +631,50 @@
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_exists} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber5">jsd/src/classes/_references.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_exists} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber5">rxvo/src/classes/_references.js</a></span>&apos;</code></pre></div>
+  
+  
+  
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="static-variable-_jsdDocs">
+    <span class="access" data-ice="access">private</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">_jsdDocs</span><span class="code" data-ice="signature">: <span>*</span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/classes/_references.js.html#lineNumber86">source</a></span></span>
+    </span>
+  </h3>
+
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_jsdDocs} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber86">rxvo/src/classes/_references.js</a></span>&apos;</code></pre></div>
   
   
   
@@ -611,7 +717,7 @@
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_mdRef} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber24">jsd/src/classes/_references.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_mdRef} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber24">rxvo/src/classes/_references.js</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>Holder for MetaData references</p>
@@ -651,11 +757,11 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_references.js.html#lineNumber69">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_references.js.html#lineNumber78">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_oBuilders} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber69">jsd/src/classes/_references.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_oBuilders} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber78">rxvo/src/classes/_references.js</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>Holder for Observer Builders</p>
@@ -699,10 +805,54 @@
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_object} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber18">jsd/src/classes/_references.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_object} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber18">rxvo/src/classes/_references.js</a></span>&apos;</code></pre></div>
   
   
-  <div data-ice="description"><p>Holder for Schema and Set instance references</p>
+  <div data-ice="description"><p>Holder for PropertiesModel and ItemsModel instance references</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="static-variable-_observerPaths">
+    <span class="access" data-ice="access">private</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">_observerPaths</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">WeakMap</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/classes/_references.js.html#lineNumber70">source</a></span></span>
+    </span>
+  </h3>
+
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_observerPaths} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber70">rxvo/src/classes/_references.js</a></span>&apos;</code></pre></div>
+  
+  
+  <div data-ice="description"><p>Holder for RXJS Observer references</p>
 </div>
 
   
@@ -743,7 +893,7 @@
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_observers} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber63">jsd/src/classes/_references.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_observers} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber63">rxvo/src/classes/_references.js</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>Holder for RXJS Observer references</p>
@@ -787,10 +937,10 @@
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_schemaHelpers} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber57">jsd/src/classes/_references.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_schemaHelpers} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber57">rxvo/src/classes/_references.js</a></span>&apos;</code></pre></div>
   
   
-  <div data-ice="description"><p>Holder for Schema Helpers references</p>
+  <div data-ice="description"><p>Holder for PropertiesModel Helpers references</p>
 </div>
 
   
@@ -831,10 +981,10 @@
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_schemaOptions} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber50">jsd/src/classes/_references.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_schemaOptions} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber50">rxvo/src/classes/_references.js</a></span>&apos;</code></pre></div>
   
   
-  <div data-ice="description"><p>Holder for Schema options refeerences</p>
+  <div data-ice="description"><p>Holder for PropertiesModel options refeerences</p>
 </div>
 
   
@@ -871,11 +1021,11 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_references.js.html#lineNumber75">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_references.js.html#lineNumber84">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_schemaSignatures} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber75">jsd/src/classes/_references.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_schemaSignatures} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber84">rxvo/src/classes/_references.js</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>Holder for JSON-Schemas</p>
@@ -919,10 +1069,10 @@
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_validators} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber43">jsd/src/classes/_references.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_validators} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber43">rxvo/src/classes/_references.js</a></span>&apos;</code></pre></div>
   
   
-  <div data-ice="description"><p>Holder for Schema Validators</p>
+  <div data-ice="description"><p>Holder for PropertiesModel Validators</p>
 </div>
 
   

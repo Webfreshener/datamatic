@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../../">
-  <title data-ice="title">src/classes/model.js | jsd</title>
+  <title data-ice="title">src/classes/model.js | rxvo</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
   <script src="script/manual.js"></script>
-<meta name="description" content="Schema Generation and Data Validation with object virtualization"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="jsd"><meta property="twitter:description" content="Schema Generation and Data Validation with object virtualization"></head>
+<meta name="description" content="RxJS + JSON-Schema Based Observable Data Models"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="rxvo"><meta property="twitter:description" content="RxJS + JSON-Schema Based Observable Data Models"></head>
 <body class="layout-container" data-ice="rootContainer">
 
 <header>
@@ -30,23 +30,29 @@
   <ul>
     
   <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#classes">classes</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_branchNotifier.js~Notifier.html">Notifier</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_metaData.js~MetaData.html">MetaData</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_observerBuilder.js~ObserverBuilder.html">ObserverBuilder</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_schemaHelpers.js~SchemaHelpers.html">SchemaHelpers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/itemsModel.js~ItemsModel.html">ItemsModel</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/jsd.js~JSD.html">JSD</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/schema.js~Schema.html">Schema</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/set.js~Set.html">Set</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getRoot">getRoot</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-listDirtyItems">listDirtyItems</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeClean">makeClean</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeDirty">makeDirty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refAtKeyValidation">refAtKeyValidation</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refValidation">refValidation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-validate">validate</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ajvRef">_ajvRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_dirtyModels">_dirtyModels</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_jsdDocs">_jsdDocs</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_oBuilders">_oBuilders</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_object">_object</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_observerPaths">_observerPaths</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_observers">_observers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaHelpers">_schemaHelpers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaOptions">_schemaOptions</a></span></span></li>
@@ -64,7 +70,7 @@
 } from &quot;./_references&quot;;
 import {JSD} from &quot;./jsd&quot;;
 import {MetaData} from &quot;./_metaData&quot;;
-import {makeClean, makeDirty, refValidation} from &quot;./utils&quot;;
+import {makeClean, makeDirty, validate} from &quot;./utils&quot;;
 
 /**
  *
@@ -120,41 +126,16 @@ export class Model {
     }
 
     /**
-     *
-     * @return {object}
-     */
-    get handler() {
-        return {
-            setPrototypeOf: () =&gt; false,
-            isExtensible: (t) =&gt; Object.isExtensible(t),
-            preventExtensions: (t) =&gt; Object.preventExtensions(t),
-            getOwnPropertyDescriptor: (t, key) =&gt; Object.getOwnPropertyDescriptor(t, key),
-            defineProperty: (t, key, desc) =&gt; Object.defineProperty(t, key, desc),
-            has: (t, key) =&gt; key in t,
-            ownKeys: (t) =&gt; Reflect.ownKeys(t),
-            apply: () =&gt; false,
-        };
-    }
-
-    /**
      * Subscribes handler method to property observer for path
      * @param path
      * @param func
      * @return {Observable}
      */
     subscribeTo(path, func) {
-        // throws if argument is not an object or function
-        if ((typeof func).match(/^(function|object)$/) === null) {
-            throw new Error(&quot;subscribeTo requires function&quot;);
-        }
-
-        // references the ObserverBuilder for the path
-        let _o = _oBuilders.get(this.jsd).get(path);
-
-        // creates observer reference for given `path` value
-        if (!_o || _o === null) {
-            _oBuilders.get(this.jsd).create(path, this);
-            _o = _oBuilders.get(this.jsd).get(path);
+        const _oBuilder = _oBuilders.get(this.jsd);
+        const _o = _oBuilder.getObserverForPath(path);
+        if (_o === null) {
+            return _o;
         }
 
         // references to subscriptions for Observable
@@ -173,8 +154,10 @@ export class Model {
 
         // creates an extensible object to hold our unsubscribe method
         // and adds unsubscribe calls to the Proto object
-        const _subs = (class {
-        }).prototype.unsubscribe = () =&gt; {
+        const _subs = class {};
+
+        // adds unsubscribe to the Proto object
+        _subs.prototype.unsubscribe = () =&gt; {
             _subRefs.forEach((sub) =&gt; {
                 sub.unsubscribe();
             });
@@ -184,11 +167,64 @@ export class Model {
     }
 
     /**
-     * stub for model getter, overridden by Model sub-class
-     * @return {object|array|null}
+     * Tests value for validation without setting value to Model
+     * @param {json} value - JSON value to validate for validity
+     * @return {boolean}
      */
-    get model() {
-        return null;
+    validate(value) {
+        try {
+           return validate(this, this.validationPath, value);
+        } catch (e) {
+            // couldn&apos;t find schema, so is Additional Properties
+            // todo: review `removeAdditional` ajv option for related behavior
+            return true;
+        }
+
+
+    }
+
+    /**
+     * resets Model to empty value
+     * @return {Model}
+     */
+    reset() {
+        const _isArray = Array.isArray(this.model);
+        const _o = !_isArray ? {} : [];
+        const _res = this.validate(_o);
+        // validates that this model be returned to an empty value
+        if (_res !== true) {
+            _oBuilders.get(this.jsd).error(this, _res);
+            return this;
+        }
+
+        // marks this model as out of sync with tree
+        makeDirty(this);
+
+        // closure to handle the freeze operation safely
+        const _freeze = (itm) =&gt; {
+            if (!Object.isFrozen(itm)) {
+                itm.freeze();
+            }
+        };
+
+        // freezes all child Model/Elements
+        // -- prevent changes to Children
+        // -- sends &quot;complete&quot; notification to their Observers
+        // -- revokes their Models if revocable
+        const _i = !_isArray ? Object.keys(this.model) : this.model;
+        _i.forEach((itm) =&gt; _freeze((!_isArray) ? _i[itm] : itm));
+
+        // creates new Proxied Model to operate on
+        const _p = new Proxy(Model.createRef(this, _o), this.handler);
+        _object.set(this, _p);
+
+        // marks this model as back in sync with tree
+        makeClean(this);
+
+        // sends notification of model change
+        _oBuilders.get(this.jsd).next(this);
+
+        return this;
     }
 
     /**
@@ -216,7 +252,7 @@ export class Model {
                 const _o = !Array.isArray(itm) ? {} : [];
                 for (let k in itm) {
 
-                    // we test for property to avoid warnings
+                    // we validate for property to avoid warnings
                     if (itm.hasOwnProperty(k)) {
 
                         // applies property to tree
@@ -240,7 +276,45 @@ export class Model {
      * @param pretty - `prettifies` JSON output for readability
      */
     toString(pretty = false) {
+        console.log(this.toJSON());
         return JSON.stringify(this.toJSON(), null, (pretty ? 2 : void(0)));
+    }
+
+    /**
+     * Applies Object.freeze to model and triggers complete notification
+     * -- unlike Object.freeze, this prevents modification
+     * -- to all children in Model hierarchy
+     * @returns {Model}
+     */
+    freeze() {
+        Object.freeze(_object.get(this));
+        _oBuilders.get(this.jsd).complete(this);
+        return this;
+    }
+
+    /**
+     *
+     * @return {object}
+     */
+    get handler() {
+        return {
+            setPrototypeOf: () =&gt; false,
+            isExtensible: (t) =&gt; Object.isExtensible(t),
+            preventExtensions: (t) =&gt; Object.preventExtensions(t),
+            getOwnPropertyDescriptor: (t, key) =&gt; Object.getOwnPropertyDescriptor(t, key),
+            defineProperty: (t, key, desc) =&gt; Object.defineProperty(t, key, desc),
+            has: (t, key) =&gt; key in t,
+            ownKeys: (t) =&gt; Reflect.ownKeys(t),
+            apply: () =&gt; false,
+        };
+    }
+
+    /**
+     * stub for model getter, overridden by Model sub-class
+     * @return {object|array|null}
+     */
+    get model() {
+        return null;
     }
 
     /**
@@ -264,17 +338,23 @@ export class Model {
      * @returns {string}
      */
     get path() {
-        let __ = _mdRef.get(this).path;
-        return _exists(__) ? __ : &quot;&quot;;
+        return _mdRef.get(this).path || &quot;&quot;;
     }
 
+    /**
+     * Getter for path to JSON Object for Model
+     * @returns {string}
+     */
+    get jsonPath() {
+        return this.path.replace(/\/?(properties|items)+\/?/g, &quot;.&quot;).replace(/^\./, &quot;&quot;);
+    }
     /**
      * Getter for Model&apos;s parent
      * @returns {Model}
      */
     get parent() {
         // attempts to get parent
-        return _mdRef.get(this).parent;
+        return _mdRef.get(this).parent || null;
     }
 
     /**
@@ -282,8 +362,8 @@ export class Model {
      * @return {boolean}
      */
     get isDirty() {
-        let _res = _dirtyModels.get(this.jsd)[this.path];
-        return _res === void(0) ? ((this.parent === null) ? false : this.parent.isDirty) : _res;
+        let _res = _dirtyModels.get(this.jsd)[this.path] || false;
+        return _res || ((this.parent === null) ? false : this.parent.isDirty);
     }
 
     /**
@@ -301,21 +381,6 @@ export class Model {
      */
     get options() {
         return _schemaOptions.get(this);
-    }
-
-    /**
-     * Applies Object.freeze to model and triggers complete notification
-     * -- unlike Object.freeze, this prevents modification
-     * -- to all children in Model hierarchy
-     * @returns {Model}
-     */
-    freeze() {
-        Object.freeze(_object.get(this));
-        const _self = this;
-        setTimeout(() =&gt; {
-            _oBuilders.get(_self.jsd).complete(_self.path, _self);
-        }, 0);
-        return this;
     }
 
     /**
@@ -349,70 +414,6 @@ export class Model {
      */
     get signature() {
         return this.schema;
-    }
-
-    /**
-     * Tests value for validation without setting value to Model
-     * @param {json} value - JSON value to test for validity
-     * @return {boolean}
-     */
-    test(value) {
-        try {
-            if (!refValidation(this, value)) {
-                // explicit failure on validation
-                return false;
-            }
-        } catch (e) {
-            // couldn&apos;t find schema, so is Additional Properties
-            // todo: review `removeAdditional` ajv option for related behavior
-            return true;
-        }
-
-        return true;
-    }
-
-    /**
-     * resets Model to empty value
-     * @return {Model}
-     */
-    reset() {
-        const _isArray = Array.isArray(this.model);
-        const _o = !_isArray ? {} : [];
-
-        // validates that this model be returned to an empty value
-        if (!this.test(_o)) {
-            _oBuilders.get(this.jsd).error(this.path, this.jsd.errors);
-            return this;
-        }
-
-        // marks this model as out of sync with tree
-        makeDirty(this);
-
-        // closure to handle the freeze operation safely
-        const _freeze = (itm) =&gt; {
-            if (!Object.isFrozen(itm)) {
-               itm.freeze();
-            }
-        };
-
-        // freezes all child Model/Elements
-        // -- prevent changes to Children
-        // -- sends &quot;complete&quot; notification to their Observers
-        // -- revokes their Models if revocable
-        const _i = !_isArray ? Object.keys(this.model) : this.model;
-        _i.forEach((itm) =&gt; _freeze((!_isArray) ? _i[itm] : itm));
-
-        // creates new Proxied Model to operate on
-        const _p = new Proxy(Model.createRef(this, _o), this.handler);
-        _object.set(this, _p);
-
-        // marks this model as back in sync with tree
-        makeClean(this);
-
-        // sends notification of model change
-        _oBuilders.get(this.jsd).next(this.path, this);
-
-        return this;
     }
 
     /**

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../../">
-  <title data-ice="title">src/classes/_schemaHelpers.js | rxvo</title>
+  <title data-ice="title">src/classes/itemsModel.js | rxvo</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -63,93 +63,223 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><h1 data-ice="title">src/classes/_schemaHelpers.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {_exists, _mdRef, _observers, _oBuilders} from &quot;./_references&quot;;
-import {MetaData} from &quot;./_metaData&quot;;
-import {PropertiesModel} from &quot;./propertiesModel&quot;;
-import {ItemsModel} from &quot;./itemsModel&quot;;
+<div class="content" data-ice="content"><h1 data-ice="title">src/classes/itemsModel.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {
+    _object, _schemaHelpers, _oBuilders
+} from &quot;./_references&quot;;
+import {Model} from &quot;./model&quot;;
+import {SchemaHelpers} from &quot;./_schemaHelpers&quot;;
+import {makeClean, makeDirty, refAtKeyValidation, refValidation} from &quot;./utils&quot;;
+import Notifier from &quot;./_branchNotifier&quot;;
+
+const _observerDelegates = new WeakMap();
 
 /**
- * @private
+ * @class ItemsModel
  */
-export class SchemaHelpers {
+export class ItemsModel extends Model {
     /**
      * @constructor
      */
-    constructor(_ref) {
-        if (!_exists(_ref) || (typeof _ref) !== &quot;object&quot;) {
-            throw new Error(&quot;arguments[0] must be an object&quot;);
-        }
-
-        this._ref = _ref;
-        Object.seal(this);
+    constructor() {
+        super(arguments[0]);
+        _schemaHelpers.set(this, new SchemaHelpers(this));
+        _object.set(this, new Proxy(Model.createRef(this, []), this.handler));
     }
 
     /**
-     * Sets Object key/values upon PropertiesModel Reference
-     * @param obj
-     * @returns {*}
+     * getter for object model
      */
-    setObject(obj) {
-        if (typeof obj === &quot;string&quot;) {
-            return obj;
+    get model() {
+        return _object.get(this);
+    }
+
+    /**
+     * setter for object model
+     * @param value
+     */
+    set model(value) {
+        if (!Array.isArray(value) || this.isFrozen) {
+            return false;
         }
-        // calls set with nested key value pair
-        Object.keys(obj).forEach((k) =&gt; {
-            let eMsg = this._ref.set(k, obj[k]);
-            if (typeof eMsg === &quot;string&quot;) {
-                throw new Error(eMsg);
+
+        if (refValidation(this, value) !== true) {
+            console.log(`error! this.jsd.errors: ${JSON.stringify(this.jsd.errors)}`);
+            Notifier.getInstance().sendError(this.jsonPath, this.jsd.errors);
+            return false;
+        }
+
+        if (!this.isDirty) {
+            // marks model as dirty to prevent cascading validation calls
+            makeDirty(this);
+        }
+
+        _object.set(this, new Proxy(Model.createRef(this, []), this.handler));
+        _observerDelegates.set(this, true);
+
+        try {
+            let cnt = 0;
+
+            value.forEach((val) =&gt; {
+                _object.get(this)[cnt++] = val;
+            });
+
+        } catch (e) {
+            makeClean(this);
+            console.log(e);
+            (Notifier.getInstance().sendError.bind(this))(this.jsonPath, e);
+            return false;
+        }
+
+        makeClean(this);
+        Notifier.getInstance().sendNext(this.jsonPath);
+        _observerDelegates.delete(this);
+
+        return true;
+    }
+
+    get handler() {
+        const _updateSelf = (value) =&gt; {
+            this.model = value;
+        };
+        return Object.assign(super.handler, {
+            get: (t, idx) =&gt; {
+                // TODO: review for removal
+                // if (typeof idx === &quot;symbol&quot;) {
+                //     idx = `${String(idx)}`;
+                // }
+
+                if (idx === &quot;length&quot;) {
+                    return t.length;
+                }
+
+                if (idx in Array.prototype) {
+                    const _self = this;
+                    // only handle methods that modify the reference array
+                    if ([&quot;fill&quot;, &quot;pop&quot;, &quot;push&quot;, &quot;shift&quot;, &quot;splice&quot;, &quot;unshift&quot;].indexOf(idx) &gt; -1) {
+                        // returns closure analog to referenced method
+                        return (...args) =&gt; {
+                            // mocks current model state
+                            const _arr = [].concat(t);
+
+                            // applies method to model state
+                            const _val = t[idx].apply(_arr, args);
+
+                            // validates updated mock
+                            const _res = refValidation(_self, _arr);
+
+                            // in event of validation failure
+                            if (_res !== true) {
+                                // .. marks model as clean
+                                makeClean(_self);
+
+                                // .. sends notifications
+                                Notifier.getInstance().sendError(_self.jsonPath,
+                                    _self.jsd.errors);
+
+                                return false;
+                            }
+
+                            // this is a kludge to handle updates from proto methods
+                            if (this.parent !== null) {
+                                this.parent.model[this.jsonPath.split(&quot;.&quot;).pop()] = _arr;
+                            } else {
+                                this.jsd.model = _arr;
+                            }
+
+                            return _val;
+                        }
+                    } else {
+                        return t[idx];
+                    }
+                }
+
+                if (idx === &quot;$ref&quot;) {
+                    return this;
+                }
+
+                return t[idx];
+            },
+            set: (t, idx, value) =&gt; {
+                if (idx in Array.prototype) {
+                    // do nothing against proto props
+                    return true;
+                }
+
+                // -- ensures we aren&apos;t in a frozen hierarchy branch
+                if (this.isFrozen) {
+                    return false;
+                }
+
+                let _oDel = _observerDelegates.get(this);
+
+                if (refAtKeyValidation(this, &quot;items&quot;, value) !== true) {
+                    if (_oDel !== void(0)) {
+                        makeClean(this);
+                        Notifier.getInstance().sendError(this.jsonPath, this.jsd.errors);
+                    }
+                    return false;
+                }
+
+                // we set the value on the array with success
+                if ((typeof value) === &quot;object&quot;) {
+                    let _sH = _schemaHelpers.get(this);
+                    value = _sH.setChildObject(`${this.path}`, value);
+                }
+
+                t[idx] = value;
+
+                // makes clean if not serial operation
+                if (_oDel !== void(0)) {
+                    makeClean(this);
+                    // updates observers
+                    Notifier.getInstance().sendNext(this.jsonPath);
+                }
+
+                return true;
+            },
+
+            deleteProperty: (t, idx) =&gt; {
+                let _oDel = _observerDelegates.get(this);
+                // creates mock of future Model state for evaluation
+                let _o = [].concat(t);
+                try {
+                    // attempts splice method to
+                    // remove item at given index index
+                    _o.splice(idx, 1);
+                } catch (e) {
+                    if (!_oDel) {
+                        makeClean(this);
+                        Notifier.getInstance().sendError(this.jsonPath, e);
+                    }
+                    return false;
+                }
+
+                // validates mock of change state
+                const _res = refValidation(this, _o);
+
+
+                if (_res !== true) {
+                    // makes clean and notifies
+                    // if not serial operation
+                    if (!_oDel) {
+                        makeClean(this);
+                        Notifier.getInstance().sendError(this.jsonPath, _res);
+                    }
+                    return false;
+                }
+
+                // applies operation
+                t.splice(idx, 1);
+
+                // flags model as in sync with tree
+                makeClean(this);
+
+                // updates observers
+                Notifier.getInstance().sendNext(this.jsonPath);
+                return true;
             }
         });
-        return this._ref;
-    }
-
-    /**
-     * Creates Child Model and set data on it
-     * @param key
-     * @param value
-     * @returns {*}
-     */
-    setChildObject(key, value) {
-        let _mdData = _mdRef.get(this._ref);
-        let _s = this.createSchemaChild(key, value, _mdData);
-
-        // creates Observables for new Child Model
-        _oBuilders.get(this._ref.jsd).create(_s);
-
-        if (typeof _s === &quot;string&quot;) {
-            return _s;
-        } else if (!_exists(_s) ||
-            typeof _s !== &quot;object&quot;) {
-            return `&apos;${key}&apos; was invalid`;
-        }
-        _s.model = value;
-        return _s.model;
-    }
-
-    /**
-     * Creates Child Model
-     * @param {string} key
-     * @param {*} value
-     * @param {MetaData} metaData
-     * @returns {Model|string} - PropertiesModel, ItemsModel or error string
-     */
-    createSchemaChild(key, value, metaData) {
-        let path = !Array.isArray(this._ref.model) ?
-            `${this._ref.path}/properties/${key}` : `${this._ref.path}/items`;
-        // populates MetaData config object
-        let _d = Object.assign({
-            _path: path,
-            _parent: this._ref,
-            _root: this._ref.root,
-            _jsd: this._ref.jsd,
-        }, metaData || {});
-
-        // constructs new MetaData object with owner as reference point for chaining
-        let _md = new MetaData(this._ref, _d);
-
-        // returns new child Model
-        return new ((!Array.isArray(value)) ? PropertiesModel : ItemsModel)(_md);
     }
 }
 </code></pre>

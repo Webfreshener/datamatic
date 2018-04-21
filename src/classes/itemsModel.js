@@ -4,7 +4,7 @@ import {
 import {Model} from "./model";
 import {SchemaHelpers} from "./_schemaHelpers";
 import {makeClean, makeDirty, refAtKeyValidation, refValidation} from "./utils";
-import Notifier from "./_branchNotifier";
+import Notifiers from "./_branchNotifier";
 
 const _observerDelegates = new WeakMap();
 
@@ -38,8 +38,7 @@ export class ItemsModel extends Model {
         }
 
         if (refValidation(this, value) !== true) {
-            console.log(`error! this.jsd.errors: ${JSON.stringify(this.jsd.errors)}`);
-            Notifier.getInstance().sendError(this.jsonPath, this.jsd.errors);
+            Notifiers.get(this.jsd).sendError(this.jsonPath, this.jsd.errors);
             return false;
         }
 
@@ -61,12 +60,12 @@ export class ItemsModel extends Model {
         } catch (e) {
             makeClean(this);
             console.log(e);
-            (Notifier.getInstance().sendError.bind(this))(this.jsonPath, e);
+            (Notifiers.get(this.jsd).sendError.bind(this))(this.jsonPath, e);
             return false;
         }
 
         makeClean(this);
-        Notifier.getInstance().sendNext(this.jsonPath);
+        Notifiers.get(this.jsd).sendNext(this.jsonPath);
         _observerDelegates.delete(this);
 
         return true;
@@ -108,7 +107,7 @@ export class ItemsModel extends Model {
                                 makeClean(_self);
 
                                 // .. sends notifications
-                                Notifier.getInstance().sendError(_self.jsonPath,
+                                Notifiers.get(this.jsd).sendError(_self.jsonPath,
                                     _self.jsd.errors);
 
                                 return false;
@@ -150,7 +149,7 @@ export class ItemsModel extends Model {
                 if (refAtKeyValidation(this, "items", value) !== true) {
                     if (_oDel !== void(0)) {
                         makeClean(this);
-                        Notifier.getInstance().sendError(this.jsonPath, this.jsd.errors);
+                        Notifiers.get(this.jsd).sendError(this.jsonPath, this.jsd.errors);
                     }
                     return false;
                 }
@@ -167,7 +166,7 @@ export class ItemsModel extends Model {
                 if (_oDel !== void(0)) {
                     makeClean(this);
                     // updates observers
-                    Notifier.getInstance().sendNext(this.jsonPath);
+                    Notifiers.get(this.jsd).sendNext(this.jsonPath);
                 }
 
                 return true;
@@ -184,7 +183,7 @@ export class ItemsModel extends Model {
                 } catch (e) {
                     if (!_oDel) {
                         makeClean(this);
-                        Notifier.getInstance().sendError(this.jsonPath, e);
+                        Notifiers.get(this.jsd).sendError(this.jsonPath, e);
                     }
                     return false;
                 }
@@ -198,7 +197,7 @@ export class ItemsModel extends Model {
                     // if not serial operation
                     if (!_oDel) {
                         makeClean(this);
-                        Notifier.getInstance().sendError(this.jsonPath, _res);
+                        Notifiers.get(this.jsd).sendError(this.jsonPath, _res);
                     }
                     return false;
                 }
@@ -210,7 +209,7 @@ export class ItemsModel extends Model {
                 makeClean(this);
 
                 // updates observers
-                Notifier.getInstance().sendNext(this.jsonPath);
+                Notifiers.get(this.jsd).sendNext(this.jsonPath);
                 return true;
             }
         });

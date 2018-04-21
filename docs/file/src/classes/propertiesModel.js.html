@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../../">
-  <title data-ice="title">src/classes/_schemaHelpers.js | rxvo</title>
+  <title data-ice="title">src/classes/propertiesModel.js | rxvo</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -63,93 +63,213 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><h1 data-ice="title">src/classes/_schemaHelpers.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {_exists, _mdRef, _observers, _oBuilders} from &quot;./_references&quot;;
-import {MetaData} from &quot;./_metaData&quot;;
-import {PropertiesModel} from &quot;./propertiesModel&quot;;
-import {ItemsModel} from &quot;./itemsModel&quot;;
+<div class="content" data-ice="content"><h1 data-ice="title">src/classes/propertiesModel.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {
+    _object, _schemaHelpers, _oBuilders,
+} from &quot;./_references&quot;;
+import {makeClean, makeDirty, refAtKeyValidation, refValidation} from &quot;./utils&quot;;
+import {SchemaHelpers} from &quot;./_schemaHelpers&quot;;
+import {Model} from &quot;./model&quot;;
+import Notifier from &quot;./_branchNotifier&quot;;
 
 /**
- * @private
+ * @class PropertiesModel
  */
-export class SchemaHelpers {
+export class PropertiesModel extends Model {
     /**
-     * @constructor
+     *
      */
-    constructor(_ref) {
-        if (!_exists(_ref) || (typeof _ref) !== &quot;object&quot;) {
-            throw new Error(&quot;arguments[0] must be an object&quot;);
-        }
+    constructor() {
+        super(arguments[0]);
 
-        this._ref = _ref;
-        Object.seal(this);
+        // stores SchemaHelpers reference for use
+        _schemaHelpers.set(this, new SchemaHelpers(this));
+
+        // sets Proxy Model reference on map
+        _object.set(this, new Proxy(Model.createRef(this, {}), this.handler));
     }
 
     /**
-     * Sets Object key/values upon PropertiesModel Reference
-     * @param obj
-     * @returns {*}
+     * Handler for Object Proxy Evaluation
+     * @returns {{get: function, set: function}}
      */
-    setObject(obj) {
-        if (typeof obj === &quot;string&quot;) {
-            return obj;
-        }
-        // calls set with nested key value pair
-        Object.keys(obj).forEach((k) =&gt; {
-            let eMsg = this._ref.set(k, obj[k]);
-            if (typeof eMsg === &quot;string&quot;) {
-                throw new Error(eMsg);
+    get handler() {
+        const _self = this;
+        return Object.assign(super.handler, {
+            get: (t, key) =&gt; {
+                return key === &quot;$ref&quot; ? this : t[key];
+            },
+            set: (t, key, value) =&gt; {
+                let _sH = _schemaHelpers.get(this);
+
+                if (key in Object.prototype) {
+                    // do nothing against proto props
+                    return true;
+                }
+
+                // -- ensures we aren&apos;t in a frozen hierarchy branch
+                if (this.isFrozen) {
+                    return false;
+                }
+
+                // checks for branch update status
+                if (!this.isDirty) {
+                    let _o = Object.assign({}, t);
+                    _o[key] = value;
+                    // attempts validation of value update
+                    if (refValidation(this, _o) !== true) {
+                        makeClean(this);
+                        _oBuilders.get(this.jsd).error(_self, this.jsd.errors);
+                        return false;
+                    }
+                }
+
+                // if key is type &apos;object&apos;, we will set directly
+                if (typeof key === &quot;object&quot;) {
+                    const e = _sH.setObject(key);
+                    if (typeof e === &quot;string&quot;) {
+                        makeClean(this);
+                        _oBuilders.get(this.jsd).error(_self, e);
+                        return false;
+                    }
+                    return true;
+                }
+                // calls validate with either full path if in PropertiesModel or key if nested in ItemsModel
+                if ((typeof value) === &quot;object&quot;) {
+                    value = _sH.setChildObject(key, value);
+                    if ((typeof value) === &quot;string&quot;) {
+                        // marks model as clean
+                        makeClean(this);
+
+                        // sends notifications
+                        _oBuilders.get(this.jsd).error(_self, value);
+                        return false;
+                    }
+                }
+
+                // performs the operation on Model
+                t[key] = value;
+                return true;
+            },
+            deleteProperty: (t, key) =&gt; {
+                // creates mock of future model state for evaluation
+                let _o = Object.assign({}, this.model);
+                delete _o[key];
+
+                // validates model with value removed
+                if (!this.validate(_o)) {
+                    return false;
+                }
+
+                // performs delete operation on model
+                delete t[key];
+                return true;
             }
         });
-        return this._ref;
     }
 
     /**
-     * Creates Child Model and set data on it
-     * @param key
+     * utility method to create selector path
+     * @param path
+     * @param addr
+     * @returns {string}
+     */
+    static concatPathAddr(path, addr) {
+        return path.length ? `${path}/${addr}` : `${addr}`;
+    }
+
+    /**
+     * getter for object model
+     */
+    get model() {
+        return _object.get(this);
+    }
+
+    /**
+     * setter for object model
      * @param value
-     * @returns {*}
      */
-    setChildObject(key, value) {
-        let _mdData = _mdRef.get(this._ref);
-        let _s = this.createSchemaChild(key, value, _mdData);
-
-        // creates Observables for new Child Model
-        _oBuilders.get(this._ref.jsd).create(_s);
-
-        if (typeof _s === &quot;string&quot;) {
-            return _s;
-        } else if (!_exists(_s) ||
-            typeof _s !== &quot;object&quot;) {
-            return `&apos;${key}&apos; was invalid`;
+    set model(value) {
+        // fails on attempts to set scalar value
+        // or if this node is locked or fails validation
+        if ((typeof value) !== &quot;object&quot; || this.isFrozen) {
+            return false;
         }
-        _s.model = value;
-        return _s.model;
+
+        if (refValidation(this, value) !== true) {
+            Notifier.getInstance().sendError(this.jsonPath, this.jsd.errors);
+            return false;
+        }
+
+        if (!this.isDirty) {
+            // marks model as dirty to prevent cascading validation calls
+            makeDirty(this);
+        }
+
+        // defines new Proxy Object for data modeling
+        // todo: replace proxy with Object Delegation
+        _object.set(this,
+            new Proxy(Model.createRef(this, {}), this.handler));
+
+        Object.keys(value).forEach((k) =&gt; {
+            // -- added try/catch to avoid error in JSFiddle
+            try {
+                this.model[k] = value[k];
+            } catch (e) {
+                // marks model as clean
+                makeClean(this);
+
+                // sends notications
+                Notifier.getInstance().sendError(this.jsonPath, e);
+                return false;
+            }
+        });
+
+        // marks model as in sync with tree
+        makeClean(this);
+
+        // calls next&apos;s observable to update subscribers
+        if (!this.isDirty) {
+            Notifier.getInstance().sendNext(this.jsonPath);
+        }
+
+        return true;
     }
 
     /**
-     * Creates Child Model
      * @param {string} key
-     * @param {*} value
-     * @param {MetaData} metaData
-     * @returns {Model|string} - PropertiesModel, ItemsModel or error string
+     * @returns {any}
      */
-    createSchemaChild(key, value, metaData) {
-        let path = !Array.isArray(this._ref.model) ?
-            `${this._ref.path}/properties/${key}` : `${this._ref.path}/items`;
-        // populates MetaData config object
-        let _d = Object.assign({
-            _path: path,
-            _parent: this._ref,
-            _root: this._ref.root,
-            _jsd: this._ref.jsd,
-        }, metaData || {});
+    get(key) {
+        return this.model[key];
+    }
 
-        // constructs new MetaData object with owner as reference point for chaining
-        let _md = new MetaData(this._ref, _d);
+    /**
+     * sets value to schema key
+     * @param {string|object} key
+     * @param {any} value
+     */
+    set(key, value) {
+        // attempts validation of value against schema
+        if (!refAtKeyValidation(this, key, value)) {
+            return false;
+        }
 
-        // returns new child Model
-        return new ((!Array.isArray(value)) ? PropertiesModel : ItemsModel)(_md);
+        if (!this.isDirty) {
+            // marks model as dirty to prevent cascading validation calls
+            makeDirty(this);
+        }
+
+        // applies validated value to model
+        this.model[key] = value;
+
+        // updates observers
+        Notifier.getInstance().sendNext(this.jsonPath);
+
+        // removes dirtiness
+        makeClean(this);
+
+        return this;
     }
 }
 </code></pre>

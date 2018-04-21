@@ -6,7 +6,7 @@ import {getRoot} from "./utils";
 import deepEqual from "deep-equal";
 
 describe("RXJS Test Suite", () => {
-    describe.skip("Basic Notifications", () => {
+    describe("Basic Notifications", () => {
         describe("update", () => {
             // let _jsd;
             // beforeEach(() => {

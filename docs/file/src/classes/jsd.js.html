@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../../">
-  <title data-ice="title">src/classes/jsd.js | jsd</title>
+  <title data-ice="title">src/classes/jsd.js | rxvo</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
   <script src="script/manual.js"></script>
-<meta name="description" content="Schema Generation and Data Validation with object virtualization"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="jsd"><meta property="twitter:description" content="Schema Generation and Data Validation with object virtualization"></head>
+<meta name="description" content="RxJS + JSON-Schema Based Observable Data Models"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="rxvo"><meta property="twitter:description" content="RxJS + JSON-Schema Based Observable Data Models"></head>
 <body class="layout-container" data-ice="rootContainer">
 
 <header>
@@ -30,23 +30,29 @@
   <ul>
     
   <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#classes">classes</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_branchNotifier.js~Notifier.html">Notifier</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_metaData.js~MetaData.html">MetaData</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_observerBuilder.js~ObserverBuilder.html">ObserverBuilder</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_schemaHelpers.js~SchemaHelpers.html">SchemaHelpers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/itemsModel.js~ItemsModel.html">ItemsModel</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/jsd.js~JSD.html">JSD</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/schema.js~Schema.html">Schema</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/set.js~Set.html">Set</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getRoot">getRoot</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-listDirtyItems">listDirtyItems</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeClean">makeClean</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeDirty">makeDirty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refAtKeyValidation">refAtKeyValidation</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refValidation">refValidation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-validate">validate</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ajvRef">_ajvRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_dirtyModels">_dirtyModels</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_jsdDocs">_jsdDocs</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_oBuilders">_oBuilders</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_object">_object</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_observerPaths">_observerPaths</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_observers">_observers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaHelpers">_schemaHelpers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaOptions">_schemaOptions</a></span></span></li>
@@ -58,25 +64,17 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/classes/jsd.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/**
- * @class JSD
- * @example const _jsd = new JSD();
- * _jsd.document = {name: &quot;test&quot;};
- * console.log(`${jsd.document.name}`);
- * // -&gt; &quot;test&quot;
- * console.log(`${jsd.document.get(&quot;.&quot;}`);
- * // -&gt; Schema
- */
-import {
-    _oBuilders, _validators,
-    _dirtyModels, _schemaSignatures
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {
+    _oBuilders, _validators, _observers,
+    _dirtyModels, _schemaSignatures, _jsdDocs
 } from &quot;./_references&quot;;
 import {ObserverBuilder} from &quot;./_observerBuilder&quot;;
-import {Schema} from &quot;./schema&quot;;
-import {Set} from &quot;./set&quot;;
+import {PropertiesModel} from &quot;./propertiesModel&quot;;
+import {ItemsModel} from &quot;./itemsModel&quot;;
 import {AjvWrapper} from &quot;./_ajvWrapper&quot;;
-const _documents = new WeakMap();
+import Notifier from &quot;./_branchNotifier&quot;;
 
+const _documents = new WeakMap();
 /**
  * JSD Document Entry-point
  * @public
@@ -84,8 +82,8 @@ const _documents = new WeakMap();
 export class JSD {
     /**
      * @constructor
-     * @param schema
-     * @param options
+     * @param {json} schema
+     * @param {object} options
      */
     constructor(schema, options = {}) {
         // attempts t get user passes Avj options
@@ -113,40 +111,67 @@ export class JSD {
 
         // if value of type is &quot;array&quot; or an array of items is defined,
         // we handle as Array
-        if ((schema.hasOwnProperty(&quot;type&quot;) &amp;&amp; schema.type === &quot;array&quot;) ||
-            (schema.hasOwnProperty(&quot;items&quot;) &amp;&amp; Array.isArray(schema.items))) {
+        if ((schema.hasOwnProperty(&quot;type&quot;) &amp;&amp; schema[&quot;type&quot;] === &quot;array&quot;) ||
+            (schema.hasOwnProperty(&quot;items&quot;) &amp;&amp; Array.isArray(schema[&quot;items&quot;]))) {
             _useSet = true;
         }
 
         // creates holder for dirty model flags in this scope
         _dirtyModels.set(this, {});
 
-        // creates root level document and sets it to this scope
-        _documents.set(this, new (!_useSet ? Schema : Set)(this));
+        new Notifier(this);
+
+        // creates root level document
+        const _doc = new (!_useSet ? PropertiesModel : ItemsModel)(this);
+
+        // applies Subject Handlers to root document
+        _oBuilders.get(this).create(_doc);
+
+        // sets document to this scope
+        _documents.set(this, _doc);
+
+        const _self = this;
+        const clazz = class {
+            getRef(atPath) {
+                let _target = Object.assign({}, _self.model);
+                (atPath.split(&quot;.&quot;)).forEach((part) =&gt; {
+                    _target = _target[part];
+                    console.log(`${_target}`);
+                });
+            }
+        };
+
     }
 
     /**
-     * getter for Model document
-     * @returns {Schema|Set}
+     * Getter for root Model
+     * @returns {object|array}
      */
-    get document() {
-        return _documents.get(this);
+    get model() {
+        return _documents.get(this).model;
     }
 
+
+    /**
+     * Setter for root Model value
+     * @param {object|array} value
+     */
+    set model(value) {
+        _documents.get(this).model = value;
+    }
+
+
+
+    /**
+     *
+     * @return {any}
+     */
     get schema() {
         return _schemaSignatures.get(this);
     }
 
     /**
-     * getter for validation status
-     * @returns {boolean}
-     */
-    get isValid() {
-        return this.document.isValid;
-    }
-
-    /**
-     * validates data against named schema
+     * Validates data against named schema
      * @param path
      * @param value
      * @return {*|void|RegExpExecArray}
@@ -156,7 +181,7 @@ export class JSD {
     }
 
     /**
-     * getter for Ajv validation error messages
+     * Getter for Ajv validation error messages
      * @return {error[] | null}
      */
     get errors() {
@@ -164,34 +189,91 @@ export class JSD {
     }
 
     /**
-     * implements toString
+     *
+     * @param to
+     * @returns {Object|Array}
+     */
+    getPath(to) {
+        let _ref = this.model;
+        to = to.replace(/\/?(properties|items)+\//g, &quot;.&quot;).replace(/^\./, &quot;&quot;);
+        (to.split(&quot;.&quot;)).forEach((step) =&gt; {
+            if (_ref[step]) {
+                _ref = _ref[step];
+            }
+        });
+
+        return _ref;
+    }
+
+    /**
+     *
+     * @param to
+     * @returns {Array[]|Object[]}
+     */
+    getModelsInPath(to) {
+        const _steps = [this.model];
+        let _ref = this.model;
+        to = to.replace(/\/?(properties|items)+\/?/g, &quot;.&quot;);
+        (to.split(&quot;.&quot;)
+            .filter((itm, idx, arr) =&gt; arr.indexOf(itm) &gt; -1))
+            .forEach((step) =&gt; {
+            if (_ref[step]) {
+                _ref = _ref[step];
+                _steps.push(_ref);
+            }
+        });
+        return _steps;
+    }
+
+    /**
+     * Subscribes observer to root Model
+     * @param observer
+     * @returns {Observable}
+     */
+    subscribe(observer) {
+        return _documents.get(this).subscribe(observer);
+    }
+
+    /**
+     * Subscribes observer to Model at path
+     * @param path
+     * @param observer
+     * @returns {Observable}
+     */
+    subscribeTo(path, observer) {
+        return _documents.get(this).subscribeTo(path, observer);
+    }
+
+    /**
+     * Implements toString
      * @return {string}
      */
     toString() {
-        return `${this.document}`;
+        return `${this.model.$ref}`;
     }
 
     /**
-     * implements toJSON
+     * Implements toJSON
      * @return {*}
      */
     toJSON() {
-        return this.document.toJSON();
+        return this.model.$ref.toJSON();
     }
 
     /**
-     * creates new Schema from JSON data
-     * @param {string|object} json -- JSON Object or String
+     * Creates new PropertiesModel from JSON data
+     * @param {string|json} json -- JSON Object or String
      * @param {object} options - JSD options object
      * @returns {JSD}
      */
     static fromJSON(json, options) {
         // quick peek at json param to ensure it looks ok
-        let __ = (typeof json).match(/^(string|object)+$/);
+        const __ = (typeof json).match(/^(string|object)+$/);
 
         if (__) {
-            // attempts to parse if type is string and create JSD from JSON
-            return new JSD((__[1] === &quot;string&quot;) ? JSON.parse(json) : json, options);
+            // attempts to create JSD from JSON or JSON string
+            return new JSD((__[1] === &quot;string&quot;) ?
+                JSON.parse(json) : json, options);
         }
 
         // throws error if something didn&apos;t look right with the json param

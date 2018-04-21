@@ -1,7 +1,6 @@
 import {_oBuilders} from "./_references";
 
-let _jsd;
-let _instance;
+const notifiers = new WeakMap();
 
 class ErrorNotification {
     constructor(path, error) {
@@ -27,24 +26,18 @@ class CompleteNotification {
     }
 }
 
-export default class Notifier {
-
-    static getInstance() {
-        return new this;
-    }
-
+class Notifier {
     /**
      *
-     * @param jsd
+     * @param rxvo
      * @returns {Notifier|*}
      */
-    constructor(jsd) {
-        if (_instance) {
-            return _instance;
-        }
+    constructor(rxvo) {
+        Object.defineProperty(this, "$rxvo", {
+            get: () => rxvo,
+        });
 
-        _instance = this;
-        _jsd = jsd;
+        notifiers.set(rxvo, this);
     }
 
     /**
@@ -53,7 +46,7 @@ export default class Notifier {
      * @param value
      */
     sendUpdate(forPath, value) {
-        _jsd.getPath(forPath).model = value;
+        this.$rxvo.getPath(forPath).model = value;
     }
 
     /**
@@ -67,14 +60,14 @@ export default class Notifier {
                 forPath = `.${forPath}`;
             }
 
-            const _models = _jsd.getModelsInPath(forPath);
+            const _models = this.$rxvo.getModelsInPath(forPath);
 
             if (_models[0] !== "") {
                 _models.splice(0, 0, "")
             }
 
             _models.forEach((model) => {
-                _oBuilders.get(_jsd).next(model.$ref);
+                _oBuilders.get(this.$rxvo).next(model.$ref);
             });
         }, 0);
     }
@@ -85,9 +78,9 @@ export default class Notifier {
      * @param error
      */
     sendError(forPath, error) {
-        const _models = _jsd.getModelsInPath(forPath);
+        const _models = this.$rxvo.getModelsInPath(forPath);
         _models.forEach((model) => {
-            _oBuilders.get(_jsd).error(model.$ref,
+            _oBuilders.get(this.$rxvo).error(model.$ref,
                 new ErrorNotification(model.$ref.path, error));
         });
     }
@@ -97,9 +90,30 @@ export default class Notifier {
      * @param forPath
      */
     sendComplete(forPath) {
-        const _models = _jsd.getModelsInPath(forPath);
+        const _models = this.$rxvo.getModelsInPath(forPath);
         _models.forEach((model) => {
-            _oBuilders.get(_jsd).complete(model.$ref);
+            _oBuilders.get(this.$rxvo).complete(model.$ref);
         });
+    }
+}
+
+export default class Notifiers {
+    /**
+     *
+     * @param rxvo
+     * @returns {*}
+     */
+    static create(rxvo) {
+       new Notifier(rxvo);
+       return Notifiers.get(rxvo);
+    }
+
+    /**
+     *
+     * @param rxvo
+     * @returns {Notifier}
+     */
+    static get(rxvo) {
+        return notifiers.get(rxvo);
     }
 }

@@ -6,7 +6,7 @@ import {ObserverBuilder} from "./_observerBuilder";
 import {PropertiesModel} from "./propertiesModel";
 import {ItemsModel} from "./itemsModel";
 import {AjvWrapper} from "./_ajvWrapper";
-import Notifier from "./_branchNotifier";
+import Notifiers from "./_branchNotifier";
 
 const _documents = new WeakMap();
 /**
@@ -53,7 +53,7 @@ export class JSD {
         // creates holder for dirty model flags in this scope
         _dirtyModels.set(this, {});
 
-        new Notifier(this);
+        Notifiers.create(this);
 
         // creates root level document
         const _doc = new (!_useSet ? PropertiesModel : ItemsModel)(this);
