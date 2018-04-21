@@ -1,9 +1,0 @@
-{
-	"NestedObjects": {
-		"anArray": ["string 1", "string 2"],
-		"anObject": {
-			"aString": "TEST",
-			"aObject": {}
-		}
-	}
-}

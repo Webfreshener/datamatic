@@ -1,78 +1,87 @@
-import {_exists, _observers} from "./_references";
+import {_observers} from "./_references";
 import {BehaviorSubject} from "rxjs/Rx";
+
+const _observerPaths = new WeakMap();
 
 export class ObserverBuilder {
     /**
      * @constructor
      */
     constructor() {
-        _observers.set(this, {});
+        _observers.set(this, new WeakMap());
+        _observerPaths.set(this, []);
     }
 
     /**
-     * @returns {string[]} of validation paths
+     * Retrieves BehaviorSubject Collection for given Model
+     * @param target {Model}
+     * @returns {Observer|null} Observer at path reference
      */
+    get(target) {
+        return _observers.get(this).get(target) || null;
+    }
+
+    /**
+     * Retrieves BehaviorSubject Collection for Model at given path
+     * @param path
+     * @returns {*}
+     */
+    getObserverForPath(path) {
+        const _itm = _observerPaths.get(this).find((o) => o[0] === `${path}`);
+        return _itm && _itm.length > 1 ? this.get(_itm[1]) : null;
+    }
+
     list() {
-        let _v = _observers.get(this);
-        return Object.keys(_v);
+        return _observerPaths.get(this).map((o) => o[0]);
     }
 
     /**
-     * @param path {string}
-     * @returns {Observer} Observer at path reference
+     * Creates BehaviorSubjects for given Model
+     * @param target {Model}
      */
-    get(path) {
-        let _o = _observers.get(this);
-        return _exists(_o[path]) ? _o[path] : null;
-    }
-
-    /**
-     *
-     * @param forPath {string}
-     * @param oRef {Model|Schema|Set}
-     */
-    create(forPath, oRef) {
-        let _o = _observers.get(this);
-        _o[forPath] = {
+    create(target) {
+        const _o = _observers.get(this);
+        const _h = {
             onNext: new BehaviorSubject(null).skip(1),
             onError: new BehaviorSubject(null).skip(1),
             onComplete: new BehaviorSubject(null).skip(1),
+        };
+        _o.set(target, _h);
+        _observerPaths.get(this).splice(-1, 0, [`${target.path}`, target]);
+        return _o.get(target);
+    }
+
+    /**
+     * Calls next on Next Subject
+     * @param target {Model}
+     */
+    next(target) {
+        let _o = this.get(target);
+        if (_o !== null) {
+            _o.onNext.next(target);
         }
     }
 
     /**
-     * calls next on Next Subject
-     * @param path {string}
-     * @param value {*}
+     * Calls next on Complete Subject
+     * @param target {Model}
      */
-    next(path, value) {
-        let _o = this.get(path);
-        if (_o) {
-            _o.onNext.next(value);
+    complete(target) {
+        let _o = this.get(target);
+        if (_o !== null) {
+            _o.onComplete.next(target);
         }
     }
 
     /**
-     * calls next on Complete Subject
-     * @param path {string}
-     * @param value {*}
+     * Calls next on Error Subject
+     * @param target {Model}
+     * @param message {*}
      */
-    complete(path, value) {
-        let _o = this.get(path);
-        if (_o) {
-            _o.onComplete.next(value);
-        }
-    }
-
-    /**
-     * calls next on Error Subject
-     * @param path {string}
-     * @param value {*}
-     */
-    error(path, value) {
-        let _o = this.get(path);
-        if (_o) {
-            _o.onError.next(value);
+    error(target, message) {
+        let _o = this.get(target);
+        if (_o !== null) {
+            _o.onError.next(message);
         }
     }
 }

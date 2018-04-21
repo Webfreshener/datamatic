@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../../">
-  <title data-ice="title">Model | jsd</title>
+  <title data-ice="title">Model | rxvo</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
   <script src="script/manual.js"></script>
-<meta name="description" content="Schema Generation and Data Validation with object virtualization"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="jsd"><meta property="twitter:description" content="Schema Generation and Data Validation with object virtualization"></head>
+<meta name="description" content="RxJS + JSON-Schema Based Observable Data Models"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="rxvo"><meta property="twitter:description" content="RxJS + JSON-Schema Based Observable Data Models"></head>
 <body class="layout-container" data-ice="rootContainer">
 
 <header>
@@ -29,50 +29,48 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#classes">classes</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_metaData.js~MetaData.html">MetaData</a></span></span></li>
+  <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#classes">classes</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_branchNotifier.js~Notifier.html">Notifier</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_metaData.js~MetaData.html">MetaData</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_observerBuilder.js~ObserverBuilder.html">ObserverBuilder</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_schemaHelpers.js~SchemaHelpers.html">SchemaHelpers</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_schemaValidator.js~SchemaValidator.html">SchemaValidator</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_validatorBuilder.js~ValidatorBuilder.html">ValidatorBuilder</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_validators.js~BaseValidator.html">BaseValidator</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/itemsModel.js~ItemsModel.html">ItemsModel</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/jsd.js~JSD.html">JSD</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/schema.js~Schema.html">Schema</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/set.js~Set.html">Set</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ensureKindIsString">ensureKindIsString</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ensureRequiredFields">ensureRequiredFields</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-remapPolypath">remapPolypath</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getRoot">getRoot</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-listDirtyItems">listDirtyItems</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeClean">makeClean</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeDirty">makeDirty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refAtKeyValidation">refAtKeyValidation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refValidation">refValidation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-validate">validate</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ajvRef">_ajvRef</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_dirtyModels">_dirtyModels</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_kinds">_kinds</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_jsdDocs">_jsdDocs</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_oBuilders">_oBuilders</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_object">_object</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_observerPaths">_observerPaths</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_observers">_observers</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_required_elements">_required_elements</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaHelpers">_schemaHelpers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaOptions">_schemaOptions</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaSignatures">_schemaSignatures</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_singletons">_singletons</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vBuilders">_vBuilders</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vPaths">_vPaths</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validPaths">_validPaths</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validators">_validators</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vectorTypes">_vectorTypes</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-wf">wf</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-rxRx">rxRx</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-Validator">Validator</a></span></span></li>
 </ul>
 </div>
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {Model} from &apos;<span><a href="file/src/classes/model.js.html#lineNumber47">jsd/src/classes/model.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {Model} from &apos;<span><a href="file/src/classes/model.js.html#lineNumber45">rxvo/src/classes/model.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/src/classes/model.js.html#lineNumber47">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/src/classes/model.js.html#lineNumber45">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -83,7 +81,7 @@
   
   
   
-  <div class="flat-list" data-ice="directSubclass"><h4>Direct Subclass:</h4><div><span><a href="class/src/classes/schema.js~Schema.html">Schema</a></span>, <span><a href="class/src/classes/set.js~Set.html">Set</a></span></div></div>
+  <div class="flat-list" data-ice="directSubclass"><h4>Direct Subclass:</h4><div><span><a href="class/src/classes/itemsModel.js~ItemsModel.html">ItemsModel</a></span>, <span><a href="class/src/classes/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></div></div>
   
   
   
@@ -194,13 +192,41 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-get-handler">handler</a></span></span><span class="code" data-ice="signature">: {get: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>, set: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>}</span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-get-handler">handler</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>: {&quot;setPrototypeOf&quot;: <span>*</span>, &quot;isExtensible&quot;: <span>*</span>, &quot;preventExtensions&quot;: <span>*</span>, &quot;getOwnPropertyDescriptor&quot;: <span>*</span>, &quot;defineProperty&quot;: <span>*</span>, &quot;has&quot;: <span>*</span>, &quot;ownKeys&quot;: <span>*</span>, &quot;apply&quot;: <span>*</span>}</span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>stub for sub-class implementation</p>
+        
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      <span class="kind" data-ice="kind">get</span>
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-get-isDirty">isDirty</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>: <span>*</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Getter for Model validation status for hierarchy</p>
 </div>
       </div>
     </td>
@@ -223,41 +249,14 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-get-isLocked">isLocked</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>: <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-get-isFrozen">isFrozen</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>: <span>*</span></span>
         </p>
       </div>
       <div>
         
         
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      <span class="kind" data-ice="kind">get</span>
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          
-          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-get-isValid">isValid</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>: <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        
+        <div data-ice="description"><p>Getter for Object.isFrozen status of this node and it&apos;s ancestors</p>
+</div>
       </div>
     </td>
     <td>
@@ -285,7 +284,65 @@
       <div>
         
         
-        <div data-ice="description"><p>getter for model&quot;s JSD owner object</p>
+        <div data-ice="description"><p>Getter for model&apos;s JSD owner object</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      <span class="kind" data-ice="kind">get</span>
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-get-jsonPath">jsonPath</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>: <span>*</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Getter for path to JSON Object for Model</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      <span class="kind" data-ice="kind">get</span>
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-get-model">model</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span> | <span>array</span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null">null</a></span>: <span>*</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>stub for model getter, overridden by Model sub-class</p>
 </div>
       </div>
     </td>
@@ -314,35 +371,7 @@
       <div>
         
         
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      <span class="kind" data-ice="kind">get</span>
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          
-          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-get-observerBuilder">observerBuilder</a></span></span><span class="code" data-ice="signature">: <span><a href="class/src/classes/_observerBuilder.js~ObserverBuilder.html">ObserverBuilder</a></span>: <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        <div data-ice="description"><p>getter for ObserverBuilder reference</p>
+        <div data-ice="description"><p>Getter for Model&apos;s Unique Object ID</p>
 </div>
       </div>
     </td>
@@ -365,13 +394,14 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-get-options">options</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-get-options">options</a></span></span><span class="code" data-ice="signature">: <span>any</span>: <span>*</span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>get options (if any) for this model&quot;s schema</p>
+        <div data-ice="description"><p>Get options (if any) for this model&apos;s schema
+todo: review for possible removal</p>
 </div>
       </div>
     </td>
@@ -400,7 +430,7 @@
       <div>
         
         
-        <div data-ice="description"><p>getter for models parent Schema or Set element</p>
+        <div data-ice="description"><p>Getter for Model&apos;s parent</p>
 </div>
       </div>
     </td>
@@ -429,7 +459,7 @@
       <div>
         
         
-        <div data-ice="description"><p>getter for <code>path</code> to current Element</p>
+        <div data-ice="description"><p>Getter for <code>path</code> to current Element</p>
 </div>
       </div>
     </td>
@@ -458,7 +488,7 @@
       <div>
         
         
-        <div data-ice="description"><p>getter for document root element</p>
+        <div data-ice="description"><p>Getter for root element of Model hierarchy</p>
 </div>
       </div>
     </td>
@@ -487,7 +517,7 @@
       <div>
         
         
-        <div data-ice="description"><p>TODO: remove and standardize around <code>signature</code></p>
+        <div data-ice="description"><p>todo: implement with ajv</p>
 </div>
       </div>
     </td>
@@ -516,7 +546,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>todo: remove and standardize around <code>schema</code></p>
+</div>
       </div>
     </td>
     <td>
@@ -538,41 +569,13 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-get-validationPath">validationPath</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-get-validationPath">validationPath</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>: <span>*</span></span>
         </p>
       </div>
       <div>
         
         
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      <span class="kind" data-ice="kind">get</span>
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          
-          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-get-validatorBuilder">validatorBuilder</a></span></span><span class="code" data-ice="signature">: <span><a href="class/src/classes/_validatorBuilder.js~ValidatorBuilder.html">ValidatorBuilder</a></span>: <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        <div data-ice="description"><p>getter for ValidatorBuilder reference</p>
+        <div data-ice="description"><p>Provides formatted string for json-schema lookup</p>
 </div>
       </div>
     </td>
@@ -602,13 +605,15 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-method-lock">lock</a></span></span><span class="code" data-ice="signature">(): <span><a href="class/src/classes/model.js~Model.html">Model</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-method-freeze">freeze</a></span></span><span class="code" data-ice="signature">(): <span><a href="class/src/classes/model.js~Model.html">Model</a></span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>applies Object.freeze to model and triggers complete notification</p>
+        <div data-ice="description"><p>Applies Object.freeze to model and triggers complete notification
+-- unlike Object.freeze, this prevents modification
+-- to all children in Model hierarchy</p>
 </div>
       </div>
     </td>
@@ -631,13 +636,13 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-method-subscribe">subscribe</a></span></span><span class="code" data-ice="signature">(func: <span>*</span>): <span>_subs</span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-method-reset">reset</a></span></span><span class="code" data-ice="signature">(): <span><a href="class/src/classes/model.js~Model.html">Model</a></span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>subscribes handler method to observer for model</p>
+        <div data-ice="description"><p>resets Model to empty value</p>
 </div>
       </div>
     </td>
@@ -660,13 +665,42 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-method-subscribeTo">subscribeTo</a></span></span><span class="code" data-ice="signature">(path: <span>*</span>, func: <span>*</span>): <span>_subs</span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-method-subscribe">subscribe</a></span></span><span class="code" data-ice="signature">(func: <span>*</span>): <span>Observable</span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>subscribes handler method to property observer for path</p>
+        <div data-ice="description"><p>Subscribes handler method to observer for model</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-method-subscribeTo">subscribeTo</a></span></span><span class="code" data-ice="signature">(path: <span>*</span>, func: <span>*</span>): <span>Observable</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Subscribes handler method to property observer for path</p>
 </div>
       </div>
     </td>
@@ -695,7 +729,7 @@
       <div>
         
         
-        <div data-ice="description"><p>JSONifies Schema Model</p>
+        <div data-ice="description"><p>Provides JSON object representation of Model</p>
 </div>
       </div>
     </td>
@@ -724,7 +758,7 @@
       <div>
         
         
-        <div data-ice="description"><p>JSON stringifies primitive value</p>
+        <div data-ice="description"><p>Provides JSON String representation of Model</p>
 </div>
       </div>
     </td>
@@ -747,13 +781,14 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-method-validate">validate</a></span></span><span class="code" data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-method-validate">validate</a></span></span><span class="code" data-ice="signature">(value: <span>json</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Tests value for validation without setting value to Model</p>
+</div>
       </div>
     </td>
     <td>
@@ -781,7 +816,7 @@
       <div>
         
         
-        <div data-ice="description"><p>gets raw value of this model</p>
+        <div data-ice="description"><p>Raw value of this Model</p>
 </div>
       </div>
     </td>
@@ -811,7 +846,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/model.js.html#lineNumber300">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/model.js.html#lineNumber359">source</a></span></span>
     </span>
   </h3>
 
@@ -892,7 +927,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/model.js.html#lineNumber48">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/model.js.html#lineNumber46">source</a></span></span>
     </span>
   </h3>
 
@@ -934,19 +969,18 @@
     
     
     
-    <span class="code" data-ice="name">handler</span><span class="code" data-ice="signature">: {get: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>, set: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>}</span>
+    <span class="code" data-ice="name">handler</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>: {&quot;setPrototypeOf&quot;: <span>*</span>, &quot;isExtensible&quot;: <span>*</span>, &quot;preventExtensions&quot;: <span>*</span>, &quot;getOwnPropertyDescriptor&quot;: <span>*</span>, &quot;defineProperty&quot;: <span>*</span>, &quot;has&quot;: <span>*</span>, &quot;ownKeys&quot;: <span>*</span>, &quot;apply&quot;: <span>*</span>}</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/model.js.html#lineNumber68">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/model.js.html#lineNumber233">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>stub for sub-class implementation</p>
-</div>
+  
 
   
 
@@ -958,7 +992,7 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType">{get: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>, set: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function">function</a></span>}</td>
+          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></td>
           
         </tr>
       </tbody>
@@ -983,25 +1017,26 @@
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-get-isLocked">
+  <h3 data-ice="anchor" id="instance-get-isDirty">
     <span class="access" data-ice="access">public</span>
     
     <span class="kind" data-ice="kind">get</span>
     
     
     
-    <span class="code" data-ice="name">isLocked</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>: <span>*</span></span>
+    <span class="code" data-ice="name">isDirty</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>: <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/model.js.html#lineNumber264">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/model.js.html#lineNumber298">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Getter for Model validation status for hierarchy</p>
+</div>
 
   
 
@@ -1038,25 +1073,26 @@
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-get-isValid">
+  <h3 data-ice="anchor" id="instance-get-isFrozen">
     <span class="access" data-ice="access">public</span>
     
     <span class="kind" data-ice="kind">get</span>
     
     
     
-    <span class="code" data-ice="name">isValid</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>: <span>*</span></span>
+    <span class="code" data-ice="name">isFrozen</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>: <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/model.js.html#lineNumber140">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/model.js.html#lineNumber324">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Getter for Object.isFrozen status of this node and it&apos;s ancestors</p>
+</div>
 
   
 
@@ -1104,14 +1140,14 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/model.js.html#lineNumber220">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/model.js.html#lineNumber307">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>getter for model&quot;s JSD owner object</p>
+  <div data-ice="description"><p>Getter for model&apos;s JSD owner object</p>
 </div>
 
   
@@ -1149,25 +1185,26 @@
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-get-objectID">
+  <h3 data-ice="anchor" id="instance-get-jsonPath">
     <span class="access" data-ice="access">public</span>
     
     <span class="kind" data-ice="kind">get</span>
     
     
     
-    <span class="code" data-ice="name">objectID</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>: <span>*</span></span>
+    <span class="code" data-ice="name">jsonPath</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>: <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/model.js.html#lineNumber186">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/model.js.html#lineNumber282">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Getter for path to JSON Object for Model</p>
+</div>
 
   
 
@@ -1180,8 +1217,7 @@
       <tbody>
         <tr>
           <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
-          <td class="return-desc" data-ice="returnDescription"><p>Object ID for Schema</p>
-</td>
+          
         </tr>
       </tbody>
     </table>
@@ -1205,25 +1241,25 @@
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-get-observerBuilder">
+  <h3 data-ice="anchor" id="instance-get-model">
     <span class="access" data-ice="access">public</span>
     
     <span class="kind" data-ice="kind">get</span>
     
     
     
-    <span class="code" data-ice="name">observerBuilder</span><span class="code" data-ice="signature">: <span><a href="class/src/classes/_observerBuilder.js~ObserverBuilder.html">ObserverBuilder</a></span>: <span>*</span></span>
+    <span class="code" data-ice="name">model</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span> | <span>array</span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null">null</a></span>: <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/model.js.html#lineNumber243">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/model.js.html#lineNumber250">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>getter for ObserverBuilder reference</p>
+  <div data-ice="description"><p>stub for model getter, overridden by Model sub-class</p>
 </div>
 
   
@@ -1236,8 +1272,65 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span><a href="class/src/classes/_observerBuilder.js~ObserverBuilder.html">ObserverBuilder</a></span></td>
+          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span> | <span>array</span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null">null</a></span></td>
           
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-get-objectID">
+    <span class="access" data-ice="access">public</span>
+    
+    <span class="kind" data-ice="kind">get</span>
+    
+    
+    
+    <span class="code" data-ice="name">objectID</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>: <span>*</span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/classes/model.js.html#lineNumber258">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Getter for Model&apos;s Unique Object ID</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+          <td class="return-desc" data-ice="returnDescription"><p>Object ID for Model</p>
+</td>
         </tr>
       </tbody>
     </table>
@@ -1268,18 +1361,19 @@
     
     
     
-    <span class="code" data-ice="name">options</span><span class="code" data-ice="signature">: <span>*</span></span>
+    <span class="code" data-ice="name">options</span><span class="code" data-ice="signature">: <span>any</span>: <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/model.js.html#lineNumber227">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/model.js.html#lineNumber316">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>get options (if any) for this model&quot;s schema</p>
+  <div data-ice="description"><p>Get options (if any) for this model&apos;s schema
+todo: review for possible removal</p>
 </div>
 
   
@@ -1287,7 +1381,19 @@
   <div data-ice="properties">
 </div>
 
-  
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span>any</span></td>
+          
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
 
   
 
@@ -1316,14 +1422,14 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/model.js.html#lineNumber211">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/model.js.html#lineNumber289">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>getter for models parent Schema or Set element</p>
+  <div data-ice="description"><p>Getter for Model&apos;s parent</p>
 </div>
 
   
@@ -1372,14 +1478,14 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/model.js.html#lineNumber202">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/model.js.html#lineNumber274">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>getter for <code>path</code> to current Element</p>
+  <div data-ice="description"><p>Getter for <code>path</code> to current Element</p>
 </div>
 
   
@@ -1428,14 +1534,14 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/model.js.html#lineNumber194">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/model.js.html#lineNumber266">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>getter for document root element</p>
+  <div data-ice="description"><p>Getter for root element of Model hierarchy</p>
 </div>
 
   
@@ -1484,14 +1590,14 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/model.js.html#lineNumber282">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/model.js.html#lineNumber341">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>TODO: remove and standardize around <code>signature</code></p>
+  <div data-ice="description"><p>todo: implement with ajv</p>
 </div>
 
   
@@ -1540,14 +1646,15 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/model.js.html#lineNumber290">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/model.js.html#lineNumber349">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>todo: remove and standardize around <code>schema</code></p>
+</div>
 
   
 
@@ -1591,61 +1698,18 @@
     
     
     
-    <span class="code" data-ice="name">validationPath</span><span class="code" data-ice="signature">: <span>*</span></span>
+    <span class="code" data-ice="name">validationPath</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>: <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/model.js.html#lineNumber269">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/model.js.html#lineNumber333">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
-
-  
-
-  <div data-ice="properties">
-</div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-get-validatorBuilder">
-    <span class="access" data-ice="access">public</span>
-    
-    <span class="kind" data-ice="kind">get</span>
-    
-    
-    
-    <span class="code" data-ice="name">validatorBuilder</span><span class="code" data-ice="signature">: <span><a href="class/src/classes/_validatorBuilder.js~ValidatorBuilder.html">ValidatorBuilder</a></span>: <span>*</span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/classes/model.js.html#lineNumber235">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  <div data-ice="description"><p>getter for ValidatorBuilder reference</p>
+  <div data-ice="description"><p>Provides formatted string for json-schema lookup</p>
 </div>
 
   
@@ -1658,7 +1722,7 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span><a href="class/src/classes/_validatorBuilder.js~ValidatorBuilder.html">ValidatorBuilder</a></span></td>
+          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
           
         </tr>
       </tbody>
@@ -1686,25 +1750,83 @@
 <div data-ice="methodDetails"><h2 data-ice="title">Public Methods</h2>
 
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-lock">
+  <h3 data-ice="anchor" id="instance-method-freeze">
     <span class="access" data-ice="access">public</span>
     
     
     
     
     
-    <span class="code" data-ice="name">lock</span><span class="code" data-ice="signature">(): <span><a href="class/src/classes/model.js~Model.html">Model</a></span></span>
+    <span class="code" data-ice="name">freeze</span><span class="code" data-ice="signature">(): <span><a href="class/src/classes/model.js~Model.html">Model</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/model.js.html#lineNumber251">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/model.js.html#lineNumber223">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>applies Object.freeze to model and triggers complete notification</p>
+  <div data-ice="description"><p>Applies Object.freeze to model and triggers complete notification
+-- unlike Object.freeze, this prevents modification
+-- to all children in Model hierarchy</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></td>
+          
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-reset">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">reset</span><span class="code" data-ice="signature">(): <span><a href="class/src/classes/model.js~Model.html">Model</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/classes/model.js.html#lineNumber124">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>resets Model to empty value</p>
 </div>
 
   
@@ -1749,18 +1871,18 @@
     
     
     
-    <span class="code" data-ice="name">subscribe</span><span class="code" data-ice="signature">(func: <span>*</span>): <span>_subs</span></span>
+    <span class="code" data-ice="name">subscribe</span><span class="code" data-ice="signature">(func: <span>*</span>): <span>Observable</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/model.js.html#lineNumber60">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/model.js.html#lineNumber58">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>subscribes handler method to observer for model</p>
+  <div data-ice="description"><p>Subscribes handler method to observer for model</p>
 </div>
 
   
@@ -1789,7 +1911,7 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span>_subs</span></td>
+          <td class="return-type code" data-ice="returnType"><span>Observable</span></td>
           
         </tr>
       </tbody>
@@ -1821,18 +1943,18 @@
     
     
     
-    <span class="code" data-ice="name">subscribeTo</span><span class="code" data-ice="signature">(path: <span>*</span>, func: <span>*</span>): <span>_subs</span></span>
+    <span class="code" data-ice="name">subscribeTo</span><span class="code" data-ice="signature">(path: <span>*</span>, func: <span>*</span>): <span>Observable</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/model.js.html#lineNumber78">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/model.js.html#lineNumber68">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>subscribes handler method to property observer for path</p>
+  <div data-ice="description"><p>Subscribes handler method to property observer for path</p>
 </div>
 
   
@@ -1867,7 +1989,7 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span>_subs</span></td>
+          <td class="return-type code" data-ice="returnType"><span>Observable</span></td>
           
         </tr>
       </tbody>
@@ -1903,14 +2025,14 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/model.js.html#lineNumber155">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/model.js.html#lineNumber175">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>JSONifies Schema Model</p>
+  <div data-ice="description"><p>Provides JSON object representation of Model</p>
 </div>
 
   
@@ -1959,14 +2081,14 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/model.js.html#lineNumber179">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/model.js.html#lineNumber212">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>JSON stringifies primitive value</p>
+  <div data-ice="description"><p>Provides JSON String representation of Model</p>
 </div>
 
   
@@ -2028,22 +2150,40 @@
     
     
     
-    <span class="code" data-ice="name">validate</span><span class="code" data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+    <span class="code" data-ice="name">validate</span><span class="code" data-ice="signature">(value: <span>json</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/model.js.html#lineNumber122">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/model.js.html#lineNumber108">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Tests value for validation without setting value to Model</p>
+</div>
 
   
 
-  <div data-ice="properties">
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">value</td>
+      <td data-ice="type" class="code"><span>json</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>JSON value to validate for validity</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
 </div>
 
   <div class="return-params" data-ice="returnParams">
@@ -2051,9 +2191,8 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
-          <td class="return-desc" data-ice="returnDescription"><p>returns error string or true</p>
-</td>
+          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></td>
+          
         </tr>
       </tbody>
     </table>
@@ -2088,14 +2227,14 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/model.js.html#lineNumber148">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/model.js.html#lineNumber168">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>gets raw value of this model</p>
+  <div data-ice="description"><p>Raw value of this Model</p>
 </div>
 
   

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">src/classes/_ajvWrapper.js | rxvo</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="RxJS + JSON-Schema Based Observable Data Models"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="rxvo"><meta property="twitter:description" content="RxJS + JSON-Schema Based Observable Data Models"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/Webfreshener/JSD.git"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#classes">classes</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_branchNotifier.js~Notifier.html">Notifier</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_metaData.js~MetaData.html">MetaData</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_observerBuilder.js~ObserverBuilder.html">ObserverBuilder</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_schemaHelpers.js~SchemaHelpers.html">SchemaHelpers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/itemsModel.js~ItemsModel.html">ItemsModel</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/jsd.js~JSD.html">JSD</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getRoot">getRoot</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-listDirtyItems">listDirtyItems</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeClean">makeClean</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeDirty">makeDirty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refAtKeyValidation">refAtKeyValidation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refValidation">refValidation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-validate">validate</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ajvRef">_ajvRef</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_dirtyModels">_dirtyModels</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_jsdDocs">_jsdDocs</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_oBuilders">_oBuilders</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_object">_object</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_observerPaths">_observerPaths</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_observers">_observers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaHelpers">_schemaHelpers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaOptions">_schemaOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaSignatures">_schemaSignatures</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validators">_validators</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-wf">wf</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/classes/_ajvWrapper.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/**
+ * @private
+ */
+import {_ajvRef} from &quot;./_references&quot;;
+import {JSD} from &quot;./jsd&quot;;
+import Ajv from &quot;ajv&quot;;
+
+/**
+ * Wrapper for Ajv JSON-PropertiesModel Validator
+ * @private
+ */
+export class AjvWrapper {
+    /**
+     * @constructor
+     * @param jsd
+     * @param schema
+     * @param ajvOptions
+     */
+    constructor(jsd, schema, ajvOptions = {}) {
+        // ensures that we are given something that represents a JSD object
+        if ((!jsd) || !(jsd instanceof JSD)) {
+            throw &quot;JSD is required at arguments[0]&quot;;
+        }
+
+        // defines getter for parent JSD reference
+        Object.defineProperty(this, &quot;$jsd&quot;, {
+            get: () =&gt; jsd,
+            enumerable: false,
+        });
+
+        // applies user specified options over our default Ajv Options
+        const opts = Object.assign(_ajvOptions, ajvOptions);
+
+        // makes user defined options object accessible for evaluation
+        Object.defineProperty(this, &quot;options&quot;, {
+           get: () =&gt; opts,
+           enumerable: true,
+        });
+
+        const _ajv = new Ajv(opts);
+        // initializes Ajv instance for this Doc and stores it to WeakMap
+        _ajvRef.set(this, _ajv);
+
+        // tests for schema and sets provided schema as the &quot;root&quot; schema
+        if (schema !== void(0)) {
+            _ajv.addSchema(schema, &quot;root&quot;);
+        }
+
+        // accept no further modifications to this object
+        Object.seal(this);
+    }
+
+    /**
+     * helper method to derive path for given model
+     * todo: review for removal
+     * @param model
+     * @return {string}
+     */
+    static resolvePath(model) {
+        return &quot;not yet implemented&quot;;
+    }
+
+    /**
+     * getter for captive Ajv validator
+     * -- use this for Ajv API Methods
+     * @returns {ajv}
+     */
+    get $ajv() {
+        return _ajvRef.get(this);
+    }
+
+    /**
+     * Executes validator at PropertiesModel $ref `path` against `value`
+     * @param path
+     * @param value
+     */
+    exec(path, value) {
+        return this.$ajv.validate(path, value);
+    }
+}
+
+/**
+ * AJV Options Config in it&apos;s entirely for reference
+ * only JSD specific option changes are enabled
+ * @type {*}
+ * @private
+ */
+const _ajvOptions = {
+    // // validation and reporting options:
+    $data:            true,
+    // allErrors:        true,
+    // verbose:          true,
+    // $comment:         false, // NEW in Ajv version 6.0
+    jsonPointers:     true,
+    // uniqueItems:      true,
+    // unicode:          true,
+    // format:           &apos;fast&apos;,
+    // formats:          {},
+    // unknownFormats:   true,
+    // schemas:          {},
+    // logger:           undefined,
+    // referenced schema options:
+    // schemaId:         &apos;$id&apos;,
+    // missingRefs:      true,
+    // extendRefs:       &apos;fail&apos;, // default &apos;ignore&apos;
+    // loadSchema:       undefined, // function(uri: string): Promise {}
+    // options to modify validated data:
+    // removeAdditional: false,
+    // useDefaults:      true,
+    // coerceTypes:      false,
+    // asynchronous validation options:
+    // transpile:        undefined, // requires ajv-async package
+    // advanced options:
+    // meta:             true,
+    // validateSchema:   true,
+    // addUsedSchema:    true,
+    // inlineRefs:       true,
+    // passContext:      false,
+    // loopRequired:     Infinity,
+    // ownProperties:    false,
+    // multipleOfPrecision: false,
+    // errorDataPath:    &apos;object&apos;, // deprecated
+    // messages:         true,
+    // sourceCode:       false,
+    // processCode:      undefined, // function (str: string): string {}
+    // cache:            new Cache,
+    // serialize:        undefined
+};
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.0.4)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

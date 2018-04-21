@@ -1,98 +1,93 @@
 {
-  "coverage": "88.06%",
-  "expectCount": 176,
-  "actualCount": 155,
+  "coverage": "81.81%",
+  "expectCount": 121,
+  "actualCount": 99,
   "files": {
+    "src/classes/_ajvWrapper.js": {
+      "expectCount": 6,
+      "actualCount": 6,
+      "undocumentLines": []
+    },
+    "src/classes/_branchNotifier.js": {
+      "expectCount": 11,
+      "actualCount": 5,
+      "undocumentLines": [
+        6,
+        7,
+        20,
+        21,
+        30,
+        32
+      ]
+    },
     "src/classes/_metaData.js": {
-      "expectCount": 13,
+      "expectCount": 12,
       "actualCount": 10,
       "undocumentLines": [
-        4,
-        22,
-        109
-      ]
-    },
-    "src/classes/_observerBuilder.js": {
-      "expectCount": 8,
-      "actualCount": 7,
-      "undocumentLines": [
-        4
-      ]
-    },
-    "src/classes/_references.js": {
-      "expectCount": 17,
-      "actualCount": 15,
-      "undocumentLines": [
-        5,
-        6
-      ]
-    },
-    "src/classes/_schemaHelpers.js": {
-      "expectCount": 9,
-      "actualCount": 8,
-      "undocumentLines": [
+        2,
         20
       ]
     },
-    "src/classes/_schemaValidator.js": {
-      "expectCount": 12,
-      "actualCount": 11,
+    "src/classes/_observerBuilder.js": {
+      "expectCount": 10,
+      "actualCount": 7,
       "undocumentLines": [
-        138
+        4,
+        6,
+        34
       ]
     },
-    "src/classes/_validatorBuilder.js": {
-      "expectCount": 9,
-      "actualCount": 9,
-      "undocumentLines": []
-    },
-    "src/classes/_validators.js": {
-      "expectCount": 32,
-      "actualCount": 27,
+    "src/classes/_references.js": {
+      "expectCount": 14,
+      "actualCount": 11,
       "undocumentLines": [
-        19,
-        20,
-        21,
-        26,
-        113
+        5,
+        6,
+        86
+      ]
+    },
+    "src/classes/_schemaHelpers.js": {
+      "expectCount": 6,
+      "actualCount": 5,
+      "undocumentLines": [
+        18
+      ]
+    },
+    "src/classes/itemsModel.js": {
+      "expectCount": 6,
+      "actualCount": 4,
+      "undocumentLines": [
+        9,
+        75
       ]
     },
     "src/classes/jsd.js": {
-      "expectCount": 14,
-      "actualCount": 12,
+      "expectCount": 15,
+      "actualCount": 14,
       "undocumentLines": [
-        18,
-        155
+        11
       ]
     },
     "src/classes/model.js": {
-      "expectCount": 25,
-      "actualCount": 23,
+      "expectCount": 26,
+      "actualCount": 25,
       "undocumentLines": [
-        48,
-        269
+        46
       ]
     },
-    "src/classes/schema.js": {
-      "expectCount": 15,
-      "actualCount": 13,
-      "undocumentLines": [
-        9,
-        268
-      ]
-    },
-    "src/classes/set.js": {
-      "expectCount": 19,
-      "actualCount": 17,
-      "undocumentLines": [
-        11,
-        90
-      ]
+    "src/classes/propertiesModel.js": {
+      "expectCount": 8,
+      "actualCount": 8,
+      "undocumentLines": []
     },
     "src/classes/utils.js": {
-      "expectCount": 3,
-      "actualCount": 3,
-      "undocumentLines": []
+      "expectCount": 7,
+      "actualCount": 4,
+      "undocumentLines": [
+        21,
+        67,
+        79
+      ]
     }
   }
 }

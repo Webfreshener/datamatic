@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../">
-  <title data-ice="title">Variable | jsd</title>
+  <title data-ice="title">Variable | rxvo</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
   <script src="script/manual.js"></script>
-<meta name="description" content="Schema Generation and Data Validation with object virtualization"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="jsd"><meta property="twitter:description" content="Schema Generation and Data Validation with object virtualization"></head>
+<meta name="description" content="RxJS + JSON-Schema Based Observable Data Models"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="rxvo"><meta property="twitter:description" content="RxJS + JSON-Schema Based Observable Data Models"></head>
 <body class="layout-container" data-ice="rootContainer">
 
 <header>
@@ -29,38 +29,36 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#classes">classes</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_metaData.js~MetaData.html">MetaData</a></span></span></li>
+  <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#classes">classes</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_branchNotifier.js~Notifier.html">Notifier</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_metaData.js~MetaData.html">MetaData</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_observerBuilder.js~ObserverBuilder.html">ObserverBuilder</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_schemaHelpers.js~SchemaHelpers.html">SchemaHelpers</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_schemaValidator.js~SchemaValidator.html">SchemaValidator</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_validatorBuilder.js~ValidatorBuilder.html">ValidatorBuilder</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_validators.js~BaseValidator.html">BaseValidator</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/itemsModel.js~ItemsModel.html">ItemsModel</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/jsd.js~JSD.html">JSD</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/schema.js~Schema.html">Schema</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/set.js~Set.html">Set</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ensureKindIsString">ensureKindIsString</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ensureRequiredFields">ensureRequiredFields</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-remapPolypath">remapPolypath</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getRoot">getRoot</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-listDirtyItems">listDirtyItems</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeClean">makeClean</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeDirty">makeDirty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refAtKeyValidation">refAtKeyValidation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refValidation">refValidation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-validate">validate</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ajvRef">_ajvRef</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_dirtyModels">_dirtyModels</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_kinds">_kinds</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_jsdDocs">_jsdDocs</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_oBuilders">_oBuilders</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_object">_object</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_observerPaths">_observerPaths</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_observers">_observers</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_required_elements">_required_elements</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaHelpers">_schemaHelpers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaOptions">_schemaOptions</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaSignatures">_schemaSignatures</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_singletons">_singletons</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vBuilders">_vBuilders</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vPaths">_vPaths</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validPaths">_validPaths</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validators">_validators</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vectorTypes">_vectorTypes</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-wf">wf</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-rxRx">rxRx</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-Validator">Validator</a></span></span></li>
 </ul>
 </div>
 </nav>
@@ -71,65 +69,6 @@
   <tbody>
   
   <tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          
-          <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-Validator">Validator</a></span></span><span class="code" data-ice="signature">: {}</span>
-        </p>
-      </div>
-      <div>
-        
-        
-        <div data-ice="description"><p>Holder for Validator Class References</p>
-</div>
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          
-          <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-rxRx">rxRx</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a></span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        <div data-ice="description"><p>Regex that matches other Regex
-todo: look into IDEA&apos;s &quot;redundant escape character&quot; warning</p>
-</div>
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
     <td>
       <span class="access" data-ice="access">public</span>
       
@@ -177,6 +116,64 @@ todo: look into IDEA&apos;s &quot;redundant escape character&quot; warning</p>
           
           
           
+          <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-_ajvRef">_ajvRef</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">WeakMap</a></span>&lt;<span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, <span>ajv</span>&gt;</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Holder for AjvWrapper references</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">private</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-_dirtyModels">_dirtyModels</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">WeakMap</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Holder for models in transition</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">private</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
           <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
         </p>
       </div>
@@ -205,14 +202,13 @@ todo: look into IDEA&apos;s &quot;redundant escape character&quot; warning</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-_kinds">_kinds</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">WeakMap</a></span></span>
+          <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-_jsdDocs">_jsdDocs</a></span></span><span class="code" data-ice="signature">: <span>*</span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>Holder for registered JS Object references</p>
-</div>
+        
       </div>
     </td>
     <td>
@@ -298,7 +294,36 @@ todo: look into IDEA&apos;s &quot;redundant escape character&quot; warning</p>
       <div>
         
         
-        <div data-ice="description"><p>Holder for Schema and Set instance references</p>
+        <div data-ice="description"><p>Holder for PropertiesModel and ItemsModel instance references</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">private</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-_observerPaths">_observerPaths</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">WeakMap</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Holder for RXJS Observer references</p>
 </div>
       </div>
     </td>
@@ -350,42 +375,13 @@ todo: look into IDEA&apos;s &quot;redundant escape character&quot; warning</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-_required_elements">_required_elements</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">WeakMap</a></span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        <div data-ice="description"><p>Holder for lists of required elements for each Schema Node</p>
-</div>
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">private</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          
           <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-_schemaHelpers">_schemaHelpers</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">WeakMap</a></span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>Holder for Schema Helpers references</p>
+        <div data-ice="description"><p>Holder for PropertiesModel Helpers references</p>
 </div>
       </div>
     </td>
@@ -414,7 +410,7 @@ todo: look into IDEA&apos;s &quot;redundant escape character&quot; warning</p>
       <div>
         
         
-        <div data-ice="description"><p>Holder for Schema options refeerences</p>
+        <div data-ice="description"><p>Holder for PropertiesModel options refeerences</p>
 </div>
       </div>
     </td>
@@ -443,123 +439,7 @@ todo: look into IDEA&apos;s &quot;redundant escape character&quot; warning</p>
       <div>
         
         
-        <div data-ice="description"><p>Holder for Schema Signatures references</p>
-</div>
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">private</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          
-          <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-_singletons">_singletons</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">WeakMap</a></span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        <div data-ice="description"><p>Holder for Singleton instance references</p>
-</div>
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">private</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          
-          <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-_vBuilders">_vBuilders</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">WeakMap</a></span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        <div data-ice="description"><p>Holder for Validator Builders</p>
-</div>
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">private</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          
-          <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-_vPaths">_vPaths</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">WeakMap</a></span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        <div data-ice="description"><p>Holder for Validation Paths</p>
-</div>
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">private</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          
-          <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-_validPaths">_validPaths</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">WeakMap</a></span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        <div data-ice="description"><p>Holder for Validation path references</p>
+        <div data-ice="description"><p>Holder for JSON-Schemas</p>
 </div>
       </div>
     </td>
@@ -588,36 +468,7 @@ todo: look into IDEA&apos;s &quot;redundant escape character&quot; warning</p>
       <div>
         
         
-        <div data-ice="description"><p>Holder for Schema Validators</p>
-</div>
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">private</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          
-          <span class="code" data-ice="name"><span><a href="variable/index.html#static-variable-_vectorTypes">_vectorTypes</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">WeakMap</a></span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        <div data-ice="description"><p>Holder for <code>Set</code> element types</p>
+        <div data-ice="description"><p>Holder for PropertiesModel Validators</p>
 </div>
       </div>
     </td>
@@ -631,95 +482,6 @@ todo: look into IDEA&apos;s &quot;redundant escape character&quot; warning</p>
 </div>
 <div data-ice="details"><h2 data-ice="title">Static Public </h2>
 
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="static-variable-Validator">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    
-    <span class="code" data-ice="name">Validator</span><span class="code" data-ice="signature">: {}</span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/classes/_validators.js.html#lineNumber6">source</a></span></span>
-    </span>
-  </h3>
-
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {Validator} from &apos;<span><a href="file/src/classes/_validators.js.html#lineNumber6">jsd/src/classes/_validators.js</a></span>&apos;</code></pre></div>
-  
-  
-  <div data-ice="description"><p>Holder for Validator Class References</p>
-</div>
-
-  
-
-  <div data-ice="properties">
-</div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="static-variable-rxRx">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    
-    <span class="code" data-ice="name">rxRx</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp">RegExp</a></span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/classes/_validatorBuilder.js.html#lineNumber14">source</a></span></span>
-    </span>
-  </h3>
-
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {rxRx} from &apos;<span><a href="file/src/classes/_validatorBuilder.js.html#lineNumber14">jsd/src/classes/_validatorBuilder.js</a></span>&apos;</code></pre></div>
-  
-  
-  <div data-ice="description"><p>Regex that matches other Regex
-todo: look into IDEA&apos;s &quot;redundant escape character&quot; warning</p>
-</div>
-
-  
-
-  <div data-ice="properties">
-</div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
 <div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="static-variable-wf">
     <span class="access" data-ice="access">public</span>
@@ -736,7 +498,7 @@ todo: look into IDEA&apos;s &quot;redundant escape character&quot; warning</p>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {wf} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber6">jsd/src/classes/_references.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {wf} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber6">rxvo/src/classes/_references.js</a></span>&apos;</code></pre></div>
   
   
   
@@ -766,6 +528,94 @@ todo: look into IDEA&apos;s &quot;redundant escape character&quot; warning</p>
 <h2 data-ice="title">Static Private </h2>
 
 <div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="static-variable-_ajvRef">
+    <span class="access" data-ice="access">private</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">_ajvRef</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">WeakMap</a></span>&lt;<span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span>, <span>ajv</span>&gt;</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/classes/_references.js.html#lineNumber30">source</a></span></span>
+    </span>
+  </h3>
+
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_ajvRef} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber30">rxvo/src/classes/_references.js</a></span>&apos;</code></pre></div>
+  
+  
+  <div data-ice="description"><p>Holder for AjvWrapper references</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="static-variable-_dirtyModels">
+    <span class="access" data-ice="access">private</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">_dirtyModels</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">WeakMap</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/classes/_references.js.html#lineNumber37">source</a></span></span>
+    </span>
+  </h3>
+
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_dirtyModels} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber37">rxvo/src/classes/_references.js</a></span>&apos;</code></pre></div>
+  
+  
+  <div data-ice="description"><p>Holder for models in transition</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="static-variable-_exists">
     <span class="access" data-ice="access">private</span>
     
@@ -781,7 +631,7 @@ todo: look into IDEA&apos;s &quot;redundant escape character&quot; warning</p>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_exists} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber5">jsd/src/classes/_references.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_exists} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber5">rxvo/src/classes/_references.js</a></span>&apos;</code></pre></div>
   
   
   
@@ -809,26 +659,25 @@ todo: look into IDEA&apos;s &quot;redundant escape character&quot; warning</p>
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="static-variable-_kinds">
+  <h3 data-ice="anchor" id="static-variable-_jsdDocs">
     <span class="access" data-ice="access">private</span>
     
     
     
     
     
-    <span class="code" data-ice="name">_kinds</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">WeakMap</a></span></span>
+    <span class="code" data-ice="name">_jsdDocs</span><span class="code" data-ice="signature">: <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_references.js.html#lineNumber17">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_references.js.html#lineNumber86">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_kinds} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber17">jsd/src/classes/_references.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_jsdDocs} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber86">rxvo/src/classes/_references.js</a></span>&apos;</code></pre></div>
   
   
-  <div data-ice="description"><p>Holder for registered JS Object references</p>
-</div>
+  
 
   
 
@@ -864,11 +713,11 @@ todo: look into IDEA&apos;s &quot;redundant escape character&quot; warning</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_references.js.html#lineNumber30">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_references.js.html#lineNumber24">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_mdRef} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber30">jsd/src/classes/_references.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_mdRef} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber24">rxvo/src/classes/_references.js</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>Holder for MetaData references</p>
@@ -908,11 +757,11 @@ todo: look into IDEA&apos;s &quot;redundant escape character&quot; warning</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_references.js.html#lineNumber96">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_references.js.html#lineNumber78">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_oBuilders} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber96">jsd/src/classes/_references.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_oBuilders} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber78">rxvo/src/classes/_references.js</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>Holder for Observer Builders</p>
@@ -952,14 +801,58 @@ todo: look into IDEA&apos;s &quot;redundant escape character&quot; warning</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_references.js.html#lineNumber24">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_references.js.html#lineNumber18">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_object} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber24">jsd/src/classes/_references.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_object} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber18">rxvo/src/classes/_references.js</a></span>&apos;</code></pre></div>
   
   
-  <div data-ice="description"><p>Holder for Schema and Set instance references</p>
+  <div data-ice="description"><p>Holder for PropertiesModel and ItemsModel instance references</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="static-variable-_observerPaths">
+    <span class="access" data-ice="access">private</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">_observerPaths</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">WeakMap</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/classes/_references.js.html#lineNumber70">source</a></span></span>
+    </span>
+  </h3>
+
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_observerPaths} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber70">rxvo/src/classes/_references.js</a></span>&apos;</code></pre></div>
+  
+  
+  <div data-ice="description"><p>Holder for RXJS Observer references</p>
 </div>
 
   
@@ -996,58 +889,14 @@ todo: look into IDEA&apos;s &quot;redundant escape character&quot; warning</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_references.js.html#lineNumber84">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_references.js.html#lineNumber63">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_observers} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber84">jsd/src/classes/_references.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_observers} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber63">rxvo/src/classes/_references.js</a></span>&apos;</code></pre></div>
   
   
   <div data-ice="description"><p>Holder for RXJS Observer references</p>
-</div>
-
-  
-
-  <div data-ice="properties">
-</div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="static-variable-_required_elements">
-    <span class="access" data-ice="access">private</span>
-    
-    
-    
-    
-    
-    <span class="code" data-ice="name">_required_elements</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">WeakMap</a></span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/classes/_references.js.html#lineNumber37">source</a></span></span>
-    </span>
-  </h3>
-
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_required_elements} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber37">jsd/src/classes/_references.js</a></span>&apos;</code></pre></div>
-  
-  
-  <div data-ice="description"><p>Holder for lists of required elements for each Schema Node</p>
 </div>
 
   
@@ -1084,14 +933,14 @@ todo: look into IDEA&apos;s &quot;redundant escape character&quot; warning</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_references.js.html#lineNumber71">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_references.js.html#lineNumber57">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_schemaHelpers} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber71">jsd/src/classes/_references.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_schemaHelpers} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber57">rxvo/src/classes/_references.js</a></span>&apos;</code></pre></div>
   
   
-  <div data-ice="description"><p>Holder for Schema Helpers references</p>
+  <div data-ice="description"><p>Holder for PropertiesModel Helpers references</p>
 </div>
 
   
@@ -1128,14 +977,14 @@ todo: look into IDEA&apos;s &quot;redundant escape character&quot; warning</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_references.js.html#lineNumber64">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_references.js.html#lineNumber50">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_schemaOptions} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber64">jsd/src/classes/_references.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_schemaOptions} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber50">rxvo/src/classes/_references.js</a></span>&apos;</code></pre></div>
   
   
-  <div data-ice="description"><p>Holder for Schema options refeerences</p>
+  <div data-ice="description"><p>Holder for PropertiesModel options refeerences</p>
 </div>
 
   
@@ -1172,190 +1021,14 @@ todo: look into IDEA&apos;s &quot;redundant escape character&quot; warning</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_references.js.html#lineNumber78">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_references.js.html#lineNumber84">source</a></span></span>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_schemaSignatures} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber78">jsd/src/classes/_references.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_schemaSignatures} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber84">rxvo/src/classes/_references.js</a></span>&apos;</code></pre></div>
   
   
-  <div data-ice="description"><p>Holder for Schema Signatures references</p>
-</div>
-
-  
-
-  <div data-ice="properties">
-</div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="static-variable-_singletons">
-    <span class="access" data-ice="access">private</span>
-    
-    
-    
-    
-    
-    <span class="code" data-ice="name">_singletons</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">WeakMap</a></span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/classes/_references.js.html#lineNumber50">source</a></span></span>
-    </span>
-  </h3>
-
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_singletons} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber50">jsd/src/classes/_references.js</a></span>&apos;</code></pre></div>
-  
-  
-  <div data-ice="description"><p>Holder for Singleton instance references</p>
-</div>
-
-  
-
-  <div data-ice="properties">
-</div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="static-variable-_vBuilders">
-    <span class="access" data-ice="access">private</span>
-    
-    
-    
-    
-    
-    <span class="code" data-ice="name">_vBuilders</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">WeakMap</a></span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/classes/_references.js.html#lineNumber102">source</a></span></span>
-    </span>
-  </h3>
-
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_vBuilders} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber102">jsd/src/classes/_references.js</a></span>&apos;</code></pre></div>
-  
-  
-  <div data-ice="description"><p>Holder for Validator Builders</p>
-</div>
-
-  
-
-  <div data-ice="properties">
-</div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="static-variable-_vPaths">
-    <span class="access" data-ice="access">private</span>
-    
-    
-    
-    
-    
-    <span class="code" data-ice="name">_vPaths</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">WeakMap</a></span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/classes/_references.js.html#lineNumber108">source</a></span></span>
-    </span>
-  </h3>
-
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_vPaths} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber108">jsd/src/classes/_references.js</a></span>&apos;</code></pre></div>
-  
-  
-  <div data-ice="description"><p>Holder for Validation Paths</p>
-</div>
-
-  
-
-  <div data-ice="properties">
-</div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="static-variable-_validPaths">
-    <span class="access" data-ice="access">private</span>
-    
-    
-    
-    
-    
-    <span class="code" data-ice="name">_validPaths</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">WeakMap</a></span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/classes/_references.js.html#lineNumber90">source</a></span></span>
-    </span>
-  </h3>
-
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_validPaths} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber90">jsd/src/classes/_references.js</a></span>&apos;</code></pre></div>
-  
-  
-  <div data-ice="description"><p>Holder for Validation path references</p>
+  <div data-ice="description"><p>Holder for JSON-Schemas</p>
 </div>
 
   
@@ -1396,54 +1069,10 @@ todo: look into IDEA&apos;s &quot;redundant escape character&quot; warning</p>
     </span>
   </h3>
 
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_validators} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber43">jsd/src/classes/_references.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_validators} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber43">rxvo/src/classes/_references.js</a></span>&apos;</code></pre></div>
   
   
-  <div data-ice="description"><p>Holder for Schema Validators</p>
-</div>
-
-  
-
-  <div data-ice="properties">
-</div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="static-variable-_vectorTypes">
-    <span class="access" data-ice="access">private</span>
-    
-    
-    
-    
-    
-    <span class="code" data-ice="name">_vectorTypes</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/WeakMap">WeakMap</a></span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/classes/_references.js.html#lineNumber57">source</a></span></span>
-    </span>
-  </h3>
-
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {_vectorTypes} from &apos;<span><a href="file/src/classes/_references.js.html#lineNumber57">jsd/src/classes/_references.js</a></span>&apos;</code></pre></div>
-  
-  
-  <div data-ice="description"><p>Holder for <code>Set</code> element types</p>
+  <div data-ice="description"><p>Holder for PropertiesModel Validators</p>
 </div>
 
   

@@ -1,6 +1,4 @@
 import {wf, _mdRef} from "./_references";
-// import {Schema} from "./schema";
-// import {Set} from "./set";
 const _mData = new WeakMap();
 /**
  * @private
@@ -8,8 +6,8 @@ const _mData = new WeakMap();
 export class MetaData {
     /**
      * @constructor
-     * @param {Schema|Set} _oRef -- Object Reference to item being described
-     * @param {object} _data -- Initial Data {parent:Schema|Set}
+     * @param {PropertiesModel|Set} _oRef -- Object Reference to item being described
+     * @param {object} _data -- Initial Data {parent:PropertiesModel|ItemsModel}
      */
     constructor(_oRef, _data = {}) {
         let _cName = wf.Fun.getConstructorName(_oRef);
@@ -23,11 +21,6 @@ export class MetaData {
                 }
                 return this.__objID;
             };
-        }
-
-        // ensures existance of writeLock param
-        if (!_data.hasOwnProperty("_writeLock") || _data._writeLock === void(0)) {
-            _data._writeLock = false;
         }
 
         _data = Object.assign({}, _data, {
@@ -64,8 +57,8 @@ export class MetaData {
     }
 
     /**
-     * Root Schema element
-     * @returns {Schema|Set}
+     * Root PropertiesModel element
+     * @returns {PropertiesModel|Set}
      */
     get root() {
         return this.get("_root");
@@ -80,32 +73,25 @@ export class MetaData {
     }
 
     /**
-     * Owner JSD document
-     * @returns {JSD}
+     * Owner RxVO document
+     * @returns {RxVO}
      */
-    get jsd() {
-        return this.get("_jsd");
+    get rxvo() {
+        return this.get("_rxvo");
     }
 
     /**
-     * path to parent element
-     * @returns {string}
+     * Getter for parent model
+     * @returns {string | null}
      */
     get parent() {
-        let _ = this.path || "";
-        let _p = _.split(".");
-        _p = (_p.length > 1) ? _p.slice(0, _p.length - 2).join(".") : _p[0];
-        return _p.length ? this.root.get(_p) : this.root;
+        return this.get("_parent");
     }
 
     /**
-     *
-     * @returns {*}
+     * Provides representation of Model as JSON string
+     * @return {string}
      */
-    get writeLock() {
-        return this.get("_writeLock");
-    }
-
     toString() {
         return JSON.stringify(_mData.get(this));
     }

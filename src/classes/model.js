@@ -1,28 +1,25 @@
 import {
-    _mdRef, _oBuilders, _vBuilders, _exists,
-    _validPaths, _object, _schemaSignatures,
-    _schemaOptions
+    _mdRef, _oBuilders, _object, _schemaOptions, _dirtyModels
 } from "./_references";
-import {JSD} from "./jsd";
-import {remapPolypath} from "./utils";
+import {RxVO} from "./rxvo";
 import {MetaData} from "./_metaData";
+import {makeClean, makeDirty, validate} from "./utils";
 
 /**
  *
  * @param ref
- * @param writeLock
  * @param metaRef
  */
-const createMetaDataRef = (ref, writeLock, metaRef) => {
+const createMetaDataRef = (ref, metaRef) => {
     let _md;
-    if (metaRef instanceof JSD) {
-        // root elements are handed the JSD object
+    if (metaRef instanceof RxVO) {
+        // root properties are handed the RxVO object
         // will create new MetaData and set reference as root element
         _md = new MetaData(ref, {
             _path: "",
+            _parent: null,
             _root: ref,
-            _writeLock: writeLock,
-            _jsd: metaRef,
+            _rxvo: metaRef,
         });
     }
     else if ((typeof metaRef) === "object") {
@@ -35,7 +32,7 @@ const createMetaDataRef = (ref, writeLock, metaRef) => {
         }
     } else {
         throw "Invalid attempt to construct Model." +
-        "tip: use `new JSD([schema])` instead"
+        "tip: use `new RxVO([schema])` instead"
     }
     // sets MetaData object to global reference
     _mdRef.set(ref, _md);
@@ -45,67 +42,52 @@ const createMetaDataRef = (ref, writeLock, metaRef) => {
  *
  */
 export class Model {
-    constructor(writeLock = false) {
+    constructor() {
         // tests if this is instance of MetaData
         if (!(this instanceof MetaData)) {
-            createMetaDataRef(this, writeLock, arguments[1]);
+            createMetaDataRef(this, arguments[0]);
         }
     }
 
     /**
-     * subscribes handler method to observer for model
+     * Subscribes handler method to observer for model
      * @param func
-     * @returns {_subs}
+     * @returns {object}
      */
     subscribe(func) {
         return this.subscribeTo(this.path, func);
     }
 
     /**
-     * stub for sub-class implementation
-     * @returns {{get: function, set: function}}
-     */
-    get handler() {
-        throw "Model requires sub-classed implmentation of handler getter"
-    }
-
-    /**
-     * subscribes handler method to property observer for path
+     * Subscribes handler method to property observer for path
      * @param path
      * @param func
-     * @returns {_subs}
+     * @return {object}
      */
     subscribeTo(path, func) {
-        // throws if argument is not an object or function
-        if ((typeof func).match(/^(function|object)$/) === null) {
-            throw new Error("subscribeTo requires function");
+        const _oBuilder = _oBuilders.get(this.rxvo);
+        const _o = _oBuilder.getObserverForPath(path);
+        if (_o === null) {
+            return _o;
         }
+
+        // references to subscriptions for Observable
+        const _subRefs = [];
+
+        // init's observer handlers if defined on passed `func` object
+        [
+            {call: "onNext", func: "next"},
+            {call: "onError", func: "error"},
+            {call: "onComplete", func: "complete"},
+        ].forEach((obs) => {
+            if (func.hasOwnProperty(obs.func)) {
+                _subRefs.push(_o[obs.call].subscribe({next: func[obs.func]}));
+            }
+        });
 
         // creates an extensible object to hold our unsubscribe method
+        // and adds unsubscribe calls to the Proto object
         const _subs = class {};
-        const _subRefs = [];
-        // references the ObserverBuilder for the path
-        let _o = this.observerBuilder.get(path);
-
-        if (!_o || _o === null) {
-            this.observerBuilder.create(path, this);
-            _o = this.observerBuilder.get(path);
-        }
-
-        // adds onNext handler if `next` prop is defined
-        if (func.hasOwnProperty("next")) {
-            _subRefs.push(_o.onNext.subscribe({next: func.next}));
-        }
-
-        // adds onError handler if `error` prop is defined
-        if (func.hasOwnProperty("error")) {
-            _subRefs.push(_o.onError.subscribe({next: func.error}));
-        }
-
-        // adds onComplete handler if `complete` prop is defined
-        if (func.hasOwnProperty("complete")) {
-            _subRefs.push(_o.onComplete.subscribe({next: func.complete}));
-        }
 
         // adds unsubscribe to the Proto object
         _subs.prototype.unsubscribe = () => {
@@ -113,36 +95,73 @@ export class Model {
                 sub.unsubscribe();
             });
         };
+
         return new _subs();
     }
 
     /**
-     * @returns {boolean|string} returns error string or true
+     * Tests value for validation without setting value to Model
+     * @param {json} value - JSON value to validate for validity
+     * @return {boolean}
      */
-    validate() {
-        const paths = _validPaths.get(this.jsd);
+    validate(value) {
         try {
-            Object.keys(paths).forEach((k) => {
-                const _t = typeof paths[k];
-                if (_t === "string") {
-                    throw paths[k];
-                }
-            });
+           return validate(this, this.validationPath, value);
         } catch (e) {
-            return e;
+            // couldn't find schema, so is Additional Properties
+            // todo: review `removeAdditional` ajv option for related behavior
+            return true;
         }
-        return true;
+
+
     }
 
     /**
-     * @returns {boolean}
+     * resets Model to empty value
+     * @return {Model}
      */
-    get isValid() {
-        return (typeof this.validate() !== "string");
+    reset() {
+        const _isArray = Array.isArray(this.model);
+        const _o = !_isArray ? {} : [];
+        const _res = this.validate(_o);
+        // validates that this model be returned to an empty value
+        if (_res !== true) {
+            _oBuilders.get(this.rxvo).error(this, _res);
+            return this;
+        }
+
+        // marks this model as out of sync with tree
+        makeDirty(this);
+
+        // closure to handle the freeze operation safely
+        const _freeze = (itm) => {
+            if (!Object.isFrozen(itm)) {
+                itm.freeze();
+            }
+        };
+
+        // freezes all child Model/Elements
+        // -- prevent changes to Children
+        // -- sends "complete" notification to their Observers
+        // -- revokes their Models if revocable
+        const _i = !_isArray ? Object.keys(this.model) : this.model;
+        _i.forEach((itm) => _freeze((!_isArray) ? _i[itm] : itm));
+
+        // creates new Proxied Model to operate on
+        const _p = new Proxy(Model.createRef(this, _o), this.handler);
+        _object.set(this, _p);
+
+        // marks this model as back in sync with tree
+        makeClean(this);
+
+        // sends notification of model change
+        _oBuilders.get(this.rxvo).next(this);
+
+        return this;
     }
 
     /**
-     * gets raw value of this model
+     * Raw value of this Model
      * @returns {*}
      */
     valueOf() {
@@ -150,45 +169,97 @@ export class Model {
     }
 
     /**
-     * JSONifies Schema Model
+     * Provides JSON object representation of Model
      */
     toJSON() {
         let _derive = (itm) => {
+
+            // uses toJSON impl if defined
             if (itm.hasOwnProperty("toJSON") &&
                 (typeof this.toJSON) === "function") {
                 return itm.toJSON();
             }
+
+            // builds new JSON tree if value is object
             if (typeof itm === "object") {
                 const _o = !Array.isArray(itm) ? {} : [];
                 for (let k in itm) {
+
+                    // we validate for property to avoid warnings
                     if (itm.hasOwnProperty(k)) {
+
+                        // applies property to tree
                         _o[k] = _derive(itm[k]);
                     }
                 }
+
+                // returns new JSON tree
                 return _o;
             }
+            // hands back itm if value wasn't usable
             return itm;
         };
+
+        // uses closure for evaluation
         return _derive(this.valueOf());
     }
 
     /**
-     * JSON stringifies primitive value
+     * Provides JSON String representation of Model
      * @param pretty - `prettifies` JSON output for readability
      */
     toString(pretty = false) {
+        console.log(this.toJSON());
         return JSON.stringify(this.toJSON(), null, (pretty ? 2 : void(0)));
     }
 
     /**
-     * @returns {string} Object ID for Schema
+     * Applies Object.freeze to model and triggers complete notification
+     * -- unlike Object.freeze, this prevents modification
+     * -- to all children in Model hierarchy
+     * @returns {Model}
+     */
+    freeze() {
+        Object.freeze(_object.get(this));
+        _oBuilders.get(this.rxvo).complete(this);
+        return this;
+    }
+
+    /**
+     *
+     * @return {object}
+     */
+    get handler() {
+        return {
+            setPrototypeOf: () => false,
+            isExtensible: (t) => Object.isExtensible(t),
+            preventExtensions: (t) => Object.preventExtensions(t),
+            getOwnPropertyDescriptor: (t, key) => Object.getOwnPropertyDescriptor(t, key),
+            defineProperty: (t, key, desc) => Object.defineProperty(t, key, desc),
+            has: (t, key) => key in t,
+            ownKeys: (t) => Reflect.ownKeys(t),
+            apply: () => false,
+        };
+    }
+
+    /**
+     * stub for model getter, overridden by Model sub-class
+     * @return {object|array|null}
+     */
+    get model() {
+        return null;
+    }
+
+    /**
+     * Getter for Model's Unique Object ID
+     * @returns {string} Object ID for Model
      */
     get objectID() {
         return _mdRef.get(this)._id;
     }
 
     /**
-     * getter for document root element
+     * Getter for root element of Model hierarchy
      * @returns {Model}
      */
     get root() {
@@ -196,95 +267,82 @@ export class Model {
     }
 
     /**
-     * getter for `path` to current Element
+     * Getter for `path` to current Element
      * @returns {string}
      */
     get path() {
-        let __ = _mdRef.get(this).path;
-        return _exists(__) ? __ : "";
+        return _mdRef.get(this).path || "";
     }
 
     /**
-     * getter for models parent Schema or Set element
+     * Getter for path to JSON Object for Model
+     * @returns {string}
+     */
+    get jsonPath() {
+        return this.path.replace(/\/?(properties|items)+\/?/g, ".").replace(/^\./, "");
+    }
+    /**
+     * Getter for Model's parent
      * @returns {Model}
      */
     get parent() {
-        let __ = _mdRef.get(this).root;
-        return _exists(__) ? __ : this;
+        // attempts to get parent
+        return _mdRef.get(this).parent || null;
     }
 
     /**
-     * getter for model"s JSD owner object
-     * @returns {JSD}
+     * Getter for Model validation status for hierarchy
+     * @return {boolean}
      */
-    get jsd() {
-        return _mdRef.get(this).jsd;
+    get isDirty() {
+        let _res = _dirtyModels.get(this.rxvo)[this.path] || false;
+        return _res || ((this.parent === null) ? false : this.parent.isDirty);
     }
 
     /**
-     * get options (if any) for this model"s schema
+     * Getter for model's RxVO owner object
+     * @returns {RxVO}
+     */
+    get rxvo() {
+        return _mdRef.get(this).rxvo;
+    }
+
+    /**
+     * Get options (if any) for this model's schema
+     * todo: review for possible removal
+     * @return {any}
      */
     get options() {
         return _schemaOptions.get(this);
     }
 
     /**
-     * getter for ValidatorBuilder reference
-     * @returns {ValidatorBuilder}
-     */
-    get validatorBuilder() {
-        return _vBuilders.get(this.jsd);
-    }
-
-    /**
-     * getter for ObserverBuilder reference
-     * @returns {ObserverBuilder}
-     */
-    get observerBuilder() {
-        return _oBuilders.get(this.jsd);
-    }
-
-    /**
-     * applies Object.freeze to model and triggers complete notification
-     * @returns {Model}
-     */
-    lock() {
-        Object.freeze(_object.get(this));
-        const _self = this;
-        setTimeout(()=> {
-            _self.observerBuilder.complete(_self.path, _self);
-        }, 0);
-        return this;
-    }
-
-    /**
-     *
+     * Getter for Object.isFrozen status of this node and it's ancestors
      * @returns {boolean}
      */
-    get isLocked() {
-        return Object.isFrozen(_object.get(this));
-    }
-
-
-    get validationPath() {
-        let _p = remapPolypath(this.path);
-        if (this.schema.hasOwnProperty("polymorphic")) {
-            _p = _p.replace(/(\.\d\.(?!polymorphic))+/, ".*.polymorphic.");
-        }
-
-        return _p;
+    get isFrozen() {
+        let _res = Object.isFrozen(_object.get(this));
+        return !_res ? ((this.parent === null) ? false : this.parent.isFrozen) : _res;
     }
 
     /**
-     * TODO: remove and standardize around `signature`
+     * Provides formatted string for json-schema lookup
+     * @return {string}
+     */
+    get validationPath() {
+        return this.path === "" ? "root#/" : `root#${this.path}`;
+    }
+
+    /**
+     * todo: implement with ajv
      * @returns {*}
      */
     get schema() {
-        return JSON.parse(_schemaSignatures.get(this));
+        return this; // _validators.get(this.rxvo).$ajv.compile({$model: this.validationPath});
     }
 
     /**
-     *
+     * todo: remove and standardize around `schema`
      * @returns {*}
      */
     get signature() {
@@ -298,7 +356,7 @@ export class Model {
      * @returns {*}
      */
     static createRef(ref, obj) {
-        Object.defineProperty(obj, "$ref", {
+        Object.defineProperty(obj, "$model", {
             value: ref,
             writable: false
         });

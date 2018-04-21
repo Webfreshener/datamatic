@@ -1,194 +1,182 @@
 window.esdocSearchIndex = [
   [
-    "jsd/src/classes/_validators.js~basevalidator",
-    "class/src/classes/_validators.js~BaseValidator.html",
-    "<span>BaseValidator</span> <span class=\"search-result-import-path\">jsd/src/classes/_validators.js</span>",
+    "rxvo/src/classes/_ajvwrapper.js~ajvwrapper",
+    "class/src/classes/_ajvWrapper.js~AjvWrapper.html",
+    "<span>AjvWrapper</span> <span class=\"search-result-import-path\">rxvo/src/classes/_ajvWrapper.js</span>",
     "class"
   ],
   [
-    "jsd/src/classes/jsd.js~jsd",
-    "class/src/classes/jsd.js~JSD.html",
-    "<span>JSD</span> <span class=\"search-result-import-path\">jsd/src/classes/jsd.js</span>",
+    "rxvo/src/classes/itemsmodel.js~itemsmodel",
+    "class/src/classes/itemsModel.js~ItemsModel.html",
+    "<span>ItemsModel</span> <span class=\"search-result-import-path\">rxvo/src/classes/itemsModel.js</span>",
     "class"
   ],
   [
-    "jsd/src/classes/_metadata.js~metadata",
+    "rxvo/src/classes/jsd.js~jsd",
+    "class/src/classes/jsd.js~RxVO.html",
+    "<span>RxVO</span> <span class=\"search-result-import-path\">rxvo/src/classes/jsd.js</span>",
+    "class"
+  ],
+  [
+    "rxvo/src/classes/_metadata.js~metadata",
     "class/src/classes/_metaData.js~MetaData.html",
-    "<span>MetaData</span> <span class=\"search-result-import-path\">jsd/src/classes/_metaData.js</span>",
+    "<span>MetaData</span> <span class=\"search-result-import-path\">rxvo/src/classes/_metaData.js</span>",
     "class"
   ],
   [
-    "jsd/src/classes/model.js~model",
+    "rxvo/src/classes/model.js~model",
     "class/src/classes/model.js~Model.html",
-    "<span>Model</span> <span class=\"search-result-import-path\">jsd/src/classes/model.js</span>",
+    "<span>Model</span> <span class=\"search-result-import-path\">rxvo/src/classes/model.js</span>",
     "class"
   ],
   [
-    "jsd/src/classes/_observerbuilder.js~observerbuilder",
+    "rxvo/src/classes/_branchnotifier.js~notifier",
+    "class/src/classes/_branchNotifier.js~Notifier.html",
+    "<span>Notifier</span> <span class=\"search-result-import-path\">rxvo/src/classes/_branchNotifier.js</span>",
+    "class"
+  ],
+  [
+    "rxvo/src/classes/_observerbuilder.js~observerbuilder",
     "class/src/classes/_observerBuilder.js~ObserverBuilder.html",
-    "<span>ObserverBuilder</span> <span class=\"search-result-import-path\">jsd/src/classes/_observerBuilder.js</span>",
+    "<span>ObserverBuilder</span> <span class=\"search-result-import-path\">rxvo/src/classes/_observerBuilder.js</span>",
     "class"
   ],
   [
-    "jsd/src/classes/schema.js~schema",
-    "class/src/classes/schema.js~Schema.html",
-    "<span>Schema</span> <span class=\"search-result-import-path\">jsd/src/classes/schema.js</span>",
+    "rxvo/src/classes/propertiesmodel.js~propertiesmodel",
+    "class/src/classes/propertiesModel.js~PropertiesModel.html",
+    "<span>PropertiesModel</span> <span class=\"search-result-import-path\">rxvo/src/classes/propertiesModel.js</span>",
     "class"
   ],
   [
-    "jsd/src/classes/_schemahelpers.js~schemahelpers",
+    "rxvo/src/classes/_schemahelpers.js~schemahelpers",
     "class/src/classes/_schemaHelpers.js~SchemaHelpers.html",
-    "<span>SchemaHelpers</span> <span class=\"search-result-import-path\">jsd/src/classes/_schemaHelpers.js</span>",
+    "<span>SchemaHelpers</span> <span class=\"search-result-import-path\">rxvo/src/classes/_schemaHelpers.js</span>",
     "class"
   ],
   [
-    "jsd/src/classes/_schemavalidator.js~schemavalidator",
-    "class/src/classes/_schemaValidator.js~SchemaValidator.html",
-    "<span>SchemaValidator</span> <span class=\"search-result-import-path\">jsd/src/classes/_schemaValidator.js</span>",
-    "class"
-  ],
-  [
-    "jsd/src/classes/set.js~set",
-    "class/src/classes/set.js~Set.html",
-    "<span>Set</span> <span class=\"search-result-import-path\">jsd/src/classes/set.js</span>",
-    "class"
-  ],
-  [
-    "jsd/src/classes/_validators.js~validator",
-    "variable/index.html#static-variable-Validator",
-    "<span>Validator</span> <span class=\"search-result-import-path\">jsd/src/classes/_validators.js</span>",
+    "rxvo/src/classes/_references.js~_ajvref",
+    "variable/index.html#static-variable-_ajvRef",
+    "<span>_ajvRef</span> <span class=\"search-result-import-path\">rxvo/src/classes/_references.js</span>",
     "variable"
   ],
   [
-    "jsd/src/classes/_validatorbuilder.js~validatorbuilder",
-    "class/src/classes/_validatorBuilder.js~ValidatorBuilder.html",
-    "<span>ValidatorBuilder</span> <span class=\"search-result-import-path\">jsd/src/classes/_validatorBuilder.js</span>",
-    "class"
+    "rxvo/src/classes/_references.js~_dirtymodels",
+    "variable/index.html#static-variable-_dirtyModels",
+    "<span>_dirtyModels</span> <span class=\"search-result-import-path\">rxvo/src/classes/_references.js</span>",
+    "variable"
   ],
   [
-    "jsd/src/classes/_references.js~_exists",
+    "rxvo/src/classes/_references.js~_exists",
     "variable/index.html#static-variable-_exists",
-    "<span>_exists</span> <span class=\"search-result-import-path\">jsd/src/classes/_references.js</span>",
+    "<span>_exists</span> <span class=\"search-result-import-path\">rxvo/src/classes/_references.js</span>",
     "variable"
   ],
   [
-    "jsd/src/classes/_references.js~_kinds",
-    "variable/index.html#static-variable-_kinds",
-    "<span>_kinds</span> <span class=\"search-result-import-path\">jsd/src/classes/_references.js</span>",
+    "rxvo/src/classes/_references.js~_jsddocs",
+    "variable/index.html#static-variable-_jsdDocs",
+    "<span>_jsdDocs</span> <span class=\"search-result-import-path\">rxvo/src/classes/_references.js</span>",
     "variable"
   ],
   [
-    "jsd/src/classes/_references.js~_mdref",
+    "rxvo/src/classes/_references.js~_mdref",
     "variable/index.html#static-variable-_mdRef",
-    "<span>_mdRef</span> <span class=\"search-result-import-path\">jsd/src/classes/_references.js</span>",
+    "<span>_mdRef</span> <span class=\"search-result-import-path\">rxvo/src/classes/_references.js</span>",
     "variable"
   ],
   [
-    "jsd/src/classes/_references.js~_obuilders",
+    "rxvo/src/classes/_references.js~_obuilders",
     "variable/index.html#static-variable-_oBuilders",
-    "<span>_oBuilders</span> <span class=\"search-result-import-path\">jsd/src/classes/_references.js</span>",
+    "<span>_oBuilders</span> <span class=\"search-result-import-path\">rxvo/src/classes/_references.js</span>",
     "variable"
   ],
   [
-    "jsd/src/classes/_references.js~_object",
+    "rxvo/src/classes/_references.js~_object",
     "variable/index.html#static-variable-_object",
-    "<span>_object</span> <span class=\"search-result-import-path\">jsd/src/classes/_references.js</span>",
+    "<span>_object</span> <span class=\"search-result-import-path\">rxvo/src/classes/_references.js</span>",
     "variable"
   ],
   [
-    "jsd/src/classes/_references.js~_observers",
+    "rxvo/src/classes/_references.js~_observerpaths",
+    "variable/index.html#static-variable-_observerPaths",
+    "<span>_observerPaths</span> <span class=\"search-result-import-path\">rxvo/src/classes/_references.js</span>",
+    "variable"
+  ],
+  [
+    "rxvo/src/classes/_references.js~_observers",
     "variable/index.html#static-variable-_observers",
-    "<span>_observers</span> <span class=\"search-result-import-path\">jsd/src/classes/_references.js</span>",
+    "<span>_observers</span> <span class=\"search-result-import-path\">rxvo/src/classes/_references.js</span>",
     "variable"
   ],
   [
-    "jsd/src/classes/_references.js~_required_elements",
-    "variable/index.html#static-variable-_required_elements",
-    "<span>_required_elements</span> <span class=\"search-result-import-path\">jsd/src/classes/_references.js</span>",
-    "variable"
-  ],
-  [
-    "jsd/src/classes/_references.js~_schemahelpers",
+    "rxvo/src/classes/_references.js~_schemahelpers",
     "variable/index.html#static-variable-_schemaHelpers",
-    "<span>_schemaHelpers</span> <span class=\"search-result-import-path\">jsd/src/classes/_references.js</span>",
+    "<span>_schemaHelpers</span> <span class=\"search-result-import-path\">rxvo/src/classes/_references.js</span>",
     "variable"
   ],
   [
-    "jsd/src/classes/_references.js~_schemaoptions",
+    "rxvo/src/classes/_references.js~_schemaoptions",
     "variable/index.html#static-variable-_schemaOptions",
-    "<span>_schemaOptions</span> <span class=\"search-result-import-path\">jsd/src/classes/_references.js</span>",
+    "<span>_schemaOptions</span> <span class=\"search-result-import-path\">rxvo/src/classes/_references.js</span>",
     "variable"
   ],
   [
-    "jsd/src/classes/_references.js~_schemasignatures",
+    "rxvo/src/classes/_references.js~_schemasignatures",
     "variable/index.html#static-variable-_schemaSignatures",
-    "<span>_schemaSignatures</span> <span class=\"search-result-import-path\">jsd/src/classes/_references.js</span>",
+    "<span>_schemaSignatures</span> <span class=\"search-result-import-path\">rxvo/src/classes/_references.js</span>",
     "variable"
   ],
   [
-    "jsd/src/classes/_references.js~_singletons",
-    "variable/index.html#static-variable-_singletons",
-    "<span>_singletons</span> <span class=\"search-result-import-path\">jsd/src/classes/_references.js</span>",
-    "variable"
-  ],
-  [
-    "jsd/src/classes/_references.js~_vbuilders",
-    "variable/index.html#static-variable-_vBuilders",
-    "<span>_vBuilders</span> <span class=\"search-result-import-path\">jsd/src/classes/_references.js</span>",
-    "variable"
-  ],
-  [
-    "jsd/src/classes/_references.js~_vpaths",
-    "variable/index.html#static-variable-_vPaths",
-    "<span>_vPaths</span> <span class=\"search-result-import-path\">jsd/src/classes/_references.js</span>",
-    "variable"
-  ],
-  [
-    "jsd/src/classes/_references.js~_validpaths",
-    "variable/index.html#static-variable-_validPaths",
-    "<span>_validPaths</span> <span class=\"search-result-import-path\">jsd/src/classes/_references.js</span>",
-    "variable"
-  ],
-  [
-    "jsd/src/classes/_references.js~_validators",
+    "rxvo/src/classes/_references.js~_validators",
     "variable/index.html#static-variable-_validators",
-    "<span>_validators</span> <span class=\"search-result-import-path\">jsd/src/classes/_references.js</span>",
+    "<span>_validators</span> <span class=\"search-result-import-path\">rxvo/src/classes/_references.js</span>",
     "variable"
   ],
   [
-    "jsd/src/classes/_references.js~_vectortypes",
-    "variable/index.html#static-variable-_vectorTypes",
-    "<span>_vectorTypes</span> <span class=\"search-result-import-path\">jsd/src/classes/_references.js</span>",
-    "variable"
-  ],
-  [
-    "jsd/src/classes/utils.js~ensurekindisstring",
-    "function/index.html#static-function-ensureKindIsString",
-    "<span>ensureKindIsString</span> <span class=\"search-result-import-path\">jsd/src/classes/utils.js</span>",
+    "rxvo/src/classes/utils.js~getroot",
+    "function/index.html#static-function-getRoot",
+    "<span>getRoot</span> <span class=\"search-result-import-path\">rxvo/src/classes/utils.js</span>",
     "function"
   ],
   [
-    "jsd/src/classes/utils.js~ensurerequiredfields",
-    "function/index.html#static-function-ensureRequiredFields",
-    "<span>ensureRequiredFields</span> <span class=\"search-result-import-path\">jsd/src/classes/utils.js</span>",
+    "rxvo/src/classes/utils.js~listdirtyitems",
+    "function/index.html#static-function-listDirtyItems",
+    "<span>listDirtyItems</span> <span class=\"search-result-import-path\">rxvo/src/classes/utils.js</span>",
     "function"
   ],
   [
-    "jsd/src/classes/utils.js~remappolypath",
-    "function/index.html#static-function-remapPolypath",
-    "<span>remapPolypath</span> <span class=\"search-result-import-path\">jsd/src/classes/utils.js</span>",
+    "rxvo/src/classes/utils.js~makeclean",
+    "function/index.html#static-function-makeClean",
+    "<span>makeClean</span> <span class=\"search-result-import-path\">rxvo/src/classes/utils.js</span>",
     "function"
   ],
   [
-    "jsd/src/classes/_validatorbuilder.js~rxrx",
-    "variable/index.html#static-variable-rxRx",
-    "<span>rxRx</span> <span class=\"search-result-import-path\">jsd/src/classes/_validatorBuilder.js</span>",
-    "variable"
+    "rxvo/src/classes/utils.js~makedirty",
+    "function/index.html#static-function-makeDirty",
+    "<span>makeDirty</span> <span class=\"search-result-import-path\">rxvo/src/classes/utils.js</span>",
+    "function"
   ],
   [
-    "jsd/src/classes/_references.js~wf",
+    "rxvo/src/classes/utils.js~refatkeyvalidation",
+    "function/index.html#static-function-refAtKeyValidation",
+    "<span>refAtKeyValidation</span> <span class=\"search-result-import-path\">rxvo/src/classes/utils.js</span>",
+    "function"
+  ],
+  [
+    "rxvo/src/classes/utils.js~refvalidation",
+    "function/index.html#static-function-refValidation",
+    "<span>refValidation</span> <span class=\"search-result-import-path\">rxvo/src/classes/utils.js</span>",
+    "function"
+  ],
+  [
+    "rxvo/src/classes/utils.js~validate",
+    "function/index.html#static-function-validate",
+    "<span>validate</span> <span class=\"search-result-import-path\">rxvo/src/classes/utils.js</span>",
+    "function"
+  ],
+  [
+    "rxvo/src/classes/_references.js~wf",
     "variable/index.html#static-variable-wf",
-    "<span>wf</span> <span class=\"search-result-import-path\">jsd/src/classes/_references.js</span>",
+    "<span>wf</span> <span class=\"search-result-import-path\">rxvo/src/classes/_references.js</span>",
     "variable"
   ],
   [
@@ -474,6 +462,78 @@ window.esdocSearchIndex = [
     "external"
   ],
   [
+    "src/classes/_ajvwrapper.js",
+    "file/src/classes/_ajvWrapper.js.html",
+    "src/classes/_ajvWrapper.js",
+    "file"
+  ],
+  [
+    "src/classes/_ajvwrapper.js~ajvwrapper#$ajv",
+    "class/src/classes/_ajvWrapper.js~AjvWrapper.html#instance-get-$ajv",
+    "src/classes/_ajvWrapper.js~AjvWrapper#$ajv",
+    "member"
+  ],
+  [
+    "src/classes/_ajvwrapper.js~ajvwrapper#constructor",
+    "class/src/classes/_ajvWrapper.js~AjvWrapper.html#instance-constructor-constructor",
+    "src/classes/_ajvWrapper.js~AjvWrapper#constructor",
+    "method"
+  ],
+  [
+    "src/classes/_ajvwrapper.js~ajvwrapper#exec",
+    "class/src/classes/_ajvWrapper.js~AjvWrapper.html#instance-method-exec",
+    "src/classes/_ajvWrapper.js~AjvWrapper#exec",
+    "method"
+  ],
+  [
+    "src/classes/_ajvwrapper.js~ajvwrapper.resolvepath",
+    "class/src/classes/_ajvWrapper.js~AjvWrapper.html#static-method-resolvePath",
+    "src/classes/_ajvWrapper.js~AjvWrapper.resolvePath",
+    "method"
+  ],
+  [
+    "src/classes/_branchnotifier.js",
+    "file/src/classes/_branchNotifier.js.html",
+    "src/classes/_branchNotifier.js",
+    "file"
+  ],
+  [
+    "src/classes/_branchnotifier.js~notifier#constructor",
+    "class/src/classes/_branchNotifier.js~Notifier.html#instance-constructor-constructor",
+    "src/classes/_branchNotifier.js~Notifier#constructor",
+    "method"
+  ],
+  [
+    "src/classes/_branchnotifier.js~notifier#sendcomplete",
+    "class/src/classes/_branchNotifier.js~Notifier.html#instance-method-sendComplete",
+    "src/classes/_branchNotifier.js~Notifier#sendComplete",
+    "method"
+  ],
+  [
+    "src/classes/_branchnotifier.js~notifier#senderror",
+    "class/src/classes/_branchNotifier.js~Notifier.html#instance-method-sendError",
+    "src/classes/_branchNotifier.js~Notifier#sendError",
+    "method"
+  ],
+  [
+    "src/classes/_branchnotifier.js~notifier#sendnext",
+    "class/src/classes/_branchNotifier.js~Notifier.html#instance-method-sendNext",
+    "src/classes/_branchNotifier.js~Notifier#sendNext",
+    "method"
+  ],
+  [
+    "src/classes/_branchnotifier.js~notifier#sendupdate",
+    "class/src/classes/_branchNotifier.js~Notifier.html#instance-method-sendUpdate",
+    "src/classes/_branchNotifier.js~Notifier#sendUpdate",
+    "method"
+  ],
+  [
+    "src/classes/_branchnotifier.js~notifier.getinstance",
+    "class/src/classes/_branchNotifier.js~Notifier.html#static-method-getInstance",
+    "src/classes/_branchNotifier.js~Notifier.getInstance",
+    "method"
+  ],
+  [
     "src/classes/_metadata.js",
     "file/src/classes/_metaData.js.html",
     "src/classes/_metaData.js",
@@ -540,12 +600,6 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "src/classes/_metadata.js~metadata#writelock",
-    "class/src/classes/_metaData.js~MetaData.html#instance-get-writeLock",
-    "src/classes/_metaData.js~MetaData#writeLock",
-    "member"
-  ],
-  [
     "src/classes/_observerbuilder.js",
     "file/src/classes/_observerBuilder.js.html",
     "src/classes/_observerBuilder.js",
@@ -579,6 +633,12 @@ window.esdocSearchIndex = [
     "src/classes/_observerbuilder.js~observerbuilder#get",
     "class/src/classes/_observerBuilder.js~ObserverBuilder.html#instance-method-get",
     "src/classes/_observerBuilder.js~ObserverBuilder#get",
+    "method"
+  ],
+  [
+    "src/classes/_observerbuilder.js~observerbuilder#getobserverforpath",
+    "class/src/classes/_observerBuilder.js~ObserverBuilder.html#instance-method-getObserverForPath",
+    "src/classes/_observerBuilder.js~ObserverBuilder#getObserverForPath",
     "method"
   ],
   [
@@ -624,18 +684,6 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "src/classes/_schemahelpers.js~schemahelpers#getschemaelement",
-    "class/src/classes/_schemaHelpers.js~SchemaHelpers.html#instance-method-getSchemaElement",
-    "src/classes/_schemaHelpers.js~SchemaHelpers#getSchemaElement",
-    "method"
-  ],
-  [
-    "src/classes/_schemahelpers.js~schemahelpers#referencerequiredelements",
-    "class/src/classes/_schemaHelpers.js~SchemaHelpers.html#instance-method-referenceRequiredElements",
-    "src/classes/_schemaHelpers.js~SchemaHelpers#referenceRequiredElements",
-    "method"
-  ],
-  [
     "src/classes/_schemahelpers.js~schemahelpers#setchildobject",
     "class/src/classes/_schemaHelpers.js~SchemaHelpers.html#instance-method-setChildObject",
     "src/classes/_schemaHelpers.js~SchemaHelpers#setChildObject",
@@ -648,189 +696,33 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "src/classes/_schemahelpers.js~schemahelpers#validate",
-    "class/src/classes/_schemaHelpers.js~SchemaHelpers.html#instance-method-validate",
-    "src/classes/_schemaHelpers.js~SchemaHelpers#validate",
-    "method"
-  ],
-  [
-    "src/classes/_schemavalidator.js",
-    "file/src/classes/_schemaValidator.js.html",
-    "src/classes/_schemaValidator.js",
+    "src/classes/itemsmodel.js",
+    "file/src/classes/itemsModel.js.html",
+    "src/classes/itemsModel.js",
     "file"
   ],
   [
-    "src/classes/_schemavalidator.js~schemavalidator#_defaults",
-    "class/src/classes/_schemaValidator.js~SchemaValidator.html#instance-member-_defaults",
-    "src/classes/_schemaValidator.js~SchemaValidator#_defaults",
+    "src/classes/itemsmodel.js~itemsmodel#constructor",
+    "class/src/classes/itemsModel.js~ItemsModel.html#instance-constructor-constructor",
+    "src/classes/itemsModel.js~ItemsModel#constructor",
+    "method"
+  ],
+  [
+    "src/classes/itemsmodel.js~itemsmodel#handler",
+    "class/src/classes/itemsModel.js~ItemsModel.html#instance-get-handler",
+    "src/classes/itemsModel.js~ItemsModel#handler",
     "member"
   ],
   [
-    "src/classes/_schemavalidator.js~schemavalidator#constructor",
-    "class/src/classes/_schemaValidator.js~SchemaValidator.html#instance-constructor-constructor",
-    "src/classes/_schemaValidator.js~SchemaValidator#constructor",
-    "method"
-  ],
-  [
-    "src/classes/_schemavalidator.js~schemavalidator#jsd",
-    "class/src/classes/_schemaValidator.js~SchemaValidator.html#instance-get-jsd",
-    "src/classes/_schemaValidator.js~SchemaValidator#jsd",
+    "src/classes/itemsmodel.js~itemsmodel#model",
+    "class/src/classes/itemsModel.js~ItemsModel.html#instance-get-model",
+    "src/classes/itemsModel.js~ItemsModel#model",
     "member"
   ],
   [
-    "src/classes/_schemavalidator.js~schemavalidator#validatepolymorphicentry",
-    "class/src/classes/_schemaValidator.js~SchemaValidator.html#instance-method-validatePolymorphicEntry",
-    "src/classes/_schemaValidator.js~SchemaValidator#validatePolymorphicEntry",
-    "method"
-  ],
-  [
-    "src/classes/_schemavalidator.js~schemavalidator#validateschemaclass",
-    "class/src/classes/_schemaValidator.js~SchemaValidator.html#instance-method-validateSchemaClass",
-    "src/classes/_schemaValidator.js~SchemaValidator#validateSchemaClass",
-    "method"
-  ],
-  [
-    "src/classes/_schemavalidator.js~schemavalidator#validateschemaentry",
-    "class/src/classes/_schemaValidator.js~SchemaValidator.html#instance-method-validateSchemaEntry",
-    "src/classes/_schemaValidator.js~SchemaValidator#validateSchemaEntry",
-    "method"
-  ],
-  [
-    "src/classes/_schemavalidator.js~schemavalidator#validateschemaparam",
-    "class/src/classes/_schemaValidator.js~SchemaValidator.html#instance-method-validateSchemaParam",
-    "src/classes/_schemaValidator.js~SchemaValidator#validateSchemaParam",
-    "method"
-  ],
-  [
-    "src/classes/_schemavalidator.js~schemavalidator#validateschemaparamstring",
-    "class/src/classes/_schemaValidator.js~SchemaValidator.html#instance-method-validateSchemaParamString",
-    "src/classes/_schemaValidator.js~SchemaValidator#validateSchemaParamString",
-    "method"
-  ],
-  [
-    "src/classes/_schemavalidator.js~schemavalidator#validatetypestring",
-    "class/src/classes/_schemaValidator.js~SchemaValidator.html#instance-method-validateTypeString",
-    "src/classes/_schemaValidator.js~SchemaValidator#validateTypeString",
-    "method"
-  ],
-  [
-    "src/classes/_schemavalidator.js~schemavalidator#validateuntypedmembers",
-    "class/src/classes/_schemaValidator.js~SchemaValidator.html#instance-method-validateUntypedMembers",
-    "src/classes/_schemaValidator.js~SchemaValidator#validateUntypedMembers",
-    "method"
-  ],
-  [
-    "src/classes/_schemavalidator.js~schemavalidator.eval",
-    "class/src/classes/_schemaValidator.js~SchemaValidator.html#static-method-eval",
-    "src/classes/_schemaValidator.js~SchemaValidator.eval",
-    "method"
-  ],
-  [
-    "src/classes/_validatorbuilder.js",
-    "file/src/classes/_validatorBuilder.js.html",
-    "src/classes/_validatorBuilder.js",
-    "file"
-  ],
-  [
-    "src/classes/_validatorbuilder.js~validatorbuilder#constructor",
-    "class/src/classes/_validatorBuilder.js~ValidatorBuilder.html#instance-constructor-constructor",
-    "src/classes/_validatorBuilder.js~ValidatorBuilder#constructor",
-    "method"
-  ],
-  [
-    "src/classes/_validatorbuilder.js~validatorbuilder#create",
-    "class/src/classes/_validatorBuilder.js~ValidatorBuilder.html#instance-method-create",
-    "src/classes/_validatorBuilder.js~ValidatorBuilder#create",
-    "method"
-  ],
-  [
-    "src/classes/_validatorbuilder.js~validatorbuilder#exec",
-    "class/src/classes/_validatorBuilder.js~ValidatorBuilder.html#instance-method-exec",
-    "src/classes/_validatorBuilder.js~ValidatorBuilder#exec",
-    "method"
-  ],
-  [
-    "src/classes/_validatorbuilder.js~validatorbuilder#get",
-    "class/src/classes/_validatorBuilder.js~ValidatorBuilder.html#instance-method-get",
-    "src/classes/_validatorBuilder.js~ValidatorBuilder#get",
-    "method"
-  ],
-  [
-    "src/classes/_validatorbuilder.js~validatorbuilder#list",
-    "class/src/classes/_validatorBuilder.js~ValidatorBuilder.html#instance-method-list",
-    "src/classes/_validatorBuilder.js~ValidatorBuilder#list",
-    "method"
-  ],
-  [
-    "src/classes/_validatorbuilder.js~validatorbuilder#resolvepath",
-    "class/src/classes/_validatorBuilder.js~ValidatorBuilder.html#instance-method-resolvePath",
-    "src/classes/_validatorBuilder.js~ValidatorBuilder#resolvePath",
-    "method"
-  ],
-  [
-    "src/classes/_validatorbuilder.js~validatorbuilder#set",
-    "class/src/classes/_validatorBuilder.js~ValidatorBuilder.html#instance-method-set",
-    "src/classes/_validatorBuilder.js~ValidatorBuilder#set",
-    "method"
-  ],
-  [
-    "src/classes/_validators.js",
-    "file/src/classes/_validators.js.html",
-    "src/classes/_validators.js",
-    "file"
-  ],
-  [
-    "src/classes/_validators.js~basevalidator#_signature",
-    "class/src/classes/_validators.js~BaseValidator.html#instance-member-_signature",
-    "src/classes/_validators.js~BaseValidator#_signature",
-    "member"
-  ],
-  [
-    "src/classes/_validators.js~basevalidator#call",
-    "class/src/classes/_validators.js~BaseValidator.html#instance-method-call",
-    "src/classes/_validators.js~BaseValidator#call",
-    "method"
-  ],
-  [
-    "src/classes/_validators.js~basevalidator#checktype",
-    "class/src/classes/_validators.js~BaseValidator.html#instance-method-checkType",
-    "src/classes/_validators.js~BaseValidator#checkType",
-    "method"
-  ],
-  [
-    "src/classes/_validators.js~basevalidator#constructor",
-    "class/src/classes/_validators.js~BaseValidator.html#instance-constructor-constructor",
-    "src/classes/_validators.js~BaseValidator#constructor",
-    "method"
-  ],
-  [
-    "src/classes/_validators.js~basevalidator#exec",
-    "class/src/classes/_validators.js~BaseValidator.html#instance-method-exec",
-    "src/classes/_validators.js~BaseValidator#exec",
-    "method"
-  ],
-  [
-    "src/classes/_validators.js~basevalidator#jsd",
-    "class/src/classes/_validators.js~BaseValidator.html#instance-member-jsd",
-    "src/classes/_validators.js~BaseValidator#jsd",
-    "member"
-  ],
-  [
-    "src/classes/_validators.js~basevalidator#path",
-    "class/src/classes/_validators.js~BaseValidator.html#instance-member-path",
-    "src/classes/_validators.js~BaseValidator#path",
-    "member"
-  ],
-  [
-    "src/classes/_validators.js~basevalidator#signature",
-    "class/src/classes/_validators.js~BaseValidator.html#instance-get-signature",
-    "src/classes/_validators.js~BaseValidator#signature",
-    "member"
-  ],
-  [
-    "src/classes/_validators.js~basevalidator#validations",
-    "class/src/classes/_validators.js~BaseValidator.html#instance-get-validations",
-    "src/classes/_validators.js~BaseValidator#validations",
+    "src/classes/itemsmodel.js~itemsmodel#model",
+    "class/src/classes/itemsModel.js~ItemsModel.html#instance-set-model",
+    "src/classes/itemsModel.js~ItemsModel#model",
     "member"
   ],
   [
@@ -840,75 +732,81 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
-    "src/classes/jsd.js~jsd#[name]",
-    "class/src/classes/jsd.js~JSD.html#instance-member-[name]",
-    "src/classes/jsd.js~JSD#[name]",
-    "member"
-  ],
-  [
     "src/classes/jsd.js~jsd#constructor",
-    "class/src/classes/jsd.js~JSD.html#instance-constructor-constructor",
-    "src/classes/jsd.js~JSD#constructor",
+    "class/src/classes/jsd.js~RxVO.html#instance-constructor-constructor",
+    "src/classes/jsd.js~RxVO#constructor",
     "method"
   ],
   [
-    "src/classes/jsd.js~jsd#document",
-    "class/src/classes/jsd.js~JSD.html#instance-get-document",
-    "src/classes/jsd.js~JSD#document",
+    "src/classes/jsd.js~jsd#errors",
+    "class/src/classes/jsd.js~RxVO.html#instance-get-errors",
+    "src/classes/jsd.js~RxVO#errors",
     "member"
   ],
   [
-    "src/classes/jsd.js~jsd#get",
-    "class/src/classes/jsd.js~JSD.html#instance-method-get",
-    "src/classes/jsd.js~JSD#get",
+    "src/classes/jsd.js~jsd#getmodelsinpath",
+    "class/src/classes/jsd.js~RxVO.html#instance-method-getModelsInPath",
+    "src/classes/jsd.js~RxVO#getModelsInPath",
     "method"
   ],
   [
-    "src/classes/jsd.js~jsd#getclass",
-    "class/src/classes/jsd.js~JSD.html#instance-method-getClass",
-    "src/classes/jsd.js~JSD#getClass",
+    "src/classes/jsd.js~jsd#getpath",
+    "class/src/classes/jsd.js~RxVO.html#instance-method-getPath",
+    "src/classes/jsd.js~RxVO#getPath",
     "method"
   ],
   [
-    "src/classes/jsd.js~jsd#isvalid",
-    "class/src/classes/jsd.js~JSD.html#instance-get-isValid",
-    "src/classes/jsd.js~JSD#isValid",
+    "src/classes/jsd.js~jsd#model",
+    "class/src/classes/jsd.js~RxVO.html#instance-set-model",
+    "src/classes/jsd.js~RxVO#model",
     "member"
   ],
   [
-    "src/classes/jsd.js~jsd#listclasses",
-    "class/src/classes/jsd.js~JSD.html#instance-method-listClasses",
-    "src/classes/jsd.js~JSD#listClasses",
-    "method"
-  ],
-  [
-    "src/classes/jsd.js~jsd#registerclass",
-    "class/src/classes/jsd.js~JSD.html#instance-method-registerClass",
-    "src/classes/jsd.js~JSD#registerClass",
-    "method"
-  ],
-  [
-    "src/classes/jsd.js~jsd#schemaref",
-    "class/src/classes/jsd.js~JSD.html#instance-get-schemaRef",
-    "src/classes/jsd.js~JSD#schemaRef",
+    "src/classes/jsd.js~jsd#model",
+    "class/src/classes/jsd.js~RxVO.html#instance-get-model",
+    "src/classes/jsd.js~RxVO#model",
     "member"
   ],
   [
-    "src/classes/jsd.js~jsd#unregisterclass",
-    "class/src/classes/jsd.js~JSD.html#instance-method-unregisterClass",
-    "src/classes/jsd.js~JSD#unregisterClass",
+    "src/classes/jsd.js~jsd#schema",
+    "class/src/classes/jsd.js~RxVO.html#instance-get-schema",
+    "src/classes/jsd.js~RxVO#schema",
+    "member"
+  ],
+  [
+    "src/classes/jsd.js~jsd#subscribe",
+    "class/src/classes/jsd.js~RxVO.html#instance-method-subscribe",
+    "src/classes/jsd.js~RxVO#subscribe",
     "method"
   ],
   [
-    "src/classes/jsd.js~jsd.defaults",
-    "class/src/classes/jsd.js~JSD.html#static-get-defaults",
-    "src/classes/jsd.js~JSD.defaults",
-    "member"
+    "src/classes/jsd.js~jsd#subscribeto",
+    "class/src/classes/jsd.js~RxVO.html#instance-method-subscribeTo",
+    "src/classes/jsd.js~RxVO#subscribeTo",
+    "method"
+  ],
+  [
+    "src/classes/jsd.js~jsd#tojson",
+    "class/src/classes/jsd.js~RxVO.html#instance-method-toJSON",
+    "src/classes/jsd.js~RxVO#toJSON",
+    "method"
+  ],
+  [
+    "src/classes/jsd.js~jsd#tostring",
+    "class/src/classes/jsd.js~RxVO.html#instance-method-toString",
+    "src/classes/jsd.js~RxVO#toString",
+    "method"
+  ],
+  [
+    "src/classes/jsd.js~jsd#validate",
+    "class/src/classes/jsd.js~RxVO.html#instance-method-validate",
+    "src/classes/jsd.js~RxVO#validate",
+    "method"
   ],
   [
     "src/classes/jsd.js~jsd.fromjson",
-    "class/src/classes/jsd.js~JSD.html#static-method-fromJSON",
-    "src/classes/jsd.js~JSD.fromJSON",
+    "class/src/classes/jsd.js~RxVO.html#static-method-fromJSON",
+    "src/classes/jsd.js~RxVO.fromJSON",
     "method"
   ],
   [
@@ -924,21 +822,27 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/classes/model.js~model#freeze",
+    "class/src/classes/model.js~Model.html#instance-method-freeze",
+    "src/classes/model.js~Model#freeze",
+    "method"
+  ],
+  [
     "src/classes/model.js~model#handler",
     "class/src/classes/model.js~Model.html#instance-get-handler",
     "src/classes/model.js~Model#handler",
     "member"
   ],
   [
-    "src/classes/model.js~model#islocked",
-    "class/src/classes/model.js~Model.html#instance-get-isLocked",
-    "src/classes/model.js~Model#isLocked",
+    "src/classes/model.js~model#isdirty",
+    "class/src/classes/model.js~Model.html#instance-get-isDirty",
+    "src/classes/model.js~Model#isDirty",
     "member"
   ],
   [
-    "src/classes/model.js~model#isvalid",
-    "class/src/classes/model.js~Model.html#instance-get-isValid",
-    "src/classes/model.js~Model#isValid",
+    "src/classes/model.js~model#isfrozen",
+    "class/src/classes/model.js~Model.html#instance-get-isFrozen",
+    "src/classes/model.js~Model#isFrozen",
     "member"
   ],
   [
@@ -948,21 +852,21 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
-    "src/classes/model.js~model#lock",
-    "class/src/classes/model.js~Model.html#instance-method-lock",
-    "src/classes/model.js~Model#lock",
-    "method"
+    "src/classes/model.js~model#jsonpath",
+    "class/src/classes/model.js~Model.html#instance-get-jsonPath",
+    "src/classes/model.js~Model#jsonPath",
+    "member"
+  ],
+  [
+    "src/classes/model.js~model#model",
+    "class/src/classes/model.js~Model.html#instance-get-model",
+    "src/classes/model.js~Model#model",
+    "member"
   ],
   [
     "src/classes/model.js~model#objectid",
     "class/src/classes/model.js~Model.html#instance-get-objectID",
     "src/classes/model.js~Model#objectID",
-    "member"
-  ],
-  [
-    "src/classes/model.js~model#observerbuilder",
-    "class/src/classes/model.js~Model.html#instance-get-observerBuilder",
-    "src/classes/model.js~Model#observerBuilder",
     "member"
   ],
   [
@@ -982,6 +886,12 @@ window.esdocSearchIndex = [
     "class/src/classes/model.js~Model.html#instance-get-path",
     "src/classes/model.js~Model#path",
     "member"
+  ],
+  [
+    "src/classes/model.js~model#reset",
+    "class/src/classes/model.js~Model.html#instance-method-reset",
+    "src/classes/model.js~Model#reset",
+    "method"
   ],
   [
     "src/classes/model.js~model#root",
@@ -1038,12 +948,6 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
-    "src/classes/model.js~model#validatorbuilder",
-    "class/src/classes/model.js~Model.html#instance-get-validatorBuilder",
-    "src/classes/model.js~Model#validatorBuilder",
-    "member"
-  ],
-  [
     "src/classes/model.js~model#valueof",
     "class/src/classes/model.js~Model.html#instance-method-valueOf",
     "src/classes/model.js~Model#valueOf",
@@ -1056,195 +960,51 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "src/classes/schema.js",
-    "file/src/classes/schema.js.html",
-    "src/classes/schema.js",
+    "src/classes/propertiesmodel.js",
+    "file/src/classes/propertiesModel.js.html",
+    "src/classes/propertiesModel.js",
     "file"
   ],
   [
-    "src/classes/schema.js~schema#constructor",
-    "class/src/classes/schema.js~Schema.html#instance-constructor-constructor",
-    "src/classes/schema.js~Schema#constructor",
+    "src/classes/propertiesmodel.js~propertiesmodel#constructor",
+    "class/src/classes/propertiesModel.js~PropertiesModel.html#instance-constructor-constructor",
+    "src/classes/propertiesModel.js~PropertiesModel#constructor",
     "method"
   ],
   [
-    "src/classes/schema.js~schema#get",
-    "class/src/classes/schema.js~Schema.html#instance-method-get",
-    "src/classes/schema.js~Schema#get",
+    "src/classes/propertiesmodel.js~propertiesmodel#get",
+    "class/src/classes/propertiesModel.js~PropertiesModel.html#instance-method-get",
+    "src/classes/propertiesModel.js~PropertiesModel#get",
     "method"
   ],
   [
-    "src/classes/schema.js~schema#handler",
-    "class/src/classes/schema.js~Schema.html#instance-get-handler",
-    "src/classes/schema.js~Schema#handler",
+    "src/classes/propertiesmodel.js~propertiesmodel#handler",
+    "class/src/classes/propertiesModel.js~PropertiesModel.html#instance-get-handler",
+    "src/classes/propertiesModel.js~PropertiesModel#handler",
     "member"
   ],
   [
-    "src/classes/schema.js~schema#isextensible",
-    "class/src/classes/schema.js~Schema.html#instance-get-isExtensible",
-    "src/classes/schema.js~Schema#isExtensible",
+    "src/classes/propertiesmodel.js~propertiesmodel#model",
+    "class/src/classes/propertiesModel.js~PropertiesModel.html#instance-get-model",
+    "src/classes/propertiesModel.js~PropertiesModel#model",
     "member"
   ],
   [
-    "src/classes/schema.js~schema#model",
-    "class/src/classes/schema.js~Schema.html#instance-get-model",
-    "src/classes/schema.js~Schema#model",
+    "src/classes/propertiesmodel.js~propertiesmodel#model",
+    "class/src/classes/propertiesModel.js~PropertiesModel.html#instance-set-model",
+    "src/classes/propertiesModel.js~PropertiesModel#model",
     "member"
   ],
   [
-    "src/classes/schema.js~schema#model",
-    "class/src/classes/schema.js~Schema.html#instance-set-model",
-    "src/classes/schema.js~Schema#model",
-    "member"
-  ],
-  [
-    "src/classes/schema.js~schema#requiredfields",
-    "class/src/classes/schema.js~Schema.html#instance-get-requiredFields",
-    "src/classes/schema.js~Schema#requiredFields",
-    "member"
-  ],
-  [
-    "src/classes/schema.js~schema#set",
-    "class/src/classes/schema.js~Schema.html#instance-method-set",
-    "src/classes/schema.js~Schema#set",
+    "src/classes/propertiesmodel.js~propertiesmodel#set",
+    "class/src/classes/propertiesModel.js~PropertiesModel.html#instance-method-set",
+    "src/classes/propertiesModel.js~PropertiesModel#set",
     "method"
   ],
   [
-    "src/classes/schema.js~schema#setdefaults",
-    "class/src/classes/schema.js~Schema.html#instance-method-setDefaults",
-    "src/classes/schema.js~Schema#setDefaults",
-    "method"
-  ],
-  [
-    "src/classes/schema.js~schema#signature",
-    "class/src/classes/schema.js~Schema.html#instance-get-signature",
-    "src/classes/schema.js~Schema#signature",
-    "member"
-  ],
-  [
-    "src/classes/schema.js~schema.concatpathaddr",
-    "class/src/classes/schema.js~Schema.html#static-method-concatPathAddr",
-    "src/classes/schema.js~Schema.concatPathAddr",
-    "method"
-  ],
-  [
-    "src/classes/schema.js~schema.defaultoptions",
-    "class/src/classes/schema.js~Schema.html#static-get-defaultOptions",
-    "src/classes/schema.js~Schema.defaultOptions",
-    "member"
-  ],
-  [
-    "src/classes/schema.js~schema.defaultsignature",
-    "class/src/classes/schema.js~Schema.html#static-get-defaultSignature",
-    "src/classes/schema.js~Schema.defaultSignature",
-    "member"
-  ],
-  [
-    "src/classes/set.js",
-    "file/src/classes/set.js.html",
-    "src/classes/set.js",
-    "file"
-  ],
-  [
-    "src/classes/set.js~set#additem",
-    "class/src/classes/set.js~Set.html#instance-method-addItem",
-    "src/classes/set.js~Set#addItem",
-    "method"
-  ],
-  [
-    "src/classes/set.js~set#constructor",
-    "class/src/classes/set.js~Set.html#instance-constructor-constructor",
-    "src/classes/set.js~Set#constructor",
-    "method"
-  ],
-  [
-    "src/classes/set.js~set#getitemat",
-    "class/src/classes/set.js~Set.html#instance-method-getItemAt",
-    "src/classes/set.js~Set#getItemAt",
-    "method"
-  ],
-  [
-    "src/classes/set.js~set#handler",
-    "class/src/classes/set.js~Set.html#instance-get-handler",
-    "src/classes/set.js~Set#handler",
-    "member"
-  ],
-  [
-    "src/classes/set.js~set#length",
-    "class/src/classes/set.js~Set.html#instance-get-length",
-    "src/classes/set.js~Set#length",
-    "member"
-  ],
-  [
-    "src/classes/set.js~set#model",
-    "class/src/classes/set.js~Set.html#instance-set-model",
-    "src/classes/set.js~Set#model",
-    "member"
-  ],
-  [
-    "src/classes/set.js~set#model",
-    "class/src/classes/set.js~Set.html#instance-get-model",
-    "src/classes/set.js~Set#model",
-    "member"
-  ],
-  [
-    "src/classes/set.js~set#pop",
-    "class/src/classes/set.js~Set.html#instance-method-pop",
-    "src/classes/set.js~Set#pop",
-    "method"
-  ],
-  [
-    "src/classes/set.js~set#push",
-    "class/src/classes/set.js~Set.html#instance-method-push",
-    "src/classes/set.js~Set#push",
-    "method"
-  ],
-  [
-    "src/classes/set.js~set#removeitemat",
-    "class/src/classes/set.js~Set.html#instance-method-removeItemAt",
-    "src/classes/set.js~Set#removeItemAt",
-    "method"
-  ],
-  [
-    "src/classes/set.js~set#replaceall",
-    "class/src/classes/set.js~Set.html#instance-method-replaceAll",
-    "src/classes/set.js~Set#replaceAll",
-    "method"
-  ],
-  [
-    "src/classes/set.js~set#replaceitemat",
-    "class/src/classes/set.js~Set.html#instance-method-replaceItemAt",
-    "src/classes/set.js~Set#replaceItemAt",
-    "method"
-  ],
-  [
-    "src/classes/set.js~set#reset",
-    "class/src/classes/set.js~Set.html#instance-method-reset",
-    "src/classes/set.js~Set#reset",
-    "method"
-  ],
-  [
-    "src/classes/set.js~set#setitemat",
-    "class/src/classes/set.js~Set.html#instance-method-setItemAt",
-    "src/classes/set.js~Set#setItemAt",
-    "method"
-  ],
-  [
-    "src/classes/set.js~set#shift",
-    "class/src/classes/set.js~Set.html#instance-method-shift",
-    "src/classes/set.js~Set#shift",
-    "method"
-  ],
-  [
-    "src/classes/set.js~set#sort",
-    "class/src/classes/set.js~Set.html#instance-method-sort",
-    "src/classes/set.js~Set#sort",
-    "method"
-  ],
-  [
-    "src/classes/set.js~set#unshift",
-    "class/src/classes/set.js~Set.html#instance-method-unshift",
-    "src/classes/set.js~Set#unshift",
+    "src/classes/propertiesmodel.js~propertiesmodel.concatpathaddr",
+    "class/src/classes/propertiesModel.js~PropertiesModel.html#static-method-concatPathAddr",
+    "src/classes/propertiesModel.js~PropertiesModel.concatPathAddr",
     "method"
   ],
   [

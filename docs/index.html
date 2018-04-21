@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl">
-  <title data-ice="title">Home | jsd</title>
+  <title data-ice="title">Home | rxvo</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
   <script src="script/manual.js"></script>
-<meta name="description" content="Schema Generation and Data Validation with object virtualization"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="jsd"><meta property="twitter:description" content="Schema Generation and Data Validation with object virtualization"></head>
+<meta name="description" content="RxJS + JSON-Schema Based Observable Data Models"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="rxvo"><meta property="twitter:description" content="RxJS + JSON-Schema Based Observable Data Models"></head>
 <body class="layout-container" data-ice="rootContainer">
 
 <header>
@@ -29,890 +29,152 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#classes">classes</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_metaData.js~MetaData.html">MetaData</a></span></span></li>
+  <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#classes">classes</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_branchNotifier.js~Notifier.html">Notifier</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_metaData.js~MetaData.html">MetaData</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_observerBuilder.js~ObserverBuilder.html">ObserverBuilder</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_schemaHelpers.js~SchemaHelpers.html">SchemaHelpers</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_schemaValidator.js~SchemaValidator.html">SchemaValidator</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_validatorBuilder.js~ValidatorBuilder.html">ValidatorBuilder</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_validators.js~BaseValidator.html">BaseValidator</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/itemsModel.js~ItemsModel.html">ItemsModel</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/jsd.js~JSD.html">JSD</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/schema.js~Schema.html">Schema</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/set.js~Set.html">Set</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ensureKindIsString">ensureKindIsString</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ensureRequiredFields">ensureRequiredFields</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-remapPolypath">remapPolypath</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getRoot">getRoot</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-listDirtyItems">listDirtyItems</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeClean">makeClean</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeDirty">makeDirty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refAtKeyValidation">refAtKeyValidation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refValidation">refValidation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-validate">validate</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ajvRef">_ajvRef</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_dirtyModels">_dirtyModels</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_kinds">_kinds</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_jsdDocs">_jsdDocs</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_oBuilders">_oBuilders</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_object">_object</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_observerPaths">_observerPaths</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_observers">_observers</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_required_elements">_required_elements</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaHelpers">_schemaHelpers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaOptions">_schemaOptions</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaSignatures">_schemaSignatures</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_singletons">_singletons</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vBuilders">_vBuilders</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vPaths">_vPaths</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validPaths">_validPaths</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validators">_validators</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vectorTypes">_vectorTypes</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-wf">wf</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-rxRx">rxRx</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-Validator">Validator</a></span></span></li>
 </ul>
 </div>
 </nav>
 
-<div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><h1 id="jsd">JSD</h1><p><strong>JSON Schema Definition</strong><br>
-Schema Based Self-Validating and Observable Data Models</p>
+<div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><h1 id="rxvo">RxVO</h1><p><strong>Reactive Validating Object</strong><br>
+RxJS + JSON-Schema (Ajv) Based Observable Data Models</p>
 <p><a href="https://travis-ci.org/Webfreshener/JSD"><img src="https://travis-ci.org/Webfreshener/JSD.svg?branch=master" alt="Build Status"></a>
 <a href="https://david-dm.org/webfreshener/jsd?type=dev"><img src="https://david-dm.org/webfreshener/jsd/dev-status.svg" alt="Dev Dependency Status"></a>
 <a href="https://www.codacy.com/app/vanschroeder/JSD?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Webfreshener/JSD&amp;utm_campaign=Badge_Grade"><img src="https://api.codacy.com/project/badge/Grade/3ca79cd83489410295680ef3ee96cd01" alt="Codacy Badge"></a>
 <a href="https://nodesecurity.io/orgs/webfreshener-llc/projects/ec54a505-71a0-42de-8b84-3aba21031b01"><img src="https://nodesecurity.io/orgs/webfreshener-llc/projects/ec54a505-71a0-42de-8b84-3aba21031b01/badge" alt="NSP Status"></a></p>
 <p><a href="https://webfreshener.github.io/JSD/">Online Developer Documentation</a></p>
-<h3 id="purpose">Purpose</h3><p> Most every developer has wished for a way to quickly and easily validate data from User Input or remote API calls and
- and to be able to easily recieve update notifications without having to manually write code to facilitaate those 
- objectives it is to that end that JSD was developed, an Observable, Schema Based Data Validation Utility written for Javascript, 
- but which sets forth a Specification which may be implemented in any</p>
+<h2 id="--9888--caution-">&#x26A0; Caution!</h2><p>This utility is not meant for general purpose use. It leverages several technologies such as RxJS, JSON-Schema and Proxy. As such it is not performant or suitable for applications that require a high degree of efficiency. However it should be fine for prototyping and single-user use in browsers or other sandboxed environments</p>
+<h3 id="purpose">Purpose</h3><p> RxVo was developed to provide a means quickly and easily validate data from User Input or remote API calls and
+ and to be able to easily receive update notifications without having to manually write code to facilitate those 
+ objectives. It is to that end that RxVO was developed, an Observable, Schema Based Data Validation Utility written 
+ for Javascript </p>
 <h3 id="table-of-contents">Table of Contents</h3><p><strong><a href="#installation-instructions">Installation Instructions</a></strong></p>
-<p><strong><a href="#basic-usage">Basic Usage</a></strong></p>
+<p><strong><a href="#jsd-specification">RXVO Document</a></strong></p>
 <ul>
-<li><a href="#schema-basics">Schema Basics</a></li>
-</ul>
-<p><strong><a href="#jsd-specification">JSD Specification</a></strong></p>
+<li><a href="#basic-usage">Basic Usage</a></li>
+<li><p><a href="#api">API</a></p>
 <ul>
-<li><a href="#array-type">Array Type</a></li>
-<li><a href="#boolean-type">Boolean Type</a></li>
-<li><a href="#number-type">Number Type</a></li>
-<li><a href="#object-type">Object Type</a></li>
-<li><a href="#string-type">String Type</a></li>
-</ul>
-<p><strong><a href="#advanced-usage">Advanced Usage</a></strong></p>
-<ul>
-<li><a href="#wildcard-keys">Wildcard Keys</a></li>
-<li><a href="#wildcard-types">Wildcard Types</a></li>
-<li><a href="#polymorphism">Polymorphism</a></li>
-<li><p><a href="#regular-expressions">Regular Expressions</a></p>
-<ul>
-<li><a href="#json-file-example-with-special-escaping">JSON File Example with Special Escaping</a></li>
+<li><a href="#rxvo">RxVO</a></li>
+<li><a href="#model">Model</a></li>
+<li><a href="#properties-model">PropertiesModel</a></li>
+<li><a href="#items-model">ItemsModel</a></li>
 </ul>
 </li>
-<li><a href="#write-locking">Write-Locking</a></li>
 </ul>
-<h4 id="installation-instructions">Installation Instructions</h4><p>There are no dependencies or prerequesites besides NPM and NodeJS
-However, this project is not yet published. 
-You must manually add to your package.json</p>
-<pre><code><code class="source-code prettyprint">...
-dependencies: {
-    ...
-    &quot;jsd&quot;: &quot;git+https://github.com/Webfreshener/JSD&quot;,
-    ...
-}
-...</code>
-</code></pre><h4 id="basic-usage">Basic Usage</h4><h5 id="schema-basics">Schema Basics</h5><p>A schema is simply a JSON Document that 
-describes the attributes of a Data Model</p>
-<p>The example below defines an Schema that expects a <code>name</code> and an <code>age</code> attribute</p>
-<pre><code><code class="source-code prettyprint">const _schema = {
-    &quot;name&quot;: {
-        &quot;type&quot;: &quot;String&quot;,
-        &quot;required&quot;: true
-    },
-    &quot;age&quot;: {
-        &quot;type&quot;: &quot;Number&quot;,
-        &quot;required&quot;: true
-    }
-};
-const _handlers = {
-    next: function (schema) {
-        if (typeof schema !== &apos;undefined&apos;) {
-            // outputs: {&quot;name&quot;:&quot;Frank&quot;,&quot;age&quot;:23}
-            console.log(`${schema}`);
+<h4 id="install">Install</h4><pre><code><code class="source-code prettyprint">$ npm i -s rxvo</code>
+</code></pre><h4 id="basic-usage">Basic Usage</h4><p>The example below defines a Model that expects a <code>name</code> value and 
+list of <code>topScores</code> items</p>
+<pre><code><code class="source-code prettyprint">// JSON-SCHEMA for Scores Collection
+const schema = {
+    &quot;type&quot;: &quot;object&quot;,
+    &quot;properties&quot;: {
+        &quot;name&quot;: {
+            &quot;type&quot;: &quot;string&quot;,
+        },
+        &quot;topScores&quot;: {
+            &quot;type&quot;: &quot;array&quot;,
+            &quot;minItems&quot;: 1,
+            &quot;maxItems&quot;: 3,
+            &quot;items&quot;: {
+                &quot;type&quot;: &quot;object&quot;,
+                &quot;properties&quot;: {
+                    &quot;name&quot;: {
+                        &quot;type&quot;: &quot;string&quot;
+                    },
+                    &quot;score&quot;: {
+                        &quot;type&quot;: &quot;integer&quot;,
+                        &quot;default&quot;: 0
+                    }
+                },
+                &quot;required&quot;: [&quot;name&quot;]
+            }
         }
+    },
+    required: [&quot;name&quot;, &quot;topScores&quot;],
+};
+
+
+// instantiate our Model
+const obj = new RxVO(schema);
+
+// subscribes an observer to the Model
+obj.subscribe({
+    next: function (ref) {
+        console.log(&quot;\t&gt;&gt; update succeeded!\n\t%s\n\t%s\n\n&quot;,
+            &quot;current object state:&quot;, &quot;&quot; + JSON.stringify(ref));
+        doTask.next()
+    },
+    complete: function (ref) {
+        console.log(&quot;\t&gt;&gt; %s&quot;,
+            &quot;object is frozen and no longer editable&quot;);
+        doTask.next()
     },
     error: function (e) {
-        // error: &apos;age&apos; expected number, type was &apos;&lt;string&gt;&apos;
-        console.log(`error: ${e}`);
-    }
-};
-
-const _jsd = new JSD(_schema);
-_jsd.document.subscribe(_handlers);
-
-// set invalid data to the model to trigger error handler
-_jsd.document.model = {
-    &quot;name&quot;: &quot;Frank&quot;,
-    &quot;age&quot;: &quot;23&quot;
-};
-
-// set valid data to the model to trigger next handler
-_jsd.document.model = {
-    &quot;name&quot;: &quot;Frank&quot;,
-    &quot;age&quot;: 23
-};</code>
-</code></pre><h3 id="jsd-specification">JSD Specification</h3><h4 id="array-type">Array Type</h4><table>
-<thead>
-<tr>
-<th>Attribute Name</th>
-<th>Data Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>required</td>
-<td>Boolean</td>
-</tr>
-<tr>
-<td>elements</td>
-<td>Object</td>
-</tr>
-<tr>
-<td>default</td>
-<td>Array </td>
-</tr>
-</tbody>
-</table>
-<h6 id="schema-example">Schema Example</h6><pre><code><code class="source-code prettyprint">// defines an Array of Strings
-{
-    type: &quot;Array&quot;,
-    &quot;required&quot;: false,
-    &quot;elements&quot;: {
-        &quot;type&quot;: &quot;String&quot;,
-        &quot;required&quot;: false
-    }
-}
-
-// defines an Array of Strings and Numbers
-{
-    type: &quot;Array&quot;,
-    &quot;required&quot;: false,
-    &quot;elements&quot;: [
-        {
-        &quot;type&quot;: &quot;String&quot;,
-        &quot;required&quot;: false
-       },
-       {
-        &quot;type&quot;: &quot;String&quot;,
-        &quot;required&quot;: false
-        }
-     ]
-}</code>
-</code></pre><h6 id="usage-example">Usage Example</h6><pre><code><code class="source-code prettyprint">// we define an array that accepts objects comprised of a name string and numeric score
-const _schema = {
-    type: &quot;Array&quot;,
-    default: [],
-    elements: [{
-        type: &quot;Object&quot;,
-        elements: {
-            name: {
-                type: &quot;String&quot;,
-                required: true,
-                restrict: &quot;^[a-zA-Z0-9\\-\\s]{1,24}$&quot;
-            },
-            score: {
-                type: &quot;Number&quot;,
-                required: true
-            },
-        },
-    }],
-};
-
-const _handler = {
-    next: (val) =&gt; {
-        // outputs: {&quot;values&quot;:[{&quot;name&quot;:&quot;Player 1&quot;,&quot;score&quot;:2000000},{&quot;name&quot;:&quot;Player 2&quot;,&quot;score&quot;:1100000},{&quot;name&quot;:&quot;Player 3&quot;,&quot;score&quot;:900000}]}
-        console.log(`${val}`);
+        console.log(&quot;\t&gt;&gt; update FAILED with error:\n\t%s\n&quot;,
+            JSON.stringify(e));
+        console.log(&quot;\tcurrent object state:\n\t%s\n&quot;, obj);
+        doTask.next();
     },
-    error: (e) =&gt; {
-        // error: &apos;score&apos; expected number, type was &apos;&lt;string&gt;&apos;s
-        console.log(`error: ${e}`);
-    }
+});
+
+// populate the RxVO with data
+// -- this will trigger the &quot;next&quot; notification
+obj.model = {
+    name: &quot;JSONville&quot;,
+    topScores: [{
+        name: &quot;Player 1&quot;,
+        score: 12300000,
+    }, {
+        name: &quot;Player 2&quot;,
+        score: 45600000,
+    }, {
+        name: &quot;Player 3&quot;,
+        score: 78900000,
+    }]
 };
 
-const _jsd = new JSD(_schema);
-_jsd.document.subscribe(_handler);
+// update the rxVO
+// this will trigger the next notification
+obj.model.topScores[0].score++;
 
-_jsd.document.model = [{
-    name: &quot;Player 1&quot;,
-    score: 2000000,
-}, {
-    name: &quot;Player 2&quot;,
-    score: 1100000
-}, {
-    // this will error because score is a string value
-    name: &quot;BOGUS&quot;,
-    score: &quot;1100000&quot;
-}, {
-    name: &quot;Player 3&quot;,
-    score: 900000
-}];</code>
-</code></pre><h4 id="boolean-type">Boolean Type</h4><table>
-<thead>
-<tr>
-<th>Attribute Name</th>
-<th>Data Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>required</td>
-<td>Boolean</td>
-</tr>
-<tr>
-<td>default</td>
-<td>Boolean </td>
-</tr>
-</tbody>
-</table>
-<pre><code><code class="source-code prettyprint">// defines an Boolean Element 
-{
-    &quot;myElement&quot;: {
-        &quot;type&quot;: &quot;Boolean&quot;,
-        &quot;required&quot;: false,
-        &quot;default&quot;: true
-    }
-}</code>
-</code></pre><h6 id="usage-example">Usage Example</h6><pre><code><code class="source-code prettyprint">const _schema = {
-    value: {
-        type: &quot;Boolean&quot;,
-        required: false,
-        default: true,
-    }
-};
+// invalid attempt update the rxVO
+// this will trigger the error notification
+// reason: &quot;topScores/items/score&quot; is type is integer 
+obj.model.topScores[0].score = &quot;1234&quot;;
 
-const _handler = {
-    next: (val) =&gt; {
-        // outputs: {&quot;value&quot;:true}
-        // outputs: {&quot;value&quot;:true}
-        // outputs: {&quot;value&quot;:false}
-        console.log(`${val}`);
-    },
-    error: (e) =&gt; {
-        // error: &apos;value&apos; expected boolean, type was &apos;&lt;string&gt;&apos;
-        console.log(`error: ${e}`);
-    }
-};
-
-
-const _jsd = new JSD(_schema);
-_jsd.document.subscribe(_handler);
-
-// - this will trigger the default value
-_jsd.document.model = {};
-
-// set value to true
-_jsd.document.model = {value: true};
-
-// set value to false
-_jsd.document.model = {value: false};
-
-// triggers error due to type mismatch
-_jsd.document.model = {value: &quot;true&quot;};</code>
-</code></pre><h4 id="number-type">Number Type</h4><table>
-<thead>
-<tr>
-<th>Attribute Name</th>
-<th>Data Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>required</td>
-<td>Boolean</td>
-</tr>
-<tr>
-<td>default</td>
-<td>Number </td>
-</tr>
-</tbody>
-</table>
-<pre><code><code class="source-code prettyprint">// defines an Number Element 
-{
-    &quot;myElement&quot;: {
-        &quot;type&quot;: &quot;Number&quot;,
-        &quot;required&quot;: false,
-        &quot;default&quot;: 0 
-    }
-}</code>
-</code></pre><h6 id="usage-example">Usage Example</h6><pre><code><code class="source-code prettyprint">const _schema = {
-    value: {
-        type: &quot;Number&quot;,
-        required: true,
-        // default: true,
-    }
-};
-
-const _handler = {
-    next: (val) =&gt; {
-        // outputs: {&quot;value&quot;:1234}
-        console.log(`${val}`);
-    },
-    error: (e) =&gt; {
-        // error: &apos;value&apos; expected number, type was &apos;&lt;string&gt;&apos;
-        console.log(`error: ${e}`);
-    }
-};
-
-
-const _jsd = new JSD(_schema);
-_jsd.document.subscribe(_handler);
-
-// this fails because the value is a string
-_jsd.document.model = {value: &quot;1234&quot;};
-
-// this will succeed
-_jsd.document.model = {value: 1234};</code>
-</code></pre><h4 id="object-type">Object Type</h4><table>
-<thead>
-<tr>
-<th>Attribute Name</th>
-<th>Data Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>required</td>
-<td>Boolean</td>
-</tr>
-<tr>
-<td>extensible</td>
-<td>Boolean</td>
-</tr>
-<tr>
-<td>elements</td>
-<td>Object</td>
-</tr>
-<tr>
-<td>polymorphic</td>
-<td>Array</td>
-</tr>
-<tr>
-<td>default</td>
-<td>Object </td>
-</tr>
-</tbody>
-</table>
-<pre><code><code class="source-code prettyprint">// defines an Object Element 
-{
-    &quot;myElement&quot;: {
-        &quot;type&quot;: &quot;Object&quot;,
-        &quot;required&quot;: false,
-        &quot;default&quot;: {
-         },
-         elements: {
-            &quot;name&quot;: {
-                &quot;type&quot;: &quot;String&quot;
-                &quot;required&quot;: true
-            },
-            &quot;active&quot;: {
-                &quot;type&quot;: &quot;Boolean&quot;
-                &quot;required&quot;: false,
-                &quot;default&quot;: true
-            }
-         }
-    }
-}</code>
-</code></pre><h6 id="usage-example">Usage Example</h6><pre><code><code class="source-code prettyprint">// we define an element named `value` that requires a name and optional active attributes 
-const _schema = {
-    value: {
-        type: &quot;Object&quot;,
-        required: false,
-        elements: {
-            name: {
-                type: &quot;String&quot;,
-                required: true
-            },
-            active: {
-                type: &quot;Boolean&quot;,
-                required: false,
-                default: false
-            }
-        }
-    }
-};
-
-const _handler = {
-    next: (val) =&gt; {
-        // outputs: {&quot;value&quot;:{&quot;name&quot;:&quot;Alice&quot;,&quot;active&quot;:true}}
-        // outputs: {&quot;value&quot;:{&quot;name&quot;:&quot;Bob&quot;,&quot;active&quot;:false}}
-        console.log(`${val}`);
-    },
-    error: (e) =&gt; {
-        // error: &apos;value.active&apos; expected boolean, type was &apos;&lt;number&gt;&apos;
-        console.log(`error: ${e}`);
-    }
-};
-
-const _jsd = new JSD(_schema);
-_jsd.document.subscribe(_handler);
-
-// this will error since `active` is a number
-_jsd.document.model = {
-    value: {
-        name: &quot;Alice&quot;,
-        active: 1,
-    }
-};
-
-// this will pass
-_jsd.document.model = {
-    value: {
-        name: &quot;Alice&quot;,
-        active: true
-    }
-};
-
-// this will also pass since `active` is optional
-_jsd.document.model = {
-    value: {
-        name: &quot;Bob&quot;,
-    }
-};</code>
-</code></pre><h4 id="string-type">String Type</h4><table>
-<thead>
-<tr>
-<th>Attribute Name</th>
-<th>Data Type</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>required</td>
-<td>Boolean</td>
-</tr>
-<tr>
-<td>restrict</td>
-<td>RegExp</td>
-</tr>
-<tr>
-<td>default</td>
-<td>String</td>
-</tr>
-</tbody>
-</table>
-<pre><code><code class="source-code prettyprint">// defines a String Element 
-{
-    &quot;myElement&quot;: {
-        &quot;type&quot;: &quot;String&quot;
-        &quot;required&quot;: true
-    }
-}</code>
-</code></pre><h6 id="usage-example">Usage Example</h6><pre><code><code class="source-code prettyprint">const _schema = {
-    value: {
-        type: &quot;String&quot;,
-        required: true,
-        restrict: &quot;^[a-zA-Z0-9_\\s\\-]+$&quot;
-    }
-};
-
-const _handler = {
-    next: (val) =&gt; {
-        // outputs: {&quot;value&quot;:&quot;false&quot;}
-        console.log(`${val}`);
-    },
-    error: (e) =&gt; {
-        // error: &apos;value&apos; expected string, type was &apos;&lt;boolean&gt;&apos;
-        console.log(`error: ${e}`);
-    }
-};
-
-const _jsd = new JSD(_schema);
-_jsd.document.subscribe(_handler);
-
-// this fails because type is boolean
-_jsd.document.model = {value: true};
-
-// this will succeeed
-_jsd.document.model = {value: &quot;false&quot;};</code>
-</code></pre><h3 id="advanced-usage">Advanced Usage</h3><h4 id="wildcard-keys">Wildcard Keys</h4><p>Wildcards keys allow for cases where you might not know or care about the actual key values.
-This is useful in cases where you might have severage elements of the ame data type and 
-format that you wish to describe in a single instance</p>
-<h6 id="schema-example">Schema Example</h6><pre><code><code class="source-code prettyprint">// declares any amount of Alphanumeric String values
-{
-    &quot;*&quot;: {
-        &quot;type&quot;: &quot;String&quot;,
-        &quot;restrict&quot;: &quot;^[a-zA-Z0-9\-]{1,10}$&quot;
-    }
-}
-
-// declares any amount of extensible Object values with name and age attributes 
-{
-    &quot;*&quot;: {
-        type: &quot;Object&quot;,
-        &quot;extensible&quot;: true
-        &quot;elements&quot;: {
-            &quot;name&quot;: {
-                &quot;type&quot;: &quot;String&quot;,
-                &quot;required&quot;: true,
-                &quot;restrict&quot;: &quot;^[a-zA-Z0-9\-]{1,10}$&quot;
-            },
-            {
-            &quot;age&quot;: {
-                &quot;type&quot;: &quot;Number&quot;,
-                &quot;required&quot;:true 
-            }
-        },
-    }
-}</code>
-</code></pre><h6 id="usage-example">Usage Example</h6><pre><code><code class="source-code prettyprint">// creates a schema that allows any key assignent, but value must be object
-const _schema = {
-    &quot;*&quot;: {
-        type: &quot;Object&quot;,
-        extensible: true,
-        elements: {
-            name: {
-                type: &quot;String&quot;,
-                required: true,
-                restrict: &quot;^[a-zA-Z0-9_\\s\\-]{9,}$&quot;
-            },
-            score: {
-                type: &quot;Number&quot;,
-                required: true,
-            }
-        },
-    }
-};
-
-const _handler = {
-    next: (val) =&gt; {
-        // {&quot;1&quot;:{&quot;name&quot;:&quot;Big Daddy&quot;,&quot;score&quot;:2000000}, ...}
-        console.log(`${val}`); 
-    },
-    error: (e) =&gt; {
-        // error: 1 expected value of type &apos;Object&apos;. Type was &apos;&lt;number&gt;&apos;
-        console.log(`error: ${e}`);
-    }
-};
-
-const _jsd = new JSD(_schema);
-_jsd.document.subscribe(_handler);
-
-// this will fail because value is number, not an object
-_jsd.document.model = {
-    1: 900000,
-};
-
-// this succeeds
-_jsd.document.model = {
-    1: {
-        name: &quot;Big Daddy&quot;,
-        score: 2000000
-    },
-    2: {
-        name: &quot;HeavyMetalPrincess&quot;,
-        score: 1100000
-    },
-    3: {
-        name: &quot;Munga-Munga&quot;,
-        score: 900000
-    },
-};</code>
-</code></pre><h4 id="wildcard-types">Wildcard Types</h4><p>In some cases, you might know the key of an attribute, 
-but the type might not be determined. In these cases,
-where you want to restrict an object to known keys but 
-allow for various value assignment, you can use 
-wildcard types</p>
-<h6 id="schema-example">Schema Example</h6><pre><code><code class="source-code prettyprint">// declares element myKey which can be any type, but must be present 
-{
-    &quot;myKey&quot;: {
-        &quot;type&quot;: &quot;*&quot;,
-        &quot;required&quot;: true
-    }
-}
-
-// declares an Object that allows for special user data 
-{
-    &quot;id&quot;: {
-        &quot;type&quot;: &quot;Number&quot;,
-        &quot;required&quot;: true,
-    },
-    &quot;name&quot;: {
-        &quot;type&quot;: &quot;String&quot;,
-        &quot;required&quot;: true,
-        &quot;restrict&quot;: &quot;^[a-zA-Z0-9\-]{1,10}$&quot;
-    },
-    {
-    &quot;dataField1&quot;: {
-        &quot;type&quot;: &quot;*&quot;,
-        &quot;required&quot;: false 
-    },
-    &quot;dataField2&quot;: {
-        &quot;type&quot;: &quot;*&quot;,
-        &quot;required&quot;: false 
-    }
-}</code>
-</code></pre><h6 id="usage-example">Usage Example</h6><pre><code><code class="source-code prettyprint">// creates a schema that lets key `value` be set to any type 
-const _schema = {
-    value: {
-        type: &quot;*&quot;,
-    }
-};
-
-const _handler = {
-    next: (val) =&gt; {
-        // outputs: {&quot;value&quot;:900000}
-        // outputs: {&quot;value&quot;:&quot;A string&quot;}
-        // outputs: {&quot;value&quot;:false}
-        console.log(`${val}`); 
-    },
-    error: (e) =&gt; {
-        // error: element &apos;bogus&apos; is not a valid element
-        console.log(`error: ${e}`);
-    }
-};
-
-const _jsd = new JSD(_schema);
-_jsd.document.subscribe(_handler);
-
-// any model with the key named `value` is ok
-_jsd.document.model = {
-    value: 900000,
-};
-
-// any model with the key named `value` is ok
-_jsd.document.model = {
-    value: &quot;A string&quot;,
-};
-
-// any model with the key named `value` is ok
-_jsd.document.model = {
-    value: false,
-};
-
-// this will fail because key `bogus` is not allowed
-_jsd.document.model = {
-    bogus: &quot;false&quot;,
-}</code>
-</code></pre><h4 id="polymorphism">Polymorphism</h4><p>In cases where you want to keep the data model tightly defined but must allow for certain values to conform to more 
-than one data type, you can use polymorhism</p>
-<h6 id="schema-example">Schema Example</h6><pre><code><code class="source-code prettyprint">// declares element `polyValue` which can be a String or an Object
-{
-   &quot;polyValue&quot;: {
-     &quot;required&quot;: true,
-     &quot;polymorphic&quot;: [
-       {
-         &quot;type&quot;: &quot;String&quot;,
-         &quot;restrict&quot;: &quot;^[a-zA-Z-0-9_]+$&quot;
-       },
-       {
-         &quot;type&quot;: &quot;Object&quot;,
-         &quot;elements&quot;: {
-           &quot;name&quot;: {
-             &quot;type&quot;: &quot;String&quot;,
-             &quot;required&quot;: true,
-             &quot;restrict&quot;: &quot;^[a-zA-Z-0-9_]{1,24}+$&quot;
-           },
-           &quot;details&quot;: {
-             &quot;type&quot;: &quot;String&quot;,
-             &quot;required&quot;: false,
-             &quot;restrict&quot;: &quot;^[a-zA-Z-0-9_]{0,256}+$&quot;
-           }, 
-         }
-       }
-     ]
-   } 
-}</code>
-</code></pre><h6 id="usage-example">Usage Example</h6><pre><code><code class="source-code prettyprint">const _schema = {
-    polyValue: {
-        required: true,
-        default: &quot;DEFAULT VALUE&quot;,
-        polymorphic: [
-            // this schema will accept a string value
-            {
-                type: &quot;String&quot;,
-                restrict: &quot;^[a-zA-Z0-9_\\s]+$&quot;,
-
-            },
-            // ... or and object with `name` and `description` elements
-            {
-                type: &quot;Object&quot;,
-                elements: {
-                    name: {
-                        type: &quot;String&quot;,
-                        required: true,
-                        restrict: &quot;^[a-zA-Z0-9_\\s]{1,24}$&quot;
-                    },
-                    description: {
-                        type: &quot;String&quot;,
-                        required: true,
-                        restrict: &quot;^[a-zA-Z0-9_\\s]{1,140}$&quot;
-                    },
-                },
-            },
-            // ... or a wildcard key &amp; numeric value pair
-            {
-                type: &quot;Object&quot;,
-                elements: {
-                    &quot;*&quot;: {
-                        type: &quot;Number&quot;
-                    },
-                },
-            }]
-    }
-};
-
-let _handler = {
-    next: (val) =&gt; {
-        // {&quot;polyValue&quot;:&quot;DEFAULT VALUE&quot;}
-        // {&quot;polyValue&quot;:&quot;HeavyMetalPrincess&quot;}
-        // {&quot;polyValue&quot;:{&quot;name&quot;:&quot;HeavyMetalPrincess&quot;,&quot;description&quot;:&quot;cupcakes&quot;}}
-        // {&quot;polyValue&quot;:{&quot;HeavyMetalPrincess&quot;:10001234}}
-        console.log(`${val}`);
-    },
-    error: (e) =&gt; {
-        // error: &apos;polyValue.polymorphic.2.*&apos; expected number, type was &apos;&lt;string&gt;&apos;
-        console.log(`error: ${e}`);
-    }
-
-};
-
-const _jsd = new JSD(_schema, {debug: true});
-_jsd.document.subscribe(_handler);
-
-// will set default value
-_jsd.document.model = {};
-
-
-// can be a string value
-_jsd.document.model = {
-    &quot;polyValue&quot;: &quot;HeavyMetalPrincess&quot;,
-}
-
-// can be an object with `name` and `description` elements
-_jsd.document.model = {
-    &quot;polyValue&quot;: {
-        &quot;name&quot;: &quot;HeavyMetalPrincess&quot;,
-        &quot;description&quot;: &quot;cupcakes&quot;,
-    }
-};
-
-// or a wildcard key &amp; numeric value pair...
-
-// -- this will error because the value is a string, not numeric
-_jsd.document.model = {
-    &quot;polyValue&quot;: {
-        HeavyMetalPrincess: &quot;10001234&quot;,
-    },
-};
-
-// -- this has a numeric value and will succeed
-_jsd.document.model = {
-    &quot;polyValue&quot;: {
-        HeavyMetalPrincess: 10001234,
-    },
-};
-});</code>
-</code></pre><h4 id="regular-expressions">Regular Expressions</h4><p>JSD allows the use of Regular Expressions to restrict String input
-There are caveats to it&apos;s use due to the nature of RegExp syntax vs  JSON
-character encoding limitations</p>
-<h6 id="js-and-ts-file-example">JS and TS file Example</h6><pre><code><code class="source-code prettyprint">// in code declaring a RegExp in JS or TS is no big deal 
-const schema = {
-   stringValue: {
-     required: true,
-     type: &quot;String&quot;,
-     restrict: &quot;^[a-zA-Z0-9_\\-\\s]+$&quot;
-   }
-};</code>
-</code></pre><h6 id="json-file-example-with-special-escaping">JSON File Example with Special Escaping</h6><pre><code><code class="source-code prettyprint">{
-    &quot;stringValue&quot;: {
-        &quot;required&quot;: true,
-        &quot;type&quot;: &quot;String&quot;,
-        &quot;restrict&quot;: &quot;^[a-zA-Z0-9_\\\\-\\\\s]+$&quot;
-    }
-}</code>
-</code></pre><h4 id="write-locking">Write-Locking</h4><p>In some cases you might want to define Read-Only Data Structures, such as Config Files
-JSD allows you to set data to the Schema and then Write-Lock it via Schema Params or Programmatically</p>
-<h6 id="schema-example">Schema Example</h6><pre><code><code class="source-code prettyprint">// a schema designating itself as write-locked with the writeLock attribute
-// once data is set to this schema, it will be read-only
-{
-  &quot;writeLock&quot;: true,
-  &quot;elements&quot;: {
-    &quot;*&quot;{
-      &quot;type&quot;: &quot;*&quot;
-    }
-  }
-}</code>
-</code></pre><h6 id="usage-example">Usage Example</h6><pre><code><code class="source-code prettyprint">// creates a schema with writeLock attribute set to true
-var _schema = {
-    writeLock: true,
-    elements: {
-        &quot;*&quot;: {
-            type: &quot;*&quot;,
-        }
-    }
-};
-
-var _handler = {
-    next: function(val) {
-        // {&quot;valueA&quot;:1,&quot;valueB&quot;:2,&quot;valueC&quot;:3}
-        // {&quot;valueA&quot;:1,&quot;valueB&quot;:2,&quot;valueC&quot;:3}
-        console.log(`${val}`);
-    },
-    complete: function(model) {
-        // complete: schema is now locked.
-        console.log(&apos;complete: schema is now locked.&apos;);
-    }
-};
-
-var _jsd = new JSD(_schema);
-_jsd.document.subscribe(_handler);
-
-// will lock schema after write
-_jsd.document.model = {
-    valueA: 1,
-    valueB: 2,
-    valueC: 3,
-};
-
-// subsequent writes will silently fail
-_jsd.document.model = {
-    valueD: 4,
-    valueE: 5,
-    valueF: 6,
-};
-
-
-// Additionally, the end-user can set this programatically
-
-// creates a schema with writeLock attribute set to true
-var _schema = {
-    &quot;*&quot;: {
-        type: &quot;*&quot;,
-    }
-};
-
-var _handler = {
-    next: function(val) {
-        // {&quot;valueA&quot;:1,&quot;valueB&quot;:2,&quot;valueC&quot;:3}
-        // {&quot;valueA&quot;:1,&quot;valueB&quot;:2,&quot;valueC&quot;:3}
-        console.log(`${val}`);
-    },
-    complete: function(model) {
-        // complete: schema is now locked.
-        console.log(&apos;complete: schema is now locked.&apos;);
-    }
-};
-
-var _jsd = new JSD(_schema);
-_jsd.document.subscribe(_handler);
-
-// will lock schema after write
-_jsd.document.model = {
-    valueA: 1,
-    valueB: 2,
-    valueC: 3,
-};
-
-// Invoke the lock feature on the document
-_jsd.document.lock();
-
-// subsequent writes will silently fail
-_jsd.document.model = {
-    valueD: 4,
-    valueE: 5,
-    valueF: 6,
-};</code>
-</code></pre></div>
+// invalid attempt update the rxVO
+// this will trigger the error notification
+// reason: &quot;topScores&quot; is marked as required
+delete obj.model.topScores;</code>
+</code></pre><p>Refer to the examples demo in <code>./examples/basic-usage</code> for more usage examples</p>
+<h4 id="api">API</h4><h4 id="model">Model</h4><h4 id="propertiesmodel">PropertiesModel</h4><h4 id="itemsmodel">ItemsModel</h4></div>
 </div>
 
 <footer class="footer">

@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../../">
-  <title data-ice="title">src/classes/schema.js | jsd</title>
+  <title data-ice="title">src/classes/propertiesModel.js | jsd</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -29,94 +29,58 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#classes">classes</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_metaData.js~MetaData.html">MetaData</a></span></span></li>
+  <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#classes">classes</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_metaData.js~MetaData.html">MetaData</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_observerBuilder.js~ObserverBuilder.html">ObserverBuilder</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_schemaHelpers.js~SchemaHelpers.html">SchemaHelpers</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_schemaValidator.js~SchemaValidator.html">SchemaValidator</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_validatorBuilder.js~ValidatorBuilder.html">ValidatorBuilder</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_validators.js~BaseValidator.html">BaseValidator</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/jsd.js~JSD.html">JSD</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/schema.js~Schema.html">Schema</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/set.js~Set.html">Set</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ensureKindIsString">ensureKindIsString</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ensureRequiredFields">ensureRequiredFields</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-remapPolypath">remapPolypath</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeClean">makeClean</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeDirty">makeDirty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refAtKeyValidation">refAtKeyValidation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refValidation">refValidation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ajvRef">_ajvRef</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_dirtyModels">_dirtyModels</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_kinds">_kinds</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_oBuilders">_oBuilders</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_object">_object</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_observers">_observers</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_required_elements">_required_elements</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaHelpers">_schemaHelpers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaOptions">_schemaOptions</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaSignatures">_schemaSignatures</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_singletons">_singletons</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vBuilders">_vBuilders</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vPaths">_vPaths</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validPaths">_validPaths</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validators">_validators</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vectorTypes">_vectorTypes</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-wf">wf</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-rxRx">rxRx</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-Validator">Validator</a></span></span></li>
 </ul>
 </div>
 </nav>
 
-<div class="content" data-ice="content"><h1 data-ice="title">src/classes/schema.js</h1>
+<div class="content" data-ice="content"><h1 data-ice="title">src/classes/propertiesModel.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {
-    _mdRef, _required_elements, _object, _exists, _schemaHelpers,
-    _schemaOptions, _schemaSignatures, _validPaths, _vPaths
+    _object, _schemaHelpers, _oBuilders,
 } from &quot;./_references&quot;;
-import {ensureRequiredFields} from &quot;./utils&quot;;
+import {makeClean, refAtKeyValidation, refValidation} from &quot;./utils&quot;;
 import {SchemaHelpers} from &quot;./_schemaHelpers&quot;;
-import {JSD} from &quot;./jsd&quot;;
 import {Model} from &quot;./model&quot;;
-const _init = new WeakMap()
+
+
 /**
  * @class Schema
  */
 export class Schema extends Model {
     /**
      *
-     * @param _signature {Object} - schema definition object
-     * @param opts {Object} - schema options
      */
-    constructor(_signature = Schema.defaultSignature, opts = Schema.defaultOptions) {
-        super(_signature.writeLock || false, arguments[2]);
+    constructor() {
+        super(arguments[0]);
 
-        if (!_exists(_signature)) {
-            throw `Schema requires JSON object at arguments[0]. Got &apos;${typeof _signature}&apos;`;
-        }
+        // stores SchemaHelpers reference for use
+        _schemaHelpers.set(this, new SchemaHelpers(this));
 
-        _init.set(this, false);
-
-        // freezes Options object to prevent modification
-        _schemaOptions.set(this, Object.freeze(opts));
-
-        // creates instance of SchemaHelpers
-        const _sH = new SchemaHelpers(this);
-
-        // initialized Required Elements reference
-        _required_elements.set(this, []);
-
-        // stores SchemaHelpers reference for later use
-        _schemaHelpers.set(this, _sH);
-
-        // populates Required Elements reference from schema values
-        _sH.referenceRequiredElements(_signature);
-
-        _vPaths.set(this, this.path);
-
-        // freezes schema signature to prevent modifications
-        const _sig = Object.freeze(_signature || JSD.defaults);
-        _schemaSignatures.set(this, JSON.stringify(_sig));
-
+        // sets Proxy Model reference on map
         _object.set(this, new Proxy(Model.createRef(this, {}), this.handler));
-        // applies default values (if any) on the model
-        this.setDefaults();
     }
 
     /**
@@ -124,56 +88,55 @@ export class Schema extends Model {
      * @returns {{get: function, set: function}}
      */
     get handler() {
-        return {
+        return Object.assign(super.handler, {
             get: (t, key) =&gt; {
                 return key === &quot;$ref&quot; ? this : t[key];
             },
             set: (t, key, value) =&gt; {
                 let _sH = _schemaHelpers.get(this);
+
+                // -- ensures we aren&apos;t in a frozen hierarchy branch
+                if (this.isFrozen) {
+                    return false;
+                }
+
+                // if key is type &apos;object&apos;, we will set directly
                 if (typeof key === &quot;object&quot;) {
                     const e = _sH.setObject(key);
                     if (typeof e === &quot;string&quot;) {
-                        this.observerBuilder.error(this.path, e);
+                        _oBuilders.get(this.jsd).error(this.path, e);
                         return false;
                     }
-                    _validPaths.get(this.jsd)[this.path] = true;
                     return true;
                 }
-
-                const keyPath = `${this.validationPath}.${key}`.replace(/^\.?(.*)$/, &quot;$1&quot;);
-                // determines if parent element is Array (Set)
-                const inSet = Array.isArray(this.parent.model);
                 // calls validate with either full path if in Schema or key if nested in Set
-                const _isValid = _sH.validate((!inSet ? keyPath : key), value);
-                if ((typeof _isValid) !== &quot;string&quot;) {
-                    _validPaths.get(this.jsd)[this.path] = true;
-                    if ((typeof value) === &quot;object&quot;) {
-                        value = _sH.setChildObject(key, value);
-                        if ((typeof value) === &quot;string&quot;) {
-                            _validPaths.get(this.jsd)[this.path] = value;
-                            this.observerBuilder.error(this.path, value);
-                            return false;
-                        }
+                if ((typeof value) === &quot;object&quot;) {
+                    value = _sH.setChildObject(key, value);
+                    if ((typeof value) === &quot;string&quot;) {
+                        _oBuilders.get(this.jsd).error(this.path, value);
+                        return false;
                     }
-                    t[key] = value;
-                } else {
-                    _validPaths.get(this.jsd)[this.path] = _isValid;
                 }
 
-                const _e = this.validate();
-                if ((typeof _e) !== &quot;string&quot;) {
-                    if (this.path.length) {
-                        // TODO: should evaluate this block
-                        const _p = Schema.concatPathAddr(this.path, key);
-                        this.observerBuilder.next(_p, value);
-                    }
-                    return true;
+                // performs the operation on Model
+                t[key] = value;
+                return true;
+            },
+            deleteProperty: (t, key) =&gt; {
+                // creates mock of future Model state for evaluation
+                let _o = Object.assign({}, this.model);
+                delete _o[key];
+
+                // validates model with value removed
+                if (!this.test(_o)) {
+                    return false;
                 }
-                this.observerBuilder.error(this.path, _e);
-                return false;
+
+                // performs the operation on Model
+                delete t[key];
+                return true;
             }
-
-        };
+        });
     }
 
     /**
@@ -183,14 +146,7 @@ export class Schema extends Model {
      * @returns {string}
      */
     static concatPathAddr(path, addr) {
-        return path.length ? `${path}.${addr}` : addr;
-    }
-
-    /**
-     * @returns schema signature object
-     */
-    get signature() {
-        return JSON.parse(_schemaSignatures.get(this));
+        return path.length ? `${path}/${addr}` : `${addr}`;
     }
 
     /**
@@ -205,54 +161,33 @@ export class Schema extends Model {
      * @param value
      */
     set model(value) {
-        let e;
-        // -- reset the proxy model to initial object state if not locked
-        if (!this.isLocked) {
-            _object.set(this, new Proxy(Model.createRef(this, {}), this.handler));
-            // -- preliminary setting of default values on initial object
-            this.setDefaults();
-        }
-        if (typeof value === &quot;object&quot;) {
-            const keys = Object.keys(value);
-            if (keys.length) {
-                keys.forEach((k) =&gt; {
-                    // -- added try/catch to avoid error in jsfiddle
-                    try {
-                        this.model[k] = value[k];
-                    } catch (e) {
-                        _validPaths.get(this.jsd)[this.path] = e;
-                        this.observerBuilder.error(this.path, e);
-                        return false;
-                    }
-                });
-            }
-            // final check for required field and setting of defaults
-            let reqErr = ensureRequiredFields(this, value);
-            if ((typeof reqErr) === &quot;string&quot;) {
-                // applies current state of `e` to validation hash
-                _validPaths.get(this.jsd)[this.path] = reqErr;
-            }
-
-            // tests current state of validation hash
-            e = this.validate();
-            if ((typeof e) !== &quot;string&quot;) {
-                // tests for writeLock and locks model if set
-                if (_mdRef.get(this).writeLock &amp;&amp; !this.isLocked) {
-                    this.lock();
-                }
-                // calls next&apos;s observable to update subscribers
-                this.observerBuilder.next(this.path, this);
-                return true;
-            } else {
-                this.observerBuilder.error(this.path, e);
-                return false;
-            }
-        } else {
-            e = `unable to set scalar value on model at ${this.path.length ? this.path : &quot;.&quot;}`;
-            _validPaths.get(this.jsd)[this.path] = e;
-            this.observerBuilder.error(this.path, e);
+        // fails on attempts to set scalar value
+        // or if this node is locked or fails validation
+        if ((typeof value) !== &quot;object&quot; || this.isFrozen ||
+            !refValidation(this, value)) {
             return false;
         }
+
+        // defines new Proxy Object for data modeling
+        // todo: replace proxy with Object Delegation
+        _object.set(this, new Proxy(Model.createRef(this, {}), this.handler));
+
+        Object.keys(value).forEach((k) =&gt; {
+            // -- added try/catch to avoid error in JSFiddle
+            try {
+                this.model[k] = value[k];
+            } catch (e) {
+                _oBuilders.get(this.jsd).error(this.path, e);
+                return false;
+            }
+        });
+
+        // marks model as in sync with tree
+        makeClean(this);
+
+        // calls next&apos;s observable to update subscribers
+        _oBuilders.get(this.jsd).next(this.path, this);
+        return true;
     }
 
     /**
@@ -269,86 +204,21 @@ export class Schema extends Model {
      * @param {any} value
      */
     set(key, value) {
-        if (typeof key === &quot;string&quot;) {
-            _validPaths.get(this.jsd)[this.path] = -1;
-            this.model[key] = value;
-            let valid = this.validate();
-            if (typeof valid === &quot;string&quot;) {
-                this.observerBuilder.error(this.path, valid);
-                return false;
-            }
-        } else {
-            let e = ensureRequiredFields(this, key);
-            _validPaths.get(this.jsd)[this.path] = e;
-            if (typeof e === &quot;string&quot;) {
-                this.observerBuilder.error(this.path, e);
-                return false;
-            }
-            Object.keys(key).forEach((_k) =&gt; {
-                this.model[_k] = key[_k];
-            });
-        }
-        if (_init.get(this)) {
-            if (this.isValid) {
-                this.observerBuilder.next(this.path, this);
-                return this;
-            }
-            let eMsg = this.validate();
-            this.observerBuilder.error(this.path, eMsg);
+        // attempts validation of value against schema
+        if (!refAtKeyValidation(this, key, value)) {
             return false;
         }
-    }
 
-    /**
-     * indicates if Schema will accept arbitrary keys
-     * @returns {boolean}
-     */
-    get isExtensible() {
-        return _exists(this.signature.extensible) ?
-            this.signature.extensible : this.options.extensible || false;
-    }
+        // applies validated value to model
+        this.model[key] = value;
 
-    /**
-     * @returns list of required elements on this Schema
-     */
-    get requiredFields() {
-        return _required_elements.get(this);
-    }
+        // updates observers
+        _oBuilders.get(this.jsd).next(this.path, this);
 
-    /**
-     * sets default values for schema keys
-     */
-    setDefaults() {
-        _init.set(this, false);
-        const _sig = this.schema;
-        // attempts to set default value
-        for (let _sigEl of Object.keys(_sig)) {
-            // -- tests for element `default`
-            let _default = _sig[_sigEl].default;
-            if (_exists(_default)) {
-                // sets default value for key on model
-                this.set(_sigEl, _default);
-            }
-        }
-        _init.set(this, true);
-    }
+        // removes dirtiness
+        makeClean(this);
 
-    static get defaultOptions() {
-        return {
-            extensible: false,
-            debug: false,
-        };
-    }
-
-    /**
-     * base signature for all Schema Objects
-     */
-    static get defaultSignature() {
-        return {
-            type: &quot;*&quot;,
-            required: true,
-            extensible: false
-        };
+        return this;
     }
 }
 </code></pre>

@@ -1,1 +1,1 @@
-module.exports = require('./dist/jsd.node').JSD;
+module.exports = require('./dist/rxvo.node').RxVO;

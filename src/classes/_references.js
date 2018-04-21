@@ -8,101 +8,84 @@ export const wf = {
     Obj: Obj,
     Str: Str
 };
+
 /**
- * Holder for registered JS Object references
- *
- * @type {WeakMap}
- * @private
- */
-export const _kinds = new WeakMap();
-/**
- * Holder for Schema and Set instance references
+ * Holder for PropertiesModel and ItemsModel instance references
  *
  * @type {WeakMap}
  * @private
  */
 export const _object = new WeakMap();
+
 /**
  * Holder for MetaData references
  * @type {WeakMap}
  * @private
  */
 export const _mdRef = new WeakMap();
+
 /**
- * Holder for lists of required elements for each Schema Node
+ * Holder for AjvWrapper references
+ * @type {WeakMap<Object, ajv>}
+ * @private
+ */
+export const _ajvRef = new WeakMap();
+
+/**
+ * Holder for models in transition
  *
  * @type {WeakMap}
  * @private
  */
-export const _required_elements = new WeakMap();
+export const _dirtyModels = new WeakMap();
+
 /**
- * Holder for Schema Validators
+ * Holder for PropertiesModel Validators
  * @type {WeakMap}
  * @private
  */
 export const _validators = new WeakMap();
+
 /**
- * Holder for Singleton instance references
- *
- * @type {WeakMap}
- * @private
- */
-export const _singletons = new WeakMap();
-/**
- * Holder for `Set` element types
- *
- * @type {WeakMap}
- * @private
- */
-export const _vectorTypes = new WeakMap();
-/**
- * Holder for Schema options refeerences
+ * Holder for PropertiesModel options refeerences
  *
  * @type {WeakMap}
  * @private
  */
 export const _schemaOptions = new WeakMap();
+
 /**
- * Holder for Schema Helpers references
+ * Holder for PropertiesModel Helpers references
  *
  * @type {WeakMap}
  * @private
  */
 export const _schemaHelpers = new WeakMap();
-/**
- * Holder for Schema Signatures references
- *
- * @type {WeakMap}
- * @private
- */
-export const _schemaSignatures = new WeakMap();
+
 /**
  * Holder for RXJS Observer references
  * @type {WeakMap}
  * @private
  */
 export const _observers = new WeakMap();
+
 /**
- * Holder for Validation path references
+ * Holder for RXJS Observer references
  * @type {WeakMap}
  * @private
  */
-export const _validPaths = new WeakMap();
+export const _observerPaths = new WeakMap();
+
 /**
  * Holder for Observer Builders
  * @type {WeakMap}
  * @private
  */
 export const _oBuilders = new WeakMap();
+
 /**
- * Holder for Validator Builders
+ * Holder for JSON-Schemas
  * @type {WeakMap}
  * @private
  */
-export const _vBuilders = new WeakMap();
-/**
- * Holder for Validation Paths
- * @type {WeakMap}
- * @private
- */
-export const _vPaths = new WeakMap();
+export const _schemaSignatures = new WeakMap();

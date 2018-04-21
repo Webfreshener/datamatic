@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../../">
-  <title data-ice="title">src/classes/set.js | jsd</title>
+  <title data-ice="title">src/classes/itemsModel.js | jsd</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -29,52 +29,41 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#classes">classes</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_metaData.js~MetaData.html">MetaData</a></span></span></li>
+  <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#classes">classes</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_metaData.js~MetaData.html">MetaData</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_observerBuilder.js~ObserverBuilder.html">ObserverBuilder</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_schemaHelpers.js~SchemaHelpers.html">SchemaHelpers</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_schemaValidator.js~SchemaValidator.html">SchemaValidator</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_validatorBuilder.js~ValidatorBuilder.html">ValidatorBuilder</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_validators.js~BaseValidator.html">BaseValidator</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/jsd.js~JSD.html">JSD</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/schema.js~Schema.html">Schema</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/set.js~Set.html">Set</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ensureKindIsString">ensureKindIsString</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ensureRequiredFields">ensureRequiredFields</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-remapPolypath">remapPolypath</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeClean">makeClean</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeDirty">makeDirty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refAtKeyValidation">refAtKeyValidation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refValidation">refValidation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ajvRef">_ajvRef</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_dirtyModels">_dirtyModels</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_kinds">_kinds</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_oBuilders">_oBuilders</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_object">_object</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_observers">_observers</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_required_elements">_required_elements</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaHelpers">_schemaHelpers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaOptions">_schemaOptions</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaSignatures">_schemaSignatures</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_singletons">_singletons</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vBuilders">_vBuilders</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vPaths">_vPaths</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validPaths">_validPaths</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validators">_validators</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vectorTypes">_vectorTypes</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-wf">wf</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-rxRx">rxRx</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-Validator">Validator</a></span></span></li>
 </ul>
 </div>
 </nav>
 
-<div class="content" data-ice="content"><h1 data-ice="title">src/classes/set.js</h1>
+<div class="content" data-ice="content"><h1 data-ice="title">src/classes/itemsModel.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {
-    _mdRef, _object, _schemaOptions,
-    _schemaHelpers, _schemaSignatures,
-    _vPaths, _validPaths
+    _object, _schemaHelpers, _oBuilders
 } from &quot;./_references&quot;;
-import {SchemaValidator} from &quot;./_schemaValidator&quot;;
-import {JSD} from &quot;./jsd&quot;;
 import {Model} from &quot;./model&quot;;
 import {SchemaHelpers} from &quot;./_schemaHelpers&quot;;
+import {makeClean, makeDirty, refAtKeyValidation, refValidation} from &quot;./utils&quot;;
 
 const _observerDelegates = new WeakMap();
 
@@ -84,24 +73,10 @@ const _observerDelegates = new WeakMap();
 export class Set extends Model {
     /**
      * @constructor
-     * @param _signature {*}
-     * @param opts {*}
      */
-    constructor(_signature, opts = {}) {
-        super(_signature.writeLock || false, arguments[2]);
-        // stores our user Options into Weakmap
-        _schemaOptions.set(this, opts);
+    constructor() {
+        super(arguments[0]);
         _schemaHelpers.set(this, new SchemaHelpers(this));
-
-        if (!_signature.hasOwnProperty(&quot;type&quot;)) {
-            _signature.type = &quot;Array&quot;;
-        }
-
-        _vPaths.set(this, `${this.path}.*.polymorphic`);
-
-        const _sig = _signature[&quot;*&quot;] || JSD.defaults;
-        _schemaSignatures.set(this, JSON.stringify(_sig));
-
         _object.set(this, new Proxy(Model.createRef(this, []), this.handler));
     }
 
@@ -117,46 +92,45 @@ export class Set extends Model {
      * @param value
      */
     set model(value) {
-        if (Array.isArray(value)) {
-            if (!this.isLocked) {
-                _object.set(this, new Proxy(Model.createRef(this, []), this.handler));
-            }
-
-            try {
-                let cnt = 0;
-                // we delegate observation in the event of whole model replacement
-                // to prevent triggering a notification for each item
-                // if the user desires such behavior they can use `addItem` with an iterator
-                _observerDelegates.set(this, {
-                    next: () =&gt; {
-                        if (this.length === value.length) {
-                            this.observerBuilder.next(this.path, this);
-                        }
-                    },
-                    error: () =&gt; {
-                        // this is a no-op, we will dispatch error later in the setter pipe
-                    }
-                });
-                value.forEach((val) =&gt; {
-                    _object.get(this)[cnt++] = val;
-                });
-            } catch (e) {
-                return this.observerBuilder.error(this.path, e);
-            }
-            if ((typeof this.isValid) === &quot;boolean&quot;) {
-                this.observerBuilder.next(this.path, this);
-                return true;
-            } else {
-                this.observerBuilder.error(this.path, this.validate());
-                return false;
-            }
-        } else {
-            this.observerBuilder.error(this.path, `${this.path} requires Array`);
+        if (!Array.isArray(value) || this.isFrozen ||
+            !refValidation(this, value)) {
+            return false;
         }
+
+        _object.set(this, new Proxy(Model.createRef(this, []), this.handler));
+
+        try {
+            let cnt = 0;
+            // we delegate observation in the event of whole model replacement
+            // to prevent triggering a notification for each item
+            // if the user desires such behavior they can use `addItem` with an iterator
+            _observerDelegates.set(this, {
+                next: () =&gt; {
+                    if (this.length === value.length) {
+                        makeClean(this);
+                        _oBuilders.get(this.jsd).next(this.path, this);
+                    }
+                },
+                error: () =&gt; {
+                    // this is a no-op, we dispatch error earlier in the setter pipe
+                }
+            });
+            value.forEach((val) =&gt; {
+                _object.get(this)[cnt++] = val;
+            });
+        } catch (e) {
+            console.error(e);
+            // return _oBuilders.get(this.jsd).error(this.path, e);
+        }
+
+        makeClean(this);
+
+        _oBuilders.get(this.jsd).next(this.path, this);
+        return true;
     }
 
     get handler() {
-        return {
+        return Object.assign(super.handler, {
             get: (t, idx) =&gt; {
                 // TODO: review for removal
                 // if (typeof idx === &quot;symbol&quot;) {
@@ -168,7 +142,28 @@ export class Set extends Model {
                 }
 
                 if (idx in Array.prototype) {
-                    return t[idx];
+                    // only handle methods that modify the reference array
+                    if ([&quot;fill&quot;, &quot;pop&quot;, &quot;push&quot;, &quot;shift&quot;, &quot;splice&quot;, &quot;unshift&quot;].indexOf(idx) &gt; -1) {
+                        return () =&gt; {
+                            let _arr = [].concat(t);
+                            const _res = _arr[idx].apply(_arr, arguments);
+
+                            if (!this.test(_arr)) {
+                                _oBuilders.get(this.jsd).error(this.path, this.jsd.errors);
+                                return false;
+                            }
+                            // prevents subsequent validation on this object
+                            makeDirty(this);
+
+                            // appies modified array to element
+                            this.model = _arr;
+
+                            // returns result of operation
+                            return _res;
+                        }
+                    } else {
+                        return t[idx];
+                    }
                 }
 
                 if (idx === &quot;$ref&quot;) {
@@ -183,186 +178,63 @@ export class Set extends Model {
                     return true;
                 }
 
-                let _oDel = _observerDelegates.get(this);
-                const sendErr = (msg) =&gt; {
-                    _validPaths.get(this.jsd)[this.path] = msg;
-                    if (_oDel) {
-                        _oDel.error(msg);
-                    } else {
-                        this.observerBuilder.error(this.path, msg);
-                    }
-                };
-                let keyPath = `${_vPaths.get(this)}`.replace(/^\.?(.*)$/, &quot;$1&quot;);
-                let cnt = 0;
-                let msg = `unable to validate &quot;${this.path}&quot;`;
-                (this.schema.polymorphic || this.schema).some(() =&gt; {
-                    msg = this.validatorBuilder.exec(`${keyPath}.${cnt++}`, value);
-                    return (msg === true);
-                });
-                // if error message is present we do error handling and return
-                if ((typeof msg) === &quot;string&quot;) {
-                    sendErr(msg);
+                // -- ensures we aren&apos;t in a frozen hierarchy branch
+                if (this.isFrozen) {
                     return false;
                 }
+
+                if (!refAtKeyValidation(this, &quot;items&quot;, value)) {
+                    return false;
+                }
+
+                let _oDel = _observerDelegates.get(this);
 
                 // we set the value on the array with success
                 if ((typeof value) === &quot;object&quot;) {
                     let _sH = _schemaHelpers.get(this);
                     // note we use the last value of `cnt` and walk back one iteration
-                    value = _sH.setChildObject(`${keyPath}.${cnt - 1}`, value);
+                    value = _sH.setChildObject(`${this.path}`, value);
                 }
+
                 t[idx] = value;
-                msg = this.validate();
-                if ((typeof msg) === &quot;boolean&quot;) {
-                    _validPaths.get(this.jsd)[this.path] = true;
-                    if (_oDel) {
-                        _oDel.next(this);
-                    } else {
-                        this.observerBuilder.next(this.path, this);
-                    }
-                    return true;
-                } else {
-                    sendErr(msg);
-                    return false;
+
+                // makes clean if not serial operation
+                if (!_oDel) {
+                    makeClean(this);
                 }
+
+                // updates observers
+                _oBuilders.get(this.jsd).next(this.path, this);
+                return true;
             },
             deleteProperty: (t, idx) =&gt; {
-                if (idx &gt;= t.length) {
-                    const e = `index ${idx} is out of bounds on ${this.path}`;
-                    this.observerBuilder.error(this.path, e);
+                // creates mock of future Model state for evaluation
+                let _o = [].concat(this.model);
+                _o.splice(idx, 1);
+
+                // validates mock of change state
+                if (!refValidation(this, _o)) {
                     return false;
                 }
+
+                // ensures index of operation is in range
+                if (idx &gt;= t.length) {
+                    const e = `index ${idx} is out of bounds on ${this.path}`;
+                    _oBuilders.get(this.jsd).error(this.path, e);
+                    return false;
+                }
+
+                // applies operation
                 t.splice(idx, 1);
-                this.observerBuilder.next(this.path, t);
+
+                // flags model as in sync with tree
+                makeClean(this);
+
+                // updates observers
+                _oBuilders.get(this.jsd).next(this.path, t);
                 return true;
             }
-        };
-    }
-
-    /**
-     * @param {number} idx
-     * @returns {any} element at index if found
-     */
-    getItemAt(idx) {
-        return this.model[idx];
-    }
-
-    /**
-     * @param {number} idx
-     * @param {any} item
-     * @returns {Set} reference to self
-     */
-    setItemAt(idx, item) {
-        this.model[idx] = item;
-        return this;
-    }
-
-    /**
-     *
-     * @param idx
-     * @returns {Set}
-     */
-    removeItemAt(idx) {
-        delete this.model[idx];
-        return this;
-    }
-
-    /**
-     * @param {Array} array
-     * @returns {Set} reference to self
-     */
-    replaceAll(array) {
-        this.model = array;
-        return this;
-    }
-
-    /**
-     * @param {number} idx
-     * @param {any} item
-     * @returns {boolean|Set} reference to self
-     */
-    replaceItemAt(idx, item) {
-        if (!this.validatorBuilder.exec(this.path, item)) {
-            return false;
-        }
-        if (idx &gt; this.model.length) {
-            return false;
-        }
-        if (idx &lt;= this.model.length) {
-            this.model[idx] = item;
-        }
-        return this;
-    }
-
-    /**
-     * @param {any} item
-     * @returns {Set} reference to self
-     */
-    addItem(item) {
-        this.setItemAt(this.model.length, item);
-        return this;
-    }
-
-    /**
-     * @returns {any} item removed from start of list
-     */
-    shift() {
-        return Reflect.apply(Array.prototype.shift, this.model, []);
-    };
-
-    /**
-     * @param {any} items to be added
-     * @returns {Set} reference to self
-     */
-    unshift(...items) {
-        Reflect.apply(Array.prototype.unshift, this.model, arguments);
-        return this;
-    }
-
-    /**
-     * @returns {any} items removed from end of list
-     */
-    pop() {
-        const v = this.model[this.model.length - 1];
-        delete this.model[this.model.length - 1];
-        return v
-    }
-
-    /**
-     * @param {any} items to be added at end of list
-     * @returns {Set} reference to self
-     */
-    push(...items) {
-        items.forEach(item =&gt; {
-            return this.addItem(item);
         });
-        this.observerBuilder.next(this.path, this);
-        return this;
-    }
-
-    /**
-     * resets list to empty array
-     * @returns {Set} reference to self
-     */
-    reset() {
-        _object.set(this, new Proxy(Model.createRef(this, []), this.handler));
-        return this;
-    }
-
-    /**
-     * @param {function} func - sorting function
-     * @returns {Set} reference to self
-     */
-    sort(func) {
-        this.model.sort(func);
-        return this;
-    }
-
-    /**
-     * @returns {number} number of elements in list
-     */
-    get length() {
-        return this.model.length || 0;
     }
 }
 </code></pre>

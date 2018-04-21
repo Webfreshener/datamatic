@@ -1,9 +1,10 @@
 {
   "author": "Van Schroeder <van@webfreshener.com>",
-  "name": "jsd",
-  "description": "Schema Generation and Data Validation with object virtualization",
+  "name": "rxvo",
+  "description": "RxJS + JSON-Schema Based Observable Data Models",
   "keywords": [
-    "schema",
+    "rxjs",
+    "json-schema",
     "validation",
     "validatable",
     "observable",
@@ -11,12 +12,11 @@
     "model",
     "json",
     "data",
-    "orm",
     "object",
+    "array",
     "hash",
-    "properties",
-    "DOM",
-    "object model"
+    "map",
+    "dictionary"
   ],
   "version": "1.0.0-beta.2",
   "main": "./index.js",
@@ -34,6 +34,7 @@
     "rxjs": "^5.5.6"
   },
   "devDependencies": {
+    "ajv": "^6.4.0",
     "babel": "^6.5.2",
     "babel-core": "^6.18.2",
     "babel-loader": "^7.1.3",
@@ -52,6 +53,7 @@
     "jest-each": "^0.3.1",
     "jsd-utils": "git+https://github.com/webfreshener/jsd-utils.git",
     "jshint": "^2.9.4",
+    "jsonpath": "^1.0.0",
     "mocha": "^5.0.0",
     "mocha-lcov-reporter": "^1.3.0",
     "weakmap": "0.0.6",
@@ -71,4 +73,3 @@
     "coverageCollector": "jest-babel-istanbul"
   }
 }
-
