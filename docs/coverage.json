@@ -1,7 +1,7 @@
 {
-  "coverage": "81.81%",
-  "expectCount": 121,
-  "actualCount": 99,
+  "coverage": "86.88%",
+  "expectCount": 122,
+  "actualCount": 106,
   "files": {
     "src/classes/_ajvWrapper.js": {
       "expectCount": 6,
@@ -9,15 +9,10 @@
       "undocumentLines": []
     },
     "src/classes/_branchNotifier.js": {
-      "expectCount": 11,
-      "actualCount": 5,
+      "expectCount": 13,
+      "actualCount": 12,
       "undocumentLines": [
-        6,
-        7,
-        20,
-        21,
-        30,
-        32
+        2
       ]
     },
     "src/classes/_metaData.js": {
@@ -38,12 +33,11 @@
       ]
     },
     "src/classes/_references.js": {
-      "expectCount": 14,
+      "expectCount": 13,
       "actualCount": 11,
       "undocumentLines": [
         5,
-        6,
-        86
+        6
       ]
     },
     "src/classes/_schemaHelpers.js": {
@@ -58,27 +52,27 @@
       "actualCount": 4,
       "undocumentLines": [
         9,
-        75
-      ]
-    },
-    "src/classes/jsd.js": {
-      "expectCount": 15,
-      "actualCount": 14,
-      "undocumentLines": [
-        11
+        74
       ]
     },
     "src/classes/model.js": {
       "expectCount": 26,
       "actualCount": 25,
       "undocumentLines": [
-        46
+        45
       ]
     },
     "src/classes/propertiesModel.js": {
       "expectCount": 8,
       "actualCount": 8,
       "undocumentLines": []
+    },
+    "src/classes/rxvo.js": {
+      "expectCount": 15,
+      "actualCount": 14,
+      "undocumentLines": [
+        10
+      ]
     },
     "src/classes/utils.js": {
       "expectCount": 7,

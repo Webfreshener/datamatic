@@ -30,14 +30,14 @@
   <ul>
     
   <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#classes">classes</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_branchNotifier.js~Notifier.html">Notifier</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_branchNotifier.js~Notifiers.html">Notifiers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_metaData.js~MetaData.html">MetaData</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_observerBuilder.js~ObserverBuilder.html">ObserverBuilder</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_schemaHelpers.js~SchemaHelpers.html">SchemaHelpers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/itemsModel.js~ItemsModel.html">ItemsModel</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/jsd.js~JSD.html">JSD</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">RxVO</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getRoot">getRoot</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-listDirtyItems">listDirtyItems</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeClean">makeClean</a></span></span></li>
@@ -48,7 +48,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ajvRef">_ajvRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_dirtyModels">_dirtyModels</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_jsdDocs">_jsdDocs</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_oBuilders">_oBuilders</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_object">_object</a></span></span></li>
@@ -65,17 +64,24 @@
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/classes/_branchNotifier.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {_oBuilders} from &quot;./_references&quot;;
+const notifiers = new WeakMap();
 
-let _jsd;
-let _instance;
-
+/**
+ * protocol for Errors
+ */
 class ErrorNotification {
+    /**
+     * @constructor
+     * @param {string} path
+     * @param {string|string[]} error
+     */
     constructor(path, error) {
+        // defines getter for `path` prop
         Object.defineProperty(this, &quot;path&quot;, {
             get: () =&gt; path,
             enumerable: true,
         });
-
+        // defines getter for `error` prop
         Object.defineProperty(this, &quot;error&quot;, {
             get: () =&gt; error,
             enumerable: true,
@@ -83,47 +89,42 @@ class ErrorNotification {
     }
 }
 
+/**
+ * todo: implement this somewhere
+ */
 class CompleteNotification {
+    /**
+     * @constructor
+     * @param {string} path
+     */
     constructor(path) {
         Object.defineProperty(this, &quot;path&quot;, {
             get: () =&gt; path,
             enumerable: true,
         });
-
     }
 }
 
-export default class Notifier {
-
-    static getInstance() {
-        return new this;
-    }
-
+/**
+ * Notification Management
+ * acts as liason between Models and RxJS Subscription Dispatchers
+ */
+class Notifier {
     /**
      *
-     * @param jsd
+     * @param rxvo
      * @returns {Notifier|*}
      */
-    constructor(jsd) {
-        if (_instance) {
-            return _instance;
-        }
+    constructor(rxvo) {
+        Object.defineProperty(this, &quot;$rxvo&quot;, {
+            get: () =&gt; rxvo,
+        });
 
-        _instance = this;
-        _jsd = jsd;
+        notifiers.set(rxvo, this);
     }
 
     /**
-     *
-     * @param forPath
-     * @param value
-     */
-    sendUpdate(forPath, value) {
-        _jsd.getPath(forPath).model = value;
-    }
-
-    /**
-     *
+     * Delegates sending RxJS `next` notifications
      * @param forPath
      */
     sendNext(forPath) {
@@ -133,42 +134,68 @@ export default class Notifier {
                 forPath = `.${forPath}`;
             }
 
-            const _models = _jsd.getModelsInPath(forPath);
+            const _models = this.$rxvo.getModelsInPath(forPath);
 
             if (_models[0] !== &quot;&quot;) {
                 _models.splice(0, 0, &quot;&quot;)
             }
 
             _models.forEach((model) =&gt; {
-                _oBuilders.get(_jsd).next(model.$ref);
+                _oBuilders.get(this.$rxvo).next(model.$model);
             });
         }, 0);
     }
 
     /**
-     *
+     * Delegates sending RxJS `error` notifications
      * @param forPath
      * @param error
      */
     sendError(forPath, error) {
-        const _models = _jsd.getModelsInPath(forPath);
+        const _models = this.$rxvo.getModelsInPath(forPath);
         _models.forEach((model) =&gt; {
-            _oBuilders.get(_jsd).error(model.$ref,
-                new ErrorNotification(model.$ref.path, error));
+            _oBuilders.get(this.$rxvo).error(model.$model,
+                new ErrorNotification(model.$model.path, error));
         });
     }
 
     /**
-     *
+     * Delegates sending RxJS `complete` notifications
      * @param forPath
      */
     sendComplete(forPath) {
-        const _models = _jsd.getModelsInPath(forPath);
+        const _models = this.$rxvo.getModelsInPath(forPath);
         _models.forEach((model) =&gt; {
-            _oBuilders.get(_jsd).complete(model.$ref);
+            _oBuilders.get(this.$rxvo).complete(model.$model);
         });
     }
-}</code></pre>
+}
+
+/**
+ * Creates and Retrives Notification Handlers
+ * @static
+ */
+export default class Notifiers {
+    /**
+     *
+     * @param rxvo
+     * @returns {*}
+     */
+    static create(rxvo) {
+       new Notifier(rxvo);
+       return Notifiers.get(rxvo);
+    }
+
+    /**
+     *
+     * @param rxvo
+     * @returns {Notifier}
+     */
+    static get(rxvo) {
+        return notifiers.get(rxvo);
+    }
+}
+</code></pre>
 
 </div>
 

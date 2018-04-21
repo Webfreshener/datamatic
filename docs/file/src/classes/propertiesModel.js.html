@@ -30,14 +30,14 @@
   <ul>
     
   <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#classes">classes</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_branchNotifier.js~Notifier.html">Notifier</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_branchNotifier.js~Notifiers.html">Notifiers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_metaData.js~MetaData.html">MetaData</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_observerBuilder.js~ObserverBuilder.html">ObserverBuilder</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_schemaHelpers.js~SchemaHelpers.html">SchemaHelpers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/itemsModel.js~ItemsModel.html">ItemsModel</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/jsd.js~JSD.html">JSD</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">RxVO</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getRoot">getRoot</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-listDirtyItems">listDirtyItems</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeClean">makeClean</a></span></span></li>
@@ -48,7 +48,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ajvRef">_ajvRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_dirtyModels">_dirtyModels</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_jsdDocs">_jsdDocs</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_oBuilders">_oBuilders</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_object">_object</a></span></span></li>
@@ -70,7 +69,7 @@
 import {makeClean, makeDirty, refAtKeyValidation, refValidation} from &quot;./utils&quot;;
 import {SchemaHelpers} from &quot;./_schemaHelpers&quot;;
 import {Model} from &quot;./model&quot;;
-import Notifier from &quot;./_branchNotifier&quot;;
+import Notifiers from &quot;./_branchNotifier&quot;;
 
 /**
  * @class PropertiesModel
@@ -97,7 +96,7 @@ export class PropertiesModel extends Model {
         const _self = this;
         return Object.assign(super.handler, {
             get: (t, key) =&gt; {
-                return key === &quot;$ref&quot; ? this : t[key];
+                return key === &quot;$model&quot; ? this : t[key];
             },
             set: (t, key, value) =&gt; {
                 let _sH = _schemaHelpers.get(this);
@@ -119,7 +118,7 @@ export class PropertiesModel extends Model {
                     // attempts validation of value update
                     if (refValidation(this, _o) !== true) {
                         makeClean(this);
-                        _oBuilders.get(this.jsd).error(_self, this.jsd.errors);
+                        _oBuilders.get(this.rxvo).error(_self, this.rxvo.errors);
                         return false;
                     }
                 }
@@ -129,7 +128,7 @@ export class PropertiesModel extends Model {
                     const e = _sH.setObject(key);
                     if (typeof e === &quot;string&quot;) {
                         makeClean(this);
-                        _oBuilders.get(this.jsd).error(_self, e);
+                        _oBuilders.get(this.rxvo).error(_self, e);
                         return false;
                     }
                     return true;
@@ -142,7 +141,7 @@ export class PropertiesModel extends Model {
                         makeClean(this);
 
                         // sends notifications
-                        _oBuilders.get(this.jsd).error(_self, value);
+                        _oBuilders.get(this.rxvo).error(_self, value);
                         return false;
                     }
                 }
@@ -197,7 +196,7 @@ export class PropertiesModel extends Model {
         }
 
         if (refValidation(this, value) !== true) {
-            Notifier.getInstance().sendError(this.jsonPath, this.jsd.errors);
+            Notifiers.get(this.rxvo).sendError(this.jsonPath, this.rxvo.errors);
             return false;
         }
 
@@ -219,8 +218,8 @@ export class PropertiesModel extends Model {
                 // marks model as clean
                 makeClean(this);
 
-                // sends notications
-                Notifier.getInstance().sendError(this.jsonPath, e);
+                // sends notifications
+                Notifiers.get(this.rxvo).sendError(this.jsonPath, e);
                 return false;
             }
         });
@@ -230,7 +229,7 @@ export class PropertiesModel extends Model {
 
         // calls next&apos;s observable to update subscribers
         if (!this.isDirty) {
-            Notifier.getInstance().sendNext(this.jsonPath);
+            Notifiers.get(this.rxvo).sendNext(this.jsonPath);
         }
 
         return true;
@@ -264,7 +263,7 @@ export class PropertiesModel extends Model {
         this.model[key] = value;
 
         // updates observers
-        Notifier.getInstance().sendNext(this.jsonPath);
+        Notifiers.get(this.rxvo).sendNext(this.jsonPath);
 
         // removes dirtiness
         makeClean(this);
