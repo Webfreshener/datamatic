@@ -1,12 +1,12 @@
 import {basicModel} from "../../fixtures/PropertiesModel.schemas";
-import {JSD} from "./jsd";
+import {RxVO} from "./rxvo";
 
 describe("Model Class Tests", () => {
     describe("Test Method", () => {
-        let _jsd;
+        let _rxvo;
 
         beforeEach(() => {
-            _jsd = new JSD(basicModel);
+            _rxvo = new RxVO(basicModel);
         });
 
         it("should validate models against schema", () => {
@@ -16,11 +16,11 @@ describe("Model Class Tests", () => {
                 active: true,
             };
 
-            expect(_jsd.model.$ref.validate(_d)).toBe(true);
+            expect(_rxvo.model.$ref.validate(_d)).toBe(true);
 
             _d.active = "1234";
 
-            expect(_jsd.model.$ref.validate(_d)).toBe("data/active should be boolean");
+            expect(_rxvo.model.$ref.validate(_d)).toBe("data/active should be boolean");
         });
     });
 })

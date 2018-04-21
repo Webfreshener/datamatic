@@ -53,7 +53,7 @@ export class PropertiesModel extends Model {
                     // attempts validation of value update
                     if (refValidation(this, _o) !== true) {
                         makeClean(this);
-                        _oBuilders.get(this.jsd).error(_self, this.jsd.errors);
+                        _oBuilders.get(this.rxvo).error(_self, this.rxvo.errors);
                         return false;
                     }
                 }
@@ -63,7 +63,7 @@ export class PropertiesModel extends Model {
                     const e = _sH.setObject(key);
                     if (typeof e === "string") {
                         makeClean(this);
-                        _oBuilders.get(this.jsd).error(_self, e);
+                        _oBuilders.get(this.rxvo).error(_self, e);
                         return false;
                     }
                     return true;
@@ -76,7 +76,7 @@ export class PropertiesModel extends Model {
                         makeClean(this);
 
                         // sends notifications
-                        _oBuilders.get(this.jsd).error(_self, value);
+                        _oBuilders.get(this.rxvo).error(_self, value);
                         return false;
                     }
                 }
@@ -131,7 +131,7 @@ export class PropertiesModel extends Model {
         }
 
         if (refValidation(this, value) !== true) {
-            Notifiers.get(this.jsd).sendError(this.jsonPath, this.jsd.errors);
+            Notifiers.get(this.rxvo).sendError(this.jsonPath, this.rxvo.errors);
             return false;
         }
 
@@ -154,7 +154,7 @@ export class PropertiesModel extends Model {
                 makeClean(this);
 
                 // sends notications
-                Notifiers.get(this.jsd).sendError(this.jsonPath, e);
+                Notifiers.get(this.rxvo).sendError(this.jsonPath, e);
                 return false;
             }
         });
@@ -164,7 +164,7 @@ export class PropertiesModel extends Model {
 
         // calls next's observable to update subscribers
         if (!this.isDirty) {
-            Notifiers.get(this.jsd).sendNext(this.jsonPath);
+            Notifiers.get(this.rxvo).sendNext(this.jsonPath);
         }
 
         return true;
@@ -198,7 +198,7 @@ export class PropertiesModel extends Model {
         this.model[key] = value;
 
         // updates observers
-        Notifiers.get(this.jsd).sendNext(this.jsonPath);
+        Notifiers.get(this.rxvo).sendNext(this.jsonPath);
 
         // removes dirtiness
         makeClean(this);

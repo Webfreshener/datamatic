@@ -38,7 +38,7 @@ export class ItemsModel extends Model {
         }
 
         if (refValidation(this, value) !== true) {
-            Notifiers.get(this.jsd).sendError(this.jsonPath, this.jsd.errors);
+            Notifiers.get(this.rxvo).sendError(this.jsonPath, this.rxvo.errors);
             return false;
         }
 
@@ -60,12 +60,12 @@ export class ItemsModel extends Model {
         } catch (e) {
             makeClean(this);
             console.log(e);
-            (Notifiers.get(this.jsd).sendError.bind(this))(this.jsonPath, e);
+            (Notifiers.get(this.rxvo).sendError.bind(this))(this.jsonPath, e);
             return false;
         }
 
         makeClean(this);
-        Notifiers.get(this.jsd).sendNext(this.jsonPath);
+        Notifiers.get(this.rxvo).sendNext(this.jsonPath);
         _observerDelegates.delete(this);
 
         return true;
@@ -107,8 +107,8 @@ export class ItemsModel extends Model {
                                 makeClean(_self);
 
                                 // .. sends notifications
-                                Notifiers.get(this.jsd).sendError(_self.jsonPath,
-                                    _self.jsd.errors);
+                                Notifiers.get(this.rxvo).sendError(_self.jsonPath,
+                                    _self.rxvo.errors);
 
                                 return false;
                             }
@@ -117,7 +117,7 @@ export class ItemsModel extends Model {
                             if (this.parent !== null) {
                                 this.parent.model[this.jsonPath.split(".").pop()] = _arr;
                             } else {
-                                this.jsd.model = _arr;
+                                this.rxvo.model = _arr;
                             }
 
                             return _val;
@@ -149,7 +149,7 @@ export class ItemsModel extends Model {
                 if (refAtKeyValidation(this, "items", value) !== true) {
                     if (_oDel !== void(0)) {
                         makeClean(this);
-                        Notifiers.get(this.jsd).sendError(this.jsonPath, this.jsd.errors);
+                        Notifiers.get(this.rxvo).sendError(this.jsonPath, this.rxvo.errors);
                     }
                     return false;
                 }
@@ -166,7 +166,7 @@ export class ItemsModel extends Model {
                 if (_oDel !== void(0)) {
                     makeClean(this);
                     // updates observers
-                    Notifiers.get(this.jsd).sendNext(this.jsonPath);
+                    Notifiers.get(this.rxvo).sendNext(this.jsonPath);
                 }
 
                 return true;
@@ -183,7 +183,7 @@ export class ItemsModel extends Model {
                 } catch (e) {
                     if (!_oDel) {
                         makeClean(this);
-                        Notifiers.get(this.jsd).sendError(this.jsonPath, e);
+                        Notifiers.get(this.rxvo).sendError(this.jsonPath, e);
                     }
                     return false;
                 }
@@ -197,7 +197,7 @@ export class ItemsModel extends Model {
                     // if not serial operation
                     if (!_oDel) {
                         makeClean(this);
-                        Notifiers.get(this.jsd).sendError(this.jsonPath, _res);
+                        Notifiers.get(this.rxvo).sendError(this.jsonPath, _res);
                     }
                     return false;
                 }
@@ -209,7 +209,7 @@ export class ItemsModel extends Model {
                 makeClean(this);
 
                 // updates observers
-                Notifiers.get(this.jsd).sendNext(this.jsonPath);
+                Notifiers.get(this.rxvo).sendNext(this.jsonPath);
                 return true;
             }
         });

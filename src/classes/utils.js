@@ -5,7 +5,7 @@ import {_dirtyModels, _validators} from "./_references";
  * @param {Model} model
  */
 export const makeDirty = (model) => {
-    _dirtyModels.get(model.jsd)[model.path] = true;
+    _dirtyModels.get(model.rxvo)[model.path] = true;
 };
 
 /**
@@ -13,13 +13,13 @@ export const makeDirty = (model) => {
  * @param {Model} model
  */
 export const makeClean = (model) => {
-    if (model.isDirty && _dirtyModels.get(model.jsd)[model.path]) {
-        delete _dirtyModels.get(model.jsd)[model.path];
+    if (model.isDirty && _dirtyModels.get(model.rxvo)[model.path]) {
+        delete _dirtyModels.get(model.rxvo)[model.path];
     }
 };
 
 export const listDirtyItems = (model) => {
-    return Object.keys(_dirtyModels.get(model.jsd));
+    return Object.keys(_dirtyModels.get(model.rxvo));
 };
 
 /**
@@ -66,7 +66,7 @@ export const refAtKeyValidation = (model, key, value) => {
 
 export const validate = (model, path, value) => {
     // obtains validator reference
-    const _v = _validators.get(model.jsd);
+    const _v = _validators.get(model.rxvo);
     const _res = _v.exec(path, value);
     // runs validation and returns
     if (_res !== true) {
@@ -77,5 +77,5 @@ export const validate = (model, path, value) => {
 };
 
 export const getRoot = (model) => {
-    return Object.assign({}, model.jsd.model);
+    return Object.assign({}, model.rxvo.model);
 };

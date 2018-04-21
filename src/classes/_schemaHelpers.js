@@ -49,7 +49,7 @@ export class SchemaHelpers {
         let _s = this.createSchemaChild(key, value, _mdData);
 
         // creates Observables for new Child Model
-        _oBuilders.get(this._ref.jsd).create(_s);
+        _oBuilders.get(this._ref.rxvo).create(_s);
 
         if (typeof _s === "string") {
             return _s;
@@ -76,7 +76,7 @@ export class SchemaHelpers {
             _path: path,
             _parent: this._ref,
             _root: this._ref.root,
-            _jsd: this._ref.jsd,
+            _rxvo: this._ref.rxvo,
         }, metaData || {});
 
         // constructs new MetaData object with owner as reference point for chaining

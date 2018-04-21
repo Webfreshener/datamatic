@@ -13,8 +13,8 @@ window.esdocSearchIndex = [
   ],
   [
     "rxvo/src/classes/jsd.js~jsd",
-    "class/src/classes/jsd.js~JSD.html",
-    "<span>JSD</span> <span class=\"search-result-import-path\">rxvo/src/classes/jsd.js</span>",
+    "class/src/classes/jsd.js~RxVO.html",
+    "<span>RxVO</span> <span class=\"search-result-import-path\">rxvo/src/classes/jsd.js</span>",
     "class"
   ],
   [
@@ -733,80 +733,80 @@ window.esdocSearchIndex = [
   ],
   [
     "src/classes/jsd.js~jsd#constructor",
-    "class/src/classes/jsd.js~JSD.html#instance-constructor-constructor",
-    "src/classes/jsd.js~JSD#constructor",
+    "class/src/classes/jsd.js~RxVO.html#instance-constructor-constructor",
+    "src/classes/jsd.js~RxVO#constructor",
     "method"
   ],
   [
     "src/classes/jsd.js~jsd#errors",
-    "class/src/classes/jsd.js~JSD.html#instance-get-errors",
-    "src/classes/jsd.js~JSD#errors",
+    "class/src/classes/jsd.js~RxVO.html#instance-get-errors",
+    "src/classes/jsd.js~RxVO#errors",
     "member"
   ],
   [
     "src/classes/jsd.js~jsd#getmodelsinpath",
-    "class/src/classes/jsd.js~JSD.html#instance-method-getModelsInPath",
-    "src/classes/jsd.js~JSD#getModelsInPath",
+    "class/src/classes/jsd.js~RxVO.html#instance-method-getModelsInPath",
+    "src/classes/jsd.js~RxVO#getModelsInPath",
     "method"
   ],
   [
     "src/classes/jsd.js~jsd#getpath",
-    "class/src/classes/jsd.js~JSD.html#instance-method-getPath",
-    "src/classes/jsd.js~JSD#getPath",
+    "class/src/classes/jsd.js~RxVO.html#instance-method-getPath",
+    "src/classes/jsd.js~RxVO#getPath",
     "method"
   ],
   [
     "src/classes/jsd.js~jsd#model",
-    "class/src/classes/jsd.js~JSD.html#instance-set-model",
-    "src/classes/jsd.js~JSD#model",
+    "class/src/classes/jsd.js~RxVO.html#instance-set-model",
+    "src/classes/jsd.js~RxVO#model",
     "member"
   ],
   [
     "src/classes/jsd.js~jsd#model",
-    "class/src/classes/jsd.js~JSD.html#instance-get-model",
-    "src/classes/jsd.js~JSD#model",
+    "class/src/classes/jsd.js~RxVO.html#instance-get-model",
+    "src/classes/jsd.js~RxVO#model",
     "member"
   ],
   [
     "src/classes/jsd.js~jsd#schema",
-    "class/src/classes/jsd.js~JSD.html#instance-get-schema",
-    "src/classes/jsd.js~JSD#schema",
+    "class/src/classes/jsd.js~RxVO.html#instance-get-schema",
+    "src/classes/jsd.js~RxVO#schema",
     "member"
   ],
   [
     "src/classes/jsd.js~jsd#subscribe",
-    "class/src/classes/jsd.js~JSD.html#instance-method-subscribe",
-    "src/classes/jsd.js~JSD#subscribe",
+    "class/src/classes/jsd.js~RxVO.html#instance-method-subscribe",
+    "src/classes/jsd.js~RxVO#subscribe",
     "method"
   ],
   [
     "src/classes/jsd.js~jsd#subscribeto",
-    "class/src/classes/jsd.js~JSD.html#instance-method-subscribeTo",
-    "src/classes/jsd.js~JSD#subscribeTo",
+    "class/src/classes/jsd.js~RxVO.html#instance-method-subscribeTo",
+    "src/classes/jsd.js~RxVO#subscribeTo",
     "method"
   ],
   [
     "src/classes/jsd.js~jsd#tojson",
-    "class/src/classes/jsd.js~JSD.html#instance-method-toJSON",
-    "src/classes/jsd.js~JSD#toJSON",
+    "class/src/classes/jsd.js~RxVO.html#instance-method-toJSON",
+    "src/classes/jsd.js~RxVO#toJSON",
     "method"
   ],
   [
     "src/classes/jsd.js~jsd#tostring",
-    "class/src/classes/jsd.js~JSD.html#instance-method-toString",
-    "src/classes/jsd.js~JSD#toString",
+    "class/src/classes/jsd.js~RxVO.html#instance-method-toString",
+    "src/classes/jsd.js~RxVO#toString",
     "method"
   ],
   [
     "src/classes/jsd.js~jsd#validate",
-    "class/src/classes/jsd.js~JSD.html#instance-method-validate",
-    "src/classes/jsd.js~JSD#validate",
+    "class/src/classes/jsd.js~RxVO.html#instance-method-validate",
+    "src/classes/jsd.js~RxVO#validate",
     "method"
   ],
   [
     "src/classes/jsd.js~jsd.fromjson",
-    "class/src/classes/jsd.js~JSD.html#static-method-fromJSON",
-    "src/classes/jsd.js~JSD.fromJSON",
+    "class/src/classes/jsd.js~RxVO.html#static-method-fromJSON",
+    "src/classes/jsd.js~RxVO.fromJSON",
     "method"
   ],
   [

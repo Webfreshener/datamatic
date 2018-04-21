@@ -1,4 +1,4 @@
-const JSD = require('../index').JSD;
+const RxVO = require('../index').RxVO;
 
 // JSON-SCHEMA for Scores Collection
 const schema = {
@@ -44,7 +44,7 @@ const data = {
 };
 
 // instantiate our Model
-const obj = new JSD(schema);
+const obj = new RxVO(schema);
 
 // subscribes an observer to the Model
 obj.subscribe({

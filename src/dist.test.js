@@ -1,10 +1,10 @@
 describe("node commonjs require", () => {
-    it("should import JSD and create document", ()=> {
-        let JSD = require("../index").JSD;
-        let jsd = new JSD({foo: {type: "String"}});
-        jsd.model = {
+    it("should import RxVO and create document", ()=> {
+        let RxVO = require("../index").RxVO;
+        let rxvo = new RxVO({foo: {type: "String"}});
+        rxvo.model = {
             foo: "bar"
         };
-        expect(jsd.model.foo).toBe("bar");
+        expect(rxvo.model.foo).toBe("bar");
     });
 });

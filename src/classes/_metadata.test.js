@@ -1,12 +1,12 @@
 import {MetaData} from "./_metaData";
 import {PropertiesModel} from "./propertiesModel";
-import {JSD} from "./jsd";
+import {RxVO} from "./rxvo";
 import {basicModel} from "../../fixtures/PropertiesModel.schemas";
 describe("MetaData Units", () => {
     let _md = null;
     describe( "SubClass Validation", ()=> {
         it( "should accept objects that are subclasses of PropertiesModel", function() {
-            let _ = new PropertiesModel(new JSD(basicModel));
+            let _ = new PropertiesModel(new RxVO(basicModel));
             !expect(() => _md = new MetaData(_, {_path: "", _root: _})).not.toThrow(
                 "new MetaData() argument 1 requires subclass PropertiesModel or ItemsModel. Was subclass of '<Object>'");
         });
@@ -18,9 +18,9 @@ describe("MetaData Units", () => {
         });
     });
     describe( "Parameter Accessor Validation", ()=> {
-        const jsd = new JSD(basicModel);
-        let _ = jsd.model.$ref;
-        const _md = new MetaData( new PropertiesModel(jsd), {_path: "key", _root: _, _parent: _});
+        const rxvo = new RxVO(basicModel);
+        let _ = rxvo.model.$ref;
+        const _md = new MetaData( new PropertiesModel(rxvo), {_path: "key", _root: _, _parent: _});
         it("should access `root` property", function() {
             expect(typeof _md.root).toBe("object");
         });

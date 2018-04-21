@@ -1,22 +1,22 @@
 import {_mdRef} from "./_references";
 import {PropertiesModel} from "./propertiesModel";
-import {JSD} from "./jsd";
+import {RxVO} from "./rxvo";
 import {SchemaHelpers} from "./_schemaHelpers";
 import {basicModel} from "../../fixtures/PropertiesModel.schemas";
 
 describe("SchemaHelpers Class Tests", () => {
-    let _jsd, _schema, _sH;
+    let _rxvo, _schema, _sH;
 
     beforeEach(() => {
-        _jsd = new JSD(basicModel);
-        _schema = new PropertiesModel(_jsd);
+        _rxvo = new RxVO(basicModel);
+        _schema = new PropertiesModel(_rxvo);
         _sH = new SchemaHelpers(_schema);
     });
 
     describe("Child Object Methods", () => {
         beforeEach(() => {
-            _jsd = new JSD(basicModel);
-            _schema = new PropertiesModel(_jsd);
+            _rxvo = new RxVO(basicModel);
+            _schema = new PropertiesModel(_rxvo);
             _sH = new SchemaHelpers(_schema);
         });
 

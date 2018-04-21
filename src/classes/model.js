@@ -2,7 +2,7 @@ import {
     _mdRef, _oBuilders, _exists,
     _object, _schemaOptions, _dirtyModels
 } from "./_references";
-import {JSD} from "./jsd";
+import {RxVO} from "./rxvo";
 import {MetaData} from "./_metaData";
 import {makeClean, makeDirty, validate} from "./utils";
 
@@ -13,14 +13,14 @@ import {makeClean, makeDirty, validate} from "./utils";
  */
 const createMetaDataRef = (ref, metaRef) => {
     let _md;
-    if (metaRef instanceof JSD) {
-        // root properties are handed the JSD object
+    if (metaRef instanceof RxVO) {
+        // root properties are handed the RxVO object
         // will create new MetaData and set reference as root element
         _md = new MetaData(ref, {
             _path: "",
             _parent: null,
             _root: ref,
-            _jsd: metaRef,
+            _rxvo: metaRef,
         });
     }
     else if ((typeof metaRef) === "object") {
@@ -33,7 +33,7 @@ const createMetaDataRef = (ref, metaRef) => {
         }
     } else {
         throw "Invalid attempt to construct Model." +
-        "tip: use `new JSD([schema])` instead"
+        "tip: use `new RxVO([schema])` instead"
     }
     // sets MetaData object to global reference
     _mdRef.set(ref, _md);
@@ -66,7 +66,7 @@ export class Model {
      * @return {Observable}
      */
     subscribeTo(path, func) {
-        const _oBuilder = _oBuilders.get(this.jsd);
+        const _oBuilder = _oBuilders.get(this.rxvo);
         const _o = _oBuilder.getObserverForPath(path);
         if (_o === null) {
             return _o;
@@ -127,7 +127,7 @@ export class Model {
         const _res = this.validate(_o);
         // validates that this model be returned to an empty value
         if (_res !== true) {
-            _oBuilders.get(this.jsd).error(this, _res);
+            _oBuilders.get(this.rxvo).error(this, _res);
             return this;
         }
 
@@ -156,7 +156,7 @@ export class Model {
         makeClean(this);
 
         // sends notification of model change
-        _oBuilders.get(this.jsd).next(this);
+        _oBuilders.get(this.rxvo).next(this);
 
         return this;
     }
@@ -222,7 +222,7 @@ export class Model {
      */
     freeze() {
         Object.freeze(_object.get(this));
-        _oBuilders.get(this.jsd).complete(this);
+        _oBuilders.get(this.rxvo).complete(this);
         return this;
     }
 
@@ -296,16 +296,16 @@ export class Model {
      * @return {boolean}
      */
     get isDirty() {
-        let _res = _dirtyModels.get(this.jsd)[this.path] || false;
+        let _res = _dirtyModels.get(this.rxvo)[this.path] || false;
         return _res || ((this.parent === null) ? false : this.parent.isDirty);
     }
 
     /**
-     * Getter for model's JSD owner object
-     * @returns {JSD}
+     * Getter for model's RxVO owner object
+     * @returns {RxVO}
      */
-    get jsd() {
-        return _mdRef.get(this).jsd;
+    get rxvo() {
+        return _mdRef.get(this).rxvo;
     }
 
     /**
@@ -339,7 +339,7 @@ export class Model {
      * @returns {*}
      */
     get schema() {
-        return this; // _validators.get(this.jsd).$ajv.compile({$ref: this.validationPath});
+        return this; // _validators.get(this.rxvo).$ajv.compile({$ref: this.validationPath});
     }
 
     /**

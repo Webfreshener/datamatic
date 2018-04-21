@@ -2,7 +2,7 @@
  * @private
  */
 import {_ajvRef} from "./_references";
-import {JSD} from "./jsd";
+import {RxVO} from "./rxvo";
 import Ajv from "ajv";
 
 /**
@@ -12,19 +12,19 @@ import Ajv from "ajv";
 export class AjvWrapper {
     /**
      * @constructor
-     * @param jsd
+     * @param rxvo
      * @param schema
      * @param ajvOptions
      */
-    constructor(jsd, schema, ajvOptions = {}) {
-        // ensures that we are given something that represents a JSD object
-        if ((!jsd) || !(jsd instanceof JSD)) {
-            throw "JSD is required at arguments[0]";
+    constructor(rxvo, schema, ajvOptions = {}) {
+        // ensures that we are given something that represents a RxVO object
+        if ((!rxvo) || !(rxvo instanceof RxVO)) {
+            throw "RxVO is required at arguments[0]";
         }
 
-        // defines getter for parent JSD reference
-        Object.defineProperty(this, "$jsd", {
-            get: () => jsd,
+        // defines getter for parent RxVO reference
+        Object.defineProperty(this, "$rxvo", {
+            get: () => rxvo,
             enumerable: false,
         });
 
@@ -81,7 +81,7 @@ export class AjvWrapper {
 
 /**
  * AJV Options Config in it's entirely for reference
- * only JSD specific option changes are enabled
+ * only RxVO specific option changes are enabled
  * @type {*}
  * @private
  */

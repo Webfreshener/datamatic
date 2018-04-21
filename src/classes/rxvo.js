@@ -1,6 +1,6 @@
 import {
     _oBuilders, _validators, _observers,
-    _dirtyModels, _schemaSignatures, _jsdDocs
+    _dirtyModels, _schemaSignatures, _rxvoDocs
 } from "./_references";
 import {ObserverBuilder} from "./_observerBuilder";
 import {PropertiesModel} from "./propertiesModel";
@@ -10,10 +10,10 @@ import Notifiers from "./_branchNotifier";
 
 const _documents = new WeakMap();
 /**
- * JSD Document Entry-point
+ * RxVo Model Entry-point
  * @public
  */
-export class JSD {
+export class RxVO {
     /**
      * @constructor
      * @param {json} schema
@@ -197,16 +197,16 @@ export class JSD {
     /**
      * Creates new PropertiesModel from JSON data
      * @param {string|json} json -- JSON Object or String
-     * @param {object} options - JSD options object
-     * @returns {JSD}
+     * @param {object} options - RxVO options object
+     * @returns {RxVO}
      */
     static fromJSON(json, options) {
         // quick peek at json param to ensure it looks ok
         const __ = (typeof json).match(/^(string|object)+$/);
 
         if (__) {
-            // attempts to create JSD from JSON or JSON string
-            return new JSD((__[1] === "string") ?
+            // attempts to create RxVO from JSON or JSON string
+            return new RxVO((__[1] === "string") ?
                 JSON.parse(json) : json, options);
         }
 

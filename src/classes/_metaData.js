@@ -73,11 +73,11 @@ export class MetaData {
     }
 
     /**
-     * Owner JSD document
-     * @returns {JSD}
+     * Owner RxVO document
+     * @returns {RxVO}
      */
-    get jsd() {
-        return this.get("_jsd");
+    get rxvo() {
+        return this.get("_rxvo");
     }
 
     /**

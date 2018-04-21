@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////
-// JSD
-// (c)2015-2017 Van Schroeder <van@webfreshener.com>
+// RxVO
+// (c)2015-2018 Van Schroeder <van@webfreshener.com>
 /////////////////////////////////////////////////
 //== Polyfills Object.assign
 if (typeof Object.assign != "function") {
@@ -24,4 +24,4 @@ if (typeof Object.assign != "function") {
         return target;
     }
 }
-export {JSD} from './classes/jsd';
+export {RxVO} from './classes/rxvo';

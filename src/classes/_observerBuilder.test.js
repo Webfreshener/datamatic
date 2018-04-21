@@ -1,5 +1,5 @@
 import {ObserverBuilder} from "./_observerBuilder";
-import {JSD} from "./jsd";
+import {RxVO} from "./rxvo";
 import {PropertiesModel} from "./propertiesModel";
 
 describe("ObserverBuilder Unit Test Suite", () => {
@@ -18,7 +18,7 @@ describe("ObserverBuilder Unit Test Suite", () => {
                     required: true,
                     polymorphic: [{type: "Boolean"}, {type: "Number"}],
                 }
-            }, null, new JSD());
+            }, null, new RxVO());
         });
 
         it.skip("should create an observer", function () {
