@@ -4,6 +4,7 @@ import {
 import {Model} from "./model";
 import {SchemaHelpers} from "./_schemaHelpers";
 import {makeClean, makeDirty, refAtKeyValidation, refValidation} from "./utils";
+import Notifier from "./_branchNotifier";
 
 const _observerDelegates = new WeakMap();
 
@@ -37,7 +38,8 @@ export class ItemsModel extends Model {
         }
 
         if (refValidation(this, value) !== true) {
-            _oBuilders.get(this.jsd).error(this, this.jsd.errors);
+            console.log(`error! this.jsd.errors: ${JSON.stringify(this.jsd.errors)}`);
+            Notifier.getInstance().sendError(this.jsonPath, this.jsd.errors);
             return false;
         }
 
@@ -47,42 +49,33 @@ export class ItemsModel extends Model {
         }
 
         _object.set(this, new Proxy(Model.createRef(this, []), this.handler));
+        _observerDelegates.set(this, true);
 
         try {
             let cnt = 0;
-            // we delegate observation in the event of whole model replacement
-            // to prevent triggering a notification for each item
-            // if the user desires such behavior they can use `addItem` with an iterator
-            _observerDelegates.set(this, {
-                next: () => {
-                    if (this.length === value.length) {
-                        makeClean(this);
-                        _oBuilders.get(this.jsd).next(this);
-                    }
-                },
-                error: () => {
-                    // this is a no-op, we dispatch error earlier in the setter pipe
-                }
-            });
+
             value.forEach((val) => {
                 _object.get(this)[cnt++] = val;
             });
 
-
         } catch (e) {
             makeClean(this);
-            _oBuilders.get(this.jsd).error(this, e);
+            console.log(e);
+            (Notifier.getInstance().sendError.bind(this))(this.jsonPath, e);
             return false;
         }
 
         makeClean(this);
-
-        _oBuilders.get(this.jsd).next(this);
+        Notifier.getInstance().sendNext(this.jsonPath);
+        _observerDelegates.delete(this);
 
         return true;
     }
 
     get handler() {
+        const _updateSelf = (value) => {
+            this.model = value;
+        };
         return Object.assign(super.handler, {
             get: (t, idx) => {
                 // TODO: review for removal
@@ -95,6 +88,7 @@ export class ItemsModel extends Model {
                 }
 
                 if (idx in Array.prototype) {
+                    const _self = this;
                     // only handle methods that modify the reference array
                     if (["fill", "pop", "push", "shift", "splice", "unshift"].indexOf(idx) > -1) {
                         // returns closure analog to referenced method
@@ -106,22 +100,26 @@ export class ItemsModel extends Model {
                             const _val = t[idx].apply(_arr, args);
 
                             // validates updated mock
-                            const _res = refValidation(this, _arr);
+                            const _res = refValidation(_self, _arr);
 
                             // in event of validation failure
                             if (_res !== true) {
                                 // .. marks model as clean
-                                makeClean(this);
+                                makeClean(_self);
 
                                 // .. sends notifications
-                                _oBuilders.get(this.jsd).error(this,
-                                    this.jsd.errors);
+                                Notifier.getInstance().sendError(_self.jsonPath,
+                                    _self.jsd.errors);
 
                                 return false;
                             }
 
-                            // applies modified array to element
-                            this.model = _arr;
+                            // this is a kludge to handle updates from proto methods
+                            if (this.parent !== null) {
+                                this.parent.model[this.jsonPath.split(".").pop()] = _arr;
+                            } else {
+                                this.jsd.model = _arr;
+                            }
 
                             return _val;
                         }
@@ -147,15 +145,15 @@ export class ItemsModel extends Model {
                     return false;
                 }
 
+                let _oDel = _observerDelegates.get(this);
+
                 if (refAtKeyValidation(this, "items", value) !== true) {
-                    if (!_oDel) {
+                    if (_oDel !== void(0)) {
                         makeClean(this);
-                        _oBuilders.get(this.jsd).error(this, this.jsd.errors);
+                        Notifier.getInstance().sendError(this.jsonPath, this.jsd.errors);
                     }
                     return false;
                 }
-
-                let _oDel = _observerDelegates.get(this);
 
                 // we set the value on the array with success
                 if ((typeof value) === "object") {
@@ -166,14 +164,15 @@ export class ItemsModel extends Model {
                 t[idx] = value;
 
                 // makes clean if not serial operation
-                if (!_oDel) {
+                if (_oDel !== void(0)) {
                     makeClean(this);
                     // updates observers
-                    _oBuilders.get(this.jsd).next(this);
+                    Notifier.getInstance().sendNext(this.jsonPath);
                 }
 
                 return true;
             },
+
             deleteProperty: (t, idx) => {
                 let _oDel = _observerDelegates.get(this);
                 // creates mock of future Model state for evaluation
@@ -185,7 +184,7 @@ export class ItemsModel extends Model {
                 } catch (e) {
                     if (!_oDel) {
                         makeClean(this);
-                        _oBuilders.get(this.jsd).error(this, e);
+                        Notifier.getInstance().sendError(this.jsonPath, e);
                     }
                     return false;
                 }
@@ -199,7 +198,7 @@ export class ItemsModel extends Model {
                     // if not serial operation
                     if (!_oDel) {
                         makeClean(this);
-                        _oBuilders.get(this.jsd).error(this, _res);
+                        Notifier.getInstance().sendError(this.jsonPath, _res);
                     }
                     return false;
                 }
@@ -211,7 +210,7 @@ export class ItemsModel extends Model {
                 makeClean(this);
 
                 // updates observers
-                _oBuilders.get(this.jsd).next(this, t);
+                Notifier.getInstance().sendNext(this.jsonPath);
                 return true;
             }
         });

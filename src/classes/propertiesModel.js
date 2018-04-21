@@ -4,6 +4,7 @@ import {
 import {makeClean, makeDirty, refAtKeyValidation, refValidation} from "./utils";
 import {SchemaHelpers} from "./_schemaHelpers";
 import {Model} from "./model";
+import Notifier from "./_branchNotifier";
 
 /**
  * @class PropertiesModel
@@ -130,7 +131,7 @@ export class PropertiesModel extends Model {
         }
 
         if (refValidation(this, value) !== true) {
-            _oBuilders.get(this.jsd).error(this, this.jsd.errors);
+            Notifier.getInstance().sendError(this.jsonPath, this.jsd.errors);
             return false;
         }
 
@@ -153,7 +154,7 @@ export class PropertiesModel extends Model {
                 makeClean(this);
 
                 // sends notications
-                _oBuilders.get(this.jsd).error(this, e);
+                Notifier.getInstance().sendError(this.jsonPath, e);
                 return false;
             }
         });
@@ -162,9 +163,9 @@ export class PropertiesModel extends Model {
         makeClean(this);
 
         // calls next's observable to update subscribers
-        // if (!this.isDirty) {
-            _oBuilders.get(this.jsd).next(this);
-        // }
+        if (!this.isDirty) {
+            Notifier.getInstance().sendNext(this.jsonPath);
+        }
 
         return true;
     }
@@ -197,7 +198,7 @@ export class PropertiesModel extends Model {
         this.model[key] = value;
 
         // updates observers
-        _oBuilders.get(this.jsd).next(this);
+        Notifier.getInstance().sendNext(this.jsonPath);
 
         // removes dirtiness
         makeClean(this);

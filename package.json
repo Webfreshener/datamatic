@@ -1,9 +1,10 @@
 {
   "author": "Van Schroeder <van@webfreshener.com>",
-  "name": "jsd",
-  "description": "Schema Generation and Data Validation with object virtualization",
+  "name": "rxvo",
+  "description": "RxJS + JSON-Schema Based Observable Data Models",
   "keywords": [
-    "schema",
+    "rxjs",
+    "json-schema",
     "validation",
     "validatable",
     "observable",
@@ -11,12 +12,11 @@
     "model",
     "json",
     "data",
-    "orm",
     "object",
+    "array",
     "hash",
-    "properties",
-    "DOM",
-    "object model"
+    "map",
+    "dictionary"
   ],
   "version": "1.0.0-beta.2",
   "main": "./index.js",

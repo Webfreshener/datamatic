@@ -3,45 +3,60 @@ import {JSD} from "./jsd";
 import {basicModel, scoresModel} from "../../fixtures/PropertiesModel.schemas";
 import {_observers, _oBuilders} from "./_references";
 import {getRoot} from "./utils";
+import deepEqual from "deep-equal";
 
 describe("RXJS Test Suite", () => {
-    describe("Basic Notifications", () => {
+    describe.skip("Basic Notifications", () => {
         describe("update", () => {
-            let _jsd
-            beforeEach(() => {
-                _jsd = new JSD(basicModel);
-            });
+            // let _jsd;
+            // beforeEach(() => {
+            //     _jsd = new JSD(basicModel);
+            // });
+            //
+            // afterEach(() => {
+            //     _jsd = null;
+            // });
 
             it("should have some tests", (done) => {
-                _jsd.subscribe({
+                const _jsd = new JSD(basicModel);
+                const _d = {
+                    name: "A Name",
+                    age: 99,
+                    active: true,
+                };
+
+                const _sub = _jsd.subscribe({
                     next: (model) => {
+                        _sub.unsubscribe();
+                        expect(deepEqual(model.toJSON(), _d)).toBe(true);
                         done()
                     },
                     error: (e) => {
+                        _sub.unsubscribe();
                         done(e);
                     }
                 });
 
-                _jsd.model = {
-                    name: "A Name",
-                    age: 99,
-                    active: true,
-                }
+                _jsd.model = _d;
             });
         });
     });
 
-    describe.only("Nested Element Notifications", () => {
+    describe("Nested Element Notifications", () => {
         describe("update", () => {
-            let _jsd;
+            // let _jsd;
 
             beforeEach(() => {
-                _jsd = new JSD(scoresModel);
+                // _jsd = new JSD(scoresModel);
             });
 
-            it.only("should have some tests", (done) => {
+            afterEach(() => {
+                // _jsd = null;
+            });
 
-                _jsd.model = {
+            it("should have some tests", (done) => {
+                const _jsd1 = new JSD(scoresModel);
+                _jsd1.model = {
                     name: "A Game",
                     topScores: [{
                         name: "Player 1",
@@ -54,57 +69,28 @@ describe("RXJS Test Suite", () => {
 
                 let cnt = 0;
 
-                // _jsd.subscribeTo("/properties/topScores", {
-                _jsd.subscribe({
+                const _sub = _jsd1.subscribe({
                     next: (res) => {
-                        console.log(`${JSON.stringify(getRoot(res))}`);
-                        // console.log(`${_jsd.}`);
-                        // if (cnt < 1) {
-                        //     console.log("\n\n 1st iteration \n\n");
-                        //     cnt++;
-                        //     return;
-                        // }
-
-                        expect(res.model.topScores.length).toBe(3);
+                        // expect(res.model.topScores.length).toBe(3);
+                        // _sub.unsubscribe();
                         done()
                     },
                     error: (e) => {
-                        done(e);
+                        // _sub.unsubscribe();
+                        done(JSON.stringify(e));
                     }
                 });
 
-                console.log(_jsd.model);
-                // _jsd.model.topScores.push({
-                //     name: "Player 3",
-                //     score: 3000000000,
-                // });
-
-                _jsd.model.topScores = [{
-                    name: "Player 1",
-                    score: 1000000000,
-                }, {
-                    name: "Player 2",
-                    score: 2000000000,
-                }, {
+                _jsd1.model.topScores.push({
                     name: "Player 3",
                     score: 3000000000,
-                }];
+                });
 
-                // console.log(`${_jsd.model.$ref}`);
+                // _jsd.model.topScores.splice(1, 1, {
+                //     name: "Player 3",
+                //     score: 4000000000,
+                // });
 
-                // _jsd.model = {
-                //     name: "A Game",
-                //     topScores: [{
-                //         name: "Player 1",
-                //         score: 1000000000,
-                //     }, {
-                //         name: "Player 2",
-                //         score: 2000000000,
-                //     }, {
-                //         name: "Player 3",
-                //         score: 3000000000,
-                //     }],
-                // };
             });
         });
     });

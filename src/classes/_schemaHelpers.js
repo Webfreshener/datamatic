@@ -50,12 +50,7 @@ export class SchemaHelpers {
 
         // creates Observables for new Child Model
         _oBuilders.get(this._ref.jsd).create(_s);
-        _s.subscribe({
-            next: (value) => {
-                // console.log(_observers.get(this._ref.jsd).model.$ref);
-                _oBuilders.get(this._ref.jsd).next(this._ref);
-            },
-        });
+
         if (typeof _s === "string") {
             return _s;
         } else if (!_exists(_s) ||

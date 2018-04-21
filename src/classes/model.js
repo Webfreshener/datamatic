@@ -210,6 +210,7 @@ export class Model {
      * @param pretty - `prettifies` JSON output for readability
      */
     toString(pretty = false) {
+        console.log(this.toJSON());
         return JSON.stringify(this.toJSON(), null, (pretty ? 2 : void(0)));
     }
 
@@ -274,6 +275,13 @@ export class Model {
         return _mdRef.get(this).path || "";
     }
 
+    /**
+     * Getter for path to JSON Object for Model
+     * @returns {string}
+     */
+    get jsonPath() {
+        return this.path.replace(/\/?(properties|items)+\/?/g, ".").replace(/^\./, "");
+    }
     /**
      * Getter for Model's parent
      * @returns {Model}

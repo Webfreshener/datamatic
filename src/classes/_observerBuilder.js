@@ -57,12 +57,8 @@ export class ObserverBuilder {
      */
     next(target) {
         let _o = this.get(target);
-        if (_o) {
+        if (_o !== null) {
             _o.onNext.next(target);
-
-            // if (!target.isDirty && target.parent !== null) {
-            //     this.next(target.parent);
-            // }
         }
     }
 
@@ -73,10 +69,7 @@ export class ObserverBuilder {
     complete(target) {
         let _o = this.get(target);
         if (_o !== null) {
-            _o.onComplete.next(target.model);
-            // if (!target.isDirty && target.parent !== null) {
-            //     this.complete(target.parent);
-            // }
+            _o.onComplete.next(target);
         }
     }
 
@@ -89,9 +82,6 @@ export class ObserverBuilder {
         let _o = this.get(target);
         if (_o !== null) {
             _o.onError.next(message);
-            // if (!target.isDirty && target.parent !== null) {
-            //     this.error(target.parent, message);
-            // }
         }
     }
 }

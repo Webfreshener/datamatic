@@ -6,6 +6,8 @@ import {ObserverBuilder} from "./_observerBuilder";
 import {PropertiesModel} from "./propertiesModel";
 import {ItemsModel} from "./itemsModel";
 import {AjvWrapper} from "./_ajvWrapper";
+import Notifier from "./_branchNotifier";
+
 const _documents = new WeakMap();
 /**
  * JSD Document Entry-point
@@ -51,6 +53,8 @@ export class JSD {
         // creates holder for dirty model flags in this scope
         _dirtyModels.set(this, {});
 
+        new Notifier(this);
+
         // creates root level document
         const _doc = new (!_useSet ? PropertiesModel : ItemsModel)(this);
 
@@ -90,24 +94,7 @@ export class JSD {
         _documents.get(this).model = value;
     }
 
-    /**
-     * Subscribes observer to root Model
-     * @param observer
-     * @returns {Observable}
-     */
-    subscribe(observer) {
-        return _documents.get(this).subscribe(observer);
-    }
 
-    /**
-     * Subscribes observer to Model at path
-     * @param path
-     * @param observer
-     * @returns {Observable}
-     */
-    subscribeTo(path, observer) {
-        return _documents.get(this).subscribeTo(path, observer);
-    }
 
     /**
      *
@@ -133,6 +120,62 @@ export class JSD {
      */
     get errors() {
         return _validators.get(this).$ajv.errors || null;
+    }
+
+    /**
+     *
+     * @param to
+     * @returns {Object|Array}
+     */
+    getPath(to) {
+        let _ref = this.model;
+        to = to.replace(/\/?(properties|items)+\//g, ".").replace(/^\./, "");
+        (to.split(".")).forEach((step) => {
+            if (_ref[step]) {
+                _ref = _ref[step];
+            }
+        });
+
+        return _ref;
+    }
+
+    /**
+     *
+     * @param to
+     * @returns {Array[]|Object[]}
+     */
+    getModelsInPath(to) {
+        const _steps = [this.model];
+        let _ref = this.model;
+        to = to.replace(/\/?(properties|items)+\/?/g, ".");
+        (to.split(".")
+            .filter((itm, idx, arr) => arr.indexOf(itm) > -1))
+            .forEach((step) => {
+            if (_ref[step]) {
+                _ref = _ref[step];
+                _steps.push(_ref);
+            }
+        });
+        return _steps;
+    }
+
+    /**
+     * Subscribes observer to root Model
+     * @param observer
+     * @returns {Observable}
+     */
+    subscribe(observer) {
+        return _documents.get(this).subscribe(observer);
+    }
+
+    /**
+     * Subscribes observer to Model at path
+     * @param path
+     * @param observer
+     * @returns {Observable}
+     */
+    subscribeTo(path, observer) {
+        return _documents.get(this).subscribeTo(path, observer);
     }
 
     /**
