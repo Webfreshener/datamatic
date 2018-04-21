@@ -16,11 +16,11 @@ describe("ItemsModel Class Suite", function () {
 
         describe("LifeCycle: Instantiation", () => {
             it("should initialize a schema and a schema object", () => {
-                expect(this.rxvo.model.$ref).toBeDefined();
-                expect(this.rxvo.model.$ref instanceof Model).toBe(true);
+                expect(this.rxvo.model.$model).toBeDefined();
+                expect(this.rxvo.model.$model instanceof Model).toBe(true);
                 expect(Array.isArray(this.rxvo.model)).toBe(true);
-                expect(this.rxvo.model.$ref).toBeDefined();
-                expect(this.rxvo.model.$ref instanceof Model).toBe(true);
+                expect(this.rxvo.model.$model).toBeDefined();
+                expect(this.rxvo.model.$model instanceof Model).toBe(true);
             });
 
             it("should not initialize a invalid schema and schema object", () => {
@@ -58,10 +58,10 @@ describe("ItemsModel Class Suite", function () {
 
         describe("LifeCycle: Instantiation", () => {
             it("should initialize a valid schema and a schema object", () => {
-                expect(this.rxvo.model.$ref).toBeDefined();
-                expect(this.rxvo.model.$ref instanceof Model).toBe(true);
-                expect(this.rxvo.model.$ref).toBeDefined();
-                expect(this.rxvo.model.$ref instanceof Model).toBe(true);
+                expect(this.rxvo.model.$model).toBeDefined();
+                expect(this.rxvo.model.$model instanceof Model).toBe(true);
+                expect(this.rxvo.model.$model).toBeDefined();
+                expect(this.rxvo.model.$model instanceof Model).toBe(true);
             });
         });
 
@@ -229,7 +229,7 @@ describe("ItemsModel Class Suite", function () {
 
         it("should not reset if it would invalidate model", () => {
             expect(this.rxvo.model.length).toBe(3);
-            this.rxvo.model.$ref.reset();
+            this.rxvo.model.$model.reset();
             expect(this.rxvo.model.length).toBe(3);
         });
 
@@ -237,19 +237,19 @@ describe("ItemsModel Class Suite", function () {
             this.rxvo = new RxVO(stringsCollection);
             this.rxvo.model = ["Item A", "Item B", "Item C"];
             expect(this.rxvo.model.length).toBe(3);
-            this.rxvo.model.$ref.reset();
+            this.rxvo.model.$model.reset();
             expect(this.rxvo.model.length).toBe(0);
         });
 
         it("should quietly validate data with the validate method", () => {
-            expect(this.rxvo.model.$ref.validate([1, 2, 3])).toBe("data/0 should be string");
-            expect(this.rxvo.model.$ref.validate(["1", "2", "3"])).toBe(true);
+            expect(this.rxvo.model.$model.validate([1, 2, 3])).toBe("data/0 should be string");
+            expect(this.rxvo.model.$model.validate(["1", "2", "3"])).toBe(true);
         });
 
         it("should freeze it's model", () => {
             this.rxvo.model = ["Item A", "Item B", "Item C"];
-            this.rxvo.model.$ref.freeze();
-            expect(this.rxvo.model.$ref.isFrozen).toBe(true);
+            this.rxvo.model.$model.freeze();
+            expect(this.rxvo.model.$model.isFrozen).toBe(true);
             this.rxvo.model = ["1", "2", "3"];
             expect(deepEqual(this.rxvo.model, ["Item A", "Item B", "Item C"])).toBe(true);
         });
@@ -262,9 +262,9 @@ describe("ItemsModel Class Suite", function () {
             }];
 
             this.rxvo.model = _orig;
-            this.rxvo.model.$ref.freeze();
+            this.rxvo.model.$model.freeze();
 
-            expect(this.rxvo.model.$ref.isFrozen).toBe(true);
+            expect(this.rxvo.model.$model.isFrozen).toBe(true);
             // should not allow array to be overriden
             this.rxvo.model = [{
                 name: "Your Name",

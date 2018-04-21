@@ -31,7 +31,7 @@ export class PropertiesModel extends Model {
         const _self = this;
         return Object.assign(super.handler, {
             get: (t, key) => {
-                return key === "$ref" ? this : t[key];
+                return key === "$model" ? this : t[key];
             },
             set: (t, key, value) => {
                 let _sH = _schemaHelpers.get(this);

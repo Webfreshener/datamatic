@@ -16,11 +16,11 @@ describe("Model Class Tests", () => {
                 active: true,
             };
 
-            expect(_rxvo.model.$ref.validate(_d)).toBe(true);
+            expect(_rxvo.model.$model.validate(_d)).toBe(true);
 
             _d.active = "1234";
 
-            expect(_rxvo.model.$ref.validate(_d)).toBe("data/active should be boolean");
+            expect(_rxvo.model.$model.validate(_d)).toBe("data/active should be boolean");
         });
     });
 })

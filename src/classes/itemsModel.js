@@ -126,7 +126,7 @@ export class ItemsModel extends Model {
                     }
                 }
 
-                if (idx === "$ref") {
+                if (idx === "$model") {
                     return this;
                 }
 

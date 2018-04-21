@@ -165,7 +165,7 @@ export class RxVO {
      * @return {string}
      */
     toString() {
-        return `${this.model.$ref}`;
+        return `${this.model.$model}`;
     }
 
     /**
@@ -173,7 +173,7 @@ export class RxVO {
      * @return {*}
      */
     toJSON() {
-        return this.model.$ref.toJSON();
+        return this.model.$model.toJSON();
     }
 
     /**

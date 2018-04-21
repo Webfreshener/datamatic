@@ -338,7 +338,7 @@ export class Model {
      * @returns {*}
      */
     get schema() {
-        return this; // _validators.get(this.rxvo).$ajv.compile({$ref: this.validationPath});
+        return this; // _validators.get(this.rxvo).$ajv.compile({$model: this.validationPath});
     }
 
     /**
@@ -356,7 +356,7 @@ export class Model {
      * @returns {*}
      */
     static createRef(ref, obj) {
-        Object.defineProperty(obj, "$ref", {
+        Object.defineProperty(obj, "$model", {
             value: ref,
             writable: false
         });

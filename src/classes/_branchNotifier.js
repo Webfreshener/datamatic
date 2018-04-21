@@ -76,7 +76,7 @@ class Notifier {
             }
 
             _models.forEach((model) => {
-                _oBuilders.get(this.$rxvo).next(model.$ref);
+                _oBuilders.get(this.$rxvo).next(model.$model);
             });
         }, 0);
     }
@@ -89,8 +89,8 @@ class Notifier {
     sendError(forPath, error) {
         const _models = this.$rxvo.getModelsInPath(forPath);
         _models.forEach((model) => {
-            _oBuilders.get(this.$rxvo).error(model.$ref,
-                new ErrorNotification(model.$ref.path, error));
+            _oBuilders.get(this.$rxvo).error(model.$model,
+                new ErrorNotification(model.$model.path, error));
         });
     }
 
@@ -101,7 +101,7 @@ class Notifier {
     sendComplete(forPath) {
         const _models = this.$rxvo.getModelsInPath(forPath);
         _models.forEach((model) => {
-            _oBuilders.get(this.$rxvo).complete(model.$ref);
+            _oBuilders.get(this.$rxvo).complete(model.$model);
         });
     }
 }

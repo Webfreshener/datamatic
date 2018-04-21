@@ -12,10 +12,10 @@ describe("PropertiesModel Class Suite", function () {
 
         describe("LifeCycle: Instantiation", () => {
             it("should initialize a schema and a schema object", () => {
-                expect(this.rxvo.model.$ref).toBeDefined();
-                expect(this.rxvo.model.$ref instanceof PropertiesModel).toBe(true);
-                expect(this.rxvo.model.$ref).toBeDefined();
-                expect(this.rxvo.model.$ref instanceof PropertiesModel).toBe(true);
+                expect(this.rxvo.model.$model).toBeDefined();
+                expect(this.rxvo.model.$model instanceof PropertiesModel).toBe(true);
+                expect(this.rxvo.model.$model).toBeDefined();
+                expect(this.rxvo.model.$model instanceof PropertiesModel).toBe(true);
             });
 
             it("should not initialize a invalid schema and schema object", () => {
@@ -87,10 +87,10 @@ describe("PropertiesModel Class Suite", function () {
 
         describe("LifeCycle: Instantiation", () => {
             it("should initialize a valid schema and a schema object", () => {
-                expect(this.rxvo.model.$ref).toBeDefined();
-                expect(this.rxvo.model.$ref instanceof PropertiesModel).toBe(true);
-                expect(this.rxvo.model.$ref).toBeDefined();
-                expect(this.rxvo.model.$ref instanceof PropertiesModel).toBe(true);
+                expect(this.rxvo.model.$model).toBeDefined();
+                expect(this.rxvo.model.$model instanceof PropertiesModel).toBe(true);
+                expect(this.rxvo.model.$model).toBeDefined();
+                expect(this.rxvo.model.$model instanceof PropertiesModel).toBe(true);
             });
         });
 
@@ -109,8 +109,8 @@ describe("PropertiesModel Class Suite", function () {
 
                 this.rxvo.model = _d;
                 expect(deepEqual(this.rxvo.model, _d)).toBe(true);
-                expect(this.rxvo.model.aObject.bObject.$ref).toBeDefined();
-                expect(this.rxvo.model.aObject.bObject.$ref instanceof PropertiesModel).toBe(true)
+                expect(this.rxvo.model.aObject.bObject.$model).toBeDefined();
+                expect(this.rxvo.model.aObject.bObject.$model instanceof PropertiesModel).toBe(true)
             });
 
             it("should reject invalid data and leave model pristine", () => {

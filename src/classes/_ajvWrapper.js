@@ -70,7 +70,7 @@ export class AjvWrapper {
     }
 
     /**
-     * Executes validator at PropertiesModel $ref `path` against `value`
+     * Executes validator at PropertiesModel $model `path` against `value`
      * @param path
      * @param value
      */
