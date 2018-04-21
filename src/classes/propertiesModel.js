@@ -153,7 +153,7 @@ export class PropertiesModel extends Model {
                 // marks model as clean
                 makeClean(this);
 
-                // sends notications
+                // sends notifications
                 Notifiers.get(this.rxvo).sendError(this.jsonPath, e);
                 return false;
             }

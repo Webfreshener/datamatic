@@ -1,6 +1,5 @@
 import {
-    _oBuilders, _validators, _observers,
-    _dirtyModels, _schemaSignatures, _rxvoDocs
+    _oBuilders, _validators, _dirtyModels, _schemaSignatures
 } from "./_references";
 import {ObserverBuilder} from "./_observerBuilder";
 import {PropertiesModel} from "./propertiesModel";
@@ -37,11 +36,9 @@ export class RxVO {
 
         Object.freeze(schema);
         _schemaSignatures.set(this, schema);
-
         _oBuilders.set(this, new ObserverBuilder());
 
         let _useSet = false;
-
 
         // if value of type is "array" or an array of items is defined,
         // we handle as Array
@@ -63,18 +60,6 @@ export class RxVO {
 
         // sets document to this scope
         _documents.set(this, _doc);
-
-        const _self = this;
-        const clazz = class {
-            getRef(atPath) {
-                let _target = Object.assign({}, _self.model);
-                (atPath.split(".")).forEach((part) => {
-                    _target = _target[part];
-                    console.log(`${_target}`);
-                });
-            }
-        };
-
     }
 
     /**
@@ -85,7 +70,6 @@ export class RxVO {
         return _documents.get(this).model;
     }
 
-
     /**
      * Setter for root Model value
      * @param {object|array} value
@@ -93,8 +77,6 @@ export class RxVO {
     set model(value) {
         _documents.get(this).model = value;
     }
-
-
 
     /**
      *

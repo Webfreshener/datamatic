@@ -75,7 +75,7 @@ export class ObserverBuilder {
 
     /**
      * Calls next on Error Subject
-     * @param path {string}
+     * @param target {Model}
      * @param message {*}
      */
     error(target, message) {

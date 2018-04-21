@@ -1,4 +1,4 @@
-import {_exists, _mdRef, _observers, _oBuilders} from "./_references";
+import {_exists, _mdRef, _oBuilders} from "./_references";
 import {MetaData} from "./_metaData";
 import {PropertiesModel} from "./propertiesModel";
 import {ItemsModel} from "./itemsModel";

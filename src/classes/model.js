@@ -1,6 +1,5 @@
 import {
-    _mdRef, _oBuilders, _exists,
-    _object, _schemaOptions, _dirtyModels
+    _mdRef, _oBuilders, _object, _schemaOptions, _dirtyModels
 } from "./_references";
 import {RxVO} from "./rxvo";
 import {MetaData} from "./_metaData";
@@ -53,7 +52,7 @@ export class Model {
     /**
      * Subscribes handler method to observer for model
      * @param func
-     * @returns {Observable}
+     * @returns {object}
      */
     subscribe(func) {
         return this.subscribeTo(this.path, func);
@@ -63,7 +62,7 @@ export class Model {
      * Subscribes handler method to property observer for path
      * @param path
      * @param func
-     * @return {Observable}
+     * @return {object}
      */
     subscribeTo(path, func) {
         const _oBuilder = _oBuilders.get(this.rxvo);

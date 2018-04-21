@@ -1,5 +1,5 @@
 import {
-    _object, _schemaHelpers, _oBuilders
+    _object, _schemaHelpers
 } from "./_references";
 import {Model} from "./model";
 import {SchemaHelpers} from "./_schemaHelpers";
@@ -72,9 +72,6 @@ export class ItemsModel extends Model {
     }
 
     get handler() {
-        const _updateSelf = (value) => {
-            this.model = value;
-        };
         return Object.assign(super.handler, {
             get: (t, idx) => {
                 // TODO: review for removal
@@ -115,8 +112,10 @@ export class ItemsModel extends Model {
 
                             // this is a kludge to handle updates from proto methods
                             if (this.parent !== null) {
+                                // applies change to parent object if this is not root context
                                 this.parent.model[this.jsonPath.split(".").pop()] = _arr;
                             } else {
+                                // applies change to RxVO instance
                                 this.rxvo.model = _arr;
                             }
 

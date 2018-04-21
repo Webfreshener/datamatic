@@ -1,14 +1,22 @@
 import {_oBuilders} from "./_references";
-
 const notifiers = new WeakMap();
 
+/**
+ * protocol for Errors
+ */
 class ErrorNotification {
+    /**
+     * @constructor
+     * @param {string} path
+     * @param {string|string[]} error
+     */
     constructor(path, error) {
+        // defines getter for `path` prop
         Object.defineProperty(this, "path", {
             get: () => path,
             enumerable: true,
         });
-
+        // defines getter for `error` prop
         Object.defineProperty(this, "error", {
             get: () => error,
             enumerable: true,
@@ -16,16 +24,26 @@ class ErrorNotification {
     }
 }
 
+/**
+ * todo: implement this somewhere
+ */
 class CompleteNotification {
+    /**
+     * @constructor
+     * @param {string} path
+     */
     constructor(path) {
         Object.defineProperty(this, "path", {
             get: () => path,
             enumerable: true,
         });
-
     }
 }
 
+/**
+ * Notification Management
+ * acts as liason between Models and RxJS Subscription Dispatchers
+ */
 class Notifier {
     /**
      *
@@ -41,16 +59,7 @@ class Notifier {
     }
 
     /**
-     *
-     * @param forPath
-     * @param value
-     */
-    sendUpdate(forPath, value) {
-        this.$rxvo.getPath(forPath).model = value;
-    }
-
-    /**
-     *
+     * Delegates sending RxJS `next` notifications
      * @param forPath
      */
     sendNext(forPath) {
@@ -73,7 +82,7 @@ class Notifier {
     }
 
     /**
-     *
+     * Delegates sending RxJS `error` notifications
      * @param forPath
      * @param error
      */
@@ -86,7 +95,7 @@ class Notifier {
     }
 
     /**
-     *
+     * Delegates sending RxJS `complete` notifications
      * @param forPath
      */
     sendComplete(forPath) {
@@ -97,6 +106,10 @@ class Notifier {
     }
 }
 
+/**
+ * Creates and Retrives Notification Handlers
+ * @static
+ */
 export default class Notifiers {
     /**
      *
