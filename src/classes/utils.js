@@ -18,10 +18,6 @@ export const makeClean = (model) => {
     }
 };
 
-export const listDirtyItems = (model) => {
-    return Object.keys(_dirtyModels.get(model.rxvo));
-};
-
 /**
  * Performs model data validation against json-schema
  * @private
