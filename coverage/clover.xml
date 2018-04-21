@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1524344713102" clover="3.2.0">
-  <project timestamp="1524344713102" name="All files">
-    <metrics statements="443" coveredstatements="347" conditionals="218" coveredconditionals="153" methods="129" coveredmethods="94" elements="790" coveredelements="594" complexity="0" loc="443" ncloc="443" packages="4" files="15" classes="15">
+<coverage generated="1524351547849" clover="3.2.0">
+  <project timestamp="1524351547849" name="All files">
+    <metrics statements="441" coveredstatements="346" conditionals="218" coveredconditionals="153" methods="128" coveredmethods="94" elements="787" coveredelements="593" complexity="0" loc="441" ncloc="441" packages="4" files="15" classes="15">
       <package name="RxVO">
         <metrics statements="1" coveredstatements="1" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
         <file name="index.js" path="/Users/van/IdeaProjects/RxVO/index.js">
@@ -33,7 +33,7 @@
         </file>
       </package>
       <package name="RxVO.src.classes">
-        <metrics statements="434" coveredstatements="339" conditionals="216" coveredconditionals="152" methods="129" coveredmethods="94"/>
+        <metrics statements="432" coveredstatements="338" conditionals="216" coveredconditionals="152" methods="128" coveredmethods="94"/>
         <file name="_ajvWrapper.js" path="/Users/van/IdeaProjects/RxVO/src/classes/_ajvWrapper.js">
           <metrics statements="16" coveredstatements="12" conditionals="7" coveredconditionals="4" methods="6" coveredmethods="3"/>
           <line num="21" count="36" type="cond" truecount="3" falsecount="1"/>
@@ -472,34 +472,32 @@
           <line num="196" count="0" type="stmt"/>
         </file>
         <file name="utils.js" path="/Users/van/IdeaProjects/RxVO/src/classes/utils.js">
-          <metrics statements="27" coveredstatements="25" conditionals="16" coveredconditionals="15" methods="7" coveredmethods="5"/>
+          <metrics statements="25" coveredstatements="24" conditionals="16" coveredconditionals="15" methods="6" coveredmethods="5"/>
           <line num="7" count="9" type="stmt"/>
           <line num="8" count="37" type="stmt"/>
           <line num="15" count="9" type="stmt"/>
           <line num="16" count="114" type="cond" truecount="4" falsecount="0"/>
           <line num="17" count="37" type="stmt"/>
-          <line num="21" count="9" type="stmt"/>
-          <line num="22" count="0" type="stmt"/>
-          <line num="32" count="9" type="stmt"/>
-          <line num="33" count="65" type="stmt"/>
-          <line num="43" count="9" type="stmt"/>
-          <line num="45" count="124" type="cond" truecount="2" falsecount="0"/>
-          <line num="46" count="32" type="stmt"/>
-          <line num="50" count="92" type="stmt"/>
-          <line num="53" count="92" type="cond" truecount="4" falsecount="0"/>
-          <line num="54" count="36" type="stmt"/>
-          <line num="57" count="92" type="stmt"/>
-          <line num="60" count="92" type="cond" truecount="2" falsecount="0"/>
-          <line num="61" count="9" type="stmt"/>
-          <line num="64" count="83" type="stmt"/>
-          <line num="67" count="9" type="stmt"/>
-          <line num="69" count="98" type="stmt"/>
-          <line num="70" count="98" type="stmt"/>
-          <line num="72" count="98" type="cond" truecount="2" falsecount="0"/>
-          <line num="73" count="12" type="cond" truecount="1" falsecount="1"/>
-          <line num="76" count="86" type="stmt"/>
-          <line num="79" count="9" type="stmt"/>
-          <line num="80" count="0" type="stmt"/>
+          <line num="28" count="9" type="stmt"/>
+          <line num="29" count="65" type="stmt"/>
+          <line num="39" count="9" type="stmt"/>
+          <line num="41" count="124" type="cond" truecount="2" falsecount="0"/>
+          <line num="42" count="32" type="stmt"/>
+          <line num="46" count="92" type="stmt"/>
+          <line num="49" count="92" type="cond" truecount="4" falsecount="0"/>
+          <line num="50" count="36" type="stmt"/>
+          <line num="53" count="92" type="stmt"/>
+          <line num="56" count="92" type="cond" truecount="2" falsecount="0"/>
+          <line num="57" count="9" type="stmt"/>
+          <line num="60" count="83" type="stmt"/>
+          <line num="63" count="9" type="stmt"/>
+          <line num="65" count="98" type="stmt"/>
+          <line num="66" count="98" type="stmt"/>
+          <line num="68" count="98" type="cond" truecount="2" falsecount="0"/>
+          <line num="69" count="12" type="cond" truecount="1" falsecount="1"/>
+          <line num="72" count="86" type="stmt"/>
+          <line num="75" count="9" type="stmt"/>
+          <line num="76" count="0" type="stmt"/>
         </file>
       </package>
     </metrics>
