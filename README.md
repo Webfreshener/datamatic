@@ -3,12 +3,12 @@ RxVO
 **Reactive Validating Object**<br/>
 RxJS + JSON-Schema (Ajv) Based Observable Data Models
 
-[![Build Status](https://travis-ci.org/Webfreshener/JSD.svg?branch=master)](https://travis-ci.org/Webfreshener/JSD)
-[![Dev Dependency Status](https://david-dm.org/webfreshener/jsd/dev-status.svg)](https://david-dm.org/webfreshener/jsd?type=dev)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/3ca79cd83489410295680ef3ee96cd01)](https://www.codacy.com/app/vanschroeder/JSD?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Webfreshener/JSD&amp;utm_campaign=Badge_Grade)
-[![NSP Status](https://nodesecurity.io/orgs/webfreshener-llc/projects/ec54a505-71a0-42de-8b84-3aba21031b01/badge)](https://nodesecurity.io/orgs/webfreshener-llc/projects/ec54a505-71a0-42de-8b84-3aba21031b01)
+[![Build Status](https://travis-ci.org/Webfreshener/RxVO.svg?branch=master)](https://travis-ci.org/Webfreshener/RxVO)
+[![Dev Dependency Status](https://david-dm.org/webfreshener/RxVO/dev-status.svg)](https://david-dm.org/webfreshener/RxVO?type=dev)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/c665c70dfeb144319bc5bbd58695eb90)](https://www.codacy.com/app/vanschroeder/RxVO?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Webfreshener/RxVO&amp;utm_campaign=Badge_Grade)
+[![Maintainability](https://api.codeclimate.com/v1/badges/625326e1880421ccc809/maintainability)](https://codeclimate.com/github/Webfreshener/RxVO/maintainability)
 
-[Online Developer Documentation](https://webfreshener.github.io/JSD/)
+[Online Developer Documentation](https://webfreshener.github.io/RxJO/)
 
 
 ## &#9888; Caution!

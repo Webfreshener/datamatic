@@ -30,14 +30,14 @@
   <ul>
     
   <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#classes">classes</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_branchNotifier.js~Notifier.html">Notifier</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_branchNotifier.js~Notifiers.html">Notifiers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_metaData.js~MetaData.html">MetaData</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_observerBuilder.js~ObserverBuilder.html">ObserverBuilder</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_schemaHelpers.js~SchemaHelpers.html">SchemaHelpers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/itemsModel.js~ItemsModel.html">ItemsModel</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/jsd.js~JSD.html">JSD</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">RxVO</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getRoot">getRoot</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-listDirtyItems">listDirtyItems</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeClean">makeClean</a></span></span></li>
@@ -48,7 +48,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ajvRef">_ajvRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_dirtyModels">_dirtyModels</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_jsdDocs">_jsdDocs</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_oBuilders">_oBuilders</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_object">_object</a></span></span></li>
@@ -65,12 +64,12 @@
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/classes/itemsModel.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {
-    _object, _schemaHelpers, _oBuilders
+    _object, _schemaHelpers
 } from &quot;./_references&quot;;
 import {Model} from &quot;./model&quot;;
 import {SchemaHelpers} from &quot;./_schemaHelpers&quot;;
 import {makeClean, makeDirty, refAtKeyValidation, refValidation} from &quot;./utils&quot;;
-import Notifier from &quot;./_branchNotifier&quot;;
+import Notifiers from &quot;./_branchNotifier&quot;;
 
 const _observerDelegates = new WeakMap();
 
@@ -104,8 +103,7 @@ export class ItemsModel extends Model {
         }
 
         if (refValidation(this, value) !== true) {
-            console.log(`error! this.jsd.errors: ${JSON.stringify(this.jsd.errors)}`);
-            Notifier.getInstance().sendError(this.jsonPath, this.jsd.errors);
+            Notifiers.get(this.rxvo).sendError(this.jsonPath, this.rxvo.errors);
             return false;
         }
 
@@ -127,21 +125,18 @@ export class ItemsModel extends Model {
         } catch (e) {
             makeClean(this);
             console.log(e);
-            (Notifier.getInstance().sendError.bind(this))(this.jsonPath, e);
+            (Notifiers.get(this.rxvo).sendError.bind(this))(this.jsonPath, e);
             return false;
         }
 
         makeClean(this);
-        Notifier.getInstance().sendNext(this.jsonPath);
+        Notifiers.get(this.rxvo).sendNext(this.jsonPath);
         _observerDelegates.delete(this);
 
         return true;
     }
 
     get handler() {
-        const _updateSelf = (value) =&gt; {
-            this.model = value;
-        };
         return Object.assign(super.handler, {
             get: (t, idx) =&gt; {
                 // TODO: review for removal
@@ -174,17 +169,19 @@ export class ItemsModel extends Model {
                                 makeClean(_self);
 
                                 // .. sends notifications
-                                Notifier.getInstance().sendError(_self.jsonPath,
-                                    _self.jsd.errors);
+                                Notifiers.get(this.rxvo).sendError(_self.jsonPath,
+                                    _self.rxvo.errors);
 
                                 return false;
                             }
 
                             // this is a kludge to handle updates from proto methods
                             if (this.parent !== null) {
+                                // applies change to parent object if this is not root context
                                 this.parent.model[this.jsonPath.split(&quot;.&quot;).pop()] = _arr;
                             } else {
-                                this.jsd.model = _arr;
+                                // applies change to RxVO instance
+                                this.rxvo.model = _arr;
                             }
 
                             return _val;
@@ -194,7 +191,7 @@ export class ItemsModel extends Model {
                     }
                 }
 
-                if (idx === &quot;$ref&quot;) {
+                if (idx === &quot;$model&quot;) {
                     return this;
                 }
 
@@ -216,7 +213,7 @@ export class ItemsModel extends Model {
                 if (refAtKeyValidation(this, &quot;items&quot;, value) !== true) {
                     if (_oDel !== void(0)) {
                         makeClean(this);
-                        Notifier.getInstance().sendError(this.jsonPath, this.jsd.errors);
+                        Notifiers.get(this.rxvo).sendError(this.jsonPath, this.rxvo.errors);
                     }
                     return false;
                 }
@@ -233,7 +230,7 @@ export class ItemsModel extends Model {
                 if (_oDel !== void(0)) {
                     makeClean(this);
                     // updates observers
-                    Notifier.getInstance().sendNext(this.jsonPath);
+                    Notifiers.get(this.rxvo).sendNext(this.jsonPath);
                 }
 
                 return true;
@@ -250,7 +247,7 @@ export class ItemsModel extends Model {
                 } catch (e) {
                     if (!_oDel) {
                         makeClean(this);
-                        Notifier.getInstance().sendError(this.jsonPath, e);
+                        Notifiers.get(this.rxvo).sendError(this.jsonPath, e);
                     }
                     return false;
                 }
@@ -264,7 +261,7 @@ export class ItemsModel extends Model {
                     // if not serial operation
                     if (!_oDel) {
                         makeClean(this);
-                        Notifier.getInstance().sendError(this.jsonPath, _res);
+                        Notifiers.get(this.rxvo).sendError(this.jsonPath, _res);
                     }
                     return false;
                 }
@@ -276,7 +273,7 @@ export class ItemsModel extends Model {
                 makeClean(this);
 
                 // updates observers
-                Notifier.getInstance().sendNext(this.jsonPath);
+                Notifiers.get(this.rxvo).sendNext(this.jsonPath);
                 return true;
             }
         });

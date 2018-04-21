@@ -12,12 +12,6 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
-    "rxvo/src/classes/jsd.js~jsd",
-    "class/src/classes/jsd.js~RxVO.html",
-    "<span>RxVO</span> <span class=\"search-result-import-path\">rxvo/src/classes/jsd.js</span>",
-    "class"
-  ],
-  [
     "rxvo/src/classes/_metadata.js~metadata",
     "class/src/classes/_metaData.js~MetaData.html",
     "<span>MetaData</span> <span class=\"search-result-import-path\">rxvo/src/classes/_metaData.js</span>",
@@ -30,9 +24,9 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
-    "rxvo/src/classes/_branchnotifier.js~notifier",
-    "class/src/classes/_branchNotifier.js~Notifier.html",
-    "<span>Notifier</span> <span class=\"search-result-import-path\">rxvo/src/classes/_branchNotifier.js</span>",
+    "rxvo/src/classes/_branchnotifier.js~notifiers",
+    "class/src/classes/_branchNotifier.js~Notifiers.html",
+    "<span>Notifiers</span> <span class=\"search-result-import-path\">rxvo/src/classes/_branchNotifier.js</span>",
     "class"
   ],
   [
@@ -45,6 +39,12 @@ window.esdocSearchIndex = [
     "rxvo/src/classes/propertiesmodel.js~propertiesmodel",
     "class/src/classes/propertiesModel.js~PropertiesModel.html",
     "<span>PropertiesModel</span> <span class=\"search-result-import-path\">rxvo/src/classes/propertiesModel.js</span>",
+    "class"
+  ],
+  [
+    "rxvo/src/classes/rxvo.js~rxvo",
+    "class/src/classes/rxvo.js~RxVO.html",
+    "<span>RxVO</span> <span class=\"search-result-import-path\">rxvo/src/classes/rxvo.js</span>",
     "class"
   ],
   [
@@ -69,12 +69,6 @@ window.esdocSearchIndex = [
     "rxvo/src/classes/_references.js~_exists",
     "variable/index.html#static-variable-_exists",
     "<span>_exists</span> <span class=\"search-result-import-path\">rxvo/src/classes/_references.js</span>",
-    "variable"
-  ],
-  [
-    "rxvo/src/classes/_references.js~_jsddocs",
-    "variable/index.html#static-variable-_jsdDocs",
-    "<span>_jsdDocs</span> <span class=\"search-result-import-path\">rxvo/src/classes/_references.js</span>",
     "variable"
   ],
   [
@@ -498,39 +492,15 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
-    "src/classes/_branchnotifier.js~notifier#constructor",
-    "class/src/classes/_branchNotifier.js~Notifier.html#instance-constructor-constructor",
-    "src/classes/_branchNotifier.js~Notifier#constructor",
+    "src/classes/_branchnotifier.js~notifiers.create",
+    "class/src/classes/_branchNotifier.js~Notifiers.html#static-method-create",
+    "src/classes/_branchNotifier.js~Notifiers.create",
     "method"
   ],
   [
-    "src/classes/_branchnotifier.js~notifier#sendcomplete",
-    "class/src/classes/_branchNotifier.js~Notifier.html#instance-method-sendComplete",
-    "src/classes/_branchNotifier.js~Notifier#sendComplete",
-    "method"
-  ],
-  [
-    "src/classes/_branchnotifier.js~notifier#senderror",
-    "class/src/classes/_branchNotifier.js~Notifier.html#instance-method-sendError",
-    "src/classes/_branchNotifier.js~Notifier#sendError",
-    "method"
-  ],
-  [
-    "src/classes/_branchnotifier.js~notifier#sendnext",
-    "class/src/classes/_branchNotifier.js~Notifier.html#instance-method-sendNext",
-    "src/classes/_branchNotifier.js~Notifier#sendNext",
-    "method"
-  ],
-  [
-    "src/classes/_branchnotifier.js~notifier#sendupdate",
-    "class/src/classes/_branchNotifier.js~Notifier.html#instance-method-sendUpdate",
-    "src/classes/_branchNotifier.js~Notifier#sendUpdate",
-    "method"
-  ],
-  [
-    "src/classes/_branchnotifier.js~notifier.getinstance",
-    "class/src/classes/_branchNotifier.js~Notifier.html#static-method-getInstance",
-    "src/classes/_branchNotifier.js~Notifier.getInstance",
+    "src/classes/_branchnotifier.js~notifiers.get",
+    "class/src/classes/_branchNotifier.js~Notifiers.html#static-method-get",
+    "src/classes/_branchNotifier.js~Notifiers.get",
     "method"
   ],
   [
@@ -558,12 +528,6 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "src/classes/_metadata.js~metadata#jsd",
-    "class/src/classes/_metaData.js~MetaData.html#instance-get-jsd",
-    "src/classes/_metaData.js~MetaData#jsd",
-    "member"
-  ],
-  [
     "src/classes/_metadata.js~metadata#objectid",
     "class/src/classes/_metaData.js~MetaData.html#instance-get-objectID",
     "src/classes/_metaData.js~MetaData#objectID",
@@ -585,6 +549,12 @@ window.esdocSearchIndex = [
     "src/classes/_metadata.js~metadata#root",
     "class/src/classes/_metaData.js~MetaData.html#instance-get-root",
     "src/classes/_metaData.js~MetaData#root",
+    "member"
+  ],
+  [
+    "src/classes/_metadata.js~metadata#rxvo",
+    "class/src/classes/_metaData.js~MetaData.html#instance-get-rxvo",
+    "src/classes/_metaData.js~MetaData#rxvo",
     "member"
   ],
   [
@@ -715,99 +685,15 @@ window.esdocSearchIndex = [
   ],
   [
     "src/classes/itemsmodel.js~itemsmodel#model",
-    "class/src/classes/itemsModel.js~ItemsModel.html#instance-get-model",
-    "src/classes/itemsModel.js~ItemsModel#model",
-    "member"
-  ],
-  [
-    "src/classes/itemsmodel.js~itemsmodel#model",
     "class/src/classes/itemsModel.js~ItemsModel.html#instance-set-model",
     "src/classes/itemsModel.js~ItemsModel#model",
     "member"
   ],
   [
-    "src/classes/jsd.js",
-    "file/src/classes/jsd.js.html",
-    "src/classes/jsd.js",
-    "file"
-  ],
-  [
-    "src/classes/jsd.js~jsd#constructor",
-    "class/src/classes/jsd.js~RxVO.html#instance-constructor-constructor",
-    "src/classes/jsd.js~RxVO#constructor",
-    "method"
-  ],
-  [
-    "src/classes/jsd.js~jsd#errors",
-    "class/src/classes/jsd.js~RxVO.html#instance-get-errors",
-    "src/classes/jsd.js~RxVO#errors",
+    "src/classes/itemsmodel.js~itemsmodel#model",
+    "class/src/classes/itemsModel.js~ItemsModel.html#instance-get-model",
+    "src/classes/itemsModel.js~ItemsModel#model",
     "member"
-  ],
-  [
-    "src/classes/jsd.js~jsd#getmodelsinpath",
-    "class/src/classes/jsd.js~RxVO.html#instance-method-getModelsInPath",
-    "src/classes/jsd.js~RxVO#getModelsInPath",
-    "method"
-  ],
-  [
-    "src/classes/jsd.js~jsd#getpath",
-    "class/src/classes/jsd.js~RxVO.html#instance-method-getPath",
-    "src/classes/jsd.js~RxVO#getPath",
-    "method"
-  ],
-  [
-    "src/classes/jsd.js~jsd#model",
-    "class/src/classes/jsd.js~RxVO.html#instance-set-model",
-    "src/classes/jsd.js~RxVO#model",
-    "member"
-  ],
-  [
-    "src/classes/jsd.js~jsd#model",
-    "class/src/classes/jsd.js~RxVO.html#instance-get-model",
-    "src/classes/jsd.js~RxVO#model",
-    "member"
-  ],
-  [
-    "src/classes/jsd.js~jsd#schema",
-    "class/src/classes/jsd.js~RxVO.html#instance-get-schema",
-    "src/classes/jsd.js~RxVO#schema",
-    "member"
-  ],
-  [
-    "src/classes/jsd.js~jsd#subscribe",
-    "class/src/classes/jsd.js~RxVO.html#instance-method-subscribe",
-    "src/classes/jsd.js~RxVO#subscribe",
-    "method"
-  ],
-  [
-    "src/classes/jsd.js~jsd#subscribeto",
-    "class/src/classes/jsd.js~RxVO.html#instance-method-subscribeTo",
-    "src/classes/jsd.js~RxVO#subscribeTo",
-    "method"
-  ],
-  [
-    "src/classes/jsd.js~jsd#tojson",
-    "class/src/classes/jsd.js~RxVO.html#instance-method-toJSON",
-    "src/classes/jsd.js~RxVO#toJSON",
-    "method"
-  ],
-  [
-    "src/classes/jsd.js~jsd#tostring",
-    "class/src/classes/jsd.js~RxVO.html#instance-method-toString",
-    "src/classes/jsd.js~RxVO#toString",
-    "method"
-  ],
-  [
-    "src/classes/jsd.js~jsd#validate",
-    "class/src/classes/jsd.js~RxVO.html#instance-method-validate",
-    "src/classes/jsd.js~RxVO#validate",
-    "method"
-  ],
-  [
-    "src/classes/jsd.js~jsd.fromjson",
-    "class/src/classes/jsd.js~RxVO.html#static-method-fromJSON",
-    "src/classes/jsd.js~RxVO.fromJSON",
-    "method"
   ],
   [
     "src/classes/model.js",
@@ -843,12 +729,6 @@ window.esdocSearchIndex = [
     "src/classes/model.js~model#isfrozen",
     "class/src/classes/model.js~Model.html#instance-get-isFrozen",
     "src/classes/model.js~Model#isFrozen",
-    "member"
-  ],
-  [
-    "src/classes/model.js~model#jsd",
-    "class/src/classes/model.js~Model.html#instance-get-jsd",
-    "src/classes/model.js~Model#jsd",
     "member"
   ],
   [
@@ -897,6 +777,12 @@ window.esdocSearchIndex = [
     "src/classes/model.js~model#root",
     "class/src/classes/model.js~Model.html#instance-get-root",
     "src/classes/model.js~Model#root",
+    "member"
+  ],
+  [
+    "src/classes/model.js~model#rxvo",
+    "class/src/classes/model.js~Model.html#instance-get-rxvo",
+    "src/classes/model.js~Model#rxvo",
     "member"
   ],
   [
@@ -1005,6 +891,90 @@ window.esdocSearchIndex = [
     "src/classes/propertiesmodel.js~propertiesmodel.concatpathaddr",
     "class/src/classes/propertiesModel.js~PropertiesModel.html#static-method-concatPathAddr",
     "src/classes/propertiesModel.js~PropertiesModel.concatPathAddr",
+    "method"
+  ],
+  [
+    "src/classes/rxvo.js",
+    "file/src/classes/rxvo.js.html",
+    "src/classes/rxvo.js",
+    "file"
+  ],
+  [
+    "src/classes/rxvo.js~rxvo#constructor",
+    "class/src/classes/rxvo.js~RxVO.html#instance-constructor-constructor",
+    "src/classes/rxvo.js~RxVO#constructor",
+    "method"
+  ],
+  [
+    "src/classes/rxvo.js~rxvo#errors",
+    "class/src/classes/rxvo.js~RxVO.html#instance-get-errors",
+    "src/classes/rxvo.js~RxVO#errors",
+    "member"
+  ],
+  [
+    "src/classes/rxvo.js~rxvo#getmodelsinpath",
+    "class/src/classes/rxvo.js~RxVO.html#instance-method-getModelsInPath",
+    "src/classes/rxvo.js~RxVO#getModelsInPath",
+    "method"
+  ],
+  [
+    "src/classes/rxvo.js~rxvo#getpath",
+    "class/src/classes/rxvo.js~RxVO.html#instance-method-getPath",
+    "src/classes/rxvo.js~RxVO#getPath",
+    "method"
+  ],
+  [
+    "src/classes/rxvo.js~rxvo#model",
+    "class/src/classes/rxvo.js~RxVO.html#instance-get-model",
+    "src/classes/rxvo.js~RxVO#model",
+    "member"
+  ],
+  [
+    "src/classes/rxvo.js~rxvo#model",
+    "class/src/classes/rxvo.js~RxVO.html#instance-set-model",
+    "src/classes/rxvo.js~RxVO#model",
+    "member"
+  ],
+  [
+    "src/classes/rxvo.js~rxvo#schema",
+    "class/src/classes/rxvo.js~RxVO.html#instance-get-schema",
+    "src/classes/rxvo.js~RxVO#schema",
+    "member"
+  ],
+  [
+    "src/classes/rxvo.js~rxvo#subscribe",
+    "class/src/classes/rxvo.js~RxVO.html#instance-method-subscribe",
+    "src/classes/rxvo.js~RxVO#subscribe",
+    "method"
+  ],
+  [
+    "src/classes/rxvo.js~rxvo#subscribeto",
+    "class/src/classes/rxvo.js~RxVO.html#instance-method-subscribeTo",
+    "src/classes/rxvo.js~RxVO#subscribeTo",
+    "method"
+  ],
+  [
+    "src/classes/rxvo.js~rxvo#tojson",
+    "class/src/classes/rxvo.js~RxVO.html#instance-method-toJSON",
+    "src/classes/rxvo.js~RxVO#toJSON",
+    "method"
+  ],
+  [
+    "src/classes/rxvo.js~rxvo#tostring",
+    "class/src/classes/rxvo.js~RxVO.html#instance-method-toString",
+    "src/classes/rxvo.js~RxVO#toString",
+    "method"
+  ],
+  [
+    "src/classes/rxvo.js~rxvo#validate",
+    "class/src/classes/rxvo.js~RxVO.html#instance-method-validate",
+    "src/classes/rxvo.js~RxVO#validate",
+    "method"
+  ],
+  [
+    "src/classes/rxvo.js~rxvo.fromjson",
+    "class/src/classes/rxvo.js~RxVO.html#static-method-fromJSON",
+    "src/classes/rxvo.js~RxVO.fromJSON",
     "method"
   ],
   [
