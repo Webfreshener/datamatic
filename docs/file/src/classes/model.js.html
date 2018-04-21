@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">src/classes/model.js | rxvo</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="RxJS + JSON-Schema Based Observable Data Models"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="rxvo"><meta property="twitter:description" content="RxJS + JSON-Schema Based Observable Data Models"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/Webfreshener/RxVO.git"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#classes">classes</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_branchNotifier.js~Notifiers.html">Notifiers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_metaData.js~MetaData.html">MetaData</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_observerBuilder.js~ObserverBuilder.html">ObserverBuilder</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_schemaHelpers.js~SchemaHelpers.html">SchemaHelpers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/itemsModel.js~ItemsModel.html">ItemsModel</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">RxVO</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getRoot">getRoot</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-listDirtyItems">listDirtyItems</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeClean">makeClean</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeDirty">makeDirty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refAtKeyValidation">refAtKeyValidation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refValidation">refValidation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-validate">validate</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ajvRef">_ajvRef</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_dirtyModels">_dirtyModels</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_oBuilders">_oBuilders</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_object">_object</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_observerPaths">_observerPaths</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_observers">_observers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaHelpers">_schemaHelpers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaOptions">_schemaOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaSignatures">_schemaSignatures</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validators">_validators</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-wf">wf</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/classes/model.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {
+    _mdRef, _oBuilders, _object, _schemaOptions, _dirtyModels
+} from &quot;./_references&quot;;
+import {RxVO} from &quot;./rxvo&quot;;
+import {MetaData} from &quot;./_metaData&quot;;
+import {makeClean, makeDirty, validate} from &quot;./utils&quot;;
+
+/**
+ *
+ * @param ref
+ * @param metaRef
+ */
+const createMetaDataRef = (ref, metaRef) =&gt; {
+    let _md;
+    if (metaRef instanceof RxVO) {
+        // root properties are handed the RxVO object
+        // will create new MetaData and set reference as root element
+        _md = new MetaData(ref, {
+            _path: &quot;&quot;,
+            _parent: null,
+            _root: ref,
+            _rxvo: metaRef,
+        });
+    }
+    else if ((typeof metaRef) === &quot;object&quot;) {
+        // extends MetaData reference
+        if (metaRef instanceof MetaData) {
+            _md = metaRef;
+        } else {
+            // todo: re-evaluate this line for possible removal
+            _md = new MetaData(this, metaRef);
+        }
+    } else {
+        throw &quot;Invalid attempt to construct Model.&quot; +
+        &quot;tip: use `new RxVO([schema])` instead&quot;
+    }
+    // sets MetaData object to global reference
+    _mdRef.set(ref, _md);
+};
+
+/**
+ *
+ */
+export class Model {
+    constructor() {
+        // tests if this is instance of MetaData
+        if (!(this instanceof MetaData)) {
+            createMetaDataRef(this, arguments[0]);
+        }
+    }
+
+    /**
+     * Subscribes handler method to observer for model
+     * @param func
+     * @returns {object}
+     */
+    subscribe(func) {
+        return this.subscribeTo(this.path, func);
+    }
+
+    /**
+     * Subscribes handler method to property observer for path
+     * @param path
+     * @param func
+     * @return {object}
+     */
+    subscribeTo(path, func) {
+        const _oBuilder = _oBuilders.get(this.rxvo);
+        const _o = _oBuilder.getObserverForPath(path);
+        if (_o === null) {
+            return _o;
+        }
+
+        // references to subscriptions for Observable
+        const _subRefs = [];
+
+        // init&apos;s observer handlers if defined on passed `func` object
+        [
+            {call: &quot;onNext&quot;, func: &quot;next&quot;},
+            {call: &quot;onError&quot;, func: &quot;error&quot;},
+            {call: &quot;onComplete&quot;, func: &quot;complete&quot;},
+        ].forEach((obs) =&gt; {
+            if (func.hasOwnProperty(obs.func)) {
+                _subRefs.push(_o[obs.call].subscribe({next: func[obs.func]}));
+            }
+        });
+
+        // creates an extensible object to hold our unsubscribe method
+        // and adds unsubscribe calls to the Proto object
+        const _subs = class {};
+
+        // adds unsubscribe to the Proto object
+        _subs.prototype.unsubscribe = () =&gt; {
+            _subRefs.forEach((sub) =&gt; {
+                sub.unsubscribe();
+            });
+        };
+
+        return new _subs();
+    }
+
+    /**
+     * Tests value for validation without setting value to Model
+     * @param {json} value - JSON value to validate for validity
+     * @return {boolean}
+     */
+    validate(value) {
+        try {
+           return validate(this, this.validationPath, value);
+        } catch (e) {
+            // couldn&apos;t find schema, so is Additional Properties
+            // todo: review `removeAdditional` ajv option for related behavior
+            return true;
+        }
+
+
+    }
+
+    /**
+     * resets Model to empty value
+     * @return {Model}
+     */
+    reset() {
+        const _isArray = Array.isArray(this.model);
+        const _o = !_isArray ? {} : [];
+        const _res = this.validate(_o);
+        // validates that this model be returned to an empty value
+        if (_res !== true) {
+            _oBuilders.get(this.rxvo).error(this, _res);
+            return this;
+        }
+
+        // marks this model as out of sync with tree
+        makeDirty(this);
+
+        // closure to handle the freeze operation safely
+        const _freeze = (itm) =&gt; {
+            if (!Object.isFrozen(itm)) {
+                itm.freeze();
+            }
+        };
+
+        // freezes all child Model/Elements
+        // -- prevent changes to Children
+        // -- sends &quot;complete&quot; notification to their Observers
+        // -- revokes their Models if revocable
+        const _i = !_isArray ? Object.keys(this.model) : this.model;
+        _i.forEach((itm) =&gt; _freeze((!_isArray) ? _i[itm] : itm));
+
+        // creates new Proxied Model to operate on
+        const _p = new Proxy(Model.createRef(this, _o), this.handler);
+        _object.set(this, _p);
+
+        // marks this model as back in sync with tree
+        makeClean(this);
+
+        // sends notification of model change
+        _oBuilders.get(this.rxvo).next(this);
+
+        return this;
+    }
+
+    /**
+     * Raw value of this Model
+     * @returns {*}
+     */
+    valueOf() {
+        return _object.get(this);
+    }
+
+    /**
+     * Provides JSON object representation of Model
+     */
+    toJSON() {
+        let _derive = (itm) =&gt; {
+
+            // uses toJSON impl if defined
+            if (itm.hasOwnProperty(&quot;toJSON&quot;) &amp;&amp;
+                (typeof this.toJSON) === &quot;function&quot;) {
+                return itm.toJSON();
+            }
+
+            // builds new JSON tree if value is object
+            if (typeof itm === &quot;object&quot;) {
+                const _o = !Array.isArray(itm) ? {} : [];
+                for (let k in itm) {
+
+                    // we validate for property to avoid warnings
+                    if (itm.hasOwnProperty(k)) {
+
+                        // applies property to tree
+                        _o[k] = _derive(itm[k]);
+                    }
+                }
+
+                // returns new JSON tree
+                return _o;
+            }
+            // hands back itm if value wasn&apos;t usable
+            return itm;
+        };
+
+        // uses closure for evaluation
+        return _derive(this.valueOf());
+    }
+
+    /**
+     * Provides JSON String representation of Model
+     * @param pretty - `prettifies` JSON output for readability
+     */
+    toString(pretty = false) {
+        console.log(this.toJSON());
+        return JSON.stringify(this.toJSON(), null, (pretty ? 2 : void(0)));
+    }
+
+    /**
+     * Applies Object.freeze to model and triggers complete notification
+     * -- unlike Object.freeze, this prevents modification
+     * -- to all children in Model hierarchy
+     * @returns {Model}
+     */
+    freeze() {
+        Object.freeze(_object.get(this));
+        _oBuilders.get(this.rxvo).complete(this);
+        return this;
+    }
+
+    /**
+     *
+     * @return {object}
+     */
+    get handler() {
+        return {
+            setPrototypeOf: () =&gt; false,
+            isExtensible: (t) =&gt; Object.isExtensible(t),
+            preventExtensions: (t) =&gt; Object.preventExtensions(t),
+            getOwnPropertyDescriptor: (t, key) =&gt; Object.getOwnPropertyDescriptor(t, key),
+            defineProperty: (t, key, desc) =&gt; Object.defineProperty(t, key, desc),
+            has: (t, key) =&gt; key in t,
+            ownKeys: (t) =&gt; Reflect.ownKeys(t),
+            apply: () =&gt; false,
+        };
+    }
+
+    /**
+     * stub for model getter, overridden by Model sub-class
+     * @return {object|array|null}
+     */
+    get model() {
+        return null;
+    }
+
+    /**
+     * Getter for Model&apos;s Unique Object ID
+     * @returns {string} Object ID for Model
+     */
+    get objectID() {
+        return _mdRef.get(this)._id;
+    }
+
+    /**
+     * Getter for root element of Model hierarchy
+     * @returns {Model}
+     */
+    get root() {
+        return _mdRef.get(this).root || this;
+    }
+
+    /**
+     * Getter for `path` to current Element
+     * @returns {string}
+     */
+    get path() {
+        return _mdRef.get(this).path || &quot;&quot;;
+    }
+
+    /**
+     * Getter for path to JSON Object for Model
+     * @returns {string}
+     */
+    get jsonPath() {
+        return this.path.replace(/\/?(properties|items)+\/?/g, &quot;.&quot;).replace(/^\./, &quot;&quot;);
+    }
+    /**
+     * Getter for Model&apos;s parent
+     * @returns {Model}
+     */
+    get parent() {
+        // attempts to get parent
+        return _mdRef.get(this).parent || null;
+    }
+
+    /**
+     * Getter for Model validation status for hierarchy
+     * @return {boolean}
+     */
+    get isDirty() {
+        let _res = _dirtyModels.get(this.rxvo)[this.path] || false;
+        return _res || ((this.parent === null) ? false : this.parent.isDirty);
+    }
+
+    /**
+     * Getter for model&apos;s RxVO owner object
+     * @returns {RxVO}
+     */
+    get rxvo() {
+        return _mdRef.get(this).rxvo;
+    }
+
+    /**
+     * Get options (if any) for this model&apos;s schema
+     * todo: review for possible removal
+     * @return {any}
+     */
+    get options() {
+        return _schemaOptions.get(this);
+    }
+
+    /**
+     * Getter for Object.isFrozen status of this node and it&apos;s ancestors
+     * @returns {boolean}
+     */
+    get isFrozen() {
+        let _res = Object.isFrozen(_object.get(this));
+        return !_res ? ((this.parent === null) ? false : this.parent.isFrozen) : _res;
+    }
+
+    /**
+     * Provides formatted string for json-schema lookup
+     * @return {string}
+     */
+    get validationPath() {
+        return this.path === &quot;&quot; ? &quot;root#/&quot; : `root#${this.path}`;
+    }
+
+    /**
+     * todo: implement with ajv
+     * @returns {*}
+     */
+    get schema() {
+        return this; // _validators.get(this.rxvo).$ajv.compile({$model: this.validationPath});
+    }
+
+    /**
+     * todo: remove and standardize around `schema`
+     * @returns {*}
+     */
+    get signature() {
+        return this.schema;
+    }
+
+    /**
+     * creates owner Model reference on Proxied data object
+     * @param ref
+     * @param obj
+     * @returns {*}
+     */
+    static createRef(ref, obj) {
+        Object.defineProperty(obj, &quot;$model&quot;, {
+            value: ref,
+            writable: false
+        });
+        return obj;
+    };
+}</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.0.4)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

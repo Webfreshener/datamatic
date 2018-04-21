@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">src/classes/itemsModel.js | jsd</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="Schema Generation and Data Validation with object virtualization"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="jsd"><meta property="twitter:description" content="Schema Generation and Data Validation with object virtualization"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/Webfreshener/JSD.git"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#classes">classes</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_metaData.js~MetaData.html">MetaData</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_observerBuilder.js~ObserverBuilder.html">ObserverBuilder</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_schemaHelpers.js~SchemaHelpers.html">SchemaHelpers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/jsd.js~JSD.html">JSD</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/schema.js~Schema.html">Schema</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/set.js~Set.html">Set</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeClean">makeClean</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeDirty">makeDirty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refAtKeyValidation">refAtKeyValidation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refValidation">refValidation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ajvRef">_ajvRef</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_dirtyModels">_dirtyModels</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_oBuilders">_oBuilders</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_object">_object</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_observers">_observers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaHelpers">_schemaHelpers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaOptions">_schemaOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaSignatures">_schemaSignatures</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validators">_validators</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-wf">wf</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/classes/itemsModel.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {
+    _object, _schemaHelpers, _oBuilders
+} from &quot;./_references&quot;;
+import {Model} from &quot;./model&quot;;
+import {SchemaHelpers} from &quot;./_schemaHelpers&quot;;
+import {makeClean, makeDirty, refAtKeyValidation, refValidation} from &quot;./utils&quot;;
+
+const _observerDelegates = new WeakMap();
+
+/**
+ * @class Set
+ */
+export class Set extends Model {
+    /**
+     * @constructor
+     */
+    constructor() {
+        super(arguments[0]);
+        _schemaHelpers.set(this, new SchemaHelpers(this));
+        _object.set(this, new Proxy(Model.createRef(this, []), this.handler));
+    }
+
+    /**
+     * getter for object model
+     */
+    get model() {
+        return _object.get(this);
+    }
+
+    /**
+     * setter for object model
+     * @param value
+     */
+    set model(value) {
+        if (!Array.isArray(value) || this.isFrozen ||
+            !refValidation(this, value)) {
+            return false;
+        }
+
+        _object.set(this, new Proxy(Model.createRef(this, []), this.handler));
+
+        try {
+            let cnt = 0;
+            // we delegate observation in the event of whole model replacement
+            // to prevent triggering a notification for each item
+            // if the user desires such behavior they can use `addItem` with an iterator
+            _observerDelegates.set(this, {
+                next: () =&gt; {
+                    if (this.length === value.length) {
+                        makeClean(this);
+                        _oBuilders.get(this.jsd).next(this.path, this);
+                    }
+                },
+                error: () =&gt; {
+                    // this is a no-op, we dispatch error earlier in the setter pipe
+                }
+            });
+            value.forEach((val) =&gt; {
+                _object.get(this)[cnt++] = val;
+            });
+        } catch (e) {
+            console.error(e);
+            // return _oBuilders.get(this.jsd).error(this.path, e);
+        }
+
+        makeClean(this);
+
+        _oBuilders.get(this.jsd).next(this.path, this);
+        return true;
+    }
+
+    get handler() {
+        return Object.assign(super.handler, {
+            get: (t, idx) =&gt; {
+                // TODO: review for removal
+                // if (typeof idx === &quot;symbol&quot;) {
+                //     idx = `${String(idx)}`;
+                // }
+
+                if (idx === &quot;length&quot;) {
+                    return t.length;
+                }
+
+                if (idx in Array.prototype) {
+                    // only handle methods that modify the reference array
+                    if ([&quot;fill&quot;, &quot;pop&quot;, &quot;push&quot;, &quot;shift&quot;, &quot;splice&quot;, &quot;unshift&quot;].indexOf(idx) &gt; -1) {
+                        return () =&gt; {
+                            let _arr = [].concat(t);
+                            const _res = _arr[idx].apply(_arr, arguments);
+
+                            if (!this.test(_arr)) {
+                                _oBuilders.get(this.jsd).error(this.path, this.jsd.errors);
+                                return false;
+                            }
+                            // prevents subsequent validation on this object
+                            makeDirty(this);
+
+                            // appies modified array to element
+                            this.model = _arr;
+
+                            // returns result of operation
+                            return _res;
+                        }
+                    } else {
+                        return t[idx];
+                    }
+                }
+
+                if (idx === &quot;$ref&quot;) {
+                    return this;
+                }
+
+                return t[idx];
+            },
+            set: (t, idx, value) =&gt; {
+                if (idx in Array.prototype) {
+                    // do nothing against proto props
+                    return true;
+                }
+
+                // -- ensures we aren&apos;t in a frozen hierarchy branch
+                if (this.isFrozen) {
+                    return false;
+                }
+
+                if (!refAtKeyValidation(this, &quot;items&quot;, value)) {
+                    return false;
+                }
+
+                let _oDel = _observerDelegates.get(this);
+
+                // we set the value on the array with success
+                if ((typeof value) === &quot;object&quot;) {
+                    let _sH = _schemaHelpers.get(this);
+                    // note we use the last value of `cnt` and walk back one iteration
+                    value = _sH.setChildObject(`${this.path}`, value);
+                }
+
+                t[idx] = value;
+
+                // makes clean if not serial operation
+                if (!_oDel) {
+                    makeClean(this);
+                }
+
+                // updates observers
+                _oBuilders.get(this.jsd).next(this.path, this);
+                return true;
+            },
+            deleteProperty: (t, idx) =&gt; {
+                // creates mock of future Model state for evaluation
+                let _o = [].concat(this.model);
+                _o.splice(idx, 1);
+
+                // validates mock of change state
+                if (!refValidation(this, _o)) {
+                    return false;
+                }
+
+                // ensures index of operation is in range
+                if (idx &gt;= t.length) {
+                    const e = `index ${idx} is out of bounds on ${this.path}`;
+                    _oBuilders.get(this.jsd).error(this.path, e);
+                    return false;
+                }
+
+                // applies operation
+                t.splice(idx, 1);
+
+                // flags model as in sync with tree
+                makeClean(this);
+
+                // updates observers
+                _oBuilders.get(this.jsd).next(this.path, t);
+                return true;
+            }
+        });
+    }
+}
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.0.4)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

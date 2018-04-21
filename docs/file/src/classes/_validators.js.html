@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">src/classes/_validators.js | jsd</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="Schema Generation and Data Validation with object virtualization"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="jsd"><meta property="twitter:description" content="Schema Generation and Data Validation with object virtualization"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/Webfreshener/JSD.git"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#classes">classes</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_metaData.js~MetaData.html">MetaData</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_observerBuilder.js~ObserverBuilder.html">ObserverBuilder</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_schemaHelpers.js~SchemaHelpers.html">SchemaHelpers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_schemaValidator.js~SchemaValidator.html">SchemaValidator</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_validatorBuilder.js~ValidatorBuilder.html">ValidatorBuilder</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_validators.js~BaseValidator.html">BaseValidator</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/jsd.js~JSD.html">JSD</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/schema.js~Schema.html">Schema</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/set.js~Set.html">Set</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ensureKindIsString">ensureKindIsString</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-ensureRequiredFields">ensureRequiredFields</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-remapPolypath">remapPolypath</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_kinds">_kinds</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_oBuilders">_oBuilders</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_object">_object</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_observers">_observers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_required_elements">_required_elements</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaHelpers">_schemaHelpers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaOptions">_schemaOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaSignatures">_schemaSignatures</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_singletons">_singletons</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vBuilders">_vBuilders</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vPaths">_vPaths</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validPaths">_validPaths</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validators">_validators</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_vectorTypes">_vectorTypes</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-wf">wf</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-rxRx">rxRx</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-Validator">Validator</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/classes/_validators.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {_exists, wf, _validPaths, _vBuilders} from &quot;./_references&quot;;
+
+/**
+ * Holder for Validator Class References
+ */
+export const Validator = {};
+
+/**
+ * @private
+ */
+export class BaseValidator {
+    /**
+     * @constructor
+     */
+    constructor(path, signature, jsd) {
+        if (!jsd) {
+            throw `JSD is required for &apos;${path}&apos;`;
+        }
+        this.path = path;
+        this._signature = JSON.stringify(signature);
+        this.jsd = jsd;
+        this.validations[path] = -1;
+        Object.seal(this);
+    }
+
+    get signature() {
+        return JSON.parse(this._signature);
+    }
+
+    /**
+     * invokes `exec` for validator on object child elements
+     * @param path
+     * @param value
+     * @returns {*}
+     */
+    call(path, value) {
+        // attempt to reference validator at path
+        let __ = _vBuilders.get(this.jsd).get(path);
+        // tests for existence of validator
+        if (_exists(__) &amp;&amp; typeof __ === &quot;function&quot;) {
+            const e = __(value);
+            // sets result of validation
+            this.validations[path] = ((typeof e) !== &quot;string&quot;) || e;
+            return e;
+        }
+        // returns error message if unable to find validator for path
+        return `&apos;${path}&apos; has no validator defined`;
+    }
+
+    /**
+     * tests typeof value reference
+     *
+     * @param type {*}
+     * @param value {*}
+     * @returns {Boolean|String}
+     */
+    checkType(type, value) {
+        // evaluation closure to test typeof element
+        let _eval = (type, value) =&gt; {
+            let _x = (typeof type !== &quot;string&quot;) ? this.jsd.getClass([type]) : type;
+            // tests for special &apos;*&apos; (wildcard) type
+            if (_x === &quot;*&quot;) {
+                return true;
+            }
+            // tests for explicit type match
+            if (_x.match(new RegExp(`^${typeof value}$`, &quot;i&quot;)) === null) {
+                return `&apos;${this.path}&apos; expected ${type}, type was &apos;&lt;${typeof value}&gt;&apos;`
+            }
+            return true;
+        };
+        // tests that param `type` exists
+        if (_exists(type)) {
+            // tests if `type` is Array
+            // -- NOTE: this should allow an Array of Types
+            // -- might want re-evaluate this
+            if (Array.isArray(type)) {
+                let _res = &quot;unable to find type for Array values&quot;;
+                // tests each `type` specified in Set until we find a true value
+                type.some((k) =&gt; {
+                    _res = _eval(k, value);
+                    return ((typeof _res) === &quot;boolean&quot;);
+                });
+                return _res;
+            }
+            // performs eval on type against value
+            return _eval(type, value);
+        } else {
+            // returns error string if `type` was undefined
+            return `type &apos;${type}&apos; for ${this.path} was undefined`;
+        }
+    }
+
+    /**
+     * default exec method, must be overridden by subclass
+     *
+     * @param value
+     * @returns {string}
+     */
+    exec(value) {
+        return `${wf.Fun.getConstructorName(this)} requires override of &apos;exec&apos;`;
+    }
+
+    /**
+     * getter returns Hash of all validations defined for this document
+     *
+     * @returns {V}
+     */
+    get validations() {
+        return _validPaths.get(this.jsd);
+    }
+}
+
+Validator.Array = class Arr extends BaseValidator {
+    /**
+     * @constructor
+     * @param path
+     * @param signature
+     * @param jsd
+     */
+    constructor(path, signature, jsd) {
+        super(path, signature, jsd);
+    }
+
+    /**
+     * validates Object datatypes
+     *
+     * @param value
+     * @returns {*}
+     */
+    exec(value) {
+        if (!Array.isArray(value)) {
+            return `type of array was expected for &apos;${this.path}&apos;. type was &apos;&lt;${typeof value}&gt;&apos;`;
+        }
+        return true;
+    }
+};
+
+/**
+ * @private
+ */
+Validator.Object = class Obj extends BaseValidator {
+    /**
+     * @constructor
+     * @param path
+     * @param signature
+     * @param jsd
+     */
+    constructor(path, signature, jsd) {
+        super(path, signature, jsd);
+    }
+
+    /**
+     * validates Object datatypes
+     *
+     * @param value
+     * @returns {*}
+     */
+    exec(value) {
+        let _iterate = (key, _val) =&gt; {
+            // replaces &quot;.&quot; path with &quot;&quot;
+            let _p = `${this.path}.${key}`;
+            // obtains Validator Builder for this Document
+            let _v = _vBuilders.get(this.jsd);
+            // tests for Validator for path
+            if (!_v.get(_p)) {
+                // creates new Validator for path using signature for key
+                let _sig = this.signature.elements[key] || this.signature.elements[&quot;*&quot;];
+                _vBuilders.get(this.jsd).create(_sig, _p, this.jsd);
+            }
+            // calls the validator with path and value
+            let e = this.call(_p, _val);
+            if ((typeof e) === &quot;string&quot;) {
+                return e;
+            }
+        };
+        if (typeof value === &quot;object&quot;) {
+            if (!Array.isArray(value)) {
+                for (let _k in value) {
+                    if (value.hasOwnProperty(_k)) {
+                        let _res = _iterate(_k, value[_k]);
+                        if (typeof _res === &quot;string&quot;) {
+                            return _res;
+                        }
+                    }
+                }
+            }
+            else {
+                for (let __ in value) {
+                    if (value.hasOwnProperty(__)) {
+                        let e = this.call(this.path, value[__]);
+                        if (typeof e === &quot;string&quot;) {
+                            return e;
+                        }
+                    }
+                }
+            }
+            return true;
+        }
+        else {
+            return `&apos;${this.path}&apos; expected value of type &apos;Object&apos;. Type was &apos;&lt;${typeof value}&gt;&apos;`;
+        }
+    }
+};
+/**
+ * @private
+ */
+Validator.Boolean = class Bool extends BaseValidator {
+    /**
+     * @constructor
+     * @param path
+     * @param signature
+     * @param jsd
+     */
+    constructor(path, signature, jsd) {
+        super(path, signature, jsd);
+    }
+
+    /**
+     * validates Boolean datatypes
+     *
+     * @param value
+     * @returns {Boolean|String}
+     */
+    exec(value) {
+        return this.checkType(&quot;boolean&quot;, value);
+    }
+};
+
+/**
+ * @private
+ */
+Validator.String = class Str extends BaseValidator {
+    /**
+     * @constructor
+     * @param path
+     * @param signature
+     * @param jsd
+     */
+    constructor(path, signature, jsd) {
+        super(path, signature, jsd);
+    }
+
+    /**
+     * validates String datatypes
+     *
+     * @param value
+     * @returns {*}
+     */
+    exec(value) {
+        let __ = this.checkType(&quot;string&quot;, value);
+        if ((typeof __) === &quot;string&quot;) {
+            return __;
+        }
+        if (_exists(this.signature.restrict)) {
+            let _rxStr;
+            let _rxFlags;
+            /*
+                Allow restrict to be Array or String
+                if Array, first element is rx string, second element is rx flags
+             */
+            if (Array.isArray(this.signature.restrict)) {
+                _rxStr = this.signature.restrict[0];
+                _rxFlags = this.signature.restrict.length &gt; 1 ? this.signature.restrict[1] : &quot;&quot;;
+            } else {
+                _rxStr = this.signature.restrict;
+                _rxFlags = &quot;&quot;;
+            }
+            // todo: loo into IDEA&apos;s &quot;duplicate \\ character&quot; warning
+            if (!_exists(new RegExp(_rxStr.replace(/[\\\\]{2,}/g, &quot;\\&quot;), _rxFlags).exec(value))) {
+                return `value &apos;${value}&apos; for ${this.path} did not match required expression`;
+            }
+        }
+        return true;
+    }
+};
+
+/**
+ * @private
+ */
+Validator.Number = class Num extends BaseValidator {
+    /**
+     * @constructor
+     * @param path
+     * @param signature
+     * @param jsd
+     */
+    constructor(path, signature, jsd) {
+        super(path, signature, jsd);
+    }
+
+    /**
+     * validates Number datatypes
+     *
+     * @param value
+     * @returns {*}
+     */
+    exec(value) {
+        let __ = this.checkType(&quot;number&quot;, value);
+        if (typeof __ === &quot;string&quot;) {
+            return __;
+        }
+        // attempts to cast to number
+        return !isNaN(Number(value)) ? true : `${this.path} was unable to process &apos;${value}&apos; as Number`;
+    }
+};
+
+/**
+ * @private
+ */
+Validator.Function = class Fun extends BaseValidator {
+    /**
+     * @constructor
+     * @param path
+     * @param signature
+     * @param jsd
+     */
+    constructor(path, signature, jsd) {
+        super(path, signature, jsd);
+    }
+
+    /**
+     * validates Function datatypes
+     *
+     * @param value
+     * @returns {*}
+     */
+    exec(value) {
+        let _x = typeof this.signature.type === &quot;string&quot; ?
+            this.signature.type :
+            wf.Fun.getConstructorName(this.signature.type);
+        let _fn = wf.Fun.getConstructorName(value);
+        return _x === _fn ? true :
+            `${this.path} requires &apos;$_x&apos; got &apos;&lt;${_fn}&gt;&apos; instead`;
+    }
+};
+
+/**
+ * @private
+ */
+Validator.Default = class Def extends BaseValidator {
+    /**
+     * @constructor
+     * @param path
+     * @param signature
+     * @param jsd
+     */
+    constructor(path, signature, jsd) {
+        super(path, signature, jsd);
+    }
+
+    /**
+     * validates unknown (default) datatypess
+     * @param value
+     * @returns {*}
+     */
+    exec(value) {
+        const _testValidator = (type, value) =&gt; {
+            if (type === &quot;*&quot;) {
+                return true;
+            }
+            let _val = Validator[wf.Str.capitalize(type)];
+            if (!_exists(_val)) {
+                return `&apos;${this.path}&apos; was unable to obtain validator for type &apos;&lt;${type}&gt;&apos;`;
+            }
+            let _ = new _val(this.path, this.signature, this.jsd);
+            return _.exec(value);
+        };
+        let _x = typeof this.signature.type === &quot;string&quot;
+            ? this.jsd.getClass(this.signature.type)
+            : this.signature.type;
+        let _tR = this.checkType(_x, value);
+        if (typeof _tR === &quot;string&quot;) {
+            return _tR;
+        }
+        if (Array.isArray(_x)) {
+            let _ = _x.map(itm =&gt; {
+                let _clazz = this.jsd.getClass(itm);
+                return _testValidator(_clazz, value);
+            });
+            return (0 &lt;= _.indexOf(true)) ? true : _[_.length - 1];
+        }
+        return _testValidator(_x, value);
+    }
+};
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.0.4)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
