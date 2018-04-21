@@ -42,6 +42,7 @@
     "babel-preset-env": "^1.6.1",
     "babel-register": "^6.18.0",
     "chai": "^4.1.2",
+    "codacy-coverage": "^2.1.1",
     "deep-equal": "^1.0.1",
     "es6-weak-map": "^2.0.1",
     "esdoc": "^1.0.4",
@@ -65,6 +66,7 @@
   "homepage": "https://webfreshener.github.io/RxVO/",
   "scripts": {
     "test": "jest",
+    "cover": "jest --coverage && cat ./coverage/lcov.info | codacy-coverage --token 8c62ed7b6f6a4be397ab746173d9c639",
     "build-test": "webpack --mode development; npm test",
     "build": "webpack --mode production",
     "version": "npm run build",
