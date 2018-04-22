@@ -14,6 +14,7 @@ export const basicModel = {
 };
 
 export const nestedModel = {
+    "type": "object",
     "properties": {
         "aObject": {
             "type": "object",
