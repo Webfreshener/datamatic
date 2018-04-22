@@ -89,9 +89,10 @@ export class PropertiesModel extends Model {
                 // creates mock of future model state for evaluation
                 let _o = Object.assign({}, this.model);
                 delete _o[key];
-
+                const _res = this.validate(_o)
                 // validates model with value removed
-                if (!this.validate(_o)) {
+                if (_res !== true) {
+                    _oBuilders.get(this.rxvo).error(this, _res);
                     return false;
                 }
 

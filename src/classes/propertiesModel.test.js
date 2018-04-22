@@ -5,7 +5,7 @@ import {basicModel, nestedModel} from "../../fixtures/PropertiesModel.schemas";
 
 describe("PropertiesModel Class Suite", function () {
 
-    describe.only("Simple PropertiesModel Tests", () => {
+    describe("Simple PropertiesModel Tests", () => {
         beforeEach(() => {
             this.rxvo = new RxVO(basicModel);
         });
@@ -57,7 +57,7 @@ describe("PropertiesModel Class Suite", function () {
             });
         });
 
-        describe.only("LifeCycle: Update", () => {
+        describe("LifeCycle: Update", () => {
             const _d = {
                 name: "Ed Testy",
                 age: 99,
@@ -73,7 +73,7 @@ describe("PropertiesModel Class Suite", function () {
                 expect(deepEqual(this.rxvo.model, _d)).toBe(false);
             });
 
-            it.only("should reject invalid data update", () => {
+            it("should reject invalid data update", () => {
                 this.rxvo.model.active = "false";
                 expect(deepEqual(this.rxvo.model, _d)).toBe(true);
             });
