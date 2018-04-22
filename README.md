@@ -6,6 +6,7 @@ RxJS + JSON-Schema (Ajv) Based Observable Data Models
 [![Build Status](https://travis-ci.org/Webfreshener/RxVO.svg?branch=master)](https://travis-ci.org/Webfreshener/RxVO)
 [![Dev Dependency Status](https://david-dm.org/webfreshener/RxVO/dev-status.svg)](https://david-dm.org/webfreshener/RxVO?type=dev)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/c665c70dfeb144319bc5bbd58695eb90)](https://www.codacy.com/app/vanschroeder/RxVO?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Webfreshener/RxVO&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/c665c70dfeb144319bc5bbd58695eb90)](https://www.codacy.com/app/vanschroeder/RxVO?utm_source=github.com&utm_medium=referral&utm_content=Webfreshener/RxVO&utm_campaign=Badge_Coverage)
 [![Maintainability](https://api.codeclimate.com/v1/badges/625326e1880421ccc809/maintainability)](https://codeclimate.com/github/Webfreshener/RxVO/maintainability)
 
 [Online Developer Documentation](https://webfreshener.github.io/RxVO/)
