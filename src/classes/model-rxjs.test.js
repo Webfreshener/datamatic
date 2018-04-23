@@ -76,6 +76,7 @@ describe("RXJS Test Suite", () => {
                         done()
                     },
                     error: (e) => {
+                        // console.log(`e: ${JSON.stringify(_rxvo1.errors)}`);
                         // _sub.unsubscribe();
                         done(JSON.stringify(e));
                     }
@@ -85,6 +86,8 @@ describe("RXJS Test Suite", () => {
                     name: "Player 3",
                     score: 3000000000,
                 });
+
+                // console.log(_rxvo1.errors);
 
                 // _rxvo.model.topScores.splice(1, 1, {
                 //     name: "Player 3",

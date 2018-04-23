@@ -1,4 +1,5 @@
 import {_dirtyModels, _validators} from "./_references";
+import merge from "lodash.merge";
 
 /**
  * flags `model` node as being out of sync with tree
@@ -78,29 +79,59 @@ export const getRoot = (model) => {
 
 /**
  *
+ * @param obj
+ */
+const getDefaultsForElement = (obj) => {
+    const _o = {};
+
+    if (obj.hasOwnProperty("default")) {
+        merge(_o, obj.default);
+    }
+
+    if ((obj.hasOwnProperty("type"))) {
+        let _m = obj.type.match(/^(object|array)+$/);
+        if (_m !== null) {
+            let _key = _m[1] === "object" ? "properties" : "items";
+            merge(_o, getDefaultsForElement(obj[_key]));
+        }
+    }
+
+    Object.keys(obj).forEach((prop) => {
+        if (obj[prop].hasOwnProperty("default")) {
+            _o[prop] = obj[prop].default;
+        }
+
+        if ((obj[prop].hasOwnProperty("type"))) {
+            if (obj[prop].type.match(/^(object|array)+$/) !== null) {
+                _o[prop] = getDefaultsForElement(obj[prop]);
+            }
+        }
+    });
+
+    delete _o["items"];
+    return _o;
+};
+
+/**
+ *
  * @param schema
  * @returns {object}
  */
 export const getDefaults = (schema) => {
     const _o = {};
     if (schema.hasOwnProperty("default")) {
-        Object.assign(_o, schema.default);
+        merge(_o, schema.default);
     }
 
     if (schema.hasOwnProperty("properties")) {
-        Object.keys(schema.properties).forEach((prop) => {
-            if (schema.properties[prop].hasOwnProperty("default")) {
-                _o[prop] = schema.properties[prop].default;
-            }
-
-            if ((schema.properties[prop].hasOwnProperty("type"))) {
-                if (schema.properties[prop].type.match(/^(object|array)+$/) !== null) {
-                    _o[prop] = getDefaults(schema.properties[prop]);
-                }
-            }
-        });
+        merge(_o, getDefaultsForElement(schema.properties));
     }
 
+    if (schema.hasOwnProperty("items")) {
+        merge(_o, getDefaultsForElement(schema.items));
+    }
+
+    delete _o["items"];
     return _o;
 };
 
@@ -111,7 +142,7 @@ export const getDefaults = (schema) => {
  * @param delimiter
  * @returns {{} & any}
  */
-export const walkObject = (path, toWalk, delimiter = "/" ) => {
+export const walkObject = (path, toWalk, delimiter = "/") => {
     let _s = Object.assign({}, toWalk);
     path.split(delimiter).forEach((part) => {
         if (part !== "") {
