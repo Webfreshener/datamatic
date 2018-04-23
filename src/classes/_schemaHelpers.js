@@ -57,6 +57,7 @@ export class SchemaHelpers {
             typeof _s !== "object") {
             return `'${key}' was invalid`;
         }
+
         _s.model = value;
         return _s.model;
     }

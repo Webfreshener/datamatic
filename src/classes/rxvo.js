@@ -6,7 +6,8 @@ import {PropertiesModel} from "./propertiesModel";
 import {ItemsModel} from "./itemsModel";
 import {AjvWrapper} from "./_ajvWrapper";
 import Notifiers from "./_branchNotifier";
-
+import {getDefaults, walkObject} from "./utils";
+const _defaults = new WeakMap();
 const _documents = new WeakMap();
 /**
  * RxVo Model Entry-point
@@ -47,6 +48,9 @@ export class RxVO {
             _useSet = true;
         }
 
+        // stores default values for this model
+        _defaults.set(this, getDefaults(schema));
+
         // creates holder for dirty model flags in this scope
         _dirtyModels.set(this, {});
 
@@ -79,11 +83,29 @@ export class RxVO {
     }
 
     /**
-     *
+     * Getter for document's JSON-Schema
      * @return {any}
      */
     get schema() {
         return _schemaSignatures.get(this);
+    }
+
+    /**
+     * Retrieves JSON-Schema element for given Path
+     * @param path
+     * @returns {any}
+     */
+    getSchemaForPath(path) {
+        return walkObject(path, this.schema);
+    }
+
+    /**
+     * Retrieves default values from JSON-Schema properties
+     * @param path
+     * @returns {{}&any}
+     */
+    getDefaultsForPath(path = "") {
+        return walkObject(path, _defaults.get(this), ".");
     }
 
     /**
@@ -122,7 +144,7 @@ export class RxVO {
     }
 
     /**
-     *
+     * Retrieves all Models at given path
      * @param to
      * @returns {Array[]|Object[]}
      */

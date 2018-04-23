@@ -75,3 +75,48 @@ export const validate = (model, path, value) => {
 export const getRoot = (model) => {
     return Object.assign({}, model.rxvo.model);
 };
+
+/**
+ *
+ * @param schema
+ * @returns {object}
+ */
+export const getDefaults = (schema) => {
+    const _o = {};
+    if (schema.hasOwnProperty("default")) {
+        Object.assign(_o, schema.default);
+    }
+
+    if (schema.hasOwnProperty("properties")) {
+        Object.keys(schema.properties).forEach((prop) => {
+            if (schema.properties[prop].hasOwnProperty("default")) {
+                _o[prop] = schema.properties[prop].default;
+            }
+
+            if ((schema.properties[prop].hasOwnProperty("type"))) {
+                if (schema.properties[prop].type.match(/^(object|array)+$/) !== null) {
+                    _o[prop] = getDefaults(schema.properties[prop]);
+                }
+            }
+        });
+    }
+
+    return _o;
+};
+
+/**
+ * Navigates given object by path
+ * @param path
+ * @param toWalk
+ * @param delimiter
+ * @returns {{} & any}
+ */
+export const walkObject = (path, toWalk, delimiter = "/" ) => {
+    let _s = Object.assign({}, toWalk);
+    path.split(delimiter).forEach((part) => {
+        if (part !== "") {
+            _s = _s[part];
+        }
+    });
+    return _s;
+};

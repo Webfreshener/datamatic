@@ -1,5 +1,5 @@
 import {RxVO} from "./rxvo"
-import {basicModel} from "../../fixtures/PropertiesModel.schemas";
+import {basicModel, nestedModelDefault} from "../../fixtures/PropertiesModel.schemas";
 
 describe("RxVO Instance Test", () => {
     let _rxvo;
@@ -12,11 +12,29 @@ describe("RxVO Instance Test", () => {
         expect(_rxvo instanceof RxVO).toBe(true);
     });
 
-    it("expects RxVO Instances to create a valid RxVO Document", () => {
+    it("should get it's schema", () => {
+        expect(_rxvo.schema).toEqual(basicModel);
+    });
 
+    it("should get path elements", () => {
+        expect(_rxvo.getSchemaForPath("properties/name")).toEqual({type: "string"});
+    });
+
+    it("should get default values for path", () => {
+        let _rxvo = new RxVO(nestedModelDefault);
+        expect(_rxvo.getDefaultsForPath("")).toEqual({aObject: {bObject: {bValue: 123}}});
+    });
+
+    it("should get default values for nested path", () => {
+        let _rxvo = new RxVO(nestedModelDefault);
+        expect(_rxvo.getDefaultsForPath("aObject")).toEqual({bObject: {bValue: 123}});
+    });
+
+    it("expects RxVO Instances to create a valid RxVO Document", () => {
         _rxvo.model = {
             "name": "test",
         };
+
         expect(`${_rxvo.model.name}`).toEqual("test");
     });
 });

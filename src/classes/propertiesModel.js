@@ -5,6 +5,7 @@ import {makeClean, makeDirty, refAtKeyValidation, refValidation} from "./utils";
 import {SchemaHelpers} from "./_schemaHelpers";
 import {Model} from "./model";
 import Notifiers from "./_branchNotifier";
+import merge from "lodash.merge";
 
 /**
  * @class PropertiesModel
@@ -131,6 +132,9 @@ export class PropertiesModel extends Model {
             return false;
         }
 
+        // ensures defaults (if any) are applied to model value
+        value = merge(this.rxvo.getDefaultsForPath(this.jsonPath), value);
+
         if (refValidation(this, value) !== true) {
             Notifiers.get(this.rxvo).sendError(this.jsonPath, this.rxvo.errors);
             return false;
@@ -145,7 +149,6 @@ export class PropertiesModel extends Model {
         // todo: replace proxy with Object Delegation
         _object.set(this,
             new Proxy(Model.createRef(this, {}), this.handler));
-
         Object.keys(value).forEach((k) => {
             // -- added try/catch to avoid error in JSFiddle
             try {

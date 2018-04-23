@@ -4,7 +4,6 @@ import {
 import {RxVO} from "./rxvo";
 import {MetaData} from "./_metaData";
 import {makeClean, makeDirty, validate} from "./utils";
-
 /**
  *
  * @param ref
@@ -206,11 +205,10 @@ export class Model {
 
     /**
      * Provides JSON String representation of Model
-     * @param pretty - `prettifies` JSON output for readability
+     * @returns {string}
      */
-    toString(pretty = false) {
-        console.log(this.toJSON());
-        return JSON.stringify(this.toJSON(), null, (pretty ? 2 : void(0)));
+    toString() {
+        return JSON.stringify(this.toJSON());
     }
 
     /**
@@ -240,6 +238,10 @@ export class Model {
             ownKeys: (t) => Reflect.ownKeys(t),
             apply: () => false,
         };
+    }
+
+    get defaults() {
+
     }
 
     /**
