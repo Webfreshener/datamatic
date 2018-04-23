@@ -29,3 +29,20 @@ export const objectCollection = {
         required: ["name"],
     },
 };
+
+export const objectCollectionDefaults = {
+    type: "array",
+    items: {
+        type: "object",
+        properties: {
+            name: {
+                type: "string",
+                default: "abc"
+            },
+            value: {
+                type: "number",
+            },
+        },
+        required: ["name"],
+    },
+};

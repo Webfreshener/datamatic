@@ -35,6 +35,30 @@ export const nestedModel = {
     "required": ["aObject"],
 };
 
+export const nestedModelDefault = {
+    "type": "object",
+    "properties": {
+        "aObject": {
+            "type": "object",
+            "properties": {
+                "bObject": {
+                    "type": "object",
+                    "properties": {
+                        "bValue": {
+                            "type": "integer",
+                            "default": 123,
+                        },
+                    },
+                    "required": ["bValue"],
+                },
+            },
+            "required": ["bObject"],
+        },
+    },
+    "required": ["aObject"],
+};
+
+
 export const scoresModel = {
     "type": "object",
     "properties": {

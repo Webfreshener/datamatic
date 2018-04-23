@@ -5,6 +5,7 @@ import {Model} from "./model";
 import {SchemaHelpers} from "./_schemaHelpers";
 import {makeClean, makeDirty, refAtKeyValidation, refValidation} from "./utils";
 import Notifiers from "./_branchNotifier";
+import merge from "lodash.merge";
 
 const _observerDelegates = new WeakMap();
 
@@ -37,6 +38,15 @@ export class ItemsModel extends Model {
             return false;
         }
 
+        let _idx = 0;
+        value.forEach((itm) => {
+            let _defaults = this.rxvo.getDefaultsForPath(this.jsonPath);
+            if (Object.keys(_defaults).length) {
+                value[_idx] = merge(_defaults, itm);
+            }
+            _idx++;
+        });
+
         if (refValidation(this, value) !== true) {
             Notifiers.get(this.rxvo).sendError(this.jsonPath, this.rxvo.errors);
             return false;
@@ -46,6 +56,7 @@ export class ItemsModel extends Model {
             // marks model as dirty to prevent cascading validation calls
             makeDirty(this);
         }
+
 
         _object.set(this, new Proxy(Model.createRef(this, []), this.handler));
         _observerDelegates.set(this, true);

@@ -1,7 +1,7 @@
 import {PropertiesModel} from "./propertiesModel";
 import {RxVO} from "./rxvo";
 import {default as deepEqual} from "deep-equal";
-import {basicModel, nestedModel} from "../../fixtures/PropertiesModel.schemas";
+import {basicModel, nestedModel, nestedModelDefault} from "../../fixtures/PropertiesModel.schemas";
 
 describe("PropertiesModel Class Suite", function () {
 
@@ -180,6 +180,24 @@ describe("PropertiesModel Class Suite", function () {
                 expect(typeof this.rxvo.errors).toBe("object");
                 expect(this.rxvo.model.aObject.bObject.bValue).toBe(1234);
             });
+        });
+    });
+
+    describe("Nested Defaults PropertiesModel Tests", () => {
+        let _rxvo;
+        beforeEach(() => {
+            _rxvo = new RxVO(nestedModelDefault);
+        });
+
+        it("should populate default values", () => {
+            _d = {
+                aObject: {
+                    bObject: {},
+                },
+            };
+
+            _rxvo.model = _d;
+            expect(_rxvo.model.aObject.bObject.bValue).toBe(123);
         });
     });
 });

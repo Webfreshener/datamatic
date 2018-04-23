@@ -3,7 +3,7 @@ import {default as deepEqual} from "deep-equal";
 import {
     stringsCollection,
     stringsMinMaxCollection,
-    objectCollection
+    objectCollection, objectCollectionDefaults
 } from "../../fixtures/ItemsModel.schemas";
 import {Model} from "./model";
 
@@ -225,61 +225,74 @@ describe("ItemsModel Class Suite", function () {
         });
     });
 
+    describe("Default Values", () => {
+        it("should apply defaults to items", () => {
+            this.rxvo = new RxVO(objectCollectionDefaults);
+            this.rxvo.model = [{}];
+            expect(this.rxvo.model[0]).toEqual({name: "abc"});
+        });
+    });
+
     describe("Model Class methods ", () => {
 
         it("should not reset if it would invalidate model", () => {
-            expect(this.rxvo.model.length).toBe(3);
-            this.rxvo.model.$model.reset();
-            expect(this.rxvo.model.length).toBe(3);
+            const _rxvo = new RxVO(stringsMinMaxCollection);
+            _rxvo.model = ["Item A", "Item B", "Item C"];
+            expect(_rxvo.model.length).toBe(3);
+            _rxvo.model.$model.reset();
+            expect(_rxvo.model.length).toBe(3);
         });
 
         it("should reset it's collection if allowed", () => {
-            this.rxvo = new RxVO(stringsCollection);
-            this.rxvo.model = ["Item A", "Item B", "Item C"];
-            expect(this.rxvo.model.length).toBe(3);
-            this.rxvo.model.$model.reset();
-            expect(this.rxvo.model.length).toBe(0);
+            const _rxvo = new RxVO(stringsCollection);
+            _rxvo.model = ["Item A", "Item B", "Item C"];
+            _rxvo.model = ["Item A", "Item B", "Item C"];
+            expect(_rxvo.model.length).toBe(3);
+            _rxvo.model.$model.reset();
+            expect(_rxvo.model.length).toBe(0);
         });
 
         it("should quietly validate data with the validate method", () => {
-            expect(this.rxvo.model.$model.validate([1, 2, 3])).toBe("data/0 should be string");
-            expect(this.rxvo.model.$model.validate(["1", "2", "3"])).toBe(true);
+            const _rxvo = new RxVO(stringsCollection);
+            expect(_rxvo.model.$model.validate([1, 2, 3])).toBe("data/0 should be string");
+            expect(_rxvo.model.$model.validate(["1", "2", "3"])).toBe(true);
         });
 
         it("should freeze it's model", () => {
-            this.rxvo.model = ["Item A", "Item B", "Item C"];
-            this.rxvo.model.$model.freeze();
-            expect(this.rxvo.model.$model.isFrozen).toBe(true);
-            this.rxvo.model = ["1", "2", "3"];
-            expect(deepEqual(this.rxvo.model, ["Item A", "Item B", "Item C"])).toBe(true);
+            const _rxvo = new RxVO(stringsCollection);
+            _rxvo.model = ["Item A", "Item B", "Item C"];
+            _rxvo.model.$model.freeze();
+            expect(_rxvo.model.$model.isFrozen).toBe(true);
+            _rxvo.model = ["1", "2", "3"];
+            expect(deepEqual(_rxvo.model, ["Item A", "Item B", "Item C"])).toBe(true);
         });
 
         it("should freeze it's model hierarchy", () => {
-            this.rxvo = new RxVO(objectCollection);
+            const _rxvo = new RxVO(objectCollection);
             const _orig = [{
                 name: "My Name",
                 active: true,
             }];
 
-            this.rxvo.model = _orig;
-            this.rxvo.model.$model.freeze();
+            _rxvo.model = _orig;
+            _rxvo.model.$model.freeze();
 
-            expect(this.rxvo.model.$model.isFrozen).toBe(true);
+            expect(_rxvo.model.$model.isFrozen).toBe(true);
             // should not allow array to be overriden
-            this.rxvo.model = [{
+            _rxvo.model = [{
                 name: "Your Name",
                 active: false,
             }];
-            expect(deepEqual(this.rxvo.model, _orig)).toBe(true);
+            expect(deepEqual(_rxvo.model, _orig)).toBe(true);
             // should not allow array item to be overriden
-            this.rxvo.model[0] = {
+            _rxvo.model[0] = {
                 name: "Your Name",
                 active: false,
             };
-            expect(deepEqual(this.rxvo.model, _orig)).toBe(true);
+            expect(deepEqual(_rxvo.model, _orig)).toBe(true);
             // should not set attributes on nested object properties
-            this.rxvo.model[0].name = "Other Name";
-            expect(deepEqual(this.rxvo.model, _orig)).toBe(true);
+            _rxvo.model[0].name = "Other Name";
+            expect(deepEqual(_rxvo.model, _orig)).toBe(true);
         });
     });
 });
