@@ -2,7 +2,6 @@ import {PropertiesModel} from "./propertiesModel";
 import {RxVO} from "./rxvo";
 import {basicModel, scoresModel} from "../../fixtures/PropertiesModel.schemas";
 import {_observers, _oBuilders} from "./_references";
-import {getRoot} from "./utils";
 import deepEqual from "deep-equal";
 
 describe("RXJS Test Suite", () => {
