@@ -123,7 +123,6 @@ export class PropertiesModel extends Model {
      * @returns {object|null}
      */
     get patternDefaults() {
-        console.log(`"${this.path}": ${JSON.stringify(this.rxvo.getSchemaForPath(this.path))}`);
         return getPatternPropertyDefaults(this.rxvo.getSchemaForPath(this.path));
     }
 
@@ -156,11 +155,8 @@ export class PropertiesModel extends Model {
                     }
                 });
             });
-            console.log(`propObj: ${JSON.stringify(propObj)}`);
             value = merge(propObj, value);
         }
-
-        console.log(`value: ${JSON.stringify(value)}`);
 
         // ensures defaults (if any) are applied to model value
         value = merge(this.rxvo.getDefaultsForPath(this.jsonPath), value);

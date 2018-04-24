@@ -78,7 +78,8 @@ export const validate = (model, path, value) => {
  * @param obj
  */
 const getDefaultsForElement = (obj) => {
-    const _o = {};
+    let _o = {};
+    const _propObj = {};
 
     if (obj.hasOwnProperty("default")) {
         merge(_o, obj.default);
@@ -89,7 +90,7 @@ const getDefaultsForElement = (obj) => {
         if (_m !== null) {
             let _key = _m[1] === "object" ? "properties" : "items";
             if (obj.hasOwnProperty(_key)) {
-                merge(_o, getDefaultsForElement(obj[_key]));
+                return merge(_o, getDefaultsForElement(obj[_key]));
             }
         }
     }
@@ -101,16 +102,19 @@ const getDefaultsForElement = (obj) => {
 
         if ((obj[prop].hasOwnProperty("type"))) {
             if (obj[prop].type.match(/^(object|array)+$/) !== null) {
+
                 if (obj[prop].hasOwnProperty("properties")) {
-                    merge(_o, getDefaultsForElement(obj[prop].properties));
+                    _propObj[prop] = getDefaultsForElement(obj[prop].properties)
                 }
 
                 if (obj[prop].hasOwnProperty("items")) {
-                    merge(_o, getDefaultsForElement(obj[prop].items));
+                    _propObj[prop] = getDefaultsForElement(obj[prop].items)
                 }
             }
         }
     });
+
+    _o = merge(_o, _propObj);
 
     delete _o["items"];
     return Object.keys(_o).length ? _o : null;
@@ -156,7 +160,7 @@ export const getPatternPropertyDefaults = (schema) => {
     if (schema.hasOwnProperty("patternProperties")) {
         let _propObj = {};
         Object.keys(schema.patternProperties).forEach((prop) => {
-            _propObj[prop] = getDefaultsForElement(schema.patternProperties);
+            merge(_o, getDefaultsForElement(schema.patternProperties));
         });
         merge(_o, _propObj);
     }

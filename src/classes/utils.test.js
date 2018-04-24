@@ -105,7 +105,7 @@ describe("Utils tests", () => {
         });
     });
 
-    describe.only("getDefaults tests", () => {
+    describe("getDefaults tests", () => {
         it("should getDefaults from schema", () => {
             const _schema = {
                 type: "object",
@@ -135,15 +135,16 @@ describe("Utils tests", () => {
         });
     });
 
-    describe.only("getPatternPropertyDefaults tests", () => {
+    describe("getPatternPropertyDefaults tests", () => {
         it("should get pattern properties for basic Properties element", () => {
-            expect(getPatternPropertyDefaults(patternModel)).toEqual({".*": "default value"});
+            expect(getPatternPropertyDefaults(patternModel))
+                .toEqual({"[^name]": {"value": "default value"}});
         });
 
         it("should get pattern properties for Nested Properties element", () => {
             expect(getPatternPropertyDefaults(nestedPatternModel)).toEqual(null);
             expect(getPatternPropertyDefaults(nestedPatternModel.properties.nested))
-                .toEqual({".*": "default value"});
+                .toEqual({".*": {"value": "default value"}});
         })
     });
 
