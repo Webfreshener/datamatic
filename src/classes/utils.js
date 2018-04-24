@@ -73,26 +73,25 @@ export const validate = (model, path, value) => {
     return true;
 };
 
-export const getRoot = (model) => {
-    return Object.assign({}, model.rxvo.model);
-};
-
 /**
  *
  * @param obj
  */
 const getDefaultsForElement = (obj) => {
-    const _o = {};
+    let _o = {};
+    const _propObj = {};
 
     if (obj.hasOwnProperty("default")) {
         merge(_o, obj.default);
     }
 
-    if ((obj.hasOwnProperty("type"))) {
+    if (obj.hasOwnProperty("type")) {
         let _m = obj.type.match(/^(object|array)+$/);
         if (_m !== null) {
             let _key = _m[1] === "object" ? "properties" : "items";
-            merge(_o, getDefaultsForElement(obj[_key]));
+            if (obj.hasOwnProperty(_key)) {
+                return merge(_o, getDefaultsForElement(obj[_key]));
+            }
         }
     }
 
@@ -103,22 +102,32 @@ const getDefaultsForElement = (obj) => {
 
         if ((obj[prop].hasOwnProperty("type"))) {
             if (obj[prop].type.match(/^(object|array)+$/) !== null) {
-                _o[prop] = getDefaultsForElement(obj[prop]);
+
+                if (obj[prop].hasOwnProperty("properties")) {
+                    _propObj[prop] = getDefaultsForElement(obj[prop].properties)
+                }
+
+                if (obj[prop].hasOwnProperty("items")) {
+                    _propObj[prop] = getDefaultsForElement(obj[prop].items)
+                }
             }
         }
     });
 
+    _o = merge(_o, _propObj);
+
     delete _o["items"];
-    return _o;
+    return Object.keys(_o).length ? _o : null;
 };
 
 /**
  *
  * @param schema
- * @returns {object}
+ * @returns {object|null}
  */
 export const getDefaults = (schema) => {
     const _o = {};
+
     if (schema.hasOwnProperty("default")) {
         merge(_o, schema.default);
     }
@@ -132,7 +141,31 @@ export const getDefaults = (schema) => {
     }
 
     delete _o["items"];
-    return _o;
+
+    return Object.keys(_o).length ? _o : null;
+};
+
+/**
+ *
+ * @param schema
+ * @returns {*}
+ */
+export const getPatternPropertyDefaults = (schema) => {
+    let _o = {};
+
+    if (schema === null || schema === void(0)) {
+        return null;
+    }
+
+    if (schema.hasOwnProperty("patternProperties")) {
+        let _propObj = {};
+        Object.keys(schema.patternProperties).forEach((prop) => {
+            merge(_o, getDefaultsForElement(schema.patternProperties));
+        });
+        merge(_o, _propObj);
+    }
+
+    return  Object.keys(_o).length ? _o : null;
 };
 
 /**

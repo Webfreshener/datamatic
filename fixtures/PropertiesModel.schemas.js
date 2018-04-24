@@ -86,3 +86,43 @@ export const scoresModel = {
     },
     required: ["name", "topScores"],
 };
+
+export const patternModel = {
+    type: "object",
+    properties: {
+        name: {
+            type: "string",
+        },
+    },
+    patternProperties: {
+        "[^name]": {
+            type: "object",
+            properties: {
+                value: {
+                    type: "string",
+                    default: "default value",
+                },
+            },
+        },
+    },
+};
+
+export const nestedPatternModel = {
+    type: "object",
+    properties: {
+        name: {
+            type: "string",
+        },
+        nested: {
+            type: "object",
+            patternProperties: {
+                ".*": {
+                    type: "object",
+                    default: {
+                        value: "default value",
+                    },
+                },
+            },
+        },
+    },
+};

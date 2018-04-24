@@ -1,5 +1,8 @@
 import {RxVO} from "./rxvo"
-import {basicModel, nestedModelDefault} from "../../fixtures/PropertiesModel.schemas";
+import {
+    basicModel, nestedModelDefault,
+    patternModel, nestedPatternModel
+} from "../../fixtures/PropertiesModel.schemas";
 
 describe("RxVO Instance Test", () => {
     let _rxvo;
@@ -23,11 +26,6 @@ describe("RxVO Instance Test", () => {
     it("should get default values for path", () => {
         let _rxvo = new RxVO(nestedModelDefault);
         expect(_rxvo.getDefaultsForPath("")).toEqual({aObject: {bObject: {bValue: 123}}});
-    });
-
-    it("should get default values for nested path", () => {
-        let _rxvo = new RxVO(nestedModelDefault);
-        expect(_rxvo.getDefaultsForPath("aObject")).toEqual({bObject: {bValue: 123}});
     });
 
     it("expects RxVO Instances to create a valid RxVO Document", () => {

@@ -1,7 +1,11 @@
 import {
     _object, _schemaHelpers, _oBuilders,
 } from "./_references";
-import {makeClean, makeDirty, refAtKeyValidation, refValidation} from "./utils";
+import {
+    makeClean, makeDirty,
+    refAtKeyValidation, refValidation,
+    getPatternPropertyDefaults
+} from "./utils";
 import {SchemaHelpers} from "./_schemaHelpers";
 import {Model} from "./model";
 import Notifiers from "./_branchNotifier";
@@ -115,6 +119,14 @@ export class PropertiesModel extends Model {
     }
 
     /**
+     * Getter for patternDefaults for this Model
+     * @returns {object|null}
+     */
+    get patternDefaults() {
+        return getPatternPropertyDefaults(this.rxvo.getSchemaForPath(this.path));
+    }
+
+    /**
      * getter for object model
      */
     get model() {
@@ -130,6 +142,20 @@ export class PropertiesModel extends Model {
         // or if this node is locked or fails validation
         if ((typeof value) !== "object" || this.isFrozen) {
             return false;
+        }
+
+        const _rxDefaults = this.patternDefaults;
+        if (_rxDefaults !== null) {
+            let propObj = {};
+            Object.keys(_rxDefaults).forEach((key) => {
+                let _rx = new RegExp(key);
+                Object.keys(value).forEach((vKey) => {
+                    if (_rx.exec(vKey) !== null) {
+                        propObj[vKey] = _rxDefaults[key];
+                    }
+                });
+            });
+            value = merge(propObj, value);
         }
 
         // ensures defaults (if any) are applied to model value

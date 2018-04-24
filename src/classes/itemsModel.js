@@ -70,7 +70,6 @@ export class ItemsModel extends Model {
 
         } catch (e) {
             makeClean(this);
-            console.log(e);
             (Notifiers.get(this.rxvo).sendError.bind(this))(this.jsonPath, e);
             return false;
         }

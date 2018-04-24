@@ -340,7 +340,7 @@ export class Model {
      * @returns {*}
      */
     get schema() {
-        return this; // _validators.get(this.rxvo).$ajv.compile({$model: this.validationPath});
+        return this.rxvo.getSchemaForPath(this.path); // _validators.get(this.rxvo).$ajv.compile({$model: this.validationPath});
     }
 
     /**
