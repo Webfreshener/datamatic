@@ -51,9 +51,7 @@ obj.subscribe({
     next: function (ref) {
         console.log("\t>> update succeeded!\n\t%s\n\t%s\n\n",
             "current object state:", "" + JSON.stringify(ref));
-        setTimeout(() => {
-            doTask.next();
-        }, 0);
+        doTask.next();
 
     },
     complete: function (ref) {
@@ -99,7 +97,7 @@ const tasks = [() => {
     console.log("\x1b[4m%s\x1b[0m\n", "Test validation example:");
 
     // allows validate validation without effecting model state
-    var result = obj.model.topScores.$ref.validate([{
+    var result = obj.model.topScores.$model.validate([{
         name: "Player 4",
         score: 12300000,
     }, {
@@ -114,7 +112,7 @@ const tasks = [() => {
 
     // this will fail because it's missing
     // the NAME property which is required
-    result = obj.model.$ref.validate({
+    result = obj.model.$model.validate({
         topScores: [{
             name: "Player 1",
             score: 12300000,
@@ -132,10 +130,10 @@ const tasks = [() => {
     console.log("\x1b[4m%s\x1b[0m\n", "Model freeze example:");
 
     // allows entire model hierarchy to be frozen
-    obj.model.$ref.freeze();
+    obj.model.$model.freeze();
 
     // can validate model's frozen status
-    console.log("\tmodel is frozen:", obj.model.$ref.isFrozen);
+    console.log("\tmodel is frozen:", obj.model.$model.isFrozen);
 
     // can no longer update the score with valid data
     console.log("\tscore before increment:", obj.model.topScores[0].score);
@@ -155,7 +153,7 @@ const doTask = ((tasks) => {
     let nIdx = 0;
 
     return {
-        next: function() {
+        next: function () {
             return nIdx < tasks.length ?
                 {value: tasks[nIdx++](), done: false} :
                 {done: true};

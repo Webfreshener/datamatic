@@ -75,8 +75,10 @@ export class ItemsModel extends Model {
         }
 
         makeClean(this);
-        Notifiers.get(this.rxvo).sendNext(this.jsonPath);
-        _observerDelegates.delete(this);
+        if (!this.isDirty) {
+            Notifiers.get(this.rxvo).sendNext(this.jsonPath);
+            _observerDelegates.delete(this);
+        }
 
         return true;
     }
@@ -141,7 +143,7 @@ export class ItemsModel extends Model {
                 if (_oDel !== void(0)) {
                     makeClean(this);
                     // updates observers
-                    Notifiers.get(this.rxvo).sendNext(this.jsonPath);
+                    // Notifiers.get(this.rxvo).sendNext(this.jsonPath);
                 }
 
                 return true;

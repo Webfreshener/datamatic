@@ -75,8 +75,6 @@ describe("RXJS Test Suite", () => {
                         done()
                     },
                     error: (e) => {
-                        // console.log(`e: ${JSON.stringify(_rxvo1.errors)}`);
-                        // _sub.unsubscribe();
                         done(JSON.stringify(e));
                     }
                 });

@@ -1,5 +1,5 @@
 import {
-    _object, _schemaHelpers, _oBuilders,
+    _object, _schemaHelpers,
 } from "./_references";
 import {
     makeClean, makeDirty,
@@ -45,10 +45,10 @@ export class PropertiesModel extends Model {
                 // creates mock of future model state for evaluation
                 let _o = Object.assign({}, this.model);
                 delete _o[key];
-                const _res = this.validate(_o)
+                const _res = this.validate(_o);
                 // validates model with value removed
                 if (_res !== true) {
-                    _oBuilders.get(this.rxvo).error(this, _res);
+                    Notifiers.get(_self.rxvo).sendError(_self.jsonPath, _res);
                     return false;
                 }
 
@@ -143,7 +143,7 @@ export class PropertiesModel extends Model {
         // marks model as in sync with tree
         makeClean(this);
 
-        // calls next's observable to update subscribers
+        // // calls next's observable to update subscribers
         if (!this.isDirty) {
             Notifiers.get(this.rxvo).sendNext(this.jsonPath);
         }
@@ -199,7 +199,7 @@ const handleObjectKey = (model, key) => {
     const e = _sH.setObject(key);
     if (typeof e === "string") {
         makeClean(model);
-        _oBuilders.get(model.rxvo).error(model, e);
+        Notifiers.get(model.rxvo).sendError(model.jsonPath, e);
         return false;
     }
 
@@ -221,7 +221,7 @@ const createModelChild = (model, key, value) => {
         // marks model as clean
         makeClean(model);
         // sends notifications
-        _oBuilders.get(model.rxvo).error(model, value);
+        Notifiers.get(model.rxvo).sendError(model.jsonPath, value);
         return false;
     }
     return value;
@@ -236,8 +236,6 @@ const createModelChild = (model, key, value) => {
  * @returns {boolean}
  */
 const setHandler = (model, t, key, value) => {
-    let _sH = _schemaHelpers.get(model);
-
     if (key in Object.prototype) {
         // do nothing against proto props
         return true;
@@ -255,7 +253,7 @@ const setHandler = (model, t, key, value) => {
         // attempts validation of value update
         if (refValidation(model, _o) !== true) {
             makeClean(model);
-            _oBuilders.get(model.rxvo).error(model, model.rxvo.errors);
+            Notifiers.get(model.rxvo).sendError(model.jsonPath, model.rxvo.errors);
             return false;
         }
     }
@@ -274,4 +272,4 @@ const setHandler = (model, t, key, value) => {
     // performs the operation on Model
     t[key] = value;
     return true;
-}
+};
