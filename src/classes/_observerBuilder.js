@@ -56,6 +56,10 @@ export class ObserverBuilder {
      * @param target {Model}
      */
     next(target) {
+        if (!target || target.isDirty) {
+            return;
+        }
+
         let _o = this.get(target);
         if (_o !== null) {
             _o.onNext.next(target);

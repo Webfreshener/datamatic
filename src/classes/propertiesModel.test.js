@@ -85,16 +85,17 @@ describe("PropertiesModel Class Suite", function () {
     });
 
     describe("Nested PropertiesModel Tests", () => {
+        let _rxvo;
         beforeEach(() => {
-            this.rxvo = new RxVO(nestedModel);
+            _rxvo = new RxVO(nestedModel)
         });
 
         describe("LifeCycle: Instantiation", () => {
             it("should initialize a valid schema and a schema object", () => {
-                expect(this.rxvo.model.$model).toBeDefined();
-                expect(this.rxvo.model.$model instanceof PropertiesModel).toBe(true);
-                expect(this.rxvo.model.$model).toBeDefined();
-                expect(this.rxvo.model.$model instanceof PropertiesModel).toBe(true);
+                expect(_rxvo.model.$model).toBeDefined();
+                expect(_rxvo.model.$model instanceof PropertiesModel).toBe(true);
+                expect(_rxvo.model.$model).toBeDefined();
+                expect(_rxvo.model.$model instanceof PropertiesModel).toBe(true);
             });
         });
 
@@ -111,10 +112,10 @@ describe("PropertiesModel Class Suite", function () {
                     },
                 };
 
-                this.rxvo.model = _d;
-                expect(deepEqual(this.rxvo.model, _d)).toBe(true);
-                expect(this.rxvo.model.aObject.bObject.$model).toBeDefined();
-                expect(this.rxvo.model.aObject.bObject.$model instanceof PropertiesModel).toBe(true)
+                _rxvo.model = _d;
+                expect(deepEqual(_rxvo.model, _d)).toBe(true);
+                expect(_rxvo.model.aObject.bObject.$model).toBeDefined();
+                expect(_rxvo.model.aObject.bObject.$model instanceof PropertiesModel).toBe(true)
             });
 
             it("should reject invalid data and leave model pristine", () => {
@@ -126,8 +127,8 @@ describe("PropertiesModel Class Suite", function () {
                     },
                 };
 
-                this.rxvo.model = _d;
-                expect(deepEqual(this.rxvo.model, {})).toBe(true);
+                _rxvo.model = _d;
+                expect(deepEqual(_rxvo.model, {})).toBe(true);
             });
         });
 
@@ -144,15 +145,15 @@ describe("PropertiesModel Class Suite", function () {
                     },
                 };
 
-                this.rxvo.model = _d;
+                _rxvo.model = _d;
 
                 _d = {
                     bValue: 4321,
                 };
 
-                this.rxvo.model.aObject.bObject = _d;
-                expect(this.rxvo.errors).toBe(null);
-                expect(deepEqual(this.rxvo.model.aObject.bObject, _d)).toBe(true);
+                _rxvo.model.aObject.bObject = _d;
+                expect(_rxvo.errors).toBe(null);
+                expect(deepEqual(_rxvo.model.aObject.bObject, _d)).toBe(true);
             });
         });
 
@@ -170,19 +171,19 @@ describe("PropertiesModel Class Suite", function () {
             };
 
             it("should allow deletion of nested properties that are not required", () => {
-                this.rxvo.model = _d;
-                expect(this.rxvo.model.extraObject.someValue).toBe("test");
-                delete this.rxvo.model.extraObject.someValue;
-                expect(this.rxvo.errors).toBe(null);
-                expect(this.rxvo.model.extraObject.someValue).toBe(void(0));
+                _rxvo.model = _d;
+                expect(_rxvo.model.extraObject.someValue).toBe("test");
+                delete _rxvo.model.extraObject.someValue;
+                expect(_rxvo.errors).toBe(null);
+                expect(_rxvo.model.extraObject.someValue).toBe(void(0));
             });
 
             it("should prevent deletion of nested properties that are required", () => {
-                this.rxvo.model = _d;
-                expect(this.rxvo.model.aObject.bObject.bValue).toBe(1234);
-                delete this.rxvo.model.aObject.bObject.bValue;
-                expect(typeof this.rxvo.errors).toBe("object");
-                expect(this.rxvo.model.aObject.bObject.bValue).toBe(1234);
+                _rxvo.model = _d;
+                expect(_rxvo.model.aObject.bObject.bValue).toBe(1234);
+                delete _rxvo.model.aObject.bObject.bValue;
+                expect(typeof _rxvo.errors).toBe("object");
+                expect(_rxvo.model.aObject.bObject.bValue).toBe(1234);
             });
         });
     });

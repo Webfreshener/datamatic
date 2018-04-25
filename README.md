@@ -36,7 +36,13 @@ This utility is not meant for general purpose use. It leverages several technolo
 
 #### Install
 ```
-$ npm i -s rxvo
+# this package is not yet published
+# for now use git+https and manually add to package.json
+dependencies: {
+...
+"rxvo": "git+https://github.com/webfreshener/RxVO.git",
+...
+}
 ```
 
 #### Basic Usage ####
