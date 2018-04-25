@@ -51,7 +51,10 @@ obj.subscribe({
     next: function (ref) {
         console.log("\t>> update succeeded!\n\t%s\n\t%s\n\n",
             "current object state:", "" + JSON.stringify(ref));
-        doTask.next()
+        setTimeout(() => {
+            doTask.next();
+        }, 0);
+
     },
     complete: function (ref) {
         console.log("\t>> %s",

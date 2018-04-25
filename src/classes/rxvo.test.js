@@ -11,7 +11,7 @@ describe("RxVO Instance Test", () => {
         _rxvo = new RxVO(basicModel);
     });
 
-    it("expects a valid RxVO instance",() => {
+    it("expects a valid RxVO instance", () => {
         expect(_rxvo instanceof RxVO).toBe(true);
     });
 
@@ -34,5 +34,19 @@ describe("RxVO Instance Test", () => {
         };
 
         expect(`${_rxvo.model.name}`).toEqual("test");
+    });
+
+    it("runs schema validator", () => {
+        const _rxvo = new RxVO({
+            properties:
+                {
+                    id: {type: 'integer'},
+                    name: {type: 'string'},
+                    value: {type: 'integer'},
+                    createdOn: {type: 'string'}
+                },
+        });
+
+        expect(_rxvo.errors).toBe(null);
     });
 });
