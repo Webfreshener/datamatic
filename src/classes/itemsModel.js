@@ -94,43 +94,9 @@ export class ItemsModel extends Model {
                 }
 
                 if (idx in Array.prototype) {
-                    const _self = this;
                     // only handle methods that modify the reference array
                     if (["fill", "pop", "push", "shift", "splice", "unshift"].indexOf(idx) > -1) {
-                        // returns closure analog to referenced method
-                        return (...args) => {
-                            // mocks current model state
-                            const _arr = [].concat(t);
-
-                            // applies method to model state
-                            const _val = t[idx].apply(_arr, args);
-
-                            // validates updated mock
-                            const _res = refValidation(_self, _arr);
-
-                            // in event of validation failure
-                            if (_res !== true) {
-                                // .. marks model as clean
-                                makeClean(_self);
-
-                                // .. sends notifications
-                                Notifiers.get(this.rxvo).sendError(_self.jsonPath,
-                                    _self.rxvo.errors);
-
-                                return false;
-                            }
-
-                            // this is a kludge to handle updates from proto methods
-                            if (this.parent !== null) {
-                                // applies change to parent object if this is not root context
-                                this.parent.model[this.jsonPath.split(".").pop()] = _arr;
-                            } else {
-                                // applies change to RxVO instance
-                                this.rxvo.model = _arr;
-                            }
-
-                            return _val;
-                        }
+                        return applyMethod(this, t, idx);
                     } else {
                         return t[idx];
                     }
@@ -182,45 +148,101 @@ export class ItemsModel extends Model {
             },
 
             deleteProperty: (t, idx) => {
-                let _oDel = _observerDelegates.get(this);
-                // creates mock of future Model state for evaluation
-                let _o = [].concat(t);
-                try {
-                    // attempts splice method to
-                    // remove item at given index index
-                    _o.splice(idx, 1);
-                } catch (e) {
-                    if (!_oDel) {
-                        makeClean(this);
-                        Notifiers.get(this.rxvo).sendError(this.jsonPath, e);
-                    }
-                    return false;
-                }
-
-                // validates mock of change state
-                const _res = refValidation(this, _o);
-
-
-                if (_res !== true) {
-                    // makes clean and notifies
-                    // if not serial operation
-                    if (!_oDel) {
-                        makeClean(this);
-                        Notifiers.get(this.rxvo).sendError(this.jsonPath, _res);
-                    }
-                    return false;
-                }
-
-                // applies operation
-                t.splice(idx, 1);
-
-                // flags model as in sync with tree
-                makeClean(this);
-
-                // updates observers
-                Notifiers.get(this.rxvo).sendNext(this.jsonPath);
-                return true;
+                return deleteTrap(this, t, idx);
             }
         });
     }
 }
+
+/**
+ * Handles Proxy Delete Trap for Array elements
+ * @param model
+ * @param t
+ * @param idx
+ * @returns {boolean}
+ */
+const deleteTrap = (model, t, idx) => {
+    let _oDel = _observerDelegates.get(model);
+    // creates mock of future Model state for evaluation
+    let _o = [].concat(t);
+    try {
+        // attempts splice method to
+        // remove item at given index index
+        _o.splice(idx, 1);
+    } catch (e) {
+        if (!_oDel) {
+            makeClean(model);
+            Notifiers.get(model.rxvo).sendError(model.jsonPath, e);
+        }
+        return false;
+    }
+
+    // validates mock of change state
+    const _res = refValidation(model, _o);
+
+
+    if (_res !== true) {
+        // makes clean and notifies
+        // if not serial operation
+        if (!_oDel) {
+            makeClean(model);
+            Notifiers.get(model.rxvo).sendError(model.jsonPath, _res);
+        }
+        return false;
+    }
+
+    // applies operation
+    t.splice(idx, 1);
+
+    // flags model as in sync with tree
+    makeClean(model);
+
+    // updates observers
+    Notifiers.get(model.rxvo).sendNext(model.jsonPath);
+    return true;
+};
+
+/**
+ * Handles proxy get for Array proto methods
+ * @param model
+ * @param t
+ * @param idx
+ * @returns {function(...[*]=)}
+ */
+const applyMethod = (model, t, idx) => {
+
+    // returns closure analog to referenced method
+    return (...args) => {
+        // mocks current model state
+        const _arr = [].concat(t);
+
+        // applies method to model state
+        const _val = t[idx].apply(_arr, args);
+
+        // validates updated mock
+        const _res = refValidation(model, _arr);
+
+        // in event of validation failure
+        if (_res !== true) {
+            // .. marks model as clean
+            makeClean(model);
+
+            // .. sends notifications
+            Notifiers.get(model.rxvo).sendError(model.jsonPath,
+                model.rxvo.errors);
+
+            return false;
+        }
+
+        // model is a kludge to handle updates from proto methods
+        if (model.parent !== null) {
+            // applies change to parent object if model is not root context
+            model.parent.model[model.jsonPath.split(".").pop()] = _arr;
+        } else {
+            // applies change to RxVO instance
+            model.rxvo.model = _arr;
+        }
+
+        return _val;
+    }
+};
