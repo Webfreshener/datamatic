@@ -39,56 +39,7 @@ export class PropertiesModel extends Model {
                 return key === "$model" ? this : t[key];
             },
             set: (t, key, value) => {
-                let _sH = _schemaHelpers.get(this);
-
-                if (key in Object.prototype) {
-                    // do nothing against proto props
-                    return true;
-                }
-
-                // -- ensures we aren't in a frozen hierarchy branch
-                if (this.isFrozen) {
-                    return false;
-                }
-
-                // checks for branch update status
-                if (!this.isDirty) {
-                    let _o = Object.assign({}, t);
-                    _o[key] = value;
-                    // attempts validation of value update
-                    if (refValidation(this, _o) !== true) {
-                        makeClean(this);
-                        _oBuilders.get(this.rxvo).error(_self, this.rxvo.errors);
-                        return false;
-                    }
-                }
-
-                // if key is type 'object', we will set directly
-                if (typeof key === "object") {
-                    const e = _sH.setObject(key);
-                    if (typeof e === "string") {
-                        makeClean(this);
-                        _oBuilders.get(this.rxvo).error(_self, e);
-                        return false;
-                    }
-                    return true;
-                }
-                // calls validate with either full path if in PropertiesModel or key if nested in ItemsModel
-                if ((typeof value) === "object") {
-                    value = _sH.setChildObject(key, value);
-                    if ((typeof value) === "string") {
-                        // marks model as clean
-                        makeClean(this);
-
-                        // sends notifications
-                        _oBuilders.get(this.rxvo).error(_self, value);
-                        return false;
-                    }
-                }
-
-                // performs the operation on Model
-                t[key] = value;
-                return true;
+                return setHandler(this, t, key, value);
             },
             deleteProperty: (t, key) => {
                 // creates mock of future model state for evaluation
@@ -235,4 +186,92 @@ export class PropertiesModel extends Model {
 
         return this;
     }
+}
+
+/**
+ * Negotiates Key values that are Objects
+ * @param model
+ * @param key
+ * @returns {boolean}
+ */
+const handleObjectKey = (model, key) => {
+    const _sH = _schemaHelpers.get(model);
+    const e = _sH.setObject(key);
+    if (typeof e === "string") {
+        makeClean(model);
+        _oBuilders.get(model.rxvo).error(model, e);
+        return false;
+    }
+
+    return true;
+};
+
+/**
+ * Creates Model Child to set up Proxy Object
+ * @param model
+ * @param key
+ * @param value
+ * @returns {*}
+ */
+const createModelChild = (model, key, value) => {
+    const _sH = _schemaHelpers.get(model);
+    // calls validate with either full path if in PropertiesModel or key if nested in ItemsModel
+    value = _sH.setChildObject(key, value);
+    if ((typeof value) === "string") {
+        // marks model as clean
+        makeClean(model);
+        // sends notifications
+        _oBuilders.get(model.rxvo).error(model, value);
+        return false;
+    }
+    return value;
+};
+
+/**
+ * Parameter Set trap for Proxy
+ * @param model
+ * @param t
+ * @param key
+ * @param value
+ * @returns {boolean}
+ */
+const setHandler = (model, t, key, value) => {
+    let _sH = _schemaHelpers.get(model);
+
+    if (key in Object.prototype) {
+        // do nothing against proto props
+        return true;
+    }
+
+    // -- ensures we aren't in a frozen hierarchy branch
+    if (model.isFrozen) {
+        return false;
+    }
+
+    // checks for branch update status
+    if (!model.isDirty) {
+        let _o = Object.assign({}, t);
+        _o[key] = value;
+        // attempts validation of value update
+        if (refValidation(model, _o) !== true) {
+            makeClean(model);
+            _oBuilders.get(model.rxvo).error(model, model.rxvo.errors);
+            return false;
+        }
+    }
+
+    // if key is type 'object', we will set directly
+    if (typeof key === "object") {
+        return handleObjectKey(model, key);
+    }
+
+    if ((typeof value) === "object") {
+        if ((value = createModelChild(model, key, value)) === false) {
+            return false
+        }
+    }
+
+    // performs the operation on Model
+    t[key] = value;
+    return true;
 }
