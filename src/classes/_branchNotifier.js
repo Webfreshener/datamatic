@@ -22,6 +22,10 @@ class ErrorNotification {
             enumerable: true,
         });
     }
+
+    toString() {
+        return `"${this.path}": ${JSON.stringify(this.error)}`;
+    }
 }
 
 /**

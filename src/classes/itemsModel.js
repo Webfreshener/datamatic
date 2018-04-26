@@ -57,7 +57,6 @@ export class ItemsModel extends Model {
             makeDirty(this);
         }
 
-
         _object.set(this, new Proxy(Model.createRef(this, []), this.handler));
         _observerDelegates.set(this, true);
 
