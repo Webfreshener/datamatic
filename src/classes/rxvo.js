@@ -54,8 +54,6 @@ export class RxVO {
         // creates holder for dirty model flags in this scope
         _dirtyModels.set(this, {});
 
-        Notifiers.create(this);
-
         // creates root level document
         const _doc = new (!_useSet ? PropertiesModel : ItemsModel)(this);
 
@@ -64,6 +62,9 @@ export class RxVO {
 
         // sets document to this scope
         _documents.set(this, _doc);
+
+        // creates RxJS Notification Delegate
+        Notifiers.create(this);
     }
 
     /**
