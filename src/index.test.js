@@ -1,6 +1,7 @@
 import {RxVO} from './index';
 import {RxVO as RxVOPackaged} from '../dist/rxvo'
-import {_data, _ns} from "../fixtures/PatternProperties.schemas";
+// import {_data, _ns} from "../fixtures/PatternProperties.schemas";
+
 
 describe("Index", () => {
     describe("Package Validation Tests", () => {
@@ -42,4 +43,6 @@ describe("Index", () => {
     //         // console.log(_rxvo.errors);
     //     });
     // });
+
+
 });

@@ -39,13 +39,13 @@ export class ItemsModel extends Model {
         }
 
         let _idx = 0;
-        value.forEach((itm) => {
-            let _defaults = this.rxvo.getDefaultsForPath(this.jsonPath);
-            if (Object.keys(_defaults).length) {
-                value[_idx] = merge(_defaults, itm);
-            }
-            _idx++;
-        });
+        // value.forEach((itm) => {
+        //     let _defaults = this.rxvo.getDefaultsForPath(this.jsonPath);
+        //     if (Object.keys(_defaults).length) {
+        //         value[_idx] = merge(_defaults, itm);
+        //     }
+        //     _idx++;
+        // });
 
         if (refValidation(this, value) !== true) {
             Notifiers.get(this.rxvo).sendError(this.jsonPath, this.rxvo.errors);
@@ -69,7 +69,7 @@ export class ItemsModel extends Model {
 
         } catch (e) {
             makeClean(this);
-            (Notifiers.get(this.rxvo).sendError.bind(this))(this.jsonPath, e);
+            Notifiers.get(this.rxvo).sendError(this.jsonPath, e);
             return false;
         }
 

@@ -51,7 +51,7 @@ export class AjvWrapper {
     }
 
     /**
-     * helper method to derive path for given model
+     * Helper method to derive path for given model
      * todo: review for removal
      * @param model
      * @return {string}
@@ -61,7 +61,7 @@ export class AjvWrapper {
     }
 
     /**
-     * getter for captive Ajv validator
+     * Getter for captive Ajv validator
      * -- use this for Ajv API Methods
      * @returns {ajv}
      */
@@ -106,7 +106,7 @@ const _ajvOptions = {
     // loadSchema:       undefined, // function(uri: string): Promise {}
     // options to modify validated data:
     // removeAdditional: false,
-    // useDefaults:      true,
+    useDefaults:      true,
     // coerceTypes:      false,
     // asynchronous validation options:
     // transpile:        undefined, // requires ajv-async package

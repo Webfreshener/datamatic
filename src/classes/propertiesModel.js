@@ -95,23 +95,6 @@ export class PropertiesModel extends Model {
             return false;
         }
 
-        const _rxDefaults = this.patternDefaults;
-        if (_rxDefaults !== null) {
-            let propObj = {};
-            Object.keys(_rxDefaults).forEach((key) => {
-                let _rx = new RegExp(key);
-                Object.keys(value).forEach((vKey) => {
-                    if (_rx.exec(vKey) !== null) {
-                        propObj[vKey] = _rxDefaults[key];
-                    }
-                });
-            });
-            value = merge(propObj, value);
-        }
-
-        // ensures defaults (if any) are applied to model value
-        value = merge(this.rxvo.getDefaultsForPath(this.jsonPath), value);
-
         if (refValidation(this, value) !== true) {
             Notifiers.get(this.rxvo).sendError(this.jsonPath, this.rxvo.errors);
             return false;
@@ -135,7 +118,7 @@ export class PropertiesModel extends Model {
                 makeClean(this);
 
                 // sends notifications
-                Notifiers.get(this.rxvo).sendError(this.jsonPath, e);
+                Notifiers.get(this.rxvo).sendError(this.jsonPath, e.message);
                 return false;
             }
         });
