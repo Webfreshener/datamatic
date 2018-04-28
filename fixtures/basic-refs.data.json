@@ -1,0 +1,9 @@
+{
+  "aReference": {
+    "valueA": "A String Value"
+  },
+  "bReference": {
+    "valueB": 1234
+  },
+  "cReference": ["A", "String", "Value"]
+}

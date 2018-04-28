@@ -68,6 +68,24 @@ export class RxVO {
     }
 
     /**
+     * Adds Schema to Validator instance
+     * @param schema
+     * @returns {boolean}
+     */
+    addSchema(schema) {
+        _validators.get(this).$ajv.addSchema(schema);
+        return (_validators.get(this).$ajv.errors === null);
+    }
+
+    /**
+     *
+     * @param id
+     */
+    useSchema(id) {
+        _validators.get(this).$ajv.getSchema(id);
+    }
+
+    /**
      * Getter for root Model
      * @returns {object|array}
      */
