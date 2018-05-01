@@ -2,6 +2,8 @@
  * @private
  */
 import {_ajvRef} from "./_references";
+import {default as JSONSchemaV4} from "../schemas/json-schema-draft-04";
+import {default as JSONSchemaV6} from "../schemas/json-schema-draft-06";
 import {RxVO} from "./rxvo";
 import Ajv from "ajv";
 
@@ -16,7 +18,7 @@ export class AjvWrapper {
      * @param schema
      * @param ajvOptions
      */
-    constructor(rxvo, schema, ajvOptions = {}) {
+    constructor(rxvo, schemas, ajvOptions = {}) {
         // ensures that we are given something that represents a RxVO object
         if ((!rxvo) || !(rxvo instanceof RxVO)) {
             throw "RxVO is required at arguments[0]";
@@ -30,7 +32,7 @@ export class AjvWrapper {
 
         // applies user specified options over our default Ajv Options
         const opts = Object.assign(_ajvOptions, ajvOptions);
-
+        console.log(opts);
         // makes user defined options object accessible for evaluation
         Object.defineProperty(this, "options", {
            get: () => opts,
@@ -38,13 +40,36 @@ export class AjvWrapper {
         });
 
         const _ajv = new Ajv(opts);
+        if (schemas && schemas !== null) {
+            if (schemas.hasOwnProperty("meta")) {
+                if (Array.isArray(schemas.meta)) {
+                    schemas.meta.forEach((meta) => {
+                        _ajv.addMetaSchema(JSONSchemaV4);
+                    });
+                }
+            }
+
+            if (schemas.hasOwnProperty("schema")) {
+                if (Array.isArray(schemas.schema)) {
+                    schemas.schema.forEach((schema) => {
+                        _ajv.addSchema(schema);
+                    });
+                } else {
+                    if ((typeof schemas.schema) === "string") {
+                        _ajv.addSchema(schemas.schema);
+                    }
+                }
+            }
+
+            if (schemas.hasOwnProperty("use")) {
+                this.use = schemas.use
+            } else {
+                this.use = "root"
+            }
+        }
+
         // initializes Ajv instance for this Doc and stores it to WeakMap
         _ajvRef.set(this, _ajv);
-
-        // tests for schema and sets provided schema as the "root" schema
-        if (schema !== void(0)) {
-            _ajv.addSchema(schema, "root");
-        }
 
         // accept no further modifications to this object
         Object.seal(this);
@@ -87,7 +112,7 @@ export class AjvWrapper {
  */
 const _ajvOptions = {
     // // validation and reporting options:
-    $data:            true,
+    // $data:            false,
     // allErrors:        true,
     // verbose:          true,
     // $comment:         false, // NEW in Ajv version 6.0
@@ -100,12 +125,12 @@ const _ajvOptions = {
     // schemas:          {},
     // logger:           undefined,
     // referenced schema options:
-    // schemaId:         '$id',
+    schemaId:         'auto',
     // missingRefs:      true,
     // extendRefs:       'fail', // default 'ignore'
     // loadSchema:       undefined, // function(uri: string): Promise {}
     // options to modify validated data:
-    // removeAdditional: false,
+    removeAdditional: true,
     useDefaults:      true,
     // coerceTypes:      false,
     // asynchronous validation options:
