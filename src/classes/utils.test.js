@@ -27,7 +27,7 @@ describe("Utils tests", () => {
         });
 
         describe("nested PropertiesModel dirtiness", () => {
-            const _rxvo = new RxVO(nestedModel);
+            const _rxvo = new RxVO({schemas: [nestedModel]});
             _rxvo.model = {
                 aObject: {
                     bObject: {
@@ -50,7 +50,7 @@ describe("Utils tests", () => {
 
     describe("Validation Methods", () => {
         describe("refValidation tests", () => {
-            const _rxvo = new RxVO(basicModel);
+            const _rxvo = new RxVO({schemas: [basicModel]});
 
             it("should pass validation against refValidation", () => {
                 const _res = refValidation(_rxvo.model.$model,
@@ -66,7 +66,7 @@ describe("Utils tests", () => {
         });
 
         describe("refAtKeyValidation tests", () => {
-            const _rxvo = new RxVO(nestedModel);
+            const _rxvo = new RxVO({schemas: [nestedModel]});
             const _data = {
                 aObject: {
                     bObject: {
@@ -90,7 +90,7 @@ describe("Utils tests", () => {
         });
 
         describe("validate method", () => {
-            const _rxvo = new RxVO(basicModel);
+            const _rxvo = new RxVO({schemas: [basicModel]});
             const _data = {name: "test", age: 99, active: true};
             it("should pass validation against refValidation", () => {
                 const _res = validate(_rxvo.model.$model, "", _data);

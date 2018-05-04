@@ -17,7 +17,7 @@ describe("RXJS Test Suite", () => {
             // });
 
             it("should have some tests", (done) => {
-                const _rxvo = new RxVO(basicModel);
+                const _rxvo = new RxVO({schemas: [basicModel]});
                 const _d = {
                     name: "A Name",
                     age: 99,

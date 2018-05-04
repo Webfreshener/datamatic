@@ -12,7 +12,7 @@ describe("RxVO Instance Test", () => {
     let _rxvo;
 
     beforeEach(() => {
-        _rxvo = new RxVO(basicModel);
+        _rxvo = new RxVO({schemas: [basicModel]});
     });
 
     it("expects a valid RxVO instance", () => {
@@ -54,14 +54,12 @@ describe("RxVO Instance Test", () => {
         expect(_rxvo.errors).toBe(null);
     });
 
-    describe.only("Mixed schemas", () => {
+    describe("Mixed schemas", () => {
         it("should allow mixed schemas to be selected and used", () => {
-            const _rxvo = new RxVO(null, {ajvOptions: {schemas: [jsonSchema, OpenAPIv2]}});
-            // _rxvo.useSchema("hello");
+            const _rxvo = new RxVO({schemas: [basicRefs]});
             _rxvo.model = refsData;
             _rxvo.model.aReference.valueA = 1234;
-            console.log(_rxvo.model);
-            expect(_rxvo.errors).toBe(null);
+            expect(_rxvo.errors === null).toBe(false);
             expect(_rxvo.model).toEqual(refsData);
         });
     });

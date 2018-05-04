@@ -106,7 +106,29 @@ export class RxVO {
      * @return {any}
      */
     get schema() {
-        return _schemaSignatures.get(this);
+        const _id = _validators.get(this).path;
+        return this.getSchemaForKey(_id);
+    }
+
+    getSchemaForKey(id) {
+        let _schema;
+        const _schemas = _schemaSignatures.get(this);
+        console.log(`id: ${id}`);
+        _schemas.schemas.some((schema) => {
+            if (schema.hasOwnProperty("$id")) {
+                if (schema.$id === id) {
+                    _schema = schema;
+                    return true;
+                }
+            } else if (schema.hasOwnProperty("id")) {
+                if (schema.id === id) {
+                    _schema = schema;
+                    return true;
+                }
+            }
+            return false;
+        });
+        return _schema;
     }
 
     /**
@@ -115,7 +137,18 @@ export class RxVO {
      * @returns {any}
      */
     getSchemaForPath(path) {
-        return walkObject(path, this.schema);
+        let _id;
+        if (path.indexOf("#") > -1) {
+            const _sp = path.split("#");
+            _id = _sp[0];
+            path = _sp[1];
+        } else {
+            _id = _validators.get(this).path;
+        }
+
+        const _schema = this.getSchemaForKey(_id);
+
+        return walkObject(path, _schema);
     }
 
     /**

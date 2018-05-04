@@ -15,7 +15,7 @@ describe("SchemaHelpers Class Tests", () => {
 
     describe("Child Object Methods", () => {
         beforeEach(() => {
-            _rxvo = new RxVO(basicModel);
+            _rxvo = new RxVO({schemas: [basicModel]});
             _schema = new PropertiesModel(_rxvo);
             _sH = new SchemaHelpers(_schema);
         });

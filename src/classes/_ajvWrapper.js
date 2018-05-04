@@ -2,10 +2,75 @@
  * @private
  */
 import {_ajvRef} from "./_references";
-import {default as JSONSchemaV4} from "../schemas/json-schema-draft-04";
-import {default as JSONSchemaV6} from "../schemas/json-schema-draft-06";
 import {RxVO} from "./rxvo";
 import Ajv from "ajv";
+
+const _validators = new WeakMap();
+
+/**
+ *
+ * @param schema
+ * @returns {string}
+ */
+const getSchemaID = (schema) => {
+    const id = ["$id", "id"].filter((id) => schema.hasOwnProperty(id));
+    return id.length ? schema[id[0]] : "root#";
+};
+
+/**
+ *
+ * @param {ajv.Ajv} _ajv
+ * @param {AjvWrapper} inst
+ * @param {object} schema
+ * @returns {string}
+ */
+const createValidatorRef = (_ajv, inst, schema) => {
+    const id = ["$id", "id"].filter((id) => schema.hasOwnProperty(id));
+    let _schemaID;
+    if (id) {
+        _schemaID = schema[id[0]];
+        _validators.get(inst)[_schemaID] = _ajv.getSchema(_schemaID);
+    } else {
+        _schemaID = schema["$id"] = "root#";
+    }
+
+    return _schemaID;
+};
+/**
+ *
+ * @param schemas
+ * @param opts
+ * @returns {ajv | ajv.Ajv}
+ */
+const createAjv = (inst, schemas, opts) => {
+    const _ajv = new Ajv(opts);
+    if (schemas && schemas !== null) {
+        if (schemas.hasOwnProperty("meta")) {
+            if (Array.isArray(schemas.meta)) {
+                schemas.meta.forEach((meta) => {
+                    _ajv.addMetaSchema(meta);
+                });
+            }
+        }
+
+        if (schemas.hasOwnProperty("schemas")) {
+            if (Array.isArray(schemas.schemas)) {
+                schemas.schemas.forEach((schema) => {
+                    // console.log(`\n\nschema:\n${JSON.stringify(schema, null, 2)}`);
+                    _ajv.addSchema(schema, getSchemaID(schema));
+                    createValidatorRef(_ajv, inst, schema);
+                });
+            } else {
+                if ((typeof schemas.schemas) === "string") {
+                    _ajv.addSchema(schemas.schemas, getSchemaID(schemas.schemas));
+                    createValidatorRef(_ajv, inst, schema.schemas);
+                }
+            }
+        }
+    }
+
+    return _ajv;
+};
 
 /**
  * Wrapper for Ajv JSON-PropertiesModel Validator
@@ -15,7 +80,7 @@ export class AjvWrapper {
     /**
      * @constructor
      * @param rxvo
-     * @param schema
+     * @param schemas
      * @param ajvOptions
      */
     constructor(rxvo, schemas, ajvOptions = {}) {
@@ -23,6 +88,12 @@ export class AjvWrapper {
         if ((!rxvo) || !(rxvo instanceof RxVO)) {
             throw "RxVO is required at arguments[0]";
         }
+
+        if (_validators.get(this) === void(0)) {
+            _validators.set(this, {});
+        }
+
+        this.path = "";
 
         // defines getter for parent RxVO reference
         Object.defineProperty(this, "$rxvo", {
@@ -32,44 +103,28 @@ export class AjvWrapper {
 
         // applies user specified options over our default Ajv Options
         const opts = Object.assign(_ajvOptions, ajvOptions);
-        console.log(opts);
+
         // makes user defined options object accessible for evaluation
         Object.defineProperty(this, "options", {
-           get: () => opts,
-           enumerable: true,
+            get: () => opts,
+            enumerable: true,
         });
 
-        const _ajv = new Ajv(opts);
-        if (schemas && schemas !== null) {
-            if (schemas.hasOwnProperty("meta")) {
-                if (Array.isArray(schemas.meta)) {
-                    schemas.meta.forEach((meta) => {
-                        _ajv.addMetaSchema(JSONSchemaV4);
-                    });
-                }
-            }
-
-            if (schemas.hasOwnProperty("schema")) {
-                if (Array.isArray(schemas.schema)) {
-                    schemas.schema.forEach((schema) => {
-                        _ajv.addSchema(schema);
-                    });
-                } else {
-                    if ((typeof schemas.schema) === "string") {
-                        _ajv.addSchema(schemas.schema);
-                    }
-                }
-            }
-
-            if (schemas.hasOwnProperty("use")) {
-                this.use = schemas.use
-            } else {
-                this.use = "root"
-            }
-        }
-
+        const _ajv = createAjv(this, schemas, opts);
         // initializes Ajv instance for this Doc and stores it to WeakMap
         _ajvRef.set(this, _ajv);
+
+        let _use = "root#";
+
+        if (schemas.hasOwnProperty("use")) {
+            _use = schemas.use;
+        }
+
+        const _v = _validators.get(this);
+        this.path = _use;
+        if (_v.hasOwnProperty(_use)) {
+            this.use = _v[_use];
+        }
 
         // accept no further modifications to this object
         Object.seal(this);
@@ -96,10 +151,16 @@ export class AjvWrapper {
 
     /**
      * Executes validator at PropertiesModel $model `path` against `value`
-     * @param path
-     * @param value
+     * @param {string} path
+     * @param {boolean} value
      */
     exec(path, value) {
+        // appends id ref to path
+        if (path.indexOf("#") < 0) {
+            path = `${this.path}${path}`.replace("//", "/");
+        }
+        // console.log(path);
+        // console.log(value);
         return this.$ajv.validate(path, value);
     }
 }
@@ -116,7 +177,7 @@ const _ajvOptions = {
     // allErrors:        true,
     // verbose:          true,
     // $comment:         false, // NEW in Ajv version 6.0
-    jsonPointers:     true,
+    jsonPointers: true,
     // uniqueItems:      true,
     // unicode:          true,
     // format:           'fast',
@@ -125,13 +186,13 @@ const _ajvOptions = {
     // schemas:          {},
     // logger:           undefined,
     // referenced schema options:
-    schemaId:         'auto',
+    schemaId: 'auto',
     // missingRefs:      true,
     // extendRefs:       'fail', // default 'ignore'
     // loadSchema:       undefined, // function(uri: string): Promise {}
     // options to modify validated data:
     removeAdditional: true,
-    useDefaults:      true,
+    useDefaults: true,
     // coerceTypes:      false,
     // asynchronous validation options:
     // transpile:        undefined, // requires ajv-async package
