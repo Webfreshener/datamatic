@@ -54,17 +54,27 @@ const createAjv = (inst, schemas, opts) => {
         }
 
         if (schemas.hasOwnProperty("schemas")) {
+            let schemaID;
             if (Array.isArray(schemas.schemas)) {
                 schemas.schemas.forEach((schema) => {
+                    schemaID = getSchemaID(schema);
                     // console.log(`\n\nschema:\n${JSON.stringify(schema, null, 2)}`);
-                    _ajv.addSchema(schema, getSchemaID(schema));
+                    _ajv.addSchema(schema, schemaID);
                     createValidatorRef(_ajv, inst, schema);
                 });
+                // sets last id as active schema;
+                _ajv.getSchema(schemaID);
             } else {
                 if ((typeof schemas.schemas) === "string") {
-                    _ajv.addSchema(schemas.schemas, getSchemaID(schemas.schemas));
+                    schemaID = getSchemaID(schema);
+                    _ajv.addSchema(schemas.schemas, schemaID);
                     createValidatorRef(_ajv, inst, schema.schemas);
+                    _ajv.getSchema(schemaID);
                 }
+            }
+
+            if (schemaID) {
+               inst.path = schemaID;
             }
         }
     }
@@ -93,8 +103,6 @@ export class AjvWrapper {
             _validators.set(this, {});
         }
 
-        this.path = "";
-
         // defines getter for parent RxVO reference
         Object.defineProperty(this, "$rxvo", {
             get: () => rxvo,
@@ -110,21 +118,10 @@ export class AjvWrapper {
             enumerable: true,
         });
 
+        this.path = "root#";
         const _ajv = createAjv(this, schemas, opts);
         // initializes Ajv instance for this Doc and stores it to WeakMap
         _ajvRef.set(this, _ajv);
-
-        let _use = "root#";
-
-        if (schemas.hasOwnProperty("use")) {
-            _use = schemas.use;
-        }
-
-        const _v = _validators.get(this);
-        this.path = _use;
-        if (_v.hasOwnProperty(_use)) {
-            this.use = _v[_use];
-        }
 
         // accept no further modifications to this object
         Object.seal(this);
@@ -157,10 +154,8 @@ export class AjvWrapper {
     exec(path, value) {
         // appends id ref to path
         if (path.indexOf("#") < 0) {
-            path = `${this.path}${path}`.replace("//", "/");
+            path = `${this.path}${path}`;
         }
-        // console.log(path);
-        // console.log(value);
         return this.$ajv.validate(path, value);
     }
 }
@@ -191,7 +186,7 @@ const _ajvOptions = {
     // extendRefs:       'fail', // default 'ignore'
     // loadSchema:       undefined, // function(uri: string): Promise {}
     // options to modify validated data:
-    removeAdditional: true,
+    // removeAdditional: true,
     useDefaults: true,
     // coerceTypes:      false,
     // asynchronous validation options:
