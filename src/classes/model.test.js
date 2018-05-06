@@ -6,7 +6,7 @@ describe("Model Class Tests", () => {
         let _rxvo;
 
         beforeEach(() => {
-            _rxvo = new RxVO(basicModel);
+            _rxvo = new RxVO({schemas: [basicModel]});
         });
 
         it("should validate models against schema", () => {

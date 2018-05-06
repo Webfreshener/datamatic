@@ -1,4 +1,5 @@
 export const basicModel = {
+    $id: "root#",
     type: "object",
     properties: {
         name: {
@@ -14,6 +15,7 @@ export const basicModel = {
 };
 
 export const nestedModel = {
+    $id: "root#",
     "type": "object",
     "properties": {
         "aObject": {
@@ -36,6 +38,7 @@ export const nestedModel = {
 };
 
 export const nestedModelDefault = {
+    $id: "root#",
     "type": "object",
     "properties": {
         "aObject": {
@@ -60,6 +63,7 @@ export const nestedModelDefault = {
 
 
 export const scoresModel = {
+    $id: "root#",
     "type": "object",
     "properties": {
         "name": {
@@ -88,6 +92,7 @@ export const scoresModel = {
 };
 
 export const patternModel = {
+    $id: "root#",
     type: "object",
     properties: {
         name: {
@@ -108,6 +113,7 @@ export const patternModel = {
 };
 
 export const nestedPatternModel = {
+    $id: "root#",
     type: "object",
     properties: {
         name: {

@@ -11,7 +11,7 @@ describe("PropertiesModel Class Suite", function () {
 
     describe("Simple PropertiesModel Tests", () => {
         beforeEach(() => {
-            this.rxvo = new RxVO(basicModel);
+            this.rxvo = new RxVO({schemas: [basicModel]});
         });
 
         describe("LifeCycle: Instantiation", () => {
@@ -30,7 +30,7 @@ describe("PropertiesModel Class Suite", function () {
                         },
                     },
                 });
-                expect(() => new RxVO(badSchema)).toThrow();
+                expect(() => new RxVO({schemas: [badSchema]})).toThrow();
             });
         });
 
@@ -87,7 +87,7 @@ describe("PropertiesModel Class Suite", function () {
     describe("Nested PropertiesModel Tests", () => {
         let _rxvo;
         beforeEach(() => {
-            _rxvo = new RxVO(nestedModel)
+            _rxvo = new RxVO({schemas: [nestedModel]});
         });
 
         describe("LifeCycle: Instantiation", () => {
@@ -191,7 +191,7 @@ describe("PropertiesModel Class Suite", function () {
     describe("Nested Defaults PropertiesModel Tests", () => {
         let _rxvo;
         beforeEach(() => {
-            _rxvo = new RxVO(nestedModelDefault);
+            _rxvo = new RxVO({schemas: [nestedModelDefault]}, {ajvOptions: {useDefaults: true}});
         });
 
         it("should populate default values", () => {
@@ -203,18 +203,6 @@ describe("PropertiesModel Class Suite", function () {
 
             _rxvo.model = _d;
             expect(_rxvo.model.aObject.bObject.bValue).toBe(123);
-        });
-    });
-
-    describe("PatternProp Defaults Tests", () => {
-        const _rxvo = new RxVO(patternModel);
-
-        it("should populate default values", () => {
-            _rxvo.model = {
-                name: "Object Name",
-                nested: {},
-            };
-            expect(_rxvo.model.nested.value).toBe("default value");
         });
     });
 });

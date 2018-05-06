@@ -4,6 +4,7 @@ import {
 import {RxVO} from "./rxvo";
 import {MetaData} from "./_metaData";
 import {makeClean, makeDirty, validate} from "./utils";
+
 /**
  *
  * @param ref
@@ -43,9 +44,9 @@ const createMetaDataRef = (ref, metaRef) => {
 export class Model {
     constructor() {
         // tests if this is instance of MetaData
-        if (!(this instanceof MetaData)) {
-            createMetaDataRef(this, arguments[0]);
-        }
+        // if (!(this instanceof MetaData)) {
+        createMetaDataRef(this, arguments[0]);
+        // }
     }
 
     /**
@@ -86,7 +87,8 @@ export class Model {
 
         // creates an extensible object to hold our unsubscribe method
         // and adds unsubscribe calls to the Proto object
-        const _subs = class {};
+        const _subs = class {
+        };
 
         // adds unsubscribe to the Proto object
         _subs.prototype.unsubscribe = () => {
@@ -105,7 +107,7 @@ export class Model {
      */
     validate(value) {
         try {
-           return validate(this, this.validationPath, value);
+            return validate(this, this.validationPath, value);
         } catch (e) {
             // couldn't find schema, so is Additional Properties
             // todo: review `removeAdditional` ajv option for related behavior
@@ -283,6 +285,7 @@ export class Model {
     get jsonPath() {
         return this.path.replace(/\/?(properties|items)+\/?/g, ".").replace(/^\./, "");
     }
+
     /**
      * Getter for Model's parent
      * @returns {Model}
@@ -332,7 +335,7 @@ export class Model {
      * @return {string}
      */
     get validationPath() {
-        return this.path === "" ? "root#/" : `root#${this.path}`;
+        return this.path === "" ? "/" : `${this.path}`;
     }
 
     /**

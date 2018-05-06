@@ -1,4 +1,5 @@
 export const stringsCollection = {
+    id: "root#",
     type: "array",
     items: {
         type: "string",
@@ -6,6 +7,7 @@ export const stringsCollection = {
 };
 
 export const stringsMinMaxCollection = {
+    id: "root#",
     type: "array",
     minItems: 1,
     maxItems: 3,
@@ -15,6 +17,7 @@ export const stringsMinMaxCollection = {
 };
 
 export const objectCollection = {
+    id: "root#",
     type: "array",
     items: {
         type: "object",
@@ -31,6 +34,7 @@ export const objectCollection = {
 };
 
 export const objectCollectionDefaults = {
+    id: "root#",
     type: "array",
     items: {
         type: "object",

@@ -11,14 +11,11 @@ describe("ItemsModel Class Suite", function () {
 
     describe("Simple ItemsModel Tests", () => {
         beforeEach(() => {
-            this.rxvo = new RxVO(stringsCollection);
+            this.rxvo = new RxVO({schemas: [stringsCollection]});
         });
 
         describe("LifeCycle: Instantiation", () => {
             it("should initialize a schema and a schema object", () => {
-                expect(this.rxvo.model.$model).toBeDefined();
-                expect(this.rxvo.model.$model instanceof Model).toBe(true);
-                expect(Array.isArray(this.rxvo.model)).toBe(true);
                 expect(this.rxvo.model.$model).toBeDefined();
                 expect(this.rxvo.model.$model instanceof Model).toBe(true);
             });
@@ -27,7 +24,7 @@ describe("ItemsModel Class Suite", function () {
                 let badSchema = Object.assign({}, stringsCollection, {
                     items: [{type: "INVALID"}],
                 });
-                expect(() => new RxVO(badSchema)).toThrow();
+                expect(() => new RxVO({schemas: [badSchema]})).toThrow();
             });
         });
 
@@ -53,7 +50,7 @@ describe("ItemsModel Class Suite", function () {
 
     describe("Nested Elements Tests", () => {
         beforeEach(() => {
-            this.rxvo = new RxVO(objectCollection);
+            this.rxvo = new RxVO({schemas: [objectCollection]});
         });
 
         describe("LifeCycle: Instantiation", () => {
@@ -104,7 +101,7 @@ describe("ItemsModel Class Suite", function () {
 
             let _d;
 
-            it("should updated nested item objects with valid data and pass validation", () => {
+            it("should update nested models with valid data and pass validation", () => {
                 _d = [{
                     name: "Item A",
                     value: 1,
@@ -149,7 +146,7 @@ describe("ItemsModel Class Suite", function () {
 
         describe("LifeCycle: Delete", () => {
             beforeEach(() => {
-                this.rxvo = new RxVO(stringsMinMaxCollection);
+                this.rxvo = new RxVO({schemas: [stringsMinMaxCollection]});
             });
 
             _d = ["Item A", "Item B", "Item C"];
@@ -174,7 +171,7 @@ describe("ItemsModel Class Suite", function () {
 
     describe("Array Prototype method tests", () => {
         beforeEach(() => {
-            this.rxvo = new RxVO(stringsMinMaxCollection);
+            this.rxvo = new RxVO({schemas: [stringsMinMaxCollection]});
             this.rxvo.model = ["Item A", "Item B", "Item C"];
         });
 
@@ -227,7 +224,7 @@ describe("ItemsModel Class Suite", function () {
 
     describe("Default Values", () => {
         it("should apply defaults to items", () => {
-            this.rxvo = new RxVO(objectCollectionDefaults);
+            this.rxvo = new RxVO({schemas: [objectCollectionDefaults]}, {ajvOptions: {useDefaults: true}});
             this.rxvo.model = [{}];
             expect(this.rxvo.model[0]).toEqual({name: "abc"});
         });
@@ -236,7 +233,7 @@ describe("ItemsModel Class Suite", function () {
     describe("Model Class methods ", () => {
 
         it("should not reset if it would invalidate model", () => {
-            const _rxvo = new RxVO(stringsMinMaxCollection);
+            const _rxvo = new RxVO({schemas: [stringsMinMaxCollection]});
             _rxvo.model = ["Item A", "Item B", "Item C"];
             expect(_rxvo.model.length).toBe(3);
             _rxvo.model.$model.reset();
@@ -244,7 +241,7 @@ describe("ItemsModel Class Suite", function () {
         });
 
         it("should reset it's collection if allowed", () => {
-            const _rxvo = new RxVO(stringsCollection);
+            const _rxvo = new RxVO({schemas: [stringsCollection]});
             _rxvo.model = ["Item A", "Item B", "Item C"];
             _rxvo.model = ["Item A", "Item B", "Item C"];
             expect(_rxvo.model.length).toBe(3);
@@ -253,13 +250,13 @@ describe("ItemsModel Class Suite", function () {
         });
 
         it("should quietly validate data with the validate method", () => {
-            const _rxvo = new RxVO(stringsCollection);
+            const _rxvo = new RxVO({schemas: [stringsCollection]});
             expect(_rxvo.model.$model.validate([1, 2, 3])).toBe("data/0 should be string");
             expect(_rxvo.model.$model.validate(["1", "2", "3"])).toBe(true);
         });
 
         it("should freeze it's model", () => {
-            const _rxvo = new RxVO(stringsCollection);
+            const _rxvo = new RxVO({schemas: [stringsCollection]});
             _rxvo.model = ["Item A", "Item B", "Item C"];
             _rxvo.model.$model.freeze();
             expect(_rxvo.model.$model.isFrozen).toBe(true);
@@ -268,7 +265,7 @@ describe("ItemsModel Class Suite", function () {
         });
 
         it("should freeze it's model hierarchy", () => {
-            const _rxvo = new RxVO(objectCollection);
+            const _rxvo = new RxVO({schemas: [objectCollection]});
             const _orig = [{
                 name: "My Name",
                 active: true,
