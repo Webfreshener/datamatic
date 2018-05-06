@@ -4,6 +4,9 @@
 import {_ajvRef} from "./_references";
 import {RxVO} from "./rxvo";
 import Ajv from "ajv";
+import {default as JSONSchemaV4} from "../schemas/json-schema-draft-04";
+import {default as JSONSchemaV6} from "../schemas/json-schema-draft-06";
+import {default as OpenAPIv2} from "../../fixtures/OpenAPIv2";
 
 const _validators = new WeakMap();
 
@@ -58,23 +61,22 @@ const createAjv = (inst, schemas, opts) => {
             if (Array.isArray(schemas.schemas)) {
                 schemas.schemas.forEach((schema) => {
                     schemaID = getSchemaID(schema);
-                    // console.log(`\n\nschema:\n${JSON.stringify(schema, null, 2)}`);
                     _ajv.addSchema(schema, schemaID);
-                    createValidatorRef(_ajv, inst, schema);
+                    // createValidatorRef(_ajv, inst, schema);
                 });
                 // sets last id as active schema;
-                _ajv.getSchema(schemaID);
+                // _ajv.getSchema(schemaID);
             } else {
                 if ((typeof schemas.schemas) === "string") {
-                    schemaID = getSchemaID(schema);
+                    schemaID = getSchemaID(schemas.schema);
                     _ajv.addSchema(schemas.schemas, schemaID);
-                    createValidatorRef(_ajv, inst, schema.schemas);
-                    _ajv.getSchema(schemaID);
+                    // createValidatorRef(_ajv, inst, schema.schemas);
+                    // _ajv.getSchema(schemaID);
                 }
             }
 
             if (schemaID) {
-               inst.path = schemaID;
+                inst.path = schemaID;
             }
         }
     }
@@ -119,7 +121,11 @@ export class AjvWrapper {
         });
 
         this.path = "root#";
-        const _ajv = createAjv(this, schemas, opts);
+        const _ajv = new Ajv(opts);
+        _ajv.addMetaSchema(JSONSchemaV4);
+        _ajv.addMetaSchema(JSONSchemaV6);
+        _ajv.addSchema(OpenAPIv2, "http://swagger.io/v2/schema.json#");
+        this.path = "http://swagger.io/v2/schema.json#";
         // initializes Ajv instance for this Doc and stores it to WeakMap
         _ajvRef.set(this, _ajv);
 
@@ -152,7 +158,7 @@ export class AjvWrapper {
      * @param {boolean} value
      */
     exec(path, value) {
-        // appends id ref to path
+        // // appends id ref to path
         if (path.indexOf("#") < 0) {
             path = `${this.path}${path}`;
         }
@@ -183,11 +189,11 @@ const _ajvOptions = {
     // referenced schema options:
     schemaId: 'auto',
     // missingRefs:      true,
-    // extendRefs:       'fail', // default 'ignore'
+    extendRefs: true, // default 'ignore'
     // loadSchema:       undefined, // function(uri: string): Promise {}
     // options to modify validated data:
     // removeAdditional: true,
-    useDefaults: true,
+    // useDefaults: true,
     // coerceTypes:      false,
     // asynchronous validation options:
     // transpile:        undefined, // requires ajv-async package

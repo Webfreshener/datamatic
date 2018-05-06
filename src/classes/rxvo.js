@@ -16,40 +16,45 @@ const _documents = new WeakMap();
 export class RxVO {
     /**
      * @constructor
-     * @param {json} schema
+     * @param {json} schemas
      * @param {object} options
      */
-    constructor(schema, options = {}) {
+    constructor(schemas, options = {}) {
         // attempts t get user passes Avj options
         let ajvOptions = options.hasOwnProperty("ajvOptions") ?
             options["ajvOptions"] : null;
 
         // defines AjvWrapper instance for this Document and it's Schemas
-        const _ajv = new AjvWrapper(this, schema, ajvOptions);
+        const _ajv = new AjvWrapper(this, schemas, ajvOptions);
 
         // sets AjvWrapper instance on map for use
         _validators.set(this, _ajv);
 
         // throws error if error message returned
-        if (!_ajv.$ajv.validateSchema(schema, false)) {
+        if (!_ajv.$ajv.validateSchema({schemas: schemas.schemas}, false)) {
             throw _ajv.$ajv.errors;
         }
 
-        Object.freeze(schema);
-        _schemaSignatures.set(this, schema);
+        // Object.freeze(schema);
+        _schemaSignatures.set(this, schemas);
         _oBuilders.set(this, new ObserverBuilder());
 
         let _useSet = false;
 
-        // if value of type is "array" or an array of items is defined,
-        // we handle as Array
-        if ((schema.hasOwnProperty("type") && schema["type"] === "array") ||
-            (schema.hasOwnProperty("items") && Array.isArray(schema["items"]))) {
-            _useSet = true;
+        if (schemas.hasOwnProperty("schemas")) {
+            // if value of type is "array" or an array of items is defined,
+            // we handle as Array
+            const schema = schemas.schemas[schemas.schemas.length - 1];
+            if ((schema.hasOwnProperty("type") && schema["type"] === "array") ||
+                (schema.hasOwnProperty("items") && Array.isArray(schema["items"]))) {
+                _useSet = true;
+            }
+        } else {
+            if ((schemas.hasOwnProperty("type") && schemas["type"] === "array") ||
+                (schemas.hasOwnProperty("items") && Array.isArray(schemas["items"]))) {
+                _useSet = true;
+            }
         }
-
-        // stores default values for this model
-        _defaults.set(this, getDefaults(schema));
 
         // creates holder for dirty model flags in this scope
         _dirtyModels.set(this, {});
@@ -149,15 +154,6 @@ export class RxVO {
         const _schema = this.getSchemaForKey(_id);
 
         return walkObject(path, _schema);
-    }
-
-    /**
-     * Retrieves default values from JSON-Schema properties
-     * @param path
-     * @returns {{}&any}
-     */
-    getDefaultsForPath(path = "") {
-        return walkObject(path, _defaults.get(this), ".");
     }
 
     /**

@@ -84,7 +84,6 @@ export class SchemaHelpers {
         let _md = new MetaData(this._ref, _d);
 
         // returns new child Model
-        console.log(`"${this.path}" create child...`);
         return new ((!Array.isArray(value)) ? PropertiesModel : ItemsModel)(_md);
     }
 }

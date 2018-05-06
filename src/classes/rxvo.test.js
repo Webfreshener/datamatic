@@ -27,11 +27,6 @@ describe("RxVO Instance Test", () => {
         expect(_rxvo.getSchemaForPath("properties/name")).toEqual({type: "string"});
     });
 
-    it("should get default values for path", () => {
-        let _rxvo = new RxVO(nestedModelDefault);
-        expect(_rxvo.getDefaultsForPath("")).toEqual({aObject: {bObject: {bValue: 123}}});
-    });
-
     it("expects RxVO Instances to create a valid RxVO Document", () => {
         _rxvo.model = {
             "name": "test",
