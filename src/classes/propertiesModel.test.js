@@ -30,7 +30,7 @@ describe("PropertiesModel Class Suite", function () {
                         },
                     },
                 });
-                expect(() => new RxVO(badSchema)).toThrow();
+                expect(() => new RxVO({schemas: [badSchema]})).toThrow();
             });
         });
 
@@ -191,7 +191,7 @@ describe("PropertiesModel Class Suite", function () {
     describe("Nested Defaults PropertiesModel Tests", () => {
         let _rxvo;
         beforeEach(() => {
-            _rxvo = new RxVO({schemas: [nestedModelDefault]});
+            _rxvo = new RxVO({schemas: [nestedModelDefault]}, {ajvOptions: {useDefaults: true}});
         });
 
         it("should populate default values", () => {
@@ -203,18 +203,6 @@ describe("PropertiesModel Class Suite", function () {
 
             _rxvo.model = _d;
             expect(_rxvo.model.aObject.bObject.bValue).toBe(123);
-        });
-    });
-
-    describe("PatternProp Defaults Tests", () => {
-        const _rxvo = new RxVO({schemas: [patternModel]});
-
-        it("should populate default values", () => {
-            _rxvo.model = {
-                name: "Object Name",
-                nested: {},
-            };
-            expect(_rxvo.model.nested.value).toBe("default value");
         });
     });
 });

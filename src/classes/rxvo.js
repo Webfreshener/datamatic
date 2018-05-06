@@ -118,7 +118,6 @@ export class RxVO {
     getSchemaForKey(id) {
         let _schema;
         const _schemas = _schemaSignatures.get(this);
-        console.log(`id: ${id}`);
         _schemas.schemas.some((schema) => {
             if (schema.hasOwnProperty("$id")) {
                 if (schema.$id === id) {

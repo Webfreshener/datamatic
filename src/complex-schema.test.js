@@ -23,7 +23,7 @@ describe("Basic Refs", () => {
         });
     });
 
-    describe.only("OPenAPI Tests", () => {
+    describe("OPenAPI Tests", () => {
         it("should load and validate OpenAPIv2 Schema", () => {
             const _rxvo = new RxVO({
                 meta: [JSONSchema4],

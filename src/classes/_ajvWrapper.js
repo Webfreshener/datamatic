@@ -121,11 +121,8 @@ export class AjvWrapper {
         });
 
         this.path = "root#";
-        const _ajv = new Ajv(opts);
-        _ajv.addMetaSchema(JSONSchemaV4);
-        _ajv.addMetaSchema(JSONSchemaV6);
-        _ajv.addSchema(OpenAPIv2, "http://swagger.io/v2/schema.json#");
-        this.path = "http://swagger.io/v2/schema.json#";
+        const _ajv = createAjv(this, schemas, opts);
+
         // initializes Ajv instance for this Doc and stores it to WeakMap
         _ajvRef.set(this, _ajv);
 

@@ -24,7 +24,7 @@ describe("ItemsModel Class Suite", function () {
                 let badSchema = Object.assign({}, stringsCollection, {
                     items: [{type: "INVALID"}],
                 });
-                expect(() => new RxVO(badSchema)).toThrow();
+                expect(() => new RxVO({schemas: [badSchema]})).toThrow();
             });
         });
 
@@ -48,7 +48,7 @@ describe("ItemsModel Class Suite", function () {
         });
     });
 
-    describe.only("Nested Elements Tests", () => {
+    describe("Nested Elements Tests", () => {
         beforeEach(() => {
             this.rxvo = new RxVO({schemas: [objectCollection]});
         });
@@ -97,11 +97,11 @@ describe("ItemsModel Class Suite", function () {
             });
         });
 
-        describe.only("LifeCycle: Update", () => {
+        describe("LifeCycle: Update", () => {
 
             let _d;
 
-            it.only("should update nested models with valid data and pass validation", () => {
+            it("should update nested models with valid data and pass validation", () => {
                 _d = [{
                     name: "Item A",
                     value: 1,
@@ -224,7 +224,7 @@ describe("ItemsModel Class Suite", function () {
 
     describe("Default Values", () => {
         it("should apply defaults to items", () => {
-            this.rxvo = new RxVO(objectCollectionDefaults);
+            this.rxvo = new RxVO({schemas: [objectCollectionDefaults]}, {ajvOptions: {useDefaults: true}});
             this.rxvo.model = [{}];
             expect(this.rxvo.model[0]).toEqual({name: "abc"});
         });
@@ -241,7 +241,7 @@ describe("ItemsModel Class Suite", function () {
         });
 
         it("should reset it's collection if allowed", () => {
-            const _rxvo = new RxVO(stringsCollection);
+            const _rxvo = new RxVO({schemas: [stringsCollection]});
             _rxvo.model = ["Item A", "Item B", "Item C"];
             _rxvo.model = ["Item A", "Item B", "Item C"];
             expect(_rxvo.model.length).toBe(3);
@@ -256,7 +256,7 @@ describe("ItemsModel Class Suite", function () {
         });
 
         it("should freeze it's model", () => {
-            const _rxvo = new RxVO(stringsCollection);
+            const _rxvo = new RxVO({schemas: [stringsCollection]});
             _rxvo.model = ["Item A", "Item B", "Item C"];
             _rxvo.model.$model.freeze();
             expect(_rxvo.model.$model.isFrozen).toBe(true);
