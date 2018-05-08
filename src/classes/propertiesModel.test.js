@@ -1,10 +1,8 @@
 import {PropertiesModel} from "./propertiesModel";
 import {RxVO} from "./rxvo";
 import {default as deepEqual} from "deep-equal";
-import {getPatternPropertyDefaults} from "./utils";
 import {
-    basicModel, nestedModel,
-    nestedModelDefault, nestedPatternModel, patternModel
+    basicModel, nestedModel, nestedModelDefault
 } from "../../fixtures/PropertiesModel.schemas";
 
 describe("PropertiesModel Class Suite", function () {
