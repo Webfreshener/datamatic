@@ -2,6 +2,7 @@ const RxVO = require('../index').RxVO;
 
 // JSON-SCHEMA for Scores Collection
 const schema = {
+    "id": "root#",
     "type": "object",
     "properties": {
         "name": {
@@ -44,7 +45,7 @@ const data = {
 };
 
 // instantiate our Model
-const obj = new RxVO(schema);
+const obj = new RxVO({schemas: [schema]});
 
 // subscribes an observer to the Model
 obj.subscribe({
