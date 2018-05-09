@@ -242,6 +242,7 @@ export class Model {
         };
     }
 
+    // todo: review for removal
     get defaults() {
 
     }
@@ -339,7 +340,7 @@ export class Model {
     }
 
     /**
-     * todo: implement with ajv
+     * todo: add tests
      * @returns {*}
      */
     get schema() {

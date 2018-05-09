@@ -14,30 +14,32 @@ RxJS + JSON-Schema (Ajv) Based Observable Data Models
 ## &#9888; Caution!
 This utility is not meant for general purpose use. It leverages several technologies such as RxJS, JSON-Schema and Proxy. As such it is not performant or suitable for applications that require a high degree of efficiency. However it should be fine for prototyping and single-user use in browsers or other sandboxed environments
 
-### Purpose 
- RxVo was developed to provide a means quickly and easily validate data from User Input or remote API calls and
- and to be able to easily receive update notifications without having to manually write code to facilitate those 
- objectives. It is to that end that RxVO was developed, an Observable, Schema Based Data Validation Utility written 
- for Javascript 
+### Goals 
+ * Provide a means to quickly and easily validate complex datasets
+ * Look and feel like a standard JS Object for ease of use and adaptability
+ * Automate creation of RxJS Update and Error notifications 
 
 ### Table of Contents
 
 **[Installation Instructions](#installation-instructions)**
-    
-**[RXVO Document](#jsd-specification)**
 
-   * [Basic Usage](#basic-usage)
+**[Usage Example](#usage-example)**
+
+**[Developer Guide](#developer-guide)**
+
+   
    * [API](#api)
    
         * [RxVO](#rxvo)
-        * [Model](#model)
+            * [schemas config](#rxvo-schemas-config)
+        * [Model Class](#model-class)
         * [PropertiesModel](#properties-model)
         * [ItemsModel](#items-model)
 
-#### Install
+#### Installation Instructions
 ```
-# this package is not yet published
-# for now use git+https and manually add to package.json
+// this package is not yet published
+// for now use git+https and manually add to package.json
 dependencies: {
 ...
 "rxvo": "git+https://github.com/webfreshener/RxVO.git",
@@ -45,7 +47,7 @@ dependencies: {
 }
 ```
 
-#### Basic Usage ####
+#### Usage Example 
 
 The example below defines a Model that expects a `name` value and 
 list of `topScores` items
@@ -53,6 +55,7 @@ list of `topScores` items
 ```
 // JSON-SCHEMA for Scores Collection
 const schema = {
+    "id": "root#",
     "type": "object",
     "properties": {
         "name": {
@@ -82,7 +85,7 @@ const schema = {
 
 
 // instantiate our Model
-const obj = new RxVO(schema);
+const obj = new RxVO({schemas: [schema]});
 
 // subscribes an observer to the Model
 obj.subscribe({
@@ -135,17 +138,101 @@ obj.model.topScores[0].score = "1234";
 delete obj.model.topScores;
 
 ```
-
 Refer to the examples demo in `./examples/basic-usage` for more usage examples
 
+## Developer Guide
 
-#### API ####
+#### RxVO ####
+This class represents the Document entry point
 
+| Method        | Arguments | Description  |
+|:--------------|:----------|:-------|
+| constructor   | [schemas config](#rxvo-schemas-config) (object), [options (object)] | creates new RxVO instance |
+| errors [getter]   | | retrieves errors (if any) from last json-schema validation |
+| model [getter/setter]   | | retrieves root [model proxy object](#model-proxy-object) for operation |
+| getModelsInPath   | to (string) | retrieves models at given path |
+| getSchemaForKey   | key (string) | retrieves json-schema with given key as ID |
+| getSchemaForPath   | path (string) | retrieves json-schema for model at given path |
+| schema [getter]   | | retrieves json-schema for root model |
+| subscribe   |  observers (object) | Subscribes Observers to the RxVO Model Root |
+| subscribeTo   |  path (string), observers (object) | Subscribes Observers to the Model at path 
+| toString   | | retrieves root model as JSON String |
+| toJSON   | | retrieves root model as JSON Object |
+| validate   | path (string), value (object) | validates data at given ath against JSON-Schema |
+| *static* fromJSON   | json (string &#124; object) | creates new RxVO from static method |
 
-#### Model ####
+##### RxVO Schemas Config
+| Property        | Type | Description  |
+|:--------------|:----------|:-------|
+| meta | array | Array of MetaSchema references to validate Schemas against
+| schemas | array | Array of Schema references to valdiate data against 
+| use | string | key/id of schema to use for data validation
 
+##### Model Proxy Object 
+
+This is the Data Model most usage will be based around.
+It is a Proxy Object that has traps for all operations that alter the state of the given Array or Object
+
+| Property        | Type | Description  |
+|:--------------|:----------|:-------|
+| $model | (object  &#124; array) | references Proxy Object owner class
+
+##### model vs $model 
+
+In usage, `model` always references the Proxied Data Model for validation and operation where `$model` references the owner Model Class
+*example:*
+```
+ const _rxvo = new RxVO({schemas: [schema]});
+ 
+ // access the root model:
+ console.log(`JSON.stringify(_rxvo.model)`);
+ 
+ // access the model's owner Model Class:
+ const owner = _rxvo.model.$model;
+ console.log(`is frozen: ${owner.isFrozen}`);
+ 
+ // call toString on Owner
+ console.log(`stringified: ${owner}`);
+ 
+ // obtain model from  it's Owner
+  console.log(`stringified: ${JSON.stringify(owner.model)}`);
+ 
+```
+
+#### Model Class ####
+| Method        | Arguments | Description  |
+|:--------------|:----------|:-------|
+| freeze | | applies Object.freeze to model hierarchy |
+| isDirty [getter]   | | returns dirtyness of model heirarchy (is dirty if operation in progress) |
+| isFrozen [getter]   | | returns Object.freeze status of Model hierarchy |
+| jsonPath [getter]   | | retrieves json path string for Model instance. eg: "this.is.my.path" |
+| model [getter/setter]   | | retrieves root model for operation |
+| subscribe   |  observers (object) | Subscribes Observers to the RxVO Model Root |
+| subscribeTo   |  path (string), observers (object) | Subscribes Observers to the Model at path |
+| model [getter/setter]   | | setter/getter for [model proxy object](#model-proxy-object) for operation |
+| objectID [getter]   | | retrieves Unique ObjectID of Model instance |
+| options [getter]   | | retrieves options passed to Model instance |
+| path [getter]   | | retrieves json-schema path string for Model instance. eg: "#/this/is/my/path" |
+| parent [getter]   | | retrieves Model's parent Model instance |
+| reset | | resets model to initial state if operation is valid |
+| root [getter]   | | retrieves root Model instance |
+| rxvo [getter]   | | retrieves Model's RxVO document instance |
+| toString   | | retrieves root model as JSON String |
+| toJSON   | | retrieves root model as JSON Object |
+| validate   | path (string), value (object) | validates data at given ath against JSON-Schema |
+| validationPath [getter] | | retrieves json-schema path string for Model validation |
 
 #### PropertiesModel ####
+###### subclass of [Model Class](#model-class)
 
+| Method        | Arguments | Description  |
+|:--------------|:----------|:-------|
+| get | key (string) | applies Object.freeze to model hierarchy |
+| set | key (string), value (any) | applies Object.freeze to model hierarchy |
+
+Allows model reference to be treated as Object with all array prototype methods available
 
 #### ItemsModel ####
+###### subclass of [Model Class](#model-class)
+Allows model reference to be treated as Array with all array prototype methods available
+

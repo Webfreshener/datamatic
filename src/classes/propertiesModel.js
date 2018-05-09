@@ -60,6 +60,7 @@ export class PropertiesModel extends Model {
     }
 
     /**
+     * todo: review for removal
      * utility method to create selector path
      * @param path
      * @param addr
@@ -70,6 +71,7 @@ export class PropertiesModel extends Model {
     }
 
     /**
+     * todo: review for removal
      * Getter for patternDefaults for this Model
      * @returns {object|null}
      */
