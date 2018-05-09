@@ -242,11 +242,6 @@ export class Model {
         };
     }
 
-    // todo: review for removal
-    get defaults() {
-
-    }
-
     /**
      * stub for model getter, overridden by Model sub-class
      * @return {object|array|null}
@@ -345,14 +340,6 @@ export class Model {
      */
     get schema() {
         return this.rxvo.getSchemaForPath(this.path); // _validators.get(this.rxvo).$ajv.compile({$model: this.validationPath});
-    }
-
-    /**
-     * todo: remove and standardize around `schema`
-     * @returns {*}
-     */
-    get signature() {
-        return this.schema;
     }
 
     /**

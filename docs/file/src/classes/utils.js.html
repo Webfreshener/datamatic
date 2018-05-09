@@ -38,13 +38,14 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">RxVO</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getRoot">getRoot</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-listDirtyItems">listDirtyItems</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDefaults">getDefaults</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPatternPropertyDefaults">getPatternPropertyDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeClean">makeClean</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeDirty">makeDirty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refAtKeyValidation">refAtKeyValidation</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refValidation">refValidation</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-validate">validate</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-walkObject">walkObject</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ajvRef">_ajvRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_dirtyModels">_dirtyModels</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
@@ -64,6 +65,7 @@
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/classes/utils.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {_dirtyModels, _validators} from &quot;./_references&quot;;
+import merge from &quot;lodash.merge&quot;;
 
 /**
  * flags `model` node as being out of sync with tree
@@ -81,10 +83,6 @@ export const makeClean = (model) =&gt; {
     if (model.isDirty &amp;&amp; _dirtyModels.get(model.rxvo)[model.path]) {
         delete _dirtyModels.get(model.rxvo)[model.path];
     }
-};
-
-export const listDirtyItems = (model) =&gt; {
-    return Object.keys(_dirtyModels.get(model.rxvo));
 };
 
 /**
@@ -141,10 +139,117 @@ export const validate = (model, path, value) =&gt; {
     return true;
 };
 
-export const getRoot = (model) =&gt; {
-    return Object.assign({}, model.rxvo.model);
+/**
+ *
+ * @param obj
+ */
+const getDefaultsForElement = (obj) =&gt; {
+    let _o = {};
+    const _propObj = {};
+
+    if (obj.hasOwnProperty(&quot;default&quot;)) {
+        merge(_o, obj.default);
+    }
+
+    if (obj.hasOwnProperty(&quot;type&quot;)) {
+        let _m = obj.type.match(/^(object|array)+$/);
+        if (_m !== null) {
+            let _key = _m[1] === &quot;object&quot; ? &quot;properties&quot; : &quot;items&quot;;
+            if (obj.hasOwnProperty(_key)) {
+                return merge(_o, getDefaultsForElement(obj[_key]));
+            }
+        }
+    }
+
+    Object.keys(obj).forEach((prop) =&gt; {
+        if (obj[prop].hasOwnProperty(&quot;default&quot;)) {
+            _o[prop] = obj[prop].default;
+        }
+
+        if ((obj[prop].hasOwnProperty(&quot;type&quot;))) {
+            if (obj[prop].type.match(/^(object|array)+$/) !== null) {
+
+                if (obj[prop].hasOwnProperty(&quot;properties&quot;)) {
+                    _propObj[prop] = getDefaultsForElement(obj[prop].properties)
+                }
+
+                if (obj[prop].hasOwnProperty(&quot;items&quot;)) {
+                    _propObj[prop] = getDefaultsForElement(obj[prop].items)
+                }
+            }
+        }
+    });
+
+    _o = merge(_o, _propObj);
+
+    delete _o[&quot;items&quot;];
+    return Object.keys(_o).length ? _o : null;
 };
-</code></pre>
+
+/**
+ *
+ * @param schema
+ * @returns {object|null}
+ */
+export const getDefaults = (schema) =&gt; {
+    const _o = {};
+
+    if (schema.hasOwnProperty(&quot;default&quot;)) {
+        merge(_o, schema.default);
+    }
+
+    if (schema.hasOwnProperty(&quot;properties&quot;)) {
+        merge(_o, getDefaultsForElement(schema.properties));
+    }
+
+    if (schema.hasOwnProperty(&quot;items&quot;)) {
+        merge(_o, getDefaultsForElement(schema.items));
+    }
+
+    delete _o[&quot;items&quot;];
+
+    return Object.keys(_o).length ? _o : null;
+};
+
+/**
+ *
+ * @param schema
+ * @returns {*}
+ */
+export const getPatternPropertyDefaults = (schema) =&gt; {
+    let _o = {};
+
+    if (schema === null || schema === void(0)) {
+        return null;
+    }
+
+    if (schema.hasOwnProperty(&quot;patternProperties&quot;)) {
+        let _propObj = {};
+        Object.keys(schema.patternProperties).forEach((prop) =&gt; {
+            merge(_o, getDefaultsForElement(schema.patternProperties));
+        });
+        merge(_o, _propObj);
+    }
+
+    return  Object.keys(_o).length ? _o : null;
+};
+
+/**
+ * Navigates given object by path
+ * @param path
+ * @param toWalk
+ * @param delimiter
+ * @returns {{} &amp; any}
+ */
+export const walkObject = (path, toWalk, delimiter = &quot;/&quot;) =&gt; {
+    let _s = Object.assign({}, toWalk);
+    path.split(delimiter).forEach((part) =&gt; {
+        if (part !== &quot;&quot;) {
+            _s = _s[part];
+        }
+    });
+    return _s;
+};</code></pre>
 
 </div>
 

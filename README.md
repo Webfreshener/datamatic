@@ -26,15 +26,13 @@ This utility is not meant for general purpose use. It leverages several technolo
 **[Usage Example](#usage-example)**
 
 **[Developer Guide](#developer-guide)**
-
-   
-   * [API](#api)
-   
-        * [RxVO](#rxvo)
-            * [schemas config](#rxvo-schemas-config)
-        * [Model Class](#model-class)
-        * [PropertiesModel](#properties-model)
-        * [ItemsModel](#items-model)
+  * [RxVO Class](#rxvo-class)
+    * [Schemas Config](#rxvo-schemas-config)
+    * [Model Proxy Object](#model-proxy-object)
+    * [model vs $model](#model-vs-$model)
+  * [Model Class](#model-class)
+  * [PropertiesModel](#properties-model)
+  * [ItemsModel](#items-model)
 
 #### Installation Instructions
 ```
@@ -142,7 +140,7 @@ Refer to the examples demo in `./examples/basic-usage` for more usage examples
 
 ## Developer Guide
 
-#### RxVO ####
+#### RxVO Class ####
 This class represents the Document entry point
 
 | Method        | Arguments | Description  |

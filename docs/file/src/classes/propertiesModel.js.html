@@ -38,13 +38,14 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">RxVO</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getRoot">getRoot</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-listDirtyItems">listDirtyItems</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDefaults">getDefaults</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPatternPropertyDefaults">getPatternPropertyDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeClean">makeClean</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeDirty">makeDirty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refAtKeyValidation">refAtKeyValidation</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refValidation">refValidation</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-validate">validate</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-walkObject">walkObject</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ajvRef">_ajvRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_dirtyModels">_dirtyModels</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
@@ -64,12 +65,17 @@
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/classes/propertiesModel.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {
-    _object, _schemaHelpers, _oBuilders,
+    _object, _schemaHelpers,
 } from &quot;./_references&quot;;
-import {makeClean, makeDirty, refAtKeyValidation, refValidation} from &quot;./utils&quot;;
+import {
+    makeClean, makeDirty,
+    refAtKeyValidation, refValidation,
+    getPatternPropertyDefaults
+} from &quot;./utils&quot;;
 import {SchemaHelpers} from &quot;./_schemaHelpers&quot;;
 import {Model} from &quot;./model&quot;;
 import Notifiers from &quot;./_branchNotifier&quot;;
+import merge from &quot;lodash.merge&quot;;
 
 /**
  * @class PropertiesModel
@@ -99,64 +105,16 @@ export class PropertiesModel extends Model {
                 return key === &quot;$model&quot; ? this : t[key];
             },
             set: (t, key, value) =&gt; {
-                let _sH = _schemaHelpers.get(this);
-
-                if (key in Object.prototype) {
-                    // do nothing against proto props
-                    return true;
-                }
-
-                // -- ensures we aren&apos;t in a frozen hierarchy branch
-                if (this.isFrozen) {
-                    return false;
-                }
-
-                // checks for branch update status
-                if (!this.isDirty) {
-                    let _o = Object.assign({}, t);
-                    _o[key] = value;
-                    // attempts validation of value update
-                    if (refValidation(this, _o) !== true) {
-                        makeClean(this);
-                        _oBuilders.get(this.rxvo).error(_self, this.rxvo.errors);
-                        return false;
-                    }
-                }
-
-                // if key is type &apos;object&apos;, we will set directly
-                if (typeof key === &quot;object&quot;) {
-                    const e = _sH.setObject(key);
-                    if (typeof e === &quot;string&quot;) {
-                        makeClean(this);
-                        _oBuilders.get(this.rxvo).error(_self, e);
-                        return false;
-                    }
-                    return true;
-                }
-                // calls validate with either full path if in PropertiesModel or key if nested in ItemsModel
-                if ((typeof value) === &quot;object&quot;) {
-                    value = _sH.setChildObject(key, value);
-                    if ((typeof value) === &quot;string&quot;) {
-                        // marks model as clean
-                        makeClean(this);
-
-                        // sends notifications
-                        _oBuilders.get(this.rxvo).error(_self, value);
-                        return false;
-                    }
-                }
-
-                // performs the operation on Model
-                t[key] = value;
-                return true;
+                return setHandler(this, t, key, value);
             },
             deleteProperty: (t, key) =&gt; {
                 // creates mock of future model state for evaluation
                 let _o = Object.assign({}, this.model);
                 delete _o[key];
-
+                const _res = this.validate(_o);
                 // validates model with value removed
-                if (!this.validate(_o)) {
+                if (_res !== true) {
+                    Notifiers.get(_self.rxvo).sendError(_self.jsonPath, _res);
                     return false;
                 }
 
@@ -165,16 +123,6 @@ export class PropertiesModel extends Model {
                 return true;
             }
         });
-    }
-
-    /**
-     * utility method to create selector path
-     * @param path
-     * @param addr
-     * @returns {string}
-     */
-    static concatPathAddr(path, addr) {
-        return path.length ? `${path}/${addr}` : `${addr}`;
     }
 
     /**
@@ -209,7 +157,6 @@ export class PropertiesModel extends Model {
         // todo: replace proxy with Object Delegation
         _object.set(this,
             new Proxy(Model.createRef(this, {}), this.handler));
-
         Object.keys(value).forEach((k) =&gt; {
             // -- added try/catch to avoid error in JSFiddle
             try {
@@ -219,7 +166,7 @@ export class PropertiesModel extends Model {
                 makeClean(this);
 
                 // sends notifications
-                Notifiers.get(this.rxvo).sendError(this.jsonPath, e);
+                Notifiers.get(this.rxvo).sendError(this.jsonPath, e.message);
                 return false;
             }
         });
@@ -227,7 +174,7 @@ export class PropertiesModel extends Model {
         // marks model as in sync with tree
         makeClean(this);
 
-        // calls next&apos;s observable to update subscribers
+        // // calls next&apos;s observable to update subscribers
         if (!this.isDirty) {
             Notifiers.get(this.rxvo).sendNext(this.jsonPath);
         }
@@ -271,6 +218,93 @@ export class PropertiesModel extends Model {
         return this;
     }
 }
+
+/**
+ * Negotiates Key values that are Objects
+ * @param model
+ * @param key
+ * @returns {boolean}
+ */
+const handleObjectKey = (model, key) =&gt; {
+    const _sH = _schemaHelpers.get(model);
+    const e = _sH.setObject(key);
+    if (typeof e === &quot;string&quot;) {
+        makeClean(model);
+        Notifiers.get(model.rxvo).sendError(model.jsonPath, e);
+        return false;
+    }
+
+    return true;
+};
+
+/**
+ * Creates Model Child to set up Proxy Object
+ * @param model
+ * @param key
+ * @param value
+ * @returns {*}
+ */
+const createModelChild = (model, key, value) =&gt; {
+    const _sH = _schemaHelpers.get(model);
+    // calls validate with either full path if in PropertiesModel or key if nested in ItemsModel
+    value = _sH.setChildObject(key, value);
+    if ((typeof value) === &quot;string&quot;) {
+        // marks model as clean
+        makeClean(model);
+        // sends notifications
+        Notifiers.get(model.rxvo).sendError(model.jsonPath, value);
+        return false;
+    }
+    return value;
+};
+
+/**
+ * Parameter Set trap for Proxy
+ * @param model
+ * @param t
+ * @param key
+ * @param value
+ * @returns {boolean}
+ */
+const setHandler = (model, t, key, value) =&gt; {
+    if (key in Object.prototype) {
+        // do nothing against proto props
+        return true;
+    }
+
+    // -- ensures we aren&apos;t in a frozen hierarchy branch
+    if (model.isFrozen) {
+        return false;
+    }
+
+    // checks for branch update status
+    if (!model.isDirty) {
+        let _o = Object.assign({}, t);
+        _o[key] = value;
+        // attempts validation of value update
+        if (refValidation(model, _o) !== true) {
+            makeClean(model);
+            Notifiers.get(model.rxvo).sendError(model.jsonPath, model.rxvo.errors);
+            return false;
+        }
+    }
+
+    // console.log(`setting key: ${key}`);
+    // if key is type &apos;object&apos;, we will set directly
+    if (typeof key === &quot;object&quot;) {
+        return handleObjectKey(model, key);
+    }
+
+    if ((typeof value) === &quot;object&quot;) {
+        if ((value = createModelChild(model, key, value)) === false) {
+            return false
+        }
+    }
+
+    // performs the operation on Model
+    t[key] = value;
+    return true;
+};
 </code></pre>
 
 </div>

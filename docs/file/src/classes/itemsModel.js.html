@@ -38,13 +38,14 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">RxVO</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getRoot">getRoot</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-listDirtyItems">listDirtyItems</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDefaults">getDefaults</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPatternPropertyDefaults">getPatternPropertyDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeClean">makeClean</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeDirty">makeDirty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refAtKeyValidation">refAtKeyValidation</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refValidation">refValidation</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-validate">validate</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-walkObject">walkObject</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ajvRef">_ajvRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_dirtyModels">_dirtyModels</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
@@ -70,6 +71,7 @@ import {Model} from &quot;./model&quot;;
 import {SchemaHelpers} from &quot;./_schemaHelpers&quot;;
 import {makeClean, makeDirty, refAtKeyValidation, refValidation} from &quot;./utils&quot;;
 import Notifiers from &quot;./_branchNotifier&quot;;
+import merge from &quot;lodash.merge&quot;;
 
 const _observerDelegates = new WeakMap();
 
@@ -102,6 +104,15 @@ export class ItemsModel extends Model {
             return false;
         }
 
+        let _idx = 0;
+        // value.forEach((itm) =&gt; {
+        //     let _defaults = this.rxvo.getDefaultsForPath(this.jsonPath);
+        //     if (Object.keys(_defaults).length) {
+        //         value[_idx] = merge(_defaults, itm);
+        //     }
+        //     _idx++;
+        // });
+
         if (refValidation(this, value) !== true) {
             Notifiers.get(this.rxvo).sendError(this.jsonPath, this.rxvo.errors);
             return false;
@@ -124,14 +135,15 @@ export class ItemsModel extends Model {
 
         } catch (e) {
             makeClean(this);
-            console.log(e);
-            (Notifiers.get(this.rxvo).sendError.bind(this))(this.jsonPath, e);
+            Notifiers.get(this.rxvo).sendError(this.jsonPath, e);
             return false;
         }
 
         makeClean(this);
-        Notifiers.get(this.rxvo).sendNext(this.jsonPath);
-        _observerDelegates.delete(this);
+        if (!this.isDirty) {
+            Notifiers.get(this.rxvo).sendNext(this.jsonPath);
+            _observerDelegates.delete(this);
+        }
 
         return true;
     }
@@ -149,43 +161,9 @@ export class ItemsModel extends Model {
                 }
 
                 if (idx in Array.prototype) {
-                    const _self = this;
                     // only handle methods that modify the reference array
                     if ([&quot;fill&quot;, &quot;pop&quot;, &quot;push&quot;, &quot;shift&quot;, &quot;splice&quot;, &quot;unshift&quot;].indexOf(idx) &gt; -1) {
-                        // returns closure analog to referenced method
-                        return (...args) =&gt; {
-                            // mocks current model state
-                            const _arr = [].concat(t);
-
-                            // applies method to model state
-                            const _val = t[idx].apply(_arr, args);
-
-                            // validates updated mock
-                            const _res = refValidation(_self, _arr);
-
-                            // in event of validation failure
-                            if (_res !== true) {
-                                // .. marks model as clean
-                                makeClean(_self);
-
-                                // .. sends notifications
-                                Notifiers.get(this.rxvo).sendError(_self.jsonPath,
-                                    _self.rxvo.errors);
-
-                                return false;
-                            }
-
-                            // this is a kludge to handle updates from proto methods
-                            if (this.parent !== null) {
-                                // applies change to parent object if this is not root context
-                                this.parent.model[this.jsonPath.split(&quot;.&quot;).pop()] = _arr;
-                            } else {
-                                // applies change to RxVO instance
-                                this.rxvo.model = _arr;
-                            }
-
-                            return _val;
-                        }
+                        return applyMethod(this, t, idx);
                     } else {
                         return t[idx];
                     }
@@ -230,55 +208,111 @@ export class ItemsModel extends Model {
                 if (_oDel !== void(0)) {
                     makeClean(this);
                     // updates observers
-                    Notifiers.get(this.rxvo).sendNext(this.jsonPath);
+                    // Notifiers.get(this.rxvo).sendNext(this.jsonPath);
                 }
 
                 return true;
             },
 
             deleteProperty: (t, idx) =&gt; {
-                let _oDel = _observerDelegates.get(this);
-                // creates mock of future Model state for evaluation
-                let _o = [].concat(t);
-                try {
-                    // attempts splice method to
-                    // remove item at given index index
-                    _o.splice(idx, 1);
-                } catch (e) {
-                    if (!_oDel) {
-                        makeClean(this);
-                        Notifiers.get(this.rxvo).sendError(this.jsonPath, e);
-                    }
-                    return false;
-                }
-
-                // validates mock of change state
-                const _res = refValidation(this, _o);
-
-
-                if (_res !== true) {
-                    // makes clean and notifies
-                    // if not serial operation
-                    if (!_oDel) {
-                        makeClean(this);
-                        Notifiers.get(this.rxvo).sendError(this.jsonPath, _res);
-                    }
-                    return false;
-                }
-
-                // applies operation
-                t.splice(idx, 1);
-
-                // flags model as in sync with tree
-                makeClean(this);
-
-                // updates observers
-                Notifiers.get(this.rxvo).sendNext(this.jsonPath);
-                return true;
+                return deleteTrap(this, t, idx);
             }
         });
     }
 }
+
+/**
+ * Handles Proxy Delete Trap for Array elements
+ * @param model
+ * @param t
+ * @param idx
+ * @returns {boolean}
+ */
+const deleteTrap = (model, t, idx) =&gt; {
+    let _oDel = _observerDelegates.get(model);
+    // creates mock of future Model state for evaluation
+    let _o = [].concat(t);
+    try {
+        // attempts splice method to
+        // remove item at given index index
+        _o.splice(idx, 1);
+    } catch (e) {
+        if (!_oDel) {
+            makeClean(model);
+            Notifiers.get(model.rxvo).sendError(model.jsonPath, e);
+        }
+        return false;
+    }
+
+    // validates mock of change state
+    const _res = refValidation(model, _o);
+
+
+    if (_res !== true) {
+        // makes clean and notifies
+        // if not serial operation
+        if (!_oDel) {
+            makeClean(model);
+            Notifiers.get(model.rxvo).sendError(model.jsonPath, _res);
+        }
+        return false;
+    }
+
+    // applies operation
+    t.splice(idx, 1);
+
+    // flags model as in sync with tree
+    makeClean(model);
+
+    // updates observers
+    Notifiers.get(model.rxvo).sendNext(model.jsonPath);
+    return true;
+};
+
+/**
+ * Handles proxy get for Array proto methods
+ * @param model
+ * @param t
+ * @param idx
+ * @returns {function(...[*]=)}
+ */
+const applyMethod = (model, t, idx) =&gt; {
+
+    // returns closure analog to referenced method
+    return (...args) =&gt; {
+        // mocks current model state
+        const _arr = [].concat(t);
+
+        // applies method to model state
+        const _val = t[idx].apply(_arr, args);
+
+        // validates updated mock
+        const _res = refValidation(model, _arr);
+
+        // in event of validation failure
+        if (_res !== true) {
+            // .. marks model as clean
+            makeClean(model);
+
+            // .. sends notifications
+            Notifiers.get(model.rxvo).sendError(model.jsonPath,
+                model.rxvo.errors);
+
+            return false;
+        }
+
+        // model is a kludge to handle updates from proto methods
+        if (model.parent !== null) {
+            // applies change to parent object if model is not root context
+            model.parent.model[model.jsonPath.split(&quot;.&quot;).pop()] = _arr;
+        } else {
+            // applies change to RxVO instance
+            model.rxvo.model = _arr;
+        }
+
+        return _val;
+    }
+};
 </code></pre>
 
 </div>

@@ -38,13 +38,14 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">RxVO</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getRoot">getRoot</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-listDirtyItems">listDirtyItems</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDefaults">getDefaults</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPatternPropertyDefaults">getPatternPropertyDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeClean">makeClean</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeDirty">makeDirty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refAtKeyValidation">refAtKeyValidation</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refValidation">refValidation</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-validate">validate</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-walkObject">walkObject</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ajvRef">_ajvRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_dirtyModels">_dirtyModels</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
@@ -63,13 +64,13 @@
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {AjvWrapper} from &apos;<span><a href="file/src/classes/_ajvWrapper.js.html#lineNumber12">rxvo/src/classes/_ajvWrapper.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {AjvWrapper} from &apos;<span><a href="file/src/classes/_ajvWrapper.js.html#lineNumber91">rxvo/src/classes/_ajvWrapper.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">private</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/src/classes/_ajvWrapper.js.html#lineNumber12">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/src/classes/_ajvWrapper.js.html#lineNumber91">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -127,7 +128,7 @@
       <div>
         
         
-        <div data-ice="description"><p>helper method to derive path for given model
+        <div data-ice="description"><p>Helper method to derive path for given model
 todo: review for removal</p>
 </div>
       </div>
@@ -158,7 +159,7 @@ todo: review for removal</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/_ajvWrapper.js~AjvWrapper.html#instance-constructor-constructor">constructor</a></span></span><span class="code" data-ice="signature">(rxvo: <span>*</span>, schema: <span>*</span>, ajvOptions: <span>*</span>)</span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/_ajvWrapper.js~AjvWrapper.html#instance-constructor-constructor">constructor</a></span></span><span class="code" data-ice="signature">(rxvo: <span>*</span>, schemas: <span>*</span>, ajvOptions: <span>*</span>)</span>
         </p>
       </div>
       <div>
@@ -199,9 +200,37 @@ todo: review for removal</p>
       <div>
         
         
-        <div data-ice="description"><p>getter for captive Ajv validator
+        <div data-ice="description"><p>Getter for captive Ajv validator
 -- use this for Ajv API Methods</p>
 </div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/src/classes/_ajvWrapper.js~AjvWrapper.html#instance-member-path">path</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
       </div>
     </td>
     <td>
@@ -230,7 +259,7 @@ todo: review for removal</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/_ajvWrapper.js~AjvWrapper.html#instance-method-exec">exec</a></span></span><span class="code" data-ice="signature">(path: <span>*</span>, value: <span>*</span>): <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/_ajvWrapper.js~AjvWrapper.html#instance-method-exec">exec</a></span></span><span class="code" data-ice="signature">(path: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, value: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>): <span>*</span></span>
         </p>
       </div>
       <div>
@@ -266,14 +295,14 @@ todo: review for removal</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_ajvWrapper.js.html#lineNumber59">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_ajvWrapper.js.html#lineNumber139">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>helper method to derive path for given model
+  <div data-ice="description"><p>Helper method to derive path for given model
 todo: review for removal</p>
 </div>
 
@@ -338,11 +367,11 @@ todo: review for removal</p>
     
     
     
-    <span class="code" data-ice="name">constructor</span><span class="code" data-ice="signature">(rxvo: <span>*</span>, schema: <span>*</span>, ajvOptions: <span>*</span>)</span>
+    <span class="code" data-ice="name">constructor</span><span class="code" data-ice="signature">(rxvo: <span>*</span>, schemas: <span>*</span>, ajvOptions: <span>*</span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_ajvWrapper.js.html#lineNumber19">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_ajvWrapper.js.html#lineNumber98">source</a></span></span>
     </span>
   </h3>
 
@@ -368,7 +397,7 @@ todo: review for removal</p>
       <td data-ice="description"></td>
     </tr>
 <tr data-ice="property" data-depth="0">
-      <td data-ice="name" class="code" data-depth="0">schema</td>
+      <td data-ice="name" class="code" data-depth="0">schemas</td>
       <td data-ice="type" class="code"><span>*</span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"></td>
@@ -416,14 +445,14 @@ todo: review for removal</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_ajvWrapper.js.html#lineNumber68">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_ajvWrapper.js.html#lineNumber148">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>getter for captive Ajv validator
+  <div data-ice="description"><p>Getter for captive Ajv validator
 -- use this for Ajv API Methods</p>
 </div>
 
@@ -461,6 +490,49 @@ todo: review for removal</p>
   
   
 </div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-member-path">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">path</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/classes/_ajvWrapper.js.html#lineNumber123">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
 </div>
 <div data-ice="methodDetails"><h2 data-ice="title">Public Methods</h2>
 
@@ -472,11 +544,11 @@ todo: review for removal</p>
     
     
     
-    <span class="code" data-ice="name">exec</span><span class="code" data-ice="signature">(path: <span>*</span>, value: <span>*</span>): <span>*</span></span>
+    <span class="code" data-ice="name">exec</span><span class="code" data-ice="signature">(path: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span>, value: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>): <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/_ajvWrapper.js.html#lineNumber77">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/_ajvWrapper.js.html#lineNumber157">source</a></span></span>
     </span>
   </h3>
 
@@ -498,13 +570,13 @@ todo: review for removal</p>
     
     <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">path</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"></td>
     </tr>
 <tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">value</td>
-      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"></td>
     </tr>

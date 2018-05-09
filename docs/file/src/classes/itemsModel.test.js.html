@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">src/classes/itemsModel.test.js | rxvo</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="RxJS + JSON-Schema Based Observable Data Models"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="rxvo"><meta property="twitter:description" content="RxJS + JSON-Schema Based Observable Data Models"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/Webfreshener/RxVO.git"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#classes">classes</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_branchNotifier.js~Notifiers.html">Notifiers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_metaData.js~MetaData.html">MetaData</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_observerBuilder.js~ObserverBuilder.html">ObserverBuilder</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_schemaHelpers.js~SchemaHelpers.html">SchemaHelpers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/itemsModel.js~ItemsModel.html">ItemsModel</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">RxVO</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDefaults">getDefaults</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPatternPropertyDefaults">getPatternPropertyDefaults</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeClean">makeClean</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeDirty">makeDirty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refAtKeyValidation">refAtKeyValidation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refValidation">refValidation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-validate">validate</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-walkObject">walkObject</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ajvRef">_ajvRef</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_dirtyModels">_dirtyModels</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_oBuilders">_oBuilders</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_object">_object</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_observerPaths">_observerPaths</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_observers">_observers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaHelpers">_schemaHelpers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaOptions">_schemaOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaSignatures">_schemaSignatures</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validators">_validators</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-wf">wf</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/classes/itemsModel.test.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {RxVO} from &quot;./rxvo&quot;;
+import {default as deepEqual} from &quot;deep-equal&quot;;
+import {
+    stringsCollection,
+    stringsMinMaxCollection,
+    objectCollection, objectCollectionDefaults
+} from &quot;../../fixtures/ItemsModel.schemas&quot;;
+import {Model} from &quot;./model&quot;;
+
+describe(&quot;ItemsModel Class Suite&quot;, function () {
+
+    describe(&quot;Simple ItemsModel Tests&quot;, () =&gt; {
+        beforeEach(() =&gt; {
+            this.rxvo = new RxVO({schemas: [stringsCollection]});
+        });
+
+        describe(&quot;LifeCycle: Instantiation&quot;, () =&gt; {
+            it(&quot;should initialize a schema and a schema object&quot;, () =&gt; {
+                expect(this.rxvo.model.$model).toBeDefined();
+                expect(this.rxvo.model.$model instanceof Model).toBe(true);
+            });
+
+            it(&quot;should not initialize a invalid schema and schema object&quot;, () =&gt; {
+                let badSchema = Object.assign({}, stringsCollection, {
+                    items: [{type: &quot;INVALID&quot;}],
+                });
+                expect(() =&gt; new RxVO({schemas: [badSchema]})).toThrow();
+            });
+        });
+
+        describe(&quot;LifeCycle: Creation&quot;, () =&gt; {
+
+            let _d;
+
+            it(&quot;should populate with valid data and make that data accessible&quot;, () =&gt; {
+                _d = [&quot;abc&quot;, &quot;def&quot;, &quot;ghi&quot;];
+
+                this.rxvo.model = _d;
+                expect(deepEqual(this.rxvo.model, _d)).toBe(true);
+            });
+
+            it(&quot;should reject invalid data and leave model pristine&quot;, () =&gt; {
+                _d = [99, 100, 101];
+
+                this.rxvo.model = _d;
+                expect(deepEqual(this.rxvo.model, {})).toBe(true);
+            });
+        });
+    });
+
+    describe(&quot;Nested Elements Tests&quot;, () =&gt; {
+        beforeEach(() =&gt; {
+            this.rxvo = new RxVO({schemas: [objectCollection]});
+        });
+
+        describe(&quot;LifeCycle: Instantiation&quot;, () =&gt; {
+            it(&quot;should initialize a valid schema and a schema object&quot;, () =&gt; {
+                expect(this.rxvo.model.$model).toBeDefined();
+                expect(this.rxvo.model.$model instanceof Model).toBe(true);
+                expect(this.rxvo.model.$model).toBeDefined();
+                expect(this.rxvo.model.$model instanceof Model).toBe(true);
+            });
+        });
+
+        describe(&quot;LifeCycle: Create&quot;, () =&gt; {
+
+            let _d;
+
+            it(&quot;should populate with valid data and make that data accessible&quot;, () =&gt; {
+                _d = [{
+                    name: &quot;Item A&quot;,
+                    value: 1,
+                }, {
+                    name: &quot;Item B&quot;,
+                }, {
+                    name: &quot;Item C&quot;,
+                    value: 2,
+                }];
+
+                this.rxvo.model = _d;
+                expect(deepEqual(this.rxvo.model, _d)).toBe(true);
+            });
+
+            it(&quot;should reject invalid data and leave model pristine&quot;, () =&gt; {
+                _d = [{
+                    name: 123,
+                    value: 1,
+                }, {
+                    value: &quot;Item B&quot;,
+                }, {
+                    value: 2,
+                }];
+
+                this.rxvo.model = _d;
+                expect(typeof this.rxvo.errors).toBe(&quot;object&quot;);
+                expect(deepEqual(this.rxvo.model, [])).toBe(true);
+            });
+        });
+
+        describe(&quot;LifeCycle: Update&quot;, () =&gt; {
+
+            let _d;
+
+            it(&quot;should update nested models with valid data and pass validation&quot;, () =&gt; {
+                _d = [{
+                    name: &quot;Item A&quot;,
+                    value: 1,
+                }, {
+                    name: &quot;Item B&quot;,
+                }, {
+                    name: &quot;Item C&quot;,
+                    value: 2,
+                }];
+
+                this.rxvo.model = _d;
+
+                this.rxvo.model[1] = {
+                    name: &quot;Item B&quot;,
+                    value: 3
+                };
+
+                expect(this.rxvo.errors).toBe(null);
+                expect(this.rxvo.model[1]).toEqual({name: &quot;Item B&quot;, value: 3});
+            });
+
+            it(&quot;should updated properties in nested objects with valid data and pass validation&quot;, () =&gt; {
+                _d = [{
+                    name: &quot;Item A&quot;,
+                    value: 1,
+                }, {
+                    name: &quot;Item B&quot;,
+                }, {
+                    name: &quot;Item C&quot;,
+                    value: 2,
+                }];
+
+                this.rxvo.model = _d;
+
+                this.rxvo.model[1].value = 3;
+
+
+                expect(this.rxvo.errors).toBe(null);
+                expect(this.rxvo.model[1]).toEqual({name: &quot;Item B&quot;, value: 3});
+            });
+        });
+
+        describe(&quot;LifeCycle: Delete&quot;, () =&gt; {
+            beforeEach(() =&gt; {
+                this.rxvo = new RxVO({schemas: [stringsMinMaxCollection]});
+            });
+
+            _d = [&quot;Item A&quot;, &quot;Item B&quot;, &quot;Item C&quot;];
+
+            it(&quot;should allow deletion of nested properties that are not required&quot;, () =&gt; {
+                this.rxvo.model = _d;
+                delete this.rxvo.model[1];
+                expect(this.rxvo.errors).toBe(null);
+                expect(this.rxvo.model.length).toBe(2);
+            });
+
+            it(&quot;should prevent deletion of nested properties that are required&quot;, () =&gt; {
+                this.rxvo.model = _d;
+                delete this.rxvo.model[0];
+                delete this.rxvo.model[1];
+                delete this.rxvo.model[2];
+                expect(typeof this.rxvo.errors).toBe(&quot;object&quot;);
+                expect(this.rxvo.model.length).toBe(1);
+            });
+        });
+    });
+
+    describe(&quot;Array Prototype method tests&quot;, () =&gt; {
+        beforeEach(() =&gt; {
+            this.rxvo = new RxVO({schemas: [stringsMinMaxCollection]});
+            this.rxvo.model = [&quot;Item A&quot;, &quot;Item B&quot;, &quot;Item C&quot;];
+        });
+
+        it(&quot;should fill with validation&quot;, () =&gt; {
+            this.rxvo.model.fill([&quot;Item A&quot;, &quot;Item B&quot;, &quot;Item C&quot;, &quot;Item D&quot;]);
+            expect(typeof this.rxvo.errors).toBe(&quot;object&quot;);
+            expect(this.rxvo.model.length).toBe(3);
+        });
+
+        it(&quot;should pop with validation&quot;, () =&gt; {
+            this.rxvo.model.pop();
+            this.rxvo.model.pop();
+            this.rxvo.model.pop();
+            expect(typeof this.rxvo.errors).toBe(&quot;object&quot;);
+            expect(this.rxvo.model.length).toBe(1);
+        });
+
+        it(&quot;should push with validation&quot;, () =&gt; {
+            this.rxvo.model.push(&quot;Item D&quot;);
+            expect(typeof this.rxvo.errors).toBe(&quot;object&quot;);
+            expect(this.rxvo.model.length).toBe(3);
+            expect(this.rxvo.model[2]).toBe(&quot;Item C&quot;);
+        });
+
+        it(&quot;should shift with validation&quot;, () =&gt; {
+            this.rxvo.model.shift();
+            this.rxvo.model.shift();
+            this.rxvo.model.shift();
+            expect(typeof this.rxvo.errors).toBe(&quot;object&quot;);
+            expect(this.rxvo.model.length).toBe(1);
+        });
+
+        it(&quot;should splice with validation&quot;, () =&gt; {
+            // remove all..
+            this.rxvo.model.splice(0, -1);
+            expect(typeof this.rxvo.errors).toBe(&quot;object&quot;);
+            expect(this.rxvo.model.length).toBe(3);
+            // append element...
+            this.rxvo.model.splice(-1, 0, &quot;Item D&quot;);
+            expect(typeof this.rxvo.errors).toBe(&quot;object&quot;);
+            expect(this.rxvo.model.length).toBe(3);
+        });
+
+        it(&quot;should unshift with validation&quot;, () =&gt; {
+            this.rxvo.model.unshift(&quot;Item Z&quot;);
+            expect(typeof this.rxvo.errors).toBe(&quot;object&quot;);
+            expect(this.rxvo.model.length).toBe(3);
+        });
+    });
+
+    describe(&quot;Default Values&quot;, () =&gt; {
+        it(&quot;should apply defaults to items&quot;, () =&gt; {
+            this.rxvo = new RxVO({schemas: [objectCollectionDefaults]}, {ajvOptions: {useDefaults: true}});
+            this.rxvo.model = [{}];
+            expect(this.rxvo.model[0]).toEqual({name: &quot;abc&quot;});
+        });
+    });
+
+    describe(&quot;Model Class methods &quot;, () =&gt; {
+
+        it(&quot;should not reset if it would invalidate model&quot;, () =&gt; {
+            const _rxvo = new RxVO({schemas: [stringsMinMaxCollection]});
+            _rxvo.model = [&quot;Item A&quot;, &quot;Item B&quot;, &quot;Item C&quot;];
+            expect(_rxvo.model.length).toBe(3);
+            _rxvo.model.$model.reset();
+            expect(_rxvo.model.length).toBe(3);
+        });
+
+        it(&quot;should reset it&apos;s collection if allowed&quot;, () =&gt; {
+            const _rxvo = new RxVO({schemas: [stringsCollection]});
+            _rxvo.model = [&quot;Item A&quot;, &quot;Item B&quot;, &quot;Item C&quot;];
+            _rxvo.model = [&quot;Item A&quot;, &quot;Item B&quot;, &quot;Item C&quot;];
+            expect(_rxvo.model.length).toBe(3);
+            _rxvo.model.$model.reset();
+            expect(_rxvo.model.length).toBe(0);
+        });
+
+        it(&quot;should quietly validate data with the validate method&quot;, () =&gt; {
+            const _rxvo = new RxVO({schemas: [stringsCollection]});
+            expect(_rxvo.model.$model.validate([1, 2, 3])).toBe(&quot;data/0 should be string&quot;);
+            expect(_rxvo.model.$model.validate([&quot;1&quot;, &quot;2&quot;, &quot;3&quot;])).toBe(true);
+        });
+
+        it(&quot;should freeze it&apos;s model&quot;, () =&gt; {
+            const _rxvo = new RxVO({schemas: [stringsCollection]});
+            _rxvo.model = [&quot;Item A&quot;, &quot;Item B&quot;, &quot;Item C&quot;];
+            _rxvo.model.$model.freeze();
+            expect(_rxvo.model.$model.isFrozen).toBe(true);
+            _rxvo.model = [&quot;1&quot;, &quot;2&quot;, &quot;3&quot;];
+            expect(deepEqual(_rxvo.model, [&quot;Item A&quot;, &quot;Item B&quot;, &quot;Item C&quot;])).toBe(true);
+        });
+
+        it(&quot;should freeze it&apos;s model hierarchy&quot;, () =&gt; {
+            const _rxvo = new RxVO({schemas: [objectCollection]});
+            const _orig = [{
+                name: &quot;My Name&quot;,
+                active: true,
+            }];
+
+            _rxvo.model = _orig;
+            _rxvo.model.$model.freeze();
+
+            expect(_rxvo.model.$model.isFrozen).toBe(true);
+            // should not allow array to be overriden
+            _rxvo.model = [{
+                name: &quot;Your Name&quot;,
+                active: false,
+            }];
+            expect(deepEqual(_rxvo.model, _orig)).toBe(true);
+            // should not allow array item to be overriden
+            _rxvo.model[0] = {
+                name: &quot;Your Name&quot;,
+                active: false,
+            };
+            expect(deepEqual(_rxvo.model, _orig)).toBe(true);
+            // should not set attributes on nested object properties
+            _rxvo.model[0].name = &quot;Other Name&quot;;
+            expect(deepEqual(_rxvo.model, _orig)).toBe(true);
+        });
+    });
+});
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.0.4)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>
