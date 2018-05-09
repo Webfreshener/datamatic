@@ -84,12 +84,12 @@ RxJS + JSON-Schema (Ajv) Based Observable Data Models</p>
 <li><a href="#rxvo-class">RxVO Class</a><ul>
 <li><a href="#rxvo-schemas-config">Schemas Config</a></li>
 <li><a href="#model-proxy-object">Model Proxy Object</a></li>
-<li><a href="#model-vs-$model">model vs $model</a></li>
+<li><a href="#model-vs-model">model vs $model</a></li>
 </ul>
 </li>
-<li><a href="#model-class">Model Class</a></li>
-<li><a href="#properties-model">PropertiesModel</a></li>
 <li><a href="#items-model">ItemsModel</a></li>
+<li><a href="#properties-model">PropertiesModel</a></li>
+<li><a href="#model-class">Model Class</a></li>
 </ul>
 <h4 id="installation-instructions">Installation Instructions</h4><pre><code><code class="source-code prettyprint">// this package is not yet published
 // for now use git+https and manually add to package.json
@@ -139,18 +139,15 @@ obj.subscribe({
     next: function (ref) {
         console.log(&quot;\t&gt;&gt; update succeeded!\n\t%s\n\t%s\n\n&quot;,
             &quot;current object state:&quot;, &quot;&quot; + JSON.stringify(ref));
-        doTask.next()
     },
     complete: function (ref) {
         console.log(&quot;\t&gt;&gt; %s&quot;,
             &quot;object is frozen and no longer editable&quot;);
-        doTask.next()
     },
     error: function (e) {
         console.log(&quot;\t&gt;&gt; update FAILED with error:\n\t%s\n&quot;,
             JSON.stringify(e));
         console.log(&quot;\tcurrent object state:\n\t%s\n&quot;, obj);
-        doTask.next();
     },
 });
 
@@ -321,7 +318,28 @@ It is a Proxy Object that has traps for all operations that alter the state of t
 
  // obtain model from  it&apos;s Owner
   console.log(`stringified: ${JSON.stringify(owner.model)}`);</code>
-</code></pre><h4 id="model-class">Model Class</h4><table>
+</code></pre><h4 id="itemsmodel">ItemsModel</h4><h6 id="subclass-of--a-href---model-class--model-class--a-">subclass of <a href="#model-class">Model Class</a></h6><h4 id="propertiesmodel">PropertiesModel</h4><h6 id="subclass-of--a-href---model-class--model-class--a-">subclass of <a href="#model-class">Model Class</a></h6><table>
+<thead>
+<tr>
+<th style="text-align:left">Method</th>
+<th style="text-align:left">Arguments</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">get</td>
+<td style="text-align:left">key (string)</td>
+<td style="text-align:left">applies Object.freeze to model hierarchy</td>
+</tr>
+<tr>
+<td style="text-align:left">set</td>
+<td style="text-align:left">key (string), value (any)</td>
+<td style="text-align:left">applies Object.freeze to model hierarchy</td>
+</tr>
+</tbody>
+</table>
+<h4 id="model-class">Model Class</h4><table>
 <thead>
 <tr>
 <th style="text-align:left">Method</th>
@@ -427,28 +445,7 @@ It is a Proxy Object that has traps for all operations that alter the state of t
 </tr>
 </tbody>
 </table>
-<h4 id="propertiesmodel">PropertiesModel</h4><h6 id="subclass-of--a-href---model-class--model-class--a-">subclass of <a href="#model-class">Model Class</a></h6><table>
-<thead>
-<tr>
-<th style="text-align:left">Method</th>
-<th style="text-align:left">Arguments</th>
-<th style="text-align:left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td style="text-align:left">get</td>
-<td style="text-align:left">key (string)</td>
-<td style="text-align:left">applies Object.freeze to model hierarchy</td>
-</tr>
-<tr>
-<td style="text-align:left">set</td>
-<td style="text-align:left">key (string), value (any)</td>
-<td style="text-align:left">applies Object.freeze to model hierarchy</td>
-</tr>
-</tbody>
-</table>
-<h4 id="itemsmodel">ItemsModel</h4><h6 id="subclass-of--a-href---model-class--model-class--a-">subclass of <a href="#model-class">Model Class</a></h6></div>
+</div>
 </div>
 
 <footer class="footer">

@@ -29,10 +29,10 @@ This utility is not meant for general purpose use. It leverages several technolo
   * [RxVO Class](#rxvo-class)
     * [Schemas Config](#rxvo-schemas-config)
     * [Model Proxy Object](#model-proxy-object)
-    * [model vs $model](#model-vs-$model)
-  * [Model Class](#model-class)
-  * [PropertiesModel](#properties-model)
+    * [model vs $model](#model-vs-model)
   * [ItemsModel](#items-model)
+  * [PropertiesModel](#properties-model)
+  * [Model Class](#model-class)
 
 #### Installation Instructions
 ```
@@ -195,6 +195,19 @@ In usage, `model` always references the Proxied Data Model for validation and op
  
 ```
 
+#### ItemsModel ####
+###### subclass of [Model Class](#model-class)
+
+
+#### PropertiesModel ####
+###### subclass of [Model Class](#model-class)
+
+| Method        | Arguments | Description  |
+|:--------------|:----------|:-------|
+| get | key (string) | applies Object.freeze to model hierarchy |
+| set | key (string), value (any) | applies Object.freeze to model hierarchy |
+
+
 #### Model Class ####
 | Method        | Arguments | Description  |
 |:--------------|:----------|:-------|
@@ -217,16 +230,3 @@ In usage, `model` always references the Proxied Data Model for validation and op
 | toJSON   | | retrieves root model as JSON Object |
 | validate   | path (string), value (object) | validates data at given ath against JSON-Schema |
 | validationPath [getter] | | retrieves json-schema path string for Model validation |
-
-#### PropertiesModel ####
-###### subclass of [Model Class](#model-class)
-
-| Method        | Arguments | Description  |
-|:--------------|:----------|:-------|
-| get | key (string) | applies Object.freeze to model hierarchy |
-| set | key (string), value (any) | applies Object.freeze to model hierarchy |
-
-
-#### ItemsModel ####
-###### subclass of [Model Class](#model-class)
-
