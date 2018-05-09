@@ -90,18 +90,15 @@ obj.subscribe({
     next: function (ref) {
         console.log("\t>> update succeeded!\n\t%s\n\t%s\n\n",
             "current object state:", "" + JSON.stringify(ref));
-        doTask.next()
     },
     complete: function (ref) {
         console.log("\t>> %s",
             "object is frozen and no longer editable");
-        doTask.next()
     },
     error: function (e) {
         console.log("\t>> update FAILED with error:\n\t%s\n",
             JSON.stringify(e));
         console.log("\tcurrent object state:\n\t%s\n", obj);
-        doTask.next();
     },
 });
 
