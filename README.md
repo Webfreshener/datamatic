@@ -178,6 +178,7 @@ It is a Proxy Object that has traps for all operations that alter the state of t
 ##### model vs $model 
 
 In usage, `model` always references the Proxied Data Model for validation and operation where `$model` references the owner Model Class
+
 *example:*
 ```
  const _rxvo = new RxVO({schemas: [schema]});
@@ -228,9 +229,7 @@ In usage, `model` always references the Proxied Data Model for validation and op
 | get | key (string) | applies Object.freeze to model hierarchy |
 | set | key (string), value (any) | applies Object.freeze to model hierarchy |
 
-Allows model reference to be treated as Object with all array prototype methods available
 
 #### ItemsModel ####
 ###### subclass of [Model Class](#model-class)
-Allows model reference to be treated as Array with all array prototype methods available
 
