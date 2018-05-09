@@ -38,13 +38,14 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">RxVO</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getRoot">getRoot</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-listDirtyItems">listDirtyItems</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDefaults">getDefaults</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPatternPropertyDefaults">getPatternPropertyDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeClean">makeClean</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeDirty">makeDirty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refAtKeyValidation">refAtKeyValidation</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refValidation">refValidation</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-validate">validate</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-walkObject">walkObject</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ajvRef">_ajvRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_dirtyModels">_dirtyModels</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
@@ -63,13 +64,13 @@
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {RxVO} from &apos;<span><a href="file/src/classes/rxvo.js.html#lineNumber15">rxvo/src/classes/rxvo.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {RxVO} from &apos;<span><a href="file/src/classes/rxvo.js.html#lineNumber16">rxvo/src/classes/rxvo.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/src/classes/rxvo.js.html#lineNumber15">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/src/classes/rxvo.js.html#lineNumber16">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -157,7 +158,7 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html#instance-constructor-constructor">constructor</a></span></span><span class="code" data-ice="signature">(schema: <span>json</span>, options: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>)</span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html#instance-constructor-constructor">constructor</a></span></span><span class="code" data-ice="signature">(schemas: <span>json</span>, options: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>)</span>
         </p>
       </div>
       <div>
@@ -285,7 +286,8 @@
       <div>
         
         
-        
+        <div data-ice="description"><p>Getter for document&apos;s JSON-Schema</p>
+</div>
       </div>
     </td>
     <td>
@@ -314,13 +316,43 @@
           
           
           
+          <span class="code" data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html#instance-method-addSchema">addSchema</a></span></span><span class="code" data-ice="signature">(schema: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Adds Schema to Validator instance</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
           <span class="code" data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html#instance-method-getModelsInPath">getModelsInPath</a></span></span><span class="code" data-ice="signature">(to: <span>*</span>): <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span><span>[]</span></span> | <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span><span>[]</span></span></span>
         </p>
       </div>
       <div>
         
         
-        
+        <div data-ice="description"><p>Retrieves all Models at given path</p>
+</div>
       </div>
     </td>
     <td>
@@ -349,6 +381,63 @@
         
         
         
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html#instance-method-getSchemaForKey">getSchemaForKey</a></span></span><span class="code" data-ice="signature">(id: <span>*</span>): <span>*</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html#instance-method-getSchemaForPath">getSchemaForPath</a></span></span><span class="code" data-ice="signature">(path: <span>*</span>): <span>any</span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Retrieves JSON-Schema element for given Path</p>
+</div>
       </div>
     </td>
     <td>
@@ -486,6 +575,34 @@
           
           
           
+          <span class="code" data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html#instance-method-useSchema">useSchema</a></span></span><span class="code" data-ice="signature">(id: <span>*</span>)</span>
+        </p>
+      </div>
+      <div>
+        
+        
+        
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
           <span class="code" data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html#instance-method-validate">validate</a></span></span><span class="code" data-ice="signature">(path: <span>*</span>, value: <span>*</span>): <span>*</span> | <span>void</span> | <span>RegExpExecArray</span></span>
         </p>
       </div>
@@ -522,7 +639,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber185">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber254">source</a></span></span>
     </span>
   </h3>
 
@@ -603,11 +720,11 @@
     
     
     
-    <span class="code" data-ice="name">constructor</span><span class="code" data-ice="signature">(schema: <span>json</span>, options: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>)</span>
+    <span class="code" data-ice="name">constructor</span><span class="code" data-ice="signature">(schemas: <span>json</span>, options: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>)</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber21">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber22">source</a></span></span>
     </span>
   </h3>
 
@@ -627,7 +744,7 @@
     <tbody>
     
     <tr data-ice="property" data-depth="0">
-      <td data-ice="name" class="code" data-depth="0">schema</td>
+      <td data-ice="name" class="code" data-depth="0">schemas</td>
       <td data-ice="type" class="code"><span>json</span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"></td>
@@ -675,7 +792,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber103">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber172">source</a></span></span>
     </span>
   </h3>
 
@@ -731,7 +848,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber69">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber97">source</a></span></span>
     </span>
   </h3>
 
@@ -787,7 +904,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber77">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber105">source</a></span></span>
     </span>
   </h3>
 
@@ -831,14 +948,15 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber85">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber113">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Getter for document&apos;s JSON-Schema</p>
+</div>
 
   
 
@@ -878,6 +996,78 @@
 <div data-ice="methodDetails"><h2 data-ice="title">Public Methods</h2>
 
 <div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-addSchema">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">addSchema</span><span class="code" data-ice="signature">(schema: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber80">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Adds Schema to Validator instance</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">schema</td>
+      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"></td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></td>
+          
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="instance-method-getModelsInPath">
     <span class="access" data-ice="access">public</span>
     
@@ -889,14 +1079,15 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber129">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber198">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Retrieves all Models at given path</p>
+</div>
 
   
 
@@ -960,7 +1151,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber112">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber181">source</a></span></span>
     </span>
   </h3>
 
@@ -1020,6 +1211,149 @@
   
 </div>
 <div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-getSchemaForKey">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">getSchemaForKey</span><span class="code" data-ice="signature">(id: <span>*</span>): <span>*</span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber118">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">id</td>
+      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"></td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span>*</span></td>
+          
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-getSchemaForPath">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">getSchemaForPath</span><span class="code" data-ice="signature">(path: <span>*</span>): <span>any</span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber143">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Retrieves JSON-Schema element for given Path</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">path</td>
+      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"></td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span>any</span></td>
+          
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="instance-method-subscribe">
     <span class="access" data-ice="access">public</span>
     
@@ -1031,7 +1365,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber149">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber218">source</a></span></span>
     </span>
   </h3>
 
@@ -1103,7 +1437,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber159">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber228">source</a></span></span>
     </span>
   </h3>
 
@@ -1181,7 +1515,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber175">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber244">source</a></span></span>
     </span>
   </h3>
 
@@ -1237,7 +1571,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber167">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber236">source</a></span></span>
     </span>
   </h3>
 
@@ -1282,6 +1616,65 @@
   
 </div>
 <div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-useSchema">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">useSchema</span><span class="code" data-ice="signature">(id: <span>*</span>)</span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber89">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">id</td>
+      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"></td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="instance-method-validate">
     <span class="access" data-ice="access">public</span>
     
@@ -1293,7 +1686,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber95">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber164">source</a></span></span>
     </span>
   </h3>
 

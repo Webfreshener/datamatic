@@ -38,13 +38,14 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">RxVO</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getRoot">getRoot</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-listDirtyItems">listDirtyItems</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDefaults">getDefaults</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPatternPropertyDefaults">getPatternPropertyDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeClean">makeClean</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeDirty">makeDirty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refAtKeyValidation">refAtKeyValidation</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refValidation">refValidation</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-validate">validate</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-walkObject">walkObject</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ajvRef">_ajvRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_dirtyModels">_dirtyModels</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
@@ -69,6 +70,85 @@
 import {_ajvRef} from &quot;./_references&quot;;
 import {RxVO} from &quot;./rxvo&quot;;
 import Ajv from &quot;ajv&quot;;
+import {default as JSONSchemaV4} from &quot;../schemas/json-schema-draft-04&quot;;
+import {default as JSONSchemaV6} from &quot;../schemas/json-schema-draft-06&quot;;
+import {default as OpenAPIv2} from &quot;../../fixtures/OpenAPIv2&quot;;
+
+const _validators = new WeakMap();
+
+/**
+ *
+ * @param schema
+ * @returns {string}
+ */
+const getSchemaID = (schema) =&gt; {
+    const id = [&quot;$id&quot;, &quot;id&quot;].filter((id) =&gt; schema.hasOwnProperty(id));
+    return id.length ? schema[id[0]] : &quot;root#&quot;;
+};
+
+/**
+ *
+ * @param {ajv.Ajv} _ajv
+ * @param {AjvWrapper} inst
+ * @param {object} schema
+ * @returns {string}
+ */
+const createValidatorRef = (_ajv, inst, schema) =&gt; {
+    const id = [&quot;$id&quot;, &quot;id&quot;].filter((id) =&gt; schema.hasOwnProperty(id));
+    let _schemaID;
+    if (id) {
+        _schemaID = schema[id[0]];
+        _validators.get(inst)[_schemaID] = _ajv.getSchema(_schemaID);
+    } else {
+        _schemaID = schema[&quot;$id&quot;] = &quot;root#&quot;;
+    }
+
+    return _schemaID;
+};
+/**
+ *
+ * @param schemas
+ * @param opts
+ * @returns {ajv | ajv.Ajv}
+ */
+const createAjv = (inst, schemas, opts) =&gt; {
+    const _ajv = new Ajv(opts);
+    if (schemas &amp;&amp; schemas !== null) {
+        if (schemas.hasOwnProperty(&quot;meta&quot;)) {
+            if (Array.isArray(schemas.meta)) {
+                schemas.meta.forEach((meta) =&gt; {
+                    _ajv.addMetaSchema(meta);
+                });
+            }
+        }
+
+        if (schemas.hasOwnProperty(&quot;schemas&quot;)) {
+            let schemaID;
+            if (Array.isArray(schemas.schemas)) {
+                schemas.schemas.forEach((schema) =&gt; {
+                    schemaID = getSchemaID(schema);
+                    _ajv.addSchema(schema, schemaID);
+                    // createValidatorRef(_ajv, inst, schema);
+                });
+                // sets last id as active schema;
+                // _ajv.getSchema(schemaID);
+            } else {
+                if ((typeof schemas.schemas) === &quot;string&quot;) {
+                    schemaID = getSchemaID(schemas.schema);
+                    _ajv.addSchema(schemas.schemas, schemaID);
+                    // createValidatorRef(_ajv, inst, schema.schemas);
+                    // _ajv.getSchema(schemaID);
+                }
+            }
+
+            if (schemaID) {
+                inst.path = schemaID;
+            }
+        }
+    }
+
+    return _ajv;
+};
 
 /**
  * Wrapper for Ajv JSON-PropertiesModel Validator
@@ -78,13 +158,17 @@ export class AjvWrapper {
     /**
      * @constructor
      * @param rxvo
-     * @param schema
+     * @param schemas
      * @param ajvOptions
      */
-    constructor(rxvo, schema, ajvOptions = {}) {
+    constructor(rxvo, schemas, ajvOptions = {}) {
         // ensures that we are given something that represents a RxVO object
         if ((!rxvo) || !(rxvo instanceof RxVO)) {
             throw &quot;RxVO is required at arguments[0]&quot;;
+        }
+
+        if (_validators.get(this) === void(0)) {
+            _validators.set(this, {});
         }
 
         // defines getter for parent RxVO reference
@@ -98,25 +182,22 @@ export class AjvWrapper {
 
         // makes user defined options object accessible for evaluation
         Object.defineProperty(this, &quot;options&quot;, {
-           get: () =&gt; opts,
-           enumerable: true,
+            get: () =&gt; opts,
+            enumerable: true,
         });
 
-        const _ajv = new Ajv(opts);
+        this.path = &quot;root#&quot;;
+        const _ajv = createAjv(this, schemas, opts);
+
         // initializes Ajv instance for this Doc and stores it to WeakMap
         _ajvRef.set(this, _ajv);
-
-        // tests for schema and sets provided schema as the &quot;root&quot; schema
-        if (schema !== void(0)) {
-            _ajv.addSchema(schema, &quot;root&quot;);
-        }
 
         // accept no further modifications to this object
         Object.seal(this);
     }
 
     /**
-     * helper method to derive path for given model
+     * Helper method to derive path for given model
      * todo: review for removal
      * @param model
      * @return {string}
@@ -126,7 +207,7 @@ export class AjvWrapper {
     }
 
     /**
-     * getter for captive Ajv validator
+     * Getter for captive Ajv validator
      * -- use this for Ajv API Methods
      * @returns {ajv}
      */
@@ -136,10 +217,14 @@ export class AjvWrapper {
 
     /**
      * Executes validator at PropertiesModel $model `path` against `value`
-     * @param path
-     * @param value
+     * @param {string} path
+     * @param {boolean} value
      */
     exec(path, value) {
+        // // appends id ref to path
+        if (path.indexOf(&quot;#&quot;) &lt; 0) {
+            path = `${this.path}${path}`;
+        }
         return this.$ajv.validate(path, value);
     }
 }
@@ -152,11 +237,11 @@ export class AjvWrapper {
  */
 const _ajvOptions = {
     // // validation and reporting options:
-    $data:            true,
+    // $data:            false,
     // allErrors:        true,
     // verbose:          true,
     // $comment:         false, // NEW in Ajv version 6.0
-    jsonPointers:     true,
+    jsonPointers: true,
     // uniqueItems:      true,
     // unicode:          true,
     // format:           &apos;fast&apos;,
@@ -165,13 +250,13 @@ const _ajvOptions = {
     // schemas:          {},
     // logger:           undefined,
     // referenced schema options:
-    // schemaId:         &apos;$id&apos;,
+    schemaId: &apos;auto&apos;,
     // missingRefs:      true,
-    // extendRefs:       &apos;fail&apos;, // default &apos;ignore&apos;
+    extendRefs: true, // default &apos;ignore&apos;
     // loadSchema:       undefined, // function(uri: string): Promise {}
     // options to modify validated data:
-    // removeAdditional: false,
-    // useDefaults:      true,
+    // removeAdditional: true,
+    // useDefaults: true,
     // coerceTypes:      false,
     // asynchronous validation options:
     // transpile:        undefined, // requires ajv-async package

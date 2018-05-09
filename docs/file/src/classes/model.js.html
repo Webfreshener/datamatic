@@ -38,13 +38,14 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">RxVO</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getRoot">getRoot</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-listDirtyItems">listDirtyItems</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDefaults">getDefaults</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPatternPropertyDefaults">getPatternPropertyDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeClean">makeClean</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeDirty">makeDirty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refAtKeyValidation">refAtKeyValidation</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refValidation">refValidation</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-validate">validate</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-walkObject">walkObject</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ajvRef">_ajvRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_dirtyModels">_dirtyModels</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
@@ -109,9 +110,9 @@ const createMetaDataRef = (ref, metaRef) =&gt; {
 export class Model {
     constructor() {
         // tests if this is instance of MetaData
-        if (!(this instanceof MetaData)) {
-            createMetaDataRef(this, arguments[0]);
-        }
+        // if (!(this instanceof MetaData)) {
+        createMetaDataRef(this, arguments[0]);
+        // }
     }
 
     /**
@@ -152,7 +153,8 @@ export class Model {
 
         // creates an extensible object to hold our unsubscribe method
         // and adds unsubscribe calls to the Proto object
-        const _subs = class {};
+        const _subs = class {
+        };
 
         // adds unsubscribe to the Proto object
         _subs.prototype.unsubscribe = () =&gt; {
@@ -171,7 +173,7 @@ export class Model {
      */
     validate(value) {
         try {
-           return validate(this, this.validationPath, value);
+            return validate(this, this.validationPath, value);
         } catch (e) {
             // couldn&apos;t find schema, so is Additional Properties
             // todo: review `removeAdditional` ajv option for related behavior
@@ -271,11 +273,10 @@ export class Model {
 
     /**
      * Provides JSON String representation of Model
-     * @param pretty - `prettifies` JSON output for readability
+     * @returns {string}
      */
-    toString(pretty = false) {
-        console.log(this.toJSON());
-        return JSON.stringify(this.toJSON(), null, (pretty ? 2 : void(0)));
+    toString() {
+        return JSON.stringify(this.toJSON());
     }
 
     /**
@@ -346,6 +347,7 @@ export class Model {
     get jsonPath() {
         return this.path.replace(/\/?(properties|items)+\/?/g, &quot;.&quot;).replace(/^\./, &quot;&quot;);
     }
+
     /**
      * Getter for Model&apos;s parent
      * @returns {Model}
@@ -395,23 +397,15 @@ export class Model {
      * @return {string}
      */
     get validationPath() {
-        return this.path === &quot;&quot; ? &quot;root#/&quot; : `root#${this.path}`;
+        return this.path === &quot;&quot; ? &quot;/&quot; : `${this.path}`;
     }
 
     /**
-     * todo: implement with ajv
+     * todo: add tests
      * @returns {*}
      */
     get schema() {
-        return this; // _validators.get(this.rxvo).$ajv.compile({$model: this.validationPath});
-    }
-
-    /**
-     * todo: remove and standardize around `schema`
-     * @returns {*}
-     */
-    get signature() {
-        return this.schema;
+        return this.rxvo.getSchemaForPath(this.path); // _validators.get(this.rxvo).$ajv.compile({$model: this.validationPath});
     }
 
     /**

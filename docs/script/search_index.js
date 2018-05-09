@@ -126,15 +126,15 @@ window.esdocSearchIndex = [
     "variable"
   ],
   [
-    "rxvo/src/classes/utils.js~getroot",
-    "function/index.html#static-function-getRoot",
-    "<span>getRoot</span> <span class=\"search-result-import-path\">rxvo/src/classes/utils.js</span>",
+    "rxvo/src/classes/utils.js~getdefaults",
+    "function/index.html#static-function-getDefaults",
+    "<span>getDefaults</span> <span class=\"search-result-import-path\">rxvo/src/classes/utils.js</span>",
     "function"
   ],
   [
-    "rxvo/src/classes/utils.js~listdirtyitems",
-    "function/index.html#static-function-listDirtyItems",
-    "<span>listDirtyItems</span> <span class=\"search-result-import-path\">rxvo/src/classes/utils.js</span>",
+    "rxvo/src/classes/utils.js~getpatternpropertydefaults",
+    "function/index.html#static-function-getPatternPropertyDefaults",
+    "<span>getPatternPropertyDefaults</span> <span class=\"search-result-import-path\">rxvo/src/classes/utils.js</span>",
     "function"
   ],
   [
@@ -165,6 +165,12 @@ window.esdocSearchIndex = [
     "rxvo/src/classes/utils.js~validate",
     "function/index.html#static-function-validate",
     "<span>validate</span> <span class=\"search-result-import-path\">rxvo/src/classes/utils.js</span>",
+    "function"
+  ],
+  [
+    "rxvo/src/classes/utils.js~walkobject",
+    "function/index.html#static-function-walkObject",
+    "<span>walkObject</span> <span class=\"search-result-import-path\">rxvo/src/classes/utils.js</span>",
     "function"
   ],
   [
@@ -480,10 +486,22 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/classes/_ajvwrapper.js~ajvwrapper#path",
+    "class/src/classes/_ajvWrapper.js~AjvWrapper.html#instance-member-path",
+    "src/classes/_ajvWrapper.js~AjvWrapper#path",
+    "member"
+  ],
+  [
     "src/classes/_ajvwrapper.js~ajvwrapper.resolvepath",
     "class/src/classes/_ajvWrapper.js~AjvWrapper.html#static-method-resolvePath",
     "src/classes/_ajvWrapper.js~AjvWrapper.resolvePath",
     "method"
+  ],
+  [
+    "src/classes/_ajvwrapper.test.js",
+    "file/src/classes/_ajvWrapper.test.js.html",
+    "src/classes/_ajvWrapper.test.js",
+    "file"
   ],
   [
     "src/classes/_branchnotifier.js",
@@ -570,6 +588,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/classes/_metadata.test.js",
+    "file/src/classes/_metadata.test.js.html",
+    "src/classes/_metadata.test.js",
+    "file"
+  ],
+  [
     "src/classes/_observerbuilder.js",
     "file/src/classes/_observerBuilder.js.html",
     "src/classes/_observerBuilder.js",
@@ -624,9 +648,21 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/classes/_observerbuilder.test.js",
+    "file/src/classes/_observerBuilder.test.js.html",
+    "src/classes/_observerBuilder.test.js",
+    "file"
+  ],
+  [
     "src/classes/_references.js",
     "file/src/classes/_references.js.html",
     "src/classes/_references.js",
+    "file"
+  ],
+  [
+    "src/classes/_references.test.js",
+    "file/src/classes/_references.test.js.html",
+    "src/classes/_references.test.js",
     "file"
   ],
   [
@@ -666,6 +702,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/classes/_schemahelpers.test.js",
+    "file/src/classes/_schemaHelpers.test.js.html",
+    "src/classes/_schemaHelpers.test.js",
+    "file"
+  ],
+  [
     "src/classes/itemsmodel.js",
     "file/src/classes/itemsModel.js.html",
     "src/classes/itemsModel.js",
@@ -685,15 +727,27 @@ window.esdocSearchIndex = [
   ],
   [
     "src/classes/itemsmodel.js~itemsmodel#model",
-    "class/src/classes/itemsModel.js~ItemsModel.html#instance-set-model",
+    "class/src/classes/itemsModel.js~ItemsModel.html#instance-get-model",
     "src/classes/itemsModel.js~ItemsModel#model",
     "member"
   ],
   [
     "src/classes/itemsmodel.js~itemsmodel#model",
-    "class/src/classes/itemsModel.js~ItemsModel.html#instance-get-model",
+    "class/src/classes/itemsModel.js~ItemsModel.html#instance-set-model",
     "src/classes/itemsModel.js~ItemsModel#model",
     "member"
+  ],
+  [
+    "src/classes/itemsmodel.test.js",
+    "file/src/classes/itemsModel.test.js.html",
+    "src/classes/itemsModel.test.js",
+    "file"
+  ],
+  [
+    "src/classes/model-rxjs.test.js",
+    "file/src/classes/model-rxjs.test.js.html",
+    "src/classes/model-rxjs.test.js",
+    "file"
   ],
   [
     "src/classes/model.js",
@@ -792,12 +846,6 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
-    "src/classes/model.js~model#signature",
-    "class/src/classes/model.js~Model.html#instance-get-signature",
-    "src/classes/model.js~Model#signature",
-    "member"
-  ],
-  [
     "src/classes/model.js~model#subscribe",
     "class/src/classes/model.js~Model.html#instance-method-subscribe",
     "src/classes/model.js~Model#subscribe",
@@ -846,6 +894,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/classes/model.test.js",
+    "file/src/classes/model.test.js.html",
+    "src/classes/model.test.js",
+    "file"
+  ],
+  [
     "src/classes/propertiesmodel.js",
     "file/src/classes/propertiesModel.js.html",
     "src/classes/propertiesModel.js",
@@ -888,16 +942,22 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "src/classes/propertiesmodel.js~propertiesmodel.concatpathaddr",
-    "class/src/classes/propertiesModel.js~PropertiesModel.html#static-method-concatPathAddr",
-    "src/classes/propertiesModel.js~PropertiesModel.concatPathAddr",
-    "method"
+    "src/classes/propertiesmodel.test.js",
+    "file/src/classes/propertiesModel.test.js.html",
+    "src/classes/propertiesModel.test.js",
+    "file"
   ],
   [
     "src/classes/rxvo.js",
     "file/src/classes/rxvo.js.html",
     "src/classes/rxvo.js",
     "file"
+  ],
+  [
+    "src/classes/rxvo.js~rxvo#addschema",
+    "class/src/classes/rxvo.js~RxVO.html#instance-method-addSchema",
+    "src/classes/rxvo.js~RxVO#addSchema",
+    "method"
   ],
   [
     "src/classes/rxvo.js~rxvo#constructor",
@@ -924,14 +984,26 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/classes/rxvo.js~rxvo#getschemaforkey",
+    "class/src/classes/rxvo.js~RxVO.html#instance-method-getSchemaForKey",
+    "src/classes/rxvo.js~RxVO#getSchemaForKey",
+    "method"
+  ],
+  [
+    "src/classes/rxvo.js~rxvo#getschemaforpath",
+    "class/src/classes/rxvo.js~RxVO.html#instance-method-getSchemaForPath",
+    "src/classes/rxvo.js~RxVO#getSchemaForPath",
+    "method"
+  ],
+  [
     "src/classes/rxvo.js~rxvo#model",
-    "class/src/classes/rxvo.js~RxVO.html#instance-get-model",
+    "class/src/classes/rxvo.js~RxVO.html#instance-set-model",
     "src/classes/rxvo.js~RxVO#model",
     "member"
   ],
   [
     "src/classes/rxvo.js~rxvo#model",
-    "class/src/classes/rxvo.js~RxVO.html#instance-set-model",
+    "class/src/classes/rxvo.js~RxVO.html#instance-get-model",
     "src/classes/rxvo.js~RxVO#model",
     "member"
   ],
@@ -966,6 +1038,12 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/classes/rxvo.js~rxvo#useschema",
+    "class/src/classes/rxvo.js~RxVO.html#instance-method-useSchema",
+    "src/classes/rxvo.js~RxVO#useSchema",
+    "method"
+  ],
+  [
     "src/classes/rxvo.js~rxvo#validate",
     "class/src/classes/rxvo.js~RxVO.html#instance-method-validate",
     "src/classes/rxvo.js~RxVO#validate",
@@ -978,15 +1056,45 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/classes/rxvo.test.js",
+    "file/src/classes/rxvo.test.js.html",
+    "src/classes/rxvo.test.js",
+    "file"
+  ],
+  [
     "src/classes/utils.js",
     "file/src/classes/utils.js.html",
     "src/classes/utils.js",
     "file"
   ],
   [
+    "src/classes/utils.test.js",
+    "file/src/classes/utils.test.js.html",
+    "src/classes/utils.test.js",
+    "file"
+  ],
+  [
+    "src/complex-schema.test.js",
+    "file/src/complex-schema.test.js.html",
+    "src/complex-schema.test.js",
+    "file"
+  ],
+  [
+    "src/dist.test.js",
+    "file/src/dist.test.js.html",
+    "src/dist.test.js",
+    "file"
+  ],
+  [
     "src/index.js",
     "file/src/index.js.html",
     "src/index.js",
+    "file"
+  ],
+  [
+    "src/index.test.js",
+    "file/src/index.test.js.html",
+    "src/index.test.js",
     "file"
   ]
 ]

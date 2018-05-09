@@ -60,24 +60,6 @@ export class PropertiesModel extends Model {
     }
 
     /**
-     * utility method to create selector path
-     * @param path
-     * @param addr
-     * @returns {string}
-     */
-    static concatPathAddr(path, addr) {
-        return path.length ? `${path}/${addr}` : `${addr}`;
-    }
-
-    /**
-     * Getter for patternDefaults for this Model
-     * @returns {object|null}
-     */
-    get patternDefaults() {
-        return getPatternPropertyDefaults(this.rxvo.getSchemaForPath(this.path));
-    }
-
-    /**
      * getter for object model
      */
     get model() {

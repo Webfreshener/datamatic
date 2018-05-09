@@ -38,13 +38,14 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">RxVO</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getRoot">getRoot</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-listDirtyItems">listDirtyItems</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDefaults">getDefaults</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPatternPropertyDefaults">getPatternPropertyDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeClean">makeClean</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeDirty">makeDirty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refAtKeyValidation">refAtKeyValidation</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refValidation">refValidation</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-validate">validate</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-walkObject">walkObject</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ajvRef">_ajvRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_dirtyModels">_dirtyModels</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
@@ -67,31 +68,41 @@ RxJS + JSON-Schema (Ajv) Based Observable Data Models</p>
 <p><a href="https://travis-ci.org/Webfreshener/RxVO"><img src="https://travis-ci.org/Webfreshener/RxVO.svg?branch=master" alt="Build Status"></a>
 <a href="https://david-dm.org/webfreshener/RxVO?type=dev"><img src="https://david-dm.org/webfreshener/RxVO/dev-status.svg" alt="Dev Dependency Status"></a>
 <a href="https://www.codacy.com/app/vanschroeder/RxVO?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Webfreshener/RxVO&amp;utm_campaign=Badge_Grade"><img src="https://api.codacy.com/project/badge/Grade/c665c70dfeb144319bc5bbd58695eb90" alt="Codacy Badge"></a>
+<a href="https://www.codacy.com/app/vanschroeder/RxVO?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Webfreshener/RxVO&amp;utm_campaign=Badge_Coverage"><img src="https://api.codacy.com/project/badge/Coverage/c665c70dfeb144319bc5bbd58695eb90" alt="Codacy Badge"></a>
 <a href="https://codeclimate.com/github/Webfreshener/RxVO/maintainability"><img src="https://api.codeclimate.com/v1/badges/625326e1880421ccc809/maintainability" alt="Maintainability"></a></p>
-<p><a href="https://webfreshener.github.io/RxJO/">Online Developer Documentation</a></p>
+<p><a href="https://webfreshener.github.io/RxVO/">Online Developer Documentation</a></p>
 <h2 id="--9888--caution-">&#x26A0; Caution!</h2><p>This utility is not meant for general purpose use. It leverages several technologies such as RxJS, JSON-Schema and Proxy. As such it is not performant or suitable for applications that require a high degree of efficiency. However it should be fine for prototyping and single-user use in browsers or other sandboxed environments</p>
-<h3 id="purpose">Purpose</h3><p> RxVo was developed to provide a means quickly and easily validate data from User Input or remote API calls and
- and to be able to easily receive update notifications without having to manually write code to facilitate those 
- objectives. It is to that end that RxVO was developed, an Observable, Schema Based Data Validation Utility written 
- for Javascript </p>
+<h3 id="goals">Goals</h3><ul>
+<li>Provide a means to quickly and easily validate complex datasets</li>
+<li>Look and feel like a standard JS Object for ease of use and adaptability</li>
+<li>Automate creation of RxJS Update and Error notifications </li>
+</ul>
 <h3 id="table-of-contents">Table of Contents</h3><p><strong><a href="#installation-instructions">Installation Instructions</a></strong></p>
-<p><strong><a href="#jsd-specification">RXVO Document</a></strong></p>
+<p><strong><a href="#usage-example">Usage Example</a></strong></p>
+<p><strong><a href="#developer-guide">Developer Guide</a></strong></p>
 <ul>
-<li><a href="#basic-usage">Basic Usage</a></li>
-<li><p><a href="#api">API</a></p>
-<ul>
-<li><a href="#rxvo">RxVO</a></li>
-<li><a href="#model">Model</a></li>
+<li><a href="#rxvo-class">RxVO Class</a><ul>
+<li><a href="#rxvo-schemas-config">Schemas Config</a></li>
+<li><a href="#model-proxy-object">Model Proxy Object</a></li>
+<li><a href="#model-vs-$model">model vs $model</a></li>
+</ul>
+</li>
+<li><a href="#model-class">Model Class</a></li>
 <li><a href="#properties-model">PropertiesModel</a></li>
 <li><a href="#items-model">ItemsModel</a></li>
 </ul>
-</li>
-</ul>
-<h4 id="install">Install</h4><pre><code><code class="source-code prettyprint">$ npm i -s rxvo</code>
-</code></pre><h4 id="basic-usage">Basic Usage</h4><p>The example below defines a Model that expects a <code>name</code> value and 
+<h4 id="installation-instructions">Installation Instructions</h4><pre><code><code class="source-code prettyprint">// this package is not yet published
+// for now use git+https and manually add to package.json
+dependencies: {
+...
+&quot;rxvo&quot;: &quot;git+https://github.com/webfreshener/RxVO.git&quot;,
+...
+}</code>
+</code></pre><h4 id="usage-example">Usage Example</h4><p>The example below defines a Model that expects a <code>name</code> value and 
 list of <code>topScores</code> items</p>
 <pre><code><code class="source-code prettyprint">// JSON-SCHEMA for Scores Collection
 const schema = {
+    &quot;id&quot;: &quot;root#&quot;,
     &quot;type&quot;: &quot;object&quot;,
     &quot;properties&quot;: {
         &quot;name&quot;: {
@@ -121,7 +132,7 @@ const schema = {
 
 
 // instantiate our Model
-const obj = new RxVO(schema);
+const obj = new RxVO({schemas: [schema]});
 
 // subscribes an observer to the Model
 obj.subscribe({
@@ -173,7 +184,273 @@ obj.model.topScores[0].score = &quot;1234&quot;;
 // reason: &quot;topScores&quot; is marked as required
 delete obj.model.topScores;</code>
 </code></pre><p>Refer to the examples demo in <code>./examples/basic-usage</code> for more usage examples</p>
-<h4 id="api">API</h4><h4 id="model">Model</h4><h4 id="propertiesmodel">PropertiesModel</h4><h4 id="itemsmodel">ItemsModel</h4></div>
+<h2 id="developer-guide">Developer Guide</h2><h4 id="rxvo-class">RxVO Class</h4><p>This class represents the Document entry point</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Method</th>
+<th style="text-align:left">Arguments</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">constructor</td>
+<td style="text-align:left"><a href="#rxvo-schemas-config">schemas config</a> (object), [options (object)]</td>
+<td style="text-align:left">creates new RxVO instance</td>
+</tr>
+<tr>
+<td style="text-align:left">errors [getter]</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">retrieves errors (if any) from last json-schema validation</td>
+</tr>
+<tr>
+<td style="text-align:left">model [getter/setter]</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">retrieves root <a href="#model-proxy-object">model proxy object</a> for operation</td>
+</tr>
+<tr>
+<td style="text-align:left">getModelsInPath</td>
+<td style="text-align:left">to (string)</td>
+<td style="text-align:left">retrieves models at given path</td>
+</tr>
+<tr>
+<td style="text-align:left">getSchemaForKey</td>
+<td style="text-align:left">key (string)</td>
+<td style="text-align:left">retrieves json-schema with given key as ID</td>
+</tr>
+<tr>
+<td style="text-align:left">getSchemaForPath</td>
+<td style="text-align:left">path (string)</td>
+<td style="text-align:left">retrieves json-schema for model at given path</td>
+</tr>
+<tr>
+<td style="text-align:left">schema [getter]</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">retrieves json-schema for root model</td>
+</tr>
+<tr>
+<td style="text-align:left">subscribe</td>
+<td style="text-align:left">observers (object)</td>
+<td style="text-align:left">Subscribes Observers to the RxVO Model Root</td>
+</tr>
+<tr>
+<td style="text-align:left">subscribeTo</td>
+<td style="text-align:left">path (string), observers (object)</td>
+<td style="text-align:left">Subscribes Observers to the Model at path </td>
+</tr>
+<tr>
+<td style="text-align:left">toString</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">retrieves root model as JSON String</td>
+</tr>
+<tr>
+<td style="text-align:left">toJSON</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">retrieves root model as JSON Object</td>
+</tr>
+<tr>
+<td style="text-align:left">validate</td>
+<td style="text-align:left">path (string), value (object)</td>
+<td style="text-align:left">validates data at given ath against JSON-Schema</td>
+</tr>
+<tr>
+<td style="text-align:left"><em>static</em> fromJSON</td>
+<td style="text-align:left">json (string | object)</td>
+<td style="text-align:left">creates new RxVO from static method</td>
+</tr>
+</tbody>
+</table>
+<h5 id="rxvo-schemas-config">RxVO Schemas Config</h5><table>
+<thead>
+<tr>
+<th style="text-align:left">Property</th>
+<th style="text-align:left">Type</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">meta</td>
+<td style="text-align:left">array</td>
+<td style="text-align:left">Array of MetaSchema references to validate Schemas against</td>
+</tr>
+<tr>
+<td style="text-align:left">schemas</td>
+<td style="text-align:left">array</td>
+<td style="text-align:left">Array of Schema references to valdiate data against </td>
+</tr>
+<tr>
+<td style="text-align:left">use</td>
+<td style="text-align:left">string</td>
+<td style="text-align:left">key/id of schema to use for data validation</td>
+</tr>
+</tbody>
+</table>
+<h5 id="model-proxy-object">Model Proxy Object</h5><p>This is the Data Model most usage will be based around.
+It is a Proxy Object that has traps for all operations that alter the state of the given Array or Object</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Property</th>
+<th style="text-align:left">Type</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">$model</td>
+<td style="text-align:left">(object  | array)</td>
+<td style="text-align:left">references Proxy Object owner class</td>
+</tr>
+</tbody>
+</table>
+<h5 id="model-vs--model">model vs $model</h5><p>In usage, <code>model</code> always references the Proxied Data Model for validation and operation where <code>$model</code> references the owner Model Class
+<em>example:</em></p>
+<pre><code><code class="source-code prettyprint"> const _rxvo = new RxVO({schemas: [schema]});
+
+ // access the root model:
+ console.log(`JSON.stringify(_rxvo.model)`);
+
+ // access the model&apos;s owner Model Class:
+ const owner = _rxvo.model.$model;
+ console.log(`is frozen: ${owner.isFrozen}`);
+
+ // call toString on Owner
+ console.log(`stringified: ${owner}`);
+
+ // obtain model from  it&apos;s Owner
+  console.log(`stringified: ${JSON.stringify(owner.model)}`);</code>
+</code></pre><h4 id="model-class">Model Class</h4><table>
+<thead>
+<tr>
+<th style="text-align:left">Method</th>
+<th style="text-align:left">Arguments</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">freeze</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">applies Object.freeze to model hierarchy</td>
+</tr>
+<tr>
+<td style="text-align:left">isDirty [getter]</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">returns dirtyness of model heirarchy (is dirty if operation in progress)</td>
+</tr>
+<tr>
+<td style="text-align:left">isFrozen [getter]</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">returns Object.freeze status of Model hierarchy</td>
+</tr>
+<tr>
+<td style="text-align:left">jsonPath [getter]</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">retrieves json path string for Model instance. eg: &quot;this.is.my.path&quot;</td>
+</tr>
+<tr>
+<td style="text-align:left">model [getter/setter]</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">retrieves root model for operation</td>
+</tr>
+<tr>
+<td style="text-align:left">subscribe</td>
+<td style="text-align:left">observers (object)</td>
+<td style="text-align:left">Subscribes Observers to the RxVO Model Root</td>
+</tr>
+<tr>
+<td style="text-align:left">subscribeTo</td>
+<td style="text-align:left">path (string), observers (object)</td>
+<td style="text-align:left">Subscribes Observers to the Model at path</td>
+</tr>
+<tr>
+<td style="text-align:left">model [getter/setter]</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">setter/getter for <a href="#model-proxy-object">model proxy object</a> for operation</td>
+</tr>
+<tr>
+<td style="text-align:left">objectID [getter]</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">retrieves Unique ObjectID of Model instance</td>
+</tr>
+<tr>
+<td style="text-align:left">options [getter]</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">retrieves options passed to Model instance</td>
+</tr>
+<tr>
+<td style="text-align:left">path [getter]</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">retrieves json-schema path string for Model instance. eg: &quot;#/this/is/my/path&quot;</td>
+</tr>
+<tr>
+<td style="text-align:left">parent [getter]</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">retrieves Model&apos;s parent Model instance</td>
+</tr>
+<tr>
+<td style="text-align:left">reset</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">resets model to initial state if operation is valid</td>
+</tr>
+<tr>
+<td style="text-align:left">root [getter]</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">retrieves root Model instance</td>
+</tr>
+<tr>
+<td style="text-align:left">rxvo [getter]</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">retrieves Model&apos;s RxVO document instance</td>
+</tr>
+<tr>
+<td style="text-align:left">toString</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">retrieves root model as JSON String</td>
+</tr>
+<tr>
+<td style="text-align:left">toJSON</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">retrieves root model as JSON Object</td>
+</tr>
+<tr>
+<td style="text-align:left">validate</td>
+<td style="text-align:left">path (string), value (object)</td>
+<td style="text-align:left">validates data at given ath against JSON-Schema</td>
+</tr>
+<tr>
+<td style="text-align:left">validationPath [getter]</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">retrieves json-schema path string for Model validation</td>
+</tr>
+</tbody>
+</table>
+<h4 id="propertiesmodel">PropertiesModel</h4><h6 id="subclass-of--a-href---model-class--model-class--a-">subclass of <a href="#model-class">Model Class</a></h6><table>
+<thead>
+<tr>
+<th style="text-align:left">Method</th>
+<th style="text-align:left">Arguments</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">get</td>
+<td style="text-align:left">key (string)</td>
+<td style="text-align:left">applies Object.freeze to model hierarchy</td>
+</tr>
+<tr>
+<td style="text-align:left">set</td>
+<td style="text-align:left">key (string), value (any)</td>
+<td style="text-align:left">applies Object.freeze to model hierarchy</td>
+</tr>
+</tbody>
+</table>
+<p>Allows model reference to be treated as Object with all array prototype methods available</p>
+<h4 id="itemsmodel">ItemsModel</h4><h6 id="subclass-of--a-href---model-class--model-class--a-">subclass of <a href="#model-class">Model Class</a></h6><p>Allows model reference to be treated as Array with all array prototype methods available</p>
+</div>
 </div>
 
 <footer class="footer">

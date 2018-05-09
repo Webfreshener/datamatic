@@ -38,13 +38,14 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">RxVO</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getRoot">getRoot</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-listDirtyItems">listDirtyItems</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDefaults">getDefaults</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPatternPropertyDefaults">getPatternPropertyDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeClean">makeClean</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeDirty">makeDirty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refAtKeyValidation">refAtKeyValidation</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refValidation">refValidation</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-validate">validate</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-walkObject">walkObject</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ajvRef">_ajvRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_dirtyModels">_dirtyModels</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
@@ -63,13 +64,13 @@
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {ItemsModel} from &apos;<span><a href="file/src/classes/itemsModel.js.html#lineNumber14">rxvo/src/classes/itemsModel.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {ItemsModel} from &apos;<span><a href="file/src/classes/itemsModel.js.html#lineNumber15">rxvo/src/classes/itemsModel.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/src/classes/itemsModel.js.html#lineNumber14">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/src/classes/itemsModel.js.html#lineNumber15">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
@@ -605,36 +606,7 @@ todo: review for possible removal</p>
       <div>
         
         
-        <div data-ice="description"><p>todo: implement with ajv</p>
-</div>
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      <span class="kind" data-ice="kind">get</span>
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          
-          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-get-signature">signature</a></span></span><span class="code" data-ice="signature">: <span>*</span>: <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        <div data-ice="description"><p>todo: remove and standardize around <code>schema</code></p>
+        <div data-ice="description"><p>todo: add tests</p>
 </div>
       </div>
     </td>
@@ -833,7 +805,7 @@ todo: review for possible removal</p>
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-method-toString">toString</a></span></span><span class="code" data-ice="signature">(pretty: <span>*</span>): <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/model.js~Model.html#instance-method-toString">toString</a></span></span><span class="code" data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
         </p>
       </div>
       <div>
@@ -926,7 +898,7 @@ todo: review for possible removal</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/itemsModel.js.html#lineNumber18">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/itemsModel.js.html#lineNumber19">source</a></span></span>
     </span>
   </h3>
 
@@ -972,7 +944,7 @@ todo: review for possible removal</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/itemsModel.js.html#lineNumber74">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/itemsModel.js.html#lineNumber85">source</a></span></span>
     </span>
   </h3>
 
@@ -1015,7 +987,7 @@ todo: review for possible removal</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/itemsModel.js.html#lineNumber27">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/itemsModel.js.html#lineNumber28">source</a></span></span>
     </span>
   </h3>
 
@@ -1059,7 +1031,7 @@ todo: review for possible removal</p>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/itemsModel.js.html#lineNumber35">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/itemsModel.js.html#lineNumber36">source</a></span></span>
     </span>
   </h3>
 
