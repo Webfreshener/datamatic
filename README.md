@@ -170,7 +170,7 @@ It is a Proxy Object that has traps for all operations that alter the state of t
 
 | Property        | Type | Description  |
 |:--------------|:----------|:-------|
-| $model | (object  &#124; array) | references Proxy Object owner class
+| $model | (PropertiesModel &#124; ItemsModel) | references Proxy Object owner class
 
 ##### model vs $model 
 
@@ -198,13 +198,22 @@ In usage, `model` always references the Proxied Data Model for validation and op
 #### ItemsModel ####
 ###### subclass of [Model Class](#model-class)
 
+Represents an Items (Array) entry in the given schema
+Note: the `model` param presents a Proxied Array, with all `Array.prototype` methods trapped and validatable
+
+| Method        | Arguments | Description  |
+|:--------------|:----------|:-------|
+| model [getter/setter]   | | setter/getter for [model proxy object](#model-proxy-object) for operation |
 
 #### PropertiesModel ####
 ###### subclass of [Model Class](#model-class)
 
+Represents an Properties (Object} entry in the given schema
+
 | Method        | Arguments | Description  |
 |:--------------|:----------|:-------|
 | get | key (string) | applies Object.freeze to model hierarchy |
+| model [getter/setter]   | | setter/getter for [model proxy object](#model-proxy-object) for operation |
 | set | key (string), value (any) | applies Object.freeze to model hierarchy |
 
 
