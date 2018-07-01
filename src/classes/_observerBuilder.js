@@ -1,6 +1,5 @@
 import {_observers} from "./_references";
 import {BehaviorSubject} from "rxjs/Rx";
-
 const _observerPaths = new WeakMap();
 
 export class ObserverBuilder {
