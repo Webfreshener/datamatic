@@ -120,7 +120,41 @@ export class AjvWrapper {
             enumerable: true,
         });
 
+        // decalres default path of root# for validation queries
         this.path = "root#";
+
+        // appends trailing "#" to end of "id" string if missing
+        const _procID = (id) => id.match(/#+$/) === null ? `${id}#` : id;
+
+        // processes schema "id" for JSON-schemas =< v04 and >= v06
+        const _procSchema = (_s) => {
+            if (_s.hasOwnProperty("$id")) {
+                _s["$id"] = _procID(_s["$id"]);
+            }
+
+            if (_s.hasOwnProperty("id")) {
+                _s["id"] = _procID(_s["id"]);
+            }
+            return _s;
+        };
+
+        // evaluates contents of schemas to normalize "id" attribugtes to have trailing "#"
+        if ((typeof schemas) === "object") {
+            if (schemas.hasOwnProperty("schemas")) {
+                if (Array.isArray(schemas.schemas)) {
+                    schemas.schemas = schemas.schemas.map(_procSchema);
+                } else {
+                    schemas.schemas = _procSchema(schemas.schemas);
+                }
+            } else {
+                if (Array.isArray(schemas)) {
+                    schemas = schemas.map(_procSchema);
+                } else {
+                    schemas = _procSchema(schemas);
+                }
+            }
+        }
+
         const _ajv = createAjv(this, schemas, opts);
 
         // initializes Ajv instance for this Doc and stores it to WeakMap
