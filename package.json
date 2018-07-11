@@ -18,7 +18,7 @@
     "map",
     "dictionary"
   ],
-  "version": "1.0.0-beta.4",
+  "version": "1.0.0",
   "main": "./index.js",
   "licenses": [
     {
@@ -71,7 +71,6 @@
     "cover": "jest --coverage && cat ./coverage/lcov.info | codacy-coverage --token 8c62ed7b6f6a4be397ab746173d9c639",
     "build-test": "webpack --mode development; npm test",
     "build": "webpack --mode production",
-    "version": "npm run build",
     "docs": "./node_modules/.bin/esdoc"
   },
   "jest": {

@@ -71,7 +71,6 @@ RxJS + JSON-Schema (Ajv) Based Observable Data Models</p>
 <a href="https://www.codacy.com/app/vanschroeder/RxVO?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Webfreshener/RxVO&amp;utm_campaign=Badge_Coverage"><img src="https://api.codacy.com/project/badge/Coverage/c665c70dfeb144319bc5bbd58695eb90" alt="Codacy Badge"></a>
 <a href="https://codeclimate.com/github/Webfreshener/RxVO/maintainability"><img src="https://api.codeclimate.com/v1/badges/625326e1880421ccc809/maintainability" alt="Maintainability"></a></p>
 <p><a href="https://webfreshener.github.io/RxVO/">Online Developer Documentation</a></p>
-<h2 id="--9888--caution-">&#x26A0; Caution!</h2><p>This utility is not meant for general purpose use. It leverages several technologies such as RxJS, JSON-Schema and Proxy. As such it is not performant or suitable for applications that require a high degree of efficiency. However it should be fine for prototyping and single-user use in browsers or other sandboxed environments</p>
 <h3 id="goals">Goals</h3><ul>
 <li>Provide a means to quickly and easily validate complex datasets</li>
 <li>Look and feel like a standard JS Object for ease of use and adaptability</li>
@@ -297,7 +296,7 @@ It is a Proxy Object that has traps for all operations that alter the state of t
 <tbody>
 <tr>
 <td style="text-align:left">$model</td>
-<td style="text-align:left">(object  | array)</td>
+<td style="text-align:left">(PropertiesModel | ItemsModel)</td>
 <td style="text-align:left">references Proxy Object owner class</td>
 </tr>
 </tbody>
@@ -318,7 +317,26 @@ It is a Proxy Object that has traps for all operations that alter the state of t
 
  // obtain model from  it&apos;s Owner
   console.log(`stringified: ${JSON.stringify(owner.model)}`);</code>
-</code></pre><h4 id="itemsmodel">ItemsModel</h4><h6 id="subclass-of--a-href---model-class--model-class--a-">subclass of <a href="#model-class">Model Class</a></h6><h4 id="propertiesmodel">PropertiesModel</h4><h6 id="subclass-of--a-href---model-class--model-class--a-">subclass of <a href="#model-class">Model Class</a></h6><table>
+</code></pre><h4 id="itemsmodel">ItemsModel</h4><h6 id="subclass-of--a-href---model-class--model-class--a-">subclass of <a href="#model-class">Model Class</a></h6><p>Represents an Items (Array) entry in the given schema
+Note: the <code>model</code> param presents a Proxied Array, with all <code>Array.prototype</code> methods trapped and validatable</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">Method</th>
+<th style="text-align:left">Arguments</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">model [getter/setter]</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">setter/getter for <a href="#model-proxy-object">model proxy object</a> for operation</td>
+</tr>
+</tbody>
+</table>
+<h4 id="propertiesmodel">PropertiesModel</h4><h6 id="subclass-of--a-href---model-class--model-class--a-">subclass of <a href="#model-class">Model Class</a></h6><p>Represents an Properties (Object} entry in the given schema</p>
+<table>
 <thead>
 <tr>
 <th style="text-align:left">Method</th>
@@ -331,6 +349,11 @@ It is a Proxy Object that has traps for all operations that alter the state of t
 <td style="text-align:left">get</td>
 <td style="text-align:left">key (string)</td>
 <td style="text-align:left">applies Object.freeze to model hierarchy</td>
+</tr>
+<tr>
+<td style="text-align:left">model [getter/setter]</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">setter/getter for <a href="#model-proxy-object">model proxy object</a> for operation</td>
 </tr>
 <tr>
 <td style="text-align:left">set</td>
