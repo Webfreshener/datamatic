@@ -8,7 +8,7 @@
       "actualCount": 9,
       "undocumentLines": [
         11,
-        123
+        124
       ]
     },
     "src/classes/_branchNotifier.js": {
@@ -31,9 +31,9 @@
       "expectCount": 10,
       "actualCount": 7,
       "undocumentLines": [
-        4,
-        6,
-        34
+        3,
+        5,
+        33
       ]
     },
     "src/classes/_references.js": {
