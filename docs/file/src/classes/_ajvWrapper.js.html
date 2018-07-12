@@ -122,6 +122,7 @@ const createAjv = (inst, schemas, opts) =&gt; {
             }
         }
 
+        // todo: review performance of addSchema
         if (schemas.hasOwnProperty(&quot;schemas&quot;)) {
             let schemaID;
             if (Array.isArray(schemas.schemas)) {
