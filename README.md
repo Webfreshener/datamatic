@@ -33,13 +33,7 @@ RxJS + JSON-Schema (Ajv) Based Observable Data Models
 
 #### Installation Instructions
 ```
-// this package is not yet published
-// for now use git+https and manually add to package.json
-dependencies: {
-...
-"rxvo": "git+https://github.com/webfreshener/RxVO.git",
-...
-}
+$ npm i rxvo
 ```
 
 #### Usage Example 
