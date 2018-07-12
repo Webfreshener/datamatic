@@ -257,10 +257,10 @@
             }
           },
           "extra": {
-            "rawValue": "jsd-utils",
-            "raw": "\"jsd-utils\""
+            "rawValue": "ofs-utils",
+            "raw": "\"ofs-utils\""
           },
-          "value": "jsd-utils"
+          "value": "ofs-utils"
         },
         "leadingComments": [
           {
@@ -3036,7 +3036,7 @@
         "binop": null,
         "updateContext": null
       },
-      "value": "jsd-utils",
+      "value": "ofs-utils",
       "start": 69,
       "end": 80,
       "loc": {
