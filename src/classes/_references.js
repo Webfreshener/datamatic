@@ -1,7 +1,7 @@
 /**
  * @private Weakmap Refs
  */
-import {exists, Fun, Obj, Str} from "jsd-utils";
+import {exists, Fun, Obj, Str} from "ofs-utils";
 export const _exists = exists;
 export const wf = {
     Fun:Fun,

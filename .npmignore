@@ -1,3 +1,9 @@
 _test
 src
+docs
+examples
+.idea
+fixtures
+coverage
+*.iml
 .travis.yml

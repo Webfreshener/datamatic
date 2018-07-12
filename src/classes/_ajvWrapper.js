@@ -56,6 +56,7 @@ const createAjv = (inst, schemas, opts) => {
             }
         }
 
+        // todo: review performance of addSchema
         if (schemas.hasOwnProperty("schemas")) {
             let schemaID;
             if (Array.isArray(schemas.schemas)) {
