@@ -12,7 +12,7 @@ RxJS + JSON-Schema (Ajv) Based Observable Data Models
 [Online Developer Documentation](https://webfreshener.github.io/RxVO/)
 
 ### Goals 
- * Provide a means to quickly and easily validate complex datasets
+ * Provide a means to quickly and easily validate complex data-sets
  * Look and feel like a standard JS Object for ease of use and adaptability
  * Automate creation of RxJS Update and Error notifications 
 
@@ -27,8 +27,8 @@ RxJS + JSON-Schema (Ajv) Based Observable Data Models
     * [Schemas Config](#rxvo-schemas-config)
     * [Model Proxy Object](#model-proxy-object)
     * [model vs $model](#model-vs-model)
-  * [ItemsModel](#items-model)
-  * [PropertiesModel](#properties-model)
+  * [ItemsModel](#itemsmodel)
+  * [PropertiesModel](#propertiesmodel)
   * [Model Class](#model-class)
 
 #### Installation Instructions
@@ -151,7 +151,7 @@ This class represents the Document entry point
 | Property        | Type | Description  |
 |:--------------|:----------|:-------|
 | meta | array | Array of MetaSchema references to validate Schemas against
-| schemas | array | Array of Schema references to valdiate data against 
+| schemas | array | Array of Schema references to validate data against 
 | use | string | key/id of schema to use for data validation
 
 ##### Model Proxy Object 

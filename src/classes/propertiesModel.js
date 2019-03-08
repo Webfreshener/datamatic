@@ -4,12 +4,10 @@ import {
 import {
     makeClean, makeDirty,
     refAtKeyValidation, refValidation,
-    getPatternPropertyDefaults
 } from "./utils";
 import {SchemaHelpers} from "./_schemaHelpers";
 import {Model} from "./model";
 import Notifiers from "./_branchNotifier";
-import merge from "lodash.merge";
 
 /**
  * @class PropertiesModel
@@ -33,7 +31,6 @@ export class PropertiesModel extends Model {
      * @returns {{get: function, set: function}}
      */
     get handler() {
-        const _self = this;
         return Object.assign(super.handler, {
             get: (t, key) => {
                 return key === "$model" ? this : t[key];
@@ -42,19 +39,7 @@ export class PropertiesModel extends Model {
                 return setHandler(this, t, key, value);
             },
             deleteProperty: (t, key) => {
-                // creates mock of future model state for evaluation
-                let _o = Object.assign({}, this.model);
-                delete _o[key];
-                const _res = this.validate(_o);
-                // validates model with value removed
-                if (_res !== true) {
-                    Notifiers.get(_self.rxvo).sendError(_self.jsonPath, _res);
-                    return false;
-                }
-
-                // performs delete operation on model
-                delete t[key];
-                return true;
+                return deleteHandler(this, t, key);
             }
         });
     }
@@ -237,5 +222,30 @@ const setHandler = (model, t, key, value) => {
 
     // performs the operation on Model
     t[key] = value;
+    return true;
+};
+
+
+/**
+ * Parameter Delete trap for Proxy
+ * @param model
+ * @param t
+ * @param key
+ * @returns {boolean}
+ */
+const deleteHandler = (model, t, key) => {
+    // creates mock of future model state for evaluation
+    let _o = Object.assign({}, model.model);
+    delete _o[key];
+    const _res = model.validate(_o);
+
+    // validates model with value removed
+    if (_res !== true) {
+        Notifiers.get(model.rxvo).sendError(model.jsonPath, _res);
+        return false;
+    }
+
+    // performs delete operation on model
+    delete t[key];
     return true;
 };

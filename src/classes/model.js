@@ -21,8 +21,7 @@ const createMetaDataRef = (ref, metaRef) => {
             _root: ref,
             _rxvo: metaRef,
         });
-    }
-    else if ((typeof metaRef) === "object") {
+    } else if ((typeof metaRef) === "object") {
         // extends MetaData reference
         if (metaRef instanceof MetaData) {
             _md = metaRef;
@@ -43,10 +42,7 @@ const createMetaDataRef = (ref, metaRef) => {
  */
 export class Model {
     constructor() {
-        // tests if this is instance of MetaData
-        // if (!(this instanceof MetaData)) {
         createMetaDataRef(this, arguments[0]);
-        // }
     }
 
     /**
