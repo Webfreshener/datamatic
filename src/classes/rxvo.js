@@ -6,8 +6,7 @@ import {PropertiesModel} from "./propertiesModel";
 import {ItemsModel} from "./itemsModel";
 import {AjvWrapper} from "./_ajvWrapper";
 import Notifiers from "./_branchNotifier";
-import {getDefaults, walkObject} from "./utils";
-const _defaults = new WeakMap();
+import {walkObject} from "./utils";
 const _documents = new WeakMap();
 /**
  * RxVo Model Entry-point
@@ -20,7 +19,7 @@ export class RxVO {
      * @param {object} options
      */
     constructor(schemas, options = {}) {
-        // attempts t get user passes Avj options
+        // attempts to get user passes Avj options
         let ajvOptions = options.hasOwnProperty("ajvOptions") ?
             options["ajvOptions"] : null;
 
@@ -31,11 +30,10 @@ export class RxVO {
         _validators.set(this, _ajv);
 
         // throws error if error message returned
-        if (!_ajv.$ajv.validateSchema({schemas: schemas.schemas}, false)) {
+        if (!_ajv.$ajv.validateSchema({schemas: schemas["schemas"]}, false)) {
             throw _ajv.$ajv.errors;
         }
 
-        // Object.freeze(schema);
         _schemaSignatures.set(this, schemas);
         _oBuilders.set(this, new ObserverBuilder());
 
@@ -116,7 +114,7 @@ export class RxVO {
     }
 
     getSchemaForKey(id) {
-        let _schema;
+        let _schema = null;
         const _schemas = _schemaSignatures.get(this);
         _schemas.schemas.some((schema) => {
             if (schema.hasOwnProperty("$id")) {

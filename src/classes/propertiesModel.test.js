@@ -2,7 +2,7 @@ import {PropertiesModel} from "./propertiesModel";
 import {RxVO} from "./rxvo";
 import {default as deepEqual} from "deep-equal";
 import {
-    basicModel, nestedModel, nestedModelDefault
+    basicModel, nestedModel, nestedModelDefault, nestedPatternModel, patternModel
 } from "../../fixtures/PropertiesModel.schemas";
 
 describe("PropertiesModel Class Suite", function () {
@@ -193,7 +193,7 @@ describe("PropertiesModel Class Suite", function () {
         });
 
         it("should populate default values", () => {
-            _d = {
+            const _d = {
                 aObject: {
                     bObject: {},
                 },
@@ -202,5 +202,55 @@ describe("PropertiesModel Class Suite", function () {
             _rxvo.model = _d;
             expect(_rxvo.model.aObject.bObject.bValue).toBe(123);
         });
+    });
+
+    describe("Pattern Properties", () => {
+        let _rxvo;
+        beforeEach(() => {
+            _rxvo = new RxVO({schemas: [patternModel]}, {ajvOptions: {useDefaults: true}});
+        });
+
+        it("should allow pattern properties", () => {
+            _rxvo.model["test"] = "foo";
+            expect(`${_rxvo}`).toEqual("{}");
+            _rxvo.model["name"] = "foo";
+            expect(`${_rxvo}`).toEqual("{\"name\":\"foo\"}");
+        });
+
+        it("should accept multiple uses of patternProperty", () => {
+            _rxvo.model["name"] = "foo";
+            expect(`${_rxvo}`).toEqual("{\"name\":\"foo\"}");
+            _rxvo.model["name"] = "bar";
+            expect(`${_rxvo}`).toEqual("{\"name\":\"bar\"}");
+        });
+
+    });
+
+    describe("Nested Pattern Properties", () => {
+        let _rxvo;
+        beforeEach(() => {
+            _rxvo = new RxVO({schemas: [nestedPatternModel]}, {ajvOptions: {useDefaults: true}});
+        });
+
+        it("should allow nested pattern properties", () => {
+            _rxvo.model = {name: "test", nested: {test1: {foo: "bar"}}};
+            expect(`${_rxvo.model.nested.$model}`).toEqual("{\"test1\":{\"foo\":\"bar\"}}");
+        });
+
+        it("should accept multiple uses of patternProperty", () => {
+            _rxvo.model = {name: "test", nested: {test1: {foo1: "bar1"}}};
+            expect(`${_rxvo.model.nested.$model}`).toEqual("{\"test1\":{\"foo1\":\"bar1\"}}");
+            _rxvo.model.nested["test2"] = {foo2: "bar2"};
+            expect(`${_rxvo.model.nested.$model}`).toEqual("{\"test1\":{\"foo1\":\"bar1\"},\"test2\":{\"foo2\":\"bar2\"}}");
+        });
+
+        it("should reject subsequent invalid uses of patternProperty", () => {
+            _rxvo.model = {name: "test", nested: {test1: {foo1: "bar1"}}};
+            _rxvo.model.nested["test1"] = false;
+            expect(_rxvo.errors === null).toBe(false);
+            expect(`${_rxvo.errors[0].dataPath}`).toEqual("/test1");
+            expect(`${_rxvo.errors[0].message}`).toEqual("should be object");
+        });
+
     });
 });
