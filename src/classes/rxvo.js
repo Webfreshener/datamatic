@@ -7,7 +7,25 @@ import {ItemsModel} from "./itemsModel";
 import {AjvWrapper} from "./_ajvWrapper";
 import Notifiers from "./_branchNotifier";
 import {walkObject} from "./utils";
+
 const _documents = new WeakMap();
+/**
+ * returns Items or Properties model class based on type of expected property
+ * @param el
+ * @returns {ItemsModel|PropertiesModel}
+ * @private
+ */
+const _getModelClass = (el) => {
+    let _class = PropertiesModel;
+
+    if ((el.hasOwnProperty("type") && el["type"] === "array") ||
+        (el.hasOwnProperty("items") && Array.isArray(el["items"]))) {
+        _class = ItemsModel;
+    }
+
+    return _class;
+};
+
 /**
  * RxVo Model Entry-point
  * @public
@@ -37,28 +55,18 @@ export class RxVO {
         _schemaSignatures.set(this, schemas);
         _oBuilders.set(this, new ObserverBuilder());
 
-        let _useSet = false;
+        let _doc;
 
         if (schemas.hasOwnProperty("schemas")) {
             // if value of type is "array" or an array of items is defined,
             // we handle as Array
-            const schema = schemas.schemas[schemas.schemas.length - 1];
-            if ((schema.hasOwnProperty("type") && schema["type"] === "array") ||
-                (schema.hasOwnProperty("items") && Array.isArray(schema["items"]))) {
-                _useSet = true;
-            }
+            _doc = new (_getModelClass(schemas.schemas[schemas.schemas.length - 1]))(this);
         } else {
-            if ((schemas.hasOwnProperty("type") && schemas["type"] === "array") ||
-                (schemas.hasOwnProperty("items") && Array.isArray(schemas["items"]))) {
-                _useSet = true;
-            }
+            _doc = new (_getModelClass(schemas))(this);
         }
 
         // creates holder for dirty model flags in this scope
         _dirtyModels.set(this, {});
-
-        // creates root level document
-        const _doc = new (!_useSet ? PropertiesModel : ItemsModel)(this);
 
         // applies Subject Handlers to root document
         _oBuilders.get(this).create(_doc);
@@ -200,11 +208,11 @@ export class RxVO {
         (to.split(".")
             .filter((itm, idx, arr) => arr.indexOf(itm) > -1))
             .forEach((step) => {
-            if (_ref[step]) {
-                _ref = _ref[step];
-                _steps.push(_ref);
-            }
-        });
+                if (_ref[step]) {
+                    _ref = _ref[step];
+                    _steps.push(_ref);
+                }
+            });
         return _steps;
     }
 
