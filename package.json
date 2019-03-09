@@ -31,7 +31,6 @@
     "url": "https://github.com/Webfreshener/RxVO.git"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.2.5",
     "rxjs": "^6.4.0",
     "rxjs-compat": "^6.4.0"
   },
