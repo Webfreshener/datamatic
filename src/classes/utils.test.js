@@ -1,7 +1,7 @@
 import {
     makeClean, makeDirty, getDefaults,
     getPatternPropertyDefaults, validate,
-    refValidation, refAtKeyValidation, walkObject
+    refValidation, refAtKeyValidation, walkObject, getSchemaID
 } from "./utils";
 
 import {
@@ -154,6 +154,13 @@ describe("Utils tests", () => {
             expect(walkObject("a/b/c", _obj)).toEqual({val: "string"});
             // with delimiter
             expect(walkObject("a.b.c", _obj, ".")).toEqual({val: "string"});
-        })
-    })
+        });
+    });
+    describe("getSchemaId test", () => {
+        it("should get schema id", () => {
+            expect(getSchemaID({id: "schema1#"})).toEqual("schema1#");
+            expect(getSchemaID({$id: "schema2#"})).toEqual("schema2#");
+            expect(getSchemaID({})).toEqual("root#");
+        });
+    });
 });

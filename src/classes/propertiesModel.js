@@ -208,7 +208,6 @@ const setHandler = (model, t, key, value) => {
         }
     }
 
-    // console.log(`setting key: ${key}`);
     // if key is type 'object', we will set directly
     if (typeof key === "object") {
         return handleObjectKey(model, key);

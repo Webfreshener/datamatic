@@ -4,18 +4,9 @@
 import {_ajvRef} from "./_references";
 import {RxVO} from "./rxvo";
 import Ajv from "ajv";
+import {getSchemaID} from "./utils";
 
 const _validators = new WeakMap();
-
-/**
- * retrieves ID attribute from schema
- * @param schema
- * @returns {string}
- */
-const getSchemaID = (schema) => {
-    const id = ["$id", "id"].filter((id) => schema.hasOwnProperty(id));
-    return id.length ? schema[id[0]] : "root#";
-};
 
 /**
  * backreferences object tree for top-down evaluation

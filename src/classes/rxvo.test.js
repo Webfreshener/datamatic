@@ -1,10 +1,5 @@
 import {RxVO} from "./rxvo"
-import {
-    basicModel, nestedModelDefault,
-    patternModel, nestedPatternModel
-} from "../../fixtures/PropertiesModel.schemas";
-import {default as OpenAPIv2} from "../../fixtures/OpenAPIv2";
-import {default as jsonSchema} from "../../fixtures/json-schema-draft04.schema";
+import {basicModel} from "../../fixtures/PropertiesModel.schemas";
 import {default as basicRefs} from "../../fixtures/basic-refs.schema";
 import {default as refsData} from "../../fixtures/basic-refs.data";
 
@@ -52,9 +47,13 @@ describe("RxVO Instance Test", () => {
     describe("Mixed schemas", () => {
         it("should allow mixed schemas to be selected and used", () => {
             const _rxvo = new RxVO({schemas: [basicRefs]});
+            _rxvo.subscribe({
+                error: (e) => console.log(JSON.stringify(e)),
+            });
             _rxvo.model = refsData;
-            _rxvo.model.aReference.valueA = 1234;
-            expect(_rxvo.errors === null).toBe(false);
+            expect(_rxvo.errors).toBe(null);
+            _rxvo.model.aReference.valueA = "A String Value";
+            expect(_rxvo.errors).toBe(null);
             expect(_rxvo.model).toEqual(refsData);
         });
     });

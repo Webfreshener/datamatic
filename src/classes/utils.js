@@ -184,3 +184,13 @@ export const walkObject = (path, toWalk, delimiter = "/") => {
     });
     return _s;
 };
+
+/**
+ * retrieves ID attribute from schema
+ * @param schema
+ * @returns {string}
+ */
+export const getSchemaID = (schema) => {
+    const id = ["$id", "id"].filter((id) => schema.hasOwnProperty(id));
+    return id.length ? schema[id[0]] : "root#";
+};

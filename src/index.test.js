@@ -21,7 +21,8 @@ describe("Index", () => {
         // todo: put browser testing on this, node has Object.assign
         // todo: review browser support requirements
         it("tests the polyfill for Object.assign", () => {
-            expect(Object.assign).toBeDefined();
+            expect(Object.hasOwnProperty("assign")).toBe(true);
+            expect(typeof Object.assign).toEqual("function");
         })
     });
 
