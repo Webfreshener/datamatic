@@ -76,6 +76,9 @@ describe("PropertiesModel Class Suite", function () {
             });
 
             it("should reject invalid data update", () => {
+                const _sub = this.rxvo.subscribe({
+                    error: (e) => console.log(JSON.stringify(e)),
+                });
                 this.rxvo.model.active = "false";
                 expect(deepEqual(this.rxvo.model, _d)).toBe(true);
             });
