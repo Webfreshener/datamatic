@@ -40,6 +40,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">RxVO</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDefaults">getDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPatternPropertyDefaults">getPatternPropertyDefaults</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getSchemaID">getSchemaID</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeClean">makeClean</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeDirty">makeDirty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refAtKeyValidation">refAtKeyValidation</a></span></span></li>
@@ -70,50 +71,40 @@
 import {_ajvRef} from &quot;./_references&quot;;
 import {RxVO} from &quot;./rxvo&quot;;
 import Ajv from &quot;ajv&quot;;
-import {default as JSONSchemaV4} from &quot;../schemas/json-schema-draft-04&quot;;
-import {default as JSONSchemaV6} from &quot;../schemas/json-schema-draft-06&quot;;
-import {default as OpenAPIv2} from &quot;../../fixtures/OpenAPIv2&quot;;
+import {getSchemaID} from &quot;./utils&quot;;
 
 const _validators = new WeakMap();
 
 /**
- *
- * @param schema
- * @returns {string}
+ * backreferences object tree for top-down evaluation
+ * @param path
+ * @param data
+ * @param rxvo
+ * @returns {any}
+ * @private
  */
-const getSchemaID = (schema) =&gt; {
-    const id = [&quot;$id&quot;, &quot;id&quot;].filter((id) =&gt; schema.hasOwnProperty(id));
-    return id.length ? schema[id[0]] : &quot;root#&quot;;
-};
+const _preconstruct = (path, data, rxvo) =&gt; {
+    const _p = path.replace(/^[a-z0-9_]*#+/i, &quot;&quot;).split(&quot;/&quot;);
+    let _o = Object.assign({}, data);
 
-/**
- *
- * @param {ajv.Ajv} _ajv
- * @param {AjvWrapper} inst
- * @param {object} schema
- * @returns {string}
- */
-const createValidatorRef = (_ajv, inst, schema) =&gt; {
-    const id = [&quot;$id&quot;, &quot;id&quot;].filter((id) =&gt; schema.hasOwnProperty(id));
-    let _schemaID;
-    if (id) {
-        _schemaID = schema[id[0]];
-        _validators.get(inst)[_schemaID] = _ajv.getSchema(_schemaID);
-    } else {
-        _schemaID = schema[&quot;$id&quot;] = &quot;root#&quot;;
+    while(_p.length &gt; 0) {
+        _p.pop();
+        _o = Object.assign({}, rxvo.getPath(_p.join(&quot;.&quot;)), _o);
     }
 
-    return _schemaID;
+    return _o;
 };
+
 /**
  *
+ * @param inst
  * @param schemas
  * @param opts
  * @returns {ajv | ajv.Ajv}
  */
 const createAjv = (inst, schemas, opts) =&gt; {
     const _ajv = new Ajv(opts);
-    if (schemas &amp;&amp; schemas !== null) {
+    if (schemas) {
         if (schemas.hasOwnProperty(&quot;meta&quot;)) {
             if (Array.isArray(schemas.meta)) {
                 schemas.meta.forEach((meta) =&gt; {
@@ -129,16 +120,11 @@ const createAjv = (inst, schemas, opts) =&gt; {
                 schemas.schemas.forEach((schema) =&gt; {
                     schemaID = getSchemaID(schema);
                     _ajv.addSchema(schema, schemaID);
-                    // createValidatorRef(_ajv, inst, schema);
                 });
-                // sets last id as active schema;
-                // _ajv.getSchema(schemaID);
             } else {
                 if ((typeof schemas.schemas) === &quot;string&quot;) {
                     schemaID = getSchemaID(schemas.schema);
                     _ajv.addSchema(schemas.schemas, schemaID);
-                    // createValidatorRef(_ajv, inst, schema.schemas);
-                    // _ajv.getSchema(schemaID);
                 }
             }
 
@@ -205,7 +191,7 @@ export class AjvWrapper {
             return _s;
         };
 
-        // evaluates contents of schemas to normalize &quot;id&quot; attribugtes to have trailing &quot;#&quot;
+        // evaluates contents of schemas to normalize &quot;id&quot; attributes to have trailing &quot;#&quot;
         if ((typeof schemas) === &quot;object&quot;) {
             if (schemas.hasOwnProperty(&quot;schemas&quot;)) {
                 if (Array.isArray(schemas.schemas)) {
@@ -253,14 +239,28 @@ export class AjvWrapper {
     /**
      * Executes validator at PropertiesModel $model `path` against `value`
      * @param {string} path
-     * @param {boolean} value
+     * @param {any} value
      */
     exec(path, value) {
-        // // appends id ref to path
+        // appends id ref to path
         if (path.indexOf(&quot;#&quot;) &lt; 0) {
             path = `${this.path}${path}`;
         }
-        return this.$ajv.validate(path, value);
+
+        let _res = false;
+
+        /*
+            makes initial validation attempt and reattempts from top on failure
+         */
+        try {
+            _res = this.$ajv.validate(path, value);
+        } catch (e) {
+            if (path.replace(/(items|properties)\/?/, &quot;&quot;).split(&quot;/&quot;).length) {
+                return this.exec(`${this.path}/`, _preconstruct(path, value, this.$rxvo));
+            }
+        }
+
+        return _res;
     }
 }
 
@@ -284,18 +284,18 @@ const _ajvOptions = {
     // unknownFormats:   true,
     // schemas:          {},
     // logger:           undefined,
-    // referenced schema options:
+    // // referenced schema options:
     schemaId: &apos;auto&apos;,
     // missingRefs:      true,
     extendRefs: true, // default &apos;ignore&apos;
     // loadSchema:       undefined, // function(uri: string): Promise {}
-    // options to modify validated data:
+    // // options to modify validated data:
     // removeAdditional: true,
     // useDefaults: true,
     // coerceTypes:      false,
-    // asynchronous validation options:
+    // // asynchronous validation options:
     // transpile:        undefined, // requires ajv-async package
-    // advanced options:
+    // // advanced options:
     // meta:             true,
     // validateSchema:   true,
     // addUsedSchema:    true,
@@ -316,7 +316,7 @@ const _ajvOptions = {
 </div>
 
 <footer class="footer">
-  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.0.4)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
 </footer>
 
 <script src="script/search_index.js"></script>
