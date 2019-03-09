@@ -40,6 +40,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">RxVO</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDefaults">getDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPatternPropertyDefaults">getPatternPropertyDefaults</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getSchemaID">getSchemaID</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeClean">makeClean</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeDirty">makeDirty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refAtKeyValidation">refAtKeyValidation</a></span></span></li>
@@ -66,13 +67,13 @@
 <div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><h1 id="rxvo">RxVO</h1><p><strong>Reactive Validating Object</strong><br>
 RxJS + JSON-Schema (Ajv) Based Observable Data Models</p>
 <p><a href="https://travis-ci.org/Webfreshener/RxVO"><img src="https://travis-ci.org/Webfreshener/RxVO.svg?branch=master" alt="Build Status"></a>
-<a href="https://david-dm.org/webfreshener/RxVO?type=dev"><img src="https://david-dm.org/webfreshener/RxVO/dev-status.svg" alt="Dev Dependency Status"></a>
+<a href="https://david-dm.org/webfreshener/RxVO"><img src="https://david-dm.org/webfreshener/RxVO/status.svg" alt="Dependency Status"></a>
 <a href="https://www.codacy.com/app/vanschroeder/RxVO?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Webfreshener/RxVO&amp;utm_campaign=Badge_Grade"><img src="https://api.codacy.com/project/badge/Grade/c665c70dfeb144319bc5bbd58695eb90" alt="Codacy Badge"></a>
 <a href="https://www.codacy.com/app/vanschroeder/RxVO?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Webfreshener/RxVO&amp;utm_campaign=Badge_Coverage"><img src="https://api.codacy.com/project/badge/Coverage/c665c70dfeb144319bc5bbd58695eb90" alt="Codacy Badge"></a>
 <a href="https://codeclimate.com/github/Webfreshener/RxVO/maintainability"><img src="https://api.codeclimate.com/v1/badges/625326e1880421ccc809/maintainability" alt="Maintainability"></a></p>
 <p><a href="https://webfreshener.github.io/RxVO/">Online Developer Documentation</a></p>
 <h3 id="goals">Goals</h3><ul>
-<li>Provide a means to quickly and easily validate complex datasets</li>
+<li>Provide a means to quickly and easily validate complex data-sets</li>
 <li>Look and feel like a standard JS Object for ease of use and adaptability</li>
 <li>Automate creation of RxJS Update and Error notifications </li>
 </ul>
@@ -86,8 +87,8 @@ RxJS + JSON-Schema (Ajv) Based Observable Data Models</p>
 <li><a href="#model-vs-model">model vs $model</a></li>
 </ul>
 </li>
-<li><a href="#items-model">ItemsModel</a></li>
-<li><a href="#properties-model">PropertiesModel</a></li>
+<li><a href="#itemsmodel">ItemsModel</a></li>
+<li><a href="#propertiesmodel">PropertiesModel</a></li>
 <li><a href="#model-class">Model Class</a></li>
 </ul>
 <h4 id="installation-instructions">Installation Instructions</h4><pre><code><code class="source-code prettyprint">$ npm i rxvo</code>
@@ -172,7 +173,8 @@ obj.model.topScores[0].score = &quot;1234&quot;;
 // invalid attempt update the rxVO
 // this will trigger the error notification
 // reason: &quot;topScores&quot; is marked as required
-delete obj.model.topScores;</code>
+delete obj.model.topScores;
+</code>
 </code></pre><p>Refer to the examples demo in <code>./examples/basic-usage</code> for more usage examples</p>
 <h2 id="developer-guide">Developer Guide</h2><h4 id="rxvo-class">RxVO Class</h4><p>This class represents the Document entry point</p>
 <table>
@@ -268,7 +270,7 @@ delete obj.model.topScores;</code>
 <tr>
 <td style="text-align:left">schemas</td>
 <td style="text-align:left">array</td>
-<td style="text-align:left">Array of Schema references to valdiate data against </td>
+<td style="text-align:left">Array of Schema references to validate data against </td>
 </tr>
 <tr>
 <td style="text-align:left">use</td>
@@ -310,7 +312,8 @@ It is a Proxy Object that has traps for all operations that alter the state of t
  console.log(`stringified: ${owner}`);
 
  // obtain model from  it&apos;s Owner
-  console.log(`stringified: ${JSON.stringify(owner.model)}`);</code>
+  console.log(`stringified: ${JSON.stringify(owner.model)}`);
+</code>
 </code></pre><h4 id="itemsmodel">ItemsModel</h4><h6 id="subclass-of--a-href---model-class--model-class--a-">subclass of <a href="#model-class">Model Class</a></h6><p>Represents an Items (Array) entry in the given schema
 Note: the <code>model</code> param presents a Proxied Array, with all <code>Array.prototype</code> methods trapped and validatable</p>
 <table>
@@ -466,7 +469,7 @@ Note: the <code>model</code> param presents a Proxied Array, with all <code>Arra
 </div>
 
 <footer class="footer">
-  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.0.4)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
 </footer>
 
 <script src="script/search_index.js"></script>

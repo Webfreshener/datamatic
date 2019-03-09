@@ -138,6 +138,12 @@ window.esdocSearchIndex = [
     "function"
   ],
   [
+    "rxvo/src/classes/utils.js~getschemaid",
+    "function/index.html#static-function-getSchemaID",
+    "<span>getSchemaID</span> <span class=\"search-result-import-path\">rxvo/src/classes/utils.js</span>",
+    "function"
+  ],
+  [
     "rxvo/src/classes/utils.js~makeclean",
     "function/index.html#static-function-makeClean",
     "<span>makeClean</span> <span class=\"search-result-import-path\">rxvo/src/classes/utils.js</span>",
@@ -925,13 +931,13 @@ window.esdocSearchIndex = [
   ],
   [
     "src/classes/propertiesmodel.js~propertiesmodel#model",
-    "class/src/classes/propertiesModel.js~PropertiesModel.html#instance-get-model",
+    "class/src/classes/propertiesModel.js~PropertiesModel.html#instance-set-model",
     "src/classes/propertiesModel.js~PropertiesModel#model",
     "member"
   ],
   [
     "src/classes/propertiesmodel.js~propertiesmodel#model",
-    "class/src/classes/propertiesModel.js~PropertiesModel.html#instance-set-model",
+    "class/src/classes/propertiesModel.js~PropertiesModel.html#instance-get-model",
     "src/classes/propertiesModel.js~PropertiesModel#model",
     "member"
   ],
@@ -997,13 +1003,13 @@ window.esdocSearchIndex = [
   ],
   [
     "src/classes/rxvo.js~rxvo#model",
-    "class/src/classes/rxvo.js~RxVO.html#instance-set-model",
+    "class/src/classes/rxvo.js~RxVO.html#instance-get-model",
     "src/classes/rxvo.js~RxVO#model",
     "member"
   ],
   [
     "src/classes/rxvo.js~rxvo#model",
-    "class/src/classes/rxvo.js~RxVO.html#instance-get-model",
+    "class/src/classes/rxvo.js~RxVO.html#instance-set-model",
     "src/classes/rxvo.js~RxVO#model",
     "member"
   ],

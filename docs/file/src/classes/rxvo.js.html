@@ -40,6 +40,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">RxVO</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDefaults">getDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPatternPropertyDefaults">getPatternPropertyDefaults</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getSchemaID">getSchemaID</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeClean">makeClean</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeDirty">makeDirty</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refAtKeyValidation">refAtKeyValidation</a></span></span></li>
@@ -72,9 +73,26 @@ import {PropertiesModel} from &quot;./propertiesModel&quot;;
 import {ItemsModel} from &quot;./itemsModel&quot;;
 import {AjvWrapper} from &quot;./_ajvWrapper&quot;;
 import Notifiers from &quot;./_branchNotifier&quot;;
-import {getDefaults, walkObject} from &quot;./utils&quot;;
-const _defaults = new WeakMap();
+import {walkObject} from &quot;./utils&quot;;
+
 const _documents = new WeakMap();
+/**
+ * returns Items or Properties model class based on type of expected property
+ * @param el
+ * @returns {ItemsModel|PropertiesModel}
+ * @private
+ */
+const _getModelClass = (el) =&gt; {
+    let _class = PropertiesModel;
+
+    if ((el.hasOwnProperty(&quot;type&quot;) &amp;&amp; el[&quot;type&quot;] === &quot;array&quot;) ||
+        (el.hasOwnProperty(&quot;items&quot;) &amp;&amp; Array.isArray(el[&quot;items&quot;]))) {
+        _class = ItemsModel;
+    }
+
+    return _class;
+};
+
 /**
  * RxVo Model Entry-point
  * @public
@@ -86,7 +104,7 @@ export class RxVO {
      * @param {object} options
      */
     constructor(schemas, options = {}) {
-        // attempts t get user passes Avj options
+        // attempts to get user passes Avj options
         let ajvOptions = options.hasOwnProperty(&quot;ajvOptions&quot;) ?
             options[&quot;ajvOptions&quot;] : null;
 
@@ -97,36 +115,25 @@ export class RxVO {
         _validators.set(this, _ajv);
 
         // throws error if error message returned
-        if (!_ajv.$ajv.validateSchema({schemas: schemas.schemas}, false)) {
+        if (!_ajv.$ajv.validateSchema({schemas: schemas[&quot;schemas&quot;]}, false)) {
             throw _ajv.$ajv.errors;
         }
 
-        // Object.freeze(schema);
         _schemaSignatures.set(this, schemas);
         _oBuilders.set(this, new ObserverBuilder());
 
-        let _useSet = false;
+        let _doc;
 
         if (schemas.hasOwnProperty(&quot;schemas&quot;)) {
             // if value of type is &quot;array&quot; or an array of items is defined,
             // we handle as Array
-            const schema = schemas.schemas[schemas.schemas.length - 1];
-            if ((schema.hasOwnProperty(&quot;type&quot;) &amp;&amp; schema[&quot;type&quot;] === &quot;array&quot;) ||
-                (schema.hasOwnProperty(&quot;items&quot;) &amp;&amp; Array.isArray(schema[&quot;items&quot;]))) {
-                _useSet = true;
-            }
+            _doc = new (_getModelClass(schemas.schemas[schemas.schemas.length - 1]))(this);
         } else {
-            if ((schemas.hasOwnProperty(&quot;type&quot;) &amp;&amp; schemas[&quot;type&quot;] === &quot;array&quot;) ||
-                (schemas.hasOwnProperty(&quot;items&quot;) &amp;&amp; Array.isArray(schemas[&quot;items&quot;]))) {
-                _useSet = true;
-            }
+            _doc = new (_getModelClass(schemas))(this);
         }
 
         // creates holder for dirty model flags in this scope
         _dirtyModels.set(this, {});
-
-        // creates root level document
-        const _doc = new (!_useSet ? PropertiesModel : ItemsModel)(this);
 
         // applies Subject Handlers to root document
         _oBuilders.get(this).create(_doc);
@@ -182,7 +189,7 @@ export class RxVO {
     }
 
     getSchemaForKey(id) {
-        let _schema;
+        let _schema = null;
         const _schemas = _schemaSignatures.get(this);
         _schemas.schemas.some((schema) =&gt; {
             if (schema.hasOwnProperty(&quot;$id&quot;)) {
@@ -268,11 +275,11 @@ export class RxVO {
         (to.split(&quot;.&quot;)
             .filter((itm, idx, arr) =&gt; arr.indexOf(itm) &gt; -1))
             .forEach((step) =&gt; {
-            if (_ref[step]) {
-                _ref = _ref[step];
-                _steps.push(_ref);
-            }
-        });
+                if (_ref[step]) {
+                    _ref = _ref[step];
+                    _steps.push(_ref);
+                }
+            });
         return _steps;
     }
 
@@ -336,7 +343,7 @@ export class RxVO {
 </div>
 
 <footer class="footer">
-  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.0.4)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
 </footer>
 
 <script src="script/search_index.js"></script>
