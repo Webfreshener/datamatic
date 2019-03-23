@@ -4,6 +4,7 @@ import {
 import {RxVO} from "./rxvo";
 import {MetaData} from "./_metaData";
 import {makeClean, makeDirty, validate} from "./utils";
+import {Pipe} from "./pipe";
 
 /**
  *
@@ -335,7 +336,7 @@ export class Model {
      * @returns {*}
      */
     get schema() {
-        return this.rxvo.getSchemaForPath(this.path); // _validators.get(this.rxvo).$ajv.compile({$model: this.validationPath});
+        return this.rxvo.getSchemaForPath(this.path);
     }
 
     /**
@@ -351,4 +352,14 @@ export class Model {
         });
         return obj;
     };
+
+    /**
+     * returns `pipe` segment for process chaining
+     * @param func
+     * @param schema
+     * @returns {Pipe}
+     */
+    pipe(func, schema) {
+        return new Pipe(this, func, schema);
+    }
 }

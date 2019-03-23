@@ -30,6 +30,7 @@ RxJS + JSON-Schema (Ajv) Based Observable Data Models
   * [ItemsModel](#itemsmodel)
   * [PropertiesModel](#propertiesmodel)
   * [Model Class](#model-class)
+  * [Pipe Class](#pipe-class)
 
 #### Installation Instructions
 ```
@@ -215,18 +216,34 @@ Represents an Properties (Object} entry in the given schema
 | isDirty [getter]   | | returns dirtyness of model heirarchy (is dirty if operation in progress) |
 | isFrozen [getter]   | | returns Object.freeze status of Model hierarchy |
 | jsonPath [getter]   | | retrieves json path string for Model instance. eg: "this.is.my.path" |
-| model [getter/setter]   | | retrieves root model for operation |
-| subscribe   |  observers (object) | Subscribes Observers to the RxVO Model Root |
-| subscribeTo   |  path (string), observers (object) | Subscribes Observers to the Model at path |
-| model [getter/setter]   | | setter/getter for [model proxy object](#model-proxy-object) for operation |
 | objectID [getter]   | | retrieves Unique ObjectID of Model instance |
 | options [getter]   | | retrieves options passed to Model instance |
 | path [getter]   | | retrieves json-schema path string for Model instance. eg: "#/this/is/my/path" |
 | parent [getter]   | | retrieves Model's parent Model instance |
+| pipe | callback (function), schema (json-schema)| returns pipe segment for process chaining |
 | reset | | resets model to initial state if operation is valid |
 | root [getter]   | | retrieves root Model instance |
 | rxvo [getter]   | | retrieves Model's RxVO document instance |
+| subscribe   |  observers (object) | Subscribes Observers to the RxVO Model Root |
+| subscribeTo   |  path (string), observers (object) | Subscribes Observers to the Model at path |
 | toString   | | retrieves root model as JSON String |
 | toJSON   | | retrieves root model as JSON Object |
 | validate   | path (string), value (object) | validates data at given ath against JSON-Schema |
 | validationPath [getter] | | retrieves json-schema path string for Model validation |
+
+#### Pipe Class ####
+| Method        | Arguments | Description  |
+|:--------------|:----------|:-------|
+| constructor | vo (Model), callback (function), schema (json-schema) | class constructor method |
+| close | | terminates input on `pipe` segment |
+| fork | | returns clone of current `pipe` segment |
+| link | callback (function), target (Pipe)| links `pipe` segment to direct output to target `pipe` |
+| once | | informs `pipe` to close after first notification |
+| pipe | callback (function), schema (json-schema) | returns new chained `pipe` segment |
+| subscribe | handler (object / function)| subscribes to `pipe` output notifications |
+| unlink | target (Pipe)| unlinks `pipe` segment from target `pipe` |
+
+#### Flow Control ####
+```
+
+```
