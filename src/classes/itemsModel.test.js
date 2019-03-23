@@ -28,15 +28,36 @@ describe("ItemsModel Class Suite", function () {
             });
         });
 
-        describe("LifeCycle: Creation", () => {
+        describe("ItemsModel LifeCycle: Creation", () => {
 
             let _d;
 
-            it("should populate with valid data and make that data accessible", () => {
+            it("should populate with valid data and make that data accessible", (done) => {
                 _d = ["abc", "def", "ghi"];
+                let _cnt = -1;
+
+                this.rxvo.subscribe({
+                    next: (m) => {
+                        _cnt++;
+                        expect(deepEqual(this.rxvo.model, _d)).toBe(true);
+                    },
+                    error: done,
+                });
+
+                setTimeout(() => {
+                    if (_cnt) {
+                        done("ItemsModel fired more than once for a single operation");
+                    } else {
+                        if (_cnt < 0) {
+                            done("ItemsModel did not fire");
+                        } else {
+                            console.log(`_cnt: ${_cnt}`);
+                            done();
+                        }
+                    }
+                }, 100);
 
                 this.rxvo.model = _d;
-                expect(deepEqual(this.rxvo.model, _d)).toBe(true);
             });
 
             it("should reject invalid data and leave model pristine", () => {
@@ -62,11 +83,11 @@ describe("ItemsModel Class Suite", function () {
             });
         });
 
-        describe("LifeCycle: Create", () => {
+        describe("ItemsModel LifeCycle: Nested Create", () => {
 
             let _d;
 
-            it("should populate with valid data and make that data accessible", () => {
+            it.only("should populate with valid data and make that data accessible", (done) => {
                 _d = [{
                     name: "Item A",
                     value: 1,
@@ -77,8 +98,31 @@ describe("ItemsModel Class Suite", function () {
                     value: 2,
                 }];
 
+                let _cnt = -1;
+
+                this.rxvo.subscribe({
+                    next: (m) => {
+                        _cnt++;
+                        expect(deepEqual(this.rxvo.model, _d)).toBe(true);
+                    },
+                    error: done,
+                });
+
+                setTimeout(() => {
+                    if (_cnt) {
+                        done("ItemsModel fired more than once for a single operation");
+                    } else {
+                        if (_cnt < 0) {
+                            done("ItemsModel did not fire");
+                        } else {
+                            console.log(`_cnt: ${_cnt}`);
+                            done();
+                        }
+                    }
+                }, 100);
+
                 this.rxvo.model = _d;
-                expect(deepEqual(this.rxvo.model, _d)).toBe(true);
+                // expect(deepEqual(this.rxvo.model, _d)).toBe(true);
             });
 
             it("should reject invalid data and leave model pristine", () => {
@@ -149,7 +193,7 @@ describe("ItemsModel Class Suite", function () {
                 this.rxvo = new RxVO({schemas: [stringsMinMaxCollection]});
             });
 
-            _d = ["Item A", "Item B", "Item C"];
+            let _d = ["Item A", "Item B", "Item C"];
 
             it("should allow deletion of nested properties that are not required", () => {
                 this.rxvo.model = _d;

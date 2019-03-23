@@ -67,22 +67,18 @@ class Notifier {
      * @param forPath
      */
     sendNext(forPath) {
-        // this is a kludge to "wait a tic" before sending the notifications
-        setTimeout(() => {
-            if (forPath[0] !== ".") {
-                forPath = `.${forPath}`;
-            }
+        if (forPath[0] !== ".") {
+            forPath = `.${forPath}`;
+        }
 
-            const _models = this.$rxvo.getModelsInPath(forPath);
+        const _models = this.$rxvo.getModelsInPath(forPath);
 
-            if (_models[0] !== "") {
-                _models.splice(0, 0, "")
-            }
+        console.log(_models);
 
-            _models.forEach((model) => {
-                _oBuilders.get(this.$rxvo).next(model.$model);
-            });
-        }, 0);
+        _models.forEach((m) => {
+            console.log(`sending model: ${m.$model}`);
+            _oBuilders.get(this.$rxvo).next(m.$model);
+        });
     }
 
     /**
