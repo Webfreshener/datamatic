@@ -73,8 +73,6 @@ class Notifier {
 
         const _models = this.$rxvo.getModelsInPath(forPath);
 
-        console.log(_models);
-
         _models.forEach((m) => {
             console.log(`sending model: ${m.$model}`);
             _oBuilders.get(this.$rxvo).next(m.$model);

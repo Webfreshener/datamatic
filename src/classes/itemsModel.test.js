@@ -34,7 +34,7 @@ describe("ItemsModel Class Suite", function () {
 
             it("should populate with valid data and make that data accessible", (done) => {
                 _d = ["abc", "def", "ghi"];
-                let _cnt = -1;
+                let _cnt = 0;
 
                 this.rxvo.subscribe({
                     next: (m) => {
@@ -45,16 +45,8 @@ describe("ItemsModel Class Suite", function () {
                 });
 
                 setTimeout(() => {
-                    if (_cnt) {
-                        done("ItemsModel fired more than once for a single operation");
-                    } else {
-                        if (_cnt < 0) {
-                            done("ItemsModel did not fire");
-                        } else {
-                            console.log(`_cnt: ${_cnt}`);
-                            done();
-                        }
-                    }
+                    expect(_cnt).toEqual(1);
+                    done();
                 }, 100);
 
                 this.rxvo.model = _d;
@@ -87,7 +79,7 @@ describe("ItemsModel Class Suite", function () {
 
             let _d;
 
-            it.only("should populate with valid data and make that data accessible", (done) => {
+            it("should populate with valid data and make that data accessible", (done) => {
                 _d = [{
                     name: "Item A",
                     value: 1,
@@ -98,27 +90,18 @@ describe("ItemsModel Class Suite", function () {
                     value: 2,
                 }];
 
-                let _cnt = -1;
+                let _cnt = 0;
 
                 this.rxvo.subscribe({
                     next: (m) => {
                         _cnt++;
-                        expect(deepEqual(this.rxvo.model, _d)).toBe(true);
                     },
                     error: done,
                 });
 
                 setTimeout(() => {
-                    if (_cnt) {
-                        done("ItemsModel fired more than once for a single operation");
-                    } else {
-                        if (_cnt < 0) {
-                            done("ItemsModel did not fire");
-                        } else {
-                            console.log(`_cnt: ${_cnt}`);
-                            done();
-                        }
-                    }
+                    expect(_cnt).toEqual(3);
+                    done();
                 }, 100);
 
                 this.rxvo.model = _d;
