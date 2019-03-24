@@ -71,12 +71,8 @@ class Notifier {
             forPath = `.${forPath}`;
         }
 
-        const _models = this.$rxvo.getModelsInPath(forPath);
-
-        _models.forEach((m) => {
-            console.log(`sending model: ${m.$model}`);
-            _oBuilders.get(this.$rxvo).next(m.$model);
-        });
+        this.$rxvo.getModelsInPath(forPath)
+            .forEach((m) => _oBuilders.get(this.$rxvo).next(m.$model));
     }
 
     /**
@@ -85,11 +81,9 @@ class Notifier {
      * @param error
      */
     sendError(forPath, error) {
-        const _models = this.$rxvo.getModelsInPath(forPath);
-        _models.forEach((model) => {
-            _oBuilders.get(this.$rxvo).error(model.$model,
-                new ErrorNotification(model.$model.path, error));
-        });
+        this.$rxvo.getModelsInPath(forPath)
+            .forEach((model) => _oBuilders.get(this.$rxvo).error(model.$model,
+                new ErrorNotification(model.$model.path, error)));
     }
 
     /**
@@ -97,10 +91,8 @@ class Notifier {
      * @param forPath
      */
     sendComplete(forPath) {
-        const _models = this.$rxvo.getModelsInPath(forPath);
-        _models.forEach((model) => {
-            _oBuilders.get(this.$rxvo).complete(model.$model);
-        });
+        this.$rxvo.getModelsInPath(forPath)
+            .forEach((model) => _oBuilders.get(this.$rxvo).complete(model.$model));
     }
 }
 
