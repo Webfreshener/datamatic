@@ -11,9 +11,11 @@ describe("Pipes tests", () => {
             throw JSON.stringify(e);
         }
     });
+
     const _pipe = new Pipe(_rxvo, (d) => {
         return d.model.filter((itm) => itm.active);
     }, basicCollection);
+
     describe("creation", () => {
         each([_pipe.close, _pipe.fork, _pipe.link, _pipe.pipe, _pipe.once, _pipe.split, _pipe.write])
             .test("should create a pipe", (func) => {
@@ -23,9 +25,9 @@ describe("Pipes tests", () => {
 
     describe("pipe", () => {
         it("should transform data with callback", (done) => {
-            _pipe.once().subscribe({
+            _pipe.subscribe({
                 next: (d) => {
-                    console.log(`${d}`);
+                    expect(d.model.length).toEqual(3);
                     done();
                 },
                 error: (e) => {
@@ -33,8 +35,7 @@ describe("Pipes tests", () => {
                 }
             });
             _rxvo.model = data;
-        })
-
+        });
     });
 
 });

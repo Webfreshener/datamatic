@@ -1,11 +1,10 @@
 import {
-    _object, _schemaHelpers
+    _object, _schemaHelpers, _oBuilders,
 } from "./_references";
 import {Model} from "./model";
 import {SchemaHelpers} from "./_schemaHelpers";
 import {makeClean, makeDirty, refAtKeyValidation, refValidation} from "./utils";
 import Notifiers from "./_branchNotifier";
-import merge from "lodash.merge";
 
 const _observerDelegates = new WeakMap();
 
@@ -57,6 +56,8 @@ export class ItemsModel extends Model {
             makeDirty(this);
         }
 
+        _oBuilders.get(this.rxvo).mute(this);
+
         _object.set(this, new Proxy(Model.createRef(this, []), this.handler));
         _observerDelegates.set(this, true);
 
@@ -66,15 +67,18 @@ export class ItemsModel extends Model {
             value.forEach((val) => {
                 _object.get(this)[cnt++] = val;
             });
-
+            // todo: review why this wont fly
+            // _object.get(this).splice(0,0, value);
         } catch (e) {
             makeClean(this);
+            _oBuilders.get(this.rxvo).unmute(this);
             Notifiers.get(this.rxvo).sendError(this.jsonPath, e);
             return false;
         }
 
         makeClean(this);
         if (!this.isDirty) {
+            _oBuilders.get(this.rxvo).unmute(this);
             Notifiers.get(this.rxvo).sendNext(this.jsonPath);
             _observerDelegates.delete(this);
         }
@@ -97,6 +101,7 @@ export class ItemsModel extends Model {
                 if (idx in Array.prototype) {
                     // only handle methods that modify the reference array
                     if (["fill", "pop", "push", "shift", "splice", "unshift"].indexOf(idx) > -1) {
+                        console.log(`apply ${idx}`);
                         return applyMethod(this, t, idx);
                     } else {
                         return t[idx];

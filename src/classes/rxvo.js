@@ -89,7 +89,7 @@ export class RxVO {
     }
 
     /**
-     *
+     * Selects schema to validate against (advanced option, use wisely)
      * @param id
      */
     useSchema(id) {
@@ -121,6 +121,11 @@ export class RxVO {
         return this.getSchemaForKey(_id);
     }
 
+    /**
+     * returns schema with given id
+     * @param id
+     * @returns {*}
+     */
     getSchemaForKey(id) {
         let _schema = null;
         const _schemas = _schemaSignatures.get(this);

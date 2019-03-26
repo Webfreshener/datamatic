@@ -100,7 +100,7 @@ describe("ItemsModel Class Suite", function () {
                 });
 
                 setTimeout(() => {
-                    expect(_cnt).toEqual(3);
+                    expect(_cnt).toEqual(1);
                     done();
                 }, 100);
 

@@ -1,6 +1,8 @@
 import {_observers} from "./_references";
 import {BehaviorSubject} from "rxjs/Rx";
+
 const _observerPaths = new WeakMap();
+const _observerCache = new WeakMap();
 
 export class ObserverBuilder {
     /**
@@ -30,6 +32,10 @@ export class ObserverBuilder {
         return _itm && _itm.length > 1 ? this.get(_itm[1]) : null;
     }
 
+    /**
+     * lists all registered observer paths
+     * @returns {*}
+     */
     list() {
         return _observerPaths.get(this).map((o) => o[0]);
     }
@@ -51,6 +57,29 @@ export class ObserverBuilder {
     }
 
     /**
+     * mutes notifications to `target` observers
+     * @param target
+     */
+    mute(target) {
+        const _idx = _observerPaths.get(this).findIndex((el) => el[0] === `${target.path}` && el[1] === target);
+        console.log(`mute _idx: ${_idx}`);
+        _observerCache.set(target, {idx: _idx, value: _observerPaths.get(this).splice(_idx, 1)});
+    }
+
+    /**
+     * unmutes notifications to `target` observers if muted
+     * @param target
+     */
+    unmute(target) {
+        const _cached = _observerCache.get(target);
+
+        if (_cached) {
+            _observerPaths.get(this).splice(_cached.idx, 0, _cached.value);
+            _observerCache.delete(target);
+        }
+    }
+
+    /**
      * Calls next on Next Subject
      * @param target {Model}
      */
@@ -59,7 +88,7 @@ export class ObserverBuilder {
             return;
         }
 
-        let _o = this.get(target);
+        let _o = !_observerCache.get(target) ? this.get(target) : null;
         if (_o !== null) {
             _o.onNext.next(target);
         }

@@ -11,7 +11,6 @@ export class Pipe {
         const _sub = vo.subscribe({
             next: (data) => {
                 const {once} = _pipes.get(this);
-                console.log("NEXT");
                 // capture output of callback
                 const _t = cb(data);
                 if ((typeof _t) === "object") {
@@ -124,6 +123,31 @@ export class Pipe {
     }
 
     /**
+     *
+     * @returns {Object|Array}
+     */
+    tap() {
+        return _pipes.get(this).out.model;
+    }
+
+    toString() {
+        return `${this.tap().$model}`;
+    }
+
+    toJSON() {
+        return this.tap().$model.toJSON();
+    }
+
+    /**
+     * informs `pipe` to close after first notification
+     * @returns {Pipe}
+     */
+    throttle(rate) {
+        _pipes.get(this).rate = rate;
+        return this;
+    }
+
+    /**
      * subscribes to `pipe` output notifications
      * @param handler
      * @returns {Observable}
@@ -133,5 +157,13 @@ export class Pipe {
             throw "handler required for Pipe::subscribe";
         }
         return _pipes.get(this).out.subscribe(handler);
+    }
+
+    /**
+     * returns JSON-SCHEMA for `pipe` output
+     * @returns {object}
+     */
+    get schema() {
+        return Object.assign({}, _pipes.get(this).schema);
     }
 }
