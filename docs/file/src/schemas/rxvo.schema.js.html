@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../../">
-  <title data-ice="title">src/classes/_schemaHelpers.test.js | rxvo</title>
+  <title data-ice="title">src/schemas/rxvo.schema.js | rxvo</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -65,52 +65,69 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><h1 data-ice="title">src/classes/_schemaHelpers.test.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {_mdRef} from &quot;./_references&quot;;
-import {PropertiesModel} from &quot;./propertiesModel&quot;;
-import {RxVO} from &quot;./rxvo&quot;;
-import {SchemaHelpers} from &quot;./_schemaHelpers&quot;;
-import {basicModel} from &quot;../../fixtures/PropertiesModel.schemas&quot;;
+<div class="content" data-ice="content"><h1 data-ice="title">src/schemas/rxvo.schema.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">export default {
+    id: &quot;https://schemas.webfreshener.com/rxvo#&quot;,
+    schema: {
+        oneOf: [
+            {
+                $ref: &quot;#definitions/Schema&quot;,
+            },
+            {
+                $ref: &quot;#definitions/Pipe&quot;,
+            },
+        ],
+    },
+    definitions: {
+        PipeConfig: {
 
-describe(&quot;SchemaHelpers Class Tests&quot;, () =&gt; {
-    let _rxvo, _schema, _sH;
+        },
+        Tags: {
+            type: &quot;array&quot;,
+            items: {
+                type: &quot;string&quot;,
+            }
+        },
+        Schema: {
+            oneOf: [
+                {
+                    $ref: &quot;http://json-schema.org/draft-04/schema#&quot;,
+                },
+                {
+                    $ref: &quot;http://json-schema.org/draft-06/schema#&quot;,
+                },
+            ],
+        },
+        Link: {
+            type: &quot;object&quot;,
+            required: [&quot;pipe&quot;],
+            properties: {
+                pipe: {
 
-    beforeEach(() =&gt; {
-        _rxvo = new RxVO(basicModel);
-        _schema = new PropertiesModel(_rxvo);
-        _sH = new SchemaHelpers(_schema);
-    });
-
-    describe(&quot;Child Object Methods&quot;, () =&gt; {
-        beforeEach(() =&gt; {
-            _rxvo = new RxVO({schemas: [basicModel]});
-            _schema = new PropertiesModel(_rxvo);
-            _sH = new SchemaHelpers(_schema);
-        });
-
-        it(&quot;should set PropertiesModel from Object values&quot;, () =&gt; {
-            expect((typeof _sH.setObject({properties: {name: &quot;bar&quot;}})) === &quot;string&quot;).toBe(false);
-            expect(_schema.model.properties.name).toBe(&quot;bar&quot;);
-        });
-
-        describe(&quot;Create Object&quot;, () =&gt; {
-            it(&quot;should create Child PropertiesModel Object&quot;, () =&gt; {
-                let _sC = _sH.createSchemaChild(&quot;foo&quot;, {}, _mdRef.get(_schema));
-                expect((typeof _sC) === &quot;string&quot;).toBe(false);
-                expect(_sC instanceof PropertiesModel).toBe(true);
-            });
-        });
-        describe(&quot;ItemsModel Values&quot;, () =&gt; {
-            it(&quot;should set Value Object on Child PropertiesModel&quot;, () =&gt; {
-                const sH = new SchemaHelpers(_schema);
-                const _child = sH.setChildObject(&quot;&quot;, {baz: 123});
-                expect(typeof _child).toBe(&quot;object&quot;);
-                expect(_child.baz).toBe(123);
-            });
-        });
-
-    });
-});
+                },
+                callback: {
+                },
+            },
+        },
+        Pipe: {
+            type: &quot;object&quot;,
+            required: [&quot;schema&quot;],
+            properties: {
+                tags: {
+                    $ref: &quot;#/definitions/Tags&quot;,
+                },
+                values: {
+                    $ref: &quot;https://schemas.webfreshener.com/rxvo/pipe-keys#&quot;,
+                },
+                schema: {
+                    $ref: &quot;#definitions/Schema&quot;,
+                },
+                callback: {
+                },
+            },
+        },
+    },
+};
 </code></pre>
 
 </div>

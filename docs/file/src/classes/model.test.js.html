@@ -36,6 +36,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_schemaHelpers.js~SchemaHelpers.html">SchemaHelpers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/itemsModel.js~ItemsModel.html">ItemsModel</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">RxVO</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDefaults">getDefaults</a></span></span></li>
@@ -71,17 +72,19 @@ import {RxVO} from &quot;./rxvo&quot;;
 describe(&quot;Model Class Tests&quot;, () =&gt; {
     describe(&quot;Test Method&quot;, () =&gt; {
         let _rxvo;
+        const _d = {
+            name: &quot;Ed Testy&quot;,
+            age: 99,
+            active: true,
+        };
 
         beforeEach(() =&gt; {
             _rxvo = new RxVO({schemas: [basicModel]});
+            _d.active = true;
         });
 
         it(&quot;should validate models against schema&quot;, () =&gt; {
-            const _d = {
-                name: &quot;Ed Testy&quot;,
-                age: 99,
-                active: true,
-            };
+
 
             expect(_rxvo.model.$model.validate(_d)).toBe(true);
 
@@ -89,8 +92,22 @@ describe(&quot;Model Class Tests&quot;, () =&gt; {
 
             expect(_rxvo.model.$model.validate(_d)).toBe(&quot;data/active should be boolean&quot;);
         });
+
+        it(&quot;should support subscription callbacks object&quot;, (done) =&gt; {
+            _rxvo.subscribe({
+                next: () =&gt; done(),
+                error: done,
+            });
+            _rxvo.model = _d;
+        });
+
+        it(&quot;should support next callback&quot;, (done) =&gt; {
+            _rxvo.subscribe(() =&gt; done());
+            _rxvo.model = _d;
+        })
     });
-})</code></pre>
+})
+</code></pre>
 
 </div>
 

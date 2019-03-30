@@ -77,7 +77,7 @@ export class ObserverBuilder {
             onComplete: new BehaviorSubject(null).skip(1),
         };
         _o.set(target, _h);
-        _observerPaths.get(this).splice(-1, 0, [`${target.path}`, target]);
+        _observerPaths.get(this).splice(0, 0, [`${target.path}`, target]);
         return _o.get(target);
     }
 

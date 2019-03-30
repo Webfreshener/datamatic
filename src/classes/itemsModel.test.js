@@ -271,7 +271,7 @@ describe("ItemsModel Class Suite", function () {
             expect(typeof this.rxvo.errors).toBe("object");
             expect(this.rxvo.model.length).toBe(3);
             // append element...
-            this.rxvo.model.splice(-1, 0, "Item D");
+            this.rxvo.model.splice(0, 0, "Item D");
             expect(typeof this.rxvo.errors).toBe("object");
             expect(this.rxvo.model.length).toBe(3);
         });

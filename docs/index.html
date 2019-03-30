@@ -36,6 +36,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_schemaHelpers.js~SchemaHelpers.html">SchemaHelpers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/itemsModel.js~ItemsModel.html">ItemsModel</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">RxVO</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDefaults">getDefaults</a></span></span></li>
@@ -78,7 +79,11 @@ RxJS + JSON-Schema (Ajv) Based Observable Data Models</p>
 <li>Automate creation of RxJS Update and Error notifications </li>
 </ul>
 <h3 id="table-of-contents">Table of Contents</h3><p><strong><a href="#installation-instructions">Installation Instructions</a></strong></p>
-<p><strong><a href="#usage-example">Usage Example</a></strong></p>
+<p><strong><a href="#usage-examples">Usage Examples</a></strong></p>
+<ul>
+<li><a href="#basic-usage">Basic Usage</a></li>
+<li><a href="#flow-control">Flow Control</a></li>
+</ul>
 <p><strong><a href="#developer-guide">Developer Guide</a></strong></p>
 <ul>
 <li><a href="#rxvo-class">RxVO Class</a><ul>
@@ -90,6 +95,7 @@ RxJS + JSON-Schema (Ajv) Based Observable Data Models</p>
 <li><a href="#itemsmodel">ItemsModel</a></li>
 <li><a href="#propertiesmodel">PropertiesModel</a></li>
 <li><a href="#model-class">Model Class</a></li>
+<li><a href="#pipe-class">Pipe Class</a></li>
 </ul>
 <h4 id="installation-instructions">Installation Instructions</h4><pre><code><code class="source-code prettyprint">$ npm i rxvo</code>
 </code></pre><h4 id="usage-example">Usage Example</h4><p>The example below defines a Model that expects a <code>name</code> value and 
@@ -176,7 +182,8 @@ obj.model.topScores[0].score = &quot;1234&quot;;
 delete obj.model.topScores;
 </code>
 </code></pre><p>Refer to the examples demo in <code>./examples/basic-usage</code> for more usage examples</p>
-<h2 id="developer-guide">Developer Guide</h2><h4 id="rxvo-class">RxVO Class</h4><p>This class represents the Document entry point</p>
+<h4 id="flow-control">Flow Control</h4><pre><code><code class="source-code prettyprint"></code>
+</code></pre><h2 id="developer-guide">Developer Guide</h2><h4 id="rxvo-class">RxVO Class</h4><p>This class represents the Document entry point</p>
 <table>
 <thead>
 <tr>
@@ -389,26 +396,6 @@ Note: the <code>model</code> param presents a Proxied Array, with all <code>Arra
 <td style="text-align:left">retrieves json path string for Model instance. eg: &quot;this.is.my.path&quot;</td>
 </tr>
 <tr>
-<td style="text-align:left">model [getter/setter]</td>
-<td style="text-align:left"></td>
-<td style="text-align:left">retrieves root model for operation</td>
-</tr>
-<tr>
-<td style="text-align:left">subscribe</td>
-<td style="text-align:left">observers (object)</td>
-<td style="text-align:left">Subscribes Observers to the RxVO Model Root</td>
-</tr>
-<tr>
-<td style="text-align:left">subscribeTo</td>
-<td style="text-align:left">path (string), observers (object)</td>
-<td style="text-align:left">Subscribes Observers to the Model at path</td>
-</tr>
-<tr>
-<td style="text-align:left">model [getter/setter]</td>
-<td style="text-align:left"></td>
-<td style="text-align:left">setter/getter for <a href="#model-proxy-object">model proxy object</a> for operation</td>
-</tr>
-<tr>
 <td style="text-align:left">objectID [getter]</td>
 <td style="text-align:left"></td>
 <td style="text-align:left">retrieves Unique ObjectID of Model instance</td>
@@ -429,6 +416,11 @@ Note: the <code>model</code> param presents a Proxied Array, with all <code>Arra
 <td style="text-align:left">retrieves Model&apos;s parent Model instance</td>
 </tr>
 <tr>
+<td style="text-align:left">pipe</td>
+<td style="text-align:left">callback (function), schema (json-schema)</td>
+<td style="text-align:left">returns pipe segment for process chaining</td>
+</tr>
+<tr>
 <td style="text-align:left">reset</td>
 <td style="text-align:left"></td>
 <td style="text-align:left">resets model to initial state if operation is valid</td>
@@ -442,6 +434,16 @@ Note: the <code>model</code> param presents a Proxied Array, with all <code>Arra
 <td style="text-align:left">rxvo [getter]</td>
 <td style="text-align:left"></td>
 <td style="text-align:left">retrieves Model&apos;s RxVO document instance</td>
+</tr>
+<tr>
+<td style="text-align:left">subscribe</td>
+<td style="text-align:left">observers (object)</td>
+<td style="text-align:left">Subscribes Observers to the RxVO Model Root</td>
+</tr>
+<tr>
+<td style="text-align:left">subscribeTo</td>
+<td style="text-align:left">path (string), observers (object)</td>
+<td style="text-align:left">Subscribes Observers to the Model at path</td>
 </tr>
 <tr>
 <td style="text-align:left">toString</td>
@@ -462,6 +464,113 @@ Note: the <code>model</code> param presents a Proxied Array, with all <code>Arra
 <td style="text-align:left">validationPath [getter]</td>
 <td style="text-align:left"></td>
 <td style="text-align:left">retrieves json-schema path string for Model validation</td>
+</tr>
+</tbody>
+</table>
+<h4 id="pipe-class">Pipe Class</h4><table>
+<thead>
+<tr>
+<th style="text-align:left">Method</th>
+<th style="text-align:left">Arguments</th>
+<th style="text-align:left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left">constructor</td>
+<td style="text-align:left">vo (Model), callback (function), schema (json-schema)</td>
+<td style="text-align:left">class constructor method</td>
+</tr>
+<tr>
+<td style="text-align:left">clone</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">returns clone of current <code>pipe</code> segment</td>
+</tr>
+<tr>
+<td style="text-align:left">close</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">terminates input on <code>pipe</code> segment</td>
+</tr>
+<tr>
+<td style="text-align:left">exec</td>
+<td style="text-align:left">data (object/array)</td>
+<td style="text-align:left">executes pipe&apos;s callback with data without writing to <code>pipe</code></td>
+</tr>
+<tr>
+<td style="text-align:left">inline</td>
+<td style="text-align:left">target (Pipe), callback (function)</td>
+<td style="text-align:left">executes target pipes in single transaction block</td>
+</tr>
+<tr>
+<td style="text-align:left">isWritable [getter]</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">Returns write status of <code>pipe</code></td>
+</tr>
+<tr>
+<td style="text-align:left">link</td>
+<td style="text-align:left">target (Pipe), callback (function)</td>
+<td style="text-align:left">links <code>pipe</code> segment to direct output to target <code>pipe</code></td>
+</tr>
+<tr>
+<td style="text-align:left">merge</td>
+<td style="text-align:left">pipeOrPipes (Pipe</td>
+<td style="text-align:left">Pipe[]), schema (json-schema), callback (function)</td>
+<td>merges multiple pipes into single output</td>
+</tr>
+<tr>
+<td style="text-align:left">once</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">informs <code>pipe</code> to close after first notification</td>
+</tr>
+<tr>
+<td style="text-align:left">pipe</td>
+<td style="text-align:left">schema/pipe (json-schema / Pipe), callback (function)</td>
+<td style="text-align:left">returns new chained <code>pipe</code> segment</td>
+</tr>
+<tr>
+<td style="text-align:left">sample</td>
+<td style="text-align:left">nth</td>
+<td style="text-align:left">Returns product of Nth occurrence of <code>pipe</code> execution</td>
+</tr>
+<tr>
+<td style="text-align:left">split</td>
+<td style="text-align:left">mappings, callback (function)</td>
+<td style="text-align:left">creates array of new <code>pipe</code> segments that run in parallel</td>
+</tr>
+<tr>
+<td style="text-align:left">subscribe</td>
+<td style="text-align:left">handler (object / function)</td>
+<td style="text-align:left">subscribes to <code>pipe</code> output notifications</td>
+</tr>
+<tr>
+<td style="text-align:left">tap</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">Provides current state of <code>pipe</code> output. alias for <code>toJSON</code></td>
+</tr>
+<tr>
+<td style="text-align:left">throttle</td>
+<td style="text-align:left">rate (number)</td>
+<td style="text-align:left">Limit notifications to rate based on time interval</td>
+</tr>
+<tr>
+<td style="text-align:left">toString</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">Provides current state of <code>pipe</code> output as JSON string</td>
+</tr>
+<tr>
+<td style="text-align:left">toJSON</td>
+<td style="text-align:left"></td>
+<td style="text-align:left">Provides current state of <code>pipe</code> output as JSON</td>
+</tr>
+<tr>
+<td style="text-align:left">unlink</td>
+<td style="text-align:left">target (Pipe)</td>
+<td style="text-align:left">unlinks <code>pipe</code> segment from target <code>pipe</code></td>
+</tr>
+<tr>
+<td style="text-align:left">write</td>
+<td style="text-align:left">data (object/array)</td>
+<td style="text-align:left">writes data to <code>pipe</code></td>
 </tr>
 </tbody>
 </table>

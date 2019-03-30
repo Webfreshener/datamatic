@@ -1,69 +1,78 @@
 {
-  "coverage": "87.05%",
-  "expectCount": 139,
-  "actualCount": 121,
+  "coverage": "88.75%",
+  "expectCount": 169,
+  "actualCount": 150,
   "files": {
     "src/classes/_ajvWrapper.js": {
       "expectCount": 10,
       "actualCount": 8,
       "undocumentLines": [
-        9,
-        110
+        34,
+        135
       ]
     },
     "src/classes/_branchNotifier.js": {
       "expectCount": 14,
       "actualCount": 12,
       "undocumentLines": [
-        2,
-        26
+        27,
+        51
       ]
     },
     "src/classes/_metaData.js": {
       "expectCount": 12,
       "actualCount": 10,
       "undocumentLines": [
-        2,
-        20
+        27,
+        45
       ]
     },
     "src/classes/_observerBuilder.js": {
-      "expectCount": 10,
-      "actualCount": 7,
+      "expectCount": 13,
+      "actualCount": 10,
       "undocumentLines": [
-        3,
-        5,
-        33
+        29,
+        30,
+        32
       ]
     },
     "src/classes/_references.js": {
       "expectCount": 13,
       "actualCount": 11,
       "undocumentLines": [
-        5,
-        6
+        30,
+        31
       ]
     },
     "src/classes/_schemaHelpers.js": {
       "expectCount": 6,
       "actualCount": 5,
       "undocumentLines": [
-        18
+        43
       ]
     },
     "src/classes/itemsModel.js": {
       "expectCount": 8,
       "actualCount": 6,
       "undocumentLines": [
-        10,
-        85
+        34,
+        115
       ]
     },
     "src/classes/model.js": {
-      "expectCount": 25,
-      "actualCount": 24,
+      "expectCount": 26,
+      "actualCount": 25,
       "undocumentLines": [
-        44
+        70
+      ]
+    },
+    "src/classes/pipe.js": {
+      "expectCount": 24,
+      "actualCount": 21,
+      "undocumentLines": [
+        28,
+        29,
+        49
       ]
     },
     "src/classes/propertiesModel.js": {
@@ -72,19 +81,16 @@
       "undocumentLines": []
     },
     "src/classes/rxvo.js": {
-      "expectCount": 20,
-      "actualCount": 18,
+      "expectCount": 22,
+      "actualCount": 21,
       "undocumentLines": [
-        11,
-        124
+        36
       ]
     },
     "src/classes/utils.js": {
       "expectCount": 10,
-      "actualCount": 9,
-      "undocumentLines": [
-        64
-      ]
+      "actualCount": 10,
+      "undocumentLines": []
     }
   }
 }

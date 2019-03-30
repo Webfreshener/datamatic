@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../../">
-  <title data-ice="title">RxVO | rxvo</title>
+  <title data-ice="title">Pipe | rxvo</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -66,17 +66,17 @@
 </nav>
 
 <div class="content" data-ice="content"><div class="header-notice">
-  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {RxVO} from &apos;<span><a href="file/src/classes/rxvo.js.html#lineNumber58">rxvo/src/classes/rxvo.js</a></span>&apos;</code></pre></div>
+  <div data-ice="importPath" class="import-path"><pre class="prettyprint"><code data-ice="importPathCode">import {Pipe} from &apos;<span><a href="file/src/classes/pipe.js.html#lineNumber48">rxvo/src/classes/pipe.js</a></span>&apos;</code></pre></div>
   <span data-ice="access">public</span>
   <span data-ice="kind">class</span>
   
   
   
-  <span data-ice="source">| <span><a href="file/src/classes/rxvo.js.html#lineNumber58">source</a></span></span>
+  <span data-ice="source">| <span><a href="file/src/classes/pipe.js.html#lineNumber48">source</a></span></span>
 </div>
 
 <div class="self-detail detail">
-  <h1 data-ice="name">RxVO</h1>
+  <h1 data-ice="name">Pipe</h1>
 
   
 
@@ -92,7 +92,7 @@
 
   
   
-  <div class="description" data-ice="description"><p>RxVo Model Entry-point</p>
+  <div class="description" data-ice="description"><p>Pipe Class</p>
 </div>
   
 
@@ -106,42 +106,7 @@
 </div>
 
 
-<div data-ice="staticMethodSummary"><h2>Static Method Summary</h2><table class="summary" data-ice="summary">
-  <thead><tr><td data-ice="title" colspan="3">Static Public Methods</td></tr></thead>
-  <tbody>
-  
-  <tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      <span data-ice="static">static</span>
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          
-          <span class="code" data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html#static-method-fromJSON">fromJSON</a></span></span><span class="code" data-ice="signature">(json: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span> | <span>json</span>, options: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>): <span><a href="class/src/classes/rxvo.js~RxVO.html">RxVO</a></span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        <div data-ice="description"><p>Creates new PropertiesModel from JSON data</p>
-</div>
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-</tbody>
-</table>
-</div>
+
 <div data-ice="constructorSummary"><h2>Constructor Summary</h2><table class="summary" data-ice="summary">
   <thead><tr><td data-ice="title" colspan="3">Public Constructor</td></tr></thead>
   <tbody>
@@ -160,7 +125,7 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html#instance-constructor-constructor">constructor</a></span></span><span class="code" data-ice="signature">(schemas: <span>json</span>, options: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>)</span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/pipe.js~Pipe.html#instance-constructor-constructor">constructor</a></span></span><span class="code" data-ice="signature">()</span>
         </p>
       </div>
       <div>
@@ -195,13 +160,13 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html#instance-get-errors">errors</a></span></span><span class="code" data-ice="signature">: <span>error[] </span> | <span> null</span>: <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/pipe.js~Pipe.html#instance-get-errors">errors</a></span></span><span class="code" data-ice="signature">: <span>*</span>: <span>*</span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>Getter for Ajv validation error messages</p>
+        <div data-ice="description"><p>Returns validation errors</p>
 </div>
       </div>
     </td>
@@ -224,13 +189,13 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html#instance-get-isFrozen">isFrozen</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>: <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/pipe.js~Pipe.html#instance-get-isWritable">isWritable</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>: <span>*</span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>Returns true if object is frozen</p>
+        <div data-ice="description"><p>Returns write status of <code>pipe</code></p>
 </div>
       </div>
     </td>
@@ -253,71 +218,13 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html#instance-get-model">model</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span> | <span>array</span>: <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/pipe.js~Pipe.html#instance-get-schema">schema</a></span></span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>: <span>*</span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>Getter for root Model</p>
-</div>
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      <span class="kind" data-ice="kind">set</span>
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          
-          <span class="code" data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html#instance-set-model">model</a></span></span><span class="code" data-ice="signature">(value: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span> | <span>array</span>)</span>
-        </p>
-      </div>
-      <div>
-        
-        
-        <div data-ice="description"><p>Setter for root Model value</p>
-</div>
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      <span class="kind" data-ice="kind">get</span>
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          
-          <span class="code" data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html#instance-get-schema">schema</a></span></span><span class="code" data-ice="signature">: <span>any</span>: <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        <div data-ice="description"><p>Getter for document&apos;s JSON-Schema</p>
+        <div data-ice="description"><p>Returns JSON-SCHEMA for <code>pipe</code> output</p>
 </div>
       </div>
     </td>
@@ -347,13 +254,13 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html#instance-method-addSchema">addSchema</a></span></span><span class="code" data-ice="signature">(schema: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/pipe.js~Pipe.html#instance-method-clone">clone</a></span></span><span class="code" data-ice="signature">(): <span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>Adds Schema to Validator instance</p>
+        <div data-ice="description"><p>Creates clone of current <code>pipe</code> segment</p>
 </div>
       </div>
     </td>
@@ -376,13 +283,13 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html#instance-method-freeze">freeze</a></span></span><span class="code" data-ice="signature">(): <span><a href="class/src/classes/rxvo.js~RxVO.html">RxVO</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/pipe.js~Pipe.html#instance-method-close">close</a></span></span><span class="code" data-ice="signature">(): <span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>Freezes document object</p>
+        <div data-ice="description"><p>Terminates input on <code>pipe</code> segment.</p>
 </div>
       </div>
     </td>
@@ -405,13 +312,13 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html#instance-method-getModelsInPath">getModelsInPath</a></span></span><span class="code" data-ice="signature">(to: <span>*</span>): <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span><span>[]</span></span> | <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span><span>[]</span></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/pipe.js~Pipe.html#instance-method-exec">exec</a></span></span><span class="code" data-ice="signature">(data: <span>*</span>): <span>*</span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>Retrieves all Models at given path</p>
+        <div data-ice="description"><p>Directly executes callback without effecting <code>pipe</code> observable</p>
 </div>
       </div>
     </td>
@@ -434,41 +341,13 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html#instance-method-getPath">getPath</a></span></span><span class="code" data-ice="signature">(to: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/pipe.js~Pipe.html#instance-method-link">link</a></span></span><span class="code" data-ice="signature">(target: <span>*</span>, callbacks: <span>*</span>): <span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></span>
         </p>
       </div>
       <div>
         
         
-        
-      </div>
-    </td>
-    <td>
-      
-      
-    </td>
-  </tr>
-<tr data-ice="target">
-    <td>
-      <span class="access" data-ice="access">public</span>
-      
-      
-      
-      <span class="override" data-ice="override"></span>
-    </td>
-    <td>
-      <div>
-        <p>
-          
-          
-          
-          <span class="code" data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html#instance-method-getSchemaForKey">getSchemaForKey</a></span></span><span class="code" data-ice="signature">(id: <span>*</span>): <span>*</span></span>
-        </p>
-      </div>
-      <div>
-        
-        
-        <div data-ice="description"><p>returns schema with given id</p>
+        <div data-ice="description"><p>links pipe segment to direct output to target pipe</p>
 </div>
       </div>
     </td>
@@ -491,13 +370,13 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html#instance-method-getSchemaForPath">getSchemaForPath</a></span></span><span class="code" data-ice="signature">(path: <span>*</span>): <span>any</span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/pipe.js~Pipe.html#instance-method-merge">merge</a></span></span><span class="code" data-ice="signature">(pipeOrPipes: <span>*</span>, schema: <span>*</span>): <span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>Retrieves JSON-Schema element for given Path</p>
+        <div data-ice="description"><p>Merges multiple pipes into single output</p>
 </div>
       </div>
     </td>
@@ -520,13 +399,13 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html#instance-method-subscribe">subscribe</a></span></span><span class="code" data-ice="signature">(observer: <span>*</span>): <span>Observable</span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/pipe.js~Pipe.html#instance-method-once">once</a></span></span><span class="code" data-ice="signature">(): <span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>Subscribes observer to root Model</p>
+        <div data-ice="description"><p>Informs <code>pipe</code> to close after first notification</p>
 </div>
       </div>
     </td>
@@ -549,13 +428,13 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html#instance-method-subscribeTo">subscribeTo</a></span></span><span class="code" data-ice="signature">(path: <span>*</span>, observer: <span>*</span>): <span>Observable</span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/pipe.js~Pipe.html#instance-method-pipe">pipe</a></span></span><span class="code" data-ice="signature">(pipesOrSchemas: <span>*</span>): <span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>Subscribes observer to Model at path</p>
+        <div data-ice="description"><p>Creates new <code>pipe</code> segment</p>
 </div>
       </div>
     </td>
@@ -578,13 +457,13 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html#instance-method-toJSON">toJSON</a></span></span><span class="code" data-ice="signature">(): <span>*</span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/pipe.js~Pipe.html#instance-method-sample">sample</a></span></span><span class="code" data-ice="signature">(nth: <span>*</span>): <span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>Implements toJSON</p>
+        <div data-ice="description"><p>Returns product of Nth occurrence of <code>pipe</code> execution</p>
 </div>
       </div>
     </td>
@@ -607,13 +486,13 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html#instance-method-toString">toString</a></span></span><span class="code" data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/pipe.js~Pipe.html#instance-method-split">split</a></span></span><span class="code" data-ice="signature">(mappings: <span>*</span>): <span>*</span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>Implements toString</p>
+        <div data-ice="description"><p>Creates array of new <code>pipe</code> segments that run in parallel</p>
 </div>
       </div>
     </td>
@@ -636,13 +515,13 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html#instance-method-useSchema">useSchema</a></span></span><span class="code" data-ice="signature">(id: <span>*</span>)</span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/pipe.js~Pipe.html#instance-method-subscribe">subscribe</a></span></span><span class="code" data-ice="signature">(handler: <span>*</span>): <span>Observable</span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>Selects schema to validate against (advanced option, use wisely)</p>
+        <div data-ice="description"><p>Subscribes to <code>pipe</code> output notifications</p>
 </div>
       </div>
     </td>
@@ -665,13 +544,158 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html#instance-method-validate">validate</a></span></span><span class="code" data-ice="signature">(path: <span>*</span>, value: <span>*</span>): <span>*</span> | <span>void</span> | <span>RegExpExecArray</span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/classes/pipe.js~Pipe.html#instance-method-tap">tap</a></span></span><span class="code" data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></span>
         </p>
       </div>
       <div>
         
         
-        <div data-ice="description"><p>Validates data against named schema</p>
+        <div data-ice="description"><p>Provides current state of <code>pipe</code> output.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/src/classes/pipe.js~Pipe.html#instance-method-throttle">throttle</a></span></span><span class="code" data-ice="signature">(rate: <span>*</span>): <span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Informs <code>pipe</code> to rate limit notifications based on time interval</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/src/classes/pipe.js~Pipe.html#instance-method-toJSON">toJSON</a></span></span><span class="code" data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Provides current state of <code>pipe</code> output.</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/src/classes/pipe.js~Pipe.html#instance-method-toString">toString</a></span></span><span class="code" data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Overrides Object&apos;s toString method</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/src/classes/pipe.js~Pipe.html#instance-method-unlink">unlink</a></span></span><span class="code" data-ice="signature">(target: <span>*</span>): <span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Unlink pipe segment from target pipe</p>
+</div>
+      </div>
+    </td>
+    <td>
+      
+      
+    </td>
+  </tr>
+<tr data-ice="target">
+    <td>
+      <span class="access" data-ice="access">public</span>
+      
+      
+      
+      <span class="override" data-ice="override"></span>
+    </td>
+    <td>
+      <div>
+        <p>
+          
+          
+          
+          <span class="code" data-ice="name"><span><a href="class/src/classes/pipe.js~Pipe.html#instance-method-write">write</a></span></span><span class="code" data-ice="signature">(data: <span>*</span>): <span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></span>
+        </p>
+      </div>
+      <div>
+        
+        
+        <div data-ice="description"><p>Writes data to pipe segment</p>
 </div>
       </div>
     </td>
@@ -687,91 +711,7 @@
 
 
 
-<div data-ice="staticMethodDetails"><h2 data-ice="title">Static Public Methods</h2>
 
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="static-method-fromJSON">
-    <span class="access" data-ice="access">public</span>
-    <span data-ice="static">static</span>
-    
-    
-    
-    
-    <span class="code" data-ice="name">fromJSON</span><span class="code" data-ice="signature">(json: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span> | <span>json</span>, options: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>): <span><a href="class/src/classes/rxvo.js~RxVO.html">RxVO</a></span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber307">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  <div data-ice="description"><p>Creates new PropertiesModel from JSON data</p>
-</div>
-
-  
-
-  <div data-ice="properties"><div data-ice="properties">
-  <h4 data-ice="title">Params:</h4>
-  <table class="params">
-    <thead>
-    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-    
-    <tr data-ice="property" data-depth="0">
-      <td data-ice="name" class="code" data-depth="0">json</td>
-      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span> | <span>json</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"><ul>
-<li>JSON Object or String</li>
-</ul>
-</td>
-    </tr>
-<tr data-ice="property" data-depth="0">
-      <td data-ice="name" class="code" data-depth="0">options</td>
-      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"><p>RxVO options object</p>
-</td>
-    </tr>
-</tbody>
-  </table>
-</div>
-</div>
-
-  <div class="return-params" data-ice="returnParams">
-    <h4>Return:</h4>
-    <table>
-      <tbody>
-        <tr>
-          <td class="return-type code" data-ice="returnType"><span><a href="class/src/classes/rxvo.js~RxVO.html">RxVO</a></span></td>
-          
-        </tr>
-      </tbody>
-    </table>
-    <div data-ice="returnProperties">
-</div>
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-</div>
 <div data-ice="constructorDetails"><h2 data-ice="title">Public Constructors</h2>
 
 <div class="detail" data-ice="detail">
@@ -782,11 +722,11 @@
     
     
     
-    <span class="code" data-ice="name">constructor</span><span class="code" data-ice="signature">(schemas: <span>json</span>, options: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>)</span>
+    <span class="code" data-ice="name">constructor</span><span class="code" data-ice="signature">()</span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber64">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/pipe.js.html#lineNumber49">source</a></span></span>
     </span>
   </h3>
 
@@ -797,29 +737,7 @@
 
   
 
-  <div data-ice="properties"><div data-ice="properties">
-  <h4 data-ice="title">Params:</h4>
-  <table class="params">
-    <thead>
-    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-    
-    <tr data-ice="property" data-depth="0">
-      <td data-ice="name" class="code" data-depth="0">schemas</td>
-      <td data-ice="type" class="code"><span>json</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
-    </tr>
-<tr data-ice="property" data-depth="0">
-      <td data-ice="name" class="code" data-depth="0">options</td>
-      <td data-ice="type" class="code"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
-    </tr>
-</tbody>
-  </table>
-</div>
+  <div data-ice="properties">
 </div>
 
   
@@ -850,18 +768,18 @@
     
     
     
-    <span class="code" data-ice="name">errors</span><span class="code" data-ice="signature">: <span>error[] </span> | <span> null</span>: <span>*</span></span>
+    <span class="code" data-ice="name">errors</span><span class="code" data-ice="signature">: <span>*</span>: <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber225">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/pipe.js.html#lineNumber183">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>Getter for Ajv validation error messages</p>
+  <div data-ice="description"><p>Returns validation errors</p>
 </div>
 
   
@@ -874,7 +792,7 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span>error[] </span> | <span> null</span></td>
+          <td class="return-type code" data-ice="returnType"><span>*</span></td>
           
         </tr>
       </tbody>
@@ -899,25 +817,25 @@
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-get-isFrozen">
+  <h3 data-ice="anchor" id="instance-get-isWritable">
     <span class="access" data-ice="access">public</span>
     
     <span class="kind" data-ice="kind">get</span>
     
     
     
-    <span class="code" data-ice="name">isFrozen</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>: <span>*</span></span>
+    <span class="code" data-ice="name">isWritable</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span>: <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber162">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/pipe.js.html#lineNumber289">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>Returns true if object is frozen</p>
+  <div data-ice="description"><p>Returns write status of <code>pipe</code></p>
 </div>
 
   
@@ -955,106 +873,6 @@
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-get-model">
-    <span class="access" data-ice="access">public</span>
-    
-    <span class="kind" data-ice="kind">get</span>
-    
-    
-    
-    <span class="code" data-ice="name">model</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span> | <span>array</span>: <span>*</span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber128">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  <div data-ice="description"><p>Getter for root Model</p>
-</div>
-
-  
-
-  <div data-ice="properties">
-</div>
-
-  <div class="return-params" data-ice="returnParams">
-    <h4>Return:</h4>
-    <table>
-      <tbody>
-        <tr>
-          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span> | <span>array</span></td>
-          
-        </tr>
-      </tbody>
-    </table>
-    <div data-ice="returnProperties">
-</div>
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-set-model">
-    <span class="access" data-ice="access">public</span>
-    
-    <span class="kind" data-ice="kind">set</span>
-    
-    
-    
-    <span class="code" data-ice="name">model</span><span class="code" data-ice="signature">(value: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span> | <span>array</span>)</span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber136">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  <div data-ice="description"><p>Setter for root Model value</p>
-</div>
-
-  
-
-  <div data-ice="properties">
-</div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
   <h3 data-ice="anchor" id="instance-get-schema">
     <span class="access" data-ice="access">public</span>
     
@@ -1062,18 +880,18 @@
     
     
     
-    <span class="code" data-ice="name">schema</span><span class="code" data-ice="signature">: <span>any</span>: <span>*</span></span>
+    <span class="code" data-ice="name">schema</span><span class="code" data-ice="signature">: <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span>: <span>*</span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber144">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/pipe.js.html#lineNumber191">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>Getter for document&apos;s JSON-Schema</p>
+  <div data-ice="description"><p>Returns JSON-SCHEMA for <code>pipe</code> output</p>
 </div>
 
   
@@ -1086,7 +904,7 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span>any</span></td>
+          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a></span></td>
           
         </tr>
       </tbody>
@@ -1114,25 +932,137 @@
 <div data-ice="methodDetails"><h2 data-ice="title">Public Methods</h2>
 
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-addSchema">
+  <h3 data-ice="anchor" id="instance-method-clone">
     <span class="access" data-ice="access">public</span>
     
     
     
     
     
-    <span class="code" data-ice="name">addSchema</span><span class="code" data-ice="signature">(schema: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></span>
+    <span class="code" data-ice="name">clone</span><span class="code" data-ice="signature">(): <span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber111">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/pipe.js.html#lineNumber248">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>Adds Schema to Validator instance</p>
+  <div data-ice="description"><p>Creates clone of current <code>pipe</code> segment</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></td>
+          
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-close">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">close</span><span class="code" data-ice="signature">(): <span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/classes/pipe.js.html#lineNumber275">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Terminates input on <code>pipe</code> segment. This is irrevocable</p>
+</div>
+
+  
+
+  <div data-ice="properties">
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></td>
+          
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-exec">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">exec</span><span class="code" data-ice="signature">(data: <span>*</span>): <span>*</span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/classes/pipe.js.html#lineNumber240">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Directly executes callback without effecting <code>pipe</code> observable</p>
 </div>
 
   
@@ -1146,6 +1076,163 @@
     <tbody>
     
     <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">data</td>
+      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"></td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span>*</span></td>
+          
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-link">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">link</span><span class="code" data-ice="signature">(target: <span>*</span>, callbacks: <span>*</span>): <span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/classes/pipe.js.html#lineNumber152">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>links pipe segment to direct output to target pipe</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">target</td>
+      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"></td>
+    </tr>
+<tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">callbacks</td>
+      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"><p>function[]</p>
+</td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></td>
+          
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-merge">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">merge</span><span class="code" data-ice="signature">(pipeOrPipes: <span>*</span>, schema: <span>*</span>): <span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/classes/pipe.js.html#lineNumber210">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Merges multiple pipes into single output</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">pipeOrPipes</td>
+      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"></td>
+    </tr>
+<tr data-ice="property" data-depth="0">
       <td data-ice="name" class="code" data-depth="0">schema</td>
       <td data-ice="type" class="code"><span>*</span></td>
       <td data-ice="appendix"></td>
@@ -1161,7 +1248,7 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></span></td>
+          <td class="return-type code" data-ice="returnType"><span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></td>
           
         </tr>
       </tbody>
@@ -1186,25 +1273,25 @@
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-freeze">
+  <h3 data-ice="anchor" id="instance-method-once">
     <span class="access" data-ice="access">public</span>
     
     
     
     
     
-    <span class="code" data-ice="name">freeze</span><span class="code" data-ice="signature">(): <span><a href="class/src/classes/rxvo.js~RxVO.html">RxVO</a></span></span>
+    <span class="code" data-ice="name">once</span><span class="code" data-ice="signature">(): <span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber153">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/pipe.js.html#lineNumber297">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>Freezes document object</p>
+  <div data-ice="description"><p>Informs <code>pipe</code> to close after first notification</p>
 </div>
 
   
@@ -1217,7 +1304,7 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span><a href="class/src/classes/rxvo.js~RxVO.html">RxVO</a></span></td>
+          <td class="return-type code" data-ice="returnType"><span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></td>
           
         </tr>
       </tbody>
@@ -1242,25 +1329,25 @@
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-getModelsInPath">
+  <h3 data-ice="anchor" id="instance-method-pipe">
     <span class="access" data-ice="access">public</span>
     
     
     
     
     
-    <span class="code" data-ice="name">getModelsInPath</span><span class="code" data-ice="signature">(to: <span>*</span>): <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span><span>[]</span></span> | <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span><span>[]</span></span></span>
+    <span class="code" data-ice="name">pipe</span><span class="code" data-ice="signature">(pipesOrSchemas: <span>*</span>): <span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber251">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/pipe.js.html#lineNumber127">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>Retrieves all Models at given path</p>
+  <div data-ice="description"><p>Creates new <code>pipe</code> segment</p>
 </div>
 
   
@@ -1274,7 +1361,7 @@
     <tbody>
     
     <tr data-ice="property" data-depth="0">
-      <td data-ice="name" class="code" data-depth="0">to</td>
+      <td data-ice="name" class="code" data-depth="0">pipesOrSchemas</td>
       <td data-ice="type" class="code"><span>*</span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"></td>
@@ -1289,7 +1376,7 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span><span>[]</span></span> | <span><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span><span>[]</span></span></td>
+          <td class="return-type code" data-ice="returnType"><span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></td>
           
         </tr>
       </tbody>
@@ -1314,25 +1401,26 @@
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-getPath">
+  <h3 data-ice="anchor" id="instance-method-sample">
     <span class="access" data-ice="access">public</span>
     
     
     
     
     
-    <span class="code" data-ice="name">getPath</span><span class="code" data-ice="signature">(to: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></span>
+    <span class="code" data-ice="name">sample</span><span class="code" data-ice="signature">(nth: <span>*</span>): <span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber234">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/pipe.js.html#lineNumber331">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  
+  <div data-ice="description"><p>Returns product of Nth occurrence of <code>pipe</code> execution</p>
+</div>
 
   
 
@@ -1345,7 +1433,7 @@
     <tbody>
     
     <tr data-ice="property" data-depth="0">
-      <td data-ice="name" class="code" data-depth="0">to</td>
+      <td data-ice="name" class="code" data-depth="0">nth</td>
       <td data-ice="type" class="code"><span>*</span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"></td>
@@ -1353,6 +1441,206 @@
 </tbody>
   </table>
 </div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></td>
+          
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-split">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">split</span><span class="code" data-ice="signature">(mappings: <span>*</span>): <span>*</span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/classes/pipe.js.html#lineNumber200">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Creates array of new <code>pipe</code> segments that run in parallel</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">mappings</td>
+      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"></td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span>*</span></td>
+          
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-subscribe">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">subscribe</span><span class="code" data-ice="signature">(handler: <span>*</span>): <span>Observable</span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/classes/pipe.js.html#lineNumber341">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Subscribes to <code>pipe</code> output notifications</p>
+</div>
+
+  
+
+  <div data-ice="properties"><div data-ice="properties">
+  <h4 data-ice="title">Params:</h4>
+  <table class="params">
+    <thead>
+    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
+    </thead>
+    <tbody>
+    
+    <tr data-ice="property" data-depth="0">
+      <td data-ice="name" class="code" data-depth="0">handler</td>
+      <td data-ice="type" class="code"><span>*</span></td>
+      <td data-ice="appendix"></td>
+      <td data-ice="description"></td>
+    </tr>
+</tbody>
+  </table>
+</div>
+</div>
+
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span>Observable</span></td>
+          
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+  
+</div>
+<div class="detail" data-ice="detail">
+  <h3 data-ice="anchor" id="instance-method-tap">
+    <span class="access" data-ice="access">public</span>
+    
+    
+    
+    
+    
+    <span class="code" data-ice="name">tap</span><span class="code" data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></span>
+    <span class="right-info">
+      
+      
+      <span data-ice="source"><span><a href="file/src/classes/pipe.js.html#lineNumber353">source</a></span></span>
+    </span>
+  </h3>
+
+  
+  
+  
+  <div data-ice="description"><p>Provides current state of <code>pipe</code> output. alias for toJSON</p>
+</div>
+
+  
+
+  <div data-ice="properties">
 </div>
 
   <div class="return-params" data-ice="returnParams">
@@ -1385,25 +1673,25 @@
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-getSchemaForKey">
+  <h3 data-ice="anchor" id="instance-method-throttle">
     <span class="access" data-ice="access">public</span>
     
     
     
     
     
-    <span class="code" data-ice="name">getSchemaForKey</span><span class="code" data-ice="signature">(id: <span>*</span>): <span>*</span></span>
+    <span class="code" data-ice="name">throttle</span><span class="code" data-ice="signature">(rate: <span>*</span>): <span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber171">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/pipe.js.html#lineNumber307">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>returns schema with given id</p>
+  <div data-ice="description"><p>Informs <code>pipe</code> to rate limit notifications based on time interval</p>
 </div>
 
   
@@ -1417,7 +1705,7 @@
     <tbody>
     
     <tr data-ice="property" data-depth="0">
-      <td data-ice="name" class="code" data-depth="0">id</td>
+      <td data-ice="name" class="code" data-depth="0">rate</td>
       <td data-ice="type" class="code"><span>*</span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"></td>
@@ -1432,229 +1720,7 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span>*</span></td>
-          
-        </tr>
-      </tbody>
-    </table>
-    <div data-ice="returnProperties">
-</div>
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-getSchemaForPath">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    
-    <span class="code" data-ice="name">getSchemaForPath</span><span class="code" data-ice="signature">(path: <span>*</span>): <span>any</span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber196">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  <div data-ice="description"><p>Retrieves JSON-Schema element for given Path</p>
-</div>
-
-  
-
-  <div data-ice="properties"><div data-ice="properties">
-  <h4 data-ice="title">Params:</h4>
-  <table class="params">
-    <thead>
-    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-    
-    <tr data-ice="property" data-depth="0">
-      <td data-ice="name" class="code" data-depth="0">path</td>
-      <td data-ice="type" class="code"><span>*</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
-    </tr>
-</tbody>
-  </table>
-</div>
-</div>
-
-  <div class="return-params" data-ice="returnParams">
-    <h4>Return:</h4>
-    <table>
-      <tbody>
-        <tr>
-          <td class="return-type code" data-ice="returnType"><span>any</span></td>
-          
-        </tr>
-      </tbody>
-    </table>
-    <div data-ice="returnProperties">
-</div>
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-subscribe">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    
-    <span class="code" data-ice="name">subscribe</span><span class="code" data-ice="signature">(observer: <span>*</span>): <span>Observable</span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber271">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  <div data-ice="description"><p>Subscribes observer to root Model</p>
-</div>
-
-  
-
-  <div data-ice="properties"><div data-ice="properties">
-  <h4 data-ice="title">Params:</h4>
-  <table class="params">
-    <thead>
-    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-    
-    <tr data-ice="property" data-depth="0">
-      <td data-ice="name" class="code" data-depth="0">observer</td>
-      <td data-ice="type" class="code"><span>*</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
-    </tr>
-</tbody>
-  </table>
-</div>
-</div>
-
-  <div class="return-params" data-ice="returnParams">
-    <h4>Return:</h4>
-    <table>
-      <tbody>
-        <tr>
-          <td class="return-type code" data-ice="returnType"><span>Observable</span></td>
-          
-        </tr>
-      </tbody>
-    </table>
-    <div data-ice="returnProperties">
-</div>
-  </div>
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-  
-</div>
-<div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-subscribeTo">
-    <span class="access" data-ice="access">public</span>
-    
-    
-    
-    
-    
-    <span class="code" data-ice="name">subscribeTo</span><span class="code" data-ice="signature">(path: <span>*</span>, observer: <span>*</span>): <span>Observable</span></span>
-    <span class="right-info">
-      
-      
-      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber281">source</a></span></span>
-    </span>
-  </h3>
-
-  
-  
-  
-  <div data-ice="description"><p>Subscribes observer to Model at path</p>
-</div>
-
-  
-
-  <div data-ice="properties"><div data-ice="properties">
-  <h4 data-ice="title">Params:</h4>
-  <table class="params">
-    <thead>
-    <tr><td>Name</td><td>Type</td><td>Attribute</td><td>Description</td></tr>
-    </thead>
-    <tbody>
-    
-    <tr data-ice="property" data-depth="0">
-      <td data-ice="name" class="code" data-depth="0">path</td>
-      <td data-ice="type" class="code"><span>*</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
-    </tr>
-<tr data-ice="property" data-depth="0">
-      <td data-ice="name" class="code" data-depth="0">observer</td>
-      <td data-ice="type" class="code"><span>*</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
-    </tr>
-</tbody>
-  </table>
-</div>
-</div>
-
-  <div class="return-params" data-ice="returnParams">
-    <h4>Return:</h4>
-    <table>
-      <tbody>
-        <tr>
-          <td class="return-type code" data-ice="returnType"><span>Observable</span></td>
+          <td class="return-type code" data-ice="returnType"><span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></td>
           
         </tr>
       </tbody>
@@ -1686,18 +1752,18 @@
     
     
     
-    <span class="code" data-ice="name">toJSON</span><span class="code" data-ice="signature">(): <span>*</span></span>
+    <span class="code" data-ice="name">toJSON</span><span class="code" data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber297">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/pipe.js.html#lineNumber371">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>Implements toJSON</p>
+  <div data-ice="description"><p>Provides current state of <code>pipe</code> output.</p>
 </div>
 
   
@@ -1710,7 +1776,7 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span>*</span></td>
+          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a></span></td>
           
         </tr>
       </tbody>
@@ -1742,18 +1808,18 @@
     
     
     
-    <span class="code" data-ice="name">toString</span><span class="code" data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></span>
+    <span class="code" data-ice="name">toString</span><span class="code" data-ice="signature">(): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber289">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/pipe.js.html#lineNumber362">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>Implements toString</p>
+  <div data-ice="description"><p>Overrides Object&apos;s toString method</p>
 </div>
 
   
@@ -1766,7 +1832,7 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></span></td>
+          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String">String</a></span></td>
           
         </tr>
       </tbody>
@@ -1791,25 +1857,25 @@
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-useSchema">
+  <h3 data-ice="anchor" id="instance-method-unlink">
     <span class="access" data-ice="access">public</span>
     
     
     
     
     
-    <span class="code" data-ice="name">useSchema</span><span class="code" data-ice="signature">(id: <span>*</span>)</span>
+    <span class="code" data-ice="name">unlink</span><span class="code" data-ice="signature">(target: <span>*</span>): <span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber120">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/pipe.js.html#lineNumber258">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>Selects schema to validate against (advanced option, use wisely)</p>
+  <div data-ice="description"><p>Unlink pipe segment from target pipe</p>
 </div>
 
   
@@ -1823,7 +1889,7 @@
     <tbody>
     
     <tr data-ice="property" data-depth="0">
-      <td data-ice="name" class="code" data-depth="0">id</td>
+      <td data-ice="name" class="code" data-depth="0">target</td>
       <td data-ice="type" class="code"><span>*</span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"></td>
@@ -1833,7 +1899,19 @@
 </div>
 </div>
 
-  
+  <div class="return-params" data-ice="returnParams">
+    <h4>Return:</h4>
+    <table>
+      <tbody>
+        <tr>
+          <td class="return-type code" data-ice="returnType"><span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></td>
+          
+        </tr>
+      </tbody>
+    </table>
+    <div data-ice="returnProperties">
+</div>
+  </div>
 
   
 
@@ -1851,25 +1929,25 @@
   
 </div>
 <div class="detail" data-ice="detail">
-  <h3 data-ice="anchor" id="instance-method-validate">
+  <h3 data-ice="anchor" id="instance-method-write">
     <span class="access" data-ice="access">public</span>
     
     
     
     
     
-    <span class="code" data-ice="name">validate</span><span class="code" data-ice="signature">(path: <span>*</span>, value: <span>*</span>): <span>*</span> | <span>void</span> | <span>RegExpExecArray</span></span>
+    <span class="code" data-ice="name">write</span><span class="code" data-ice="signature">(data: <span>*</span>): <span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></span>
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/classes/rxvo.js.html#lineNumber217">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/classes/pipe.js.html#lineNumber231">source</a></span></span>
     </span>
   </h3>
 
   
   
   
-  <div data-ice="description"><p>Validates data against named schema</p>
+  <div data-ice="description"><p>Writes data to pipe segment</p>
 </div>
 
   
@@ -1883,13 +1961,7 @@
     <tbody>
     
     <tr data-ice="property" data-depth="0">
-      <td data-ice="name" class="code" data-depth="0">path</td>
-      <td data-ice="type" class="code"><span>*</span></td>
-      <td data-ice="appendix"></td>
-      <td data-ice="description"></td>
-    </tr>
-<tr data-ice="property" data-depth="0">
-      <td data-ice="name" class="code" data-depth="0">value</td>
+      <td data-ice="name" class="code" data-depth="0">data</td>
       <td data-ice="type" class="code"><span>*</span></td>
       <td data-ice="appendix"></td>
       <td data-ice="description"></td>
@@ -1904,7 +1976,7 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span>*</span> | <span>void</span> | <span>RegExpExecArray</span></td>
+          <td class="return-type code" data-ice="returnType"><span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></td>
           
         </tr>
       </tbody>

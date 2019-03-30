@@ -62,7 +62,7 @@ export class Pipe {
                 data = data.toJSON ? data.toJSON() : data;
 
                 if (_pipes.get(this).tO) {
-                    _cache.get(this).splice(-1, 0, () => _pipes.get(this).cb(data));
+                    _cache.get(this).splice(0, 0, () => _pipes.get(this).cb(data));
                     return;
                 }
 

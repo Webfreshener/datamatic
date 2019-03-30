@@ -84,7 +84,7 @@ const tasks = [() => {
     // TASK 3: Updates the score with INVALID data (length > maxItems)
     // -- will trigger error notification
     console.log("\x1b[4m%s\x1b[0m\n", "Max length exceeded error example:");
-    obj.model.topScores.splice(-1, 0, {
+    obj.model.topScores.splice(0, 0, {
         name: "Player 4",
         score: 10111200,
     });

@@ -198,7 +198,6 @@ describe("Pipes tests", () => {
 
         jest.advanceTimersByTime(100);
         expect(_cb).toHaveBeenCalledTimes(1);
-
     });
 
     it("should throttle notifications based on time interval", () => {
@@ -223,6 +222,7 @@ describe("Pipes tests", () => {
         expect(_cnt).toEqual(2);
         jest.advanceTimersByTime(200);
         expect(_cnt).toEqual(4);
+        console.log(_p.tap());
         expect(_p.tap().length).toEqual(6);
         _sub.unsubscribe();
     });
