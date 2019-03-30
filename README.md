@@ -20,7 +20,9 @@ RxJS + JSON-Schema (Ajv) Based Observable Data Models
 
 **[Installation Instructions](#installation-instructions)**
 
-**[Usage Example](#usage-example)**
+**[Usage Examples](#usage-examples)**
+   * [Basic Usage](#basic-usage)
+   * [Flow Control](#flow-control)
 
 **[Developer Guide](#developer-guide)**
   * [RxVO Class](#rxvo-class)
@@ -126,6 +128,11 @@ delete obj.model.topScores;
 
 ```
 Refer to the examples demo in `./examples/basic-usage` for more usage examples
+
+#### Flow Control ####
+```
+
+```
 
 ## Developer Guide
 
@@ -235,15 +242,22 @@ Represents an Properties (Object} entry in the given schema
 | Method        | Arguments | Description  |
 |:--------------|:----------|:-------|
 | constructor | vo (Model), callback (function), schema (json-schema) | class constructor method |
+| clone | | returns clone of current `pipe` segment |
 | close | | terminates input on `pipe` segment |
-| fork | | returns clone of current `pipe` segment |
-| link | callback (function), target (Pipe)| links `pipe` segment to direct output to target `pipe` |
+| exec | data (object/array)| executes pipe's callback with data without writing to `pipe` |
+| inline | target (Pipe), callback (function)| executes target pipes in single transaction block |
+| isWritable [getter] | | Returns write status of `pipe` |
+| link | target (Pipe), callback (function) | links `pipe` segment to direct output to target `pipe` |
+| merge | pipeOrPipes (Pipe|Pipe[]), schema (json-schema), callback (function) | merges multiple pipes into single output |
 | once | | informs `pipe` to close after first notification |
-| pipe | callback (function), schema (json-schema) | returns new chained `pipe` segment |
+| pipe | schema/pipe (json-schema / Pipe), callback (function) | returns new chained `pipe` segment |
+| sample | nth | Returns product of Nth occurrence of `pipe` execution |
+| split | mappings, callback (function) | creates array of new `pipe` segments that run in parallel |
 | subscribe | handler (object / function)| subscribes to `pipe` output notifications |
+| tap | | Provides current state of `pipe` output. alias for `toJSON` |
+| throttle | rate (number) | Limit notifications to rate based on time interval |
+| toString | | Provides current state of `pipe` output as JSON string |
+| toJSON | | Provides current state of `pipe` output as JSON |
 | unlink | target (Pipe)| unlinks `pipe` segment from target `pipe` |
+| write | data (object/array)| writes data to `pipe` |
 
-#### Flow Control ####
-```
-
-```

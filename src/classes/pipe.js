@@ -1,120 +1,297 @@
+/* ############################################################################
+The MIT License (MIT)
+
+Copyright (c) 2016 - 2019 Van Schroeder
+Copyright (c) 2017-2019 Webfreshener, LLC
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+############################################################################ */
 import {RxVO} from "./rxvo";
 
 const _pipes = new WeakMap();
+const _cache = new WeakMap();
 
+/**
+ * Fills callbacks array to enforce 2 callback minimum
+ * @param callbacks
+ * @returns {*}
+ * @private
+ */
+const _fillCallback = (callbacks) => {
+    if (callbacks.length < 2) {
+        callbacks = callbacks.concat([...Array(2 - callbacks.length)
+            .fill((d) => d, 0)])
+    }
+    return callbacks;
+};
+
+/**
+ * Pipe Class
+ */
 export class Pipe {
-    constructor(vo, cb, schema) {
-        const _outVO = new RxVO({
-            schemas: Array.isArray(schema) ? schema : [schema],
-        });
+    constructor(vo, ...pipesOrSchemas) {
+        if (!pipesOrSchemas.length) {
+            throw "Pipe requires at least one schema or pipe element";
+        }
 
+        if (Array.isArray(pipesOrSchemas[0])) {
+            pipesOrSchemas = pipesOrSchemas[0];
+        }
+
+        _cache.set(this, []);
         const _sub = vo.subscribe({
             next: (data) => {
-                const {once} = _pipes.get(this);
-                // capture output of callback
-                const _t = cb(data);
-                if ((typeof _t) === "object") {
-                    _outVO.model = _t;
+                // remove rxvo wrappings from object
+                data = data.toJSON ? data.toJSON() : data;
+
+                if (_pipes.get(this).tO) {
+                    _cache.get(this).splice(-1, 0, () => _pipes.get(this).cb(data));
+                    return;
                 }
 
-                if (once) {
-                    // unsubs from subscription
-                    // we do there here to unsub before waiting on callback
-                    this.close();
+                if (_pipes.get(this).ivl !== 0) {
+                    if ((++_pipes.get(this).ivlVal) !== _pipes.get(this).ivl) {
+                        return;
+                    } else {
+                        _pipes.get(this).ivlVal = 0;
+                    }
+                }
+
+                // capture output of callback
+                const _t = _pipes.get(this).cb(data);
+
+                if ((typeof _t) === "object" && !_pipes.get(this).out.isFrozen) {
+                    if (_pipes.get(this).once) {
+                        _pipes.get(this).once = false;
+                        this.close();
+                    }
+                    _pipes.get(this).out.model = _t.toJSON ? _t.toJSON() : _t;
                 }
             },
             complete: this.close,
         });
 
+        const _s = pipesOrSchemas.map((_) => _.schema || _).pop();
+
+        // enforces 2 callback minimum for `reduce`
+        const _callbacks = _fillCallback(
+            pipesOrSchemas.map(
+                (_p) => _p.exec ? _p.exec : (_p.callback || ((d) => d))
+            ),
+        );
+
         _pipes.set(this, {
             vo: vo,
-            schema: schema,
-            out: _outVO,
+            ivl: 0,
+            ivlVal: 0,
+            rate: 1,
+            schema: _s,
+            out: new RxVO({
+                schemas: Array.isArray(_s) ? _s : [_s],
+            }),
             once: false,
-            listener: _sub,
+            listener: [_sub],
             links: new WeakMap(),
-            cb: cb
+            // initializes callback handler
+            cb: (_res) => {
+                _callbacks.forEach((_cb) => {
+                    _res = _cb(_res);
+                });
+                return _res;
+            },
         });
     }
 
     /**
-     * creates array of new `pipe` segments
-     * @param mappings
-     * @returns {*}
-     */
-    split(mappings) {
-        return mappings.map((o) => this.pipe(o.cb, o.schema));
-    }
-
-    /**
-     * writes data to pipe segment
-     * @param data
+     * Creates new `pipe` segment
+     * @param pipesOrSchemas
      * @returns {Pipe}
      */
-    write(data) {
-        _pipes.get(this).out.model = data;
-        return this;
-    }
+    pipe(...pipesOrSchemas) {
+        if (Array.isArray(pipesOrSchemas[0])) {
+            pipesOrSchemas = pipesOrSchemas[0];
+        }
 
-    /**
-     * creates clone of current `pipe` segment
-     * @returns {Pipe}
-     */
-    fork() {
-        const {vo, schema} = _pipes.get(this);
-        return new Pipe(vo, schema);
+        // fixes scoping issue for inlining callbacks from external pipes
+        pipesOrSchemas = pipesOrSchemas.map((pS) => {
+            if (pS instanceof Pipe) {
+                return {
+                    schema: pS.schema,
+                    exec: (d)=> pS.exec.apply(pS, [d]),
+                };
+            }
+            return pS;
+        });
+
+        return new Pipe(_pipes.get(this).out, pipesOrSchemas);
     }
 
     /**
      * links pipe segment to direct output to target pipe
-     * @param cb
      * @param target
+     * @param callbacks function[]
      * @returns {Pipe}
      */
-    link(cb, target) {
-        const _sub = _pipes.get(this).out.subscribe({
-            next: (data) => target.write(cb(data)),
-            complete: () => this.unlink(target),
+    link(target, ...callbacks) {
+        if (!(target instanceof Pipe)) {
+            throw `item for "target" was not a Pipe`;
+        }
+
+        // allow for array literal in place of inline assignment
+        if (Array.isArray(callbacks[0])) {
+            callbacks = callbacks[0];
+        }
+
+        callbacks = _fillCallback(callbacks);
+
+        // creates observer and stores it to links map for `pipe`
+        const _sub = this.subscribe({
+            next: (data) => {
+                let _res = data.toJSON();
+                // applies all callbacks and writes to target `pipe`
+                target.write(callbacks.reduce((_cb) => _res = _cb(_res)));
+            },
+            // handles unlink & cleanup on complete
+            complete: () => this.unlink(target)
         });
+
         _pipes.get(this).links.set(target, _sub);
         return this;
     }
 
     /**
-     * unlinks pipe segment from target pipe
+     * Returns validation errors
+     * @returns {*}
+     */
+    get errors() {
+        return _pipes.get(this).vo.errors;
+    }
+
+    /**
+     * Returns JSON-SCHEMA for `pipe` output
+     * @returns {object}
+     */
+    get schema() {
+        return Object.assign({}, _pipes.get(this).schema);
+    }
+
+    /**
+     * Creates array of new `pipe` segments that run in parallel
+     * @param mappings
+     * @returns {*}
+     */
+    split(mappings) {
+        return mappings.map((o) => this.pipe([o]));
+    }
+
+    /**
+     * Merges multiple pipes into single output
+     * @param pipeOrPipes
+     * @param schema
+     * @returns {Pipe}
+     */
+    merge(pipeOrPipes, schema) {
+        const _out = this.pipe(schema);
+        (Array.isArray(pipeOrPipes) ? pipeOrPipes : [pipeOrPipes])
+            .forEach((_p) => {
+                _pipes.get(this).listener.push(
+                    _p.subscribe({
+                        next: (d) => {
+                            _out.write(d.toJSON ? d.toJSON() : d)
+                        }
+                    })
+                );
+            });
+
+        return _out;
+    }
+
+    /**
+     * Writes data to pipe segment
+     * @param data
+     * @returns {Pipe}
+     */
+    write(data) {
+        _pipes.get(this).vo.model = data;
+        return this;
+    }
+
+    /**
+     * Directly executes callback without effecting `pipe` observable
+     * @param data
+     */
+    exec(data) {
+        return _pipes.get(this).cb(data);
+    }
+
+    /**
+     * Creates clone of current `pipe` segment
+     * @returns {Pipe}
+     */
+    clone() {
+        const {vo, schema, cb} = _pipes.get(this);
+        return new Pipe(vo, {schema: schema, callback: cb});
+    }
+
+    /**
+     * Unlink pipe segment from target pipe
      * @param target
      * @returns {Pipe}
      */
     unlink(target) {
+        if (!(target instanceof Pipe)) {
+            throw `item for "target" was not a Pipe`;
+        }
+
         const _sub = _pipes.get(this).links.get(target);
         if (_sub) {
             _sub.unsubscribe();
-            _pipes.get(this).links.set(target, null);
+            _pipes.get(this).links.delete(target);
         }
         return this;
     }
 
     /**
-     * terminates input on `pipe` segment
+     * Terminates input on `pipe` segment. This is irrevocable
      * @returns {Pipe}
      */
     close() {
-        _pipes.get(this).listener.unsubscribe();
+        // unsubscribe all observers
+        _pipes.get(this).listener.forEach((_l) => _l.unsubscribe());
+        setTimeout(() => {
+            _pipes.get(this).out.freeze();
+        }, 1);
+
         return this;
     }
 
     /**
-     * returns chained `pipe` segment
-     * @param cb
-     * @param schema
-     * @returns {Pipe}
+     * Returns write status of `pipe`
+     * @returns {boolean}
      */
-    pipe(cb, schema) {
-        return new Pipe(_pipes.get(this).out, cb, schema);
+    get isWritable() {
+        return _pipes.get(this).out.isFrozen;
     }
 
     /**
-     * informs `pipe` to close after first notification
+     * Informs `pipe` to close after first notification
      * @returns {Pipe}
      */
     once() {
@@ -123,32 +300,41 @@ export class Pipe {
     }
 
     /**
-     *
-     * @returns {Object|Array}
-     */
-    tap() {
-        return _pipes.get(this).out.model;
-    }
-
-    toString() {
-        return `${this.tap().$model}`;
-    }
-
-    toJSON() {
-        return this.tap().$model.toJSON();
-    }
-
-    /**
-     * informs `pipe` to close after first notification
+     * Informs `pipe` to rate limit notifications based on time interval
+     * @param rate
      * @returns {Pipe}
      */
     throttle(rate) {
-        _pipes.get(this).rate = rate;
+        const _intvl = _pipes.get(this).tO;
+
+        if (_intvl) {
+            _intvl.clearInterval();
+        }
+
+        _pipes.get(this).tO = setInterval(() => {
+            if (_cache.get(this).length) {
+                const _func = _cache.get(this).pop();
+                if ((typeof _func) === "function") {
+                    _pipes.get(this).out.model = _func();
+                }
+            }
+        }, rate);
+
         return this;
     }
 
     /**
-     * subscribes to `pipe` output notifications
+     * Returns product of Nth occurrence of `pipe` execution
+     * @param nth
+     * @returns {Pipe}
+     */
+    sample(nth) {
+        _pipes.get(this).ivl = nth;
+        return this;
+    }
+
+    /**
+     * Subscribes to `pipe` output notifications
      * @param handler
      * @returns {Observable}
      */
@@ -156,14 +342,33 @@ export class Pipe {
         if (!(typeof handler).match(/^(function|object)$/)) {
             throw "handler required for Pipe::subscribe";
         }
+
         return _pipes.get(this).out.subscribe(handler);
     }
 
     /**
-     * returns JSON-SCHEMA for `pipe` output
-     * @returns {object}
+     * Provides current state of `pipe` output. alias for toJSON
+     * @returns {Object|Array}
      */
-    get schema() {
-        return Object.assign({}, _pipes.get(this).schema);
+    tap() {
+        return this.toJSON();
+    }
+
+    /**
+     * Overrides Object's toString method
+     * @override
+     * @returns {String}
+     */
+    toString() {
+        return JSON.stringify(this.toJSON());
+    }
+
+    /**
+     * Provides current state of `pipe` output.
+     * @override
+     * @returns {Object|Array}
+     */
+    toJSON() {
+        return _pipes.get(this).out.model.$model.toJSON();
     }
 }

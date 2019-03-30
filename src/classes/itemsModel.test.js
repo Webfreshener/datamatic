@@ -194,6 +194,40 @@ describe("ItemsModel Class Suite", function () {
                 expect(this.rxvo.model.length).toBe(1);
             });
         });
+
+        describe("LifeCycle: Reset", () => {
+            beforeEach(() => {
+                this.rxvo = new RxVO({schemas: [objectCollection]});
+            });
+
+            it("should notifiy subsequent validations", () => {
+                const _d = [{
+                    name: "Item A",
+                    value: 1,
+                }, {
+                    name: "Item B",
+                }, {
+                    name: "Item C",
+                    value: 2,
+                }];
+
+                this.rxvo.model = _d;
+
+                setTimeout(() => {
+                    this.rxvo.subscribe({
+                        next: (m) => {
+                            expect(m.models.length).toEqual(3);
+                            done()
+                        },
+                        error: done,
+                    });
+
+                    this.rxvo.model = _d;
+                }, 100);
+            });
+        });
+
+
     });
 
     describe("Array Prototype method tests", () => {
