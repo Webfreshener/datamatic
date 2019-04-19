@@ -58,7 +58,7 @@ export class ObserverBuilder {
     }
 
     /**
-     * lists all registered observer paths
+     * Lists all registered observer paths
      * @returns {*}
      */
     list() {
@@ -82,7 +82,7 @@ export class ObserverBuilder {
     }
 
     /**
-     * mutes notifications to `target` observers
+     * Mutes notifications to `target` observers
      * @param target
      */
     mute(target) {
@@ -91,7 +91,7 @@ export class ObserverBuilder {
     }
 
     /**
-     * unmutes notifications to `target` observers if muted
+     * Unmutes notifications to `target` observers if muted
      * @param target
      */
     unmute(target) {

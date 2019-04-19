@@ -238,26 +238,25 @@ Represents an Properties (Object} entry in the given schema
 | validate   | path (string), value (object) | validates data at given ath against JSON-Schema |
 | validationPath [getter] | | retrieves json-schema path string for Model validation |
 
-#### Pipe Class ####
+#### TxPipe Class ####
 | Method        | Arguments | Description  |
 |:--------------|:----------|:-------|
-| constructor | vo (Model), callback (function), schema (json-schema) | class constructor method |
-| clone | | returns clone of current `pipe` segment |
-| close | | terminates input on `pipe` segment |
+| constructor | vo, ...pipesOrSchemas | class constructor method |
 | exec | data (object/array)| executes pipe's callback with data without writing to `pipe` |
-| inline | target (Pipe), callback (function)| executes target pipes in single transaction block |
-| isWritable [getter] | | Returns write status of `pipe` |
-| link | target (Pipe), callback (function) | links `pipe` segment to direct output to target `pipe` |
-| merge | pipeOrPipes (Pipe|Pipe[]), schema (json-schema), callback (function) | merges multiple pipes into single output |
-| once | | informs `pipe` to close after first notification |
-| pipe | schema/pipe (json-schema / Pipe), callback (function) | returns new chained `pipe` segment |
-| sample | nth | Returns product of Nth occurrence of `pipe` execution |
-| split | mappings, callback (function) | creates array of new `pipe` segments that run in parallel |
 | subscribe | handler (object / function)| subscribes to `pipe` output notifications |
-| tap | | Provides current state of `pipe` output. alias for `toJSON` |
-| throttle | rate (number) | Limit notifications to rate based on time interval |
-| toString | | Provides current state of `pipe` output as JSON string |
 | toJSON | | Provides current state of `pipe` output as JSON |
-| unlink | target (Pipe)| unlinks `pipe` segment from target `pipe` |
-| write | data (object/array)| writes data to `pipe` |
+| toString | | Provides current state of `pipe` output as JSON string |
+| txClone | | returns clone of current `pipe` segment |
+| txClose | | terminates input on `pipe` segment |
+| txWritable [getter] | | Returns write status of `pipe` |
+| txLink | target (Pipe), ...pipesOrSchemas | links `pipe` segment to direct output to target `pipe` |
+| txMerge | pipeOrPipes, schema | merges multiple pipes into single output |
+| txOnce | | informs `pipe` to close after first notification |
+| txPipe | ...pipesOrSchemas | returns new chained `pipe` segment |
+| txSample | nth | Returns product of Nth occurrence of `pipe` execution |
+| txSplit | ...pipesOrSchemas | creates array of new `pipe` segments that run in parallel |
+| txTap | | Provides current state of `pipe` output. alias for `toJSON` |
+| txThrottle | rate (number) | Limit notifications to rate based on time interval |
+| txUnlink | target (Pipe)| unlinks `pipe` segment from target `pipe` |
+| txWrite | data (object/array)| writes data to `pipe` |
 

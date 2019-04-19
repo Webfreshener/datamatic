@@ -183,6 +183,14 @@ export class ItemsModel extends Model {
             }
         });
     }
+
+    /**
+     * Returns length of model array
+     * @returns {number}
+     */
+    length() {
+        return this.model.length();
+    }
 }
 
 /**

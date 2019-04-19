@@ -29,7 +29,7 @@ import {
 import {RxVO} from "./rxvo";
 import {MetaData} from "./_metaData";
 import {makeClean, makeDirty, validate} from "./utils";
-import {Pipe} from "./pipe";
+import {Pipe} from "./txPipe";
 
 /**
  *
