@@ -24,6 +24,7 @@ SOFTWARE.
 
 ############################################################################ */
 import {_oBuilders} from "./_references";
+
 const notifiers = new WeakMap();
 
 /**
@@ -96,8 +97,9 @@ class Notifier {
             forPath = `.${forPath}`;
         }
 
-        this.$rxvo.getModelsInPath(forPath)
-            .forEach((m) => _oBuilders.get(this.$rxvo).next(m.$model));
+        this.$rxvo.getModelsInPath(forPath).forEach(
+            (m) => _oBuilders.get(this.$rxvo).next(m.$model)
+        );
     }
 
     /**
@@ -132,8 +134,8 @@ export default class Notifiers {
      * @returns {*}
      */
     static create(rxvo) {
-       new Notifier(rxvo);
-       return Notifiers.get(rxvo);
+        new Notifier(rxvo);
+        return Notifiers.get(rxvo);
     }
 
     /**

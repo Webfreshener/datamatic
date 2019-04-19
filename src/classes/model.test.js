@@ -16,12 +16,8 @@ describe("Model Class Tests", () => {
         });
 
         it("should validate models against schema", () => {
-
-
             expect(_rxvo.model.$model.validate(_d)).toBe(true);
-
             _d.active = "1234";
-
             expect(_rxvo.model.$model.validate(_d)).toBe("data/active should be boolean");
         });
 
@@ -33,9 +29,27 @@ describe("Model Class Tests", () => {
             _rxvo.model = _d;
         });
 
-        it("should support next callback", (done) => {
+        it("should allow function as next callback", (done) => {
             _rxvo.subscribe(() => done());
             _rxvo.model = _d;
+        });
+
+        it("should be observable", (done) => {
+            let _ival = 0;
+            const _arr = new Array(0, 2000);
+            const _iterator = {
+                next: (
+                    () => _ival++ < _arr.length ? {
+                        value: _rxvo.model = _d,
+                        done: false,
+                    } : {
+                        value: _rxvo.freeze(),
+                        done: true,
+                    }
+                ),
+            };
+            _rxvo.subscribe({next: _iterator.next, complete: done});
+            _iterator.next();
         })
     });
-})
+});

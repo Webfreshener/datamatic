@@ -98,7 +98,6 @@ export class PropertiesModel extends Model {
         }
 
         // defines new Proxy Object for data modeling
-        // todo: replace proxy with Object Delegation
         _object.set(this,
             new Proxy(Model.createRef(this, {}), this.handler));
         Object.keys(value).forEach((k) => {
@@ -108,7 +107,6 @@ export class PropertiesModel extends Model {
             } catch (e) {
                 // marks model as clean
                 makeClean(this);
-
                 // sends notifications
                 Notifiers.get(this.rxvo).sendError(this.jsonPath, e.message);
                 return false;

@@ -86,7 +86,9 @@ export class ObserverBuilder {
      * @param target
      */
     mute(target) {
-        const _idx = _observerPaths.get(this).findIndex((el) => el[0] === `${target.path}` && el[1] === target);
+        const _idx = _observerPaths.get(this).findIndex(
+            (el) => el[0] === `${target.path}` && el[1] === target
+        );
         _observerCache.set(target, {idx: _idx, value: _observerPaths.get(this).splice(_idx, 1)});
     }
 
@@ -126,7 +128,7 @@ export class ObserverBuilder {
     complete(target) {
         let _o = this.get(target);
         if (_o !== null) {
-            _o.onComplete.next(target);
+            _o.onComplete.next();
         }
     }
 

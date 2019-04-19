@@ -151,7 +151,7 @@ export class RxVO {
      * @returns {RxVO}
      */
     freeze() {
-        this.model.$model.freeze();
+        _documents.get(this).freeze();
         return this;
     }
 
@@ -160,7 +160,7 @@ export class RxVO {
      * @returns {boolean}
      */
     get isFrozen() {
-        return this.model.$model.isFrozen;
+        return _documents.get(this).isFrozen;
     }
 
     /**
