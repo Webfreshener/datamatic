@@ -58,7 +58,11 @@ export class ItemsModel extends Model {
      * @param value
      */
     set model(value) {
-        if (!Array.isArray(value) || this.isFrozen) {
+        if (!Array.isArray(value)) {
+            return `${this.path} invalid operation`;
+        }
+
+        if (this.isFrozen) {
             return false;
         }
 
@@ -73,7 +77,7 @@ export class ItemsModel extends Model {
 
         if (refValidation(this, value) !== true) {
             Notifiers.get(this.rxvo).sendError(this.jsonPath, this.rxvo.errors);
-            return false;
+            return `${JSON.stringify(this.rxvo.errors)}`;
         }
 
         if (!this.isDirty) {
@@ -98,7 +102,7 @@ export class ItemsModel extends Model {
             makeClean(this);
             _oBuilders.get(this.rxvo).unmute(this);
             Notifiers.get(this.rxvo).sendError(this.jsonPath, e);
-            return false;
+            return `${JSON.stringify(e)}`;
         }
 
         makeClean(this);
@@ -147,7 +151,7 @@ export class ItemsModel extends Model {
 
                 // -- ensures we aren't in a frozen hierarchy branch
                 if (this.isFrozen) {
-                    return false;
+                    throw `model path "${this.path.length ? this.path : "."}" is non-configurable and non-writable`;
                 }
 
                 let _oDel = _observerDelegates.get(this);
@@ -157,7 +161,7 @@ export class ItemsModel extends Model {
                         makeClean(this);
                         Notifiers.get(this.rxvo).sendError(this.jsonPath, this.rxvo.errors);
                     }
-                    return false;
+                    return `${JSON.stringify(this.rxvo.errors)}`;
                 }
 
                 // we set the value on the array with success
@@ -198,7 +202,7 @@ export class ItemsModel extends Model {
  * @param model
  * @param t
  * @param idx
- * @returns {boolean}
+ * @returns {boolean|void}
  */
 const deleteTrap = (model, t, idx) => {
     let _oDel = _observerDelegates.get(model);
@@ -213,7 +217,7 @@ const deleteTrap = (model, t, idx) => {
             makeClean(model);
             Notifiers.get(model.rxvo).sendError(model.jsonPath, e);
         }
-        return false;
+        return `${JSON.stringify(e)}`;
     }
 
     // validates mock of change state
@@ -227,7 +231,7 @@ const deleteTrap = (model, t, idx) => {
             makeClean(model);
             Notifiers.get(model.rxvo).sendError(model.jsonPath, _res);
         }
-        return false;
+        return `${JSON.stringify(e)}`;
     }
 
     // applies operation

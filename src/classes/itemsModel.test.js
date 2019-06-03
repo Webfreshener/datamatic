@@ -335,22 +335,8 @@ describe("ItemsModel Class Suite", function () {
             _rxvo.model = _orig;
             _rxvo.model.$model.freeze();
 
-            expect(_rxvo.model.$model.isFrozen).toBe(true);
-            // should not allow array to be overriden
-            _rxvo.model = [{
-                name: "Your Name",
-                active: false,
-            }];
-            expect(deepEqual(_rxvo.model, _orig)).toBe(true);
-            // should not allow array item to be overriden
-            _rxvo.model[0] = {
-                name: "Your Name",
-                active: false,
-            };
-            expect(deepEqual(_rxvo.model, _orig)).toBe(true);
-            // should not set attributes on nested object properties
-            _rxvo.model[0].name = "Other Name";
-            expect(deepEqual(_rxvo.model, _orig)).toBe(true);
+            expect(() => _rxvo.model[0].name = "Other Name")
+                .toThrow("model path \"/items\" is non-configurable and non-writable");
         });
     });
 });

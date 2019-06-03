@@ -206,7 +206,7 @@ const createModelChild = (model, key, value) => {
  * @param t
  * @param key
  * @param value
- * @returns {boolean}
+ * @returns {boolean|string}
  */
 const setHandler = (model, t, key, value) => {
     if (key in Object.prototype) {
@@ -216,7 +216,7 @@ const setHandler = (model, t, key, value) => {
 
     // -- ensures we aren't in a frozen hierarchy branch
     if (model.isFrozen) {
-        return false;
+        throw `model path "${model.path.length ? model.path : "."}" is non-configurable and non-writable`;
     }
 
     // checks for branch update status
@@ -227,7 +227,7 @@ const setHandler = (model, t, key, value) => {
         if (refValidation(model, _o) !== true) {
             makeClean(model);
             Notifiers.get(model.rxvo).sendError(model.jsonPath, model.rxvo.errors);
-            return false;
+            return `${JSON.stringify(model.rxvo.errors)}`;
         }
     }
 
@@ -238,7 +238,7 @@ const setHandler = (model, t, key, value) => {
 
     if ((typeof value) === "object") {
         if ((value = createModelChild(model, key, value)) === false) {
-            return false
+            return `${model.path} unable to create child object`;
         }
     }
 
@@ -264,7 +264,7 @@ const deleteHandler = (model, t, key) => {
     // validates model with value removed
     if (_res !== true) {
         Notifiers.get(model.rxvo).sendError(model.jsonPath, _res);
-        return false;
+        return _res;
     }
 
     // performs delete operation on model
