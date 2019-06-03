@@ -29,8 +29,7 @@ import {
 import {RxVO} from "./rxvo";
 import {MetaData} from "./_metaData";
 import {makeClean, makeDirty, validate} from "./utils";
-import {Pipe} from "./txPipe";
-
+import {TxPipe} from "txpipe";
 /**
  *
  * @param ref
@@ -140,8 +139,6 @@ export class Model {
             // todo: review `removeAdditional` ajv option for related behavior
             return true;
         }
-
-
     }
 
     /**
@@ -365,6 +362,7 @@ export class Model {
      * @returns {*}
      */
     get schema() {
+        console.log(`this.path: ${JSON.stringify(this.path)}`);
         return this.rxvo.getSchemaForPath(this.path);
     }
 
@@ -384,11 +382,20 @@ export class Model {
 
     /**
      * returns `pipe` segment for process chaining
-     * @param func
-     * @param schema
-     * @returns {Pipe}
+     * @param pipesOrSchemas
+     * @returns {TxPipe}
      */
-    pipe(schema, func) {
-        return new Pipe(this, schema, func);
+    pipe(...pipesOrSchemas) {
+        const _p = new TxPipe(...[this, ...pipesOrSchemas]);
+        const _sub = this.subscribe({
+            next: (d) => {
+                _p.txWrite(d.model);
+            },
+            complete: () => {
+                _sub.unsubscribe();
+                _p.txClose();
+            }
+        });
+        return _p;
     }
 }

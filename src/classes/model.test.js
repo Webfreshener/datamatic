@@ -50,6 +50,6 @@ describe("Model Class Tests", () => {
             };
             _rxvo.subscribe({next: _iterator.next, complete: done});
             _iterator.next();
-        })
+        });
     });
 });

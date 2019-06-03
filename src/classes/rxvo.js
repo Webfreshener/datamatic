@@ -143,6 +143,7 @@ export class RxVO {
      */
     get schema() {
         const _id = _validators.get(this).path;
+        console.log(`_id: ${_id}\b${JSON.stringify(this.getSchemaForKey(_id))}`);
         return this.getSchemaForKey(_id);
     }
 
@@ -262,6 +263,17 @@ export class RxVO {
             });
         return _steps;
     }
+
+
+    /**
+     *
+     * @param pipesOrSchemas
+     * @returns {TxPipe}
+     */
+    pipe(...pipesOrSchemas) {
+        return _documents.get(this).pipe(...pipesOrSchemas);
+    }
+
 
     /**
      * Subscribes observer to root Model
