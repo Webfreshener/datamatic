@@ -139,8 +139,12 @@ const tasks = [() => {
     // can no longer update the score with valid data
     console.log("\tscore before increment:", obj.model.topScores[0].score);
 
-    // attempt to perform increment
-    obj.model.topScores[0].score++;
+    try {
+        // attempt to perform increment
+        obj.model.topScores[0].score++;
+    } catch (e) {
+        console.log(`\n\tOOPS! ${JSON.stringify(e)}`);
+    }
 
     // outputs to confirm no change to state
     console.log("\tscore after increment: %s\n", obj.model.topScores[0].score);
