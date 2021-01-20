@@ -1,6 +1,6 @@
 {
   "author": "Van Schroeder <van@webfreshener.com>",
-  "name": "@txjs/model",
+  "name": "rxvo",
   "description": "JSON-Schema Based Observable Data Models",
   "keywords": [
     "rxjs",
