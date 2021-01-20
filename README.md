@@ -227,7 +227,7 @@ Represents an Properties (Object} entry in the given schema
 | options [getter]   | | retrieves options passed to Model instance |
 | path [getter]   | | retrieves json-schema path string for Model instance. eg: "#/this/is/my/path" |
 | parent [getter]   | | retrieves Model's parent Model instance |
-| pipe | callback (function), schema (json-schema)| returns pipe segment for process chaining |
+| pipe | ..pipesOrSchemas | returns TxPipe instance for operating on model |
 | reset | | resets model to initial state if operation is valid |
 | root [getter]   | | retrieves root Model instance |
 | rxvo [getter]   | | retrieves Model's RxVO document instance |
