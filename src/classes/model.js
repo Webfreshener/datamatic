@@ -362,7 +362,6 @@ export class Model {
      * @returns {*}
      */
     get schema() {
-        console.log(`this.path: ${JSON.stringify(this.path)}`);
         return this.rxvo.getSchemaForPath(this.path);
     }
 

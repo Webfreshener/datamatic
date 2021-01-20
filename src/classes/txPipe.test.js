@@ -8,10 +8,10 @@ describe("TxPipes tests", () => {
 
     beforeEach(() => {
         _vo = new RxVO({schemas: [basicCollection]});
-        _p = _vo.pipe({
-            schema: basicCollection,
-            exec: (d) => d.filter((itm) => itm.active),
-        });
+        _p = _vo.pipe(
+            [(itm) => itm.active ? itm : undefined],
+            basicCollection,
+        );
     });
 
     it("should provide a pipe", (done) => {
@@ -20,7 +20,7 @@ describe("TxPipes tests", () => {
                 next: (d) => {
                     _sub.unsubscribe();
                     // data in VO as been filtered by Pipe
-                    expect(d.model.length).toEqual(3);
+                    expect(d.length).toEqual(3);
                     done();
                 },
                 error: (e) => {
