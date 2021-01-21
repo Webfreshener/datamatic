@@ -28,15 +28,28 @@ describe("ItemsModel Class Suite", function () {
             });
         });
 
-        describe("LifeCycle: Creation", () => {
+        describe("ItemsModel LifeCycle: Creation", () => {
 
             let _d;
 
-            it("should populate with valid data and make that data accessible", () => {
+            it("should populate with valid data and make that data accessible", (done) => {
                 _d = ["abc", "def", "ghi"];
+                let _cnt = 0;
+
+                this.rxvo.subscribe({
+                    next: (m) => {
+                        _cnt++;
+                        expect(deepEqual(this.rxvo.model, _d)).toBe(true);
+                    },
+                    error: done,
+                });
+
+                setTimeout(() => {
+                    expect(_cnt).toEqual(1);
+                    done();
+                }, 100);
 
                 this.rxvo.model = _d;
-                expect(deepEqual(this.rxvo.model, _d)).toBe(true);
             });
 
             it("should reject invalid data and leave model pristine", () => {
@@ -62,11 +75,11 @@ describe("ItemsModel Class Suite", function () {
             });
         });
 
-        describe("LifeCycle: Create", () => {
+        describe("ItemsModel LifeCycle: Nested Create", () => {
 
             let _d;
 
-            it("should populate with valid data and make that data accessible", () => {
+            it("should populate with valid data and make that data accessible", (done) => {
                 _d = [{
                     name: "Item A",
                     value: 1,
@@ -77,8 +90,22 @@ describe("ItemsModel Class Suite", function () {
                     value: 2,
                 }];
 
+                let _cnt = 0;
+
+                this.rxvo.subscribe({
+                    next: (m) => {
+                        _cnt++;
+                    },
+                    error: done,
+                });
+
+                setTimeout(() => {
+                    expect(_cnt).toEqual(1);
+                    done();
+                }, 100);
+
                 this.rxvo.model = _d;
-                expect(deepEqual(this.rxvo.model, _d)).toBe(true);
+                // expect(deepEqual(this.rxvo.model, _d)).toBe(true);
             });
 
             it("should reject invalid data and leave model pristine", () => {
@@ -149,7 +176,7 @@ describe("ItemsModel Class Suite", function () {
                 this.rxvo = new RxVO({schemas: [stringsMinMaxCollection]});
             });
 
-            _d = ["Item A", "Item B", "Item C"];
+            let _d = ["Item A", "Item B", "Item C"];
 
             it("should allow deletion of nested properties that are not required", () => {
                 this.rxvo.model = _d;
@@ -167,6 +194,40 @@ describe("ItemsModel Class Suite", function () {
                 expect(this.rxvo.model.length).toBe(1);
             });
         });
+
+        describe("LifeCycle: Reset", () => {
+            beforeEach(() => {
+                this.rxvo = new RxVO({schemas: [objectCollection]});
+            });
+
+            it("should notifiy subsequent validations", () => {
+                const _d = [{
+                    name: "Item A",
+                    value: 1,
+                }, {
+                    name: "Item B",
+                }, {
+                    name: "Item C",
+                    value: 2,
+                }];
+
+                this.rxvo.model = _d;
+
+                setTimeout(() => {
+                    this.rxvo.subscribe({
+                        next: (m) => {
+                            expect(m.models.length).toEqual(3);
+                            done()
+                        },
+                        error: done,
+                    });
+
+                    this.rxvo.model = _d;
+                }, 100);
+            });
+        });
+
+
     });
 
     describe("Array Prototype method tests", () => {
@@ -210,7 +271,7 @@ describe("ItemsModel Class Suite", function () {
             expect(typeof this.rxvo.errors).toBe("object");
             expect(this.rxvo.model.length).toBe(3);
             // append element...
-            this.rxvo.model.splice(-1, 0, "Item D");
+            this.rxvo.model.splice(0, 0, "Item D");
             expect(typeof this.rxvo.errors).toBe("object");
             expect(this.rxvo.model.length).toBe(3);
         });
@@ -274,22 +335,8 @@ describe("ItemsModel Class Suite", function () {
             _rxvo.model = _orig;
             _rxvo.model.$model.freeze();
 
-            expect(_rxvo.model.$model.isFrozen).toBe(true);
-            // should not allow array to be overriden
-            _rxvo.model = [{
-                name: "Your Name",
-                active: false,
-            }];
-            expect(deepEqual(_rxvo.model, _orig)).toBe(true);
-            // should not allow array item to be overriden
-            _rxvo.model[0] = {
-                name: "Your Name",
-                active: false,
-            };
-            expect(deepEqual(_rxvo.model, _orig)).toBe(true);
-            // should not set attributes on nested object properties
-            _rxvo.model[0].name = "Other Name";
-            expect(deepEqual(_rxvo.model, _orig)).toBe(true);
+            expect(() => _rxvo.model[0].name = "Other Name")
+                .toThrow("model path \"/items\" is non-configurable and non-writable");
         });
     });
 });

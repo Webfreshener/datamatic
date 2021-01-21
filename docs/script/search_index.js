@@ -36,6 +36,12 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
+    "rxvo/src/classes/pipe.js~pipe",
+    "class/src/classes/pipe.js~Pipe.html",
+    "<span>Pipe</span> <span class=\"search-result-import-path\">rxvo/src/classes/pipe.js</span>",
+    "class"
+  ],
+  [
     "rxvo/src/classes/propertiesmodel.js~propertiesmodel",
     "class/src/classes/propertiesModel.js~PropertiesModel.html",
     "<span>PropertiesModel</span> <span class=\"search-result-import-path\">rxvo/src/classes/propertiesModel.js</span>",
@@ -648,9 +654,21 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
+    "src/classes/_observerbuilder.js~observerbuilder#mute",
+    "class/src/classes/_observerBuilder.js~ObserverBuilder.html#instance-method-mute",
+    "src/classes/_observerBuilder.js~ObserverBuilder#mute",
+    "method"
+  ],
+  [
     "src/classes/_observerbuilder.js~observerbuilder#next",
     "class/src/classes/_observerBuilder.js~ObserverBuilder.html#instance-method-next",
     "src/classes/_observerBuilder.js~ObserverBuilder#next",
+    "method"
+  ],
+  [
+    "src/classes/_observerbuilder.js~observerbuilder#unmute",
+    "class/src/classes/_observerBuilder.js~ObserverBuilder.html#instance-method-unmute",
+    "src/classes/_observerBuilder.js~ObserverBuilder#unmute",
     "method"
   ],
   [
@@ -828,6 +846,12 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
+    "src/classes/model.js~model#pipe",
+    "class/src/classes/model.js~Model.html#instance-method-pipe",
+    "src/classes/model.js~Model#pipe",
+    "method"
+  ],
+  [
     "src/classes/model.js~model#reset",
     "class/src/classes/model.js~Model.html#instance-method-reset",
     "src/classes/model.js~Model#reset",
@@ -906,6 +930,138 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/classes/pipe.js",
+    "file/src/classes/pipe.js.html",
+    "src/classes/pipe.js",
+    "file"
+  ],
+  [
+    "src/classes/pipe.js~pipe#clone",
+    "class/src/classes/pipe.js~Pipe.html#instance-method-clone",
+    "src/classes/pipe.js~Pipe#clone",
+    "method"
+  ],
+  [
+    "src/classes/pipe.js~pipe#close",
+    "class/src/classes/pipe.js~Pipe.html#instance-method-close",
+    "src/classes/pipe.js~Pipe#close",
+    "method"
+  ],
+  [
+    "src/classes/pipe.js~pipe#constructor",
+    "class/src/classes/pipe.js~Pipe.html#instance-constructor-constructor",
+    "src/classes/pipe.js~Pipe#constructor",
+    "method"
+  ],
+  [
+    "src/classes/pipe.js~pipe#errors",
+    "class/src/classes/pipe.js~Pipe.html#instance-get-errors",
+    "src/classes/pipe.js~Pipe#errors",
+    "member"
+  ],
+  [
+    "src/classes/pipe.js~pipe#exec",
+    "class/src/classes/pipe.js~Pipe.html#instance-method-exec",
+    "src/classes/pipe.js~Pipe#exec",
+    "method"
+  ],
+  [
+    "src/classes/pipe.js~pipe#iswritable",
+    "class/src/classes/pipe.js~Pipe.html#instance-get-isWritable",
+    "src/classes/pipe.js~Pipe#isWritable",
+    "member"
+  ],
+  [
+    "src/classes/pipe.js~pipe#link",
+    "class/src/classes/pipe.js~Pipe.html#instance-method-link",
+    "src/classes/pipe.js~Pipe#link",
+    "method"
+  ],
+  [
+    "src/classes/pipe.js~pipe#merge",
+    "class/src/classes/pipe.js~Pipe.html#instance-method-merge",
+    "src/classes/pipe.js~Pipe#merge",
+    "method"
+  ],
+  [
+    "src/classes/pipe.js~pipe#once",
+    "class/src/classes/pipe.js~Pipe.html#instance-method-once",
+    "src/classes/pipe.js~Pipe#once",
+    "method"
+  ],
+  [
+    "src/classes/pipe.js~pipe#pipe",
+    "class/src/classes/pipe.js~Pipe.html#instance-method-pipe",
+    "src/classes/pipe.js~Pipe#pipe",
+    "method"
+  ],
+  [
+    "src/classes/pipe.js~pipe#sample",
+    "class/src/classes/pipe.js~Pipe.html#instance-method-sample",
+    "src/classes/pipe.js~Pipe#sample",
+    "method"
+  ],
+  [
+    "src/classes/pipe.js~pipe#schema",
+    "class/src/classes/pipe.js~Pipe.html#instance-get-schema",
+    "src/classes/pipe.js~Pipe#schema",
+    "member"
+  ],
+  [
+    "src/classes/pipe.js~pipe#split",
+    "class/src/classes/pipe.js~Pipe.html#instance-method-split",
+    "src/classes/pipe.js~Pipe#split",
+    "method"
+  ],
+  [
+    "src/classes/pipe.js~pipe#subscribe",
+    "class/src/classes/pipe.js~Pipe.html#instance-method-subscribe",
+    "src/classes/pipe.js~Pipe#subscribe",
+    "method"
+  ],
+  [
+    "src/classes/pipe.js~pipe#tap",
+    "class/src/classes/pipe.js~Pipe.html#instance-method-tap",
+    "src/classes/pipe.js~Pipe#tap",
+    "method"
+  ],
+  [
+    "src/classes/pipe.js~pipe#throttle",
+    "class/src/classes/pipe.js~Pipe.html#instance-method-throttle",
+    "src/classes/pipe.js~Pipe#throttle",
+    "method"
+  ],
+  [
+    "src/classes/pipe.js~pipe#tojson",
+    "class/src/classes/pipe.js~Pipe.html#instance-method-toJSON",
+    "src/classes/pipe.js~Pipe#toJSON",
+    "method"
+  ],
+  [
+    "src/classes/pipe.js~pipe#tostring",
+    "class/src/classes/pipe.js~Pipe.html#instance-method-toString",
+    "src/classes/pipe.js~Pipe#toString",
+    "method"
+  ],
+  [
+    "src/classes/pipe.js~pipe#unlink",
+    "class/src/classes/pipe.js~Pipe.html#instance-method-unlink",
+    "src/classes/pipe.js~Pipe#unlink",
+    "method"
+  ],
+  [
+    "src/classes/pipe.js~pipe#write",
+    "class/src/classes/pipe.js~Pipe.html#instance-method-write",
+    "src/classes/pipe.js~Pipe#write",
+    "method"
+  ],
+  [
+    "src/classes/pipe.test.js",
+    "file/src/classes/pipe.test.js.html",
+    "src/classes/pipe.test.js",
+    "file"
+  ],
+  [
     "src/classes/propertiesmodel.js",
     "file/src/classes/propertiesModel.js.html",
     "src/classes/propertiesModel.js",
@@ -978,6 +1134,12 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
+    "src/classes/rxvo.js~rxvo#freeze",
+    "class/src/classes/rxvo.js~RxVO.html#instance-method-freeze",
+    "src/classes/rxvo.js~RxVO#freeze",
+    "method"
+  ],
+  [
     "src/classes/rxvo.js~rxvo#getmodelsinpath",
     "class/src/classes/rxvo.js~RxVO.html#instance-method-getModelsInPath",
     "src/classes/rxvo.js~RxVO#getModelsInPath",
@@ -1000,6 +1162,12 @@ window.esdocSearchIndex = [
     "class/src/classes/rxvo.js~RxVO.html#instance-method-getSchemaForPath",
     "src/classes/rxvo.js~RxVO#getSchemaForPath",
     "method"
+  ],
+  [
+    "src/classes/rxvo.js~rxvo#isfrozen",
+    "class/src/classes/rxvo.js~RxVO.html#instance-get-isFrozen",
+    "src/classes/rxvo.js~RxVO#isFrozen",
+    "member"
   ],
   [
     "src/classes/rxvo.js~rxvo#model",
@@ -1101,6 +1269,18 @@ window.esdocSearchIndex = [
     "src/index.test.js",
     "file/src/index.test.js.html",
     "src/index.test.js",
+    "file"
+  ],
+  [
+    "src/schemas/pipe-keys.schema.js",
+    "file/src/schemas/pipe-keys.schema.js.html",
+    "src/schemas/pipe-keys.schema.js",
+    "file"
+  ],
+  [
+    "src/schemas/rxvo.schema.js",
+    "file/src/schemas/rxvo.schema.js.html",
+    "src/schemas/rxvo.schema.js",
     "file"
   ]
 ]

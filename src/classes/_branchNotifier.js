@@ -1,4 +1,30 @@
+/* ############################################################################
+The MIT License (MIT)
+
+Copyright (c) 2016 - 2019 Van Schroeder
+Copyright (c) 2017-2019 Webfreshener, LLC
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+############################################################################ */
 import {_oBuilders} from "./_references";
+
 const notifiers = new WeakMap();
 
 /**
@@ -67,22 +93,13 @@ class Notifier {
      * @param forPath
      */
     sendNext(forPath) {
-        // this is a kludge to "wait a tic" before sending the notifications
-        setTimeout(() => {
-            if (forPath[0] !== ".") {
-                forPath = `.${forPath}`;
-            }
+        if (forPath[0] !== ".") {
+            forPath = `.${forPath}`;
+        }
 
-            const _models = this.$rxvo.getModelsInPath(forPath);
-
-            if (_models[0] !== "") {
-                _models.splice(0, 0, "")
-            }
-
-            _models.forEach((model) => {
-                _oBuilders.get(this.$rxvo).next(model.$model);
-            });
-        }, 0);
+        this.$rxvo.getModelsInPath(forPath).forEach(
+            (m) => _oBuilders.get(this.$rxvo).next(m.$model)
+        );
     }
 
     /**
@@ -91,11 +108,9 @@ class Notifier {
      * @param error
      */
     sendError(forPath, error) {
-        const _models = this.$rxvo.getModelsInPath(forPath);
-        _models.forEach((model) => {
-            _oBuilders.get(this.$rxvo).error(model.$model,
-                new ErrorNotification(model.$model.path, error));
-        });
+        this.$rxvo.getModelsInPath(forPath)
+            .forEach((model) => _oBuilders.get(this.$rxvo).error(model.$model,
+                new ErrorNotification(model.$model.path, error)));
     }
 
     /**
@@ -103,10 +118,8 @@ class Notifier {
      * @param forPath
      */
     sendComplete(forPath) {
-        const _models = this.$rxvo.getModelsInPath(forPath);
-        _models.forEach((model) => {
-            _oBuilders.get(this.$rxvo).complete(model.$model);
-        });
+        this.$rxvo.getModelsInPath(forPath)
+            .forEach((model) => _oBuilders.get(this.$rxvo).complete(model.$model));
     }
 }
 
@@ -121,8 +134,8 @@ export default class Notifiers {
      * @returns {*}
      */
     static create(rxvo) {
-       new Notifier(rxvo);
-       return Notifiers.get(rxvo);
+        new Notifier(rxvo);
+        return Notifiers.get(rxvo);
     }
 
     /**

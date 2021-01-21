@@ -36,6 +36,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_schemaHelpers.js~SchemaHelpers.html">SchemaHelpers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/itemsModel.js~ItemsModel.html">ItemsModel</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">RxVO</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDefaults">getDefaults</a></span></span></li>
@@ -95,15 +96,28 @@ describe(&quot;ItemsModel Class Suite&quot;, function () {
             });
         });
 
-        describe(&quot;LifeCycle: Creation&quot;, () =&gt; {
+        describe(&quot;ItemsModel LifeCycle: Creation&quot;, () =&gt; {
 
             let _d;
 
-            it(&quot;should populate with valid data and make that data accessible&quot;, () =&gt; {
+            it(&quot;should populate with valid data and make that data accessible&quot;, (done) =&gt; {
                 _d = [&quot;abc&quot;, &quot;def&quot;, &quot;ghi&quot;];
+                let _cnt = 0;
+
+                this.rxvo.subscribe({
+                    next: (m) =&gt; {
+                        _cnt++;
+                        expect(deepEqual(this.rxvo.model, _d)).toBe(true);
+                    },
+                    error: done,
+                });
+
+                setTimeout(() =&gt; {
+                    expect(_cnt).toEqual(1);
+                    done();
+                }, 100);
 
                 this.rxvo.model = _d;
-                expect(deepEqual(this.rxvo.model, _d)).toBe(true);
             });
 
             it(&quot;should reject invalid data and leave model pristine&quot;, () =&gt; {
@@ -129,11 +143,11 @@ describe(&quot;ItemsModel Class Suite&quot;, function () {
             });
         });
 
-        describe(&quot;LifeCycle: Create&quot;, () =&gt; {
+        describe(&quot;ItemsModel LifeCycle: Nested Create&quot;, () =&gt; {
 
             let _d;
 
-            it(&quot;should populate with valid data and make that data accessible&quot;, () =&gt; {
+            it(&quot;should populate with valid data and make that data accessible&quot;, (done) =&gt; {
                 _d = [{
                     name: &quot;Item A&quot;,
                     value: 1,
@@ -144,8 +158,22 @@ describe(&quot;ItemsModel Class Suite&quot;, function () {
                     value: 2,
                 }];
 
+                let _cnt = 0;
+
+                this.rxvo.subscribe({
+                    next: (m) =&gt; {
+                        _cnt++;
+                    },
+                    error: done,
+                });
+
+                setTimeout(() =&gt; {
+                    expect(_cnt).toEqual(1);
+                    done();
+                }, 100);
+
                 this.rxvo.model = _d;
-                expect(deepEqual(this.rxvo.model, _d)).toBe(true);
+                // expect(deepEqual(this.rxvo.model, _d)).toBe(true);
             });
 
             it(&quot;should reject invalid data and leave model pristine&quot;, () =&gt; {
@@ -216,7 +244,7 @@ describe(&quot;ItemsModel Class Suite&quot;, function () {
                 this.rxvo = new RxVO({schemas: [stringsMinMaxCollection]});
             });
 
-            _d = [&quot;Item A&quot;, &quot;Item B&quot;, &quot;Item C&quot;];
+            let _d = [&quot;Item A&quot;, &quot;Item B&quot;, &quot;Item C&quot;];
 
             it(&quot;should allow deletion of nested properties that are not required&quot;, () =&gt; {
                 this.rxvo.model = _d;
@@ -234,6 +262,40 @@ describe(&quot;ItemsModel Class Suite&quot;, function () {
                 expect(this.rxvo.model.length).toBe(1);
             });
         });
+
+        describe(&quot;LifeCycle: Reset&quot;, () =&gt; {
+            beforeEach(() =&gt; {
+                this.rxvo = new RxVO({schemas: [objectCollection]});
+            });
+
+            it(&quot;should notifiy subsequent validations&quot;, () =&gt; {
+                const _d = [{
+                    name: &quot;Item A&quot;,
+                    value: 1,
+                }, {
+                    name: &quot;Item B&quot;,
+                }, {
+                    name: &quot;Item C&quot;,
+                    value: 2,
+                }];
+
+                this.rxvo.model = _d;
+
+                setTimeout(() =&gt; {
+                    this.rxvo.subscribe({
+                        next: (m) =&gt; {
+                            expect(m.models.length).toEqual(3);
+                            done()
+                        },
+                        error: done,
+                    });
+
+                    this.rxvo.model = _d;
+                }, 100);
+            });
+        });
+
+
     });
 
     describe(&quot;Array Prototype method tests&quot;, () =&gt; {
@@ -277,7 +339,7 @@ describe(&quot;ItemsModel Class Suite&quot;, function () {
             expect(typeof this.rxvo.errors).toBe(&quot;object&quot;);
             expect(this.rxvo.model.length).toBe(3);
             // append element...
-            this.rxvo.model.splice(-1, 0, &quot;Item D&quot;);
+            this.rxvo.model.splice(0, 0, &quot;Item D&quot;);
             expect(typeof this.rxvo.errors).toBe(&quot;object&quot;);
             expect(this.rxvo.model.length).toBe(3);
         });

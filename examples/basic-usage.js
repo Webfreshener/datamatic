@@ -84,7 +84,7 @@ const tasks = [() => {
     // TASK 3: Updates the score with INVALID data (length > maxItems)
     // -- will trigger error notification
     console.log("\x1b[4m%s\x1b[0m\n", "Max length exceeded error example:");
-    obj.model.topScores.splice(-1, 0, {
+    obj.model.topScores.splice(0, 0, {
         name: "Player 4",
         score: 10111200,
     });
@@ -139,8 +139,12 @@ const tasks = [() => {
     // can no longer update the score with valid data
     console.log("\tscore before increment:", obj.model.topScores[0].score);
 
-    // attempt to perform increment
-    obj.model.topScores[0].score++;
+    try {
+        // attempt to perform increment
+        obj.model.topScores[0].score++;
+    } catch (e) {
+        console.log(`\n\tOOPS! ${JSON.stringify(e)}`);
+    }
 
     // outputs to confirm no change to state
     console.log("\tscore after increment: %s\n", obj.model.topScores[0].score);

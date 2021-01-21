@@ -1,3 +1,28 @@
+/* ############################################################################
+The MIT License (MIT)
+
+Copyright (c) 2016 - 2019 Van Schroeder
+Copyright (c) 2017-2019 Webfreshener, LLC
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+############################################################################ */
 import {
     _object, _schemaHelpers,
 } from "./_references";
@@ -73,7 +98,6 @@ export class PropertiesModel extends Model {
         }
 
         // defines new Proxy Object for data modeling
-        // todo: replace proxy with Object Delegation
         _object.set(this,
             new Proxy(Model.createRef(this, {}), this.handler));
         Object.keys(value).forEach((k) => {
@@ -83,7 +107,6 @@ export class PropertiesModel extends Model {
             } catch (e) {
                 // marks model as clean
                 makeClean(this);
-
                 // sends notifications
                 Notifiers.get(this.rxvo).sendError(this.jsonPath, e.message);
                 return false;
@@ -183,7 +206,7 @@ const createModelChild = (model, key, value) => {
  * @param t
  * @param key
  * @param value
- * @returns {boolean}
+ * @returns {boolean|string}
  */
 const setHandler = (model, t, key, value) => {
     if (key in Object.prototype) {
@@ -193,7 +216,7 @@ const setHandler = (model, t, key, value) => {
 
     // -- ensures we aren't in a frozen hierarchy branch
     if (model.isFrozen) {
-        return false;
+        throw `model path "${model.path.length ? model.path : "."}" is non-configurable and non-writable`;
     }
 
     // checks for branch update status
@@ -204,7 +227,7 @@ const setHandler = (model, t, key, value) => {
         if (refValidation(model, _o) !== true) {
             makeClean(model);
             Notifiers.get(model.rxvo).sendError(model.jsonPath, model.rxvo.errors);
-            return false;
+            return `${JSON.stringify(model.rxvo.errors)}`;
         }
     }
 
@@ -215,7 +238,7 @@ const setHandler = (model, t, key, value) => {
 
     if ((typeof value) === "object") {
         if ((value = createModelChild(model, key, value)) === false) {
-            return false
+            return `${model.path} unable to create child object`;
         }
     }
 
@@ -241,7 +264,7 @@ const deleteHandler = (model, t, key) => {
     // validates model with value removed
     if (_res !== true) {
         Notifiers.get(model.rxvo).sendError(model.jsonPath, _res);
-        return false;
+        return _res;
     }
 
     // performs delete operation on model

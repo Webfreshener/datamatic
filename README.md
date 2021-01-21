@@ -20,7 +20,9 @@ RxJS + JSON-Schema (Ajv) Based Observable Data Models
 
 **[Installation Instructions](#installation-instructions)**
 
-**[Usage Example](#usage-example)**
+**[Usage Examples](#usage-examples)**
+   * [Basic Usage](#basic-usage)
+   * [Flow Control](#flow-control)
 
 **[Developer Guide](#developer-guide)**
   * [RxVO Class](#rxvo-class)
@@ -30,6 +32,7 @@ RxJS + JSON-Schema (Ajv) Based Observable Data Models
   * [ItemsModel](#itemsmodel)
   * [PropertiesModel](#propertiesmodel)
   * [Model Class](#model-class)
+  * [Pipe Class](#pipe-class)
 
 #### Installation Instructions
 ```
@@ -126,6 +129,11 @@ delete obj.model.topScores;
 ```
 Refer to the examples demo in `./examples/basic-usage` for more usage examples
 
+#### Flow Control ####
+```
+
+```
+
 ## Developer Guide
 
 #### RxVO Class ####
@@ -215,18 +223,40 @@ Represents an Properties (Object} entry in the given schema
 | isDirty [getter]   | | returns dirtyness of model heirarchy (is dirty if operation in progress) |
 | isFrozen [getter]   | | returns Object.freeze status of Model hierarchy |
 | jsonPath [getter]   | | retrieves json path string for Model instance. eg: "this.is.my.path" |
-| model [getter/setter]   | | retrieves root model for operation |
-| subscribe   |  observers (object) | Subscribes Observers to the RxVO Model Root |
-| subscribeTo   |  path (string), observers (object) | Subscribes Observers to the Model at path |
-| model [getter/setter]   | | setter/getter for [model proxy object](#model-proxy-object) for operation |
 | objectID [getter]   | | retrieves Unique ObjectID of Model instance |
 | options [getter]   | | retrieves options passed to Model instance |
 | path [getter]   | | retrieves json-schema path string for Model instance. eg: "#/this/is/my/path" |
 | parent [getter]   | | retrieves Model's parent Model instance |
+| pipe | ..pipesOrSchemas | returns TxPipe instance for operating on model |
 | reset | | resets model to initial state if operation is valid |
 | root [getter]   | | retrieves root Model instance |
 | rxvo [getter]   | | retrieves Model's RxVO document instance |
+| subscribe   |  observers (object) | Subscribes Observers to the RxVO Model Root |
+| subscribeTo   |  path (string), observers (object) | Subscribes Observers to the Model at path |
 | toString   | | retrieves root model as JSON String |
 | toJSON   | | retrieves root model as JSON Object |
 | validate   | path (string), value (object) | validates data at given ath against JSON-Schema |
 | validationPath [getter] | | retrieves json-schema path string for Model validation |
+
+#### TxPipe Class ####
+| Method        | Arguments | Description  |
+|:--------------|:----------|:-------|
+| constructor | vo, ...pipesOrSchemas | class constructor method |
+| exec | data (object/array)| executes pipe's callback with data without writing to `pipe` |
+| subscribe | handler (object / function)| subscribes to `pipe` output notifications |
+| toJSON | | Provides current state of `pipe` output as JSON |
+| toString | | Provides current state of `pipe` output as JSON string |
+| txClone | | returns clone of current `pipe` segment |
+| txClose | | terminates input on `pipe` segment |
+| txWritable [getter] | | Returns write status of `pipe` |
+| txLink | target (Pipe), ...pipesOrSchemas | links `pipe` segment to direct output to target `pipe` |
+| txMerge | pipeOrPipes, schema | merges multiple pipes into single output |
+| txOnce | | informs `pipe` to close after first notification |
+| txPipe | ...pipesOrSchemas | returns new chained `pipe` segment |
+| txSample | nth | Returns product of Nth occurrence of `pipe` execution |
+| txSplit | ...pipesOrSchemas | creates array of new `pipe` segments that run in parallel |
+| txTap | | Provides current state of `pipe` output. alias for `toJSON` |
+| txThrottle | rate (number) | Limit notifications to rate based on time interval |
+| txUnlink | target (Pipe)| unlinks `pipe` segment from target `pipe` |
+| txWrite | data (object/array)| writes data to `pipe` |
+

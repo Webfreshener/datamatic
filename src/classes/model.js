@@ -1,10 +1,35 @@
+/* ############################################################################
+The MIT License (MIT)
+
+Copyright (c) 2016 - 2019 Van Schroeder
+Copyright (c) 2017-2019 Webfreshener, LLC
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+############################################################################ */
 import {
     _mdRef, _oBuilders, _object, _schemaOptions, _dirtyModels
 } from "./_references";
 import {RxVO} from "./rxvo";
 import {MetaData} from "./_metaData";
 import {makeClean, makeDirty, validate} from "./utils";
-
+import {TxPipe} from "txpipe";
 /**
  *
  * @param ref
@@ -67,6 +92,12 @@ export class Model {
             return _o;
         }
 
+        // support next handler being passed directly
+        // todo: review other valid manners of passing observer callbacks
+        if ((typeof func) === "function") {
+            func = {next: func};
+        }
+
         // references to subscriptions for Observable
         const _subRefs = [];
 
@@ -83,8 +114,7 @@ export class Model {
 
         // creates an extensible object to hold our unsubscribe method
         // and adds unsubscribe calls to the Proto object
-        const _subs = class {
-        };
+        const _subs = class { };
 
         // adds unsubscribe to the Proto object
         _subs.prototype.unsubscribe = () => {
@@ -109,8 +139,6 @@ export class Model {
             // todo: review `removeAdditional` ajv option for related behavior
             return true;
         }
-
-
     }
 
     /**
@@ -170,7 +198,6 @@ export class Model {
      */
     toJSON() {
         let _derive = (itm) => {
-
             // uses toJSON impl if defined
             if (itm.hasOwnProperty("toJSON") &&
                 (typeof this.toJSON) === "function") {
@@ -335,7 +362,7 @@ export class Model {
      * @returns {*}
      */
     get schema() {
-        return this.rxvo.getSchemaForPath(this.path); // _validators.get(this.rxvo).$ajv.compile({$model: this.validationPath});
+        return this.rxvo.getSchemaForPath(this.path);
     }
 
     /**
@@ -351,4 +378,23 @@ export class Model {
         });
         return obj;
     };
+
+    /**
+     * returns `pipe` segment for process chaining
+     * @param pipesOrSchemas
+     * @returns {TxPipe}
+     */
+    pipe(...pipesOrSchemas) {
+        const _p = new TxPipe(...[this, ...pipesOrSchemas]);
+        const _sub = this.subscribe({
+            next: (d) => {
+                _p.txWrite(d.model);
+            },
+            complete: () => {
+                _sub.unsubscribe();
+                _p.txClose();
+            }
+        });
+        return _p;
+    }
 }

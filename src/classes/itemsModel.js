@@ -1,11 +1,35 @@
+/* ############################################################################
+The MIT License (MIT)
+
+Copyright (c) 2016 - 2019 Van Schroeder
+Copyright (c) 2017-2019 Webfreshener, LLC
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+############################################################################ */
 import {
-    _object, _schemaHelpers
+    _object, _schemaHelpers, _oBuilders,
 } from "./_references";
 import {Model} from "./model";
 import {SchemaHelpers} from "./_schemaHelpers";
 import {makeClean, makeDirty, refAtKeyValidation, refValidation} from "./utils";
 import Notifiers from "./_branchNotifier";
-import merge from "lodash.merge";
 
 const _observerDelegates = new WeakMap();
 
@@ -34,7 +58,11 @@ export class ItemsModel extends Model {
      * @param value
      */
     set model(value) {
-        if (!Array.isArray(value) || this.isFrozen) {
+        if (!Array.isArray(value)) {
+            return `${this.path} invalid operation`;
+        }
+
+        if (this.isFrozen) {
             return false;
         }
 
@@ -49,13 +77,15 @@ export class ItemsModel extends Model {
 
         if (refValidation(this, value) !== true) {
             Notifiers.get(this.rxvo).sendError(this.jsonPath, this.rxvo.errors);
-            return false;
+            return `${JSON.stringify(this.rxvo.errors)}`;
         }
 
         if (!this.isDirty) {
             // marks model as dirty to prevent cascading validation calls
             makeDirty(this);
         }
+
+        _oBuilders.get(this.rxvo).mute(this);
 
         _object.set(this, new Proxy(Model.createRef(this, []), this.handler));
         _observerDelegates.set(this, true);
@@ -66,15 +96,19 @@ export class ItemsModel extends Model {
             value.forEach((val) => {
                 _object.get(this)[cnt++] = val;
             });
-
+            // todo: review why this wont fly
+            // _object.get(this).splice(0,0, value);
         } catch (e) {
             makeClean(this);
+            _oBuilders.get(this.rxvo).unmute(this);
             Notifiers.get(this.rxvo).sendError(this.jsonPath, e);
-            return false;
+            return `${JSON.stringify(e)}`;
         }
 
         makeClean(this);
+
         if (!this.isDirty) {
+            _oBuilders.get(this.rxvo).unmute(this);
             Notifiers.get(this.rxvo).sendNext(this.jsonPath);
             _observerDelegates.delete(this);
         }
@@ -117,7 +151,7 @@ export class ItemsModel extends Model {
 
                 // -- ensures we aren't in a frozen hierarchy branch
                 if (this.isFrozen) {
-                    return false;
+                    throw `model path "${this.path.length ? this.path : "."}" is non-configurable and non-writable`;
                 }
 
                 let _oDel = _observerDelegates.get(this);
@@ -127,7 +161,7 @@ export class ItemsModel extends Model {
                         makeClean(this);
                         Notifiers.get(this.rxvo).sendError(this.jsonPath, this.rxvo.errors);
                     }
-                    return false;
+                    return `${JSON.stringify(this.rxvo.errors)}`;
                 }
 
                 // we set the value on the array with success
@@ -153,6 +187,14 @@ export class ItemsModel extends Model {
             }
         });
     }
+
+    /**
+     * Returns length of model array
+     * @returns {number}
+     */
+    length() {
+        return this.model.length();
+    }
 }
 
 /**
@@ -160,7 +202,7 @@ export class ItemsModel extends Model {
  * @param model
  * @param t
  * @param idx
- * @returns {boolean}
+ * @returns {boolean|void}
  */
 const deleteTrap = (model, t, idx) => {
     let _oDel = _observerDelegates.get(model);
@@ -175,7 +217,7 @@ const deleteTrap = (model, t, idx) => {
             makeClean(model);
             Notifiers.get(model.rxvo).sendError(model.jsonPath, e);
         }
-        return false;
+        return `${JSON.stringify(e)}`;
     }
 
     // validates mock of change state
@@ -189,7 +231,7 @@ const deleteTrap = (model, t, idx) => {
             makeClean(model);
             Notifiers.get(model.rxvo).sendError(model.jsonPath, _res);
         }
-        return false;
+        return `${JSON.stringify(e)}`;
     }
 
     // applies operation

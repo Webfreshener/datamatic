@@ -14,6 +14,25 @@ export const basicModel = {
     },
 };
 
+export const basicCollection = {
+    $id: "root#",
+    type: "array",
+    items: {
+        type: "object",
+        properties: {
+            name: {
+                type: "string",
+            },
+            age: {
+                type: "number",
+            },
+            active: {
+                type: "boolean",
+            },
+        },
+    },
+};
+
 export const nestedModel = {
     $id: "root#",
     "type": "object",
