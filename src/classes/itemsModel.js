@@ -41,7 +41,7 @@ export class ItemsModel extends Model {
      * @constructor
      */
     constructor() {
-        super(arguments[0]);
+        super(...arguments);
         _schemaHelpers.set(this, new SchemaHelpers(this));
         _object.set(this, new Proxy(Model.createRef(this, []), this.handler));
     }
@@ -202,7 +202,7 @@ export class ItemsModel extends Model {
  * @param model
  * @param t
  * @param idx
- * @returns {boolean|void}
+ * @returns {boolean|string}
  */
 const deleteTrap = (model, t, idx) => {
     let _oDel = _observerDelegates.get(model);
@@ -231,7 +231,7 @@ const deleteTrap = (model, t, idx) => {
             makeClean(model);
             Notifiers.get(model.rxvo).sendError(model.jsonPath, _res);
         }
-        return `${JSON.stringify(e)}`;
+        return JSON.stringify(_res);
     }
 
     // applies operation

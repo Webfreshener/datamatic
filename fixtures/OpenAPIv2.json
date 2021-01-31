@@ -1,14 +1,86 @@
 {
   "title": "A JSON Schema for Swagger 2.0 API.",
-  "id": "http://swagger.io/v2/schema.json#",
-  "$schema": "http://json-schema.org/draft-04/schema#",
+  "$id": "http://swagger.io/v2/schema.json#",
+  "$schema": "http://json-schema.org/draft-07/schema",
   "type": "object",
   "required": [
     "swagger",
     "info",
     "paths"
   ],
-  "additionalProperties": true,
+  "additionalProperties": false,
+  "patternProperties": {
+    "^x-": {
+      "$ref": "#/definitions/vendorExtension"
+    }
+  },
+  "properties": {
+    "swagger": {
+      "type": "string",
+      "const": "2.0",
+      "description": "The Swagger version of this document."
+    },
+    "info": {
+      "$ref": "#/definitions/info"
+    },
+    "host": {
+      "type": "string",
+      "pattern": "^[^{}/ :\\\\]+(?::\\d+)?$",
+      "description": "The host (name or ip) of the API. Example: 'swagger.io'"
+    },
+    "basePath": {
+      "type": "string",
+      "pattern": "^/",
+      "description": "The base path to the API. Example: '/api'."
+    },
+    "schemes": {
+      "$ref": "#/definitions/schemesList"
+    },
+    "consumes": {
+      "description": "A list of MIME types accepted by the API.",
+      "allOf": [
+        {
+          "$ref": "#/definitions/mediaTypeList"
+        }
+      ]
+    },
+    "produces": {
+      "description": "A list of MIME types the API can produce.",
+      "allOf": [
+        {
+          "$ref": "#/definitions/mediaTypeList"
+        }
+      ]
+    },
+    "paths": {
+      "$ref": "#/definitions/paths"
+    },
+    "definitions": {
+      "$ref": "#/definitions/definitions"
+    },
+    "parameters": {
+      "$ref": "#/definitions/parameterDefinitions"
+    },
+    "responses": {
+      "$ref": "#/definitions/responseDefinitions"
+    },
+    "security": {
+      "$ref": "#/definitions/security"
+    },
+    "securityDefinitions": {
+      "$ref": "#/definitions/securityDefinitions"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "$ref": "#/definitions/tag"
+      },
+      "uniqueItems": true
+    },
+    "externalDocs": {
+      "$ref": "#/definitions/externalDocs"
+    }
+  },
   "definitions": {
     "info": {
       "type": "object",
@@ -18,6 +90,11 @@
         "title"
       ],
       "additionalProperties": false,
+      "patternProperties": {
+        "^x-": {
+          "$ref": "#/definitions/vendorExtension"
+        }
+      },
       "properties": {
         "title": {
           "type": "string",
@@ -34,6 +111,12 @@
         "termsOfService": {
           "type": "string",
           "description": "The terms of service for the API."
+        },
+        "contact": {
+          "$ref": "#/definitions/contact"
+        },
+        "license": {
+          "$ref": "#/definitions/license"
         }
       }
     },
@@ -404,9 +487,7 @@
       }
     },
     "vendorExtension": {
-      "description": "Any property starting with x- is valid.",
-      "additionalProperties": true,
-      "additionalItems": true
+      "description": "Any property starting with x- is valid."
     },
     "bodyParameter": {
       "type": "object",
@@ -432,9 +513,7 @@
         "in": {
           "type": "string",
           "description": "Determines the location of the parameter.",
-          "enum": [
-            "body"
-          ]
+          "const": "body"
         },
         "required": {
           "type": "boolean",
@@ -448,6 +527,7 @@
       "additionalProperties": false
     },
     "headerParameterSubSchema": {
+      "type": "object",
       "additionalProperties": false,
       "patternProperties": {
         "^x-": {
@@ -463,9 +543,7 @@
         "in": {
           "type": "string",
           "description": "Determines the location of the parameter.",
-          "enum": [
-            "header"
-          ]
+          "const": "header"
         },
         "description": {
           "type": "string",
@@ -536,6 +614,7 @@
       }
     },
     "queryParameterSubSchema": {
+      "type": "object",
       "additionalProperties": false,
       "patternProperties": {
         "^x-": {
@@ -551,9 +630,7 @@
         "in": {
           "type": "string",
           "description": "Determines the location of the parameter.",
-          "enum": [
-            "query"
-          ]
+          "const": "query"
         },
         "description": {
           "type": "string",
@@ -629,6 +706,7 @@
       }
     },
     "formDataParameterSubSchema": {
+      "type": "object",
       "additionalProperties": false,
       "patternProperties": {
         "^x-": {
@@ -644,9 +722,7 @@
         "in": {
           "type": "string",
           "description": "Determines the location of the parameter.",
-          "enum": [
-            "formData"
-          ]
+          "const": "formData"
         },
         "description": {
           "type": "string",
@@ -723,6 +799,7 @@
       }
     },
     "pathParameterSubSchema": {
+      "type": "object",
       "additionalProperties": false,
       "patternProperties": {
         "^x-": {
@@ -735,17 +812,13 @@
       "properties": {
         "required": {
           "type": "boolean",
-          "enum": [
-            true
-          ],
+          "const": true,
           "description": "Determines whether or not this parameter is required or optional."
         },
         "in": {
           "type": "string",
           "description": "Determines the location of the parameter.",
-          "enum": [
-            "path"
-          ]
+          "const": "path"
         },
         "description": {
           "type": "string",
@@ -972,7 +1045,7 @@
         "externalDocs": {
           "$ref": "#/definitions/externalDocs"
         },
-        "example": {}
+        "example": true
       },
       "additionalProperties": false
     },
@@ -1005,9 +1078,7 @@
         },
         "type": {
           "type": "string",
-          "enum": [
-            "file"
-          ]
+          "const": "file"
         },
         "readOnly": {
           "type": "boolean",
@@ -1016,7 +1087,7 @@
         "externalDocs": {
           "$ref": "#/definitions/externalDocs"
         },
-        "example": {}
+        "example": true
       },
       "additionalProperties": false
     },
@@ -1191,9 +1262,7 @@
       "properties": {
         "type": {
           "type": "string",
-          "enum": [
-            "basic"
-          ]
+          "const": "basic"
         },
         "description": {
           "type": "string"
@@ -1216,9 +1285,7 @@
       "properties": {
         "type": {
           "type": "string",
-          "enum": [
-            "apiKey"
-          ]
+          "const": "apiKey"
         },
         "name": {
           "type": "string"
@@ -1251,15 +1318,11 @@
       "properties": {
         "type": {
           "type": "string",
-          "enum": [
-            "oauth2"
-          ]
+          "const": "oauth2"
         },
         "flow": {
           "type": "string",
-          "enum": [
-            "implicit"
-          ]
+          "const": "implicit"
         },
         "scopes": {
           "$ref": "#/definitions/oauth2Scopes"
@@ -1289,15 +1352,11 @@
       "properties": {
         "type": {
           "type": "string",
-          "enum": [
-            "oauth2"
-          ]
+          "const": "oauth2"
         },
         "flow": {
           "type": "string",
-          "enum": [
-            "password"
-          ]
+          "const": "password"
         },
         "scopes": {
           "$ref": "#/definitions/oauth2Scopes"
@@ -1327,15 +1386,11 @@
       "properties": {
         "type": {
           "type": "string",
-          "enum": [
-            "oauth2"
-          ]
+          "const": "oauth2"
         },
         "flow": {
           "type": "string",
-          "enum": [
-            "application"
-          ]
+          "const": "application"
         },
         "scopes": {
           "$ref": "#/definitions/oauth2Scopes"
@@ -1366,15 +1421,11 @@
       "properties": {
         "type": {
           "type": "string",
-          "enum": [
-            "oauth2"
-          ]
+          "const": "oauth2"
         },
         "flow": {
           "type": "string",
-          "enum": [
-            "accessCode"
-          ]
+          "const": "accessCode"
         },
         "scopes": {
           "$ref": "#/definitions/oauth2Scopes"
@@ -1413,7 +1464,6 @@
     "parametersList": {
       "type": "array",
       "description": "The parameters needed to send a valid API call.",
-      "additionalItems": false,
       "items": {
         "oneOf": [
           {
@@ -1517,78 +1567,6 @@
           "type": "string"
         }
       }
-    }
-  },
-  "patternProperties": {
-    "^x-": {
-      "$ref": "#/definitions/vendorExtension"
-    }
-  },
-  "properties": {
-    "swagger": {
-      "type": "string",
-      "enum": [
-        "2.0"
-      ],
-      "description": "The Swagger version of this document."
-    },
-
-    "host": {
-      "type": "string",
-      "pattern": "^[^{}/ :\\\\]+(?::\\d+)?$",
-      "description": "The host (name or ip) of the API. Example: 'swagger.io'"
-    },
-    "basePath": {
-      "type": "string",
-      "pattern": "^/",
-      "description": "The base path to the API. Example: '/api'."
-    },
-    "schemes": {
-      "$ref": "#/definitions/schemesList"
-    },
-    "consumes": {
-      "description": "A list of MIME types accepted by the API.",
-      "allOf": [
-        {
-          "$ref": "#/definitions/mediaTypeList"
-        }
-      ]
-    },
-    "produces": {
-      "description": "A list of MIME types the API can produce.",
-      "allOf": [
-        {
-          "$ref": "#/definitions/mediaTypeList"
-        }
-      ]
-    },
-    "paths": {
-      "$ref": "#/definitions/paths"
-    },
-    "definitions": {
-      "$ref": "#/definitions/definitions"
-    },
-    "parameters": {
-      "$ref": "#/definitions/parameterDefinitions"
-    },
-    "responses": {
-      "$ref": "#/definitions/responseDefinitions"
-    },
-    "security": {
-      "$ref": "#/definitions/security"
-    },
-    "securityDefinitions": {
-      "$ref": "#/definitions/securityDefinitions"
-    },
-    "tags": {
-      "type": "array",
-      "items": {
-        "$ref": "#/definitions/tag"
-      },
-      "uniqueItems": true
-    },
-    "externalDocs": {
-      "$ref": "#/definitions/externalDocs"
     }
   }
 }

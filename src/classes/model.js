@@ -35,13 +35,13 @@ import {TxPipe} from "txpipe";
  * @param ref
  * @param metaRef
  */
-const createMetaDataRef = (ref, metaRef) => {
+const createMetaDataRef = (ref, metaRef, path) => {
     let _md;
     if (metaRef instanceof RxVO) {
         // root properties are handed the RxVO object
         // will create new MetaData and set reference as root element
         _md = new MetaData(ref, {
-            _path: "",
+            _path: path, //"",
             _parent: null,
             _root: ref,
             _rxvo: metaRef,
@@ -67,7 +67,7 @@ const createMetaDataRef = (ref, metaRef) => {
  */
 export class Model {
     constructor() {
-        createMetaDataRef(this, arguments[0]);
+        createMetaDataRef(this, ...arguments);
     }
 
     /**
@@ -294,7 +294,8 @@ export class Model {
      * @returns {string}
      */
     get path() {
-        return _mdRef.get(this).path || "";
+        // console.log(JSON.stringify(Object.keys(_mdRef.get(this)), null, 2));
+        return _mdRef.get(this).path || "";//this.schema.$id;
     }
 
     /**

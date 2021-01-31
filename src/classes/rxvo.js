@@ -85,9 +85,10 @@ export class RxVO {
         if (schemas.hasOwnProperty("schemas")) {
             // if value of type is "array" or an array of items is defined,
             // we handle as Array
-            _doc = new (_getModelClass(schemas.schemas[schemas.schemas.length - 1]))(this);
+            _doc = new (_getModelClass(schemas.schemas[schemas.schemas.length - 1]))
+            (this, schemas.schemas[schemas.schemas.length - 1].$id);
         } else {
-            _doc = new (_getModelClass(schemas))(this);
+            _doc = new (_getModelClass(schemas))(this, schemas.$id);
         }
 
         // creates holder for dirty model flags in this scope

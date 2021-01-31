@@ -1,5 +1,6 @@
 export default {
   $id: "root",
+  type: "object",
   definitions: {
     refA: {
       type: "object",

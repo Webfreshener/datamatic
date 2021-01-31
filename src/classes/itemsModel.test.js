@@ -336,7 +336,7 @@ describe("ItemsModel Class Suite", function () {
             _rxvo.model.$model.freeze();
 
             expect(() => _rxvo.model[0].name = "Other Name")
-                .toThrow("model path \"/items\" is non-configurable and non-writable");
+                .toThrow("model path \"root#/items\" is non-configurable and non-writable");
         });
     });
 });
