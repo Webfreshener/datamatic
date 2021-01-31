@@ -29,6 +29,7 @@ SOFTWARE.
 import {_ajvRef} from "./_references";
 import {RxVO} from "./rxvo";
 import Ajv from "ajv";
+import addFormats from "ajv-formats";
 import {getSchemaID} from "./utils";
 
 const _validators = new WeakMap();
@@ -62,6 +63,8 @@ const _preconstruct = (path, data, rxvo) => {
  */
 const createAjv = (inst, schemas, opts) => {
     const _ajv = new Ajv(opts);
+    addFormats(_ajv);
+
     if (schemas) {
         if (schemas.hasOwnProperty("meta")) {
             if (Array.isArray(schemas.meta)) {
@@ -77,6 +80,7 @@ const createAjv = (inst, schemas, opts) => {
             if (Array.isArray(schemas.schemas)) {
                 schemas.schemas.forEach((schema) => {
                     schemaID = getSchemaID(schema);
+                    console.log(`adding schemaID: ${schemaID}`);
                     _ajv.addSchema(schema, schemaID);
                 });
             } else {
@@ -229,43 +233,44 @@ export class AjvWrapper {
  * @private
  */
 const _ajvOptions = {
-    // // validation and reporting options:
-    // $data:            false,
-    // allErrors:        true,
-    // verbose:          true,
-    // $comment:         false, // NEW in Ajv version 6.0
-    jsonPointers: true,
-    // uniqueItems:      true,
-    // unicode:          true,
-    // format:           'fast',
-    // formats:          {},
-    // unknownFormats:   true,
-    // schemas:          {},
-    // logger:           undefined,
-    // // referenced schema options:
-    schemaId: 'auto',
-    // missingRefs:      true,
-    extendRefs: true, // default 'ignore'
-    // loadSchema:       undefined, // function(uri: string): Promise {}
-    // // options to modify validated data:
-    // removeAdditional: true,
-    // useDefaults: true,
-    // coerceTypes:      false,
-    // // asynchronous validation options:
-    // transpile:        undefined, // requires ajv-async package
-    // // advanced options:
-    // meta:             true,
-    // validateSchema:   true,
-    // addUsedSchema:    true,
-    // inlineRefs:       true,
-    // passContext:      false,
-    // loopRequired:     Infinity,
-    // ownProperties:    false,
-    // multipleOfPrecision: false,
-    // errorDataPath:    'object', // deprecated
-    // messages:         true,
-    // sourceCode:       false,
-    // processCode:      undefined, // function (str: string): string {}
-    // cache:            new Cache,
-    // serialize:        undefined
+    // strict mode options (NEW)
+    strict: true,
+    strictTypes: "log",
+    strictTuples: "log",
+    allowUnionTypes: true,
+    allowMatchingProperties: false,
+    validateFormats: true,
+    // validation and reporting options:
+    $data: false,
+    allErrors: false,
+    verbose: false,
+    $comment: false,
+    formats: {},
+    keywords: [],
+    schemas: {},
+    logger: undefined,
+    loadSchema: undefined, // function(uri: string): Promise {}
+    // options to modify validated data:
+    removeAdditional: false,
+    useDefaults: false,
+    coerceTypes: false,
+    // advanced options:
+    meta: true,
+    validateSchema: true,
+    addUsedSchema: true,
+    inlineRefs: true,
+    passContext: false,
+    loopRequired: Infinity,
+    loopEnum: Infinity, // NEW
+    ownProperties: false,
+    multipleOfPrecision: undefined,
+    messages: true,
+    code: {
+        // NEW
+        es5: false,
+        lines: false,
+        source: false,
+        process: undefined, // (code: string) => string
+        optimize: true,
+    },
 };

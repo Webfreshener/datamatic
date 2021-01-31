@@ -6,51 +6,44 @@ import {default as BasicAPI} from "../../fixtures/basic-api.swagger";
 import Ajv from "ajv";
 import {AjvWrapper} from "./_ajvWrapper";
 import {RxVO} from "./rxvo";
+import addFormats from "ajv-formats";
 
 describe("AJVWrapper Tests", () => {
     describe("AJV Standalone -- version integrity & debug", () => {
-        it("should handle v4 Schemas", () => {
-            const opts = {
-                schemaId: "auto",
-                jsonPointers: true,
-                allErrors: false,
-                extendRefs: true,
-            };
-            const _ajv = new Ajv(opts);
-            _ajv.addMetaSchema(JSONSchemaV4);
-            _ajv.addMetaSchema(JSONSchemaV6);
+        it("should handle OpenAPI2.0 Schemas (updated to JSON-Schema draft-07)", () => {
+            const _ajv = new Ajv({
+                allowUnionTypes: true,
+            });
+
+            addFormats(_ajv);
+
+            _ajv.addSchema(JSONSchemaV4,"http://json-schema.org/draft-04/schema#");
             _ajv.addSchema(OpenAPIv2, "http://swagger.io/v2/schema.json#");
-            // const _v = _ajv.getSchema("http://swagger.io/v2/schema.json");
-            // const _isValid = _v(PetStoreV2);
-            // expect(_isValid).toBe(true);
-            expect(_ajv.validate("http://swagger.io/v2/schema.json#/", PetStoreV2)).toBe(true);
+
+            const _v = _ajv.validate("http://swagger.io/v2/schema.json#", PetStoreV2);
+
+            expect(_ajv.errors).toBe(null);
+            expect(_v).toBe(true);
 
         });
     });
 
     describe("AJVWrapper", () => {
-        it("should handle v4 Schemas", () => {
-            const opts = {
-                schemaId: "auto",
-                jsonPointers: true,
-                allErrors: false,
-                extendRefs: true,
-            };
-
+        it("should handle v6 Schemas", () => {
             const schemas = {
-                meta: [JSONSchemaV4, JSONSchemaV6],
+                meta: [JSONSchemaV4],
                 schemas: [OpenAPIv2],
-                // use: "http://swagger.io/v2/schema.json#"
             };
 
             const rxvo = new RxVO(schemas);
-            const _ajv = new AjvWrapper(rxvo, schemas, opts);
-            const _isValid = _ajv.exec("http://swagger.io/v2/schema.json#", PetStoreV2);
+            const _ajv = new AjvWrapper(rxvo, schemas);
 
+            const _isValid = _ajv.exec("http://swagger.io/v2/schema.json#", PetStoreV2);
             rxvo.model = PetStoreV2;
 
             expect(rxvo.errors).toBe(null);
             expect(_isValid).toBe(true);
+            expect(JSON.parse(`${rxvo}`)).toEqual(PetStoreV2);
         });
     });
 });

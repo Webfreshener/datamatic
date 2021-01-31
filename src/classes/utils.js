@@ -71,19 +71,11 @@ export const refAtKeyValidation = (model, key, value) => {
     // obtains preliminary model path
     let path = `${model.validationPath}`;
 
-    // appends key to path if set
     if (key && key.length) {
         path = `${path}/${key}`;
     }
 
-    const _res = validate(model, path, value);
-
-    // tests our results for failure
-    if (_res !== true) {
-        return _res;
-    }
-
-    return true;
+    return validate(model, path, value);
 };
 
 /**
@@ -97,12 +89,9 @@ export const validate = (model, path, value) => {
     // obtains validator reference
     const _v = _validators.get(model.rxvo);
     const _res = _v.exec(path, value);
-    // runs validation and returns
-    if (_res !== true) {
-        return _v.$ajv.errorsText(_res.errors) || "unknown validation error";
-    }
+    // runs validation and returns result or errors
+    return _res ? true : _v.$ajv.errorsText(_res.errors);
 
-    return true;
 };
 
 /**
@@ -185,7 +174,7 @@ export const getDefaults = (schema) => {
 export const getPatternPropertyDefaults = (schema) => {
     let _o = {};
 
-    if (schema === null || schema === void(0)) {
+    if (schema === null || schema === void (0)) {
         return null;
     }
 
@@ -197,7 +186,7 @@ export const getPatternPropertyDefaults = (schema) => {
         merge(_o, _propObj);
     }
 
-    return  Object.keys(_o).length ? _o : null;
+    return Object.keys(_o).length ? _o : null;
 };
 
 /**
