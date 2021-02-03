@@ -13,10 +13,10 @@
 
 <header>
   <a href="./">Home</a>
-  
+
   <a href="identifiers.html">Reference</a>
   <a href="source.html">Source</a>
-  
+
   <div class="search-box">
   <span>
     <img src="./image/search.png">
@@ -28,7 +28,7 @@
 
 <nav class="navigation" data-ice="nav"><div>
   <ul>
-    
+
   <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#classes">classes</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_branchNotifier.js~Notifiers.html">Notifiers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_metaData.js~MetaData.html">MetaData</a></span></span></li>
@@ -38,7 +38,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">RxVO</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDefaults">getDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPatternPropertyDefaults">getPatternPropertyDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getSchemaID">getSchemaID</a></span></span></li>
@@ -77,12 +77,12 @@ import {
     patternModel, nestedPatternModel
 } from &quot;../../fixtures/PropertiesModel.schemas&quot;;
 
-import {RxVO} from &quot;./rxvo&quot;;
+import {Model} from &quot;./rxvo&quot;;
 
 describe(&quot;Utils tests&quot;, () =&gt; {
     describe(&quot;make dirty and make clean&quot;, () =&gt; {
         describe(&quot;basic PropertiesModel dirtiness&quot;, () =&gt; {
-            const _rxvo = new RxVO(basicModel);
+            const _rxvo = new Model(basicModel);
             it(&quot;should make model dirty&quot;, () =&gt; {
                 makeDirty(_rxvo.model.$model);
                 expect(_rxvo.model.$model.isDirty).toBe(true);
@@ -95,7 +95,7 @@ describe(&quot;Utils tests&quot;, () =&gt; {
         });
 
         describe(&quot;nested PropertiesModel dirtiness&quot;, () =&gt; {
-            const _rxvo = new RxVO({schemas: [nestedModel]});
+            const _rxvo = new Model({schemas: [nestedModel]});
             _rxvo.model = {
                 aObject: {
                     bObject: {
@@ -118,7 +118,7 @@ describe(&quot;Utils tests&quot;, () =&gt; {
 
     describe(&quot;Validation Methods&quot;, () =&gt; {
         describe(&quot;refValidation tests&quot;, () =&gt; {
-            const _rxvo = new RxVO({schemas: [basicModel]});
+            const _rxvo = new Model({schemas: [basicModel]});
 
             it(&quot;should pass validation against refValidation&quot;, () =&gt; {
                 const _res = refValidation(_rxvo.model.$model,
@@ -134,7 +134,7 @@ describe(&quot;Utils tests&quot;, () =&gt; {
         });
 
         describe(&quot;refAtKeyValidation tests&quot;, () =&gt; {
-            const _rxvo = new RxVO({schemas: [nestedModel]});
+            const _rxvo = new Model({schemas: [nestedModel]});
             const _data = {
                 aObject: {
                     bObject: {
@@ -158,7 +158,7 @@ describe(&quot;Utils tests&quot;, () =&gt; {
         });
 
         describe(&quot;validate method&quot;, () =&gt; {
-            const _rxvo = new RxVO({schemas: [basicModel]});
+            const _rxvo = new Model({schemas: [basicModel]});
             const _data = {name: &quot;test&quot;, age: 99, active: true};
             it(&quot;should pass validation against refValidation&quot;, () =&gt; {
                 const _res = validate(_rxvo.model.$model, &quot;&quot;, _data);

@@ -13,10 +13,10 @@
 
 <header>
   <a href="./">Home</a>
-  
+
   <a href="identifiers.html">Reference</a>
   <a href="source.html">Source</a>
-  
+
   <div class="search-box">
   <span>
     <img src="./image/search.png">
@@ -28,7 +28,7 @@
 
 <nav class="navigation" data-ice="nav"><div>
   <ul>
-    
+
   <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#classes">classes</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_branchNotifier.js~Notifiers.html">Notifiers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_metaData.js~MetaData.html">MetaData</a></span></span></li>
@@ -38,7 +38,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">RxVO</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDefaults">getDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPatternPropertyDefaults">getPatternPropertyDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getSchemaID">getSchemaID</a></span></span></li>
@@ -73,7 +73,7 @@ import {default as PetStoreV2} from &quot;../../fixtures/petstore.v2&quot;;
 import {default as BasicAPI} from &quot;../../fixtures/basic-api.swagger&quot;;
 import Ajv from &quot;ajv&quot;;
 import {AjvWrapper} from &quot;./_ajvWrapper&quot;;
-import {RxVO} from &quot;./rxvo&quot;;
+import {Model} from &quot;./rxvo&quot;;
 
 describe(&quot;AJVWrapper Tests&quot;, () =&gt; {
     describe(&quot;AJV Standalone -- version integrity &amp; debug&quot;, () =&gt; {
@@ -111,7 +111,7 @@ describe(&quot;AJVWrapper Tests&quot;, () =&gt; {
                 // use: &quot;http://swagger.io/v2/schema.json#&quot;
             };
 
-            const rxvo = new RxVO(schemas);
+            const rxvo = new Model(schemas);
             const _ajv = new AjvWrapper(rxvo, schemas, opts);
             const _isValid = _ajv.exec(&quot;http://swagger.io/v2/schema.json#&quot;, PetStoreV2);
 

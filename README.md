@@ -1,4 +1,4 @@
-RxVO
+Model
 =============
 **Reactive Validating Object**<br/>
 RxJS + JSON-Schema (Ajv) Based Observable Data Models
@@ -25,7 +25,7 @@ RxJS + JSON-Schema (Ajv) Based Observable Data Models
    * [Flow Control](#flow-control)
 
 **[Developer Guide](#developer-guide)**
-  * [RxVO Class](#rxvo-class)
+  * [Model Class](#rxvo-class)
     * [Schemas Config](#rxvo-schemas-config)
     * [Model Proxy Object](#model-proxy-object)
     * [model vs $model](#model-vs-model)
@@ -77,7 +77,7 @@ const schema = {
 
 
 // instantiate our Model
-const obj = new RxVO({schemas: [schema]});
+const obj = new Model({schemas: [schema]});
 
 // subscribes an observer to the Model
 obj.subscribe({
@@ -96,7 +96,7 @@ obj.subscribe({
     },
 });
 
-// populate the RxVO with data
+// populate the Model with data
 // -- this will trigger the "next" notification
 obj.model = {
     name: "JSONville",
@@ -136,26 +136,26 @@ Refer to the examples demo in `./examples/basic-usage` for more usage examples
 
 ## Developer Guide
 
-#### RxVO Class ####
+#### Model Class ####
 This class represents the Document entry point
 
 | Method        | Arguments | Description  |
 |:--------------|:----------|:-------|
-| constructor   | [schemas config](#rxvo-schemas-config) (object), [options (object)] | creates new RxVO instance |
+| constructor   | [schemas config](#rxvo-schemas-config) (object), [options (object)] | creates new Model instance |
 | errors [getter]   | | retrieves errors (if any) from last json-schema validation |
 | model [getter/setter]   | | retrieves root [model proxy object](#model-proxy-object) for operation |
 | getModelsInPath   | to (string) | retrieves models at given path |
 | getSchemaForKey   | key (string) | retrieves json-schema with given key as ID |
 | getSchemaForPath   | path (string) | retrieves json-schema for model at given path |
 | schema [getter]   | | retrieves json-schema for root model |
-| subscribe   |  observers (object) | Subscribes Observers to the RxVO Model Root |
+| subscribe   |  observers (object) | Subscribes Observers to the Model Model Root |
 | subscribeTo   |  path (string), observers (object) | Subscribes Observers to the Model at path 
 | toString   | | retrieves root model as JSON String |
 | toJSON   | | retrieves root model as JSON Object |
 | validate   | path (string), value (object) | validates data at given ath against JSON-Schema |
-| *static* fromJSON   | json (string &#124; object) | creates new RxVO from static method |
+| *static* fromJSON   | json (string &#124; object) | creates new Model from static method |
 
-##### RxVO Schemas Config
+##### Model Schemas Config
 | Property        | Type | Description  |
 |:--------------|:----------|:-------|
 | meta | array | Array of MetaSchema references to validate Schemas against
@@ -177,7 +177,7 @@ In usage, `model` always references the Proxied Data Model for validation and op
 
 *example:*
 ```
- const _rxvo = new RxVO({schemas: [schema]});
+ const _rxvo = new Model({schemas: [schema]});
  
  // access the root model:
  console.log(`JSON.stringify(_rxvo.model)`);
@@ -230,8 +230,8 @@ Represents an Properties (Object} entry in the given schema
 | pipe | ..pipesOrSchemas | returns TxPipe instance for operating on model |
 | reset | | resets model to initial state if operation is valid |
 | root [getter]   | | retrieves root Model instance |
-| rxvo [getter]   | | retrieves Model's RxVO document instance |
-| subscribe   |  observers (object) | Subscribes Observers to the RxVO Model Root |
+| rxvo [getter]   | | retrieves Model's Model document instance |
+| subscribe   |  observers (object) | Subscribes Observers to the Model Model Root |
 | subscribeTo   |  path (string), observers (object) | Subscribes Observers to the Model at path |
 | toString   | | retrieves root model as JSON String |
 | toJSON   | | retrieves root model as JSON Object |

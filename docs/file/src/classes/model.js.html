@@ -13,10 +13,10 @@
 
 <header>
   <a href="./">Home</a>
-  
+
   <a href="identifiers.html">Reference</a>
   <a href="source.html">Source</a>
-  
+
   <div class="search-box">
   <span>
     <img src="./image/search.png">
@@ -28,7 +28,7 @@
 
 <nav class="navigation" data-ice="nav"><div>
   <ul>
-    
+
   <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#classes">classes</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_branchNotifier.js~Notifiers.html">Notifiers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_metaData.js~MetaData.html">MetaData</a></span></span></li>
@@ -38,7 +38,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">RxVO</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDefaults">getDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPatternPropertyDefaults">getPatternPropertyDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getSchemaID">getSchemaID</a></span></span></li>
@@ -94,7 +94,7 @@ SOFTWARE.
 import {
     _mdRef, _oBuilders, _object, _schemaOptions, _dirtyModels
 } from &quot;./_references&quot;;
-import {RxVO} from &quot;./rxvo&quot;;
+import {Model} from &quot;./rxvo&quot;;
 import {MetaData} from &quot;./_metaData&quot;;
 import {makeClean, makeDirty, validate} from &quot;./utils&quot;;
 import {Pipe} from &quot;./pipe&quot;;
@@ -106,8 +106,8 @@ import {Pipe} from &quot;./pipe&quot;;
  */
 const createMetaDataRef = (ref, metaRef) =&gt; {
     let _md;
-    if (metaRef instanceof RxVO) {
-        // root properties are handed the RxVO object
+    if (metaRef instanceof Model) {
+        // root properties are handed the Model object
         // will create new MetaData and set reference as root element
         _md = new MetaData(ref, {
             _path: &quot;&quot;,
@@ -125,7 +125,7 @@ const createMetaDataRef = (ref, metaRef) =&gt; {
         }
     } else {
         throw &quot;Invalid attempt to construct Model.&quot; +
-        &quot;tip: use `new RxVO([schema])` instead&quot;
+        &quot;tip: use `new Model([schema])` instead&quot;
     }
     // sets MetaData object to global reference
     _mdRef.set(ref, _md);
@@ -395,8 +395,8 @@ export class Model {
     }
 
     /**
-     * Getter for model&apos;s RxVO owner object
-     * @returns {RxVO}
+     * Getter for model&apos;s Model owner object
+     * @returns {Model}
      */
     get rxvo() {
         return _mdRef.get(this).rxvo;

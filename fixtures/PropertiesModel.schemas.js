@@ -1,5 +1,6 @@
 export const basicModel = {
     $id: "root#",
+    $schema: "http://json-schema.org/draft-07/schema#",
     type: "object",
     properties: {
         name: {
@@ -16,6 +17,7 @@ export const basicModel = {
 
 export const basicCollection = {
     $id: "root#",
+    // $schema: "http://json-schema.org/draft-07/schema#",
     type: "array",
     items: {
         type: "object",
@@ -31,6 +33,18 @@ export const basicCollection = {
             },
         },
     },
+};
+
+export const nameRequiredSchema = {
+    $id: "root#",
+    $schema: "http://json-schema.org/draft-07/schema#",
+    type: "object",
+    required: ["name"],
+    properties: {
+        name: {
+            type: "string",
+        }
+    }
 };
 
 export const nestedModel = {

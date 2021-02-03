@@ -13,10 +13,10 @@
 
 <header>
   <a href="./">Home</a>
-  
+
   <a href="identifiers.html">Reference</a>
   <a href="source.html">Source</a>
-  
+
   <div class="search-box">
   <span>
     <img src="./image/search.png">
@@ -28,7 +28,7 @@
 
 <nav class="navigation" data-ice="nav"><div>
   <ul>
-    
+
   <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#classes">classes</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_branchNotifier.js~Notifiers.html">Notifiers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_metaData.js~MetaData.html">MetaData</a></span></span></li>
@@ -38,7 +38,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">RxVO</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDefaults">getDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPatternPropertyDefaults">getPatternPropertyDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getSchemaID">getSchemaID</a></span></span></li>
@@ -67,9 +67,9 @@
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/dist.test.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">describe(&quot;node commonjs require&quot;, () =&gt; {
-    it(&quot;should import RxVO and create document&quot;, ()=&gt; {
-        let RxVO = require(&quot;../index&quot;).RxVO;
-        let rxvo = new RxVO({schemas: [{id: &quot;root#&quot;, type: &quot;object&quot;, properties: {foo: {type: &quot;string&quot;}}}]});
+    it(&quot;should import Model and create document&quot;, ()=&gt; {
+        let Model = require(&quot;../index&quot;).Model;
+        let rxvo = new Model({schemas: [{id: &quot;root#&quot;, type: &quot;object&quot;, properties: {foo: {type: &quot;string&quot;}}}]});
         rxvo.model = {
             foo: &quot;bar&quot;
         };

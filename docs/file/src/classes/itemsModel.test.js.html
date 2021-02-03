@@ -13,10 +13,10 @@
 
 <header>
   <a href="./">Home</a>
-  
+
   <a href="identifiers.html">Reference</a>
   <a href="source.html">Source</a>
-  
+
   <div class="search-box">
   <span>
     <img src="./image/search.png">
@@ -28,7 +28,7 @@
 
 <nav class="navigation" data-ice="nav"><div>
   <ul>
-    
+
   <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#classes">classes</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_branchNotifier.js~Notifiers.html">Notifiers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_metaData.js~MetaData.html">MetaData</a></span></span></li>
@@ -38,7 +38,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">RxVO</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDefaults">getDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPatternPropertyDefaults">getPatternPropertyDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getSchemaID">getSchemaID</a></span></span></li>
@@ -66,7 +66,7 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/classes/itemsModel.test.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {RxVO} from &quot;./rxvo&quot;;
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {Model} from &quot;./rxvo&quot;;
 import {default as deepEqual} from &quot;deep-equal&quot;;
 import {
     stringsCollection,
@@ -79,7 +79,7 @@ describe(&quot;ItemsModel Class Suite&quot;, function () {
 
     describe(&quot;Simple ItemsModel Tests&quot;, () =&gt; {
         beforeEach(() =&gt; {
-            this.rxvo = new RxVO({schemas: [stringsCollection]});
+            this.rxvo = new Model({schemas: [stringsCollection]});
         });
 
         describe(&quot;LifeCycle: Instantiation&quot;, () =&gt; {
@@ -92,7 +92,7 @@ describe(&quot;ItemsModel Class Suite&quot;, function () {
                 let badSchema = Object.assign({}, stringsCollection, {
                     items: [{type: &quot;INVALID&quot;}],
                 });
-                expect(() =&gt; new RxVO({schemas: [badSchema]})).toThrow();
+                expect(() =&gt; new Model({schemas: [badSchema]})).toThrow();
             });
         });
 
@@ -131,7 +131,7 @@ describe(&quot;ItemsModel Class Suite&quot;, function () {
 
     describe(&quot;Nested Elements Tests&quot;, () =&gt; {
         beforeEach(() =&gt; {
-            this.rxvo = new RxVO({schemas: [objectCollection]});
+            this.rxvo = new Model({schemas: [objectCollection]});
         });
 
         describe(&quot;LifeCycle: Instantiation&quot;, () =&gt; {
@@ -241,7 +241,7 @@ describe(&quot;ItemsModel Class Suite&quot;, function () {
 
         describe(&quot;LifeCycle: Delete&quot;, () =&gt; {
             beforeEach(() =&gt; {
-                this.rxvo = new RxVO({schemas: [stringsMinMaxCollection]});
+                this.rxvo = new Model({schemas: [stringsMinMaxCollection]});
             });
 
             let _d = [&quot;Item A&quot;, &quot;Item B&quot;, &quot;Item C&quot;];
@@ -265,7 +265,7 @@ describe(&quot;ItemsModel Class Suite&quot;, function () {
 
         describe(&quot;LifeCycle: Reset&quot;, () =&gt; {
             beforeEach(() =&gt; {
-                this.rxvo = new RxVO({schemas: [objectCollection]});
+                this.rxvo = new Model({schemas: [objectCollection]});
             });
 
             it(&quot;should notifiy subsequent validations&quot;, () =&gt; {
@@ -300,7 +300,7 @@ describe(&quot;ItemsModel Class Suite&quot;, function () {
 
     describe(&quot;Array Prototype method tests&quot;, () =&gt; {
         beforeEach(() =&gt; {
-            this.rxvo = new RxVO({schemas: [stringsMinMaxCollection]});
+            this.rxvo = new Model({schemas: [stringsMinMaxCollection]});
             this.rxvo.model = [&quot;Item A&quot;, &quot;Item B&quot;, &quot;Item C&quot;];
         });
 
@@ -353,7 +353,7 @@ describe(&quot;ItemsModel Class Suite&quot;, function () {
 
     describe(&quot;Default Values&quot;, () =&gt; {
         it(&quot;should apply defaults to items&quot;, () =&gt; {
-            this.rxvo = new RxVO({schemas: [objectCollectionDefaults]}, {ajvOptions: {useDefaults: true}});
+            this.rxvo = new Model({schemas: [objectCollectionDefaults]}, {ajvOptions: {useDefaults: true}});
             this.rxvo.model = [{}];
             expect(this.rxvo.model[0]).toEqual({name: &quot;abc&quot;});
         });
@@ -362,7 +362,7 @@ describe(&quot;ItemsModel Class Suite&quot;, function () {
     describe(&quot;Model Class methods &quot;, () =&gt; {
 
         it(&quot;should not reset if it would invalidate model&quot;, () =&gt; {
-            const _rxvo = new RxVO({schemas: [stringsMinMaxCollection]});
+            const _rxvo = new Model({schemas: [stringsMinMaxCollection]});
             _rxvo.model = [&quot;Item A&quot;, &quot;Item B&quot;, &quot;Item C&quot;];
             expect(_rxvo.model.length).toBe(3);
             _rxvo.model.$model.reset();
@@ -370,7 +370,7 @@ describe(&quot;ItemsModel Class Suite&quot;, function () {
         });
 
         it(&quot;should reset it&apos;s collection if allowed&quot;, () =&gt; {
-            const _rxvo = new RxVO({schemas: [stringsCollection]});
+            const _rxvo = new Model({schemas: [stringsCollection]});
             _rxvo.model = [&quot;Item A&quot;, &quot;Item B&quot;, &quot;Item C&quot;];
             _rxvo.model = [&quot;Item A&quot;, &quot;Item B&quot;, &quot;Item C&quot;];
             expect(_rxvo.model.length).toBe(3);
@@ -379,13 +379,13 @@ describe(&quot;ItemsModel Class Suite&quot;, function () {
         });
 
         it(&quot;should quietly validate data with the validate method&quot;, () =&gt; {
-            const _rxvo = new RxVO({schemas: [stringsCollection]});
+            const _rxvo = new Model({schemas: [stringsCollection]});
             expect(_rxvo.model.$model.validate([1, 2, 3])).toBe(&quot;data/0 should be string&quot;);
             expect(_rxvo.model.$model.validate([&quot;1&quot;, &quot;2&quot;, &quot;3&quot;])).toBe(true);
         });
 
         it(&quot;should freeze it&apos;s model&quot;, () =&gt; {
-            const _rxvo = new RxVO({schemas: [stringsCollection]});
+            const _rxvo = new Model({schemas: [stringsCollection]});
             _rxvo.model = [&quot;Item A&quot;, &quot;Item B&quot;, &quot;Item C&quot;];
             _rxvo.model.$model.freeze();
             expect(_rxvo.model.$model.isFrozen).toBe(true);
@@ -394,7 +394,7 @@ describe(&quot;ItemsModel Class Suite&quot;, function () {
         });
 
         it(&quot;should freeze it&apos;s model hierarchy&quot;, () =&gt; {
-            const _rxvo = new RxVO({schemas: [objectCollection]});
+            const _rxvo = new Model({schemas: [objectCollection]});
             const _orig = [{
                 name: &quot;My Name&quot;,
                 active: true,

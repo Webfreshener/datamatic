@@ -13,10 +13,10 @@
 
 <header>
   <a href="./">Home</a>
-  
+
   <a href="identifiers.html">Reference</a>
   <a href="source.html">Source</a>
-  
+
   <div class="search-box">
   <span>
     <img src="./image/search.png">
@@ -28,7 +28,7 @@
 
 <nav class="navigation" data-ice="nav"><div>
   <ul>
-    
+
   <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#classes">classes</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_branchNotifier.js~Notifiers.html">Notifiers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_metaData.js~MetaData.html">MetaData</a></span></span></li>
@@ -38,7 +38,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">RxVO</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDefaults">getDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPatternPropertyDefaults">getPatternPropertyDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getSchemaID">getSchemaID</a></span></span></li>
@@ -68,13 +68,13 @@
 <div class="content" data-ice="content"><h1 data-ice="title">src/classes/_metadata.test.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {MetaData} from &quot;./_metaData&quot;;
 import {PropertiesModel} from &quot;./propertiesModel&quot;;
-import {RxVO} from &quot;./rxvo&quot;;
+import {Model} from &quot;./rxvo&quot;;
 import {basicModel} from &quot;../../fixtures/PropertiesModel.schemas&quot;;
 describe(&quot;MetaData Units&quot;, () =&gt; {
     let _md = null;
     describe( &quot;SubClass Validation&quot;, ()=&gt; {
         it( &quot;should accept objects that are subclasses of PropertiesModel&quot;, function() {
-            let _ = new PropertiesModel(new RxVO(basicModel));
+            let _ = new PropertiesModel(new Model(basicModel));
             !expect(() =&gt; _md = new MetaData(_, {_path: &quot;&quot;, _root: _})).not.toThrow(
                 &quot;new MetaData() argument 1 requires subclass PropertiesModel or ItemsModel. Was subclass of &apos;&lt;Object&gt;&apos;&quot;);
         });
@@ -86,7 +86,7 @@ describe(&quot;MetaData Units&quot;, () =&gt; {
         });
     });
     describe( &quot;Parameter Accessor Validation&quot;, ()=&gt; {
-        const rxvo = new RxVO(basicModel);
+        const rxvo = new Model(basicModel);
         let _ = rxvo.model.$model;
         const _md = new MetaData( new PropertiesModel(rxvo), {_path: &quot;key&quot;, _root: _, _parent: _});
         it(&quot;should access `root` property&quot;, function() {

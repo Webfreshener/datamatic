@@ -13,10 +13,10 @@
 
 <header>
   <a href="./">Home</a>
-  
+
   <a href="identifiers.html">Reference</a>
   <a href="source.html">Source</a>
-  
+
   <div class="search-box">
   <span>
     <img src="./image/search.png">
@@ -28,7 +28,7 @@
 
 <nav class="navigation" data-ice="nav"><div>
   <ul>
-    
+
   <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#classes">classes</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_branchNotifier.js~Notifiers.html">Notifiers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_metaData.js~MetaData.html">MetaData</a></span></span></li>
@@ -38,7 +38,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">RxVO</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDefaults">getDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPatternPropertyDefaults">getPatternPropertyDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getSchemaID">getSchemaID</a></span></span></li>
@@ -68,7 +68,7 @@
 <div class="content" data-ice="content"><h1 data-ice="title">src/classes/_schemaHelpers.test.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {_mdRef} from &quot;./_references&quot;;
 import {PropertiesModel} from &quot;./propertiesModel&quot;;
-import {RxVO} from &quot;./rxvo&quot;;
+import {Model} from &quot;./rxvo&quot;;
 import {SchemaHelpers} from &quot;./_schemaHelpers&quot;;
 import {basicModel} from &quot;../../fixtures/PropertiesModel.schemas&quot;;
 
@@ -76,14 +76,14 @@ describe(&quot;SchemaHelpers Class Tests&quot;, () =&gt; {
     let _rxvo, _schema, _sH;
 
     beforeEach(() =&gt; {
-        _rxvo = new RxVO(basicModel);
+        _rxvo = new Model(basicModel);
         _schema = new PropertiesModel(_rxvo);
         _sH = new SchemaHelpers(_schema);
     });
 
     describe(&quot;Child Object Methods&quot;, () =&gt; {
         beforeEach(() =&gt; {
-            _rxvo = new RxVO({schemas: [basicModel]});
+            _rxvo = new Model({schemas: [basicModel]});
             _schema = new PropertiesModel(_rxvo);
             _sH = new SchemaHelpers(_schema);
         });

@@ -13,10 +13,10 @@
 
 <header>
   <a href="./">Home</a>
-  
+
   <a href="identifiers.html">Reference</a>
   <a href="source.html">Source</a>
-  
+
   <div class="search-box">
   <span>
     <img src="./image/search.png">
@@ -28,7 +28,7 @@
 
 <nav class="navigation" data-ice="nav"><div>
   <ul>
-    
+
   <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#classes">classes</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_branchNotifier.js~Notifiers.html">Notifiers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_metaData.js~MetaData.html">MetaData</a></span></span></li>
@@ -38,7 +38,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">RxVO</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDefaults">getDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPatternPropertyDefaults">getPatternPropertyDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getSchemaID">getSchemaID</a></span></span></li>
@@ -67,7 +67,7 @@
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/classes/propertiesModel.test.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {PropertiesModel} from &quot;./propertiesModel&quot;;
-import {RxVO} from &quot;./rxvo&quot;;
+import {Model} from &quot;./rxvo&quot;;
 import {default as deepEqual} from &quot;deep-equal&quot;;
 import {
     basicModel, nestedModel, nestedModelDefault, nestedPatternModel, patternModel
@@ -77,7 +77,7 @@ describe(&quot;PropertiesModel Class Suite&quot;, function () {
 
     describe(&quot;Simple PropertiesModel Tests&quot;, () =&gt; {
         beforeEach(() =&gt; {
-            this.rxvo = new RxVO({schemas: [basicModel]});
+            this.rxvo = new Model({schemas: [basicModel]});
         });
 
         describe(&quot;LifeCycle: Instantiation&quot;, () =&gt; {
@@ -96,7 +96,7 @@ describe(&quot;PropertiesModel Class Suite&quot;, function () {
                         },
                     },
                 });
-                expect(() =&gt; new RxVO({schemas: [badSchema]})).toThrow();
+                expect(() =&gt; new Model({schemas: [badSchema]})).toThrow();
             });
         });
 
@@ -153,7 +153,7 @@ describe(&quot;PropertiesModel Class Suite&quot;, function () {
     describe(&quot;Nested PropertiesModel Tests&quot;, () =&gt; {
         let _rxvo;
         beforeEach(() =&gt; {
-            _rxvo = new RxVO({schemas: [nestedModel]});
+            _rxvo = new Model({schemas: [nestedModel]});
         });
 
         describe(&quot;LifeCycle: Instantiation&quot;, () =&gt; {
@@ -257,7 +257,7 @@ describe(&quot;PropertiesModel Class Suite&quot;, function () {
     describe(&quot;Nested Defaults PropertiesModel Tests&quot;, () =&gt; {
         let _rxvo;
         beforeEach(() =&gt; {
-            _rxvo = new RxVO({schemas: [nestedModelDefault]}, {ajvOptions: {useDefaults: true}});
+            _rxvo = new Model({schemas: [nestedModelDefault]}, {ajvOptions: {useDefaults: true}});
         });
 
         it(&quot;should populate default values&quot;, () =&gt; {
@@ -275,7 +275,7 @@ describe(&quot;PropertiesModel Class Suite&quot;, function () {
     describe(&quot;Pattern Properties&quot;, () =&gt; {
         let _rxvo;
         beforeEach(() =&gt; {
-            _rxvo = new RxVO({schemas: [patternModel]}, {ajvOptions: {useDefaults: true}});
+            _rxvo = new Model({schemas: [patternModel]}, {ajvOptions: {useDefaults: true}});
         });
 
         it(&quot;should allow pattern properties&quot;, () =&gt; {
@@ -297,7 +297,7 @@ describe(&quot;PropertiesModel Class Suite&quot;, function () {
     describe(&quot;Nested Pattern Properties&quot;, () =&gt; {
         let _rxvo;
         beforeEach(() =&gt; {
-            _rxvo = new RxVO({schemas: [nestedPatternModel]}, {ajvOptions: {useDefaults: true}});
+            _rxvo = new Model({schemas: [nestedPatternModel]}, {ajvOptions: {useDefaults: true}});
         });
 
         it(&quot;should allow nested pattern properties&quot;, () =&gt; {

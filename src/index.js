@@ -27,4 +27,4 @@ SOFTWARE.
 if (typeof Object.assign !== "function") {
     Object.assign = require('object.assign/polyfill')();
 }
-export {RxVO} from './classes/rxvo';
+export {Model} from './Model';

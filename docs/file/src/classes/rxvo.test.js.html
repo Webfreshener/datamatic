@@ -13,10 +13,10 @@
 
 <header>
   <a href="./">Home</a>
-  
+
   <a href="identifiers.html">Reference</a>
   <a href="source.html">Source</a>
-  
+
   <div class="search-box">
   <span>
     <img src="./image/search.png">
@@ -28,7 +28,7 @@
 
 <nav class="navigation" data-ice="nav"><div>
   <ul>
-    
+
   <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#classes">classes</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_branchNotifier.js~Notifiers.html">Notifiers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_metaData.js~MetaData.html">MetaData</a></span></span></li>
@@ -38,7 +38,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">RxVO</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDefaults">getDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPatternPropertyDefaults">getPatternPropertyDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getSchemaID">getSchemaID</a></span></span></li>
@@ -66,20 +66,20 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/classes/rxvo.test.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {RxVO} from &quot;./rxvo&quot;
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {Model} from &quot;./rxvo&quot;
 import {basicModel} from &quot;../../fixtures/PropertiesModel.schemas&quot;;
 import {default as basicRefs} from &quot;../../fixtures/basic-refs.schema&quot;;
 import {default as refsData} from &quot;../../fixtures/basic-refs.data&quot;;
 
-describe(&quot;RxVO Instance Test&quot;, () =&gt; {
+describe(&quot;Model Instance Test&quot;, () =&gt; {
     let _rxvo;
 
     beforeEach(() =&gt; {
-        _rxvo = new RxVO({schemas: [basicModel]});
+        _rxvo = new Model({schemas: [basicModel]});
     });
 
-    it(&quot;expects a valid RxVO instance&quot;, () =&gt; {
-        expect(_rxvo instanceof RxVO).toBe(true);
+    it(&quot;expects a valid Model instance&quot;, () =&gt; {
+        expect(_rxvo instanceof Model).toBe(true);
     });
 
     it(&quot;should get it&apos;s schema&quot;, () =&gt; {
@@ -90,7 +90,7 @@ describe(&quot;RxVO Instance Test&quot;, () =&gt; {
         expect(_rxvo.getSchemaForPath(&quot;properties/name&quot;)).toEqual({type: &quot;string&quot;});
     });
 
-    it(&quot;expects RxVO Instances to create a valid RxVO Document&quot;, () =&gt; {
+    it(&quot;expects Model Instances to create a valid Model Document&quot;, () =&gt; {
         _rxvo.model = {
             &quot;name&quot;: &quot;test&quot;,
         };
@@ -99,7 +99,7 @@ describe(&quot;RxVO Instance Test&quot;, () =&gt; {
     });
 
     it(&quot;runs schema validator&quot;, () =&gt; {
-        const _rxvo = new RxVO({
+        const _rxvo = new Model({
             properties:
                 {
                     id: {type: &apos;integer&apos;},
@@ -114,7 +114,7 @@ describe(&quot;RxVO Instance Test&quot;, () =&gt; {
 
     describe(&quot;Mixed schemas&quot;, () =&gt; {
         it(&quot;should allow mixed schemas to be selected and used&quot;, () =&gt; {
-            const _rxvo = new RxVO({schemas: [basicRefs]});
+            const _rxvo = new Model({schemas: [basicRefs]});
             _rxvo.subscribe({
                 error: (e) =&gt; console.log(JSON.stringify(e)),
             });

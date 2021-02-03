@@ -49,8 +49,8 @@ window.esdocSearchIndex = [
   ],
   [
     "rxvo/src/classes/rxvo.js~rxvo",
-    "class/src/classes/rxvo.js~RxVO.html",
-    "<span>RxVO</span> <span class=\"search-result-import-path\">rxvo/src/classes/rxvo.js</span>",
+    "class/src/classes/rxvo.js~Model.html",
+    "<span>Model</span> <span class=\"search-result-import-path\">rxvo/src/classes/rxvo.js</span>",
     "class"
   ],
   [
@@ -1117,116 +1117,116 @@ window.esdocSearchIndex = [
   ],
   [
     "src/classes/rxvo.js~rxvo#addschema",
-    "class/src/classes/rxvo.js~RxVO.html#instance-method-addSchema",
-    "src/classes/rxvo.js~RxVO#addSchema",
+    "class/src/classes/rxvo.js~Model.html#instance-method-addSchema",
+    "src/classes/rxvo.js~Model#addSchema",
     "method"
   ],
   [
     "src/classes/rxvo.js~rxvo#constructor",
-    "class/src/classes/rxvo.js~RxVO.html#instance-constructor-constructor",
-    "src/classes/rxvo.js~RxVO#constructor",
+    "class/src/classes/rxvo.js~Model.html#instance-constructor-constructor",
+    "src/classes/rxvo.js~Model#constructor",
     "method"
   ],
   [
     "src/classes/rxvo.js~rxvo#errors",
-    "class/src/classes/rxvo.js~RxVO.html#instance-get-errors",
-    "src/classes/rxvo.js~RxVO#errors",
+    "class/src/classes/rxvo.js~Model.html#instance-get-errors",
+    "src/classes/rxvo.js~Model#errors",
     "member"
   ],
   [
     "src/classes/rxvo.js~rxvo#freeze",
-    "class/src/classes/rxvo.js~RxVO.html#instance-method-freeze",
-    "src/classes/rxvo.js~RxVO#freeze",
+    "class/src/classes/rxvo.js~Model.html#instance-method-freeze",
+    "src/classes/rxvo.js~Model#freeze",
     "method"
   ],
   [
     "src/classes/rxvo.js~rxvo#getmodelsinpath",
-    "class/src/classes/rxvo.js~RxVO.html#instance-method-getModelsInPath",
-    "src/classes/rxvo.js~RxVO#getModelsInPath",
+    "class/src/classes/rxvo.js~Model.html#instance-method-getModelsInPath",
+    "src/classes/rxvo.js~Model#getModelsInPath",
     "method"
   ],
   [
     "src/classes/rxvo.js~rxvo#getpath",
-    "class/src/classes/rxvo.js~RxVO.html#instance-method-getPath",
-    "src/classes/rxvo.js~RxVO#getPath",
+    "class/src/classes/rxvo.js~Model.html#instance-method-getPath",
+    "src/classes/rxvo.js~Model#getPath",
     "method"
   ],
   [
     "src/classes/rxvo.js~rxvo#getschemaforkey",
-    "class/src/classes/rxvo.js~RxVO.html#instance-method-getSchemaForKey",
-    "src/classes/rxvo.js~RxVO#getSchemaForKey",
+    "class/src/classes/rxvo.js~Model.html#instance-method-getSchemaForKey",
+    "src/classes/rxvo.js~Model#getSchemaForKey",
     "method"
   ],
   [
     "src/classes/rxvo.js~rxvo#getschemaforpath",
-    "class/src/classes/rxvo.js~RxVO.html#instance-method-getSchemaForPath",
-    "src/classes/rxvo.js~RxVO#getSchemaForPath",
+    "class/src/classes/rxvo.js~Model.html#instance-method-getSchemaForPath",
+    "src/classes/rxvo.js~Model#getSchemaForPath",
     "method"
   ],
   [
     "src/classes/rxvo.js~rxvo#isfrozen",
-    "class/src/classes/rxvo.js~RxVO.html#instance-get-isFrozen",
-    "src/classes/rxvo.js~RxVO#isFrozen",
+    "class/src/classes/rxvo.js~Model.html#instance-get-isFrozen",
+    "src/classes/rxvo.js~Model#isFrozen",
     "member"
   ],
   [
     "src/classes/rxvo.js~rxvo#model",
-    "class/src/classes/rxvo.js~RxVO.html#instance-get-model",
-    "src/classes/rxvo.js~RxVO#model",
+    "class/src/classes/rxvo.js~Model.html#instance-get-model",
+    "src/classes/rxvo.js~Model#model",
     "member"
   ],
   [
     "src/classes/rxvo.js~rxvo#model",
-    "class/src/classes/rxvo.js~RxVO.html#instance-set-model",
-    "src/classes/rxvo.js~RxVO#model",
+    "class/src/classes/rxvo.js~Model.html#instance-set-model",
+    "src/classes/rxvo.js~Model#model",
     "member"
   ],
   [
     "src/classes/rxvo.js~rxvo#schema",
-    "class/src/classes/rxvo.js~RxVO.html#instance-get-schema",
-    "src/classes/rxvo.js~RxVO#schema",
+    "class/src/classes/rxvo.js~Model.html#instance-get-schema",
+    "src/classes/rxvo.js~Model#schema",
     "member"
   ],
   [
     "src/classes/rxvo.js~rxvo#subscribe",
-    "class/src/classes/rxvo.js~RxVO.html#instance-method-subscribe",
-    "src/classes/rxvo.js~RxVO#subscribe",
+    "class/src/classes/rxvo.js~Model.html#instance-method-subscribe",
+    "src/classes/rxvo.js~Model#subscribe",
     "method"
   ],
   [
     "src/classes/rxvo.js~rxvo#subscribeto",
-    "class/src/classes/rxvo.js~RxVO.html#instance-method-subscribeTo",
-    "src/classes/rxvo.js~RxVO#subscribeTo",
+    "class/src/classes/rxvo.js~Model.html#instance-method-subscribeTo",
+    "src/classes/rxvo.js~Model#subscribeTo",
     "method"
   ],
   [
     "src/classes/rxvo.js~rxvo#tojson",
-    "class/src/classes/rxvo.js~RxVO.html#instance-method-toJSON",
-    "src/classes/rxvo.js~RxVO#toJSON",
+    "class/src/classes/rxvo.js~Model.html#instance-method-toJSON",
+    "src/classes/rxvo.js~Model#toJSON",
     "method"
   ],
   [
     "src/classes/rxvo.js~rxvo#tostring",
-    "class/src/classes/rxvo.js~RxVO.html#instance-method-toString",
-    "src/classes/rxvo.js~RxVO#toString",
+    "class/src/classes/rxvo.js~Model.html#instance-method-toString",
+    "src/classes/rxvo.js~Model#toString",
     "method"
   ],
   [
     "src/classes/rxvo.js~rxvo#useschema",
-    "class/src/classes/rxvo.js~RxVO.html#instance-method-useSchema",
-    "src/classes/rxvo.js~RxVO#useSchema",
+    "class/src/classes/rxvo.js~Model.html#instance-method-useSchema",
+    "src/classes/rxvo.js~Model#useSchema",
     "method"
   ],
   [
     "src/classes/rxvo.js~rxvo#validate",
-    "class/src/classes/rxvo.js~RxVO.html#instance-method-validate",
-    "src/classes/rxvo.js~RxVO#validate",
+    "class/src/classes/rxvo.js~Model.html#instance-method-validate",
+    "src/classes/rxvo.js~Model#validate",
     "method"
   ],
   [
     "src/classes/rxvo.js~rxvo.fromjson",
-    "class/src/classes/rxvo.js~RxVO.html#static-method-fromJSON",
-    "src/classes/rxvo.js~RxVO.fromJSON",
+    "class/src/classes/rxvo.js~Model.html#static-method-fromJSON",
+    "src/classes/rxvo.js~Model.fromJSON",
     "method"
   ],
   [

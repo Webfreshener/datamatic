@@ -13,10 +13,10 @@
 
 <header>
   <a href="./">Home</a>
-  
+
   <a href="identifiers.html">Reference</a>
   <a href="source.html">Source</a>
-  
+
   <div class="search-box">
   <span>
     <img src="./image/search.png">
@@ -28,7 +28,7 @@
 
 <nav class="navigation" data-ice="nav"><div>
   <ul>
-    
+
   <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#classes">classes</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_branchNotifier.js~Notifiers.html">Notifiers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_metaData.js~MetaData.html">MetaData</a></span></span></li>
@@ -38,7 +38,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">RxVO</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDefaults">getDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPatternPropertyDefaults">getPatternPropertyDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getSchemaID">getSchemaID</a></span></span></li>
@@ -66,7 +66,7 @@
 </nav>
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/classes/txPipe.test.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {RxVO} from &quot;./rxvo&quot;;
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {Model} from &quot;./rxvo&quot;;
 import {Pipe} from &quot;./pipe&quot;;
 import {basicCollection} from &quot;../../fixtures/PropertiesModel.schemas&quot;;
 import {default as data} from &quot;../../fixtures/pipes-test.data&quot;;
@@ -79,7 +79,7 @@ describe(&quot;Pipes tests&quot;, () =&gt; {
     let _vo;
 
     beforeEach(() =&gt; {
-        _vo = new RxVO({schemas: [basicCollection]});
+        _vo = new Model({schemas: [basicCollection]});
         _p = new Pipe(_vo, [{
             schema: basicCollection,
             callback: (d) =&gt; d.filter((itm) =&gt; itm.active),
@@ -154,14 +154,14 @@ describe(&quot;Pipes tests&quot;, () =&gt; {
 
     it(&quot;should exec multiple pipes inline&quot;, () =&gt; {
         const _p1 = new Pipe(
-            new RxVO({schemas: [_vo.schema]}),
+            new Model({schemas: [_vo.schema]}),
             [{
                 schema: Object.assign({}, _vo.schema),
                 callback: (d) =&gt; d.map((m) =&gt; Object.assign(m, {name: `${m.name} RENAMED`})),
             }]);
 
         const _p2 = new Pipe(
-            new RxVO({schemas: [_vo.schema]}),
+            new Model({schemas: [_vo.schema]}),
             [{
                 schema: Object.assign({}, _vo.schema),
                 callback: (d) =&gt; d.map((m) =&gt; Object.assign(m, {age: 99})),
@@ -183,13 +183,13 @@ describe(&quot;Pipes tests&quot;, () =&gt; {
 
     it(&quot;should merge multiple pipes into a single output&quot;, () =&gt; {
         const _p1 = new Pipe(
-            new RxVO({schemas: [_vo.schema]}), {
+            new Model({schemas: [_vo.schema]}), {
                 schema: _vo.schema,
                 callback: (d) =&gt; d.map((m) =&gt; Object.assign(m, {name: `${m.name} RENAMED`})),
             });
 
         const _p2 = new Pipe(
-            new RxVO({schemas: [_vo.schema]}), {
+            new Model({schemas: [_vo.schema]}), {
                 schema: _vo.schema,
                 callback: (d) =&gt; d.map((m) =&gt; Object.assign(m, {age: 99}))
             }
@@ -327,7 +327,7 @@ describe(&quot;Pipes tests&quot;, () =&gt; {
 
     it(&quot;should link and unlink pipes&quot;, () =&gt; {
         const _cb = jest.fn();
-        const _rxvo = new RxVO({schemas: [basicCollection]});
+        const _rxvo = new Model({schemas: [basicCollection]});
         const _link = new Pipe(_rxvo, basicCollection);
 
         _p.link(_link, [(d) =&gt; {

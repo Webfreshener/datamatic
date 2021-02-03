@@ -13,10 +13,10 @@
 
 <header>
   <a href="./">Home</a>
-  
+
   <a href="identifiers.html">Reference</a>
   <a href="source.html">Source</a>
-  
+
   <div class="search-box">
   <span>
     <img src="./image/search.png">
@@ -28,7 +28,7 @@
 
 <nav class="navigation" data-ice="nav"><div>
   <ul>
-    
+
   <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#classes">classes</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_branchNotifier.js~Notifiers.html">Notifiers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_metaData.js~MetaData.html">MetaData</a></span></span></li>
@@ -38,7 +38,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">RxVO</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDefaults">getDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPatternPropertyDefaults">getPatternPropertyDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getSchemaID">getSchemaID</a></span></span></li>
@@ -65,7 +65,7 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><h1 id="rxvo">RxVO</h1><p><strong>Reactive Validating Object</strong><br>
+<div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><h1 id="rxvo">Model</h1><p><strong>Reactive Validating Object</strong><br>
 RxJS + JSON-Schema (Ajv) Based Observable Data Models</p>
 <p><a href="https://travis-ci.org/Webfreshener/RxVO"><img src="https://travis-ci.org/Webfreshener/RxVO.svg?branch=master" alt="Build Status"></a>
 <a href="https://david-dm.org/webfreshener/RxVO"><img src="https://david-dm.org/webfreshener/RxVO/status.svg" alt="Dependency Status"></a>
@@ -86,7 +86,7 @@ RxJS + JSON-Schema (Ajv) Based Observable Data Models</p>
 </ul>
 <p><strong><a href="#developer-guide">Developer Guide</a></strong></p>
 <ul>
-<li><a href="#rxvo-class">RxVO Class</a><ul>
+<li><a href="#rxvo-class">Model Class</a><ul>
 <li><a href="#rxvo-schemas-config">Schemas Config</a></li>
 <li><a href="#model-proxy-object">Model Proxy Object</a></li>
 <li><a href="#model-vs-model">model vs $model</a></li>
@@ -98,7 +98,7 @@ RxJS + JSON-Schema (Ajv) Based Observable Data Models</p>
 <li><a href="#pipe-class">Pipe Class</a></li>
 </ul>
 <h4 id="installation-instructions">Installation Instructions</h4><pre><code><code class="source-code prettyprint">$ npm i rxvo</code>
-</code></pre><h4 id="usage-example">Usage Example</h4><p>The example below defines a Model that expects a <code>name</code> value and 
+</code></pre><h4 id="usage-example">Usage Example</h4><p>The example below defines a Model that expects a <code>name</code> value and
 list of <code>topScores</code> items</p>
 <pre><code><code class="source-code prettyprint">// JSON-SCHEMA for Scores Collection
 const schema = {
@@ -132,7 +132,7 @@ const schema = {
 
 
 // instantiate our Model
-const obj = new RxVO({schemas: [schema]});
+const obj = new Model({schemas: [schema]});
 
 // subscribes an observer to the Model
 obj.subscribe({
@@ -151,7 +151,7 @@ obj.subscribe({
     },
 });
 
-// populate the RxVO with data
+// populate the Model with data
 // -- this will trigger the &quot;next&quot; notification
 obj.model = {
     name: &quot;JSONville&quot;,
@@ -173,7 +173,7 @@ obj.model.topScores[0].score++;
 
 // invalid attempt update the rxVO
 // this will trigger the error notification
-// reason: &quot;topScores/items/score&quot; is type is integer 
+// reason: &quot;topScores/items/score&quot; is type is integer
 obj.model.topScores[0].score = &quot;1234&quot;;
 
 // invalid attempt update the rxVO
@@ -183,7 +183,7 @@ delete obj.model.topScores;
 </code>
 </code></pre><p>Refer to the examples demo in <code>./examples/basic-usage</code> for more usage examples</p>
 <h4 id="flow-control">Flow Control</h4><pre><code><code class="source-code prettyprint"></code>
-</code></pre><h2 id="developer-guide">Developer Guide</h2><h4 id="rxvo-class">RxVO Class</h4><p>This class represents the Document entry point</p>
+</code></pre><h2 id="developer-guide">Developer Guide</h2><h4 id="rxvo-class">Model Class</h4><p>This class represents the Document entry point</p>
 <table>
 <thead>
 <tr>
@@ -196,7 +196,7 @@ delete obj.model.topScores;
 <tr>
 <td style="text-align:left">constructor</td>
 <td style="text-align:left"><a href="#rxvo-schemas-config">schemas config</a> (object), [options (object)]</td>
-<td style="text-align:left">creates new RxVO instance</td>
+<td style="text-align:left">creates new Model instance</td>
 </tr>
 <tr>
 <td style="text-align:left">errors [getter]</td>
@@ -231,7 +231,7 @@ delete obj.model.topScores;
 <tr>
 <td style="text-align:left">subscribe</td>
 <td style="text-align:left">observers (object)</td>
-<td style="text-align:left">Subscribes Observers to the RxVO Model Root</td>
+<td style="text-align:left">Subscribes Observers to the Model Model Root</td>
 </tr>
 <tr>
 <td style="text-align:left">subscribeTo</td>
@@ -256,11 +256,11 @@ delete obj.model.topScores;
 <tr>
 <td style="text-align:left"><em>static</em> fromJSON</td>
 <td style="text-align:left">json (string | object)</td>
-<td style="text-align:left">creates new RxVO from static method</td>
+<td style="text-align:left">creates new Model from static method</td>
 </tr>
 </tbody>
 </table>
-<h5 id="rxvo-schemas-config">RxVO Schemas Config</h5><table>
+<h5 id="rxvo-schemas-config">Model Schemas Config</h5><table>
 <thead>
 <tr>
 <th style="text-align:left">Property</th>
@@ -306,7 +306,7 @@ It is a Proxy Object that has traps for all operations that alter the state of t
 </table>
 <h5 id="model-vs--model">model vs $model</h5><p>In usage, <code>model</code> always references the Proxied Data Model for validation and operation where <code>$model</code> references the owner Model Class</p>
 <p><em>example:</em></p>
-<pre><code><code class="source-code prettyprint"> const _rxvo = new RxVO({schemas: [schema]});
+<pre><code><code class="source-code prettyprint"> const _rxvo = new Model({schemas: [schema]});
 
  // access the root model:
  console.log(`JSON.stringify(_rxvo.model)`);
@@ -433,12 +433,12 @@ Note: the <code>model</code> param presents a Proxied Array, with all <code>Arra
 <tr>
 <td style="text-align:left">rxvo [getter]</td>
 <td style="text-align:left"></td>
-<td style="text-align:left">retrieves Model&apos;s RxVO document instance</td>
+<td style="text-align:left">retrieves Model&apos;s Model document instance</td>
 </tr>
 <tr>
 <td style="text-align:left">subscribe</td>
 <td style="text-align:left">observers (object)</td>
-<td style="text-align:left">Subscribes Observers to the RxVO Model Root</td>
+<td style="text-align:left">Subscribes Observers to the Model Model Root</td>
 </tr>
 <tr>
 <td style="text-align:left">subscribeTo</td>
