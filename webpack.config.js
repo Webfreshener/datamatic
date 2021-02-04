@@ -9,18 +9,18 @@ module.exports = [{
         path: path.join(__dirname, "dist"),
         filename: 'datalux.js',
 		libraryTarget: "umd",
-		library: "datalux",
+		// library: "datalux",
 	},
     module: {
-        rules: [
-            // {
-            //     test: /\.js$/,
-            //     exclude: /node_modules/,
-            //     use: {
-            //         loader: "babel-loader"
-            //     },
-            // },
-        ],
+        // rules: [
+        //     {
+        //         test: /\.js$/,
+        //         exclude: /node_modules/,
+        //         use: {
+        //             loader: "babel-loader"
+        //         },
+        //     },
+        // ],
     },
 }, {
     externals: [
@@ -30,17 +30,17 @@ module.exports = [{
         path: path.join(__dirname, "dist"),
         filename: 'datalux.node.js',
         libraryTarget: "commonjs",
-        library: "datalux",
+        // library: "datalux",
     },
     module: {
-        rules: [
-            {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                use: {
-                    loader: "babel-loader",
-                },
-            },
-        ],
+        // rules: [
+        //     {
+        //         test: /\.js$/,
+        //         exclude: /node_modules/,
+        //         use: {
+        //             loader: "babel-loader",
+        //         },
+        //     },
+        // ],
     },
 }];

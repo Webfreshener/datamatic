@@ -25,13 +25,13 @@ SOFTWARE.
 ############################################################################ */
 module.exports = Object.defineProperties({}, {
     Model: {
-        value: require('./dist/rxvo.node').Model,
+        value: require('./dist/datalux.node').Model,
         enumerable: true,
         configurable: false,
         writable: false,
     },
     Pipe: {
-        value: require('./dist/rxvo.node').Pipe,
+        value: require('./dist/datalux.node').Pipe,
         enumerable: true,
         configurable: false,
         writable: false,

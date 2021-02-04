@@ -177,6 +177,6 @@ export const mapArgs = (...args) => {
         return [DefaultPipeTx, DefaultPipeTx];
     }
 
-    // normalizes args list and wraps in txPipe Protocol
+    // normalizes args list and wraps in pipe Protocol
     return [...args].map(castToExec);
 };

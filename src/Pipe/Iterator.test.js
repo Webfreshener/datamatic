@@ -42,7 +42,7 @@ describe("TxIterator Tests", () => {
             }),
         });
 
-        _tx.txWrite([
+        _tx.write([
             {name: "sam", age: 25, active: true},
             {name: "fred", age: 20, active: true},
             {name: "alice", age: 30, active: false},

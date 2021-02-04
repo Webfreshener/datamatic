@@ -30,8 +30,8 @@ import {_observers, Validator} from "./Validator";
  *
  */
 export class Properties {
-    static init(txPipe, properties) {
-        const {callbacks, inSchema, outSchema, txSchemas, vo, pOS, _pipes} = properties;
+    static init(pipe, properties) {
+        const {callbacks, inSchema, outSchema, schemas, vo, pOS, _pipes} = properties;
         const _txP = {};
         return Object.defineProperties(_txP, {
             callbacks: {
@@ -73,8 +73,8 @@ export class Properties {
                     // unsubscribe all observers on complete notification (freeze/close)
                     _txV.subscribe({
                         complete: () => {
-                            _pipes.get(txPipe).listeners.forEach((_) => _.unsubscribe());
-                            _pipes.get(txPipe).listeners = [];
+                            _pipes.get(pipe).listeners.forEach((_) => _.unsubscribe());
+                            _pipes.get(pipe).listeners = [];
                         },
                     });
                     return _txV;
@@ -87,9 +87,9 @@ export class Properties {
                 enumerable: true,
                 configurable: false,
             },
-            txSchemas: {
+            schemas: {
                 // enforces 2 schema minimum (in/out)
-                value: txSchemas.length < 2 ? [...txSchemas, ...txSchemas] : txSchemas,
+                value: schemas.length < 2 ? [...schemas, ...schemas] : schemas,
                 enumerable: true,
                 configurable: false,
             },

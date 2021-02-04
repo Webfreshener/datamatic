@@ -13,8 +13,8 @@ describe("TxPipes Sub-Class Tests", () => {
             },
         });
         const _ = new TestSubClass(_unit);
-        expect(_unit.txWrite(_data).txTap()).toEqual(_res);
-        expect(_.txWrite(_data).txTap()).toEqual(_res);
+        expect(_unit.write(_data).tap()).toEqual(_res);
+        expect(_.write(_data).tap()).toEqual(_res);
     });
 
 });
@@ -35,7 +35,7 @@ describe("TXPipe Error Handling", () => {
             }
         });
 
-        _tx.txWrite(true);
+        _tx.write(true);
     })
 });
 
@@ -47,7 +47,7 @@ describe("TxPipe Tests", () => {
 
     it("should work as a Promise", (done) => {
         const _p = new Pipe(..._pipesOrSchemas);
-        _p.txPromise(data).then((res) => {
+        _p.promise(data).then((res) => {
             expect(res.length).toEqual(3);
             done();
         }, done).catch(done);
@@ -74,7 +74,7 @@ describe("TxPipe Tests", () => {
             },
         });
 
-        _tx.txWrite({});
+        _tx.write({});
     });
 
     it("should remain viable after transaction", (done) => {
@@ -93,8 +93,8 @@ describe("TxPipe Tests", () => {
             }
         });
 
-        _p.txWrite("ok");
-        _p.txWrite("ok");
+        _p.write("ok");
+        _p.write("ok");
     });
 
     it("should iterate with an iterable", (done) => {
@@ -139,7 +139,7 @@ describe("TxPipe Tests", () => {
             },
         });
 
-        _tx.txWrite([
+        _tx.write([
             {name: "sam", age: 25, active: true},
             {name: "fred", age: 20, active: true},
             {name: "alice", age: 30, active: false},
@@ -160,7 +160,7 @@ describe("TxPipe Tests", () => {
             }
         });
 
-        _tx.txWrite(_data);
+        _tx.write(_data);
 
     });
 
@@ -170,10 +170,10 @@ describe("TxPipe Tests", () => {
         const _iterator = {
             next: () => {
                 return (_ival++ < 50) ? {
-                    value: _p.txWrite([data[0]]),
+                    value: _p.write([data[0]]),
                     done: false,
                 } : {
-                    value: _p.txClose(),
+                    value: _p.close(),
                     done: true,
                 }
             },

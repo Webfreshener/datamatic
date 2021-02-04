@@ -27,7 +27,7 @@ export class Iterator {
         let _res = [];
         records.forEach(
             (__) => {
-                const _it = _pipes.get(this).txYield(__);
+                const _it = _pipes.get(this).yield(__);
                 let _done = false;
                 let _value = __;
                 while (!_done) {

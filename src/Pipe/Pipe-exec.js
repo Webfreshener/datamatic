@@ -7,7 +7,7 @@ describe("TxPipe Exec Tests", () => {
         const _sub = _p.subscribe({
             next: (d) => {
                 _sub.unsubscribe();
-                expect(`${JSON.stringify(d)}`).toEqual(JSON.stringify(_p.txTap()));
+                expect(`${JSON.stringify(d)}`).toEqual(JSON.stringify(_p.tap()));
                 done();
             },
             error: (e) => {
@@ -15,7 +15,7 @@ describe("TxPipe Exec Tests", () => {
                 done(e);
             },
         });
-        _p.txWrite(data);
+        _p.write(data);
     });
 
     it("should transform data with callback", (done) => {
@@ -23,7 +23,7 @@ describe("TxPipe Exec Tests", () => {
             next: (d) => {
                 _sub.unsubscribe();
                 expect(d.length).toEqual(3);
-                expect(_p.txTap().length).toEqual(3);
+                expect(_p.tap().length).toEqual(3);
                 done();
             },
             error: (e) => {
@@ -32,7 +32,7 @@ describe("TxPipe Exec Tests", () => {
             }
         });
 
-        _p.txWrite(data);
+        _p.write(data);
     });
 
     it("should not exec until called upon", (done) => {
@@ -46,7 +46,7 @@ describe("TxPipe Exec Tests", () => {
 
         const _ivl = setInterval(() => {
             console.log("interval...");
-            _p.txWrite("ok");
+            _p.write("ok");
         }, 10);
 
         _p.subscribe({
@@ -88,7 +88,7 @@ describe("TxPipe Exec Tests", () => {
             },
         });
 
-        _p.txWrite(data[0]);
+        _p.write(data[0]);
         setTimeout(done, 200);
     });
 
@@ -109,7 +109,7 @@ describe("TxPipe Exec Tests", () => {
             }
         });
 
-        _p.txWrite(data[0]);
+        _p.write(data[0]);
     });
 
 
@@ -133,6 +133,6 @@ describe("TxPipe Exec Tests", () => {
             },
         });
 
-        _p.txWrite(data[0]);
+        _p.write(data[0]);
     });
 });

@@ -67,7 +67,7 @@
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/index.test.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {Model} from &apos;./index&apos;;
-import {Model as RxVOPackaged} from &apos;../dist/rxvo&apos;
+import {Model as DistModel} from &apos;../dist/rxvo&apos;
 
 describe(&quot;Index&quot;, () =&gt; {
     describe(&quot;Package Validation Tests&quot;, () =&gt; {
@@ -76,7 +76,7 @@ describe(&quot;Index&quot;, () =&gt; {
         });
 
         it(&quot;should import from WebPacked Lib&quot;, function () {
-            expect(typeof RxVOPackaged).toEqual(&apos;function&apos;);
+            expect(typeof DistModel).toEqual(&apos;function&apos;);
         });
 
         it(&quot;should import from ES5 `require`&quot;, () =&gt; {

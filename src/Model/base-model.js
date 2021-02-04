@@ -303,7 +303,8 @@ export class BaseModel {
      * @returns {string}
      */
     get jsonPath() {
-        return this.path.replace(/\/?(properties|items)+\/?/g, ".").replace(/^\./, "");
+        return this.path.replace(/\/?(properties|items)+\/?/g, ".")
+            .replace(/^\./, "");
     }
 
     /**
@@ -317,7 +318,7 @@ export class BaseModel {
 
     /**
      * Getter for Model validation status for hierarchy
-     * @return {boolean}
+     * @returns {boolean}
      */
     get isDirty() {
         let _res = _dirtyModels.get(this.rxvo)[this.path] || false;
@@ -335,7 +336,7 @@ export class BaseModel {
     /**
      * Get options (if any) for this model's schema
      * todo: review for possible removal
-     * @return {any}
+     * @returns {any}
      */
     get options() {
         return _schemaOptions.get(this);
@@ -352,7 +353,7 @@ export class BaseModel {
 
     /**
      * Provides formatted string for json-schema lookup
-     * @return {string}
+     * @returns {string}
      */
     get validationPath() {
         return this.path === "" ? "/" : `${this.path}`;
@@ -389,11 +390,11 @@ export class BaseModel {
         const _p = new Pipe(...pipesOrSchemas);
         const _sub = this.subscribe({
             next: (d) => {
-                _p.txWrite(d.model);
+                _p.write(d.model);
             },
             complete: () => {
                 _sub.unsubscribe();
-                _p.txClose();
+                _p.close();
             }
         });
         return _p;

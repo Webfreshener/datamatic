@@ -109,7 +109,7 @@ export class Pipe {
             Properties.init(this, {
                 vo: (_inPipe instanceof Validator) ? _inPipe : new Validator(_inSchema),
                 callbacks: _callbacks,
-                txSchemas: _pSchemas,
+                schemas: _pSchemas,
                 inSchema: _inSchema,
                 outSchema: _outSchema,
                 pOS: pipesOrVOsOrSchemas,
@@ -133,11 +133,11 @@ export class Pipe {
     }
 
     /**
-     * Creates new `txPipe` segment
+     * Creates new `pipe` segment
      * @param pipesOrSchemas
      * @returns {Pipe}
      */
-    txPipe(...pipesOrSchemas) {
+    pipe(...pipesOrSchemas) {
         return new Pipe([_pipes.get(this).out, ...pipesOrSchemas]);
     }
 
@@ -158,7 +158,7 @@ export class Pipe {
      * @param callbacks function[]
      * @returns {Pipe}
      */
-    txLink(target, ...callbacks) {
+    link(target, ...callbacks) {
         if (!(target instanceof Pipe)) {
             throw `item for "target" was not a TxPipe`;
         }
@@ -170,21 +170,21 @@ export class Pipe {
 
         callbacks = fill(callbacks || []);
 
-        // creates observer and stores it to links map for `txPipe`
+        // creates observer and stores it to links map for `pipe`
         const _sub = this.subscribe({
             next: (data) => {
                 const _res = Executor.exec(callbacks, data.toJSON ? data.toJSON() : data);
                 if (_res instanceof Promise) {
-                    return _res.then((_) => target.txWrite(_));
+                    return _res.then((_) => target.write(_));
                 }
 
-                target.txWrite(_res);
+                target.write(_res);
             },
             error: (e) => {
                 console.error(e);
             },
             // handles unlink & cleanup on complete
-            complete: () => this.txUnlink(target)
+            complete: () => this.unlink(target)
         });
 
         _pipes.get(this).links.set(target, _sub);
@@ -192,11 +192,11 @@ export class Pipe {
     }
 
     /**
-     * Unlink `txPipe` segment from target `txPipe`
+     * Unlink `pipe` segment from target `pipe`
      * @param target
      * @returns {Pipe}
      */
-    txUnlink(target) {
+    unlink(target) {
         if (!(target instanceof Pipe)) {
             throw `item for "target" was not a TxPipe`;
         }
@@ -215,25 +215,25 @@ export class Pipe {
      * Returns validation errors
      * @returns {*}
      */
-    get txErrors() {
+    get errors() {
         return _pipes.get(this).vo.errors;
     }
 
     /**
-     * Returns JSON-SCHEMA for `txPipe` output
+     * Returns JSON-SCHEMA for `pipe` output
      * @returns {object}
      */
-    get txSchemas() {
-        return [..._pipes.get(this).txSchemas];
+    get schemas() {
+        return [..._pipes.get(this).schemas];
     }
 
     /**
-     * Creates array of new `txPipe` segments that run in parallel
+     * Creates array of new `pipe` segments that run in parallel
      * @param schemasOrPipes
      * @returns {*}
      */
-    txSplit(schemasOrPipes) {
-        return schemasOrPipes.map((_) => this.txPipe(_));
+    split(schemasOrPipes) {
+        return schemasOrPipes.map((_) => this.pipe(_));
     }
 
     /**
@@ -241,7 +241,7 @@ export class Pipe {
      * @param data
      * @returns {generator}
      */
-    txYield(data) {
+    yield(data) {
         let _fill = _pipes.get(this).pOS.map((_) => _.exec || ((_) => _));
 
         if (!_fill.length) {
@@ -269,7 +269,7 @@ export class Pipe {
      * @param pipeOrSchema
      * @returns {Pipe}
      */
-    txMerge(pipeOrPipes, pipeOrSchema = {schemas: [DefaultVOSchema]}) {
+    merge(pipeOrPipes, pipeOrSchema = {schemas: [DefaultVOSchema]}) {
         const _out = new Pipe(pipeOrSchema);
         _pipes.get(this).listeners = [
             ..._pipes.get(this).listeners,
@@ -279,7 +279,7 @@ export class Pipe {
                 .map((_p) => {
                     _p.subscribe((d) => {
                         // -- all pipes now write to output tx
-                        _out.txWrite(d.toJSON ? d.toJSON() : d);
+                        _out.write(d.toJSON ? d.toJSON() : d);
                     });
                     return _p;
                 })
@@ -293,16 +293,16 @@ export class Pipe {
      * @param data
      * @returns {Pipe}
      */
-    txWrite(data) {
+    write(data) {
         _pipes.get(this).vo.model = data;
         return this;
     }
 
     /**
-     * Creates clone of current `txPipe` segment
+     * Creates clone of current `pipe` segment
      * @returns {Pipe}
      */
-    txClone() {
+    clone() {
         const $ref = _pipes.get(this);
         const _cz = class extends Pipe {
             constructor() {
@@ -315,28 +315,28 @@ export class Pipe {
     }
 
     /**
-     * Terminates input on `txPipe` segment. This is irrevocable
+     * Terminates input on `pipe` segment. This is irrevocable
      * @returns {Pipe}
      */
-    txClose() {
+    close() {
         _pipes.get(this).out.freeze();
         return this;
     }
 
     /**
-     * Returns write status of `txPipe`
+     * Returns write status of `pipe`
      * @returns {boolean}
      */
-    get txWritable() {
+    get writable() {
         return !_pipes.get(this).out.isFrozen;
     }
 
     /**
-     * Informs `txPipe` to rate limit notifications based on time interval
+     * Informs `pipe` to rate limit notifications based on time interval
      * @param rate
      * @returns {Pipe}
      */
-    txThrottle(rate) {
+    throttle(rate) {
         const _ivl = _pipes.get(this).tO;
 
         if (_ivl) {
@@ -361,17 +361,17 @@ export class Pipe {
     }
 
     /**
-     * Returns product of Nth occurrence of `txPipe` execution
+     * Returns product of Nth occurrence of `pipe` execution
      * @param nth
      * @returns {Pipe}
      */
-    txSample(nth) {
+    sample(nth) {
         _pipes.get(this).ivl = nth;
         return this;
     }
 
     /**
-     * Subscribes to `txPipe` output notifications
+     * Subscribes to `pipe` output notifications
      * @param handler
      * @returns {Observable}
      */
@@ -384,21 +384,21 @@ export class Pipe {
     }
 
     /**
-     * Provides current state of `txPipe` output. alias for toJSON
+     * Provides current state of `pipe` output. alias for toJSON
      * @returns {Object|Array}
      */
-    txTap() {
+    tap() {
         return this.toJSON();
     }
 
     /**
      * Convenience Method for Promise based flows.
-     * Writes data to `txPipe` and wraps observer in Promise
+     * Writes data to `pipe` and wraps observer in Promise
      *
      * @param data
      * @returns {Promise<Pipe>}
      */
-    async txPromise(data) {
+    async promise(data) {
         return await new Promise((resolve, reject) => {
             this.subscribe({
                 next: (d) => {
@@ -408,7 +408,7 @@ export class Pipe {
                     reject(e);
                 }
             });
-            this.txWrite(data);
+            this.write(data);
         });
     }
 
@@ -422,7 +422,7 @@ export class Pipe {
     }
 
     /**
-     * Provides current state of `txPipe` output.
+     * Provides current state of `pipe` output.
      * @override
      * @returns {Object|Array}
      */
@@ -483,7 +483,7 @@ export class PipeListener {
      * closes `pipe` on complete notification
      */
     complete() {
-        this.target.txClose();
+        this.target.close();
     }
 
     /**
@@ -540,7 +540,7 @@ export class PipeListener {
         }
 
         // tests if object and if object is writable
-        if ((_t instanceof Promise) || ((_type === "function") || (_type === "object")) && _target.txWritable) {
+        if ((_t instanceof Promise) || ((_type === "function") || (_type === "object")) && _target.writable) {
             if (_t instanceof Promise) {
                 return _t.then((_) => {
                     _out(_)

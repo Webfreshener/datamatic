@@ -11,7 +11,7 @@ describe("TxPipe API Tests", () => {
     });
 
     test("TxPipe schema", () => {
-        const _p = (new Pipe(..._pipesOrSchemas)).txSchemas;
+        const _p = (new Pipe(..._pipesOrSchemas)).schemas;
         expect(JSON.stringify(_p[0])).toEqual(
             JSON.stringify(_pipesOrSchemas[0])
         );
@@ -30,7 +30,7 @@ describe("TxPipe API Tests", () => {
             });
 
             expect(_p.exec(data).length).toEqual(3);
-            expect(Object.keys(_p.txTap()).length).toEqual(0);
+            expect(Object.keys(_p.tap()).length).toEqual(0);
             setTimeout(() => done(), 10);
         });
 
@@ -71,7 +71,7 @@ describe("TxPipe API Tests", () => {
             },
         });
 
-        _p.txWrite(data[0]);
+        _p.write(data[0]);
     });
 
     it("should provide errors", (done) => {
@@ -89,7 +89,7 @@ describe("TxPipe API Tests", () => {
             }
         });
 
-        _p.txWrite(data[0]);
+        _p.write(data[0]);
     });
 
     it("should split pipe", () => {
@@ -109,7 +109,7 @@ describe("TxPipe API Tests", () => {
             exec: (d) => d
         });
 
-        const _split = _p.txSplit(_config);
+        const _split = _p.split(_config);
         expect(_split.length).toEqual(2);
 
         _split.forEach((pipe) => {
@@ -126,10 +126,10 @@ describe("TxPipe API Tests", () => {
         });
 
         setTimeout(() => {
-            _p.txWrite(data);
+            _p.write(data);
             expect(_cb).toHaveBeenCalledTimes(2);
-            expect(_split[0].txTap()[0].name.match(/.*\sRENAMED+$/)).toBeTruthy();
-            expect(_split[1].txTap()[0].age).toEqual(99);
+            expect(_split[0].tap()[0].name.match(/.*\sRENAMED+$/)).toBeTruthy();
+            expect(_split[1].tap()[0].age).toEqual(99);
         }, 50);
     });
 
@@ -144,23 +144,23 @@ describe("TxPipe API Tests", () => {
             exec: (d) => d.map((m) => Object.assign(m, {age: 99})),
         });
 
-        const _inline = _p.txPipe(_p1, _p2);
+        const _inline = _p.pipe(_p1, _p2);
 
-        _inline.txWrite(data);
+        _inline.write(data);
 
         setTimeout(() => {
-            expect(JSON.stringify(_inline.txSchemas[0].schemas[0].schema)).toEqual(JSON.stringify(basicCollection));
-            expect(_inline.txTap().length).toEqual(data.length);
-            expect(_inline.txTap()[0].name.match(/.*\sRENAMED+$/)).toBeTruthy();
-            expect(_inline.txTap()[0].age).toEqual(99);
-            expect(_inline.txTap()[data.length - 1].name.match(/.*\sRENAMED+$/)).toBeTruthy();
-            expect(_inline.txTap()[data.length - 1].age).toEqual(99);
-            _inline.txClose();
+            expect(JSON.stringify(_inline.schemas[0].schemas[0].schema)).toEqual(JSON.stringify(basicCollection));
+            expect(_inline.tap().length).toEqual(data.length);
+            expect(_inline.tap()[0].name.match(/.*\sRENAMED+$/)).toBeTruthy();
+            expect(_inline.tap()[0].age).toEqual(99);
+            expect(_inline.tap()[data.length - 1].name.match(/.*\sRENAMED+$/)).toBeTruthy();
+            expect(_inline.tap()[data.length - 1].age).toEqual(99);
+            _inline.close();
         }, 0);
 
     });
 
-    test("txYield", () => {
+    test("yield", () => {
         const _pOS = [
             {
                 exec: () => "foo",
@@ -173,7 +173,7 @@ describe("TxPipe API Tests", () => {
             },
         ];
 
-        const _ = (new Pipe(..._pOS)).txYield(data);
+        const _ = (new Pipe(..._pOS)).yield(data);
 
         expect(_.next().value).toBe("foo");
         expect(_.next().value).toBe("bar");
@@ -194,17 +194,17 @@ describe("TxPipe API Tests", () => {
             }
         });
 
-        _tx.txWrite(data);
+        _tx.write(data);
     });
 
-    test("txThrottle", () => {
+    test("throttle", () => {
         const _cb = jest.fn();
-        const _sub = _p.txThrottle(150).subscribe(() => _cb());
+        const _sub = _p.throttle(150).subscribe(() => _cb());
         data.forEach((d) => {
-            _p.txWrite([d]);
+            _p.write([d]);
         });
 
-        expect(_p.txErrors).toEqual(null);
+        expect(_p.errors).toEqual(null);
         let _cnt = 0;
         const _ivl = setInterval(() => {
             expect(_cb).toHaveBeenCalledTimes(_cnt++);
@@ -215,32 +215,32 @@ describe("TxPipe API Tests", () => {
         }, 151);
     });
 
-    test("txSample", () => {
+    test("sample", () => {
         const _cb = jest.fn();
-        _p.txSample(3).subscribe({
+        _p.sample(3).subscribe({
             next: () => _cb(),
             error: console.log,
         });
 
         data.slice(0, 4).forEach((m) => {
-            _p.txWrite([m]);
+            _p.write([m]);
         });
 
         expect(_cb).toHaveBeenCalledTimes(1);
     });
 
-    test("txClone", () => {
+    test("clone", () => {
         let _cnt = 0;
 
         const _h = () => _cnt++;
 
         const _sub1 = _p.subscribe(_h);
 
-        const _clone = _p.txClone();
+        const _clone = _p.clone();
 
         const _sub2 = _clone.subscribe(_h);
 
-        _clone.txWrite(data);
+        _clone.write(data);
         expect(_cnt).toEqual(2);
 
         _cnt = 0;
@@ -249,7 +249,7 @@ describe("TxPipe API Tests", () => {
         _sub2.unsubscribe();
     });
 
-    describe("txLink / txUnlink", () => {
+    describe("link / unlink", () => {
 
         beforeAll(() => {
 
@@ -269,13 +269,13 @@ describe("TxPipe API Tests", () => {
         const _TxValidator = new Validator({schemas: [basicCollection]});
         const _link = new Pipe(_TxValidator, {schemas: [basicCollection]});
 
-        _p.txLink(_link, (d) => {
+        _p.link(_link, (d) => {
             _cb();
             return d;
         });
 
-        _p.txWrite(data);
-        expect(_p.txErrors).toEqual(null);
+        _p.write(data);
+        expect(_p.errors).toEqual(null);
         expect(_cb).toHaveBeenCalledTimes(1);
 
         // we capture state for comparison
@@ -284,11 +284,11 @@ describe("TxPipe API Tests", () => {
         expect(`${_link}`).toEqual(`${_state}`);
         expect(`${_link}` === `${_p}`).toBe(true);
 
-        _p.txUnlink(_link);
+        _p.unlink(_link);
 
         // this will add an item to _p but not to _link
-        _p.txWrite([
-            ..._p.txTap(),
+        _p.write([
+            ..._p.tap(),
             {
                 name: "Added Item",
                 active: true,
@@ -296,7 +296,7 @@ describe("TxPipe API Tests", () => {
             }
         ]);
 
-        expect(_p.txErrors).toEqual(null);
+        expect(_p.errors).toEqual(null);
 
         // we expect to discover no further executions and the state to be unchanged
         expect(_cb).toHaveBeenCalledTimes(1);
@@ -309,7 +309,7 @@ describe("TxPipe API Tests", () => {
         const _sub = _p.subscribe({
             next: () => {
                 // will close on first invocation
-                _p.txClose();
+                _p.close();
                 _cb();
             },
             error: (e) => {
@@ -319,13 +319,13 @@ describe("TxPipe API Tests", () => {
         });
 
         data.forEach((d) => {
-            _p.txWrite(Array.isArray(_p.txTap()) ? [..._p.txTap(), d] : [d]);
+            _p.write(Array.isArray(_p.tap()) ? [..._p.tap(), d] : [d]);
         });
 
-        expect(_p.txErrors).toEqual(null);
-        expect(_p.txTap().length).toEqual(1);
+        expect(_p.errors).toEqual(null);
+        expect(_p.tap().length).toEqual(1);
         expect(_cb).toHaveBeenCalledTimes(1);
-        expect(_p.txWritable).toBe(false);
+        expect(_p.writable).toBe(false);
         _sub.unsubscribe();
     });
 
@@ -346,7 +346,7 @@ describe("TxPipe API Tests", () => {
             }
         );
 
-        const _merged = _p.txMerge([_p1, _p2], {
+        const _merged = _p.merge([_p1, _p2], {
             schema: _vo.schema,
             exec: (d) => d.map(
                 (m) => Object.assign(m, {active: false})
@@ -358,19 +358,19 @@ describe("TxPipe API Tests", () => {
             next: (d) => {
                 if (!_cnt) {
                     _cnt++;
-                    expect(_merged.txTap()[0].name.match(/.*\sRENAMED+$/)).toBeTruthy();
-                    expect(_merged.txTap()[data.length - 1].name.match(/.*\sRENAMED+$/)).toBeTruthy();
-                    _p2.txWrite(data);
+                    expect(_merged.tap()[0].name.match(/.*\sRENAMED+$/)).toBeTruthy();
+                    expect(_merged.tap()[data.length - 1].name.match(/.*\sRENAMED+$/)).toBeTruthy();
+                    _p2.write(data);
                 } else {
-                    expect(_merged.txTap().length).toEqual(data.length);
-                    expect(_merged.txTap()[0].age).toEqual(99);
-                    expect(_merged.txTap()[data.length - 1].age).toEqual(99);
+                    expect(_merged.tap().length).toEqual(data.length);
+                    expect(_merged.tap()[0].age).toEqual(99);
+                    expect(_merged.tap()[data.length - 1].age).toEqual(99);
                     done();
                 }
             }
         });
 
-        _p1.txWrite(data);
+        _p1.write(data);
     });
 
 });

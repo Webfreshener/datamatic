@@ -5,8 +5,7 @@ const _d = {
     active: true,
 };
 
-describe.skip("node commonjs require", () => {
-    console.log(require("../index"));
+describe("node commonjs require", () => {
     const {Model} = require("../index");
     let _model;
 

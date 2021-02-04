@@ -1,5 +1,5 @@
 import {Model} from './index';
-import {RxVO as RxVOPackaged} from '../dist/rxvo'
+import {Model as DistModel} from '../dist/datalux'
 
 describe.skip("Index Tests", () => {
     describe("Package Validation Tests", () => {
@@ -8,7 +8,7 @@ describe.skip("Index Tests", () => {
         });
 
         it("should import from WebPacked Lib", function () {
-            expect(typeof RxVOPackaged).toEqual('function');
+            expect(typeof DistModel).toEqual('function');
         });
 
         it("should import from ES5 `require`", () => {
