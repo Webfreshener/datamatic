@@ -2,13 +2,13 @@ Datamat
 =============
 RxJS + JSON-Schema (Ajv) Based Observable and Validating Data Models and Pipelines
 
-[![Build Status](https://travis-ci.org/Webfreshener/model.svg?branch=master)](https://travis-ci.org/Webfreshener/model)
-[![Dependency Status](https://david-dm.org/webfreshener/model/status.svg)](https://david-dm.org/webfreshener/model)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/c665c70dfeb144319bc5bbd58695eb90)](https://www.codacy.com/app/vanschroeder/model?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Webfreshener/model&amp;utm_campaign=Badge_Grade)
-[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/c665c70dfeb144319bc5bbd58695eb90)](https://www.codacy.com/app/vanschroeder/model?utm_source=github.com&utm_medium=referral&utm_content=Webfreshener/model&utm_campaign=Badge_Coverage)
-[![Maintainability](https://api.codeclimate.com/v1/badges/625326e1880421ccc809/maintainability)](https://codeclimate.com/github/Webfreshener/model/maintainability)
+[![Build Status](https://travis-ci.org/Webfreshener/model.svg?branch=master)](https://travis-ci.com/Webfreshener/datamat)
+[![Dependency Status](https://david-dm.org/webfreshener/datamat/status.svg)](https://david-dm.org/webfreshener/datamat)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/49624d8edeec44e9af6fc484f8b414af)](https://www.codacy.com/app/vanschroeder/datamat?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Webfreshener/model&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/49624d8edeec44e9af6fc484f8b414af)](https://www.codacy.com/app/vanschroeder/datamat?utm_source=github.com&utm_medium=referral&utm_content=Webfreshener/model&utm_campaign=Badge_Coverage)
+[![Maintainability](https://api.codeclimate.com/v1/badges/a578a2291adea1b5045b/maintainability)](https://codeclimate.com/github/Webfreshener/datamat/maintainability)
 
-[Online Developer Documentation](https://webfreshener.github.io/model/)
+[Online Developer Documentation](https://webfreshener.github.io/datamat/)
 
 ### Goals 
  * Provide a means to quickly and easily validate complex data-sets
