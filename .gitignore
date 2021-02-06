@@ -2,6 +2,7 @@
 .idea/*
 .project
 *.iml
+codacy-report.sh
 package-lock.json
 node_modules/*
 test/_orig
