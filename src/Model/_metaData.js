@@ -99,10 +99,10 @@ export class MetaData {
 
     /**
      * Owner Model document
-     * @returns {RxVO}
+     * @returns {Model}
      */
-    get rxvo() {
-        return this.get("_rxvo");
+    get owner() {
+        return this.get("_owner");
     }
 
     /**

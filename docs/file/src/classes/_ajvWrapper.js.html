@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../../">
-  <title data-ice="title">src/classes/_ajvWrapper.js | rxvo</title>
+  <title data-ice="title">src/classes/_ajvWrapper.js | owner</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
   <script src="script/manual.js"></script>
-<meta name="description" content="RxJS + JSON-Schema Based Observable Data Models"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="rxvo"><meta property="twitter:description" content="RxJS + JSON-Schema Based Observable Data Models"></head>
+<meta name="description" content="RxJS + JSON-Schema Based Observable Data Models"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="owner"><meta property="twitter:description" content="RxJS + JSON-Schema Based Observable Data Models"></head>
 <body class="layout-container" data-ice="rootContainer">
 
 <header>
@@ -38,7 +38,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">Model</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/owner.js~RxVO.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDefaults">getDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPatternPropertyDefaults">getPatternPropertyDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getSchemaID">getSchemaID</a></span></span></li>
@@ -95,7 +95,7 @@ SOFTWARE.
  * @private
  */
 import {_ajvRef} from &quot;./_references&quot;;
-import {Model} from &quot;./rxvo&quot;;
+import {Model} from &quot;./owner&quot;;
 import Ajv from &quot;ajv&quot;;
 import {getSchemaID} from &quot;./utils&quot;;
 
@@ -105,17 +105,17 @@ const _validators = new WeakMap();
  * backreferences object tree for top-down evaluation
  * @param path
  * @param data
- * @param rxvo
+ * @param owner
  * @returns {any}
  * @private
  */
-const _preconstruct = (path, data, rxvo) =&gt; {
+const _preconstruct = (path, data, owner) =&gt; {
     const _p = path.replace(/^[a-z0-9_]*#+/i, &quot;&quot;).split(&quot;/&quot;);
     let _o = Object.assign({}, data);
 
     while(_p.length &gt; 0) {
         _p.pop();
-        _o = Object.assign({}, rxvo.getPath(_p.join(&quot;.&quot;)), _o);
+        _o = Object.assign({}, owner.getPath(_p.join(&quot;.&quot;)), _o);
     }
 
     return _o;
@@ -170,13 +170,13 @@ const createAjv = (inst, schemas, opts) =&gt; {
 export class AjvWrapper {
     /**
      * @constructor
-     * @param rxvo
+     * @param owner
      * @param schemas
      * @param ajvOptions
      */
-    constructor(rxvo, schemas, ajvOptions = {}) {
+    constructor(owner, schemas, ajvOptions = {}) {
         // ensures that we are given something that represents a Model object
-        if ((!rxvo) || !(rxvo instanceof Model)) {
+        if ((!owner) || !(owner instanceof Model)) {
             throw &quot;Model is required at arguments[0]&quot;;
         }
 
@@ -185,8 +185,8 @@ export class AjvWrapper {
         }
 
         // defines getter for parent Model reference
-        Object.defineProperty(this, &quot;$rxvo&quot;, {
-            get: () =&gt; rxvo,
+        Object.defineProperty(this, &quot;$owner&quot;, {
+            get: () =&gt; owner,
             enumerable: false,
         });
 
@@ -282,7 +282,7 @@ export class AjvWrapper {
             _res = this.$ajv.validate(path, value);
         } catch (e) {
             if (path.replace(/(items|properties)\/?/, &quot;&quot;).split(&quot;/&quot;).length) {
-                return this.exec(`${this.path}/`, _preconstruct(path, value, this.$rxvo));
+                return this.exec(`${this.path}/`, _preconstruct(path, value, this.$owner));
             }
         }
 

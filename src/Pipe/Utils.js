@@ -97,7 +97,7 @@ export const castToExec = (obj) => {
         return Object.assign({}, DefaultPipeTx, obj);
     }
 
-    // -- if TxPipe, our work here is already done
+    // -- if Pipe, our work here is already done
     if (obj instanceof Pipe) {
         return obj;
     }
@@ -142,7 +142,7 @@ export const castToExec = (obj) => {
 /**
  *
  * @param cb
- * @returns {function(*): any}
+ * @returns {function}
  */
 export const handleAsync = (cb) => (
     async (d) => await new Promise(

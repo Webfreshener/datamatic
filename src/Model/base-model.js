@@ -44,7 +44,7 @@ const createMetaDataRef = (ref, metaRef, path) => {
             _path: path, //"",
             _parent: null,
             _root: ref,
-            _rxvo: metaRef,
+            _owner: metaRef,
         });
     } else if ((typeof metaRef) === "object") {
         // extends MetaData reference
@@ -86,7 +86,7 @@ export class BaseModel {
      * @return {object}
      */
     subscribeTo(path, func) {
-        const _oBuilder = _oBuilders.get(this.rxvo);
+        const _oBuilder = _oBuilders.get(this.owner);
         const _o = _oBuilder.getObserverForPath(path);
         if (_o === null) {
             return _o;
@@ -151,7 +151,7 @@ export class BaseModel {
         const _res = this.validate(_o);
         // validates that this model be returned to an empty value
         if (_res !== true) {
-            _oBuilders.get(this.rxvo).error(this, _res);
+            _oBuilders.get(this.owner).error(this, _res);
             return this;
         }
 
@@ -180,7 +180,7 @@ export class BaseModel {
         makeClean(this);
 
         // sends notification of model change
-        _oBuilders.get(this.rxvo).next(this);
+        _oBuilders.get(this.owner).next(this);
 
         return this;
     }
@@ -244,7 +244,7 @@ export class BaseModel {
      */
     freeze() {
         Object.freeze(_object.get(this));
-        _oBuilders.get(this.rxvo).complete(this);
+        _oBuilders.get(this.owner).complete(this);
         return this;
     }
 
@@ -321,7 +321,7 @@ export class BaseModel {
      * @returns {boolean}
      */
     get isDirty() {
-        let _res = _dirtyModels.get(this.rxvo)[this.path] || false;
+        let _res = _dirtyModels.get(this.owner)[this.path] || false;
         return _res || ((this.parent === null) ? false : this.parent.isDirty);
     }
 
@@ -329,8 +329,8 @@ export class BaseModel {
      * Getter for model's Model owner object
      * @returns {Model}
      */
-    get rxvo() {
-        return _mdRef.get(this).rxvo;
+    get owner() {
+        return _mdRef.get(this).owner;
     }
 
     /**
@@ -364,7 +364,7 @@ export class BaseModel {
      * @returns {*}
      */
     get schema() {
-        return this.rxvo.getSchemaForPath(this.path);
+        return this.owner.getSchemaForPath(this.path);
     }
 
     /**

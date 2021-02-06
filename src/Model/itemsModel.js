@@ -68,7 +68,7 @@ export class ItemsModel extends BaseModel {
 
         let _idx = 0;
         // value.forEach((itm) => {
-        //     let _defaults = this.rxvo.getDefaultsForPath(this.jsonPath);
+        //     let _defaults = this.owner.getDefaultsForPath(this.jsonPath);
         //     if (Object.keys(_defaults).length) {
         //         value[_idx] = merge(_defaults, itm);
         //     }
@@ -76,8 +76,8 @@ export class ItemsModel extends BaseModel {
         // });
 
         if (refValidation(this, value) !== true) {
-            Notifiers.get(this.rxvo).sendError(this.jsonPath, this.rxvo.errors);
-            return `${JSON.stringify(this.rxvo.errors)}`;
+            Notifiers.get(this.owner).sendError(this.jsonPath, this.owner.errors);
+            return `${JSON.stringify(this.owner.errors)}`;
         }
 
         if (!this.isDirty) {
@@ -85,7 +85,7 @@ export class ItemsModel extends BaseModel {
             makeDirty(this);
         }
 
-        _oBuilders.get(this.rxvo).mute(this);
+        _oBuilders.get(this.owner).mute(this);
 
         _object.set(this, new Proxy(BaseModel.createRef(this, []), this.handler));
         _observerDelegates.set(this, true);
@@ -100,16 +100,16 @@ export class ItemsModel extends BaseModel {
             // _object.get(this).splice(0,0, value);
         } catch (e) {
             makeClean(this);
-            _oBuilders.get(this.rxvo).unmute(this);
-            Notifiers.get(this.rxvo).sendError(this.jsonPath, e);
+            _oBuilders.get(this.owner).unmute(this);
+            Notifiers.get(this.owner).sendError(this.jsonPath, e);
             return `${JSON.stringify(e)}`;
         }
 
         makeClean(this);
 
         if (!this.isDirty) {
-            _oBuilders.get(this.rxvo).unmute(this);
-            Notifiers.get(this.rxvo).sendNext(this.jsonPath);
+            _oBuilders.get(this.owner).unmute(this);
+            Notifiers.get(this.owner).sendNext(this.jsonPath);
             _observerDelegates.delete(this);
         }
 
@@ -159,9 +159,9 @@ export class ItemsModel extends BaseModel {
                 if (refAtKeyValidation(this, "items", value) !== true) {
                     if (_oDel !== void(0)) {
                         makeClean(this);
-                        Notifiers.get(this.rxvo).sendError(this.jsonPath, this.rxvo.errors);
+                        Notifiers.get(this.owner).sendError(this.jsonPath, this.owner.errors);
                     }
-                    return `${JSON.stringify(this.rxvo.errors)}`;
+                    return `${JSON.stringify(this.owner.errors)}`;
                 }
 
                 // we set the value on the array with success
@@ -176,7 +176,7 @@ export class ItemsModel extends BaseModel {
                 if (_oDel !== void(0)) {
                     makeClean(this);
                     // updates observers
-                    // Notifiers.get(this.rxvo).sendNext(this.jsonPath);
+                    // Notifiers.get(this.owner).sendNext(this.jsonPath);
                 }
 
                 return true;
@@ -215,7 +215,7 @@ const deleteTrap = (model, t, idx) => {
     } catch (e) {
         if (!_oDel) {
             makeClean(model);
-            Notifiers.get(model.rxvo).sendError(model.jsonPath, e);
+            Notifiers.get(model.owner).sendError(model.jsonPath, e);
         }
         return `${JSON.stringify(e)}`;
     }
@@ -229,7 +229,7 @@ const deleteTrap = (model, t, idx) => {
         // if not serial operation
         if (!_oDel) {
             makeClean(model);
-            Notifiers.get(model.rxvo).sendError(model.jsonPath, _res);
+            Notifiers.get(model.owner).sendError(model.jsonPath, _res);
         }
         return JSON.stringify(_res);
     }
@@ -241,7 +241,7 @@ const deleteTrap = (model, t, idx) => {
     makeClean(model);
 
     // updates observers
-    Notifiers.get(model.rxvo).sendNext(model.jsonPath);
+    Notifiers.get(model.owner).sendNext(model.jsonPath);
     return true;
 };
 
@@ -271,8 +271,8 @@ const applyMethod = (model, t, idx) => {
             makeClean(model);
 
             // .. sends notifications
-            Notifiers.get(model.rxvo).sendError(model.jsonPath,
-                model.rxvo.errors);
+            Notifiers.get(model.owner).sendError(model.jsonPath,
+                model.owner.errors);
 
             return false;
         }
@@ -283,7 +283,7 @@ const applyMethod = (model, t, idx) => {
             model.parent.model[model.jsonPath.split(".").pop()] = _arr;
         } else {
             // applies change to Model instance
-            model.rxvo.model = _arr;
+            model.owner.model = _arr;
         }
 
         return _val;

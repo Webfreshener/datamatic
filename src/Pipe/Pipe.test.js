@@ -3,7 +3,7 @@ import {default as data} from "../../fixtures/pipes-test.data";
 import {TestSubClass} from "../../fixtures/pipes-instances";
 import {default as _pipesOrSchemas} from "../../fixtures/pipes-or-schema"
 
-describe("TxPipes Sub-Class Tests", () => {
+describe("Pipes Sub-Class Tests", () => {
     const _data = {body: "ok"};
     const _res = {body: "yada-yada"};
     it("should sub class", () => {
@@ -39,7 +39,7 @@ describe("TXPipe Error Handling", () => {
     })
 });
 
-describe("TxPipe Tests", () => {
+describe("Pipe Tests", () => {
     let _p;
     beforeEach(() => {
         _p = new Pipe(..._pipesOrSchemas);

@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../../">
-  <title data-ice="title">src/classes/itemsModel.js | rxvo</title>
+  <title data-ice="title">src/classes/itemsModel.js | owner</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
   <script src="script/manual.js"></script>
-<meta name="description" content="RxJS + JSON-Schema Based Observable Data Models"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="rxvo"><meta property="twitter:description" content="RxJS + JSON-Schema Based Observable Data Models"></head>
+<meta name="description" content="RxJS + JSON-Schema Based Observable Data Models"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="owner"><meta property="twitter:description" content="RxJS + JSON-Schema Based Observable Data Models"></head>
 <body class="layout-container" data-ice="rootContainer">
 
 <header>
@@ -38,7 +38,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">Model</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/owner.js~RxVO.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDefaults">getDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPatternPropertyDefaults">getPatternPropertyDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getSchemaID">getSchemaID</a></span></span></li>
@@ -132,7 +132,7 @@ export class ItemsModel extends Model {
 
         let _idx = 0;
         // value.forEach((itm) =&gt; {
-        //     let _defaults = this.rxvo.getDefaultsForPath(this.jsonPath);
+        //     let _defaults = this.owner.getDefaultsForPath(this.jsonPath);
         //     if (Object.keys(_defaults).length) {
         //         value[_idx] = merge(_defaults, itm);
         //     }
@@ -140,7 +140,7 @@ export class ItemsModel extends Model {
         // });
 
         if (refValidation(this, value) !== true) {
-            Notifiers.get(this.rxvo).sendError(this.jsonPath, this.rxvo.errors);
+            Notifiers.get(this.owner).sendError(this.jsonPath, this.owner.errors);
             return false;
         }
 
@@ -149,7 +149,7 @@ export class ItemsModel extends Model {
             makeDirty(this);
         }
 
-        _oBuilders.get(this.rxvo).mute(this);
+        _oBuilders.get(this.owner).mute(this);
 
         _object.set(this, new Proxy(Model.createRef(this, []), this.handler));
         _observerDelegates.set(this, true);
@@ -164,16 +164,16 @@ export class ItemsModel extends Model {
             // _object.get(this).splice(0,0, value);
         } catch (e) {
             makeClean(this);
-            _oBuilders.get(this.rxvo).unmute(this);
-            Notifiers.get(this.rxvo).sendError(this.jsonPath, e);
+            _oBuilders.get(this.owner).unmute(this);
+            Notifiers.get(this.owner).sendError(this.jsonPath, e);
             return false;
         }
 
         makeClean(this);
 
         if (!this.isDirty) {
-            _oBuilders.get(this.rxvo).unmute(this);
-            Notifiers.get(this.rxvo).sendNext(this.jsonPath);
+            _oBuilders.get(this.owner).unmute(this);
+            Notifiers.get(this.owner).sendNext(this.jsonPath);
             _observerDelegates.delete(this);
         }
 
@@ -223,7 +223,7 @@ export class ItemsModel extends Model {
                 if (refAtKeyValidation(this, &quot;items&quot;, value) !== true) {
                     if (_oDel !== void(0)) {
                         makeClean(this);
-                        Notifiers.get(this.rxvo).sendError(this.jsonPath, this.rxvo.errors);
+                        Notifiers.get(this.owner).sendError(this.jsonPath, this.owner.errors);
                     }
                     return false;
                 }
@@ -240,7 +240,7 @@ export class ItemsModel extends Model {
                 if (_oDel !== void(0)) {
                     makeClean(this);
                     // updates observers
-                    // Notifiers.get(this.rxvo).sendNext(this.jsonPath);
+                    // Notifiers.get(this.owner).sendNext(this.jsonPath);
                 }
 
                 return true;
@@ -271,7 +271,7 @@ const deleteTrap = (model, t, idx) =&gt; {
     } catch (e) {
         if (!_oDel) {
             makeClean(model);
-            Notifiers.get(model.rxvo).sendError(model.jsonPath, e);
+            Notifiers.get(model.owner).sendError(model.jsonPath, e);
         }
         return false;
     }
@@ -285,7 +285,7 @@ const deleteTrap = (model, t, idx) =&gt; {
         // if not serial operation
         if (!_oDel) {
             makeClean(model);
-            Notifiers.get(model.rxvo).sendError(model.jsonPath, _res);
+            Notifiers.get(model.owner).sendError(model.jsonPath, _res);
         }
         return false;
     }
@@ -297,7 +297,7 @@ const deleteTrap = (model, t, idx) =&gt; {
     makeClean(model);
 
     // updates observers
-    Notifiers.get(model.rxvo).sendNext(model.jsonPath);
+    Notifiers.get(model.owner).sendNext(model.jsonPath);
     return true;
 };
 
@@ -327,8 +327,8 @@ const applyMethod = (model, t, idx) =&gt; {
             makeClean(model);
 
             // .. sends notifications
-            Notifiers.get(model.rxvo).sendError(model.jsonPath,
-                model.rxvo.errors);
+            Notifiers.get(model.owner).sendError(model.jsonPath,
+                model.owner.errors);
 
             return false;
         }
@@ -339,7 +339,7 @@ const applyMethod = (model, t, idx) =&gt; {
             model.parent.model[model.jsonPath.split(&quot;.&quot;).pop()] = _arr;
         } else {
             // applies change to Model instance
-            model.rxvo.model = _arr;
+            model.owner.model = _arr;
         }
 
         return _val;

@@ -1,20 +1,19 @@
-Model
+Datamat
 =============
-**Reactive Validating Object**<br/>
-RxJS + JSON-Schema (Ajv) Based Observable Data Models
+RxJS + JSON-Schema (Ajv) Based Observable and Validating Data Models and Pipelines
 
-[![Build Status](https://travis-ci.org/Webfreshener/RxVO.svg?branch=master)](https://travis-ci.org/Webfreshener/RxVO)
-[![Dependency Status](https://david-dm.org/webfreshener/RxVO/status.svg)](https://david-dm.org/webfreshener/RxVO)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/c665c70dfeb144319bc5bbd58695eb90)](https://www.codacy.com/app/vanschroeder/RxVO?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Webfreshener/RxVO&amp;utm_campaign=Badge_Grade)
-[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/c665c70dfeb144319bc5bbd58695eb90)](https://www.codacy.com/app/vanschroeder/RxVO?utm_source=github.com&utm_medium=referral&utm_content=Webfreshener/RxVO&utm_campaign=Badge_Coverage)
-[![Maintainability](https://api.codeclimate.com/v1/badges/625326e1880421ccc809/maintainability)](https://codeclimate.com/github/Webfreshener/RxVO/maintainability)
+[![Build Status](https://travis-ci.org/Webfreshener/model.svg?branch=master)](https://travis-ci.org/Webfreshener/model)
+[![Dependency Status](https://david-dm.org/webfreshener/model/status.svg)](https://david-dm.org/webfreshener/model)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/c665c70dfeb144319bc5bbd58695eb90)](https://www.codacy.com/app/vanschroeder/model?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Webfreshener/model&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/c665c70dfeb144319bc5bbd58695eb90)](https://www.codacy.com/app/vanschroeder/model?utm_source=github.com&utm_medium=referral&utm_content=Webfreshener/model&utm_campaign=Badge_Coverage)
+[![Maintainability](https://api.codeclimate.com/v1/badges/625326e1880421ccc809/maintainability)](https://codeclimate.com/github/Webfreshener/model/maintainability)
 
-[Online Developer Documentation](https://webfreshener.github.io/RxVO/)
+[Online Developer Documentation](https://webfreshener.github.io/model/)
 
 ### Goals 
  * Provide a means to quickly and easily validate complex data-sets
  * Look and feel like a standard JS Object for ease of use and adaptability
- * Automate creation of RxJS Update and Error notifications 
+ * Automate data evaluation and transformation
 
 ### Table of Contents
 
@@ -22,11 +21,11 @@ RxJS + JSON-Schema (Ajv) Based Observable Data Models
 
 **[Usage Examples](#usage-examples)**
    * [Basic Usage](#basic-usage)
-   * [Flow Control](#flow-control)
+   * [Data Pipelines and Transformation](#data-pipelines-and-tansformation)
 
 **[Developer Guide](#developer-guide)**
-  * [Model Class](#rxvo-class)
-    * [Schemas Config](#rxvo-schemas-config)
+  * [Model Class](#owner-class)
+    * [Schemas Config](#owner-schemas-config)
     * [Model Proxy Object](#model-proxy-object)
     * [model vs $model](#model-vs-model)
   * [ItemsModel](#itemsmodel)
@@ -36,11 +35,12 @@ RxJS + JSON-Schema (Ajv) Based Observable Data Models
 
 #### Installation Instructions
 ```
-$ npm i rxvo
+$ npm install @webfreshener/datamat
 ```
 
-#### Usage Example 
+### Usage Examples
 
+#### Basic Example
 The example below defines a Model that expects a `name` value and 
 list of `topScores` items
 
@@ -112,16 +112,16 @@ obj.model = {
     }]
 };
 
-// update the rxVO
+// update the model
 // this will trigger the next notification
 obj.model.topScores[0].score++;
 
-// invalid attempt update the rxVO
+// invalid attempt update the model
 // this will trigger the error notification
 // reason: "topScores/items/score" is type is integer 
 obj.model.topScores[0].score = "1234";
 
-// invalid attempt update the rxVO
+// invalid attempt update the model
 // this will trigger the error notification
 // reason: "topScores" is marked as required
 delete obj.model.topScores;
@@ -129,7 +129,7 @@ delete obj.model.topScores;
 ```
 Refer to the examples demo in `./examples/basic-usage` for more usage examples
 
-#### Flow Control ####
+#### Data Pipelines and Transformation ####
 ```
 
 ```
@@ -141,7 +141,7 @@ This class represents the Document entry point
 
 | Method        | Arguments | Description  |
 |:--------------|:----------|:-------|
-| constructor   | [schemas config](#rxvo-schemas-config) (object), [options (object)] | creates new Model instance |
+| constructor   | [schemas config](#owner-schemas-config) (object), [options (object)] | creates new Model instance |
 | errors [getter]   | | retrieves errors (if any) from last json-schema validation |
 | model [getter/setter]   | | retrieves root [model proxy object](#model-proxy-object) for operation |
 | getModelsInPath   | to (string) | retrieves models at given path |
@@ -177,13 +177,13 @@ In usage, `model` always references the Proxied Data Model for validation and op
 
 *example:*
 ```
- const _rxvo = new Model({schemas: [schema]});
+ const _owner = new Model({schemas: [schema]});
  
  // access the root model:
- console.log(`JSON.stringify(_rxvo.model)`);
+ console.log(`JSON.stringify(_owner.model)`);
  
  // access the model's owner Model Class:
- const owner = _rxvo.model.$model;
+ const owner = _owner.model.$model;
  console.log(`is frozen: ${owner.isFrozen}`);
  
  // call toString on Owner
@@ -227,7 +227,7 @@ Represents an Properties (Object} entry in the given schema
 | options [getter]   | | retrieves options passed to Model instance |
 | path [getter]   | | retrieves json-schema path string for Model instance. eg: "#/this/is/my/path" |
 | parent [getter]   | | retrieves Model's parent Model instance |
-| pipe | ..pipesOrSchemas | returns TxPipe instance for operating on model |
+| pipe | ..pipesOrSchemas | returns Pipe instance for operating on model |
 | reset | | resets model to initial state if operation is valid |
 | root [getter]   | | retrieves root Model instance |
 | model [getter]   | | retrieves Model's internal Model Document instance |

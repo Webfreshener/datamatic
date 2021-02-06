@@ -18,9 +18,9 @@ describe("MetaData Units", () => {
         });
     });
     describe( "Parameter Accessor Validation", ()=> {
-        const rxvo = new Model(basicModel);
-        let _ = rxvo.model.$model;
-        const _md = new MetaData( new PropertiesModel(rxvo), {_path: "key", _root: _, _parent: _});
+        const owner = new Model(basicModel);
+        let _ = owner.model.$model;
+        const _md = new MetaData( new PropertiesModel(owner), {_path: "key", _root: _, _parent: _});
         it("should access `root` property", function() {
             expect(typeof _md.root).toBe("object");
         });

@@ -4,34 +4,34 @@ import {default as basicRefs} from "../../fixtures/basic-refs.schema";
 import {default as refsData} from "../../fixtures/basic-refs.data";
 
 describe("Model Instance Test", () => {
-    let _rxvo;
+    let _owner;
 
     beforeEach(() => {
-        _rxvo = new Model({schemas: [basicModel]});
+        _owner = new Model({schemas: [basicModel]});
     });
 
     it("expects a valid Model instance", () => {
-        expect(_rxvo instanceof Model).toBe(true);
+        expect(_owner instanceof Model).toBe(true);
     });
 
     it("should get it's schema", () => {
-        expect(_rxvo.schema).toEqual(basicModel);
+        expect(_owner.schema).toEqual(basicModel);
     });
 
     it("should get path elements", () => {
-        expect(_rxvo.getSchemaForPath("properties/name")).toEqual({type: "string"});
+        expect(_owner.getSchemaForPath("properties/name")).toEqual({type: "string"});
     });
 
     it("expects Model Instances to create a valid Model Document", () => {
-        _rxvo.model = {
+        _owner.model = {
             "name": "test",
         };
 
-        expect(`${_rxvo.model.name}`).toEqual("test");
+        expect(`${_owner.model.name}`).toEqual("test");
     });
 
     it("runs schema validator", () => {
-        const _rxvo = new Model({
+        const _owner = new Model({
             properties:
                 {
                     id: {type: 'integer'},
@@ -41,20 +41,20 @@ describe("Model Instance Test", () => {
                 },
         });
 
-        expect(_rxvo.errors).toBe(null);
+        expect(_owner.errors).toBe(null);
     });
 
     describe("Mixed schemas", () => {
         it("should allow mixed schemas to be selected and used", () => {
-            const _rxvo = new Model({schemas: [basicRefs]});
-            _rxvo.subscribe({
+            const _owner = new Model({schemas: [basicRefs]});
+            _owner.subscribe({
                 error: (e) => console.log(JSON.stringify(e)),
             });
-            _rxvo.model = refsData;
-            expect(_rxvo.errors).toBe(null);
-            _rxvo.model.aReference.valueA = "A String Value";
-            expect(_rxvo.errors).toBe(null);
-            expect(_rxvo.model).toEqual(refsData);
+            _owner.model = refsData;
+            expect(_owner.errors).toBe(null);
+            _owner.model.aReference.valueA = "A String Value";
+            expect(_owner.errors).toBe(null);
+            expect(_owner.model).toEqual(refsData);
         });
     });
 });

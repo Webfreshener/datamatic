@@ -9,15 +9,15 @@ describe("PropertiesModel Class Suite", function () {
 
     describe("Simple PropertiesModel Tests", () => {
         beforeEach(() => {
-            this.rxvo = new Model({schemas: [basicModel]});
+            this.owner = new Model({schemas: [basicModel]});
         });
 
         describe("LifeCycle: Instantiation", () => {
             it("should initialize a schema and a schema object", () => {
-                expect(this.rxvo.model.$model).toBeDefined();
-                expect(this.rxvo.model.$model instanceof PropertiesModel).toBe(true);
-                expect(this.rxvo.model.$model).toBeDefined();
-                expect(this.rxvo.model.$model instanceof PropertiesModel).toBe(true);
+                expect(this.owner.model.$model).toBeDefined();
+                expect(this.owner.model.$model instanceof PropertiesModel).toBe(true);
+                expect(this.owner.model.$model).toBeDefined();
+                expect(this.owner.model.$model instanceof PropertiesModel).toBe(true);
             });
 
             it("should not initialize a invalid schema and schema object", () => {
@@ -43,8 +43,8 @@ describe("PropertiesModel Class Suite", function () {
                     active: true,
                 };
 
-                this.rxvo.model = _d;
-                expect(deepEqual(this.rxvo.model, _d)).toBe(true);
+                this.owner.model = _d;
+                expect(deepEqual(this.owner.model, _d)).toBe(true);
             });
 
             it("should reject invalid data and leave model pristine", () => {
@@ -54,8 +54,8 @@ describe("PropertiesModel Class Suite", function () {
                     active: "123",
                 };
 
-                this.rxvo.model = _d;
-                expect(deepEqual(this.rxvo.model, {})).toBe(true);
+                this.owner.model = _d;
+                expect(deepEqual(this.owner.model, {})).toBe(true);
             });
         });
 
@@ -67,33 +67,33 @@ describe("PropertiesModel Class Suite", function () {
             };
 
             beforeEach(() => {
-                this.rxvo.model = _d;
+                this.owner.model = _d;
             });
 
             it("should update with valid data", () => {
-                this.rxvo.model.active = false;
-                expect(deepEqual(this.rxvo.model, _d)).toBe(false);
+                this.owner.model.active = false;
+                expect(deepEqual(this.owner.model, _d)).toBe(false);
             });
 
             it("should reject invalid data update", () => {
-                this.rxvo.model.active = "false";
-                expect(deepEqual(this.rxvo.model, _d)).toBe(true);
+                this.owner.model.active = "false";
+                expect(deepEqual(this.owner.model, _d)).toBe(true);
             });
         });
     });
 
     describe("Nested PropertiesModel Tests", () => {
-        let _rxvo;
+        let _owner;
         beforeEach(() => {
-            _rxvo = new Model({schemas: [nestedModel]});
+            _owner = new Model({schemas: [nestedModel]});
         });
 
         describe("LifeCycle: Instantiation", () => {
             it("should initialize a valid schema and a schema object", () => {
-                expect(_rxvo.model.$model).toBeDefined();
-                expect(_rxvo.model.$model instanceof PropertiesModel).toBe(true);
-                expect(_rxvo.model.$model).toBeDefined();
-                expect(_rxvo.model.$model instanceof PropertiesModel).toBe(true);
+                expect(_owner.model.$model).toBeDefined();
+                expect(_owner.model.$model instanceof PropertiesModel).toBe(true);
+                expect(_owner.model.$model).toBeDefined();
+                expect(_owner.model.$model instanceof PropertiesModel).toBe(true);
             });
         });
 
@@ -110,10 +110,10 @@ describe("PropertiesModel Class Suite", function () {
                     },
                 };
 
-                _rxvo.model = _d;
-                expect(deepEqual(_rxvo.model, _d)).toBe(true);
-                expect(_rxvo.model.aObject.bObject.$model).toBeDefined();
-                expect(_rxvo.model.aObject.bObject.$model instanceof PropertiesModel).toBe(true)
+                _owner.model = _d;
+                expect(deepEqual(_owner.model, _d)).toBe(true);
+                expect(_owner.model.aObject.bObject.$model).toBeDefined();
+                expect(_owner.model.aObject.bObject.$model instanceof PropertiesModel).toBe(true)
             });
 
             it("should reject invalid data and leave model pristine", () => {
@@ -125,8 +125,8 @@ describe("PropertiesModel Class Suite", function () {
                     },
                 };
 
-                _rxvo.model = _d;
-                expect(deepEqual(_rxvo.model, {})).toBe(true);
+                _owner.model = _d;
+                expect(deepEqual(_owner.model, {})).toBe(true);
             });
         });
 
@@ -143,15 +143,15 @@ describe("PropertiesModel Class Suite", function () {
                     },
                 };
 
-                _rxvo.model = _d;
+                _owner.model = _d;
 
                 _d = {
                     bValue: 4321,
                 };
 
-                _rxvo.model.aObject.bObject = _d;
-                expect(_rxvo.errors).toBe(null);
-                expect(deepEqual(_rxvo.model.aObject.bObject, _d)).toBe(true);
+                _owner.model.aObject.bObject = _d;
+                expect(_owner.errors).toBe(null);
+                expect(deepEqual(_owner.model.aObject.bObject, _d)).toBe(true);
             });
         });
 
@@ -169,27 +169,27 @@ describe("PropertiesModel Class Suite", function () {
             };
 
             it("should allow deletion of nested properties that are not required", () => {
-                _rxvo.model = _d;
-                expect(_rxvo.model.extraObject.someValue).toBe("test");
-                delete _rxvo.model.extraObject.someValue;
-                expect(_rxvo.errors).toBe(null);
-                expect(_rxvo.model.extraObject.someValue).toBe(void(0));
+                _owner.model = _d;
+                expect(_owner.model.extraObject.someValue).toBe("test");
+                delete _owner.model.extraObject.someValue;
+                expect(_owner.errors).toBe(null);
+                expect(_owner.model.extraObject.someValue).toBe(void(0));
             });
 
             it("should prevent deletion of nested properties that are required", () => {
-                _rxvo.model = _d;
-                expect(_rxvo.model.aObject.bObject.bValue).toBe(1234);
-                delete _rxvo.model.aObject.bObject.bValue;
-                expect(typeof _rxvo.errors).toBe("object");
-                expect(_rxvo.model.aObject.bObject.bValue).toBe(1234);
+                _owner.model = _d;
+                expect(_owner.model.aObject.bObject.bValue).toBe(1234);
+                delete _owner.model.aObject.bObject.bValue;
+                expect(typeof _owner.errors).toBe("object");
+                expect(_owner.model.aObject.bObject.bValue).toBe(1234);
             });
         });
     });
 
     describe("Nested Defaults PropertiesModel Tests", () => {
-        let _rxvo;
+        let _owner;
         beforeEach(() => {
-            _rxvo = new Model({schemas: [nestedModelDefault]}, {ajvOptions: {useDefaults: true}});
+            _owner = new Model({schemas: [nestedModelDefault]}, {ajvOptions: {useDefaults: true}});
         });
 
         it("should populate default values", () => {
@@ -199,57 +199,57 @@ describe("PropertiesModel Class Suite", function () {
                 },
             };
 
-            _rxvo.model = _d;
-            expect(_rxvo.model.aObject.bObject.bValue).toBe(123);
+            _owner.model = _d;
+            expect(_owner.model.aObject.bObject.bValue).toBe(123);
         });
     });
 
     describe("Pattern Properties", () => {
-        let _rxvo;
+        let _owner;
         beforeEach(() => {
-            _rxvo = new Model({schemas: [patternModel]}, {ajvOptions: {useDefaults: true}});
+            _owner = new Model({schemas: [patternModel]}, {ajvOptions: {useDefaults: true}});
         });
 
         it("should allow pattern properties", () => {
-            _rxvo.model["test"] = "foo";
-            expect(`${_rxvo}`).toEqual("{}");
-            _rxvo.model["name"] = "foo";
-            expect(`${_rxvo}`).toEqual("{\"name\":\"foo\"}");
+            _owner.model["test"] = "foo";
+            expect(`${_owner}`).toEqual("{}");
+            _owner.model["name"] = "foo";
+            expect(`${_owner}`).toEqual("{\"name\":\"foo\"}");
         });
 
         it("should accept multiple uses of patternProperty", () => {
-            _rxvo.model["name"] = "foo";
-            expect(`${_rxvo}`).toEqual("{\"name\":\"foo\"}");
-            _rxvo.model["name"] = "bar";
-            expect(`${_rxvo}`).toEqual("{\"name\":\"bar\"}");
+            _owner.model["name"] = "foo";
+            expect(`${_owner}`).toEqual("{\"name\":\"foo\"}");
+            _owner.model["name"] = "bar";
+            expect(`${_owner}`).toEqual("{\"name\":\"bar\"}");
         });
 
     });
 
     describe("Nested Pattern Properties", () => {
-        let _rxvo;
+        let _owner;
         beforeEach(() => {
-            _rxvo = new Model({schemas: [nestedPatternModel]}, {ajvOptions: {useDefaults: true}});
+            _owner = new Model({schemas: [nestedPatternModel]}, {ajvOptions: {useDefaults: true}});
         });
 
         it("should allow nested pattern properties", () => {
-            _rxvo.model = {name: "test", nested: {test1: {foo: "bar"}}};
-            expect(`${_rxvo.model.nested.$model}`).toEqual("{\"test1\":{\"foo\":\"bar\"}}");
+            _owner.model = {name: "test", nested: {test1: {foo: "bar"}}};
+            expect(`${_owner.model.nested.$model}`).toEqual("{\"test1\":{\"foo\":\"bar\"}}");
         });
 
         it("should accept multiple uses of patternProperty", () => {
-            _rxvo.model = {name: "test", nested: {test1: {foo1: "bar1"}}};
-            expect(`${_rxvo.model.nested.$model}`).toEqual("{\"test1\":{\"foo1\":\"bar1\"}}");
-            _rxvo.model.nested["test2"] = {foo2: "bar2"};
-            expect(`${_rxvo.model.nested.$model}`).toEqual("{\"test1\":{\"foo1\":\"bar1\"},\"test2\":{\"foo2\":\"bar2\"}}");
+            _owner.model = {name: "test", nested: {test1: {foo1: "bar1"}}};
+            expect(`${_owner.model.nested.$model}`).toEqual("{\"test1\":{\"foo1\":\"bar1\"}}");
+            _owner.model.nested["test2"] = {foo2: "bar2"};
+            expect(`${_owner.model.nested.$model}`).toEqual("{\"test1\":{\"foo1\":\"bar1\"},\"test2\":{\"foo2\":\"bar2\"}}");
         });
 
         it("should reject subsequent invalid uses of patternProperty", () => {
-            _rxvo.model = {name: "test", nested: {test1: {foo1: "bar1"}}};
-            _rxvo.model.nested["test1"] = false;
-            expect(_rxvo.errors === null).toBe(false);
-            expect(`${_rxvo.errors[0].dataPath}`).toEqual("/test1");
-            expect(`${_rxvo.errors[0].message}`).toEqual("should be object");
+            _owner.model = {name: "test", nested: {test1: {foo1: "bar1"}}};
+            _owner.model.nested["test1"] = false;
+            expect(_owner.errors === null).toBe(false);
+            expect(`${_owner.errors[0].dataPath}`).toEqual("/test1");
+            expect(`${_owner.errors[0].message}`).toEqual("should be object");
         });
 
     });

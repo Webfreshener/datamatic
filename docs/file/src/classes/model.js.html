@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../../">
-  <title data-ice="title">src/classes/model.js | rxvo</title>
+  <title data-ice="title">src/classes/model.js | owner</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
   <script src="script/manual.js"></script>
-<meta name="description" content="RxJS + JSON-Schema Based Observable Data Models"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="rxvo"><meta property="twitter:description" content="RxJS + JSON-Schema Based Observable Data Models"></head>
+<meta name="description" content="RxJS + JSON-Schema Based Observable Data Models"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="owner"><meta property="twitter:description" content="RxJS + JSON-Schema Based Observable Data Models"></head>
 <body class="layout-container" data-ice="rootContainer">
 
 <header>
@@ -38,7 +38,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">Model</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/owner.js~RxVO.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDefaults">getDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPatternPropertyDefaults">getPatternPropertyDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getSchemaID">getSchemaID</a></span></span></li>
@@ -94,7 +94,7 @@ SOFTWARE.
 import {
     _mdRef, _oBuilders, _object, _schemaOptions, _dirtyModels
 } from &quot;./_references&quot;;
-import {Model} from &quot;./rxvo&quot;;
+import {Model} from &quot;./owner&quot;;
 import {MetaData} from &quot;./_metaData&quot;;
 import {makeClean, makeDirty, validate} from &quot;./utils&quot;;
 import {Pipe} from &quot;./pipe&quot;;
@@ -113,7 +113,7 @@ const createMetaDataRef = (ref, metaRef) =&gt; {
             _path: &quot;&quot;,
             _parent: null,
             _root: ref,
-            _rxvo: metaRef,
+            _owner: metaRef,
         });
     } else if ((typeof metaRef) === &quot;object&quot;) {
         // extends MetaData reference
@@ -155,7 +155,7 @@ export class Model {
      * @return {object}
      */
     subscribeTo(path, func) {
-        const _oBuilder = _oBuilders.get(this.rxvo);
+        const _oBuilder = _oBuilders.get(this.owner);
         const _o = _oBuilder.getObserverForPath(path);
         if (_o === null) {
             return _o;
@@ -222,7 +222,7 @@ export class Model {
         const _res = this.validate(_o);
         // validates that this model be returned to an empty value
         if (_res !== true) {
-            _oBuilders.get(this.rxvo).error(this, _res);
+            _oBuilders.get(this.owner).error(this, _res);
             return this;
         }
 
@@ -251,7 +251,7 @@ export class Model {
         makeClean(this);
 
         // sends notification of model change
-        _oBuilders.get(this.rxvo).next(this);
+        _oBuilders.get(this.owner).next(this);
 
         return this;
     }
@@ -315,7 +315,7 @@ export class Model {
      */
     freeze() {
         Object.freeze(_object.get(this));
-        _oBuilders.get(this.rxvo).complete(this);
+        _oBuilders.get(this.owner).complete(this);
         return this;
     }
 
@@ -390,7 +390,7 @@ export class Model {
      * @return {boolean}
      */
     get isDirty() {
-        let _res = _dirtyModels.get(this.rxvo)[this.path] || false;
+        let _res = _dirtyModels.get(this.owner)[this.path] || false;
         return _res || ((this.parent === null) ? false : this.parent.isDirty);
     }
 
@@ -398,8 +398,8 @@ export class Model {
      * Getter for model&apos;s Model owner object
      * @returns {Model}
      */
-    get rxvo() {
-        return _mdRef.get(this).rxvo;
+    get owner() {
+        return _mdRef.get(this).owner;
     }
 
     /**
@@ -433,7 +433,7 @@ export class Model {
      * @returns {*}
      */
     get schema() {
-        return this.rxvo.getSchemaForPath(this.path);
+        return this.owner.getSchemaForPath(this.path);
     }
 
     /**

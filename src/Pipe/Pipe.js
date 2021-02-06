@@ -33,7 +33,7 @@ const _pipes = new WeakMap();
 const _cache = new WeakMap();
 
 /**
- * TxPipe Class
+ * Pipe Class
  */
 export class Pipe {
     static getExecs(..._pvs) {
@@ -160,7 +160,7 @@ export class Pipe {
      */
     link(target, ...callbacks) {
         if (!(target instanceof Pipe)) {
-            throw `item for "target" was not a TxPipe`;
+            throw `item for "target" was not a Pipe`;
         }
 
         // allow for array literal in place of inline assignment
@@ -198,7 +198,7 @@ export class Pipe {
      */
     unlink(target) {
         if (!(target instanceof Pipe)) {
-            throw `item for "target" was not a TxPipe`;
+            throw `item for "target" was not a Pipe`;
         }
 
         const _sub = _pipes.get(this).links.get(target);
@@ -377,7 +377,7 @@ export class Pipe {
      */
     subscribe(handler) {
         if (!(typeof handler).match(/^(function|object)$/)) {
-            throw "handler required for TxPipe::subscribe";
+            throw "handler required for Pipe::subscribe";
         }
 
         return _pipes.get(this).out.subscribe(handler);

@@ -5,18 +5,18 @@ import {SchemaHelpers} from "./_schemaHelpers";
 import {basicModel} from "../../fixtures/PropertiesModel.schemas";
 
 describe("SchemaHelpers Class Tests", () => {
-    let _rxvo, _schema, _sH;
+    let _owner, _schema, _sH;
 
     beforeEach(() => {
-        _rxvo = new Model(basicModel);
-        _schema = new PropertiesModel(_rxvo);
+        _owner = new Model(basicModel);
+        _schema = new PropertiesModel(_owner);
         _sH = new SchemaHelpers(_schema);
     });
 
     describe("Child Object Methods", () => {
         beforeEach(() => {
-            _rxvo = new Model({schemas: [basicModel]});
-            _schema = new PropertiesModel(_rxvo);
+            _owner = new Model({schemas: [basicModel]});
+            _schema = new PropertiesModel(_owner);
             _sH = new SchemaHelpers(_schema);
         });
 

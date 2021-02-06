@@ -1,5 +1,5 @@
 export default {
-    id: "https://schemas.webfreshener.com/rxvo#",
+    id: "https://schemas.webfreshener.com/owner#",
     schema: {
         oneOf: [
             {
@@ -49,7 +49,7 @@ export default {
                     $ref: "#/definitions/Tags",
                 },
                 values: {
-                    $ref: "https://schemas.webfreshener.com/rxvo/pipe-keys#",
+                    $ref: "https://schemas.webfreshener.com/owner/pipe-keys#",
                 },
                 schema: {
                     $ref: "#definitions/Schema",

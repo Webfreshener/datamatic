@@ -2091,7 +2091,7 @@
                         },
                         {
                           "type": "CommentLine",
-                          "value": "     let _defaults = this.rxvo.getDefaultsForPath(this.jsonPath);",
+                          "value": "     let _defaults = this.owner.getDefaultsForPath(this.jsonPath);",
                           "start": 2263,
                           "end": 2330,
                           "loc": {
@@ -2466,9 +2466,9 @@
                                             "line": 75,
                                             "column": 35
                                           },
-                                          "identifierName": "rxvo"
+                                          "identifierName": "owner"
                                         },
-                                        "name": "rxvo"
+                                        "name": "owner"
                                       },
                                       "computed": false
                                     }
@@ -2598,9 +2598,9 @@
                                           "line": 75,
                                           "column": 71
                                         },
-                                        "identifierName": "rxvo"
+                                        "identifierName": "owner"
                                       },
-                                      "name": "rxvo"
+                                      "name": "owner"
                                     },
                                     "computed": false
                                   },
@@ -2680,7 +2680,7 @@
                         },
                         {
                           "type": "CommentLine",
-                          "value": "     let _defaults = this.rxvo.getDefaultsForPath(this.jsonPath);",
+                          "value": "     let _defaults = this.owner.getDefaultsForPath(this.jsonPath);",
                           "start": 2263,
                           "end": 2330,
                           "loc": {
@@ -3111,9 +3111,9 @@
                                       "line": 84,
                                       "column": 32
                                     },
-                                    "identifierName": "rxvo"
+                                    "identifierName": "owner"
                                   },
-                                  "name": "rxvo"
+                                  "name": "owner"
                                 },
                                 "computed": false
                               }
@@ -4260,9 +4260,9 @@
                                               "line": 99,
                                               "column": 36
                                             },
-                                            "identifierName": "rxvo"
+                                            "identifierName": "owner"
                                           },
-                                          "name": "rxvo"
+                                          "name": "owner"
                                         },
                                         "computed": false
                                       }
@@ -4455,9 +4455,9 @@
                                               "line": 100,
                                               "column": 35
                                             },
-                                            "identifierName": "rxvo"
+                                            "identifierName": "owner"
                                           },
-                                          "name": "rxvo"
+                                          "name": "owner"
                                         },
                                         "computed": false
                                       }
@@ -4899,9 +4899,9 @@
                                             "line": 107,
                                             "column": 36
                                           },
-                                          "identifierName": "rxvo"
+                                          "identifierName": "owner"
                                         },
-                                        "name": "rxvo"
+                                        "name": "owner"
                                       },
                                       "computed": false
                                     }
@@ -5094,9 +5094,9 @@
                                             "line": 108,
                                             "column": 35
                                           },
-                                          "identifierName": "rxvo"
+                                          "identifierName": "owner"
                                         },
-                                        "name": "rxvo"
+                                        "name": "owner"
                                       },
                                       "computed": false
                                     }
@@ -7683,9 +7683,9 @@
                                                                     "line": 158,
                                                                     "column": 47
                                                                   },
-                                                                  "identifierName": "rxvo"
+                                                                  "identifierName": "owner"
                                                                 },
-                                                                "name": "rxvo"
+                                                                "name": "owner"
                                                               },
                                                               "computed": false
                                                             }
@@ -7815,9 +7815,9 @@
                                                                   "line": 158,
                                                                   "column": 83
                                                                 },
-                                                                "identifierName": "rxvo"
+                                                                "identifierName": "owner"
                                                               },
-                                                              "name": "rxvo"
+                                                              "name": "owner"
                                                             },
                                                             "computed": false
                                                           },
@@ -8708,7 +8708,7 @@
                                                 },
                                                 {
                                                   "type": "CommentLine",
-                                                  "value": " Notifiers.get(this.rxvo).sendNext(this.jsonPath);",
+                                                  "value": " Notifiers.get(this.owner).sendNext(this.jsonPath);",
                                                   "start": 5779,
                                                   "end": 5831,
                                                   "loc": {
@@ -10047,9 +10047,9 @@
                                                   "line": 206,
                                                   "column": 36
                                                 },
-                                                "identifierName": "rxvo"
+                                                "identifierName": "owner"
                                               },
-                                              "name": "rxvo"
+                                              "name": "owner"
                                             },
                                             "computed": false
                                           }
@@ -10709,9 +10709,9 @@
                                                 "line": 220,
                                                 "column": 36
                                               },
-                                              "identifierName": "rxvo"
+                                              "identifierName": "owner"
                                             },
-                                            "name": "rxvo"
+                                            "name": "owner"
                                           },
                                           "computed": false
                                         }
@@ -11316,9 +11316,9 @@
                                     "line": 232,
                                     "column": 28
                                   },
-                                  "identifierName": "rxvo"
+                                  "identifierName": "owner"
                                 },
-                                "name": "rxvo"
+                                "name": "owner"
                               },
                               "computed": false
                             }
@@ -12613,9 +12613,9 @@
                                                   "line": 262,
                                                   "column": 36
                                                 },
-                                                "identifierName": "rxvo"
+                                                "identifierName": "owner"
                                               },
-                                              "name": "rxvo"
+                                              "name": "owner"
                                             },
                                             "computed": false
                                           }
@@ -12751,9 +12751,9 @@
                                                 "line": 263,
                                                 "column": 26
                                               },
-                                              "identifierName": "rxvo"
+                                              "identifierName": "owner"
                                             },
-                                            "name": "rxvo"
+                                            "name": "owner"
                                           },
                                           "computed": false
                                         },
@@ -13429,9 +13429,9 @@
                                               "line": 274,
                                               "column": 22
                                             },
-                                            "identifierName": "rxvo"
+                                            "identifierName": "owner"
                                           },
-                                          "name": "rxvo"
+                                          "name": "owner"
                                         },
                                         "computed": false,
                                         "leadingComments": null
@@ -13701,7 +13701,7 @@
     },
     {
       "type": "CommentLine",
-      "value": "     let _defaults = this.rxvo.getDefaultsForPath(this.jsonPath);",
+      "value": "     let _defaults = this.owner.getDefaultsForPath(this.jsonPath);",
       "start": 2263,
       "end": 2330,
       "loc": {
@@ -14005,7 +14005,7 @@
     },
     {
       "type": "CommentLine",
-      "value": " Notifiers.get(this.rxvo).sendNext(this.jsonPath);",
+      "value": " Notifiers.get(this.owner).sendNext(this.jsonPath);",
       "start": 5779,
       "end": 5831,
       "loc": {
@@ -18452,7 +18452,7 @@
     },
     {
       "type": "CommentLine",
-      "value": "     let _defaults = this.rxvo.getDefaultsForPath(this.jsonPath);",
+      "value": "     let _defaults = this.owner.getDefaultsForPath(this.jsonPath);",
       "start": 2263,
       "end": 2330,
       "loc": {
@@ -19029,7 +19029,7 @@
         "postfix": false,
         "binop": null
       },
-      "value": "rxvo",
+      "value": "owner",
       "start": 2577,
       "end": 2581,
       "loc": {
@@ -19317,7 +19317,7 @@
         "postfix": false,
         "binop": null
       },
-      "value": "rxvo",
+      "value": "owner",
       "start": 2613,
       "end": 2617,
       "loc": {
@@ -20091,7 +20091,7 @@
         "postfix": false,
         "binop": null
       },
-      "value": "rxvo",
+      "value": "owner",
       "start": 2835,
       "end": 2839,
       "loc": {
@@ -22491,7 +22491,7 @@
         "postfix": false,
         "binop": null
       },
-      "value": "rxvo",
+      "value": "owner",
       "start": 3301,
       "end": 3305,
       "loc": {
@@ -22855,7 +22855,7 @@
         "postfix": false,
         "binop": null
       },
-      "value": "rxvo",
+      "value": "owner",
       "start": 3352,
       "end": 3356,
       "loc": {
@@ -23770,7 +23770,7 @@
         "postfix": false,
         "binop": null
       },
-      "value": "rxvo",
+      "value": "owner",
       "start": 3511,
       "end": 3515,
       "loc": {
@@ -24134,7 +24134,7 @@
         "postfix": false,
         "binop": null
       },
-      "value": "rxvo",
+      "value": "owner",
       "start": 3562,
       "end": 3566,
       "loc": {
@@ -29812,7 +29812,7 @@
         "postfix": false,
         "binop": null
       },
-      "value": "rxvo",
+      "value": "owner",
       "start": 5168,
       "end": 5172,
       "loc": {
@@ -30100,7 +30100,7 @@
         "postfix": false,
         "binop": null
       },
-      "value": "rxvo",
+      "value": "owner",
       "start": 5204,
       "end": 5208,
       "loc": {
@@ -32015,7 +32015,7 @@
     },
     {
       "type": "CommentLine",
-      "value": " Notifiers.get(this.rxvo).sendNext(this.jsonPath);",
+      "value": " Notifiers.get(this.owner).sendNext(this.jsonPath);",
       "start": 5779,
       "end": 5831,
       "loc": {
@@ -34646,7 +34646,7 @@
         "postfix": false,
         "binop": null
       },
-      "value": "rxvo",
+      "value": "owner",
       "start": 6533,
       "end": 6537,
       "loc": {
@@ -36019,7 +36019,7 @@
         "postfix": false,
         "binop": null
       },
-      "value": "rxvo",
+      "value": "owner",
       "start": 6871,
       "end": 6875,
       "loc": {
@@ -37024,7 +37024,7 @@
         "postfix": false,
         "binop": null
       },
-      "value": "rxvo",
+      "value": "owner",
       "start": 7109,
       "end": 7113,
       "loc": {
@@ -39441,7 +39441,7 @@
         "postfix": false,
         "binop": null
       },
-      "value": "rxvo",
+      "value": "owner",
       "start": 7865,
       "end": 7869,
       "loc": {
@@ -39725,7 +39725,7 @@
         "postfix": false,
         "binop": null
       },
-      "value": "rxvo",
+      "value": "owner",
       "start": 7919,
       "end": 7923,
       "loc": {
@@ -40945,7 +40945,7 @@
         "postfix": false,
         "binop": null
       },
-      "value": "rxvo",
+      "value": "owner",
       "start": 8304,
       "end": 8308,
       "loc": {

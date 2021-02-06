@@ -194,10 +194,10 @@
             }
           },
           "extra": {
-            "rawValue": "./rxvo",
-            "raw": "\"./rxvo\""
+            "rawValue": "./owner",
+            "raw": "\"./owner\""
           },
-          "value": "./rxvo"
+          "value": "./owner"
         }
       },
       {
@@ -1000,9 +1000,9 @@
                                                                   "line": 20,
                                                                   "column": 27
                                                                 },
-                                                                "identifierName": "_rxvo"
+                                                                "identifierName": "_owner"
                                                               },
-                                                              "name": "_rxvo"
+                                                              "name": "_owner"
                                                             },
                                                             "init": {
                                                               "type": "NewExpression",
@@ -1443,9 +1443,9 @@
                                                                       "line": 27,
                                                                       "column": 34
                                                                     },
-                                                                    "identifierName": "_rxvo"
+                                                                    "identifierName": "_owner"
                                                                   },
-                                                                  "name": "_rxvo"
+                                                                  "name": "_owner"
                                                                 },
                                                                 "property": {
                                                                   "type": "Identifier",
@@ -2236,9 +2236,9 @@
                                                                   "line": 39,
                                                                   "column": 21
                                                                 },
-                                                                "identifierName": "_rxvo"
+                                                                "identifierName": "_owner"
                                                               },
-                                                              "name": "_rxvo"
+                                                              "name": "_owner"
                                                             },
                                                             "property": {
                                                               "type": "Identifier",
@@ -2288,7 +2288,7 @@
                                             "leadingComments": [
                                               {
                                                 "type": "CommentLine",
-                                                "value": " let _rxvo;",
+                                                "value": " let _owner;",
                                                 "start": 378,
                                                 "end": 391,
                                                 "loc": {
@@ -2320,7 +2320,7 @@
                                               },
                                               {
                                                 "type": "CommentLine",
-                                                "value": "     _rxvo = new RxVO(basicModel);",
+                                                "value": "     _owner = new RxVO(basicModel);",
                                                 "start": 438,
                                                 "end": 474,
                                                 "loc": {
@@ -2384,7 +2384,7 @@
                                               },
                                               {
                                                 "type": "CommentLine",
-                                                "value": "     _rxvo = null;",
+                                                "value": "     _owner = null;",
                                                 "start": 554,
                                                 "end": 574,
                                                 "loc": {
@@ -2716,7 +2716,7 @@
                                                     "innerComments": [
                                                       {
                                                         "type": "CommentLine",
-                                                        "value": " _rxvo = new RxVO(scoresModel);",
+                                                        "value": " _owner = new RxVO(scoresModel);",
                                                         "start": 1508,
                                                         "end": 1541,
                                                         "loc": {
@@ -2735,7 +2735,7 @@
                                                   "trailingComments": [
                                                     {
                                                       "type": "CommentLine",
-                                                      "value": " _rxvo = new RxVO(scoresModel);",
+                                                      "value": " _owner = new RxVO(scoresModel);",
                                                       "start": 1508,
                                                       "end": 1541,
                                                       "loc": {
@@ -2757,7 +2757,7 @@
                                             "leadingComments": [
                                               {
                                                 "type": "CommentLine",
-                                                "value": " let _rxvo;",
+                                                "value": " let _owner;",
                                                 "start": 1446,
                                                 "end": 1459,
                                                 "loc": {
@@ -2858,7 +2858,7 @@
                                                     "innerComments": [
                                                       {
                                                         "type": "CommentLine",
-                                                        "value": " _rxvo = null;",
+                                                        "value": " _owner = null;",
                                                         "start": 1605,
                                                         "end": 1621,
                                                         "loc": {
@@ -2877,7 +2877,7 @@
                                                   "trailingComments": [
                                                     {
                                                       "type": "CommentLine",
-                                                      "value": " _rxvo = null;",
+                                                      "value": " _owner = null;",
                                                       "start": 1605,
                                                       "end": 1621,
                                                       "loc": {
@@ -3056,9 +3056,9 @@
                                                                   "line": 57,
                                                                   "column": 28
                                                                 },
-                                                                "identifierName": "_rxvo1"
+                                                                "identifierName": "_owner1"
                                                               },
-                                                              "name": "_rxvo1"
+                                                              "name": "_owner1"
                                                             },
                                                             "init": {
                                                               "type": "NewExpression",
@@ -3240,9 +3240,9 @@
                                                                   "line": 58,
                                                                   "column": 22
                                                                 },
-                                                                "identifierName": "_rxvo1"
+                                                                "identifierName": "_owner1"
                                                               },
-                                                              "name": "_rxvo1"
+                                                              "name": "_owner1"
                                                             },
                                                             "property": {
                                                               "type": "Identifier",
@@ -3800,9 +3800,9 @@
                                                                       "line": 71,
                                                                       "column": 35
                                                                     },
-                                                                    "identifierName": "_rxvo1"
+                                                                    "identifierName": "_owner1"
                                                                   },
-                                                                  "name": "_rxvo1"
+                                                                  "name": "_owner1"
                                                                 },
                                                                 "property": {
                                                                   "type": "Identifier",
@@ -4329,9 +4329,9 @@
                                                                       "line": 82,
                                                                       "column": 22
                                                                     },
-                                                                    "identifierName": "_rxvo1"
+                                                                    "identifierName": "_owner1"
                                                                   },
-                                                                  "name": "_rxvo1"
+                                                                  "name": "_owner1"
                                                                 },
                                                                 "property": {
                                                                   "type": "Identifier",
@@ -4523,7 +4523,7 @@
                                                         "trailingComments": [
                                                           {
                                                             "type": "CommentLine",
-                                                            "value": " console.log(_rxvo1.errors);",
+                                                            "value": " console.log(_owner1.errors);",
                                                             "start": 2676,
                                                             "end": 2706,
                                                             "loc": {
@@ -4539,7 +4539,7 @@
                                                           },
                                                           {
                                                             "type": "CommentLine",
-                                                            "value": " _rxvo.model.topScores.splice(1, 1, {",
+                                                            "value": " _owner.model.topScores.splice(1, 1, {",
                                                             "start": 2724,
                                                             "end": 2763,
                                                             "loc": {
@@ -4609,7 +4609,7 @@
                                                   "trailingComments": [
                                                     {
                                                       "type": "CommentLine",
-                                                      "value": " console.log(_rxvo1.errors);",
+                                                      "value": " console.log(_owner1.errors);",
                                                       "start": 2676,
                                                       "end": 2706,
                                                       "loc": {
@@ -4625,7 +4625,7 @@
                                                     },
                                                     {
                                                       "type": "CommentLine",
-                                                      "value": " _rxvo.model.topScores.splice(1, 1, {",
+                                                      "value": " _owner.model.topScores.splice(1, 1, {",
                                                       "start": 2724,
                                                       "end": 2763,
                                                       "loc": {
@@ -4719,7 +4719,7 @@
   "comments": [
     {
       "type": "CommentLine",
-      "value": " let _rxvo;",
+      "value": " let _owner;",
       "start": 378,
       "end": 391,
       "loc": {
@@ -4751,7 +4751,7 @@
     },
     {
       "type": "CommentLine",
-      "value": "     _rxvo = new RxVO(basicModel);",
+      "value": "     _owner = new RxVO(basicModel);",
       "start": 438,
       "end": 474,
       "loc": {
@@ -4815,7 +4815,7 @@
     },
     {
       "type": "CommentLine",
-      "value": "     _rxvo = null;",
+      "value": "     _owner = null;",
       "start": 554,
       "end": 574,
       "loc": {
@@ -4847,7 +4847,7 @@
     },
     {
       "type": "CommentLine",
-      "value": " let _rxvo;",
+      "value": " let _owner;",
       "start": 1446,
       "end": 1459,
       "loc": {
@@ -4863,7 +4863,7 @@
     },
     {
       "type": "CommentLine",
-      "value": " _rxvo = new RxVO(scoresModel);",
+      "value": " _owner = new RxVO(scoresModel);",
       "start": 1508,
       "end": 1541,
       "loc": {
@@ -4879,7 +4879,7 @@
     },
     {
       "type": "CommentLine",
-      "value": " _rxvo = null;",
+      "value": " _owner = null;",
       "start": 1605,
       "end": 1621,
       "loc": {
@@ -4927,7 +4927,7 @@
     },
     {
       "type": "CommentLine",
-      "value": " console.log(_rxvo1.errors);",
+      "value": " console.log(_owner1.errors);",
       "start": 2676,
       "end": 2706,
       "loc": {
@@ -4943,7 +4943,7 @@
     },
     {
       "type": "CommentLine",
-      "value": " _rxvo.model.topScores.splice(1, 1, {",
+      "value": " _owner.model.topScores.splice(1, 1, {",
       "start": 2724,
       "end": 2763,
       "loc": {
@@ -5333,7 +5333,7 @@
         "binop": null,
         "updateContext": null
       },
-      "value": "./rxvo",
+      "value": "./owner",
       "start": 70,
       "end": 78,
       "loc": {
@@ -6593,7 +6593,7 @@
     },
     {
       "type": "CommentLine",
-      "value": " let _rxvo;",
+      "value": " let _owner;",
       "start": 378,
       "end": 391,
       "loc": {
@@ -6625,7 +6625,7 @@
     },
     {
       "type": "CommentLine",
-      "value": "     _rxvo = new RxVO(basicModel);",
+      "value": "     _owner = new RxVO(basicModel);",
       "start": 438,
       "end": 474,
       "loc": {
@@ -6689,7 +6689,7 @@
     },
     {
       "type": "CommentLine",
-      "value": "     _rxvo = null;",
+      "value": "     _owner = null;",
       "start": 554,
       "end": 574,
       "loc": {
@@ -6990,7 +6990,7 @@
         "postfix": false,
         "binop": null
       },
-      "value": "_rxvo",
+      "value": "_owner",
       "start": 670,
       "end": 675,
       "loc": {
@@ -7907,7 +7907,7 @@
         "postfix": false,
         "binop": null
       },
-      "value": "_rxvo",
+      "value": "_owner",
       "start": 890,
       "end": 895,
       "loc": {
@@ -9545,7 +9545,7 @@
         "postfix": false,
         "binop": null
       },
-      "value": "_rxvo",
+      "value": "_owner",
       "start": 1291,
       "end": 1296,
       "loc": {
@@ -10330,7 +10330,7 @@
     },
     {
       "type": "CommentLine",
-      "value": " let _rxvo;",
+      "value": " let _owner;",
       "start": 1446,
       "end": 1459,
       "loc": {
@@ -10498,7 +10498,7 @@
     },
     {
       "type": "CommentLine",
-      "value": " _rxvo = new RxVO(scoresModel);",
+      "value": " _owner = new RxVO(scoresModel);",
       "start": 1508,
       "end": 1541,
       "loc": {
@@ -10742,7 +10742,7 @@
     },
     {
       "type": "CommentLine",
-      "value": " _rxvo = null;",
+      "value": " _owner = null;",
       "start": 1605,
       "end": 1621,
       "loc": {
@@ -11103,7 +11103,7 @@
         "postfix": false,
         "binop": null
       },
-      "value": "_rxvo1",
+      "value": "_owner1",
       "start": 1714,
       "end": 1720,
       "loc": {
@@ -11466,7 +11466,7 @@
         "postfix": false,
         "binop": null
       },
-      "value": "_rxvo1",
+      "value": "_owner1",
       "start": 1775,
       "end": 1781,
       "loc": {
@@ -12643,7 +12643,7 @@
         "postfix": false,
         "binop": null
       },
-      "value": "_rxvo1",
+      "value": "_owner1",
       "start": 2160,
       "end": 2166,
       "loc": {
@@ -13645,7 +13645,7 @@
         "postfix": false,
         "binop": null
       },
-      "value": "_rxvo1",
+      "value": "_owner1",
       "start": 2532,
       "end": 2538,
       "loc": {
@@ -14153,7 +14153,7 @@
     },
     {
       "type": "CommentLine",
-      "value": " console.log(_rxvo1.errors);",
+      "value": " console.log(_owner1.errors);",
       "start": 2676,
       "end": 2706,
       "loc": {
@@ -14169,7 +14169,7 @@
     },
     {
       "type": "CommentLine",
-      "value": " _rxvo.model.topScores.splice(1, 1, {",
+      "value": " _owner.model.topScores.splice(1, 1, {",
       "start": 2724,
       "end": 2763,
       "loc": {

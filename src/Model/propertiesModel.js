@@ -88,7 +88,7 @@ export class PropertiesModel extends BaseModel {
         }
 
         if (refValidation(this, value) !== true) {
-            Notifiers.get(this.rxvo).sendError(this.jsonPath, this.rxvo.errors);
+            Notifiers.get(this.owner).sendError(this.jsonPath, this.owner.errors);
             return false;
         }
 
@@ -108,7 +108,7 @@ export class PropertiesModel extends BaseModel {
                 // marks model as clean
                 makeClean(this);
                 // sends notifications
-                Notifiers.get(this.rxvo).sendError(this.jsonPath, e.message);
+                Notifiers.get(this.owner).sendError(this.jsonPath, e.message);
                 return false;
             }
         });
@@ -118,7 +118,7 @@ export class PropertiesModel extends BaseModel {
 
         // // calls next's observable to update subscribers
         if (!this.isDirty) {
-            Notifiers.get(this.rxvo).sendNext(this.jsonPath);
+            Notifiers.get(this.owner).sendNext(this.jsonPath);
         }
 
         return true;
@@ -152,7 +152,7 @@ export class PropertiesModel extends BaseModel {
         this.model[key] = value;
 
         // updates observers
-        Notifiers.get(this.rxvo).sendNext(this.jsonPath);
+        Notifiers.get(this.owner).sendNext(this.jsonPath);
 
         // removes dirtiness
         makeClean(this);
@@ -172,7 +172,7 @@ const handleObjectKey = (model, key) => {
     const e = _sH.setObject(key);
     if (typeof e === "string") {
         makeClean(model);
-        Notifiers.get(model.rxvo).sendError(model.jsonPath, e);
+        Notifiers.get(model.owner).sendError(model.jsonPath, e);
         return false;
     }
 
@@ -194,7 +194,7 @@ const createModelChild = (model, key, value) => {
         // marks model as clean
         makeClean(model);
         // sends notifications
-        Notifiers.get(model.rxvo).sendError(model.jsonPath, value);
+        Notifiers.get(model.owner).sendError(model.jsonPath, value);
         return false;
     }
     return value;
@@ -226,8 +226,8 @@ const setHandler = (model, t, key, value) => {
         // attempts validation of value update
         if (refValidation(model, _o) !== true) {
             makeClean(model);
-            Notifiers.get(model.rxvo).sendError(model.jsonPath, model.rxvo.errors);
-            return `${JSON.stringify(model.rxvo.errors)}`;
+            Notifiers.get(model.owner).sendError(model.jsonPath, model.owner.errors);
+            return `${JSON.stringify(model.owner.errors)}`;
         }
     }
 
@@ -263,7 +263,7 @@ const deleteHandler = (model, t, key) => {
 
     // validates model with value removed
     if (_res !== true) {
-        Notifiers.get(model.rxvo).sendError(model.jsonPath, _res);
+        Notifiers.get(model.owner).sendError(model.jsonPath, _res);
         return _res;
     }
 

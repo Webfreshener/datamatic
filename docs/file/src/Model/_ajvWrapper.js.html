@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">src/Model/_ajvWrapper.js | @webfreshener/vxlib</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="JSON-Schema Based Observable Data Models"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="@webfreshener/vxlib"><meta property="twitter:description" content="JSON-Schema Based Observable Data Models"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/Webfreshener/RxVO.git"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#model">Model</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_branchNotifier.js~Notifiers.html">Notifiers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_metaData.js~MetaData.html">MetaData</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_observerBuilder.js~ObserverBuilder.html">ObserverBuilder</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_schemaHelpers.js~SchemaHelpers.html">SchemaHelpers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/base-model.js~BaseModel.html">BaseModel</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/index.js~Model.html">Model</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/itemsModel.js~ItemsModel.html">ItemsModel</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDefaults">getDefaults</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPatternPropertyDefaults">getPatternPropertyDefaults</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getSchemaID">getSchemaID</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeClean">makeClean</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeDirty">makeDirty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refAtKeyValidation">refAtKeyValidation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refValidation">refValidation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-validate">validate</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-walkObject">walkObject</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ajvRef">_ajvRef</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_dirtyModels">_dirtyModels</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_oBuilders">_oBuilders</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_object">_object</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_observerPaths">_observerPaths</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_observers">_observers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaHelpers">_schemaHelpers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaOptions">_schemaOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaSignatures">_schemaSignatures</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validators">_validators</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-wf">wf</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pipe">Pipe</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipe/Executor.js~Executor.html">Executor</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipe/Iterator.js~Iterator.html">Iterator</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipe/Pipe.js~Pipe.html">Pipe</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipe/Pipe.js~PipeListener.html">PipeListener</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipe/Properties.js~Properties.html">Properties</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipe/Validator.js~Validator.html">Validator</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipe/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipe/vxBehaviorSubject.js~VxBehaviorSubject.html">VxBehaviorSubject</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-castToExec">castToExec</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-fill">fill</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-handleAsync">handleAsync</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-mapArgs">mapArgs</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-wrapCallback">wrapCallback</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_observers">_observers</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/Model/_ajvWrapper.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* ############################################################################
+The MIT License (MIT)
+
+Copyright (c) 2016 - 2019 Van Schroeder
+Copyright (c) 2017-2019 Webfreshener, LLC
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+############################################################################ */
+/**
+ * @private
+ */
+import {_ajvRef} from &quot;./_references&quot;;
+import {Model} from &quot;./index&quot;;
+import Ajv from &quot;ajv&quot;;
+import addFormats from &quot;ajv-formats&quot;;
+import {getSchemaID} from &quot;./utils&quot;;
+
+const _validators = new WeakMap();
+
+/**
+ * backreferences object tree for top-down evaluation
+ * @param path
+ * @param data
+ * @param owner
+ * @returns {any}
+ * @private
+ */
+const _preconstruct = (path, data, owner) =&gt; {
+    const _p = path.replace(/^[a-z0-9_]*#+/i, &quot;&quot;).split(&quot;/&quot;);
+    let _o = Object.assign({}, data);
+
+    while(_p.length &gt; 0) {
+        _p.pop();
+        _o = Object.assign({}, owner.getPath(_p.join(&quot;.&quot;)), _o);
+    }
+
+    return _o;
+};
+
+/**
+ *
+ * @param inst
+ * @param schemas
+ * @param opts
+ * @returns {ajv | ajv.Ajv}
+ */
+const createAjv = (inst, schemas, opts) =&gt; {
+    const _ajv = new Ajv(opts);
+    addFormats(_ajv);
+
+    if (schemas) {
+        if (schemas.hasOwnProperty(&quot;meta&quot;)) {
+            if (Array.isArray(schemas.meta)) {
+                schemas.meta.forEach((meta) =&gt; {
+                    _ajv.addMetaSchema(meta);
+                });
+            }
+        }
+
+        // todo: review performance of addSchema
+        if (schemas.hasOwnProperty(&quot;schemas&quot;)) {
+            let schemaID;
+            if (Array.isArray(schemas.schemas)) {
+                schemas.schemas.forEach((schema) =&gt; {
+                    schemaID = getSchemaID(schema);
+                    _ajv.addSchema(schema, schemaID);
+                });
+            } else {
+                if ((typeof schemas.schemas) === &quot;string&quot;) {
+                    schemaID = getSchemaID(schemas.schema);
+                    _ajv.addSchema(schemas.schemas, schemaID);
+                }
+            }
+
+            if (schemaID) {
+                inst.path = schemaID;
+            }
+        }
+    }
+
+    return _ajv;
+};
+
+/**
+ * Wrapper for Ajv JSON-PropertiesModel Validator
+ * @private
+ */
+export class AjvWrapper {
+    /**
+     * @constructor
+     * @param owner
+     * @param schemas
+     * @param ajvOptions
+     */
+    constructor(owner, schemas, ajvOptions = {}) {
+        // ensures that we are given something that represents a Model object
+        if ((!owner) || !(owner instanceof Model)) {
+            throw &quot;Model is required at arguments[0]&quot;;
+        }
+
+        if (_validators.get(this) === void(0)) {
+            _validators.set(this, {});
+        }
+
+        // defines getter for parent Model reference
+        Object.defineProperty(this, &quot;$owner&quot;, {
+            get: () =&gt; owner,
+            enumerable: false,
+        });
+
+        // applies user specified options over our default Ajv Options
+        const opts = Object.assign(_ajvOptions, ajvOptions);
+
+        // makes user defined options object accessible for evaluation
+        Object.defineProperty(this, &quot;options&quot;, {
+            get: () =&gt; opts,
+            enumerable: true,
+        });
+
+        // declares default path of root# for validation queries
+        this.path = &quot;root#&quot;;
+
+        // appends trailing &quot;#&quot; to end of &quot;id&quot; string if missing
+        const _procID = (id) =&gt; id.match(/#+$/) === null ? `${id}#` : id;
+
+        // processes schema &quot;id&quot; for JSON-schemas =&lt; v04 and &gt;= v06
+        const _procSchema = (_s) =&gt; {
+            if (_s.hasOwnProperty(&quot;$id&quot;)) {
+                _s[&quot;$id&quot;] = _procID(_s[&quot;$id&quot;]);
+            }
+
+            if (_s.hasOwnProperty(&quot;id&quot;)) {
+                _s[&quot;id&quot;] = _procID(_s[&quot;id&quot;]);
+            }
+            return _s;
+        };
+
+        // evaluates contents of schemas to normalize &quot;id&quot; attributes to have trailing &quot;#&quot;
+        if ((typeof schemas) === &quot;object&quot;) {
+            if (schemas.hasOwnProperty(&quot;schemas&quot;)) {
+                if (Array.isArray(schemas.schemas)) {
+                    schemas.schemas = schemas.schemas.map(_procSchema);
+                } else {
+                    schemas.schemas = _procSchema(schemas.schemas);
+                }
+            } else {
+                if (Array.isArray(schemas)) {
+                    schemas = schemas.map(_procSchema);
+                } else {
+                    schemas = _procSchema(schemas);
+                }
+            }
+        }
+
+        const _ajv = createAjv(this, schemas, opts);
+
+        // initializes Ajv instance for this Doc and stores it to WeakMap
+        _ajvRef.set(this, _ajv);
+
+        // accept no further modifications to this object
+        Object.seal(this);
+    }
+
+    /**
+     * Helper method to derive path for given model
+     * todo: review for removal
+     * @param model
+     * @return {string}
+     */
+    static resolvePath(model) {
+        return &quot;not yet implemented&quot;;
+    }
+
+    /**
+     * Getter for captive Ajv validator
+     * -- use this for Ajv API Methods
+     * @returns {ajv}
+     */
+    get $ajv() {
+        return _ajvRef.get(this);
+    }
+
+    /**
+     * Executes validator at PropertiesModel $model `path` against `value`
+     * @param {string} path
+     * @param {any} value
+     */
+    exec(path, value) {
+        // appends id ref to path
+        if (path.indexOf(&quot;#&quot;) &lt; 0) {
+            path = `${this.path}${path}`;
+        }
+
+        let _res = false;
+
+        /*
+            makes initial validation attempt and reattempts from top on failure
+         */
+        try {
+            _res = this.$ajv.validate(path, value);
+        } catch (e) {
+            if (path.replace(/(items|properties)\/?/, &quot;&quot;).split(&quot;/&quot;).length) {
+                return this.exec(`${this.path}/`, _preconstruct(path, value, this.$owner));
+            }
+        }
+
+        return _res;
+    }
+}
+
+/**
+ * AJV Options Config in it&apos;s entirely for reference
+ * only Model specific option changes are enabled
+ * @type {*}
+ * @private
+ */
+const _ajvOptions = {
+    // strict mode options (NEW)
+    strict: true,
+    strictTypes: &quot;log&quot;,
+    strictTuples: &quot;log&quot;,
+    allowUnionTypes: true,
+    allowMatchingProperties: false,
+    validateFormats: true,
+    // validation and reporting options:
+    $data: false,
+    allErrors: false,
+    verbose: false,
+    $comment: false,
+    formats: {},
+    keywords: [],
+    schemas: {},
+    logger: undefined,
+    loadSchema: undefined, // function(uri: string): Promise {}
+    // options to modify validated data:
+    removeAdditional: false,
+    useDefaults: false,
+    coerceTypes: false,
+    // advanced options:
+    meta: true,
+    validateSchema: true,
+    addUsedSchema: true,
+    inlineRefs: true,
+    passContext: false,
+    loopRequired: Infinity,
+    loopEnum: Infinity, // NEW
+    ownProperties: false,
+    multipleOfPrecision: undefined,
+    messages: true,
+    code: {
+        // NEW
+        es5: false,
+        lines: false,
+        source: false,
+        process: undefined, // (code: string) =&gt; string
+        optimize: true,
+    },
+};
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

@@ -3,7 +3,7 @@ import {Model} from "./index";
 
 describe("Model Class Tests", () => {
     describe("Test Method", () => {
-        let _rxvo;
+        let _owner;
         const _d = {
             name: "Ed Testy",
             age: 99,
@@ -11,27 +11,27 @@ describe("Model Class Tests", () => {
         };
 
         beforeEach(() => {
-            _rxvo = new Model({schemas: [basicModel]});
+            _owner = new Model({schemas: [basicModel]});
             _d.active = true;
         });
 
         it("should validate models against schema", () => {
-            expect(_rxvo.model.$model.validate(_d)).toBe(true);
+            expect(_owner.model.$model.validate(_d)).toBe(true);
             _d.active = "1234";
-            expect(_rxvo.model.$model.validate(_d)).toBe("data/active should be boolean");
+            expect(_owner.model.$model.validate(_d)).toBe("data/active should be boolean");
         });
 
         it("should support subscription callbacks object", (done) => {
-            _rxvo.subscribe({
+            _owner.subscribe({
                 next: () => done(),
                 error: done,
             });
-            _rxvo.model = _d;
+            _owner.model = _d;
         });
 
         it("should allow function as next callback", (done) => {
-            _rxvo.subscribe(() => done());
-            _rxvo.model = _d;
+            _owner.subscribe(() => done());
+            _owner.model = _d;
         });
 
         it("should be observable", (done) => {
@@ -40,15 +40,15 @@ describe("Model Class Tests", () => {
             const _iterator = {
                 next: (
                     () => _ival++ < _arr.length ? {
-                        value: _rxvo.model = _d,
+                        value: _owner.model = _d,
                         done: false,
                     } : {
-                        value: _rxvo.freeze(),
+                        value: _owner.freeze(),
                         done: true,
                     }
                 ),
             };
-            _rxvo.subscribe({next: _iterator.next, complete: done});
+            _owner.subscribe({next: _iterator.next, complete: done});
             _iterator.next();
         });
     });

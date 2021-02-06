@@ -7,24 +7,24 @@ import deepEqual from "deep-equal";
 describe("RXJS Test Suite", () => {
     describe("Basic Notifications", () => {
         describe("update", () => {
-            // let _rxvo;
+            // let _owner;
             // beforeEach(() => {
-            //     _rxvo = new Model(basicModel);
+            //     _owner = new Model(basicModel);
             // });
             //
             // afterEach(() => {
-            //     _rxvo = null;
+            //     _owner = null;
             // });
 
             it("should have some tests", (done) => {
-                const _rxvo = new Model({schemas: [basicModel]});
+                const _owner = new Model({schemas: [basicModel]});
                 const _d = {
                     name: "A Name",
                     age: 99,
                     active: true,
                 };
 
-                const _sub = _rxvo.subscribe({
+                const _sub = _owner.subscribe({
                     next: (model) => {
                         _sub.unsubscribe();
                         expect(deepEqual(model.toJSON(), _d)).toBe(true);
@@ -36,26 +36,26 @@ describe("RXJS Test Suite", () => {
                     }
                 });
 
-                _rxvo.model = _d;
+                _owner.model = _d;
             });
         });
     });
 
     describe("Nested Element Notifications", () => {
         describe("update", () => {
-            // let _rxvo;
+            // let _owner;
 
             beforeEach(() => {
-                // _rxvo = new Model(scoresModel);
+                // _owner = new Model(scoresModel);
             });
 
             afterEach(() => {
-                // _rxvo = null;
+                // _owner = null;
             });
 
             it("should have some tests", (done) => {
-                const _rxvo1 = new Model({schemas: [scoresModel]});
-                _rxvo1.model = {
+                const _owner1 = new Model({schemas: [scoresModel]});
+                _owner1.model = {
                     name: "A Game",
                     topScores: [{
                         name: "Player 1",
@@ -68,7 +68,7 @@ describe("RXJS Test Suite", () => {
 
                 let cnt = 0;
 
-                const _sub = _rxvo1.subscribe({
+                const _sub = _owner1.subscribe({
                     next: (res) => {
                         // expect(res.model.topScores.length).toBe(3);
                         // _sub.unsubscribe();
@@ -79,14 +79,14 @@ describe("RXJS Test Suite", () => {
                     }
                 });
 
-                _rxvo1.model.topScores.push({
+                _owner1.model.topScores.push({
                     name: "Player 3",
                     score: 3000000000,
                 });
 
-                // console.log(_rxvo1.errors);
+                // console.log(_owner1.errors);
 
-                // _rxvo.model.topScores.splice(1, 1, {
+                // _owner.model.topScores.splice(1, 1, {
                 //     name: "Player 3",
                 //     score: 4000000000,
                 // });

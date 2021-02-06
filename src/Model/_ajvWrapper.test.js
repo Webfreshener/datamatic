@@ -35,15 +35,15 @@ describe("AJVWrapper Tests", () => {
                 schemas: [OpenAPIv2],
             };
 
-            const rxvo = new Model(schemas);
-            const _ajv = new AjvWrapper(rxvo, schemas);
+            const owner = new Model(schemas);
+            const _ajv = new AjvWrapper(owner, schemas);
 
             const _isValid = _ajv.exec("http://swagger.io/v2/schema.json#", PetStoreV2);
-            rxvo.model = PetStoreV2;
+            owner.model = PetStoreV2;
 
-            expect(rxvo.errors).toBe(null);
+            expect(owner.errors).toBe(null);
             expect(_isValid).toBe(true);
-            expect(JSON.parse(`${rxvo}`)).toEqual(PetStoreV2);
+            expect(JSON.parse(`${owner}`)).toEqual(PetStoreV2);
         });
     });
 });

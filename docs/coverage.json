@@ -1,25 +1,25 @@
 {
-  "coverage": "88.75%",
-  "expectCount": 169,
-  "actualCount": 150,
+  "coverage": "82.15%",
+  "expectCount": 241,
+  "actualCount": 198,
   "files": {
-    "src/classes/_ajvWrapper.js": {
+    "src/Model/_ajvWrapper.js": {
       "expectCount": 10,
       "actualCount": 8,
       "undocumentLines": [
-        34,
-        135
+        35,
+        138
       ]
     },
-    "src/classes/_branchNotifier.js": {
+    "src/Model/_branchNotifier.js": {
       "expectCount": 14,
       "actualCount": 12,
       "undocumentLines": [
-        27,
-        51
+        28,
+        52
       ]
     },
-    "src/classes/_metaData.js": {
+    "src/Model/_metaData.js": {
       "expectCount": 12,
       "actualCount": 10,
       "undocumentLines": [
@@ -27,7 +27,7 @@
         45
       ]
     },
-    "src/classes/_observerBuilder.js": {
+    "src/Model/_observerBuilder.js": {
       "expectCount": 13,
       "actualCount": 10,
       "undocumentLines": [
@@ -36,7 +36,7 @@
         32
       ]
     },
-    "src/classes/_references.js": {
+    "src/Model/_references.js": {
       "expectCount": 13,
       "actualCount": 11,
       "undocumentLines": [
@@ -44,53 +44,130 @@
         31
       ]
     },
-    "src/classes/_schemaHelpers.js": {
+    "src/Model/_schemaHelpers.js": {
       "expectCount": 6,
       "actualCount": 5,
       "undocumentLines": [
         43
       ]
     },
-    "src/classes/itemsModel.js": {
-      "expectCount": 8,
-      "actualCount": 6,
-      "undocumentLines": [
-        34,
-        115
-      ]
-    },
-    "src/classes/model.js": {
+    "src/Model/base-model.js": {
       "expectCount": 26,
       "actualCount": 25,
       "undocumentLines": [
-        70
+        69
       ]
     },
-    "src/classes/pipe.js": {
-      "expectCount": 24,
-      "actualCount": 21,
-      "undocumentLines": [
-        28,
-        29,
-        49
-      ]
-    },
-    "src/classes/propertiesModel.js": {
-      "expectCount": 11,
-      "actualCount": 11,
-      "undocumentLines": []
-    },
-    "src/classes/rxvo.js": {
-      "expectCount": 22,
-      "actualCount": 21,
+    "src/Model/index.js": {
+      "expectCount": 23,
+      "actualCount": 22,
       "undocumentLines": [
         36
       ]
     },
-    "src/classes/utils.js": {
+    "src/Model/itemsModel.js": {
+      "expectCount": 9,
+      "actualCount": 7,
+      "undocumentLines": [
+        34,
+        119
+      ]
+    },
+    "src/Model/propertiesModel.js": {
+      "expectCount": 11,
+      "actualCount": 11,
+      "undocumentLines": []
+    },
+    "src/Model/utils.js": {
       "expectCount": 10,
       "actualCount": 10,
       "undocumentLines": []
+    },
+    "src/Pipe/Executor.js": {
+      "expectCount": 3,
+      "actualCount": 2,
+      "undocumentLines": [
+        28
+      ]
+    },
+    "src/Pipe/Iterator.js": {
+      "expectCount": 6,
+      "actualCount": 0,
+      "undocumentLines": [
+        3,
+        4,
+        6,
+        7,
+        13,
+        17
+      ]
+    },
+    "src/Pipe/Pipe.js": {
+      "expectCount": 34,
+      "actualCount": 29,
+      "undocumentLines": [
+        32,
+        33,
+        39,
+        434,
+        574
+      ]
+    },
+    "src/Pipe/Properties.js": {
+      "expectCount": 2,
+      "actualCount": 1,
+      "undocumentLines": [
+        33
+      ]
+    },
+    "src/Pipe/Utils.js": {
+      "expectCount": 6,
+      "actualCount": 6,
+      "undocumentLines": []
+    },
+    "src/Pipe/Utils.test.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        4
+      ]
+    },
+    "src/Pipe/Validator.js": {
+      "expectCount": 18,
+      "actualCount": 13,
+      "undocumentLines": [
+        31,
+        32,
+        33,
+        35,
+        37
+      ]
+    },
+    "src/Pipe/_ajvWrapper.js": {
+      "expectCount": 15,
+      "actualCount": 10,
+      "undocumentLines": [
+        31,
+        32,
+        33,
+        57,
+        86
+      ]
+    },
+    "src/Pipe/vxBehaviorSubject.js": {
+      "expectCount": 8,
+      "actualCount": 6,
+      "undocumentLines": [
+        28,
+        30
+      ]
+    },
+    "src/dist.test.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        2
+      ]
     }
   }
 }

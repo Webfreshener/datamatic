@@ -77,15 +77,15 @@ class CompleteNotification {
 class Notifier {
     /**
      *
-     * @param rxvo
+     * @param owner
      * @returns {Notifier|*}
      */
-    constructor(rxvo) {
-        Object.defineProperty(this, "$rxvo", {
-            get: () => rxvo,
+    constructor(owner) {
+        Object.defineProperty(this, "$owner", {
+            get: () => owner,
         });
 
-        notifiers.set(rxvo, this);
+        notifiers.set(owner, this);
     }
 
     /**
@@ -97,8 +97,8 @@ class Notifier {
             forPath = `.${forPath}`;
         }
 
-        this.$rxvo.getModelsInPath(forPath).forEach(
-            (m) => _oBuilders.get(this.$rxvo).next(m.$model)
+        this.$owner.getModelsInPath(forPath).forEach(
+            (m) => _oBuilders.get(this.$owner).next(m.$model)
         );
     }
 
@@ -108,8 +108,8 @@ class Notifier {
      * @param error
      */
     sendError(forPath, error) {
-        this.$rxvo.getModelsInPath(forPath)
-            .forEach((model) => _oBuilders.get(this.$rxvo).error(model.$model,
+        this.$owner.getModelsInPath(forPath)
+            .forEach((model) => _oBuilders.get(this.$owner).error(model.$model,
                 new ErrorNotification(model.$model.path, error)));
     }
 
@@ -118,8 +118,8 @@ class Notifier {
      * @param forPath
      */
     sendComplete(forPath) {
-        this.$rxvo.getModelsInPath(forPath)
-            .forEach((model) => _oBuilders.get(this.$rxvo).complete(model.$model));
+        this.$owner.getModelsInPath(forPath)
+            .forEach((model) => _oBuilders.get(this.$owner).complete(model.$model));
     }
 }
 
@@ -130,20 +130,20 @@ class Notifier {
 export default class Notifiers {
     /**
      *
-     * @param rxvo
+     * @param owner
      * @returns {*}
      */
-    static create(rxvo) {
-        new Notifier(rxvo);
-        return Notifiers.get(rxvo);
+    static create(owner) {
+        new Notifier(owner);
+        return Notifiers.get(owner);
     }
 
     /**
      *
-     * @param rxvo
+     * @param owner
      * @returns {Notifier}
      */
-    static get(rxvo) {
-        return notifiers.get(rxvo);
+    static get(owner) {
+        return notifiers.get(owner);
     }
 }

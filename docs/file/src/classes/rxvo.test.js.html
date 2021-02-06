@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../../">
-  <title data-ice="title">src/classes/rxvo.test.js | rxvo</title>
+  <title data-ice="title">src/classes/owner.test.js | owner</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
   <script src="script/manual.js"></script>
-<meta name="description" content="RxJS + JSON-Schema Based Observable Data Models"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="rxvo"><meta property="twitter:description" content="RxJS + JSON-Schema Based Observable Data Models"></head>
+<meta name="description" content="RxJS + JSON-Schema Based Observable Data Models"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="owner"><meta property="twitter:description" content="RxJS + JSON-Schema Based Observable Data Models"></head>
 <body class="layout-container" data-ice="rootContainer">
 
 <header>
@@ -38,7 +38,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">Model</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/owner.js~RxVO.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDefaults">getDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPatternPropertyDefaults">getPatternPropertyDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getSchemaID">getSchemaID</a></span></span></li>
@@ -65,41 +65,41 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><h1 data-ice="title">src/classes/rxvo.test.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {Model} from &quot;./rxvo&quot;
+<div class="content" data-ice="content"><h1 data-ice="title">src/classes/owner.test.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {Model} from &quot;./owner&quot;
 import {basicModel} from &quot;../../fixtures/PropertiesModel.schemas&quot;;
 import {default as basicRefs} from &quot;../../fixtures/basic-refs.schema&quot;;
 import {default as refsData} from &quot;../../fixtures/basic-refs.data&quot;;
 
 describe(&quot;Model Instance Test&quot;, () =&gt; {
-    let _rxvo;
+    let _owner;
 
     beforeEach(() =&gt; {
-        _rxvo = new Model({schemas: [basicModel]});
+        _owner = new Model({schemas: [basicModel]});
     });
 
     it(&quot;expects a valid Model instance&quot;, () =&gt; {
-        expect(_rxvo instanceof Model).toBe(true);
+        expect(_owner instanceof Model).toBe(true);
     });
 
     it(&quot;should get it&apos;s schema&quot;, () =&gt; {
-        expect(_rxvo.schema).toEqual(basicModel);
+        expect(_owner.schema).toEqual(basicModel);
     });
 
     it(&quot;should get path elements&quot;, () =&gt; {
-        expect(_rxvo.getSchemaForPath(&quot;properties/name&quot;)).toEqual({type: &quot;string&quot;});
+        expect(_owner.getSchemaForPath(&quot;properties/name&quot;)).toEqual({type: &quot;string&quot;});
     });
 
     it(&quot;expects Model Instances to create a valid Model Document&quot;, () =&gt; {
-        _rxvo.model = {
+        _owner.model = {
             &quot;name&quot;: &quot;test&quot;,
         };
 
-        expect(`${_rxvo.model.name}`).toEqual(&quot;test&quot;);
+        expect(`${_owner.model.name}`).toEqual(&quot;test&quot;);
     });
 
     it(&quot;runs schema validator&quot;, () =&gt; {
-        const _rxvo = new Model({
+        const _owner = new Model({
             properties:
                 {
                     id: {type: &apos;integer&apos;},
@@ -109,20 +109,20 @@ describe(&quot;Model Instance Test&quot;, () =&gt; {
                 },
         });
 
-        expect(_rxvo.errors).toBe(null);
+        expect(_owner.errors).toBe(null);
     });
 
     describe(&quot;Mixed schemas&quot;, () =&gt; {
         it(&quot;should allow mixed schemas to be selected and used&quot;, () =&gt; {
-            const _rxvo = new Model({schemas: [basicRefs]});
-            _rxvo.subscribe({
+            const _owner = new Model({schemas: [basicRefs]});
+            _owner.subscribe({
                 error: (e) =&gt; console.log(JSON.stringify(e)),
             });
-            _rxvo.model = refsData;
-            expect(_rxvo.errors).toBe(null);
-            _rxvo.model.aReference.valueA = &quot;A String Value&quot;;
-            expect(_rxvo.errors).toBe(null);
-            expect(_rxvo.model).toEqual(refsData);
+            _owner.model = refsData;
+            expect(_owner.errors).toBe(null);
+            _owner.model.aReference.valueA = &quot;A String Value&quot;;
+            expect(_owner.errors).toBe(null);
+            expect(_owner.model).toEqual(refsData);
         });
     });
 });

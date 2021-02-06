@@ -3,12 +3,12 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../../">
-  <title data-ice="title">src/classes/utils.test.js | rxvo</title>
+  <title data-ice="title">src/classes/utils.test.js | owner</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
   <script src="script/manual.js"></script>
-<meta name="description" content="RxJS + JSON-Schema Based Observable Data Models"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="rxvo"><meta property="twitter:description" content="RxJS + JSON-Schema Based Observable Data Models"></head>
+<meta name="description" content="RxJS + JSON-Schema Based Observable Data Models"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="owner"><meta property="twitter:description" content="RxJS + JSON-Schema Based Observable Data Models"></head>
 <body class="layout-container" data-ice="rootContainer">
 
 <header>
@@ -38,7 +38,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">Model</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/owner.js~RxVO.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDefaults">getDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPatternPropertyDefaults">getPatternPropertyDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getSchemaID">getSchemaID</a></span></span></li>
@@ -77,26 +77,26 @@ import {
     patternModel, nestedPatternModel
 } from &quot;../../fixtures/PropertiesModel.schemas&quot;;
 
-import {Model} from &quot;./rxvo&quot;;
+import {Model} from &quot;./owner&quot;;
 
 describe(&quot;Utils tests&quot;, () =&gt; {
     describe(&quot;make dirty and make clean&quot;, () =&gt; {
         describe(&quot;basic PropertiesModel dirtiness&quot;, () =&gt; {
-            const _rxvo = new Model(basicModel);
+            const _owner = new Model(basicModel);
             it(&quot;should make model dirty&quot;, () =&gt; {
-                makeDirty(_rxvo.model.$model);
-                expect(_rxvo.model.$model.isDirty).toBe(true);
+                makeDirty(_owner.model.$model);
+                expect(_owner.model.$model.isDirty).toBe(true);
             });
 
             it(&quot;should make model clean&quot;, () =&gt; {
-                makeClean(_rxvo.model.$model);
-                expect(_rxvo.model.$model.isDirty).toBe(false);
+                makeClean(_owner.model.$model);
+                expect(_owner.model.$model.isDirty).toBe(false);
             });
         });
 
         describe(&quot;nested PropertiesModel dirtiness&quot;, () =&gt; {
-            const _rxvo = new Model({schemas: [nestedModel]});
-            _rxvo.model = {
+            const _owner = new Model({schemas: [nestedModel]});
+            _owner.model = {
                 aObject: {
                     bObject: {
                         bValue: 123,
@@ -104,37 +104,37 @@ describe(&quot;Utils tests&quot;, () =&gt; {
                 },
             };
             it(&quot;should make model dirty&quot;, () =&gt; {
-                makeDirty(_rxvo.model.aObject.bObject.$model);
-                expect(_rxvo.model.aObject.$model.isDirty).toBe(false);
-                expect(_rxvo.model.aObject.bObject.$model.isDirty).toBe(true);
+                makeDirty(_owner.model.aObject.bObject.$model);
+                expect(_owner.model.aObject.$model.isDirty).toBe(false);
+                expect(_owner.model.aObject.bObject.$model.isDirty).toBe(true);
             });
 
             it(&quot;should make model clean&quot;, () =&gt; {
-                makeClean(_rxvo.model.aObject.bObject.$model);
-                expect(_rxvo.model.aObject.bObject.$model.isDirty).toBe(false);
+                makeClean(_owner.model.aObject.bObject.$model);
+                expect(_owner.model.aObject.bObject.$model.isDirty).toBe(false);
             });
         });
     });
 
     describe(&quot;Validation Methods&quot;, () =&gt; {
         describe(&quot;refValidation tests&quot;, () =&gt; {
-            const _rxvo = new Model({schemas: [basicModel]});
+            const _owner = new Model({schemas: [basicModel]});
 
             it(&quot;should pass validation against refValidation&quot;, () =&gt; {
-                const _res = refValidation(_rxvo.model.$model,
+                const _res = refValidation(_owner.model.$model,
                     {name: &quot;test&quot;, age: 99, active: true});
                 expect(_res).toBe(true);
             });
 
             it(&quot;should fail validation against refValidation&quot;, () =&gt; {
-                const _res = refValidation(_rxvo.model.$model,
+                const _res = refValidation(_owner.model.$model,
                     {name: &quot;test&quot;, age: &quot;99&quot;, active: true});
                 expect(_res).toBe(&quot;data/age should be number&quot;);
             });
         });
 
         describe(&quot;refAtKeyValidation tests&quot;, () =&gt; {
-            const _rxvo = new Model({schemas: [nestedModel]});
+            const _owner = new Model({schemas: [nestedModel]});
             const _data = {
                 aObject: {
                     bObject: {
@@ -142,32 +142,32 @@ describe(&quot;Utils tests&quot;, () =&gt; {
                     },
                 },
             };
-            _rxvo.model = _data;
+            _owner.model = _data;
             it(&quot;should pass validation against refValidation&quot;, () =&gt; {
-                const _res = refAtKeyValidation(_rxvo.model.aObject.$model,
+                const _res = refAtKeyValidation(_owner.model.aObject.$model,
                     &quot;properties/bObject&quot;, _data.aObject.bObject);
                 expect(_res).toBe(true);
             });
 
             it(&quot;should fail validation against refValidation&quot;, () =&gt; {
                 _data.aObject.bObject.bValue = &quot;123&quot;;
-                const _res = refAtKeyValidation(_rxvo.model.aObject.$model,
+                const _res = refAtKeyValidation(_owner.model.aObject.$model,
                     &quot;properties/bObject&quot;, _data.aObject.bObject);
                 expect(_res).toBe(&quot;data/bValue should be integer&quot;);
             });
         });
 
         describe(&quot;validate method&quot;, () =&gt; {
-            const _rxvo = new Model({schemas: [basicModel]});
+            const _owner = new Model({schemas: [basicModel]});
             const _data = {name: &quot;test&quot;, age: 99, active: true};
             it(&quot;should pass validation against refValidation&quot;, () =&gt; {
-                const _res = validate(_rxvo.model.$model, &quot;&quot;, _data);
+                const _res = validate(_owner.model.$model, &quot;&quot;, _data);
                 expect(_res).toBe(true);
             });
 
             it(&quot;should fail validation against refValidation&quot;, () =&gt; {
                 _data.age = &quot;99&quot;
-                const _res = validate(_rxvo.model.$model, &quot;&quot;, _data);
+                const _res = validate(_owner.model.$model, &quot;&quot;, _data);
                 expect(_res).toBe(&quot;data/age should be number&quot;);
             });
         });

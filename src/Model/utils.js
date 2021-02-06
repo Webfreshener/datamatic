@@ -31,7 +31,7 @@ import merge from "lodash.merge";
  * @param {BaseModel} model
  */
 export const makeDirty = (model) => {
-    _dirtyModels.get(model.rxvo)[model.path] = true;
+    _dirtyModels.get(model.owner)[model.path] = true;
 };
 
 /**
@@ -39,8 +39,8 @@ export const makeDirty = (model) => {
  * @param {BaseModel} model
  */
 export const makeClean = (model) => {
-    if (model.isDirty && _dirtyModels.get(model.rxvo)[model.path]) {
-        delete _dirtyModels.get(model.rxvo)[model.path];
+    if (model.isDirty && _dirtyModels.get(model.owner)[model.path]) {
+        delete _dirtyModels.get(model.owner)[model.path];
     }
 };
 
@@ -87,7 +87,7 @@ export const refAtKeyValidation = (model, key, value) => {
  */
 export const validate = (model, path, value) => {
     // obtains validator reference
-    const _v = _validators.get(model.rxvo);
+    const _v = _validators.get(model.owner);
     const _res = _v.exec(path, value);
     // runs validation and returns result or errors
     return _res ? true : _v.$ajv.errorsText(_res.errors);

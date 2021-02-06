@@ -268,7 +268,7 @@ export class Model {
     /**
      *
      * @param pipesOrSchemas
-     * @returns {TxPipe}
+     * @returns {Pipe}
      */
     pipe(...pipesOrSchemas) {
         return _documents.get(this).pipe(...pipesOrSchemas);

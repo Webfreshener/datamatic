@@ -38,17 +38,17 @@ const _validators = new WeakMap();
  * backreferences object tree for top-down evaluation
  * @param path
  * @param data
- * @param rxvo
+ * @param owner
  * @returns {any}
  * @private
  */
-const _preconstruct = (path, data, rxvo) => {
+const _preconstruct = (path, data, owner) => {
     const _p = path.replace(/^[a-z0-9_]*#+/i, "").split("/");
     let _o = Object.assign({}, data);
 
     while(_p.length > 0) {
         _p.pop();
-        _o = Object.assign({}, rxvo.getPath(_p.join(".")), _o);
+        _o = Object.assign({}, owner.getPath(_p.join(".")), _o);
     }
 
     return _o;
@@ -105,13 +105,13 @@ const createAjv = (inst, schemas, opts) => {
 export class AjvWrapper {
     /**
      * @constructor
-     * @param rxvo
+     * @param owner
      * @param schemas
      * @param ajvOptions
      */
-    constructor(rxvo, schemas, ajvOptions = {}) {
+    constructor(owner, schemas, ajvOptions = {}) {
         // ensures that we are given something that represents a Model object
-        if ((!rxvo) || !(rxvo instanceof Model)) {
+        if ((!owner) || !(owner instanceof Model)) {
             throw "Model is required at arguments[0]";
         }
 
@@ -120,8 +120,8 @@ export class AjvWrapper {
         }
 
         // defines getter for parent Model reference
-        Object.defineProperty(this, "$rxvo", {
-            get: () => rxvo,
+        Object.defineProperty(this, "$owner", {
+            get: () => owner,
             enumerable: false,
         });
 
@@ -217,7 +217,7 @@ export class AjvWrapper {
             _res = this.$ajv.validate(path, value);
         } catch (e) {
             if (path.replace(/(items|properties)\/?/, "").split("/").length) {
-                return this.exec(`${this.path}/`, _preconstruct(path, value, this.$rxvo));
+                return this.exec(`${this.path}/`, _preconstruct(path, value, this.$owner));
             }
         }
 
