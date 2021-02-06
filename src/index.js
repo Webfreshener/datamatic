@@ -28,4 +28,4 @@ if (typeof Object.assign !== "function") {
     Object.assign = require('object.assign/polyfill')();
 }
 export {Model} from "./Model";
-export {Pipe} from "./Pipeline";
+export {Pipeline} from "./Pipeline";

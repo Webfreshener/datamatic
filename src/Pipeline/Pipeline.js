@@ -33,7 +33,7 @@ const _pipes = new WeakMap();
 const _cache = new WeakMap();
 
 /**
- * Pipe Class
+ * Pipeline Class
  */
 export class Pipeline {
     static getExecs(..._pvs) {
@@ -377,7 +377,7 @@ export class Pipeline {
      */
     subscribe(handler) {
         if (!(typeof handler).match(/^(function|object)$/)) {
-            throw "handler required for Pipe::subscribe";
+            throw "handler required for Pipeline::subscribe";
         }
 
         return _pipes.get(this).out.subscribe(handler);

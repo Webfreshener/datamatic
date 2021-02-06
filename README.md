@@ -226,7 +226,7 @@ Represents an Properties (Object} entry in the given schema
 | options [getter]   | | retrieves options passed to Model instance |
 | path [getter]   | | retrieves json-schema path string for Model instance. eg: "#/this/is/my/path" |
 | parent [getter]   | | retrieves Model's parent Model instance |
-| pipe | ..pipesOrSchemas | returns Pipe instance for operating on model |
+| pipe | ..pipesOrSchemas | returns Pipeline instance for operating on model |
 | reset | | resets model to initial state if operation is valid |
 | root [getter]   | | retrieves root Model instance |
 | model [getter]   | | retrieves Model's internal Model Document instance |
@@ -237,7 +237,7 @@ Represents an Properties (Object} entry in the given schema
 | validate   | path (string), value (object) | validates data at given ath against JSON-Schema |
 | validationPath [getter] | | retrieves json-schema path string for Model validation |
 
-#### Pipe Class ####
+#### Pipeline Class ####
 | Method        | Arguments | Description  |
 |:--------------|:----------|:-------|
 | constructor | ...pipesOrSchemas | class constructor method |
@@ -248,7 +248,7 @@ Represents an Properties (Object} entry in the given schema
 | clone | | returns clone of current `pipe` segment |
 | close | | terminates input on `pipe` segment |
 | writable [getter] | | Returns write status of `pipe` |
-| link | target (Pipe), ...pipesOrSchemas | links `pipe` segment to direct output to target `pipe` |
+| link | target (Pipeline), ...pipesOrSchemas | links `pipe` segment to direct output to target `pipe` |
 | merge | pipeOrPipes, schema | merges multiple pipes into single output |
 | once | | informs `pipe` to close after first notification |
 | pipe | ...pipesOrSchemas | returns new chained `pipe` segment |
@@ -256,6 +256,6 @@ Represents an Properties (Object} entry in the given schema
 | split | ...pipesOrSchemas | creates array of new `pipe` segments that run in parallel |
 | tap | | Provides current state of `pipe` output. alias for `toJSON` |
 | throttle | rate (number) | Limit notifications to rate based on time interval |
-| unlink | target (Pipe)| unlinks `pipe` segment from target `pipe` |
+| unlink | target (Pipeline)| unlinks `pipe` segment from target `pipe` |
 | write | data (object / array / string / number / boolean)| writes data to `pipe` |
 

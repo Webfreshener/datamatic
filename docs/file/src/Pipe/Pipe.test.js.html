@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../../">
-  <title data-ice="title">src/Pipe/Pipe.test.js | @webfreshener/vxlib</title>
+  <title data-ice="title">src/Pipeline/Pipeline.test.js | @webfreshener/vxlib</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -13,10 +13,10 @@
 
 <header>
   <a href="./">Home</a>
-  
+
   <a href="identifiers.html">Reference</a>
   <a href="source.html">Source</a>
-  
+
   <div class="search-box">
   <span>
     <img src="./image/search.png">
@@ -28,7 +28,7 @@
 
 <nav class="navigation" data-ice="nav"><div>
   <ul>
-    
+
   <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#model">Model</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_branchNotifier.js~Notifiers.html">Notifiers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_metaData.js~MetaData.html">MetaData</a></span></span></li>
@@ -60,9 +60,9 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaSignatures">_schemaSignatures</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validators">_validators</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-wf">wf</a></span></span></li>
-<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pipe">Pipe</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipe/Executor.js~Executor.html">Executor</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pipe">Pipeline</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipe/Executor.js~Executor.html">Executor</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipe/Iterator.js~Iterator.html">Iterator</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipe/Pipe.js~Pipe.html">Pipe</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipe/Pipe.js~Pipe.html">Pipeline</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipe/Pipe.js~PipeListener.html">PipeListener</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipe/Properties.js~Properties.html">Properties</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipe/Validator.js~Validator.html">Validator</a></span></span></li>
@@ -78,8 +78,8 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><h1 data-ice="title">src/Pipe/Pipe.test.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {Pipe} from &quot;./Pipe&quot;;
+<div class="content" data-ice="content"><h1 data-ice="title">src/Pipeline/Pipeline.test.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {Pipeline} from &quot;./Pipeline&quot;;
 import {default as data} from &quot;../../fixtures/pipes-test.data&quot;;
 import {TestSubClass} from &quot;../../fixtures/pipes-instances&quot;;
 import {default as _pipesOrSchemas} from &quot;../../fixtures/pipes-or-schema&quot;
@@ -88,7 +88,7 @@ describe(&quot;Pipes Sub-Class Tests&quot;, () =&gt; {
     const _data = {body: &quot;ok&quot;};
     const _res = {body: &quot;yada-yada&quot;};
     it(&quot;should sub class&quot;, () =&gt; {
-        const _unit = new Pipe({
+        const _unit = new Pipeline({
             exec: () =&gt; {
                 return _res
             },
@@ -102,7 +102,7 @@ describe(&quot;Pipes Sub-Class Tests&quot;, () =&gt; {
 
 describe(&quot;TXPipe Error Handling&quot;, () =&gt; {
     it(&quot;should detect validation errors&quot;, (done) =&gt; {
-        const _tx = new Pipe({
+        const _tx = new Pipeline({
             type: &quot;string&quot;,
         }, () =&gt; false);
 
@@ -120,14 +120,14 @@ describe(&quot;TXPipe Error Handling&quot;, () =&gt; {
     })
 });
 
-describe(&quot;Pipe Tests&quot;, () =&gt; {
+describe(&quot;Pipeline Tests&quot;, () =&gt; {
     let _p;
     beforeEach(() =&gt; {
-        _p = new Pipe(..._pipesOrSchemas);
+        _p = new Pipeline(..._pipesOrSchemas);
     });
 
     it(&quot;should work as a Promise&quot;, (done) =&gt; {
-        const _p = new Pipe(..._pipesOrSchemas);
+        const _p = new Pipeline(..._pipesOrSchemas);
         _p.promise(data).then((res) =&gt; {
             expect(res.length).toEqual(3);
             done();
@@ -135,7 +135,7 @@ describe(&quot;Pipe Tests&quot;, () =&gt; {
     });
 
     it(&quot;async pipe should work as observable&quot;, (done) =&gt; {
-        const _tx = new Pipe(
+        const _tx = new Pipeline(
             async () =&gt; {
                 return new Promise((res) =&gt; {
                     setTimeout(
@@ -160,7 +160,7 @@ describe(&quot;Pipe Tests&quot;, () =&gt; {
 
     it(&quot;should remain viable after transaction&quot;, (done) =&gt; {
         let _cnt = 0;
-        const _p = new Pipe({type: &quot;string&quot;});
+        const _p = new Pipeline({type: &quot;string&quot;});
 
         _p.subscribe({
             next: () =&gt; {
@@ -180,7 +180,7 @@ describe(&quot;Pipe Tests&quot;, () =&gt; {
 
     it(&quot;should iterate with an iterable&quot;, (done) =&gt; {
         const _cb = jest.fn();
-        const _tx = new Pipe(
+        const _tx = new Pipeline(
             [{
                 // any object with `loop` creates an iterator
                 exec: (d) =&gt; d.active === true ? d : void 0,
@@ -229,7 +229,7 @@ describe(&quot;Pipe Tests&quot;, () =&gt; {
     });
 
     it(&quot;should create schema iterator if wrapped in array&quot;, (done) =&gt; {
-        const _tx = new Pipe([{type: &quot;boolean&quot;}]);
+        const _tx = new Pipeline([{type: &quot;boolean&quot;}]);
         const _data = [true, true, false]
         _tx.subscribe({
             next: (d) =&gt; {

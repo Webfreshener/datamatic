@@ -6,7 +6,7 @@ export default {
                 $ref: "#definitions/Schema",
             },
             {
-                $ref: "#definitions/Pipe",
+                $ref: "#definitions/Pipeline",
             },
         ],
     },

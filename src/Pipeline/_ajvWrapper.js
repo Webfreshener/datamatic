@@ -225,7 +225,7 @@ const createAJV = (schemas, opts) => {
 
 /**
  * AJV Options Config in it's entirely for reference
- * only Pipe specific option changes are enabled
+ * only Pipeline specific option changes are enabled
  * @type {*}
  * @private
  */

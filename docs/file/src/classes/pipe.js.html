@@ -36,7 +36,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_schemaHelpers.js~SchemaHelpers.html">SchemaHelpers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/itemsModel.js~ItemsModel.html">ItemsModel</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/pipe.js~Pipe.html">Pipeline</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/owner.js~RxVO.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDefaults">getDefaults</a></span></span></li>
@@ -111,12 +111,12 @@ const _fillCallback = (callbacks) =&gt; {
 };
 
 /**
- * Pipe Class
+ * Pipeline Class
  */
-export class Pipe {
+export class Pipeline {
     constructor(vo, ...pipesOrSchemas) {
         if (!pipesOrSchemas.length) {
-            throw &quot;Pipe requires at least one schema or pipe element&quot;;
+            throw &quot;Pipeline requires at least one schema or pipe element&quot;;
         }
 
         if (Array.isArray(pipesOrSchemas[0])) {
@@ -190,7 +190,7 @@ export class Pipe {
     /**
      * Creates new `pipe` segment
      * @param pipesOrSchemas
-     * @returns {Pipe}
+     * @returns {Pipeline}
      */
     pipe(...pipesOrSchemas) {
         if (Array.isArray(pipesOrSchemas[0])) {
@@ -199,7 +199,7 @@ export class Pipe {
 
         // fixes scoping issue for inlining callbacks from external pipes
         pipesOrSchemas = pipesOrSchemas.map((pS) =&gt; {
-            if (pS instanceof Pipe) {
+            if (pS instanceof Pipeline) {
                 return {
                     schema: pS.schema,
                     exec: (d)=&gt; pS.exec.apply(pS, [d]),
@@ -208,18 +208,18 @@ export class Pipe {
             return pS;
         });
 
-        return new Pipe(_pipes.get(this).out, pipesOrSchemas);
+        return new Pipeline(_pipes.get(this).out, pipesOrSchemas);
     }
 
     /**
      * links pipe segment to direct output to target pipe
      * @param target
      * @param callbacks function[]
-     * @returns {Pipe}
+     * @returns {Pipeline}
      */
     link(target, ...callbacks) {
-        if (!(target instanceof Pipe)) {
-            throw `item for &quot;target&quot; was not a Pipe`;
+        if (!(target instanceof Pipeline)) {
+            throw `item for &quot;target&quot; was not a Pipeline`;
         }
 
         // allow for array literal in place of inline assignment
@@ -273,7 +273,7 @@ export class Pipe {
      * Merges multiple pipes into single output
      * @param pipeOrPipes
      * @param schema
-     * @returns {Pipe}
+     * @returns {Pipeline}
      */
     merge(pipeOrPipes, schema) {
         const _out = this.pipe(schema);
@@ -294,7 +294,7 @@ export class Pipe {
     /**
      * Writes data to pipe segment
      * @param data
-     * @returns {Pipe}
+     * @returns {Pipeline}
      */
     write(data) {
         _pipes.get(this).vo.model = data;
@@ -311,21 +311,21 @@ export class Pipe {
 
     /**
      * Creates clone of current `pipe` segment
-     * @returns {Pipe}
+     * @returns {Pipeline}
      */
     clone() {
         const {vo, schema, cb} = _pipes.get(this);
-        return new Pipe(vo, {schema: schema, callback: cb});
+        return new Pipeline(vo, {schema: schema, callback: cb});
     }
 
     /**
      * Unlink pipe segment from target pipe
      * @param target
-     * @returns {Pipe}
+     * @returns {Pipeline}
      */
     unlink(target) {
-        if (!(target instanceof Pipe)) {
-            throw `item for &quot;target&quot; was not a Pipe`;
+        if (!(target instanceof Pipeline)) {
+            throw `item for &quot;target&quot; was not a Pipeline`;
         }
 
         const _sub = _pipes.get(this).links.get(target);
@@ -338,7 +338,7 @@ export class Pipe {
 
     /**
      * Terminates input on `pipe` segment. This is irrevocable
-     * @returns {Pipe}
+     * @returns {Pipeline}
      */
     close() {
         // unsubscribe all observers
@@ -360,7 +360,7 @@ export class Pipe {
 
     /**
      * Informs `pipe` to close after first notification
-     * @returns {Pipe}
+     * @returns {Pipeline}
      */
     once() {
         _pipes.get(this).once = true;
@@ -370,7 +370,7 @@ export class Pipe {
     /**
      * Informs `pipe` to rate limit notifications based on time interval
      * @param rate
-     * @returns {Pipe}
+     * @returns {Pipeline}
      */
     throttle(rate) {
         const _intvl = _pipes.get(this).tO;
@@ -394,7 +394,7 @@ export class Pipe {
     /**
      * Returns product of Nth occurrence of `pipe` execution
      * @param nth
-     * @returns {Pipe}
+     * @returns {Pipeline}
      */
     sample(nth) {
         _pipes.get(this).ivl = nth;
@@ -408,7 +408,7 @@ export class Pipe {
      */
     subscribe(handler) {
         if (!(typeof handler).match(/^(function|object)$/)) {
-            throw &quot;handler required for Pipe::subscribe&quot;;
+            throw &quot;handler required for Pipeline::subscribe&quot;;
         }
 
         return _pipes.get(this).out.subscribe(handler);

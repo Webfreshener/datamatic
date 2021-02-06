@@ -7,8 +7,8 @@ window.esdocSearchIndex = [
   ],
   [
     "@webfreshener/vxlib/src/pipe/_ajvwrapper.js~ajvwrapper",
-    "class/src/Pipe/_ajvWrapper.js~AjvWrapper.html",
-    "<span>AjvWrapper</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipe/_ajvWrapper.js</span>",
+    "class/src/Pipeline/_ajvWrapper.js~AjvWrapper.html",
+    "<span>AjvWrapper</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipeline/_ajvWrapper.js</span>",
     "class"
   ],
   [
@@ -19,8 +19,8 @@ window.esdocSearchIndex = [
   ],
   [
     "@webfreshener/vxlib/src/pipe/executor.js~executor",
-    "class/src/Pipe/Executor.js~Executor.html",
-    "<span>Executor</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipe/Executor.js</span>",
+    "class/src/Pipeline/Executor.js~Executor.html",
+    "<span>Executor</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipeline/Executor.js</span>",
     "class"
   ],
   [
@@ -31,8 +31,8 @@ window.esdocSearchIndex = [
   ],
   [
     "@webfreshener/vxlib/src/pipe/iterator.js~iterator",
-    "class/src/Pipe/Iterator.js~Iterator.html",
-    "<span>Iterator</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipe/Iterator.js</span>",
+    "class/src/Pipeline/Iterator.js~Iterator.html",
+    "<span>Iterator</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipeline/Iterator.js</span>",
     "class"
   ],
   [
@@ -61,20 +61,20 @@ window.esdocSearchIndex = [
   ],
   [
     "@webfreshener/vxlib/src/pipe/pipe.js~pipe",
-    "class/src/Pipe/Pipe.js~Pipe.html",
-    "<span>Pipe</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipe/Pipe.js</span>",
+    "class/src/Pipeline/Pipeline.js~Pipeline.html",
+    "<span>Pipeline</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipeline/Pipeline.js</span>",
     "class"
   ],
   [
     "@webfreshener/vxlib/src/pipe/pipe.js~pipelistener",
-    "class/src/Pipe/Pipe.js~PipeListener.html",
-    "<span>PipeListener</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipe/Pipe.js</span>",
+    "class/src/Pipeline/Pipeline.js~PipeListener.html",
+    "<span>PipeListener</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipeline/Pipeline.js</span>",
     "class"
   ],
   [
     "@webfreshener/vxlib/src/pipe/properties.js~properties",
-    "class/src/Pipe/Properties.js~Properties.html",
-    "<span>Properties</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipe/Properties.js</span>",
+    "class/src/Pipeline/Properties.js~Properties.html",
+    "<span>Properties</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipeline/Properties.js</span>",
     "class"
   ],
   [
@@ -91,14 +91,14 @@ window.esdocSearchIndex = [
   ],
   [
     "@webfreshener/vxlib/src/pipe/validator.js~validator",
-    "class/src/Pipe/Validator.js~Validator.html",
-    "<span>Validator</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipe/Validator.js</span>",
+    "class/src/Pipeline/Validator.js~Validator.html",
+    "<span>Validator</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipeline/Validator.js</span>",
     "class"
   ],
   [
     "@webfreshener/vxlib/src/pipe/vxbehaviorsubject.js~vxbehaviorsubject",
-    "class/src/Pipe/vxBehaviorSubject.js~VxBehaviorSubject.html",
-    "<span>VxBehaviorSubject</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipe/vxBehaviorSubject.js</span>",
+    "class/src/Pipeline/vxBehaviorSubject.js~VxBehaviorSubject.html",
+    "<span>VxBehaviorSubject</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipeline/vxBehaviorSubject.js</span>",
     "class"
   ],
   [
@@ -152,7 +152,7 @@ window.esdocSearchIndex = [
   [
     "@webfreshener/vxlib/src/pipe/validator.js~_observers",
     "variable/index.html#static-variable-_observers",
-    "<span>_observers</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipe/Validator.js</span>",
+    "<span>_observers</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipeline/Validator.js</span>",
     "variable"
   ],
   [
@@ -182,13 +182,13 @@ window.esdocSearchIndex = [
   [
     "@webfreshener/vxlib/src/pipe/utils.js~casttoexec",
     "function/index.html#static-function-castToExec",
-    "<span>castToExec</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipe/Utils.js</span>",
+    "<span>castToExec</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipeline/Utils.js</span>",
     "function"
   ],
   [
     "@webfreshener/vxlib/src/pipe/utils.js~fill",
     "function/index.html#static-function-fill",
-    "<span>fill</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipe/Utils.js</span>",
+    "<span>fill</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipeline/Utils.js</span>",
     "function"
   ],
   [
@@ -212,7 +212,7 @@ window.esdocSearchIndex = [
   [
     "@webfreshener/vxlib/src/pipe/utils.js~handleasync",
     "function/index.html#static-function-handleAsync",
-    "<span>handleAsync</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipe/Utils.js</span>",
+    "<span>handleAsync</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipeline/Utils.js</span>",
     "function"
   ],
   [
@@ -230,7 +230,7 @@ window.esdocSearchIndex = [
   [
     "@webfreshener/vxlib/src/pipe/utils.js~mapargs",
     "function/index.html#static-function-mapArgs",
-    "<span>mapArgs</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipe/Utils.js</span>",
+    "<span>mapArgs</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipeline/Utils.js</span>",
     "function"
   ],
   [
@@ -266,7 +266,7 @@ window.esdocSearchIndex = [
   [
     "@webfreshener/vxlib/src/pipe/utils.js~wrapcallback",
     "function/index.html#static-function-wrapCallback",
-    "<span>wrapCallback</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipe/Utils.js</span>",
+    "<span>wrapCallback</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipeline/Utils.js</span>",
     "function"
   ],
   [
@@ -1213,464 +1213,464 @@ window.esdocSearchIndex = [
   ],
   [
     "src/pipe/executor.js",
-    "file/src/Pipe/Executor.js.html",
-    "src/Pipe/Executor.js",
+    "file/src/Pipeline/Executor.js.html",
+    "src/Pipeline/Executor.js",
     "file"
   ],
   [
     "src/pipe/executor.js~executor.exec",
-    "class/src/Pipe/Executor.js~Executor.html#static-method-exec",
-    "src/Pipe/Executor.js~Executor.exec",
+    "class/src/Pipeline/Executor.js~Executor.html#static-method-exec",
+    "src/Pipeline/Executor.js~Executor.exec",
     "method"
   ],
   [
     "src/pipe/iterator.js",
-    "file/src/Pipe/Iterator.js.html",
-    "src/Pipe/Iterator.js",
+    "file/src/Pipeline/Iterator.js.html",
+    "src/Pipeline/Iterator.js",
     "file"
   ],
   [
     "src/pipe/iterator.js~iterator#constructor",
-    "class/src/Pipe/Iterator.js~Iterator.html#instance-constructor-constructor",
-    "src/Pipe/Iterator.js~Iterator#constructor",
+    "class/src/Pipeline/Iterator.js~Iterator.html#instance-constructor-constructor",
+    "src/Pipeline/Iterator.js~Iterator#constructor",
     "method"
   ],
   [
     "src/pipe/iterator.js~iterator#loop",
-    "class/src/Pipe/Iterator.js~Iterator.html#instance-method-loop",
-    "src/Pipe/Iterator.js~Iterator#loop",
+    "class/src/Pipeline/Iterator.js~Iterator.html#instance-method-loop",
+    "src/Pipeline/Iterator.js~Iterator#loop",
     "method"
   ],
   [
     "src/pipe/iterator.js~iterator#schema",
-    "class/src/Pipe/Iterator.js~Iterator.html#instance-get-schema",
-    "src/Pipe/Iterator.js~Iterator#schema",
+    "class/src/Pipeline/Iterator.js~Iterator.html#instance-get-schema",
+    "src/Pipeline/Iterator.js~Iterator#schema",
     "member"
   ],
   [
     "src/pipe/iterator.test.js",
-    "file/src/Pipe/Iterator.test.js.html",
-    "src/Pipe/Iterator.test.js",
+    "file/src/Pipeline/Iterator.test.js.html",
+    "src/Pipeline/Iterator.test.js",
     "file"
   ],
   [
     "src/pipe/pipe-api.test.js",
-    "file/src/Pipe/Pipe-api.test.js.html",
-    "src/Pipe/Pipe-api.test.js",
+    "file/src/Pipeline/Pipeline-api.test.js.html",
+    "src/Pipeline/Pipeline-api.test.js",
     "file"
   ],
   [
     "src/pipe/pipe-exec.js",
-    "file/src/Pipe/Pipe-exec.js.html",
-    "src/Pipe/Pipe-exec.js",
+    "file/src/Pipeline/Pipeline-exec.js.html",
+    "src/Pipeline/Pipeline-exec.js",
     "file"
   ],
   [
     "src/pipe/pipe.js",
-    "file/src/Pipe/Pipe.js.html",
-    "src/Pipe/Pipe.js",
+    "file/src/Pipeline/Pipeline.js.html",
+    "src/Pipeline/Pipeline.js",
     "file"
   ],
   [
     "src/pipe/pipe.js~pipe#clone",
-    "class/src/Pipe/Pipe.js~Pipe.html#instance-method-clone",
-    "src/Pipe/Pipe.js~Pipe#clone",
+    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-clone",
+    "src/Pipeline/Pipeline.js~Pipeline#clone",
     "method"
   ],
   [
     "src/pipe/pipe.js~pipe#close",
-    "class/src/Pipe/Pipe.js~Pipe.html#instance-method-close",
-    "src/Pipe/Pipe.js~Pipe#close",
+    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-close",
+    "src/Pipeline/Pipeline.js~Pipeline#close",
     "method"
   ],
   [
     "src/pipe/pipe.js~pipe#constructor",
-    "class/src/Pipe/Pipe.js~Pipe.html#instance-constructor-constructor",
-    "src/Pipe/Pipe.js~Pipe#constructor",
+    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-constructor-constructor",
+    "src/Pipeline/Pipeline.js~Pipeline#constructor",
     "method"
   ],
   [
     "src/pipe/pipe.js~pipe#errors",
-    "class/src/Pipe/Pipe.js~Pipe.html#instance-get-errors",
-    "src/Pipe/Pipe.js~Pipe#errors",
+    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-get-errors",
+    "src/Pipeline/Pipeline.js~Pipeline#errors",
     "member"
   ],
   [
     "src/pipe/pipe.js~pipe#link",
-    "class/src/Pipe/Pipe.js~Pipe.html#instance-method-link",
-    "src/Pipe/Pipe.js~Pipe#link",
+    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-link",
+    "src/Pipeline/Pipeline.js~Pipeline#link",
     "method"
   ],
   [
     "src/pipe/pipe.js~pipe#merge",
-    "class/src/Pipe/Pipe.js~Pipe.html#instance-method-merge",
-    "src/Pipe/Pipe.js~Pipe#merge",
+    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-merge",
+    "src/Pipeline/Pipeline.js~Pipeline#merge",
     "method"
   ],
   [
     "src/pipe/pipe.js~pipe#pipe",
-    "class/src/Pipe/Pipe.js~Pipe.html#instance-method-pipe",
-    "src/Pipe/Pipe.js~Pipe#pipe",
+    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-pipe",
+    "src/Pipeline/Pipeline.js~Pipeline#pipe",
     "method"
   ],
   [
     "src/pipe/pipe.js~pipe#promise",
-    "class/src/Pipe/Pipe.js~Pipe.html#instance-method-promise",
-    "src/Pipe/Pipe.js~Pipe#promise",
+    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-promise",
+    "src/Pipeline/Pipeline.js~Pipeline#promise",
     "method"
   ],
   [
     "src/pipe/pipe.js~pipe#sample",
-    "class/src/Pipe/Pipe.js~Pipe.html#instance-method-sample",
-    "src/Pipe/Pipe.js~Pipe#sample",
+    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-sample",
+    "src/Pipeline/Pipeline.js~Pipeline#sample",
     "method"
   ],
   [
     "src/pipe/pipe.js~pipe#schema",
-    "class/src/Pipe/Pipe.js~Pipe.html#instance-get-schema",
-    "src/Pipe/Pipe.js~Pipe#schema",
+    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-get-schema",
+    "src/Pipeline/Pipeline.js~Pipeline#schema",
     "member"
   ],
   [
     "src/pipe/pipe.js~pipe#schemas",
-    "class/src/Pipe/Pipe.js~Pipe.html#instance-get-schemas",
-    "src/Pipe/Pipe.js~Pipe#schemas",
+    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-get-schemas",
+    "src/Pipeline/Pipeline.js~Pipeline#schemas",
     "member"
   ],
   [
     "src/pipe/pipe.js~pipe#split",
-    "class/src/Pipe/Pipe.js~Pipe.html#instance-method-split",
-    "src/Pipe/Pipe.js~Pipe#split",
+    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-split",
+    "src/Pipeline/Pipeline.js~Pipeline#split",
     "method"
   ],
   [
     "src/pipe/pipe.js~pipe#subscribe",
-    "class/src/Pipe/Pipe.js~Pipe.html#instance-method-subscribe",
-    "src/Pipe/Pipe.js~Pipe#subscribe",
+    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-subscribe",
+    "src/Pipeline/Pipeline.js~Pipeline#subscribe",
     "method"
   ],
   [
     "src/pipe/pipe.js~pipe#tap",
-    "class/src/Pipe/Pipe.js~Pipe.html#instance-method-tap",
-    "src/Pipe/Pipe.js~Pipe#tap",
+    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-tap",
+    "src/Pipeline/Pipeline.js~Pipeline#tap",
     "method"
   ],
   [
     "src/pipe/pipe.js~pipe#throttle",
-    "class/src/Pipe/Pipe.js~Pipe.html#instance-method-throttle",
-    "src/Pipe/Pipe.js~Pipe#throttle",
+    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-throttle",
+    "src/Pipeline/Pipeline.js~Pipeline#throttle",
     "method"
   ],
   [
     "src/pipe/pipe.js~pipe#tojson",
-    "class/src/Pipe/Pipe.js~Pipe.html#instance-method-toJSON",
-    "src/Pipe/Pipe.js~Pipe#toJSON",
+    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-toJSON",
+    "src/Pipeline/Pipeline.js~Pipeline#toJSON",
     "method"
   ],
   [
     "src/pipe/pipe.js~pipe#tostring",
-    "class/src/Pipe/Pipe.js~Pipe.html#instance-method-toString",
-    "src/Pipe/Pipe.js~Pipe#toString",
+    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-toString",
+    "src/Pipeline/Pipeline.js~Pipeline#toString",
     "method"
   ],
   [
     "src/pipe/pipe.js~pipe#unlink",
-    "class/src/Pipe/Pipe.js~Pipe.html#instance-method-unlink",
-    "src/Pipe/Pipe.js~Pipe#unlink",
+    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-unlink",
+    "src/Pipeline/Pipeline.js~Pipeline#unlink",
     "method"
   ],
   [
     "src/pipe/pipe.js~pipe#writable",
-    "class/src/Pipe/Pipe.js~Pipe.html#instance-get-writable",
-    "src/Pipe/Pipe.js~Pipe#writable",
+    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-get-writable",
+    "src/Pipeline/Pipeline.js~Pipeline#writable",
     "member"
   ],
   [
     "src/pipe/pipe.js~pipe#write",
-    "class/src/Pipe/Pipe.js~Pipe.html#instance-method-write",
-    "src/Pipe/Pipe.js~Pipe#write",
+    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-write",
+    "src/Pipeline/Pipeline.js~Pipeline#write",
     "method"
   ],
   [
     "src/pipe/pipe.js~pipe#yield",
-    "class/src/Pipe/Pipe.js~Pipe.html#instance-method-yield",
-    "src/Pipe/Pipe.js~Pipe#yield",
+    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-yield",
+    "src/Pipeline/Pipeline.js~Pipeline#yield",
     "method"
   ],
   [
     "src/pipe/pipe.js~pipe.getexecs",
-    "class/src/Pipe/Pipe.js~Pipe.html#static-method-getExecs",
-    "src/Pipe/Pipe.js~Pipe.getExecs",
+    "class/src/Pipeline/Pipeline.js~Pipeline.html#static-method-getExecs",
+    "src/Pipeline/Pipeline.js~Pipeline.getExecs",
     "method"
   ],
   [
     "src/pipe/pipe.js~pipelistener#complete",
-    "class/src/Pipe/Pipe.js~PipeListener.html#instance-method-complete",
-    "src/Pipe/Pipe.js~PipeListener#complete",
+    "class/src/Pipeline/Pipeline.js~PipeListener.html#instance-method-complete",
+    "src/Pipeline/Pipeline.js~PipeListener#complete",
     "method"
   ],
   [
     "src/pipe/pipe.js~pipelistener#constructor",
-    "class/src/Pipe/Pipe.js~PipeListener.html#instance-constructor-constructor",
-    "src/Pipe/Pipe.js~PipeListener#constructor",
+    "class/src/Pipeline/Pipeline.js~PipeListener.html#instance-constructor-constructor",
+    "src/Pipeline/Pipeline.js~PipeListener#constructor",
     "method"
   ],
   [
     "src/pipe/pipe.js~pipelistener#error",
-    "class/src/Pipe/Pipe.js~PipeListener.html#instance-method-error",
-    "src/Pipe/Pipe.js~PipeListener#error",
+    "class/src/Pipeline/Pipeline.js~PipeListener.html#instance-method-error",
+    "src/Pipeline/Pipeline.js~PipeListener#error",
     "method"
   ],
   [
     "src/pipe/pipe.js~pipelistener#next",
-    "class/src/Pipe/Pipe.js~PipeListener.html#instance-method-next",
-    "src/Pipe/Pipe.js~PipeListener#next",
+    "class/src/Pipeline/Pipeline.js~PipeListener.html#instance-method-next",
+    "src/Pipeline/Pipeline.js~PipeListener#next",
     "method"
   ],
   [
     "src/pipe/pipe.js~pipelistener#out",
-    "class/src/Pipe/Pipe.js~PipeListener.html#instance-get-out",
-    "src/Pipe/Pipe.js~PipeListener#out",
+    "class/src/Pipeline/Pipeline.js~PipeListener.html#instance-get-out",
+    "src/Pipeline/Pipeline.js~PipeListener#out",
     "member"
   ],
   [
     "src/pipe/pipe.js~pipelistener#subscribe",
-    "class/src/Pipe/Pipe.js~PipeListener.html#instance-method-subscribe",
-    "src/Pipe/Pipe.js~PipeListener#subscribe",
+    "class/src/Pipeline/Pipeline.js~PipeListener.html#instance-method-subscribe",
+    "src/Pipeline/Pipeline.js~PipeListener#subscribe",
     "method"
   ],
   [
     "src/pipe/pipe.js~pipelistener#target",
-    "class/src/Pipe/Pipe.js~PipeListener.html#instance-get-target",
-    "src/Pipe/Pipe.js~PipeListener#target",
+    "class/src/Pipeline/Pipeline.js~PipeListener.html#instance-get-target",
+    "src/Pipeline/Pipeline.js~PipeListener#target",
     "member"
   ],
   [
     "src/pipe/pipe.js~pipelistener#vo",
-    "class/src/Pipe/Pipe.js~PipeListener.html#instance-get-vo",
-    "src/Pipe/Pipe.js~PipeListener#vo",
+    "class/src/Pipeline/Pipeline.js~PipeListener.html#instance-get-vo",
+    "src/Pipeline/Pipeline.js~PipeListener#vo",
     "member"
   ],
   [
     "src/pipe/pipe.test.js",
-    "file/src/Pipe/Pipe.test.js.html",
-    "src/Pipe/Pipe.test.js",
+    "file/src/Pipeline/Pipeline.test.js.html",
+    "src/Pipeline/Pipeline.test.js",
     "file"
   ],
   [
     "src/pipe/properties.js",
-    "file/src/Pipe/Properties.js.html",
-    "src/Pipe/Properties.js",
+    "file/src/Pipeline/Properties.js.html",
+    "src/Pipeline/Properties.js",
     "file"
   ],
   [
     "src/pipe/properties.js~properties.init",
-    "class/src/Pipe/Properties.js~Properties.html#static-method-init",
-    "src/Pipe/Properties.js~Properties.init",
+    "class/src/Pipeline/Properties.js~Properties.html#static-method-init",
+    "src/Pipeline/Properties.js~Properties.init",
     "method"
   ],
   [
     "src/pipe/utils.js",
-    "file/src/Pipe/Utils.js.html",
-    "src/Pipe/Utils.js",
+    "file/src/Pipeline/Utils.js.html",
+    "src/Pipeline/Utils.js",
     "file"
   ],
   [
     "src/pipe/utils.test.js",
-    "file/src/Pipe/Utils.test.js.html",
-    "src/Pipe/Utils.test.js",
+    "file/src/Pipeline/Utils.test.js.html",
+    "src/Pipeline/Utils.test.js",
     "file"
   ],
   [
     "src/pipe/validator.js",
-    "file/src/Pipe/Validator.js.html",
-    "src/Pipe/Validator.js",
+    "file/src/Pipeline/Validator.js.html",
+    "src/Pipeline/Validator.js",
     "file"
   ],
   [
     "src/pipe/validator.js~validator#constructor",
-    "class/src/Pipe/Validator.js~Validator.html#instance-constructor-constructor",
-    "src/Pipe/Validator.js~Validator#constructor",
+    "class/src/Pipeline/Validator.js~Validator.html#instance-constructor-constructor",
+    "src/Pipeline/Validator.js~Validator#constructor",
     "method"
   ],
   [
     "src/pipe/validator.js~validator#errors",
-    "class/src/Pipe/Validator.js~Validator.html#instance-get-errors",
-    "src/Pipe/Validator.js~Validator#errors",
+    "class/src/Pipeline/Validator.js~Validator.html#instance-get-errors",
+    "src/Pipeline/Validator.js~Validator#errors",
     "member"
   ],
   [
     "src/pipe/validator.js~validator#freeze",
-    "class/src/Pipe/Validator.js~Validator.html#instance-method-freeze",
-    "src/Pipe/Validator.js~Validator#freeze",
+    "class/src/Pipeline/Validator.js~Validator.html#instance-method-freeze",
+    "src/Pipeline/Validator.js~Validator#freeze",
     "method"
   ],
   [
     "src/pipe/validator.js~validator#isfrozen",
-    "class/src/Pipe/Validator.js~Validator.html#instance-get-isFrozen",
-    "src/Pipe/Validator.js~Validator#isFrozen",
+    "class/src/Pipeline/Validator.js~Validator.html#instance-get-isFrozen",
+    "src/Pipeline/Validator.js~Validator#isFrozen",
     "member"
   ],
   [
     "src/pipe/validator.js~validator#model",
-    "class/src/Pipe/Validator.js~Validator.html#instance-set-model",
-    "src/Pipe/Validator.js~Validator#model",
+    "class/src/Pipeline/Validator.js~Validator.html#instance-set-model",
+    "src/Pipeline/Validator.js~Validator#model",
     "member"
   ],
   [
     "src/pipe/validator.js~validator#model",
-    "class/src/Pipe/Validator.js~Validator.html#instance-get-model",
-    "src/Pipe/Validator.js~Validator#model",
+    "class/src/Pipeline/Validator.js~Validator.html#instance-get-model",
+    "src/Pipeline/Validator.js~Validator#model",
     "member"
   ],
   [
     "src/pipe/validator.js~validator#subscribe",
-    "class/src/Pipe/Validator.js~Validator.html#instance-method-subscribe",
-    "src/Pipe/Validator.js~Validator#subscribe",
+    "class/src/Pipeline/Validator.js~Validator.html#instance-method-subscribe",
+    "src/Pipeline/Validator.js~Validator#subscribe",
     "method"
   ],
   [
     "src/pipe/validator.js~validator#tojson",
-    "class/src/Pipe/Validator.js~Validator.html#instance-method-toJSON",
-    "src/Pipe/Validator.js~Validator#toJSON",
+    "class/src/Pipeline/Validator.js~Validator.html#instance-method-toJSON",
+    "src/Pipeline/Validator.js~Validator#toJSON",
     "method"
   ],
   [
     "src/pipe/validator.js~validator#tostring",
-    "class/src/Pipe/Validator.js~Validator.html#instance-method-toString",
-    "src/Pipe/Validator.js~Validator#toString",
+    "class/src/Pipeline/Validator.js~Validator.html#instance-method-toString",
+    "src/Pipeline/Validator.js~Validator#toString",
     "method"
   ],
   [
     "src/pipe/validator.js~validator#validate",
-    "class/src/Pipe/Validator.js~Validator.html#instance-method-validate",
-    "src/Pipe/Validator.js~Validator#validate",
+    "class/src/Pipeline/Validator.js~Validator.html#instance-method-validate",
+    "src/Pipeline/Validator.js~Validator#validate",
     "method"
   ],
   [
     "src/pipe/validator.js~validator#valueof",
-    "class/src/Pipe/Validator.js~Validator.html#instance-method-valueOf",
-    "src/Pipe/Validator.js~Validator#valueOf",
+    "class/src/Pipeline/Validator.js~Validator.html#instance-method-valueOf",
+    "src/Pipeline/Validator.js~Validator#valueOf",
     "method"
   ],
   [
     "src/pipe/validator.js~validator.deriveschema",
-    "class/src/Pipe/Validator.js~Validator.html#static-method-deriveSchema",
-    "src/Pipe/Validator.js~Validator.deriveSchema",
+    "class/src/Pipeline/Validator.js~Validator.html#static-method-deriveSchema",
+    "src/Pipeline/Validator.js~Validator.deriveSchema",
     "method"
   ],
   [
     "src/pipe/validator.js~validator.validateschemas",
-    "class/src/Pipe/Validator.js~Validator.html#static-method-validateSchemas",
-    "src/Pipe/Validator.js~Validator.validateSchemas",
+    "class/src/Pipeline/Validator.js~Validator.html#static-method-validateSchemas",
+    "src/Pipeline/Validator.js~Validator.validateSchemas",
     "method"
   ],
   [
     "src/pipe/validator.test.js",
-    "file/src/Pipe/Validator.test.js.html",
-    "src/Pipe/Validator.test.js",
+    "file/src/Pipeline/Validator.test.js.html",
+    "src/Pipeline/Validator.test.js",
     "file"
   ],
   [
     "src/pipe/_ajvwrapper.js",
-    "file/src/Pipe/_ajvWrapper.js.html",
-    "src/Pipe/_ajvWrapper.js",
+    "file/src/Pipeline/_ajvWrapper.js.html",
+    "src/Pipeline/_ajvWrapper.js",
     "file"
   ],
   [
     "src/pipe/_ajvwrapper.js~ajvwrapper#$ajv",
-    "class/src/Pipe/_ajvWrapper.js~AjvWrapper.html#instance-get-$ajv",
-    "src/Pipe/_ajvWrapper.js~AjvWrapper#$ajv",
+    "class/src/Pipeline/_ajvWrapper.js~AjvWrapper.html#instance-get-$ajv",
+    "src/Pipeline/_ajvWrapper.js~AjvWrapper#$ajv",
     "member"
   ],
   [
     "src/pipe/_ajvwrapper.js~ajvwrapper#addschema",
-    "class/src/Pipe/_ajvWrapper.js~AjvWrapper.html#instance-method-addSchema",
-    "src/Pipe/_ajvWrapper.js~AjvWrapper#addSchema",
+    "class/src/Pipeline/_ajvWrapper.js~AjvWrapper.html#instance-method-addSchema",
+    "src/Pipeline/_ajvWrapper.js~AjvWrapper#addSchema",
     "method"
   ],
   [
     "src/pipe/_ajvwrapper.js~ajvwrapper#constructor",
-    "class/src/Pipe/_ajvWrapper.js~AjvWrapper.html#instance-constructor-constructor",
-    "src/Pipe/_ajvWrapper.js~AjvWrapper#constructor",
+    "class/src/Pipeline/_ajvWrapper.js~AjvWrapper.html#instance-constructor-constructor",
+    "src/Pipeline/_ajvWrapper.js~AjvWrapper#constructor",
     "method"
   ],
   [
     "src/pipe/_ajvwrapper.js~ajvwrapper#exec",
-    "class/src/Pipe/_ajvWrapper.js~AjvWrapper.html#instance-method-exec",
-    "src/Pipe/_ajvWrapper.js~AjvWrapper#exec",
+    "class/src/Pipeline/_ajvWrapper.js~AjvWrapper.html#instance-method-exec",
+    "src/Pipeline/_ajvWrapper.js~AjvWrapper#exec",
     "method"
   ],
   [
     "src/pipe/_ajvwrapper.js~ajvwrapper#path",
-    "class/src/Pipe/_ajvWrapper.js~AjvWrapper.html#instance-member-path",
-    "src/Pipe/_ajvWrapper.js~AjvWrapper#path",
+    "class/src/Pipeline/_ajvWrapper.js~AjvWrapper.html#instance-member-path",
+    "src/Pipeline/_ajvWrapper.js~AjvWrapper#path",
     "member"
   ],
   [
     "src/pipe/_ajvwrapper.js~ajvwrapper.getschemaid",
-    "class/src/Pipe/_ajvWrapper.js~AjvWrapper.html#static-method-getSchemaID",
-    "src/Pipe/_ajvWrapper.js~AjvWrapper.getSchemaID",
+    "class/src/Pipeline/_ajvWrapper.js~AjvWrapper.html#static-method-getSchemaID",
+    "src/Pipeline/_ajvWrapper.js~AjvWrapper.getSchemaID",
     "method"
   ],
   [
     "src/pipe/_ajvwrapper.test.js",
-    "file/src/Pipe/_ajvWrapper.test.js.html",
-    "src/Pipe/_ajvWrapper.test.js",
+    "file/src/Pipeline/_ajvWrapper.test.js.html",
+    "src/Pipeline/_ajvWrapper.test.js",
     "file"
   ],
   [
     "src/pipe/index.js",
-    "file/src/Pipe/index.js.html",
-    "src/Pipe/index.js",
+    "file/src/Pipeline/index.js.html",
+    "src/Pipeline/index.js",
     "file"
   ],
   [
     "src/pipe/vxbehaviorsubject.js",
-    "file/src/Pipe/vxBehaviorSubject.js.html",
-    "src/Pipe/vxBehaviorSubject.js",
+    "file/src/Pipeline/vxBehaviorSubject.js.html",
+    "src/Pipeline/vxBehaviorSubject.js",
     "file"
   ],
   [
     "src/pipe/vxbehaviorsubject.js~vxbehaviorsubject#complete",
-    "class/src/Pipe/vxBehaviorSubject.js~VxBehaviorSubject.html#instance-method-complete",
-    "src/Pipe/vxBehaviorSubject.js~VxBehaviorSubject#complete",
+    "class/src/Pipeline/vxBehaviorSubject.js~VxBehaviorSubject.html#instance-method-complete",
+    "src/Pipeline/vxBehaviorSubject.js~VxBehaviorSubject#complete",
     "method"
   ],
   [
     "src/pipe/vxbehaviorsubject.js~vxbehaviorsubject#constructor",
-    "class/src/Pipe/vxBehaviorSubject.js~VxBehaviorSubject.html#instance-constructor-constructor",
-    "src/Pipe/vxBehaviorSubject.js~VxBehaviorSubject#constructor",
+    "class/src/Pipeline/vxBehaviorSubject.js~VxBehaviorSubject.html#instance-constructor-constructor",
+    "src/Pipeline/vxBehaviorSubject.js~VxBehaviorSubject#constructor",
     "method"
   ],
   [
     "src/pipe/vxbehaviorsubject.js~vxbehaviorsubject#error",
-    "class/src/Pipe/vxBehaviorSubject.js~VxBehaviorSubject.html#instance-method-error",
-    "src/Pipe/vxBehaviorSubject.js~VxBehaviorSubject#error",
+    "class/src/Pipeline/vxBehaviorSubject.js~VxBehaviorSubject.html#instance-method-error",
+    "src/Pipeline/vxBehaviorSubject.js~VxBehaviorSubject#error",
     "method"
   ],
   [
     "src/pipe/vxbehaviorsubject.js~vxbehaviorsubject#next",
-    "class/src/Pipe/vxBehaviorSubject.js~VxBehaviorSubject.html#instance-method-next",
-    "src/Pipe/vxBehaviorSubject.js~VxBehaviorSubject#next",
+    "class/src/Pipeline/vxBehaviorSubject.js~VxBehaviorSubject.html#instance-method-next",
+    "src/Pipeline/vxBehaviorSubject.js~VxBehaviorSubject#next",
     "method"
   ],
   [
     "src/pipe/vxbehaviorsubject.js~vxbehaviorsubject#subscribe",
-    "class/src/Pipe/vxBehaviorSubject.js~VxBehaviorSubject.html#instance-method-subscribe",
-    "src/Pipe/vxBehaviorSubject.js~VxBehaviorSubject#subscribe",
+    "class/src/Pipeline/vxBehaviorSubject.js~VxBehaviorSubject.html#instance-method-subscribe",
+    "src/Pipeline/vxBehaviorSubject.js~VxBehaviorSubject#subscribe",
     "method"
   ],
   [
     "src/pipe/vxbehaviorsubject.js~vxbehaviorsubject.create",
-    "class/src/Pipe/vxBehaviorSubject.js~VxBehaviorSubject.html#static-method-create",
-    "src/Pipe/vxBehaviorSubject.js~VxBehaviorSubject.create",
+    "class/src/Pipeline/vxBehaviorSubject.js~VxBehaviorSubject.html#static-method-create",
+    "src/Pipeline/vxBehaviorSubject.js~VxBehaviorSubject.create",
     "method"
   ],
   [
     "src/pipe/vxbehaviorsubject.test.js",
-    "file/src/Pipe/vxBehaviorSubject.test.js.html",
-    "src/Pipe/vxBehaviorSubject.test.js",
+    "file/src/Pipeline/vxBehaviorSubject.test.js.html",
+    "src/Pipeline/vxBehaviorSubject.test.js",
     "file"
   ],
   [

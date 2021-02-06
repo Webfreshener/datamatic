@@ -23,5 +23,5 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ############################################################################ */
-export {Pipeline as Pipe} from './Pipeline';
+export {Pipeline as Pipeline} from './Pipeline';
 export {Validator as TxValidator} from './Validator';

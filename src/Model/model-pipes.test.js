@@ -19,7 +19,7 @@ describe("Pipes tests", () => {
         const _sub = _p.subscribe({
                 next: (d) => {
                     _sub.unsubscribe();
-                    // data in VO as been filtered by Pipe
+                    // data in VO as been filtered by Pipeline
                     expect(d.length).toEqual(3);
                     done();
                 },

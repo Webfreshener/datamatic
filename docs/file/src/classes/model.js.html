@@ -36,7 +36,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_schemaHelpers.js~SchemaHelpers.html">SchemaHelpers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/itemsModel.js~ItemsModel.html">ItemsModel</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/pipe.js~Pipe.html">Pipeline</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/owner.js~RxVO.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDefaults">getDefaults</a></span></span></li>
@@ -97,7 +97,7 @@ import {
 import {Model} from &quot;./owner&quot;;
 import {MetaData} from &quot;./_metaData&quot;;
 import {makeClean, makeDirty, validate} from &quot;./utils&quot;;
-import {Pipe} from &quot;./pipe&quot;;
+import {Pipeline} from &quot;./pipe&quot;;
 
 /**
  *
@@ -454,10 +454,10 @@ export class Model {
      * returns `pipe` segment for process chaining
      * @param func
      * @param schema
-     * @returns {Pipe}
+     * @returns {Pipeline}
      */
     pipe(schema, func) {
-        return new Pipe(this, schema, func);
+        return new Pipeline(this, schema, func);
     }
 }
 </code></pre>

@@ -4,20 +4,20 @@ import {basicCollection} from "../../fixtures/PropertiesModel.schemas";
 import {default as data} from "../../fixtures/pipes-test.data";
 import {default as _pipesOrSchemas} from "../../fixtures/pipes-or-schema"
 
-describe("Pipe API Tests", () => {
+describe("Pipeline API Tests", () => {
     let _p;
     beforeEach(() => {
         _p = new Pipeline(..._pipesOrSchemas);
     });
 
-    test("Pipe schema", () => {
+    test("Pipeline schema", () => {
         const _p = (new Pipeline(..._pipesOrSchemas)).schemas;
         expect(JSON.stringify(_p[0])).toEqual(
             JSON.stringify(_pipesOrSchemas[0])
         );
     });
 
-    describe("Pipe exec", () => {
+    describe("Pipeline exec", () => {
         it("should not be an observable", (done) => {
             const _p = new Pipeline(..._pipesOrSchemas);
             _p.subscribe({

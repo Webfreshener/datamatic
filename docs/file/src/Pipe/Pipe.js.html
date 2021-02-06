@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../../">
-  <title data-ice="title">src/Pipe/Pipe.js | @webfreshener/vxlib</title>
+  <title data-ice="title">src/Pipeline/Pipeline.js | @webfreshener/vxlib</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -13,10 +13,10 @@
 
 <header>
   <a href="./">Home</a>
-  
+
   <a href="identifiers.html">Reference</a>
   <a href="source.html">Source</a>
-  
+
   <div class="search-box">
   <span>
     <img src="./image/search.png">
@@ -28,7 +28,7 @@
 
 <nav class="navigation" data-ice="nav"><div>
   <ul>
-    
+
   <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#model">Model</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_branchNotifier.js~Notifiers.html">Notifiers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_metaData.js~MetaData.html">MetaData</a></span></span></li>
@@ -60,9 +60,9 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaSignatures">_schemaSignatures</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validators">_validators</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-wf">wf</a></span></span></li>
-<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pipe">Pipe</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipe/Executor.js~Executor.html">Executor</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pipe">Pipeline</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipe/Executor.js~Executor.html">Executor</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipe/Iterator.js~Iterator.html">Iterator</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipe/Pipe.js~Pipe.html">Pipe</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipe/Pipe.js~Pipe.html">Pipeline</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipe/Pipe.js~PipeListener.html">PipeListener</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipe/Properties.js~Properties.html">Properties</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipe/Validator.js~Validator.html">Validator</a></span></span></li>
@@ -78,7 +78,7 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><h1 data-ice="title">src/Pipe/Pipe.js</h1>
+<div class="content" data-ice="content"><h1 data-ice="title">src/Pipeline/Pipeline.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* ############################################################################
 The MIT License (MIT)
 
@@ -114,9 +114,9 @@ const _pipes = new WeakMap();
 const _cache = new WeakMap();
 
 /**
- * Pipe Class
+ * Pipeline Class
  */
-export class Pipe {
+export class Pipeline {
     static getExecs(..._pvs) {
         return _pvs.map((_p) =&gt; {
             _p = Array.isArray(_p) ? _p[0] : _p;
@@ -149,7 +149,7 @@ export class Pipe {
         pipesOrVOsOrSchemas = mapArgs(...pipesOrVOsOrSchemas);
 
         // enforces 2 callback minimum for `reduce` by appending pass-thru callbacks
-        const _callbacks = fill(Pipe.getExecs(...pipesOrVOsOrSchemas));
+        const _callbacks = fill(Pipeline.getExecs(...pipesOrVOsOrSchemas));
 
         const _inPipe = (
             Array.isArray(pipesOrVOsOrSchemas) &amp;&amp; pipesOrVOsOrSchemas.length
@@ -216,10 +216,10 @@ export class Pipe {
     /**
      * Creates new `pipe` segment
      * @param pipesOrSchemas
-     * @returns {Pipe}
+     * @returns {Pipeline}
      */
     pipe(...pipesOrSchemas) {
-        return new Pipe([_pipes.get(this).out, ...pipesOrSchemas]);
+        return new Pipeline([_pipes.get(this).out, ...pipesOrSchemas]);
     }
 
     /**
@@ -237,11 +237,11 @@ export class Pipe {
      * links pipe segment to direct output to target pipe
      * @param target
      * @param callbacks function[]
-     * @returns {Pipe}
+     * @returns {Pipeline}
      */
     link(target, ...callbacks) {
-        if (!(target instanceof Pipe)) {
-            throw `item for &quot;target&quot; was not a Pipe`;
+        if (!(target instanceof Pipeline)) {
+            throw `item for &quot;target&quot; was not a Pipeline`;
         }
 
         // allow for array literal in place of inline assignment
@@ -275,11 +275,11 @@ export class Pipe {
     /**
      * Unlink `pipe` segment from target `pipe`
      * @param target
-     * @returns {Pipe}
+     * @returns {Pipeline}
      */
     unlink(target) {
-        if (!(target instanceof Pipe)) {
-            throw `item for &quot;target&quot; was not a Pipe`;
+        if (!(target instanceof Pipeline)) {
+            throw `item for &quot;target&quot; was not a Pipeline`;
         }
 
         const _sub = _pipes.get(this).links.get(target);
@@ -348,10 +348,10 @@ export class Pipe {
      * Merges multiple pipes into single output
      * @param pipeOrPipes
      * @param pipeOrSchema
-     * @returns {Pipe}
+     * @returns {Pipeline}
      */
     merge(pipeOrPipes, pipeOrSchema = {schemas: [DefaultVOSchema]}) {
-        const _out = new Pipe(pipeOrSchema);
+        const _out = new Pipeline(pipeOrSchema);
         _pipes.get(this).listeners = [
             ..._pipes.get(this).listeners,
             // -- feeds output of map to listeners array
@@ -372,7 +372,7 @@ export class Pipe {
     /**
      * Writes data to pipe segment
      * @param data
-     * @returns {Pipe}
+     * @returns {Pipeline}
      */
     write(data) {
         _pipes.get(this).vo.model = data;
@@ -381,11 +381,11 @@ export class Pipe {
 
     /**
      * Creates clone of current `pipe` segment
-     * @returns {Pipe}
+     * @returns {Pipeline}
      */
     clone() {
         const $ref = _pipes.get(this);
-        const _cz = class extends Pipe {
+        const _cz = class extends Pipeline {
             constructor() {
                 super();
                 _pipes.set(this, $ref);
@@ -397,7 +397,7 @@ export class Pipe {
 
     /**
      * Terminates input on `pipe` segment. This is irrevocable
-     * @returns {Pipe}
+     * @returns {Pipeline}
      */
     close() {
         _pipes.get(this).out.freeze();
@@ -415,7 +415,7 @@ export class Pipe {
     /**
      * Informs `pipe` to rate limit notifications based on time interval
      * @param rate
-     * @returns {Pipe}
+     * @returns {Pipeline}
      */
     throttle(rate) {
         const _ivl = _pipes.get(this).tO;
@@ -444,7 +444,7 @@ export class Pipe {
     /**
      * Returns product of Nth occurrence of `pipe` execution
      * @param nth
-     * @returns {Pipe}
+     * @returns {Pipeline}
      */
     sample(nth) {
         _pipes.get(this).ivl = nth;
@@ -458,7 +458,7 @@ export class Pipe {
      */
     subscribe(handler) {
         if (!(typeof handler).match(/^(function|object)$/)) {
-            throw &quot;handler required for Pipe::subscribe&quot;;
+            throw &quot;handler required for Pipeline::subscribe&quot;;
         }
 
         return _pipes.get(this).out.subscribe(handler);
@@ -477,7 +477,7 @@ export class Pipe {
      * Writes data to `pipe` and wraps observer in Promise
      *
      * @param data
-     * @returns {Promise&lt;Pipe&gt;}
+     * @returns {Promise&lt;Pipeline&gt;}
      */
     async promise(data) {
         return await new Promise((resolve, reject) =&gt; {
@@ -529,7 +529,7 @@ export class PipeListener {
 
     /**
      *
-     * @returns {Pipe}
+     * @returns {Pipeline}
      */
     get target() {
         return _pipes.get(this);

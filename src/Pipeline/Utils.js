@@ -97,7 +97,7 @@ export const castToExec = (obj) => {
         return Object.assign({}, DefaultPipeTx, obj);
     }
 
-    // -- if Pipe, our work here is already done
+    // -- if Pipeline, our work here is already done
     if (obj instanceof Pipeline) {
         return obj;
     }

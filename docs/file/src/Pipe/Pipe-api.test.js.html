@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../../">
-  <title data-ice="title">src/Pipe/Pipe-api.test.js | @webfreshener/vxlib</title>
+  <title data-ice="title">src/Pipeline/Pipeline-api.test.js | @webfreshener/vxlib</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -13,10 +13,10 @@
 
 <header>
   <a href="./">Home</a>
-  
+
   <a href="identifiers.html">Reference</a>
   <a href="source.html">Source</a>
-  
+
   <div class="search-box">
   <span>
     <img src="./image/search.png">
@@ -28,7 +28,7 @@
 
 <nav class="navigation" data-ice="nav"><div>
   <ul>
-    
+
   <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#model">Model</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_branchNotifier.js~Notifiers.html">Notifiers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_metaData.js~MetaData.html">MetaData</a></span></span></li>
@@ -60,9 +60,9 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaSignatures">_schemaSignatures</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validators">_validators</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-wf">wf</a></span></span></li>
-<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pipe">Pipe</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipe/Executor.js~Executor.html">Executor</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pipe">Pipeline</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipe/Executor.js~Executor.html">Executor</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipe/Iterator.js~Iterator.html">Iterator</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipe/Pipe.js~Pipe.html">Pipe</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipe/Pipe.js~Pipe.html">Pipeline</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipe/Pipe.js~PipeListener.html">PipeListener</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipe/Properties.js~Properties.html">Properties</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipe/Validator.js~Validator.html">Validator</a></span></span></li>
@@ -78,29 +78,29 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><h1 data-ice="title">src/Pipe/Pipe-api.test.js</h1>
+<div class="content" data-ice="content"><h1 data-ice="title">src/Pipeline/Pipeline-api.test.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {Validator} from &quot;./Validator&quot;;
-import {Pipe} from &quot;./Pipe&quot;;
+import {Pipeline} from &quot;./Pipeline&quot;;
 import {basicCollection} from &quot;../../fixtures/PropertiesModel.schemas&quot;;
 import {default as data} from &quot;../../fixtures/pipes-test.data&quot;;
 import {default as _pipesOrSchemas} from &quot;../../fixtures/pipes-or-schema&quot;
 
-describe(&quot;Pipe API Tests&quot;, () =&gt; {
+describe(&quot;Pipeline API Tests&quot;, () =&gt; {
     let _p;
     beforeEach(() =&gt; {
-        _p = new Pipe(..._pipesOrSchemas);
+        _p = new Pipeline(..._pipesOrSchemas);
     });
 
-    test(&quot;Pipe schema&quot;, () =&gt; {
-        const _p = (new Pipe(..._pipesOrSchemas)).schemas;
+    test(&quot;Pipeline schema&quot;, () =&gt; {
+        const _p = (new Pipeline(..._pipesOrSchemas)).schemas;
         expect(JSON.stringify(_p[0])).toEqual(
             JSON.stringify(_pipesOrSchemas[0])
         );
     });
 
-    describe(&quot;Pipe exec&quot;, () =&gt; {
+    describe(&quot;Pipeline exec&quot;, () =&gt; {
         it(&quot;should not be an observable&quot;, (done) =&gt; {
-            const _p = new Pipe(..._pipesOrSchemas);
+            const _p = new Pipeline(..._pipesOrSchemas);
             _p.subscribe({
                 next: () =&gt; {
                     done(&quot;should not be observable if called with exec&quot;);
@@ -120,7 +120,7 @@ describe(&quot;Pipe API Tests&quot;, () =&gt; {
         });
 
         it(&quot;should throw&quot;, () =&gt; {
-            const _p = new Pipe(..._pipesOrSchemas);
+            const _p = new Pipeline(..._pipesOrSchemas);
             try {
                 _p.exec(&quot;invalid value&quot;);
             } catch (e) {
@@ -130,7 +130,7 @@ describe(&quot;Pipe API Tests&quot;, () =&gt; {
     });
 
     it(&quot;should send error notification if a pipe returns false&quot;, (done) =&gt; {
-        const _p = new Pipe(
+        const _p = new Pipeline(
             ...[
                 ..._pipesOrSchemas,
                 {
@@ -156,7 +156,7 @@ describe(&quot;Pipe API Tests&quot;, () =&gt; {
     });
 
     it(&quot;should provide errors&quot;, (done) =&gt; {
-        const _p = new Pipe(
+        const _p = new Pipeline(
             {type: &quot;boolean&quot;});
         const _sub = _p.subscribe({
             next: () =&gt; {
@@ -186,7 +186,7 @@ describe(&quot;Pipe API Tests&quot;, () =&gt; {
         ];
 
         const _cb = jest.fn();
-        _p = new Pipe({
+        _p = new Pipeline({
             exec: (d) =&gt; d
         });
 
@@ -215,12 +215,12 @@ describe(&quot;Pipe API Tests&quot;, () =&gt; {
     });
 
     it(&quot;should exec multiple pipes inline&quot;, () =&gt; {
-        const _p1 = new Pipe({
+        const _p1 = new Pipeline({
             schema: basicCollection,
             exec: (d) =&gt; d.map((m) =&gt; Object.assign(m, {name: `${m.name} RENAMED`})),
         });
 
-        const _p2 = new Pipe({
+        const _p2 = new Pipeline({
             schema: basicCollection,
             exec: (d) =&gt; d.map((m) =&gt; Object.assign(m, {age: 99})),
         });
@@ -246,7 +246,7 @@ describe(&quot;Pipe API Tests&quot;, () =&gt; {
             {
                 exec: () =&gt; &quot;foo&quot;,
             },
-            new Pipe({
+            new Pipeline({
                 exec: () =&gt; &quot;bar&quot;,
             }),
             {
@@ -254,7 +254,7 @@ describe(&quot;Pipe API Tests&quot;, () =&gt; {
             },
         ];
 
-        const _ = (new Pipe(..._pOS)).yield(data);
+        const _ = (new Pipeline(..._pOS)).yield(data);
 
         expect(_.next().value).toBe(&quot;foo&quot;);
         expect(_.next().value).toBe(&quot;bar&quot;);
@@ -263,7 +263,7 @@ describe(&quot;Pipe API Tests&quot;, () =&gt; {
     });
 
     it(&quot;pipe should pipe&quot;, (done) =&gt; {
-        const _tx = new Pipe();
+        const _tx = new Pipeline();
 
         _tx.subscribe({
             next: (d) =&gt; {
@@ -348,7 +348,7 @@ describe(&quot;Pipe API Tests&quot;, () =&gt; {
     test(&quot;should link and unlink pipes&quot;, () =&gt; {
         const _cb = jest.fn();
         const _TxValidator = new Validator({schemas: [basicCollection]});
-        const _link = new Pipe(_TxValidator, {schemas: [basicCollection]});
+        const _link = new Pipeline(_TxValidator, {schemas: [basicCollection]});
 
         _p.link(_link, (d) =&gt; {
             _cb();
@@ -416,12 +416,12 @@ describe(&quot;Pipe API Tests&quot;, () =&gt; {
             schema: _pipesOrSchemas[0].schema,
         };
 
-        const _p1 = new Pipe({
+        const _p1 = new Pipeline({
             schema: _vo.schema,
             exec: (d) =&gt; d.map((m) =&gt; Object.assign(m, {name: `${m.name} RENAMED`})),
         });
 
-        const _p2 = new Pipe({
+        const _p2 = new Pipeline({
                 schema: _vo.schema,
                 exec: (d) =&gt; d.map((m) =&gt; Object.assign(m, {age: 99}))
             }

@@ -1,7 +1,7 @@
 import {Pipeline} from "./Pipeline";
 import {default as data} from "../../fixtures/pipes-test.data";
 
-describe("Pipe Exec Tests", () => {
+describe("Pipeline Exec Tests", () => {
 
     it("should intake and output data", (done) => {
         const _sub = _p.subscribe({

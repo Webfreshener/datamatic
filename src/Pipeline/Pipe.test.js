@@ -39,7 +39,7 @@ describe("TXPipe Error Handling", () => {
     })
 });
 
-describe("Pipe Tests", () => {
+describe("Pipeline Tests", () => {
     let _p;
     beforeEach(() => {
         _p = new Pipeline(..._pipesOrSchemas);

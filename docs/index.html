@@ -13,10 +13,10 @@
 
 <header>
   <a href="./">Home</a>
-  
+
   <a href="identifiers.html">Reference</a>
   <a href="source.html">Source</a>
-  
+
   <div class="search-box">
   <span>
     <img src="./image/search.png">
@@ -28,7 +28,7 @@
 
 <nav class="navigation" data-ice="nav"><div>
   <ul>
-    
+
   <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#model">Model</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_branchNotifier.js~Notifiers.html">Notifiers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_metaData.js~MetaData.html">MetaData</a></span></span></li>
@@ -60,9 +60,9 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaSignatures">_schemaSignatures</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validators">_validators</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-wf">wf</a></span></span></li>
-<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pipe">Pipe</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipe/Executor.js~Executor.html">Executor</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pipe">Pipeline</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipe/Executor.js~Executor.html">Executor</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipe/Iterator.js~Iterator.html">Iterator</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipe/Pipe.js~Pipe.html">Pipe</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipe/Pipe.js~Pipe.html">Pipeline</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipe/Pipe.js~PipeListener.html">PipeListener</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipe/Properties.js~Properties.html">Properties</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipe/Validator.js~Validator.html">Validator</a></span></span></li>
@@ -107,10 +107,10 @@
 <li><a href="#itemsmodel">ItemsModel</a></li>
 <li><a href="#propertiesmodel">PropertiesModel</a></li>
 <li><a href="#model-class">Model Class</a></li>
-<li><a href="#pipe-class">Pipe Class</a></li>
+<li><a href="#pipe-class">Pipeline Class</a></li>
 </ul>
 <h4 id="installation-instructions">Installation Instructions</h4><pre><code><code class="source-code prettyprint">$ npm install @webfreshener/datamat</code>
-</code></pre><h3 id="usage-examples">Usage Examples</h3><h4 id="basic-example">Basic Example</h4><p>The example below defines a Model that expects a <code>name</code> value and 
+</code></pre><h3 id="usage-examples">Usage Examples</h3><h4 id="basic-example">Basic Example</h4><p>The example below defines a Model that expects a <code>name</code> value and
 list of <code>topScores</code> items</p>
 <pre><code><code class="source-code prettyprint">// JSON-SCHEMA for Scores Collection
 const schema = {
@@ -185,7 +185,7 @@ obj.model.topScores[0].score++;
 
 // invalid attempt update the model
 // this will trigger the error notification
-// reason: &quot;topScores/items/score&quot; is type is integer 
+// reason: &quot;topScores/items/score&quot; is type is integer
 obj.model.topScores[0].score = &quot;1234&quot;;
 
 // invalid attempt update the model
@@ -430,7 +430,7 @@ Note: the <code>model</code> param presents a Proxied Array, with all <code>Arra
 <tr>
 <td style="text-align:left">pipe</td>
 <td style="text-align:left">..pipesOrSchemas</td>
-<td style="text-align:left">returns Pipe instance for operating on model</td>
+<td style="text-align:left">returns Pipeline instance for operating on model</td>
 </tr>
 <tr>
 <td style="text-align:left">reset</td>
@@ -479,7 +479,7 @@ Note: the <code>model</code> param presents a Proxied Array, with all <code>Arra
 </tr>
 </tbody>
 </table>
-<h4 id="pipe-class">Pipe Class</h4><table>
+<h4 id="pipe-class">Pipeline Class</h4><table>
 <thead>
 <tr>
 <th style="text-align:left">Method</th>
@@ -530,7 +530,7 @@ Note: the <code>model</code> param presents a Proxied Array, with all <code>Arra
 </tr>
 <tr>
 <td style="text-align:left">link</td>
-<td style="text-align:left">target (Pipe), ...pipesOrSchemas</td>
+<td style="text-align:left">target (Pipeline), ...pipesOrSchemas</td>
 <td style="text-align:left">links <code>pipe</code> segment to direct output to target <code>pipe</code></td>
 </tr>
 <tr>
@@ -570,7 +570,7 @@ Note: the <code>model</code> param presents a Proxied Array, with all <code>Arra
 </tr>
 <tr>
 <td style="text-align:left">unlink</td>
-<td style="text-align:left">target (Pipe)</td>
+<td style="text-align:left">target (Pipeline)</td>
 <td style="text-align:left">unlinks <code>pipe</code> segment from target <code>pipe</code></td>
 </tr>
 <tr>

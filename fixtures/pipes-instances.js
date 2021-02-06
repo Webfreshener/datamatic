@@ -1,8 +1,8 @@
-import {Pipe} from "../src/Pipeline";
+import {Pipeline} from "../src/Pipeline";
 const _pipes = new WeakMap();
 export class TestUser {
     constructor(...pipesOrSchemas) {
-        _pipes.set(this, new Pipe(false,pipesOrSchemas));
+        _pipes.set(this, new Pipeline(false,pipesOrSchemas));
     }
     get pipe() {
         return _pipes.get(this);
@@ -13,7 +13,7 @@ export class TestUser {
     }
 }
 
-export class TestSubClass extends Pipe {
+export class TestSubClass extends Pipeline {
     constructor(...pipesOrSchemas) {
         super(...pipesOrSchemas);
     }
