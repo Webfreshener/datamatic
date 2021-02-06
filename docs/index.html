@@ -79,22 +79,22 @@
 </nav>
 
 <div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><h1 id="datamat">Datamat</h1><p>RxJS + JSON-Schema (Ajv) Based Observable and Validating Data Models and Pipelines</p>
-<p><a href="https://travis-ci.org/Webfreshener/RxVO"><img src="https://travis-ci.org/Webfreshener/RxVO.svg?branch=master" alt="Build Status"></a>
-<a href="https://david-dm.org/webfreshener/RxVO"><img src="https://david-dm.org/webfreshener/RxVO/status.svg" alt="Dependency Status"></a>
-<a href="https://www.codacy.com/app/vanschroeder/RxVO?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Webfreshener/RxVO&amp;utm_campaign=Badge_Grade"><img src="https://api.codacy.com/project/badge/Grade/c665c70dfeb144319bc5bbd58695eb90" alt="Codacy Badge"></a>
-<a href="https://www.codacy.com/app/vanschroeder/RxVO?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Webfreshener/RxVO&amp;utm_campaign=Badge_Coverage"><img src="https://api.codacy.com/project/badge/Coverage/c665c70dfeb144319bc5bbd58695eb90" alt="Codacy Badge"></a>
-<a href="https://codeclimate.com/github/Webfreshener/RxVO/maintainability"><img src="https://api.codeclimate.com/v1/badges/625326e1880421ccc809/maintainability" alt="Maintainability"></a></p>
-<p><a href="https://webfreshener.github.io/RxVO/">Online Developer Documentation</a></p>
+<p><a href="https://travis-ci.org/Webfreshener/model"><img src="https://travis-ci.org/Webfreshener/model.svg?branch=master" alt="Build Status"></a>
+<a href="https://david-dm.org/webfreshener/model"><img src="https://david-dm.org/webfreshener/model/status.svg" alt="Dependency Status"></a>
+<a href="https://www.codacy.com/app/vanschroeder/model?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Webfreshener/model&amp;utm_campaign=Badge_Grade"><img src="https://api.codacy.com/project/badge/Grade/c665c70dfeb144319bc5bbd58695eb90" alt="Codacy Badge"></a>
+<a href="https://www.codacy.com/app/vanschroeder/model?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Webfreshener/model&amp;utm_campaign=Badge_Coverage"><img src="https://api.codacy.com/project/badge/Coverage/c665c70dfeb144319bc5bbd58695eb90" alt="Codacy Badge"></a>
+<a href="https://codeclimate.com/github/Webfreshener/model/maintainability"><img src="https://api.codeclimate.com/v1/badges/625326e1880421ccc809/maintainability" alt="Maintainability"></a></p>
+<p><a href="https://webfreshener.github.io/model/">Online Developer Documentation</a></p>
 <h3 id="goals">Goals</h3><ul>
 <li>Provide a means to quickly and easily validate complex data-sets</li>
 <li>Look and feel like a standard JS Object for ease of use and adaptability</li>
-<li>Automate creation of RxJS Update and Error notifications </li>
+<li>Automate data evaluation and transformation</li>
 </ul>
 <h3 id="table-of-contents">Table of Contents</h3><p><strong><a href="#installation-instructions">Installation Instructions</a></strong></p>
 <p><strong><a href="#usage-examples">Usage Examples</a></strong></p>
 <ul>
 <li><a href="#basic-usage">Basic Usage</a></li>
-<li><a href="#flow-control">Flow Control</a></li>
+<li><a href="#data-pipelines-and-tansformation">Data Pipelines and Transformation</a></li>
 </ul>
 <p><strong><a href="#developer-guide">Developer Guide</a></strong></p>
 <ul>
@@ -110,7 +110,7 @@
 <li><a href="#pipe-class">Pipe Class</a></li>
 </ul>
 <h4 id="installation-instructions">Installation Instructions</h4><pre><code><code class="source-code prettyprint">$ npm install @webfreshener/datamat</code>
-</code></pre><h4 id="usage-examples">Usage Examples</h4><p>The example below defines a Model that expects a <code>name</code> value and 
+</code></pre><h3 id="usage-examples">Usage Examples</h3><h4 id="basic-example">Basic Example</h4><p>The example below defines a Model that expects a <code>name</code> value and 
 list of <code>topScores</code> items</p>
 <pre><code><code class="source-code prettyprint">// JSON-SCHEMA for Scores Collection
 const schema = {
@@ -179,22 +179,22 @@ obj.model = {
     }]
 };
 
-// update the rxVO
+// update the model
 // this will trigger the next notification
 obj.model.topScores[0].score++;
 
-// invalid attempt update the rxVO
+// invalid attempt update the model
 // this will trigger the error notification
 // reason: &quot;topScores/items/score&quot; is type is integer 
 obj.model.topScores[0].score = &quot;1234&quot;;
 
-// invalid attempt update the rxVO
+// invalid attempt update the model
 // this will trigger the error notification
 // reason: &quot;topScores&quot; is marked as required
 delete obj.model.topScores;
 </code>
 </code></pre><p>Refer to the examples demo in <code>./examples/basic-usage</code> for more usage examples</p>
-<h4 id="flow-control">Flow Control</h4><pre><code><code class="source-code prettyprint"></code>
+<h4 id="data-pipelines-and-transformation">Data Pipelines and Transformation</h4><pre><code><code class="source-code prettyprint"></code>
 </code></pre><h2 id="developer-guide">Developer Guide</h2><h4 id="model-class">Model Class</h4><p>This class represents the Document entry point</p>
 <table>
 <thead>
