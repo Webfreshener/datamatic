@@ -74,7 +74,9 @@
     "cover": "jest --coverage && cat ./coverage/lcov.info | codacy-coverage --token \"$CODACY_ID\"",
     "build-test": "webpack --mode development; npm test",
     "build": "webpack --config webpack.config.js --mode production",
-    "docs": "./node_modules/.bin/esdoc"},
+    "docs": "./node_modules/.bin/esdoc",
+    "report": "$HOME/Library/Caches/Codacy/coverage-reporter/11.9.2/codacy-coverage-reporter report"
+  },
   "jest": {
     "collectCoverage": true,
     "coveragePathIgnorePatterns": [
