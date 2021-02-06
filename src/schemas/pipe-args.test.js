@@ -1,4 +1,4 @@
-import {Validator} from "../Pipe/Validator";
+import {Validator} from "../Pipeline/Validator";
 import {basicModel} from "../../fixtures/PropertiesModel.schemas";
 import {default as TxArgsSchema} from "./pipe-args.schema";
 

@@ -24,7 +24,7 @@ SOFTWARE.
 
 ############################################################################ */
 import {Iterator} from "./Iterator";
-import {Pipe} from "./Pipe";
+import {Pipeline} from "./Pipeline";
 import {Validator} from "./Validator";
 import {default as DefaultVOSchema} from "../schemas/default-pipe-vo.schema"
 
@@ -58,7 +58,7 @@ export const fill = (arr, value = ((d) => d), min = 2) => {
 /**
  *
  * @param obj
- * @returns {{exec: function}|Iterator|Pipe|Validator}
+ * @returns {{exec: function}|Iterator|Pipeline|Validator}
  */
 export const castToExec = (obj) => {
     if (!obj) {
@@ -82,7 +82,7 @@ export const castToExec = (obj) => {
     }
 
     if (obj instanceof Iterator) {
-        return new Pipe({
+        return new Pipeline({
             exec: (d) => obj.loop(d),
         });
     }
@@ -98,7 +98,7 @@ export const castToExec = (obj) => {
     }
 
     // -- if Pipe, our work here is already done
-    if (obj instanceof Pipe) {
+    if (obj instanceof Pipeline) {
         return obj;
     }
 

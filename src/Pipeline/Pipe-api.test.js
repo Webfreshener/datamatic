@@ -1,5 +1,5 @@
 import {Validator} from "./Validator";
-import {Pipe} from "./Pipe";
+import {Pipeline} from "./Pipeline";
 import {basicCollection} from "../../fixtures/PropertiesModel.schemas";
 import {default as data} from "../../fixtures/pipes-test.data";
 import {default as _pipesOrSchemas} from "../../fixtures/pipes-or-schema"
@@ -7,11 +7,11 @@ import {default as _pipesOrSchemas} from "../../fixtures/pipes-or-schema"
 describe("Pipe API Tests", () => {
     let _p;
     beforeEach(() => {
-        _p = new Pipe(..._pipesOrSchemas);
+        _p = new Pipeline(..._pipesOrSchemas);
     });
 
     test("Pipe schema", () => {
-        const _p = (new Pipe(..._pipesOrSchemas)).schemas;
+        const _p = (new Pipeline(..._pipesOrSchemas)).schemas;
         expect(JSON.stringify(_p[0])).toEqual(
             JSON.stringify(_pipesOrSchemas[0])
         );
@@ -19,7 +19,7 @@ describe("Pipe API Tests", () => {
 
     describe("Pipe exec", () => {
         it("should not be an observable", (done) => {
-            const _p = new Pipe(..._pipesOrSchemas);
+            const _p = new Pipeline(..._pipesOrSchemas);
             _p.subscribe({
                 next: () => {
                     done("should not be observable if called with exec");
@@ -39,7 +39,7 @@ describe("Pipe API Tests", () => {
         });
 
         it("should throw", () => {
-            const _p = new Pipe(..._pipesOrSchemas);
+            const _p = new Pipeline(..._pipesOrSchemas);
             try {
                 _p.exec("invalid value");
             } catch (e) {
@@ -49,7 +49,7 @@ describe("Pipe API Tests", () => {
     });
 
     it("should send error notification if a pipe returns false", (done) => {
-        const _p = new Pipe(
+        const _p = new Pipeline(
             ...[
                 ..._pipesOrSchemas,
                 {
@@ -75,7 +75,7 @@ describe("Pipe API Tests", () => {
     });
 
     it("should provide errors", (done) => {
-        const _p = new Pipe(
+        const _p = new Pipeline(
             {type: "boolean"});
         const _sub = _p.subscribe({
             next: () => {
@@ -105,7 +105,7 @@ describe("Pipe API Tests", () => {
         ];
 
         const _cb = jest.fn();
-        _p = new Pipe({
+        _p = new Pipeline({
             exec: (d) => d
         });
 
@@ -134,12 +134,12 @@ describe("Pipe API Tests", () => {
     });
 
     it("should exec multiple pipes inline", () => {
-        const _p1 = new Pipe({
+        const _p1 = new Pipeline({
             schema: basicCollection,
             exec: (d) => d.map((m) => Object.assign(m, {name: `${m.name} RENAMED`})),
         });
 
-        const _p2 = new Pipe({
+        const _p2 = new Pipeline({
             schema: basicCollection,
             exec: (d) => d.map((m) => Object.assign(m, {age: 99})),
         });
@@ -165,7 +165,7 @@ describe("Pipe API Tests", () => {
             {
                 exec: () => "foo",
             },
-            new Pipe({
+            new Pipeline({
                 exec: () => "bar",
             }),
             {
@@ -173,7 +173,7 @@ describe("Pipe API Tests", () => {
             },
         ];
 
-        const _ = (new Pipe(..._pOS)).yield(data);
+        const _ = (new Pipeline(..._pOS)).yield(data);
 
         expect(_.next().value).toBe("foo");
         expect(_.next().value).toBe("bar");
@@ -182,7 +182,7 @@ describe("Pipe API Tests", () => {
     });
 
     it("pipe should pipe", (done) => {
-        const _tx = new Pipe();
+        const _tx = new Pipeline();
 
         _tx.subscribe({
             next: (d) => {
@@ -267,7 +267,7 @@ describe("Pipe API Tests", () => {
     test("should link and unlink pipes", () => {
         const _cb = jest.fn();
         const _TxValidator = new Validator({schemas: [basicCollection]});
-        const _link = new Pipe(_TxValidator, {schemas: [basicCollection]});
+        const _link = new Pipeline(_TxValidator, {schemas: [basicCollection]});
 
         _p.link(_link, (d) => {
             _cb();
@@ -335,12 +335,12 @@ describe("Pipe API Tests", () => {
             schema: _pipesOrSchemas[0].schema,
         };
 
-        const _p1 = new Pipe({
+        const _p1 = new Pipeline({
             schema: _vo.schema,
             exec: (d) => d.map((m) => Object.assign(m, {name: `${m.name} RENAMED`})),
         });
 
-        const _p2 = new Pipe({
+        const _p2 = new Pipeline({
                 schema: _vo.schema,
                 exec: (d) => d.map((m) => Object.assign(m, {age: 99}))
             }

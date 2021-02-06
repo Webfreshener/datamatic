@@ -1,11 +1,11 @@
-import {Pipe} from "./Pipe";
+import {Pipeline} from "./Pipeline";
 
 const _iterators = new WeakMap();
 const _pipes = new WeakMap();
 
 export class Iterator {
     constructor(...pipesOrSchemas) {
-        const _pipe = new Pipe(...pipesOrSchemas);
+        const _pipe = new Pipeline(...pipesOrSchemas);
         _pipes.set(this, _pipe);
         _iterators.set(this, [...pipesOrSchemas]);
     }

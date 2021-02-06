@@ -29,7 +29,7 @@ import {
 import {Model} from "./index";
 import {MetaData} from "./_metaData";
 import {makeClean, makeDirty, validate} from "./utils";
-import {Pipe} from "../Pipe";
+import {Pipe} from "../Pipeline";
 /**
  *
  * @param ref
@@ -384,7 +384,7 @@ export class BaseModel {
     /**
      * returns `pipe` segment for process chaining
      * @param pipesOrSchemas
-     * @returns {Pipe}
+     * @returns {Pipeline}
      */
     pipe(...pipesOrSchemas) {
         const _p = new Pipe(...pipesOrSchemas);

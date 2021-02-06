@@ -30,7 +30,7 @@ RxJS + JSON-Schema (Ajv) Based Observable and Validating Data Models and Pipelin
   * [ItemsModel](#itemsmodel)
   * [PropertiesModel](#propertiesmodel)
   * [Model Class](#model-class)
-  * [Pipe Class](#pipe-class)
+  * [Pipeline Class](#pipeline-class)
 
 #### Installation Instructions
 ```

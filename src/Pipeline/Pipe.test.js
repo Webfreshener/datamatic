@@ -1,4 +1,4 @@
-import {Pipe} from "./Pipe";
+import {Pipeline} from "./Pipeline";
 import {default as data} from "../../fixtures/pipes-test.data";
 import {TestSubClass} from "../../fixtures/pipes-instances";
 import {default as _pipesOrSchemas} from "../../fixtures/pipes-or-schema"
@@ -7,7 +7,7 @@ describe("Pipes Sub-Class Tests", () => {
     const _data = {body: "ok"};
     const _res = {body: "yada-yada"};
     it("should sub class", () => {
-        const _unit = new Pipe({
+        const _unit = new Pipeline({
             exec: () => {
                 return _res
             },
@@ -21,7 +21,7 @@ describe("Pipes Sub-Class Tests", () => {
 
 describe("TXPipe Error Handling", () => {
     it("should detect validation errors", (done) => {
-        const _tx = new Pipe({
+        const _tx = new Pipeline({
             type: "string",
         }, () => false);
 
@@ -42,11 +42,11 @@ describe("TXPipe Error Handling", () => {
 describe("Pipe Tests", () => {
     let _p;
     beforeEach(() => {
-        _p = new Pipe(..._pipesOrSchemas);
+        _p = new Pipeline(..._pipesOrSchemas);
     });
 
     it("should work as a Promise", (done) => {
-        const _p = new Pipe(..._pipesOrSchemas);
+        const _p = new Pipeline(..._pipesOrSchemas);
         _p.promise(data).then((res) => {
             expect(res.length).toEqual(3);
             done();
@@ -54,7 +54,7 @@ describe("Pipe Tests", () => {
     });
 
     it("async pipe should work as observable", (done) => {
-        const _tx = new Pipe(
+        const _tx = new Pipeline(
             async () => {
                 return new Promise((res) => {
                     setTimeout(
@@ -79,7 +79,7 @@ describe("Pipe Tests", () => {
 
     it("should remain viable after transaction", (done) => {
         let _cnt = 0;
-        const _p = new Pipe({type: "string"});
+        const _p = new Pipeline({type: "string"});
 
         _p.subscribe({
             next: () => {
@@ -99,7 +99,7 @@ describe("Pipe Tests", () => {
 
     it("should iterate with an iterable", (done) => {
         const _cb = jest.fn();
-        const _tx = new Pipe(
+        const _tx = new Pipeline(
             [{
                 // any object with `loop` creates an iterator
                 exec: (d) => d.active === true ? d : void 0,
@@ -148,7 +148,7 @@ describe("Pipe Tests", () => {
     });
 
     it("should create schema iterator if wrapped in array", (done) => {
-        const _tx = new Pipe([{type: "boolean"}]);
+        const _tx = new Pipeline([{type: "boolean"}]);
         const _data = [true, true, false]
         _tx.subscribe({
             next: (d) => {

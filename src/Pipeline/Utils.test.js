@@ -1,5 +1,5 @@
 import {fill, castToExec} from "./Utils";
-import {Pipe} from "./Pipe";
+import {Pipeline} from "./Pipeline";
 import {Validator} from "./Validator";
 const _schema = {
     "$id": "root#",
@@ -27,7 +27,7 @@ describe("TxUtils Tests", () => {
         describe("iterator handling", () => {
             it("should cast array to iterator", () => {
                 const _res = castToExec([() => "ok"]);
-                expect(_res instanceof Pipe).toBe(true);
+                expect(_res instanceof Pipeline).toBe(true);
                 expect(JSON.stringify(_res.exec([1, 2, 3]))).toEqual("[\"ok\",\"ok\",\"ok\"]");
             });
 
@@ -41,7 +41,7 @@ describe("TxUtils Tests", () => {
 
             it("should exec", () => {
                 const _res = castToExec([() => "ok"]);
-                expect(JSON.stringify(new Pipe(_res).exec([1, 2, 3]))).toEqual("[\"ok\",\"ok\",\"ok\"]");
+                expect(JSON.stringify(new Pipeline(_res).exec([1, 2, 3]))).toEqual("[\"ok\",\"ok\",\"ok\"]");
             });
         });
         describe("schema handling", () => {

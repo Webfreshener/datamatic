@@ -35,7 +35,7 @@ const _cache = new WeakMap();
 /**
  * Pipe Class
  */
-export class Pipe {
+export class Pipeline {
     static getExecs(..._pvs) {
         return _pvs.map((_p) => {
             _p = Array.isArray(_p) ? _p[0] : _p;
@@ -68,7 +68,7 @@ export class Pipe {
         pipesOrVOsOrSchemas = mapArgs(...pipesOrVOsOrSchemas);
 
         // enforces 2 callback minimum for `reduce` by appending pass-thru callbacks
-        const _callbacks = fill(Pipe.getExecs(...pipesOrVOsOrSchemas));
+        const _callbacks = fill(Pipeline.getExecs(...pipesOrVOsOrSchemas));
 
         const _inPipe = (
             Array.isArray(pipesOrVOsOrSchemas) && pipesOrVOsOrSchemas.length
@@ -135,10 +135,10 @@ export class Pipe {
     /**
      * Creates new `pipe` segment
      * @param pipesOrSchemas
-     * @returns {Pipe}
+     * @returns {Pipeline}
      */
     pipe(...pipesOrSchemas) {
-        return new Pipe([_pipes.get(this).out, ...pipesOrSchemas]);
+        return new Pipeline([_pipes.get(this).out, ...pipesOrSchemas]);
     }
 
     /**
@@ -156,10 +156,10 @@ export class Pipe {
      * links pipe segment to direct output to target pipe
      * @param target
      * @param callbacks function[]
-     * @returns {Pipe}
+     * @returns {Pipeline}
      */
     link(target, ...callbacks) {
-        if (!(target instanceof Pipe)) {
+        if (!(target instanceof Pipeline)) {
             throw `item for "target" was not a Pipe`;
         }
 
@@ -194,10 +194,10 @@ export class Pipe {
     /**
      * Unlink `pipe` segment from target `pipe`
      * @param target
-     * @returns {Pipe}
+     * @returns {Pipeline}
      */
     unlink(target) {
-        if (!(target instanceof Pipe)) {
+        if (!(target instanceof Pipeline)) {
             throw `item for "target" was not a Pipe`;
         }
 
@@ -267,10 +267,10 @@ export class Pipe {
      * Merges multiple pipes into single output
      * @param pipeOrPipes
      * @param pipeOrSchema
-     * @returns {Pipe}
+     * @returns {Pipeline}
      */
     merge(pipeOrPipes, pipeOrSchema = {schemas: [DefaultVOSchema]}) {
-        const _out = new Pipe(pipeOrSchema);
+        const _out = new Pipeline(pipeOrSchema);
         _pipes.get(this).listeners = [
             ..._pipes.get(this).listeners,
             // -- feeds output of map to listeners array
@@ -291,7 +291,7 @@ export class Pipe {
     /**
      * Writes data to pipe segment
      * @param data
-     * @returns {Pipe}
+     * @returns {Pipeline}
      */
     write(data) {
         _pipes.get(this).vo.model = data;
@@ -300,11 +300,11 @@ export class Pipe {
 
     /**
      * Creates clone of current `pipe` segment
-     * @returns {Pipe}
+     * @returns {Pipeline}
      */
     clone() {
         const $ref = _pipes.get(this);
-        const _cz = class extends Pipe {
+        const _cz = class extends Pipeline {
             constructor() {
                 super();
                 _pipes.set(this, $ref);
@@ -316,7 +316,7 @@ export class Pipe {
 
     /**
      * Terminates input on `pipe` segment. This is irrevocable
-     * @returns {Pipe}
+     * @returns {Pipeline}
      */
     close() {
         _pipes.get(this).out.freeze();
@@ -334,7 +334,7 @@ export class Pipe {
     /**
      * Informs `pipe` to rate limit notifications based on time interval
      * @param rate
-     * @returns {Pipe}
+     * @returns {Pipeline}
      */
     throttle(rate) {
         const _ivl = _pipes.get(this).tO;
@@ -363,7 +363,7 @@ export class Pipe {
     /**
      * Returns product of Nth occurrence of `pipe` execution
      * @param nth
-     * @returns {Pipe}
+     * @returns {Pipeline}
      */
     sample(nth) {
         _pipes.get(this).ivl = nth;
@@ -396,7 +396,7 @@ export class Pipe {
      * Writes data to `pipe` and wraps observer in Promise
      *
      * @param data
-     * @returns {Promise<Pipe>}
+     * @returns {Promise<Pipeline>}
      */
     async promise(data) {
         return await new Promise((resolve, reject) => {
@@ -448,7 +448,7 @@ export class PipeListener {
 
     /**
      *
-     * @returns {Pipe}
+     * @returns {Pipeline}
      */
     get target() {
         return _pipes.get(this);

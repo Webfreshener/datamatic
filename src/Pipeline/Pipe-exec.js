@@ -1,4 +1,4 @@
-import {Pipe} from "./Pipe";
+import {Pipeline} from "./Pipeline";
 import {default as data} from "../../fixtures/pipes-test.data";
 
 describe("Pipe Exec Tests", () => {
@@ -38,7 +38,7 @@ describe("Pipe Exec Tests", () => {
     it("should not exec until called upon", (done) => {
         const _cb = jest.fn();
         let _cnt = 0;
-        const _p = new Pipe(
+        const _p = new Pipeline(
             async (d) => {
                 return Promise.resolve(d);
             }
@@ -66,7 +66,7 @@ describe("Pipe Exec Tests", () => {
 
 
     it("should stop if a pipe returns false", (done) => {
-        const _p = new Pipe(
+        const _p = new Pipeline(
             ...[
                 ..._pipesOrSchemas,
                 {
@@ -93,7 +93,7 @@ describe("Pipe Exec Tests", () => {
     });
 
     it("should provide errors", (done) => {
-        const _p = new Pipe(() => "an error message");
+        const _p = new Pipeline(() => "an error message");
         const _sub = _p.subscribe({
             next: () => {
                 _sub.unsubscribe();
@@ -115,7 +115,7 @@ describe("Pipe Exec Tests", () => {
 
     it("should send error if a pipe returns string", (done) => {
         const _eMsg = "an important error message for you";
-        const _p = new Pipe(
+        const _p = new Pipeline(
             _pipesOrSchemas,
             {
                 exec: () => _eMsg,

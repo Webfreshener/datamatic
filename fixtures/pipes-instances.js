@@ -1,4 +1,4 @@
-import {Pipe} from "../src/Pipe";
+import {Pipe} from "../src/Pipeline";
 const _pipes = new WeakMap();
 export class TestUser {
     constructor(...pipesOrSchemas) {

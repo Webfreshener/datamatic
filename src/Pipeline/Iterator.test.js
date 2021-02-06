@@ -1,6 +1,6 @@
 import {Iterator} from "./Iterator";
 import {default as DefaultVO} from "../schemas/default-pipe-vo.schema";
-import {Pipe} from "./Pipe";
+import {Pipeline} from "./Pipeline";
 
 describe("TxIterator Tests", () => {
     it("should provide a schema", () => {
@@ -28,7 +28,7 @@ describe("TxIterator Tests", () => {
     });
     it("should work within pipe", (done) => {
         const _cb = jest.fn();
-        const _tx = new Pipe(
+        const _tx = new Pipeline(
             new Iterator( {exec: (d) => d.active === true ? d : void 0}),
         );
 
