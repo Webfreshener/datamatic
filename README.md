@@ -1,20 +1,19 @@
-RxVO
+Datamat
 =============
-**Reactive Validating Object**<br/>
-RxJS + JSON-Schema (Ajv) Based Observable Data Models
+RxJS + JSON-Schema (Ajv) Based Observable and Validating Data Models and Pipelines
 
-[![Build Status](https://travis-ci.org/Webfreshener/RxVO.svg?branch=master)](https://travis-ci.org/Webfreshener/RxVO)
-[![Dependency Status](https://david-dm.org/webfreshener/RxVO/status.svg)](https://david-dm.org/webfreshener/RxVO)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/c665c70dfeb144319bc5bbd58695eb90)](https://www.codacy.com/app/vanschroeder/RxVO?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Webfreshener/RxVO&amp;utm_campaign=Badge_Grade)
-[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/c665c70dfeb144319bc5bbd58695eb90)](https://www.codacy.com/app/vanschroeder/RxVO?utm_source=github.com&utm_medium=referral&utm_content=Webfreshener/RxVO&utm_campaign=Badge_Coverage)
-[![Maintainability](https://api.codeclimate.com/v1/badges/625326e1880421ccc809/maintainability)](https://codeclimate.com/github/Webfreshener/RxVO/maintainability)
+[![Build Status](https://travis-ci.org/Webfreshener/model.svg?branch=master)](https://travis-ci.org/Webfreshener/model)
+[![Dependency Status](https://david-dm.org/webfreshener/model/status.svg)](https://david-dm.org/webfreshener/model)
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/c665c70dfeb144319bc5bbd58695eb90)](https://www.codacy.com/app/vanschroeder/model?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Webfreshener/model&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://api.codacy.com/project/badge/Coverage/c665c70dfeb144319bc5bbd58695eb90)](https://www.codacy.com/app/vanschroeder/model?utm_source=github.com&utm_medium=referral&utm_content=Webfreshener/model&utm_campaign=Badge_Coverage)
+[![Maintainability](https://api.codeclimate.com/v1/badges/625326e1880421ccc809/maintainability)](https://codeclimate.com/github/Webfreshener/model/maintainability)
 
-[Online Developer Documentation](https://webfreshener.github.io/RxVO/)
+[Online Developer Documentation](https://webfreshener.github.io/model/)
 
 ### Goals 
  * Provide a means to quickly and easily validate complex data-sets
  * Look and feel like a standard JS Object for ease of use and adaptability
- * Automate creation of RxJS Update and Error notifications 
+ * Automate data evaluation and transformation
 
 ### Table of Contents
 
@@ -22,11 +21,11 @@ RxJS + JSON-Schema (Ajv) Based Observable Data Models
 
 **[Usage Examples](#usage-examples)**
    * [Basic Usage](#basic-usage)
-   * [Flow Control](#flow-control)
+   * [Data Pipelines and Transformation](#data-pipelines-and-tansformation)
 
 **[Developer Guide](#developer-guide)**
-  * [RxVO Class](#rxvo-class)
-    * [Schemas Config](#rxvo-schemas-config)
+  * [Model Class](#owner-class)
+    * [Schemas Config](#owner-schemas-config)
     * [Model Proxy Object](#model-proxy-object)
     * [model vs $model](#model-vs-model)
   * [ItemsModel](#itemsmodel)
@@ -36,11 +35,12 @@ RxJS + JSON-Schema (Ajv) Based Observable Data Models
 
 #### Installation Instructions
 ```
-$ npm i rxvo
+$ npm install @webfreshener/datamat
 ```
 
-#### Usage Example 
+### Usage Examples
 
+#### Basic Example
 The example below defines a Model that expects a `name` value and 
 list of `topScores` items
 
@@ -77,7 +77,7 @@ const schema = {
 
 
 // instantiate our Model
-const obj = new RxVO({schemas: [schema]});
+const obj = new Model({schemas: [schema]});
 
 // subscribes an observer to the Model
 obj.subscribe({
@@ -96,7 +96,7 @@ obj.subscribe({
     },
 });
 
-// populate the RxVO with data
+// populate the Model with data
 // -- this will trigger the "next" notification
 obj.model = {
     name: "JSONville",
@@ -112,16 +112,16 @@ obj.model = {
     }]
 };
 
-// update the rxVO
+// update the model
 // this will trigger the next notification
 obj.model.topScores[0].score++;
 
-// invalid attempt update the rxVO
+// invalid attempt update the model
 // this will trigger the error notification
 // reason: "topScores/items/score" is type is integer 
 obj.model.topScores[0].score = "1234";
 
-// invalid attempt update the rxVO
+// invalid attempt update the model
 // this will trigger the error notification
 // reason: "topScores" is marked as required
 delete obj.model.topScores;
@@ -129,33 +129,33 @@ delete obj.model.topScores;
 ```
 Refer to the examples demo in `./examples/basic-usage` for more usage examples
 
-#### Flow Control ####
+#### Data Pipelines and Transformation ####
 ```
 
 ```
 
 ## Developer Guide
 
-#### RxVO Class ####
+#### Model Class ####
 This class represents the Document entry point
 
 | Method        | Arguments | Description  |
 |:--------------|:----------|:-------|
-| constructor   | [schemas config](#rxvo-schemas-config) (object), [options (object)] | creates new RxVO instance |
+| constructor   | [schemas config](#owner-schemas-config) (object), [options (object)] | creates new Model instance |
 | errors [getter]   | | retrieves errors (if any) from last json-schema validation |
 | model [getter/setter]   | | retrieves root [model proxy object](#model-proxy-object) for operation |
 | getModelsInPath   | to (string) | retrieves models at given path |
 | getSchemaForKey   | key (string) | retrieves json-schema with given key as ID |
 | getSchemaForPath   | path (string) | retrieves json-schema for model at given path |
 | schema [getter]   | | retrieves json-schema for root model |
-| subscribe   |  observers (object) | Subscribes Observers to the RxVO Model Root |
+| subscribe   |  observers (object) | Subscribes Observers to the Model Model Root |
 | subscribeTo   |  path (string), observers (object) | Subscribes Observers to the Model at path 
 | toString   | | retrieves root model as JSON String |
 | toJSON   | | retrieves root model as JSON Object |
 | validate   | path (string), value (object) | validates data at given ath against JSON-Schema |
-| *static* fromJSON   | json (string &#124; object) | creates new RxVO from static method |
+| *static* fromJSON   | json (string &#124; object) | creates new Model from static method |
 
-##### RxVO Schemas Config
+##### Model Schemas Config
 | Property        | Type | Description  |
 |:--------------|:----------|:-------|
 | meta | array | Array of MetaSchema references to validate Schemas against
@@ -177,13 +177,13 @@ In usage, `model` always references the Proxied Data Model for validation and op
 
 *example:*
 ```
- const _rxvo = new RxVO({schemas: [schema]});
+ const _owner = new Model({schemas: [schema]});
  
  // access the root model:
- console.log(`JSON.stringify(_rxvo.model)`);
+ console.log(`JSON.stringify(_owner.model)`);
  
  // access the model's owner Model Class:
- const owner = _rxvo.model.$model;
+ const owner = _owner.model.$model;
  console.log(`is frozen: ${owner.isFrozen}`);
  
  // call toString on Owner
@@ -227,36 +227,36 @@ Represents an Properties (Object} entry in the given schema
 | options [getter]   | | retrieves options passed to Model instance |
 | path [getter]   | | retrieves json-schema path string for Model instance. eg: "#/this/is/my/path" |
 | parent [getter]   | | retrieves Model's parent Model instance |
-| pipe | ..pipesOrSchemas | returns TxPipe instance for operating on model |
+| pipe | ..pipesOrSchemas | returns Pipe instance for operating on model |
 | reset | | resets model to initial state if operation is valid |
 | root [getter]   | | retrieves root Model instance |
-| rxvo [getter]   | | retrieves Model's RxVO document instance |
-| subscribe   |  observers (object) | Subscribes Observers to the RxVO Model Root |
+| model [getter]   | | retrieves Model's internal Model Document instance |
+| subscribe   |  observers (object) | Subscribes Observers to the Model Model Root |
 | subscribeTo   |  path (string), observers (object) | Subscribes Observers to the Model at path |
 | toString   | | retrieves root model as JSON String |
 | toJSON   | | retrieves root model as JSON Object |
 | validate   | path (string), value (object) | validates data at given ath against JSON-Schema |
 | validationPath [getter] | | retrieves json-schema path string for Model validation |
 
-#### TxPipe Class ####
+#### Pipe Class ####
 | Method        | Arguments | Description  |
 |:--------------|:----------|:-------|
-| constructor | vo, ...pipesOrSchemas | class constructor method |
-| exec | data (object/array)| executes pipe's callback with data without writing to `pipe` |
-| subscribe | handler (object / function)| subscribes to `pipe` output notifications |
+| constructor | ...pipesOrSchemas | class constructor method |
+| exec | data (object / array / string / number / boolean)| executes pipe's callback with data without writing to `pipe` |
+| subscribe | handler (object / function / schema / array)| subscribes to `pipe` output notifications |
 | toJSON | | Provides current state of `pipe` output as JSON |
 | toString | | Provides current state of `pipe` output as JSON string |
-| txClone | | returns clone of current `pipe` segment |
-| txClose | | terminates input on `pipe` segment |
-| txWritable [getter] | | Returns write status of `pipe` |
-| txLink | target (Pipe), ...pipesOrSchemas | links `pipe` segment to direct output to target `pipe` |
-| txMerge | pipeOrPipes, schema | merges multiple pipes into single output |
-| txOnce | | informs `pipe` to close after first notification |
-| txPipe | ...pipesOrSchemas | returns new chained `pipe` segment |
-| txSample | nth | Returns product of Nth occurrence of `pipe` execution |
-| txSplit | ...pipesOrSchemas | creates array of new `pipe` segments that run in parallel |
-| txTap | | Provides current state of `pipe` output. alias for `toJSON` |
-| txThrottle | rate (number) | Limit notifications to rate based on time interval |
-| txUnlink | target (Pipe)| unlinks `pipe` segment from target `pipe` |
-| txWrite | data (object/array)| writes data to `pipe` |
+| clone | | returns clone of current `pipe` segment |
+| close | | terminates input on `pipe` segment |
+| writable [getter] | | Returns write status of `pipe` |
+| link | target (Pipe), ...pipesOrSchemas | links `pipe` segment to direct output to target `pipe` |
+| merge | pipeOrPipes, schema | merges multiple pipes into single output |
+| once | | informs `pipe` to close after first notification |
+| pipe | ...pipesOrSchemas | returns new chained `pipe` segment |
+| sample | nth | Returns product of Nth occurrence of `pipe` execution |
+| split | ...pipesOrSchemas | creates array of new `pipe` segments that run in parallel |
+| tap | | Provides current state of `pipe` output. alias for `toJSON` |
+| throttle | rate (number) | Limit notifications to rate based on time interval |
+| unlink | target (Pipe)| unlinks `pipe` segment from target `pipe` |
+| write | data (object / array / string / number / boolean)| writes data to `pipe` |
 

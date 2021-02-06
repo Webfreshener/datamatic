@@ -3,20 +3,20 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../../">
-  <title data-ice="title">src/classes/_branchNotifier.js | rxvo</title>
+  <title data-ice="title">src/classes/_branchNotifier.js | owner</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
   <script src="script/manual.js"></script>
-<meta name="description" content="RxJS + JSON-Schema Based Observable Data Models"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="rxvo"><meta property="twitter:description" content="RxJS + JSON-Schema Based Observable Data Models"></head>
+<meta name="description" content="RxJS + JSON-Schema Based Observable Data Models"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="owner"><meta property="twitter:description" content="RxJS + JSON-Schema Based Observable Data Models"></head>
 <body class="layout-container" data-ice="rootContainer">
 
 <header>
   <a href="./">Home</a>
-  
+
   <a href="identifiers.html">Reference</a>
   <a href="source.html">Source</a>
-  
+
   <div class="search-box">
   <span>
     <img src="./image/search.png">
@@ -28,7 +28,7 @@
 
 <nav class="navigation" data-ice="nav"><div>
   <ul>
-    
+
   <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#classes">classes</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_branchNotifier.js~Notifiers.html">Notifiers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_metaData.js~MetaData.html">MetaData</a></span></span></li>
@@ -38,7 +38,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">RxVO</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/owner.js~RxVO.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDefaults">getDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPatternPropertyDefaults">getPatternPropertyDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getSchemaID">getSchemaID</a></span></span></li>
@@ -144,15 +144,15 @@ class CompleteNotification {
 class Notifier {
     /**
      *
-     * @param rxvo
+     * @param owner
      * @returns {Notifier|*}
      */
-    constructor(rxvo) {
-        Object.defineProperty(this, &quot;$rxvo&quot;, {
-            get: () =&gt; rxvo,
+    constructor(owner) {
+        Object.defineProperty(this, &quot;$owner&quot;, {
+            get: () =&gt; owner,
         });
 
-        notifiers.set(rxvo, this);
+        notifiers.set(owner, this);
     }
 
     /**
@@ -164,8 +164,8 @@ class Notifier {
             forPath = `.${forPath}`;
         }
 
-        this.$rxvo.getModelsInPath(forPath)
-            .forEach((m) =&gt; _oBuilders.get(this.$rxvo).next(m.$model));
+        this.$owner.getModelsInPath(forPath)
+            .forEach((m) =&gt; _oBuilders.get(this.$owner).next(m.$model));
     }
 
     /**
@@ -174,8 +174,8 @@ class Notifier {
      * @param error
      */
     sendError(forPath, error) {
-        this.$rxvo.getModelsInPath(forPath)
-            .forEach((model) =&gt; _oBuilders.get(this.$rxvo).error(model.$model,
+        this.$owner.getModelsInPath(forPath)
+            .forEach((model) =&gt; _oBuilders.get(this.$owner).error(model.$model,
                 new ErrorNotification(model.$model.path, error)));
     }
 
@@ -184,8 +184,8 @@ class Notifier {
      * @param forPath
      */
     sendComplete(forPath) {
-        this.$rxvo.getModelsInPath(forPath)
-            .forEach((model) =&gt; _oBuilders.get(this.$rxvo).complete(model.$model));
+        this.$owner.getModelsInPath(forPath)
+            .forEach((model) =&gt; _oBuilders.get(this.$owner).complete(model.$model));
     }
 }
 
@@ -196,21 +196,21 @@ class Notifier {
 export default class Notifiers {
     /**
      *
-     * @param rxvo
+     * @param owner
      * @returns {*}
      */
-    static create(rxvo) {
-       new Notifier(rxvo);
-       return Notifiers.get(rxvo);
+    static create(owner) {
+       new Notifier(owner);
+       return Notifiers.get(owner);
     }
 
     /**
      *
-     * @param rxvo
+     * @param owner
      * @returns {Notifier}
      */
-    static get(rxvo) {
-        return notifiers.get(rxvo);
+    static get(owner) {
+        return notifiers.get(owner);
     }
 }
 </code></pre>

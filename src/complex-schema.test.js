@@ -3,15 +3,15 @@ import {default as Data} from "../fixtures/basic-refs.data";
 import {default as OpenAPIv2} from "../fixtures/OpenAPIv2";
 import {default as JSONSchema4} from "../fixtures/json-schema-draft04.schema";
 import {default as basicAPI} from "../fixtures/petstore.v2"
-import {RxVO} from "./classes/rxvo";
+import {Model} from "./Model";
 
 describe("Basic Refs", () => {
     describe("ref handling", () => {
         it("should validate schema containing $refs and definitions", (done) => {
-            const _rxvo = new RxVO({schemas: [Schema]});
-            _rxvo.subscribe({
+            const _owner = new Model({schemas: [Schema]});
+            _owner.subscribe({
                 next: (model) => {
-                    expect(_rxvo.errors).toBe(null);
+                    expect(_owner.errors).toBe(null);
                     expect(model.toJSON()).toEqual(Data);
                     done();
                 },
@@ -19,22 +19,22 @@ describe("Basic Refs", () => {
                     done(`${e}`);
                 }
             });
-            _rxvo.model = Data;
+            _owner.model = Data;
         });
     });
 
     describe("OPenAPI Tests", () => {
         it("should load and validate OpenAPIv2 Schema", () => {
-            const _rxvo = new RxVO({
+            const _owner = new Model({
                 meta: [JSONSchema4],
                 schemas: [OpenAPIv2],
                 use: "http://swagger.io/v2/schema.json#"
             });
-                _rxvo.model = basicAPI;
+                _owner.model = basicAPI;
             // test to ensure no errors were logged
-            expect(_rxvo.errors).toBe(null);
+            expect(_owner.errors).toBe(null);
             // test for completeness
-            expect(_rxvo.toJSON()).toEqual(basicAPI);
+            expect(_owner.toJSON()).toEqual(basicAPI);
         })
             ;
         })

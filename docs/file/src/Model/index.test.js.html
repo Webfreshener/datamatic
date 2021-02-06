@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">src/Model/index.test.js | @webfreshener/vxlib</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="JSON-Schema Based Observable Data Models"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="@webfreshener/vxlib"><meta property="twitter:description" content="JSON-Schema Based Observable Data Models"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/Webfreshener/RxVO.git"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#model">Model</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_branchNotifier.js~Notifiers.html">Notifiers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_metaData.js~MetaData.html">MetaData</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_observerBuilder.js~ObserverBuilder.html">ObserverBuilder</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_schemaHelpers.js~SchemaHelpers.html">SchemaHelpers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/base-model.js~BaseModel.html">BaseModel</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/index.js~Model.html">Model</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/itemsModel.js~ItemsModel.html">ItemsModel</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDefaults">getDefaults</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPatternPropertyDefaults">getPatternPropertyDefaults</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getSchemaID">getSchemaID</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeClean">makeClean</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeDirty">makeDirty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refAtKeyValidation">refAtKeyValidation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refValidation">refValidation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-validate">validate</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-walkObject">walkObject</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ajvRef">_ajvRef</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_dirtyModels">_dirtyModels</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_oBuilders">_oBuilders</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_object">_object</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_observerPaths">_observerPaths</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_observers">_observers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaHelpers">_schemaHelpers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaOptions">_schemaOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaSignatures">_schemaSignatures</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validators">_validators</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-wf">wf</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pipe">Pipe</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipe/Executor.js~Executor.html">Executor</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipe/Iterator.js~Iterator.html">Iterator</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipe/Pipe.js~Pipe.html">Pipe</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipe/Pipe.js~PipeListener.html">PipeListener</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipe/Properties.js~Properties.html">Properties</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipe/Validator.js~Validator.html">Validator</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipe/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipe/vxBehaviorSubject.js~VxBehaviorSubject.html">VxBehaviorSubject</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-castToExec">castToExec</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-fill">fill</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-handleAsync">handleAsync</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-mapArgs">mapArgs</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-wrapCallback">wrapCallback</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_observers">_observers</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/Model/index.test.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {Model} from &quot;./index&quot;
+import {basicModel} from &quot;../../fixtures/PropertiesModel.schemas&quot;;
+import {default as basicRefs} from &quot;../../fixtures/basic-refs.schema&quot;;
+import {default as refsData} from &quot;../../fixtures/basic-refs.data&quot;;
+
+describe(&quot;Model Instance Test&quot;, () =&gt; {
+    let _owner;
+
+    beforeEach(() =&gt; {
+        _owner = new Model({schemas: [basicModel]});
+    });
+
+    it(&quot;expects a valid Model instance&quot;, () =&gt; {
+        expect(_owner instanceof Model).toBe(true);
+    });
+
+    it(&quot;should get it&apos;s schema&quot;, () =&gt; {
+        expect(_owner.schema).toEqual(basicModel);
+    });
+
+    it(&quot;should get path elements&quot;, () =&gt; {
+        expect(_owner.getSchemaForPath(&quot;properties/name&quot;)).toEqual({type: &quot;string&quot;});
+    });
+
+    it(&quot;expects Model Instances to create a valid Model Document&quot;, () =&gt; {
+        _owner.model = {
+            &quot;name&quot;: &quot;test&quot;,
+        };
+
+        expect(`${_owner.model.name}`).toEqual(&quot;test&quot;);
+    });
+
+    it(&quot;runs schema validator&quot;, () =&gt; {
+        const _owner = new Model({
+            properties:
+                {
+                    id: {type: &apos;integer&apos;},
+                    name: {type: &apos;string&apos;},
+                    value: {type: &apos;integer&apos;},
+                    createdOn: {type: &apos;string&apos;}
+                },
+        });
+
+        expect(_owner.errors).toBe(null);
+    });
+
+    describe(&quot;Mixed schemas&quot;, () =&gt; {
+        it(&quot;should allow mixed schemas to be selected and used&quot;, () =&gt; {
+            const _owner = new Model({schemas: [basicRefs]});
+            _owner.subscribe({
+                error: (e) =&gt; console.log(JSON.stringify(e)),
+            });
+            _owner.model = refsData;
+            expect(_owner.errors).toBe(null);
+            _owner.model.aReference.valueA = &quot;A String Value&quot;;
+            expect(_owner.errors).toBe(null);
+            expect(_owner.model).toEqual(refsData);
+        });
+    });
+});
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

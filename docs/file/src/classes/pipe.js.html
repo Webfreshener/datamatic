@@ -3,20 +3,20 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../../">
-  <title data-ice="title">src/classes/txPipe.js | rxvo</title>
+  <title data-ice="title">src/classes/pipe.js | owner</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
   <script src="script/manual.js"></script>
-<meta name="description" content="RxJS + JSON-Schema Based Observable Data Models"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="rxvo"><meta property="twitter:description" content="RxJS + JSON-Schema Based Observable Data Models"></head>
+<meta name="description" content="RxJS + JSON-Schema Based Observable Data Models"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="owner"><meta property="twitter:description" content="RxJS + JSON-Schema Based Observable Data Models"></head>
 <body class="layout-container" data-ice="rootContainer">
 
 <header>
   <a href="./">Home</a>
-  
+
   <a href="identifiers.html">Reference</a>
   <a href="source.html">Source</a>
-  
+
   <div class="search-box">
   <span>
     <img src="./image/search.png">
@@ -28,7 +28,7 @@
 
 <nav class="navigation" data-ice="nav"><div>
   <ul>
-    
+
   <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#classes">classes</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_branchNotifier.js~Notifiers.html">Notifiers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_metaData.js~MetaData.html">MetaData</a></span></span></li>
@@ -38,7 +38,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">RxVO</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/owner.js~RxVO.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDefaults">getDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPatternPropertyDefaults">getPatternPropertyDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getSchemaID">getSchemaID</a></span></span></li>
@@ -65,7 +65,7 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><h1 data-ice="title">src/classes/txPipe.js</h1>
+<div class="content" data-ice="content"><h1 data-ice="title">src/classes/pipe.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* ############################################################################
 The MIT License (MIT)
 
@@ -91,7 +91,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ############################################################################ */
-import {RxVO} from &quot;./rxvo&quot;;
+import {Model} from &quot;./owner&quot;;
 
 const _pipes = new WeakMap();
 const _cache = new WeakMap();
@@ -126,7 +126,7 @@ export class Pipe {
         _cache.set(this, []);
         const _sub = vo.subscribe({
             next: (data) =&gt; {
-                // remove rxvo wrappings from object
+                // remove owner wrappings from object
                 data = data.toJSON ? data.toJSON() : data;
 
                 if (_pipes.get(this).tO) {
@@ -171,7 +171,7 @@ export class Pipe {
             ivlVal: 0,
             rate: 1,
             schema: _s,
-            out: new RxVO({
+            out: new Model({
                 schemas: Array.isArray(_s) ? _s : [_s],
             }),
             once: false,

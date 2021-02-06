@@ -7,20 +7,20 @@ module.exports = [{
     ],
 	output: {
         path: path.join(__dirname, "dist"),
-        filename: 'rxvo.js',
+        filename: 'datalux.js',
 		libraryTarget: "umd",
-		library: "RxVO",
+		// library: "datalux",
 	},
     module: {
-        rules: [
-            // {
-            //     test: /\.js$/,
-            //     exclude: /node_modules/,
-            //     use: {
-            //         loader: "babel-loader"
-            //     },
-            // },
-        ],
+        // rules: [
+        //     {
+        //         test: /\.js$/,
+        //         exclude: /node_modules/,
+        //         use: {
+        //             loader: "babel-loader"
+        //         },
+        //     },
+        // ],
     },
 }, {
     externals: [
@@ -28,19 +28,19 @@ module.exports = [{
     ],
     output: {
         path: path.join(__dirname, "dist"),
-        filename: 'rxvo.node.js',
+        filename: 'datalux.node.js',
         libraryTarget: "commonjs",
-        library: "RxVO",
+        // library: "datalux",
     },
     module: {
-        rules: [
-            {
-                test: /\.js$/,
-                exclude: /node_modules/,
-                use: {
-                    loader: "babel-loader",
-                },
-            },
-        ],
+        // rules: [
+        //     {
+        //         test: /\.js$/,
+        //         exclude: /node_modules/,
+        //         use: {
+        //             loader: "babel-loader",
+        //         },
+        //     },
+        // ],
     },
 }];

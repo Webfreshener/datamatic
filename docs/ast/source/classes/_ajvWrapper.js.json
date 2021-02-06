@@ -230,10 +230,10 @@
             }
           },
           "extra": {
-            "rawValue": "./rxvo",
-            "raw": "\"./rxvo\""
+            "rawValue": "./owner",
+            "raw": "\"./owner\""
           },
-          "value": "./rxvo"
+          "value": "./owner"
         }
       },
       {
@@ -476,7 +476,7 @@
         "trailingComments": [
           {
             "type": "CommentBlock",
-            "value": "*\n * backreferences object tree for top-down evaluation\n * @param path\n * @param data\n * @param rxvo\n * @returns {any}\n * @private\n ",
+            "value": "*\n * backreferences object tree for top-down evaluation\n * @param path\n * @param data\n * @param owner\n * @returns {any}\n * @private\n ",
             "start": 1475,
             "end": 1611,
             "loc": {
@@ -622,9 +622,9 @@
                       "line": 44,
                       "column": 39
                     },
-                    "identifierName": "rxvo"
+                    "identifierName": "owner"
                   },
-                  "name": "rxvo"
+                  "name": "owner"
                 }
               ],
               "body": {
@@ -1383,9 +1383,9 @@
                                           "line": 50,
                                           "column": 35
                                         },
-                                        "identifierName": "rxvo"
+                                        "identifierName": "owner"
                                       },
-                                      "name": "rxvo"
+                                      "name": "owner"
                                     },
                                     "property": {
                                       "type": "Identifier",
@@ -1564,7 +1564,7 @@
         "leadingComments": [
           {
             "type": "CommentBlock",
-            "value": "*\n * backreferences object tree for top-down evaluation\n * @param path\n * @param data\n * @param rxvo\n * @returns {any}\n * @private\n ",
+            "value": "*\n * backreferences object tree for top-down evaluation\n * @param path\n * @param data\n * @param owner\n * @returns {any}\n * @private\n ",
             "start": 1475,
             "end": 1611,
             "loc": {
@@ -3974,9 +3974,9 @@
                         "line": 109,
                         "column": 20
                       },
-                      "identifierName": "rxvo"
+                      "identifierName": "owner"
                     },
-                    "name": "rxvo"
+                    "name": "owner"
                   },
                   {
                     "type": "Identifier",
@@ -4116,9 +4116,9 @@
                                 "line": 111,
                                 "column": 18
                               },
-                              "identifierName": "rxvo"
+                              "identifierName": "owner"
                             },
-                            "name": "rxvo",
+                            "name": "owner",
                             "leadingComments": null
                           },
                           "extra": {
@@ -4172,9 +4172,9 @@
                                   "line": 111,
                                   "column": 29
                                 },
-                                "identifierName": "rxvo"
+                                "identifierName": "owner"
                               },
-                              "name": "rxvo"
+                              "name": "owner"
                             },
                             "operator": "instanceof",
                             "right": {
@@ -4695,10 +4695,10 @@
                               }
                             },
                             "extra": {
-                              "rawValue": "$rxvo",
-                              "raw": "\"$rxvo\""
+                              "rawValue": "$owner",
+                              "raw": "\"$owner\""
                             },
-                            "value": "$rxvo"
+                            "value": "$owner"
                           },
                           {
                             "type": "ObjectExpression",
@@ -4781,9 +4781,9 @@
                                         "line": 121,
                                         "column": 27
                                       },
-                                      "identifierName": "rxvo"
+                                      "identifierName": "owner"
                                     },
-                                    "name": "rxvo"
+                                    "name": "owner"
                                   }
                                 }
                               },
@@ -8209,7 +8209,7 @@
                 "leadingComments": [
                   {
                     "type": "CommentBlock",
-                    "value": "*\n     * @constructor\n     * @param rxvo\n     * @param schemas\n     * @param ajvOptions\n     ",
+                    "value": "*\n     * @constructor\n     * @param owner\n     * @param schemas\n     * @param ajvOptions\n     ",
                     "start": 3120,
                     "end": 3217,
                     "loc": {
@@ -9921,9 +9921,9 @@
                                                     "line": 217,
                                                     "column": 87
                                                   },
-                                                  "identifierName": "$rxvo"
+                                                  "identifierName": "$owner"
                                                 },
-                                                "name": "$rxvo"
+                                                "name": "$owner"
                                               },
                                               "computed": false
                                             }
@@ -10978,7 +10978,7 @@
     },
     {
       "type": "CommentBlock",
-      "value": "*\n * backreferences object tree for top-down evaluation\n * @param path\n * @param data\n * @param rxvo\n * @returns {any}\n * @private\n ",
+      "value": "*\n * backreferences object tree for top-down evaluation\n * @param path\n * @param data\n * @param owner\n * @returns {any}\n * @private\n ",
       "start": 1475,
       "end": 1611,
       "loc": {
@@ -11042,7 +11042,7 @@
     },
     {
       "type": "CommentBlock",
-      "value": "*\n     * @constructor\n     * @param rxvo\n     * @param schemas\n     * @param ajvOptions\n     ",
+      "value": "*\n     * @constructor\n     * @param owner\n     * @param schemas\n     * @param ajvOptions\n     ",
       "start": 3120,
       "end": 3217,
       "loc": {
@@ -12264,7 +12264,7 @@
         "binop": null,
         "updateContext": null
       },
-      "value": "./rxvo",
+      "value": "./owner",
       "start": 1368,
       "end": 1376,
       "loc": {
@@ -12833,7 +12833,7 @@
     },
     {
       "type": "CommentBlock",
-      "value": "*\n * backreferences object tree for top-down evaluation\n * @param path\n * @param data\n * @param rxvo\n * @returns {any}\n * @private\n ",
+      "value": "*\n * backreferences object tree for top-down evaluation\n * @param path\n * @param data\n * @param owner\n * @returns {any}\n * @private\n ",
       "start": 1475,
       "end": 1611,
       "loc": {
@@ -13069,7 +13069,7 @@
         "postfix": false,
         "binop": null
       },
-      "value": "rxvo",
+      "value": "owner",
       "start": 1647,
       "end": 1651,
       "loc": {
@@ -14576,7 +14576,7 @@
         "postfix": false,
         "binop": null
       },
-      "value": "rxvo",
+      "value": "owner",
       "start": 1835,
       "end": 1839,
       "loc": {
@@ -19964,7 +19964,7 @@
     },
     {
       "type": "CommentBlock",
-      "value": "*\n     * @constructor\n     * @param rxvo\n     * @param schemas\n     * @param ajvOptions\n     ",
+      "value": "*\n     * @constructor\n     * @param owner\n     * @param schemas\n     * @param ajvOptions\n     ",
       "start": 3120,
       "end": 3217,
       "loc": {
@@ -20041,7 +20041,7 @@
         "postfix": false,
         "binop": null
       },
-      "value": "rxvo",
+      "value": "owner",
       "start": 3234,
       "end": 3238,
       "loc": {
@@ -20419,7 +20419,7 @@
         "postfix": false,
         "binop": null
       },
-      "value": "rxvo",
+      "value": "owner",
       "start": 3359,
       "end": 3363,
       "loc": {
@@ -20549,7 +20549,7 @@
         "postfix": false,
         "binop": null
       },
-      "value": "rxvo",
+      "value": "owner",
       "start": 3370,
       "end": 3374,
       "loc": {
@@ -21658,7 +21658,7 @@
         "binop": null,
         "updateContext": null
       },
-      "value": "$rxvo",
+      "value": "$owner",
       "start": 3647,
       "end": 3654,
       "loc": {
@@ -21863,7 +21863,7 @@
         "postfix": false,
         "binop": null
       },
-      "value": "rxvo",
+      "value": "owner",
       "start": 3681,
       "end": 3685,
       "loc": {
@@ -32180,7 +32180,7 @@
         "postfix": false,
         "binop": null
       },
-      "value": "$rxvo",
+      "value": "$owner",
       "start": 6633,
       "end": 6638,
       "loc": {

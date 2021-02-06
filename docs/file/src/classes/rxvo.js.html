@@ -3,20 +3,20 @@
 <head>
   <meta charset="utf-8">
   <base data-ice="baseUrl" href="../../../">
-  <title data-ice="title">src/classes/rxvo.js | rxvo</title>
+  <title data-ice="title">src/classes/owner.js | owner</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
   <script src="script/manual.js"></script>
-<meta name="description" content="RxJS + JSON-Schema Based Observable Data Models"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="rxvo"><meta property="twitter:description" content="RxJS + JSON-Schema Based Observable Data Models"></head>
+<meta name="description" content="RxJS + JSON-Schema Based Observable Data Models"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="owner"><meta property="twitter:description" content="RxJS + JSON-Schema Based Observable Data Models"></head>
 <body class="layout-container" data-ice="rootContainer">
 
 <header>
   <a href="./">Home</a>
-  
+
   <a href="identifiers.html">Reference</a>
   <a href="source.html">Source</a>
-  
+
   <div class="search-box">
   <span>
     <img src="./image/search.png">
@@ -28,7 +28,7 @@
 
 <nav class="navigation" data-ice="nav"><div>
   <ul>
-    
+
   <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#classes">classes</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_branchNotifier.js~Notifiers.html">Notifiers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/_metaData.js~MetaData.html">MetaData</a></span></span></li>
@@ -38,7 +38,7 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/model.js~Model.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/pipe.js~Pipe.html">Pipe</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/rxvo.js~RxVO.html">RxVO</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/classes/owner.js~RxVO.html">Model</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDefaults">getDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPatternPropertyDefaults">getPatternPropertyDefaults</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getSchemaID">getSchemaID</a></span></span></li>
@@ -65,7 +65,7 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><h1 data-ice="title">src/classes/rxvo.js</h1>
+<div class="content" data-ice="content"><h1 data-ice="title">src/classes/owner.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* ############################################################################
 The MIT License (MIT)
 
@@ -123,7 +123,7 @@ const _getModelClass = (el) =&gt; {
  * RxVo Model Entry-point
  * @public
  */
-export class RxVO {
+export class Model {
     /**
      * @constructor
      * @param {json} schemas
@@ -216,7 +216,7 @@ export class RxVO {
 
     /**
      * Freezes document object
-     * @returns {RxVO}
+     * @returns {Model}
      */
     freeze() {
         this.model.$model.freeze();
@@ -369,16 +369,16 @@ export class RxVO {
     /**
      * Creates new PropertiesModel from JSON data
      * @param {string|json} json -- JSON Object or String
-     * @param {object} options - RxVO options object
-     * @returns {RxVO}
+     * @param {object} options - Model options object
+     * @returns {Model}
      */
     static fromJSON(json, options) {
         // quick peek at json param to ensure it looks ok
         const __ = (typeof json).match(/^(string|object)+$/);
 
         if (__) {
-            // attempts to create RxVO from JSON or JSON string
-            return new RxVO((__[1] === &quot;string&quot;) ?
+            // attempts to create Model from JSON or JSON string
+            return new Model((__[1] === &quot;string&quot;) ?
                 JSON.parse(json) : json, options);
         }
 

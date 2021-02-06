@@ -23,4 +23,17 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ############################################################################ */
-module.exports = require('./dist/rxvo.node').RxVO;
+module.exports = Object.defineProperties({}, {
+    Model: {
+        value: require('./dist/datalux.node').Model,
+        enumerable: true,
+        configurable: false,
+        writable: false,
+    },
+    Pipe: {
+        value: require('./dist/datalux.node').Pipe,
+        enumerable: true,
+        configurable: false,
+        writable: false,
+    },
+})

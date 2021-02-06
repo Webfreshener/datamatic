@@ -1,5 +1,5 @@
 export default {
-    $id: "https://schemas.webfreshener.com/rxvo/pipe-keys#",
+    $id: "https://schemas.webfreshener.com/owner/pipe-keys#",
     type: "array",
     items: {
         $ref: "#/definitions/PipeObject",

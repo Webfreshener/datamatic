@@ -6,20 +6,20 @@ const _d = {
 };
 
 describe("node commonjs require", () => {
-    const {RxVO} = require("../index");
-    let rxvo;
+    const {Model} = require("../index");
+    let _model;
 
     beforeEach(() => {
-        rxvo = new RxVO({
+        _model = new Model({
             schemas: [basicModel],
         });
     });
 
-    it("should import RxVO and create document", ()=> {
-        rxvo.model = {
+    it("should import Model and create document", ()=> {
+        _model.model = {
             foo: "bar"
         };
-        expect(rxvo.model.foo).toBe("bar");
+        expect(_model.model.foo).toBe("bar");
     });
 
     it("should be an observable", (done) => {
@@ -28,15 +28,15 @@ describe("node commonjs require", () => {
         const _iterator = {
             next: (
                 () => _ival++ < _arr.length ? {
-                    value: rxvo.model = _d,
+                    value: _model.model = _d,
                     done: false,
                 } : {
-                    value: rxvo.freeze(),
+                    value: _model.freeze(),
                     done: true,
                 }
             ),
         };
-        rxvo.subscribe({next: _iterator.next, complete: done});
+        _model.subscribe({next: _iterator.next, complete: done});
         _iterator.next();
     });
 });

@@ -1,195 +1,273 @@
 window.esdocSearchIndex = [
   [
-    "rxvo/src/classes/_ajvwrapper.js~ajvwrapper",
-    "class/src/classes/_ajvWrapper.js~AjvWrapper.html",
-    "<span>AjvWrapper</span> <span class=\"search-result-import-path\">rxvo/src/classes/_ajvWrapper.js</span>",
+    "@webfreshener/vxlib/src/model/_ajvwrapper.js~ajvwrapper",
+    "class/src/Model/_ajvWrapper.js~AjvWrapper.html",
+    "<span>AjvWrapper</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/_ajvWrapper.js</span>",
     "class"
   ],
   [
-    "rxvo/src/classes/itemsmodel.js~itemsmodel",
-    "class/src/classes/itemsModel.js~ItemsModel.html",
-    "<span>ItemsModel</span> <span class=\"search-result-import-path\">rxvo/src/classes/itemsModel.js</span>",
+    "@webfreshener/vxlib/src/pipe/_ajvwrapper.js~ajvwrapper",
+    "class/src/Pipe/_ajvWrapper.js~AjvWrapper.html",
+    "<span>AjvWrapper</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipe/_ajvWrapper.js</span>",
     "class"
   ],
   [
-    "rxvo/src/classes/_metadata.js~metadata",
-    "class/src/classes/_metaData.js~MetaData.html",
-    "<span>MetaData</span> <span class=\"search-result-import-path\">rxvo/src/classes/_metaData.js</span>",
+    "@webfreshener/vxlib/src/model/base-model.js~basemodel",
+    "class/src/Model/base-model.js~BaseModel.html",
+    "<span>BaseModel</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/base-model.js</span>",
     "class"
   ],
   [
-    "rxvo/src/classes/model.js~model",
-    "class/src/classes/model.js~Model.html",
-    "<span>Model</span> <span class=\"search-result-import-path\">rxvo/src/classes/model.js</span>",
+    "@webfreshener/vxlib/src/pipe/executor.js~executor",
+    "class/src/Pipe/Executor.js~Executor.html",
+    "<span>Executor</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipe/Executor.js</span>",
     "class"
   ],
   [
-    "rxvo/src/classes/_branchnotifier.js~notifiers",
-    "class/src/classes/_branchNotifier.js~Notifiers.html",
-    "<span>Notifiers</span> <span class=\"search-result-import-path\">rxvo/src/classes/_branchNotifier.js</span>",
+    "@webfreshener/vxlib/src/model/itemsmodel.js~itemsmodel",
+    "class/src/Model/itemsModel.js~ItemsModel.html",
+    "<span>ItemsModel</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/itemsModel.js</span>",
     "class"
   ],
   [
-    "rxvo/src/classes/_observerbuilder.js~observerbuilder",
-    "class/src/classes/_observerBuilder.js~ObserverBuilder.html",
-    "<span>ObserverBuilder</span> <span class=\"search-result-import-path\">rxvo/src/classes/_observerBuilder.js</span>",
+    "@webfreshener/vxlib/src/pipe/iterator.js~iterator",
+    "class/src/Pipe/Iterator.js~Iterator.html",
+    "<span>Iterator</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipe/Iterator.js</span>",
     "class"
   ],
   [
-    "rxvo/src/classes/pipe.js~pipe",
-    "class/src/classes/pipe.js~Pipe.html",
-    "<span>Pipe</span> <span class=\"search-result-import-path\">rxvo/src/classes/pipe.js</span>",
+    "@webfreshener/vxlib/src/model/_metadata.js~metadata",
+    "class/src/Model/_metaData.js~MetaData.html",
+    "<span>MetaData</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/_metaData.js</span>",
     "class"
   ],
   [
-    "rxvo/src/classes/propertiesmodel.js~propertiesmodel",
-    "class/src/classes/propertiesModel.js~PropertiesModel.html",
-    "<span>PropertiesModel</span> <span class=\"search-result-import-path\">rxvo/src/classes/propertiesModel.js</span>",
+    "@webfreshener/vxlib/src/model/index.js~model",
+    "class/src/Model/index.js~Model.html",
+    "<span>Model</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/index.js</span>",
     "class"
   ],
   [
-    "rxvo/src/classes/rxvo.js~rxvo",
-    "class/src/classes/rxvo.js~RxVO.html",
-    "<span>RxVO</span> <span class=\"search-result-import-path\">rxvo/src/classes/rxvo.js</span>",
+    "@webfreshener/vxlib/src/model/_branchnotifier.js~notifiers",
+    "class/src/Model/_branchNotifier.js~Notifiers.html",
+    "<span>Notifiers</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/_branchNotifier.js</span>",
     "class"
   ],
   [
-    "rxvo/src/classes/_schemahelpers.js~schemahelpers",
-    "class/src/classes/_schemaHelpers.js~SchemaHelpers.html",
-    "<span>SchemaHelpers</span> <span class=\"search-result-import-path\">rxvo/src/classes/_schemaHelpers.js</span>",
+    "@webfreshener/vxlib/src/model/_observerbuilder.js~observerbuilder",
+    "class/src/Model/_observerBuilder.js~ObserverBuilder.html",
+    "<span>ObserverBuilder</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/_observerBuilder.js</span>",
     "class"
   ],
   [
-    "rxvo/src/classes/_references.js~_ajvref",
+    "@webfreshener/vxlib/src/pipe/pipe.js~pipe",
+    "class/src/Pipe/Pipe.js~Pipe.html",
+    "<span>Pipe</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipe/Pipe.js</span>",
+    "class"
+  ],
+  [
+    "@webfreshener/vxlib/src/pipe/pipe.js~pipelistener",
+    "class/src/Pipe/Pipe.js~PipeListener.html",
+    "<span>PipeListener</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipe/Pipe.js</span>",
+    "class"
+  ],
+  [
+    "@webfreshener/vxlib/src/pipe/properties.js~properties",
+    "class/src/Pipe/Properties.js~Properties.html",
+    "<span>Properties</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipe/Properties.js</span>",
+    "class"
+  ],
+  [
+    "@webfreshener/vxlib/src/model/propertiesmodel.js~propertiesmodel",
+    "class/src/Model/propertiesModel.js~PropertiesModel.html",
+    "<span>PropertiesModel</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/propertiesModel.js</span>",
+    "class"
+  ],
+  [
+    "@webfreshener/vxlib/src/model/_schemahelpers.js~schemahelpers",
+    "class/src/Model/_schemaHelpers.js~SchemaHelpers.html",
+    "<span>SchemaHelpers</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/_schemaHelpers.js</span>",
+    "class"
+  ],
+  [
+    "@webfreshener/vxlib/src/pipe/validator.js~validator",
+    "class/src/Pipe/Validator.js~Validator.html",
+    "<span>Validator</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipe/Validator.js</span>",
+    "class"
+  ],
+  [
+    "@webfreshener/vxlib/src/pipe/vxbehaviorsubject.js~vxbehaviorsubject",
+    "class/src/Pipe/vxBehaviorSubject.js~VxBehaviorSubject.html",
+    "<span>VxBehaviorSubject</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipe/vxBehaviorSubject.js</span>",
+    "class"
+  ],
+  [
+    "@webfreshener/vxlib/src/model/_references.js~_ajvref",
     "variable/index.html#static-variable-_ajvRef",
-    "<span>_ajvRef</span> <span class=\"search-result-import-path\">rxvo/src/classes/_references.js</span>",
+    "<span>_ajvRef</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/_references.js</span>",
     "variable"
   ],
   [
-    "rxvo/src/classes/_references.js~_dirtymodels",
+    "@webfreshener/vxlib/src/model/_references.js~_dirtymodels",
     "variable/index.html#static-variable-_dirtyModels",
-    "<span>_dirtyModels</span> <span class=\"search-result-import-path\">rxvo/src/classes/_references.js</span>",
+    "<span>_dirtyModels</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/_references.js</span>",
     "variable"
   ],
   [
-    "rxvo/src/classes/_references.js~_exists",
+    "@webfreshener/vxlib/src/model/_references.js~_exists",
     "variable/index.html#static-variable-_exists",
-    "<span>_exists</span> <span class=\"search-result-import-path\">rxvo/src/classes/_references.js</span>",
+    "<span>_exists</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/_references.js</span>",
     "variable"
   ],
   [
-    "rxvo/src/classes/_references.js~_mdref",
+    "@webfreshener/vxlib/src/model/_references.js~_mdref",
     "variable/index.html#static-variable-_mdRef",
-    "<span>_mdRef</span> <span class=\"search-result-import-path\">rxvo/src/classes/_references.js</span>",
+    "<span>_mdRef</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/_references.js</span>",
     "variable"
   ],
   [
-    "rxvo/src/classes/_references.js~_obuilders",
+    "@webfreshener/vxlib/src/model/_references.js~_obuilders",
     "variable/index.html#static-variable-_oBuilders",
-    "<span>_oBuilders</span> <span class=\"search-result-import-path\">rxvo/src/classes/_references.js</span>",
+    "<span>_oBuilders</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/_references.js</span>",
     "variable"
   ],
   [
-    "rxvo/src/classes/_references.js~_object",
+    "@webfreshener/vxlib/src/model/_references.js~_object",
     "variable/index.html#static-variable-_object",
-    "<span>_object</span> <span class=\"search-result-import-path\">rxvo/src/classes/_references.js</span>",
+    "<span>_object</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/_references.js</span>",
     "variable"
   ],
   [
-    "rxvo/src/classes/_references.js~_observerpaths",
+    "@webfreshener/vxlib/src/model/_references.js~_observerpaths",
     "variable/index.html#static-variable-_observerPaths",
-    "<span>_observerPaths</span> <span class=\"search-result-import-path\">rxvo/src/classes/_references.js</span>",
+    "<span>_observerPaths</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/_references.js</span>",
     "variable"
   ],
   [
-    "rxvo/src/classes/_references.js~_observers",
+    "@webfreshener/vxlib/src/model/_references.js~_observers",
     "variable/index.html#static-variable-_observers",
-    "<span>_observers</span> <span class=\"search-result-import-path\">rxvo/src/classes/_references.js</span>",
+    "<span>_observers</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/_references.js</span>",
     "variable"
   ],
   [
-    "rxvo/src/classes/_references.js~_schemahelpers",
+    "@webfreshener/vxlib/src/pipe/validator.js~_observers",
+    "variable/index.html#static-variable-_observers",
+    "<span>_observers</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipe/Validator.js</span>",
+    "variable"
+  ],
+  [
+    "@webfreshener/vxlib/src/model/_references.js~_schemahelpers",
     "variable/index.html#static-variable-_schemaHelpers",
-    "<span>_schemaHelpers</span> <span class=\"search-result-import-path\">rxvo/src/classes/_references.js</span>",
+    "<span>_schemaHelpers</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/_references.js</span>",
     "variable"
   ],
   [
-    "rxvo/src/classes/_references.js~_schemaoptions",
+    "@webfreshener/vxlib/src/model/_references.js~_schemaoptions",
     "variable/index.html#static-variable-_schemaOptions",
-    "<span>_schemaOptions</span> <span class=\"search-result-import-path\">rxvo/src/classes/_references.js</span>",
+    "<span>_schemaOptions</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/_references.js</span>",
     "variable"
   ],
   [
-    "rxvo/src/classes/_references.js~_schemasignatures",
+    "@webfreshener/vxlib/src/model/_references.js~_schemasignatures",
     "variable/index.html#static-variable-_schemaSignatures",
-    "<span>_schemaSignatures</span> <span class=\"search-result-import-path\">rxvo/src/classes/_references.js</span>",
+    "<span>_schemaSignatures</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/_references.js</span>",
     "variable"
   ],
   [
-    "rxvo/src/classes/_references.js~_validators",
+    "@webfreshener/vxlib/src/model/_references.js~_validators",
     "variable/index.html#static-variable-_validators",
-    "<span>_validators</span> <span class=\"search-result-import-path\">rxvo/src/classes/_references.js</span>",
+    "<span>_validators</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/_references.js</span>",
     "variable"
   ],
   [
-    "rxvo/src/classes/utils.js~getdefaults",
+    "@webfreshener/vxlib/src/pipe/utils.js~casttoexec",
+    "function/index.html#static-function-castToExec",
+    "<span>castToExec</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipe/Utils.js</span>",
+    "function"
+  ],
+  [
+    "@webfreshener/vxlib/src/pipe/utils.js~fill",
+    "function/index.html#static-function-fill",
+    "<span>fill</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipe/Utils.js</span>",
+    "function"
+  ],
+  [
+    "@webfreshener/vxlib/src/model/utils.js~getdefaults",
     "function/index.html#static-function-getDefaults",
-    "<span>getDefaults</span> <span class=\"search-result-import-path\">rxvo/src/classes/utils.js</span>",
+    "<span>getDefaults</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/utils.js</span>",
     "function"
   ],
   [
-    "rxvo/src/classes/utils.js~getpatternpropertydefaults",
+    "@webfreshener/vxlib/src/model/utils.js~getpatternpropertydefaults",
     "function/index.html#static-function-getPatternPropertyDefaults",
-    "<span>getPatternPropertyDefaults</span> <span class=\"search-result-import-path\">rxvo/src/classes/utils.js</span>",
+    "<span>getPatternPropertyDefaults</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/utils.js</span>",
     "function"
   ],
   [
-    "rxvo/src/classes/utils.js~getschemaid",
+    "@webfreshener/vxlib/src/model/utils.js~getschemaid",
     "function/index.html#static-function-getSchemaID",
-    "<span>getSchemaID</span> <span class=\"search-result-import-path\">rxvo/src/classes/utils.js</span>",
+    "<span>getSchemaID</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/utils.js</span>",
     "function"
   ],
   [
-    "rxvo/src/classes/utils.js~makeclean",
+    "@webfreshener/vxlib/src/pipe/utils.js~handleasync",
+    "function/index.html#static-function-handleAsync",
+    "<span>handleAsync</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipe/Utils.js</span>",
+    "function"
+  ],
+  [
+    "@webfreshener/vxlib/src/model/utils.js~makeclean",
     "function/index.html#static-function-makeClean",
-    "<span>makeClean</span> <span class=\"search-result-import-path\">rxvo/src/classes/utils.js</span>",
+    "<span>makeClean</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/utils.js</span>",
     "function"
   ],
   [
-    "rxvo/src/classes/utils.js~makedirty",
+    "@webfreshener/vxlib/src/model/utils.js~makedirty",
     "function/index.html#static-function-makeDirty",
-    "<span>makeDirty</span> <span class=\"search-result-import-path\">rxvo/src/classes/utils.js</span>",
+    "<span>makeDirty</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/utils.js</span>",
     "function"
   ],
   [
-    "rxvo/src/classes/utils.js~refatkeyvalidation",
+    "@webfreshener/vxlib/src/pipe/utils.js~mapargs",
+    "function/index.html#static-function-mapArgs",
+    "<span>mapArgs</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipe/Utils.js</span>",
+    "function"
+  ],
+  [
+    "@webfreshener/vxlib/src/model/utils.js~refatkeyvalidation",
     "function/index.html#static-function-refAtKeyValidation",
-    "<span>refAtKeyValidation</span> <span class=\"search-result-import-path\">rxvo/src/classes/utils.js</span>",
+    "<span>refAtKeyValidation</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/utils.js</span>",
     "function"
   ],
   [
-    "rxvo/src/classes/utils.js~refvalidation",
+    "@webfreshener/vxlib/src/model/utils.js~refvalidation",
     "function/index.html#static-function-refValidation",
-    "<span>refValidation</span> <span class=\"search-result-import-path\">rxvo/src/classes/utils.js</span>",
+    "<span>refValidation</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/utils.js</span>",
     "function"
   ],
   [
-    "rxvo/src/classes/utils.js~validate",
+    "@webfreshener/vxlib/src/model/utils.js~validate",
     "function/index.html#static-function-validate",
-    "<span>validate</span> <span class=\"search-result-import-path\">rxvo/src/classes/utils.js</span>",
+    "<span>validate</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/utils.js</span>",
     "function"
   ],
   [
-    "rxvo/src/classes/utils.js~walkobject",
+    "@webfreshener/vxlib/src/model/utils.js~walkobject",
     "function/index.html#static-function-walkObject",
-    "<span>walkObject</span> <span class=\"search-result-import-path\">rxvo/src/classes/utils.js</span>",
+    "<span>walkObject</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/utils.js</span>",
     "function"
   ],
   [
-    "rxvo/src/classes/_references.js~wf",
+    "@webfreshener/vxlib/src/model/_references.js~wf",
     "variable/index.html#static-variable-wf",
-    "<span>wf</span> <span class=\"search-result-import-path\">rxvo/src/classes/_references.js</span>",
+    "<span>wf</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/_references.js</span>",
     "variable"
+  ],
+  [
+    "@webfreshener/vxlib/src/pipe/utils.js~wrapcallback",
+    "function/index.html#static-function-wrapCallback",
+    "<span>wrapCallback</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipe/Utils.js</span>",
+    "function"
   ],
   [
     "src/.external-ecmascript.js~array",
@@ -474,777 +552,1125 @@ window.esdocSearchIndex = [
     "external"
   ],
   [
-    "src/classes/_ajvwrapper.js",
-    "file/src/classes/_ajvWrapper.js.html",
-    "src/classes/_ajvWrapper.js",
+    "src/model/_ajvwrapper.js",
+    "file/src/Model/_ajvWrapper.js.html",
+    "src/Model/_ajvWrapper.js",
     "file"
   ],
   [
-    "src/classes/_ajvwrapper.js~ajvwrapper#$ajv",
-    "class/src/classes/_ajvWrapper.js~AjvWrapper.html#instance-get-$ajv",
-    "src/classes/_ajvWrapper.js~AjvWrapper#$ajv",
+    "src/model/_ajvwrapper.js~ajvwrapper#$ajv",
+    "class/src/Model/_ajvWrapper.js~AjvWrapper.html#instance-get-$ajv",
+    "src/Model/_ajvWrapper.js~AjvWrapper#$ajv",
     "member"
   ],
   [
-    "src/classes/_ajvwrapper.js~ajvwrapper#constructor",
-    "class/src/classes/_ajvWrapper.js~AjvWrapper.html#instance-constructor-constructor",
-    "src/classes/_ajvWrapper.js~AjvWrapper#constructor",
+    "src/model/_ajvwrapper.js~ajvwrapper#constructor",
+    "class/src/Model/_ajvWrapper.js~AjvWrapper.html#instance-constructor-constructor",
+    "src/Model/_ajvWrapper.js~AjvWrapper#constructor",
     "method"
   ],
   [
-    "src/classes/_ajvwrapper.js~ajvwrapper#exec",
-    "class/src/classes/_ajvWrapper.js~AjvWrapper.html#instance-method-exec",
-    "src/classes/_ajvWrapper.js~AjvWrapper#exec",
+    "src/model/_ajvwrapper.js~ajvwrapper#exec",
+    "class/src/Model/_ajvWrapper.js~AjvWrapper.html#instance-method-exec",
+    "src/Model/_ajvWrapper.js~AjvWrapper#exec",
     "method"
   ],
   [
-    "src/classes/_ajvwrapper.js~ajvwrapper#path",
-    "class/src/classes/_ajvWrapper.js~AjvWrapper.html#instance-member-path",
-    "src/classes/_ajvWrapper.js~AjvWrapper#path",
+    "src/model/_ajvwrapper.js~ajvwrapper#path",
+    "class/src/Model/_ajvWrapper.js~AjvWrapper.html#instance-member-path",
+    "src/Model/_ajvWrapper.js~AjvWrapper#path",
     "member"
   ],
   [
-    "src/classes/_ajvwrapper.js~ajvwrapper.resolvepath",
-    "class/src/classes/_ajvWrapper.js~AjvWrapper.html#static-method-resolvePath",
-    "src/classes/_ajvWrapper.js~AjvWrapper.resolvePath",
+    "src/model/_ajvwrapper.js~ajvwrapper.resolvepath",
+    "class/src/Model/_ajvWrapper.js~AjvWrapper.html#static-method-resolvePath",
+    "src/Model/_ajvWrapper.js~AjvWrapper.resolvePath",
     "method"
   ],
   [
-    "src/classes/_ajvwrapper.test.js",
-    "file/src/classes/_ajvWrapper.test.js.html",
-    "src/classes/_ajvWrapper.test.js",
+    "src/model/_ajvwrapper.test.js",
+    "file/src/Model/_ajvWrapper.test.js.html",
+    "src/Model/_ajvWrapper.test.js",
     "file"
   ],
   [
-    "src/classes/_branchnotifier.js",
-    "file/src/classes/_branchNotifier.js.html",
-    "src/classes/_branchNotifier.js",
+    "src/model/_branchnotifier.js",
+    "file/src/Model/_branchNotifier.js.html",
+    "src/Model/_branchNotifier.js",
     "file"
   ],
   [
-    "src/classes/_branchnotifier.js~notifiers.create",
-    "class/src/classes/_branchNotifier.js~Notifiers.html#static-method-create",
-    "src/classes/_branchNotifier.js~Notifiers.create",
+    "src/model/_branchnotifier.js~notifiers.create",
+    "class/src/Model/_branchNotifier.js~Notifiers.html#static-method-create",
+    "src/Model/_branchNotifier.js~Notifiers.create",
     "method"
   ],
   [
-    "src/classes/_branchnotifier.js~notifiers.get",
-    "class/src/classes/_branchNotifier.js~Notifiers.html#static-method-get",
-    "src/classes/_branchNotifier.js~Notifiers.get",
+    "src/model/_branchnotifier.js~notifiers.get",
+    "class/src/Model/_branchNotifier.js~Notifiers.html#static-method-get",
+    "src/Model/_branchNotifier.js~Notifiers.get",
     "method"
   ],
   [
-    "src/classes/_metadata.js",
-    "file/src/classes/_metaData.js.html",
-    "src/classes/_metaData.js",
+    "src/model/_metadata.js",
+    "file/src/Model/_metaData.js.html",
+    "src/Model/_metaData.js",
     "file"
   ],
   [
-    "src/classes/_metadata.js~metadata#__objid",
-    "class/src/classes/_metaData.js~MetaData.html#instance-member-__objID",
-    "src/classes/_metaData.js~MetaData#__objID",
+    "src/model/_metadata.js~metadata#__objid",
+    "class/src/Model/_metaData.js~MetaData.html#instance-member-__objID",
+    "src/Model/_metaData.js~MetaData#__objID",
     "member"
   ],
   [
-    "src/classes/_metadata.js~metadata#constructor",
-    "class/src/classes/_metaData.js~MetaData.html#instance-constructor-constructor",
-    "src/classes/_metaData.js~MetaData#constructor",
+    "src/model/_metadata.js~metadata#constructor",
+    "class/src/Model/_metaData.js~MetaData.html#instance-constructor-constructor",
+    "src/Model/_metaData.js~MetaData#constructor",
     "method"
   ],
   [
-    "src/classes/_metadata.js~metadata#get",
-    "class/src/classes/_metaData.js~MetaData.html#instance-method-get",
-    "src/classes/_metaData.js~MetaData#get",
+    "src/model/_metadata.js~metadata#get",
+    "class/src/Model/_metaData.js~MetaData.html#instance-method-get",
+    "src/Model/_metaData.js~MetaData#get",
     "method"
   ],
   [
-    "src/classes/_metadata.js~metadata#objectid",
-    "class/src/classes/_metaData.js~MetaData.html#instance-get-objectID",
-    "src/classes/_metaData.js~MetaData#objectID",
+    "src/model/_metadata.js~metadata#objectid",
+    "class/src/Model/_metaData.js~MetaData.html#instance-get-objectID",
+    "src/Model/_metaData.js~MetaData#objectID",
     "member"
   ],
   [
-    "src/classes/_metadata.js~metadata#parent",
-    "class/src/classes/_metaData.js~MetaData.html#instance-get-parent",
-    "src/classes/_metaData.js~MetaData#parent",
+    "src/model/_metadata.js~metadata#owner",
+    "class/src/Model/_metaData.js~MetaData.html#instance-get-owner",
+    "src/Model/_metaData.js~MetaData#owner",
     "member"
   ],
   [
-    "src/classes/_metadata.js~metadata#path",
-    "class/src/classes/_metaData.js~MetaData.html#instance-get-path",
-    "src/classes/_metaData.js~MetaData#path",
+    "src/model/_metadata.js~metadata#parent",
+    "class/src/Model/_metaData.js~MetaData.html#instance-get-parent",
+    "src/Model/_metaData.js~MetaData#parent",
     "member"
   ],
   [
-    "src/classes/_metadata.js~metadata#root",
-    "class/src/classes/_metaData.js~MetaData.html#instance-get-root",
-    "src/classes/_metaData.js~MetaData#root",
+    "src/model/_metadata.js~metadata#path",
+    "class/src/Model/_metaData.js~MetaData.html#instance-get-path",
+    "src/Model/_metaData.js~MetaData#path",
     "member"
   ],
   [
-    "src/classes/_metadata.js~metadata#rxvo",
-    "class/src/classes/_metaData.js~MetaData.html#instance-get-rxvo",
-    "src/classes/_metaData.js~MetaData#rxvo",
+    "src/model/_metadata.js~metadata#root",
+    "class/src/Model/_metaData.js~MetaData.html#instance-get-root",
+    "src/Model/_metaData.js~MetaData#root",
     "member"
   ],
   [
-    "src/classes/_metadata.js~metadata#set",
-    "class/src/classes/_metaData.js~MetaData.html#instance-method-set",
-    "src/classes/_metaData.js~MetaData#set",
+    "src/model/_metadata.js~metadata#set",
+    "class/src/Model/_metaData.js~MetaData.html#instance-method-set",
+    "src/Model/_metaData.js~MetaData#set",
     "method"
   ],
   [
-    "src/classes/_metadata.js~metadata#tostring",
-    "class/src/classes/_metaData.js~MetaData.html#instance-method-toString",
-    "src/classes/_metaData.js~MetaData#toString",
+    "src/model/_metadata.js~metadata#tostring",
+    "class/src/Model/_metaData.js~MetaData.html#instance-method-toString",
+    "src/Model/_metaData.js~MetaData#toString",
     "method"
   ],
   [
-    "src/classes/_metadata.test.js",
-    "file/src/classes/_metadata.test.js.html",
-    "src/classes/_metadata.test.js",
+    "src/model/_metadata.test.js",
+    "file/src/Model/_metadata.test.js.html",
+    "src/Model/_metadata.test.js",
     "file"
   ],
   [
-    "src/classes/_observerbuilder.js",
-    "file/src/classes/_observerBuilder.js.html",
-    "src/classes/_observerBuilder.js",
+    "src/model/_observerbuilder.js",
+    "file/src/Model/_observerBuilder.js.html",
+    "src/Model/_observerBuilder.js",
     "file"
   ],
   [
-    "src/classes/_observerbuilder.js~observerbuilder#complete",
-    "class/src/classes/_observerBuilder.js~ObserverBuilder.html#instance-method-complete",
-    "src/classes/_observerBuilder.js~ObserverBuilder#complete",
+    "src/model/_observerbuilder.js~observerbuilder#complete",
+    "class/src/Model/_observerBuilder.js~ObserverBuilder.html#instance-method-complete",
+    "src/Model/_observerBuilder.js~ObserverBuilder#complete",
     "method"
   ],
   [
-    "src/classes/_observerbuilder.js~observerbuilder#constructor",
-    "class/src/classes/_observerBuilder.js~ObserverBuilder.html#instance-constructor-constructor",
-    "src/classes/_observerBuilder.js~ObserverBuilder#constructor",
+    "src/model/_observerbuilder.js~observerbuilder#constructor",
+    "class/src/Model/_observerBuilder.js~ObserverBuilder.html#instance-constructor-constructor",
+    "src/Model/_observerBuilder.js~ObserverBuilder#constructor",
     "method"
   ],
   [
-    "src/classes/_observerbuilder.js~observerbuilder#create",
-    "class/src/classes/_observerBuilder.js~ObserverBuilder.html#instance-method-create",
-    "src/classes/_observerBuilder.js~ObserverBuilder#create",
+    "src/model/_observerbuilder.js~observerbuilder#create",
+    "class/src/Model/_observerBuilder.js~ObserverBuilder.html#instance-method-create",
+    "src/Model/_observerBuilder.js~ObserverBuilder#create",
     "method"
   ],
   [
-    "src/classes/_observerbuilder.js~observerbuilder#error",
-    "class/src/classes/_observerBuilder.js~ObserverBuilder.html#instance-method-error",
-    "src/classes/_observerBuilder.js~ObserverBuilder#error",
+    "src/model/_observerbuilder.js~observerbuilder#error",
+    "class/src/Model/_observerBuilder.js~ObserverBuilder.html#instance-method-error",
+    "src/Model/_observerBuilder.js~ObserverBuilder#error",
     "method"
   ],
   [
-    "src/classes/_observerbuilder.js~observerbuilder#get",
-    "class/src/classes/_observerBuilder.js~ObserverBuilder.html#instance-method-get",
-    "src/classes/_observerBuilder.js~ObserverBuilder#get",
+    "src/model/_observerbuilder.js~observerbuilder#get",
+    "class/src/Model/_observerBuilder.js~ObserverBuilder.html#instance-method-get",
+    "src/Model/_observerBuilder.js~ObserverBuilder#get",
     "method"
   ],
   [
-    "src/classes/_observerbuilder.js~observerbuilder#getobserverforpath",
-    "class/src/classes/_observerBuilder.js~ObserverBuilder.html#instance-method-getObserverForPath",
-    "src/classes/_observerBuilder.js~ObserverBuilder#getObserverForPath",
+    "src/model/_observerbuilder.js~observerbuilder#getobserverforpath",
+    "class/src/Model/_observerBuilder.js~ObserverBuilder.html#instance-method-getObserverForPath",
+    "src/Model/_observerBuilder.js~ObserverBuilder#getObserverForPath",
     "method"
   ],
   [
-    "src/classes/_observerbuilder.js~observerbuilder#list",
-    "class/src/classes/_observerBuilder.js~ObserverBuilder.html#instance-method-list",
-    "src/classes/_observerBuilder.js~ObserverBuilder#list",
+    "src/model/_observerbuilder.js~observerbuilder#list",
+    "class/src/Model/_observerBuilder.js~ObserverBuilder.html#instance-method-list",
+    "src/Model/_observerBuilder.js~ObserverBuilder#list",
     "method"
   ],
   [
-    "src/classes/_observerbuilder.js~observerbuilder#mute",
-    "class/src/classes/_observerBuilder.js~ObserverBuilder.html#instance-method-mute",
-    "src/classes/_observerBuilder.js~ObserverBuilder#mute",
+    "src/model/_observerbuilder.js~observerbuilder#mute",
+    "class/src/Model/_observerBuilder.js~ObserverBuilder.html#instance-method-mute",
+    "src/Model/_observerBuilder.js~ObserverBuilder#mute",
     "method"
   ],
   [
-    "src/classes/_observerbuilder.js~observerbuilder#next",
-    "class/src/classes/_observerBuilder.js~ObserverBuilder.html#instance-method-next",
-    "src/classes/_observerBuilder.js~ObserverBuilder#next",
+    "src/model/_observerbuilder.js~observerbuilder#next",
+    "class/src/Model/_observerBuilder.js~ObserverBuilder.html#instance-method-next",
+    "src/Model/_observerBuilder.js~ObserverBuilder#next",
     "method"
   ],
   [
-    "src/classes/_observerbuilder.js~observerbuilder#unmute",
-    "class/src/classes/_observerBuilder.js~ObserverBuilder.html#instance-method-unmute",
-    "src/classes/_observerBuilder.js~ObserverBuilder#unmute",
+    "src/model/_observerbuilder.js~observerbuilder#unmute",
+    "class/src/Model/_observerBuilder.js~ObserverBuilder.html#instance-method-unmute",
+    "src/Model/_observerBuilder.js~ObserverBuilder#unmute",
     "method"
   ],
   [
-    "src/classes/_observerbuilder.test.js",
-    "file/src/classes/_observerBuilder.test.js.html",
-    "src/classes/_observerBuilder.test.js",
+    "src/model/_observerbuilder.test.js",
+    "file/src/Model/_observerBuilder.test.js.html",
+    "src/Model/_observerBuilder.test.js",
     "file"
   ],
   [
-    "src/classes/_references.js",
-    "file/src/classes/_references.js.html",
-    "src/classes/_references.js",
+    "src/model/_references.js",
+    "file/src/Model/_references.js.html",
+    "src/Model/_references.js",
     "file"
   ],
   [
-    "src/classes/_references.test.js",
-    "file/src/classes/_references.test.js.html",
-    "src/classes/_references.test.js",
+    "src/model/_references.test.js",
+    "file/src/Model/_references.test.js.html",
+    "src/Model/_references.test.js",
     "file"
   ],
   [
-    "src/classes/_schemahelpers.js",
-    "file/src/classes/_schemaHelpers.js.html",
-    "src/classes/_schemaHelpers.js",
+    "src/model/_schemahelpers.js",
+    "file/src/Model/_schemaHelpers.js.html",
+    "src/Model/_schemaHelpers.js",
     "file"
   ],
   [
-    "src/classes/_schemahelpers.js~schemahelpers#_ref",
-    "class/src/classes/_schemaHelpers.js~SchemaHelpers.html#instance-member-_ref",
-    "src/classes/_schemaHelpers.js~SchemaHelpers#_ref",
+    "src/model/_schemahelpers.js~schemahelpers#_ref",
+    "class/src/Model/_schemaHelpers.js~SchemaHelpers.html#instance-member-_ref",
+    "src/Model/_schemaHelpers.js~SchemaHelpers#_ref",
     "member"
   ],
   [
-    "src/classes/_schemahelpers.js~schemahelpers#constructor",
-    "class/src/classes/_schemaHelpers.js~SchemaHelpers.html#instance-constructor-constructor",
-    "src/classes/_schemaHelpers.js~SchemaHelpers#constructor",
+    "src/model/_schemahelpers.js~schemahelpers#constructor",
+    "class/src/Model/_schemaHelpers.js~SchemaHelpers.html#instance-constructor-constructor",
+    "src/Model/_schemaHelpers.js~SchemaHelpers#constructor",
     "method"
   ],
   [
-    "src/classes/_schemahelpers.js~schemahelpers#createschemachild",
-    "class/src/classes/_schemaHelpers.js~SchemaHelpers.html#instance-method-createSchemaChild",
-    "src/classes/_schemaHelpers.js~SchemaHelpers#createSchemaChild",
+    "src/model/_schemahelpers.js~schemahelpers#createschemachild",
+    "class/src/Model/_schemaHelpers.js~SchemaHelpers.html#instance-method-createSchemaChild",
+    "src/Model/_schemaHelpers.js~SchemaHelpers#createSchemaChild",
     "method"
   ],
   [
-    "src/classes/_schemahelpers.js~schemahelpers#setchildobject",
-    "class/src/classes/_schemaHelpers.js~SchemaHelpers.html#instance-method-setChildObject",
-    "src/classes/_schemaHelpers.js~SchemaHelpers#setChildObject",
+    "src/model/_schemahelpers.js~schemahelpers#setchildobject",
+    "class/src/Model/_schemaHelpers.js~SchemaHelpers.html#instance-method-setChildObject",
+    "src/Model/_schemaHelpers.js~SchemaHelpers#setChildObject",
     "method"
   ],
   [
-    "src/classes/_schemahelpers.js~schemahelpers#setobject",
-    "class/src/classes/_schemaHelpers.js~SchemaHelpers.html#instance-method-setObject",
-    "src/classes/_schemaHelpers.js~SchemaHelpers#setObject",
+    "src/model/_schemahelpers.js~schemahelpers#setobject",
+    "class/src/Model/_schemaHelpers.js~SchemaHelpers.html#instance-method-setObject",
+    "src/Model/_schemaHelpers.js~SchemaHelpers#setObject",
     "method"
   ],
   [
-    "src/classes/_schemahelpers.test.js",
-    "file/src/classes/_schemaHelpers.test.js.html",
-    "src/classes/_schemaHelpers.test.js",
+    "src/model/_schemahelpers.test.js",
+    "file/src/Model/_schemaHelpers.test.js.html",
+    "src/Model/_schemaHelpers.test.js",
     "file"
   ],
   [
-    "src/classes/itemsmodel.js",
-    "file/src/classes/itemsModel.js.html",
-    "src/classes/itemsModel.js",
+    "src/model/base-model.js",
+    "file/src/Model/base-model.js.html",
+    "src/Model/base-model.js",
     "file"
   ],
   [
-    "src/classes/itemsmodel.js~itemsmodel#constructor",
-    "class/src/classes/itemsModel.js~ItemsModel.html#instance-constructor-constructor",
-    "src/classes/itemsModel.js~ItemsModel#constructor",
+    "src/model/base-model.js~basemodel#constructor",
+    "class/src/Model/base-model.js~BaseModel.html#instance-constructor-constructor",
+    "src/Model/base-model.js~BaseModel#constructor",
     "method"
   ],
   [
-    "src/classes/itemsmodel.js~itemsmodel#handler",
-    "class/src/classes/itemsModel.js~ItemsModel.html#instance-get-handler",
-    "src/classes/itemsModel.js~ItemsModel#handler",
+    "src/model/base-model.js~basemodel#freeze",
+    "class/src/Model/base-model.js~BaseModel.html#instance-method-freeze",
+    "src/Model/base-model.js~BaseModel#freeze",
+    "method"
+  ],
+  [
+    "src/model/base-model.js~basemodel#handler",
+    "class/src/Model/base-model.js~BaseModel.html#instance-get-handler",
+    "src/Model/base-model.js~BaseModel#handler",
     "member"
   ],
   [
-    "src/classes/itemsmodel.js~itemsmodel#model",
-    "class/src/classes/itemsModel.js~ItemsModel.html#instance-get-model",
-    "src/classes/itemsModel.js~ItemsModel#model",
+    "src/model/base-model.js~basemodel#isdirty",
+    "class/src/Model/base-model.js~BaseModel.html#instance-get-isDirty",
+    "src/Model/base-model.js~BaseModel#isDirty",
     "member"
   ],
   [
-    "src/classes/itemsmodel.js~itemsmodel#model",
-    "class/src/classes/itemsModel.js~ItemsModel.html#instance-set-model",
-    "src/classes/itemsModel.js~ItemsModel#model",
+    "src/model/base-model.js~basemodel#isfrozen",
+    "class/src/Model/base-model.js~BaseModel.html#instance-get-isFrozen",
+    "src/Model/base-model.js~BaseModel#isFrozen",
     "member"
   ],
   [
-    "src/classes/itemsmodel.test.js",
-    "file/src/classes/itemsModel.test.js.html",
-    "src/classes/itemsModel.test.js",
+    "src/model/base-model.js~basemodel#jsonpath",
+    "class/src/Model/base-model.js~BaseModel.html#instance-get-jsonPath",
+    "src/Model/base-model.js~BaseModel#jsonPath",
+    "member"
+  ],
+  [
+    "src/model/base-model.js~basemodel#model",
+    "class/src/Model/base-model.js~BaseModel.html#instance-get-model",
+    "src/Model/base-model.js~BaseModel#model",
+    "member"
+  ],
+  [
+    "src/model/base-model.js~basemodel#objectid",
+    "class/src/Model/base-model.js~BaseModel.html#instance-get-objectID",
+    "src/Model/base-model.js~BaseModel#objectID",
+    "member"
+  ],
+  [
+    "src/model/base-model.js~basemodel#options",
+    "class/src/Model/base-model.js~BaseModel.html#instance-get-options",
+    "src/Model/base-model.js~BaseModel#options",
+    "member"
+  ],
+  [
+    "src/model/base-model.js~basemodel#owner",
+    "class/src/Model/base-model.js~BaseModel.html#instance-get-owner",
+    "src/Model/base-model.js~BaseModel#owner",
+    "member"
+  ],
+  [
+    "src/model/base-model.js~basemodel#parent",
+    "class/src/Model/base-model.js~BaseModel.html#instance-get-parent",
+    "src/Model/base-model.js~BaseModel#parent",
+    "member"
+  ],
+  [
+    "src/model/base-model.js~basemodel#path",
+    "class/src/Model/base-model.js~BaseModel.html#instance-get-path",
+    "src/Model/base-model.js~BaseModel#path",
+    "member"
+  ],
+  [
+    "src/model/base-model.js~basemodel#pipe",
+    "class/src/Model/base-model.js~BaseModel.html#instance-method-pipe",
+    "src/Model/base-model.js~BaseModel#pipe",
+    "method"
+  ],
+  [
+    "src/model/base-model.js~basemodel#reset",
+    "class/src/Model/base-model.js~BaseModel.html#instance-method-reset",
+    "src/Model/base-model.js~BaseModel#reset",
+    "method"
+  ],
+  [
+    "src/model/base-model.js~basemodel#root",
+    "class/src/Model/base-model.js~BaseModel.html#instance-get-root",
+    "src/Model/base-model.js~BaseModel#root",
+    "member"
+  ],
+  [
+    "src/model/base-model.js~basemodel#schema",
+    "class/src/Model/base-model.js~BaseModel.html#instance-get-schema",
+    "src/Model/base-model.js~BaseModel#schema",
+    "member"
+  ],
+  [
+    "src/model/base-model.js~basemodel#subscribe",
+    "class/src/Model/base-model.js~BaseModel.html#instance-method-subscribe",
+    "src/Model/base-model.js~BaseModel#subscribe",
+    "method"
+  ],
+  [
+    "src/model/base-model.js~basemodel#subscribeto",
+    "class/src/Model/base-model.js~BaseModel.html#instance-method-subscribeTo",
+    "src/Model/base-model.js~BaseModel#subscribeTo",
+    "method"
+  ],
+  [
+    "src/model/base-model.js~basemodel#tojson",
+    "class/src/Model/base-model.js~BaseModel.html#instance-method-toJSON",
+    "src/Model/base-model.js~BaseModel#toJSON",
+    "method"
+  ],
+  [
+    "src/model/base-model.js~basemodel#tostring",
+    "class/src/Model/base-model.js~BaseModel.html#instance-method-toString",
+    "src/Model/base-model.js~BaseModel#toString",
+    "method"
+  ],
+  [
+    "src/model/base-model.js~basemodel#validate",
+    "class/src/Model/base-model.js~BaseModel.html#instance-method-validate",
+    "src/Model/base-model.js~BaseModel#validate",
+    "method"
+  ],
+  [
+    "src/model/base-model.js~basemodel#validationpath",
+    "class/src/Model/base-model.js~BaseModel.html#instance-get-validationPath",
+    "src/Model/base-model.js~BaseModel#validationPath",
+    "member"
+  ],
+  [
+    "src/model/base-model.js~basemodel#valueof",
+    "class/src/Model/base-model.js~BaseModel.html#instance-method-valueOf",
+    "src/Model/base-model.js~BaseModel#valueOf",
+    "method"
+  ],
+  [
+    "src/model/base-model.js~basemodel.createref",
+    "class/src/Model/base-model.js~BaseModel.html#static-method-createRef",
+    "src/Model/base-model.js~BaseModel.createRef",
+    "method"
+  ],
+  [
+    "src/model/base-model.test.js",
+    "file/src/Model/base-model.test.js.html",
+    "src/Model/base-model.test.js",
     "file"
   ],
   [
-    "src/classes/model-rxjs.test.js",
-    "file/src/classes/model-rxjs.test.js.html",
-    "src/classes/model-rxjs.test.js",
+    "src/model/index.js",
+    "file/src/Model/index.js.html",
+    "src/Model/index.js",
     "file"
   ],
   [
-    "src/classes/model.js",
-    "file/src/classes/model.js.html",
-    "src/classes/model.js",
+    "src/model/index.js~model#addschema",
+    "class/src/Model/index.js~Model.html#instance-method-addSchema",
+    "src/Model/index.js~Model#addSchema",
+    "method"
+  ],
+  [
+    "src/model/index.js~model#constructor",
+    "class/src/Model/index.js~Model.html#instance-constructor-constructor",
+    "src/Model/index.js~Model#constructor",
+    "method"
+  ],
+  [
+    "src/model/index.js~model#errors",
+    "class/src/Model/index.js~Model.html#instance-get-errors",
+    "src/Model/index.js~Model#errors",
+    "member"
+  ],
+  [
+    "src/model/index.js~model#freeze",
+    "class/src/Model/index.js~Model.html#instance-method-freeze",
+    "src/Model/index.js~Model#freeze",
+    "method"
+  ],
+  [
+    "src/model/index.js~model#getmodelsinpath",
+    "class/src/Model/index.js~Model.html#instance-method-getModelsInPath",
+    "src/Model/index.js~Model#getModelsInPath",
+    "method"
+  ],
+  [
+    "src/model/index.js~model#getpath",
+    "class/src/Model/index.js~Model.html#instance-method-getPath",
+    "src/Model/index.js~Model#getPath",
+    "method"
+  ],
+  [
+    "src/model/index.js~model#getschemaforkey",
+    "class/src/Model/index.js~Model.html#instance-method-getSchemaForKey",
+    "src/Model/index.js~Model#getSchemaForKey",
+    "method"
+  ],
+  [
+    "src/model/index.js~model#getschemaforpath",
+    "class/src/Model/index.js~Model.html#instance-method-getSchemaForPath",
+    "src/Model/index.js~Model#getSchemaForPath",
+    "method"
+  ],
+  [
+    "src/model/index.js~model#isfrozen",
+    "class/src/Model/index.js~Model.html#instance-get-isFrozen",
+    "src/Model/index.js~Model#isFrozen",
+    "member"
+  ],
+  [
+    "src/model/index.js~model#model",
+    "class/src/Model/index.js~Model.html#instance-get-model",
+    "src/Model/index.js~Model#model",
+    "member"
+  ],
+  [
+    "src/model/index.js~model#model",
+    "class/src/Model/index.js~Model.html#instance-set-model",
+    "src/Model/index.js~Model#model",
+    "member"
+  ],
+  [
+    "src/model/index.js~model#pipe",
+    "class/src/Model/index.js~Model.html#instance-method-pipe",
+    "src/Model/index.js~Model#pipe",
+    "method"
+  ],
+  [
+    "src/model/index.js~model#schema",
+    "class/src/Model/index.js~Model.html#instance-get-schema",
+    "src/Model/index.js~Model#schema",
+    "member"
+  ],
+  [
+    "src/model/index.js~model#subscribe",
+    "class/src/Model/index.js~Model.html#instance-method-subscribe",
+    "src/Model/index.js~Model#subscribe",
+    "method"
+  ],
+  [
+    "src/model/index.js~model#subscribeto",
+    "class/src/Model/index.js~Model.html#instance-method-subscribeTo",
+    "src/Model/index.js~Model#subscribeTo",
+    "method"
+  ],
+  [
+    "src/model/index.js~model#tojson",
+    "class/src/Model/index.js~Model.html#instance-method-toJSON",
+    "src/Model/index.js~Model#toJSON",
+    "method"
+  ],
+  [
+    "src/model/index.js~model#tostring",
+    "class/src/Model/index.js~Model.html#instance-method-toString",
+    "src/Model/index.js~Model#toString",
+    "method"
+  ],
+  [
+    "src/model/index.js~model#useschema",
+    "class/src/Model/index.js~Model.html#instance-method-useSchema",
+    "src/Model/index.js~Model#useSchema",
+    "method"
+  ],
+  [
+    "src/model/index.js~model#validate",
+    "class/src/Model/index.js~Model.html#instance-method-validate",
+    "src/Model/index.js~Model#validate",
+    "method"
+  ],
+  [
+    "src/model/index.js~model.fromjson",
+    "class/src/Model/index.js~Model.html#static-method-fromJSON",
+    "src/Model/index.js~Model.fromJSON",
+    "method"
+  ],
+  [
+    "src/model/index.test.js",
+    "file/src/Model/index.test.js.html",
+    "src/Model/index.test.js",
     "file"
   ],
   [
-    "src/classes/model.js~model#constructor",
-    "class/src/classes/model.js~Model.html#instance-constructor-constructor",
-    "src/classes/model.js~Model#constructor",
-    "method"
-  ],
-  [
-    "src/classes/model.js~model#freeze",
-    "class/src/classes/model.js~Model.html#instance-method-freeze",
-    "src/classes/model.js~Model#freeze",
-    "method"
-  ],
-  [
-    "src/classes/model.js~model#handler",
-    "class/src/classes/model.js~Model.html#instance-get-handler",
-    "src/classes/model.js~Model#handler",
-    "member"
-  ],
-  [
-    "src/classes/model.js~model#isdirty",
-    "class/src/classes/model.js~Model.html#instance-get-isDirty",
-    "src/classes/model.js~Model#isDirty",
-    "member"
-  ],
-  [
-    "src/classes/model.js~model#isfrozen",
-    "class/src/classes/model.js~Model.html#instance-get-isFrozen",
-    "src/classes/model.js~Model#isFrozen",
-    "member"
-  ],
-  [
-    "src/classes/model.js~model#jsonpath",
-    "class/src/classes/model.js~Model.html#instance-get-jsonPath",
-    "src/classes/model.js~Model#jsonPath",
-    "member"
-  ],
-  [
-    "src/classes/model.js~model#model",
-    "class/src/classes/model.js~Model.html#instance-get-model",
-    "src/classes/model.js~Model#model",
-    "member"
-  ],
-  [
-    "src/classes/model.js~model#objectid",
-    "class/src/classes/model.js~Model.html#instance-get-objectID",
-    "src/classes/model.js~Model#objectID",
-    "member"
-  ],
-  [
-    "src/classes/model.js~model#options",
-    "class/src/classes/model.js~Model.html#instance-get-options",
-    "src/classes/model.js~Model#options",
-    "member"
-  ],
-  [
-    "src/classes/model.js~model#parent",
-    "class/src/classes/model.js~Model.html#instance-get-parent",
-    "src/classes/model.js~Model#parent",
-    "member"
-  ],
-  [
-    "src/classes/model.js~model#path",
-    "class/src/classes/model.js~Model.html#instance-get-path",
-    "src/classes/model.js~Model#path",
-    "member"
-  ],
-  [
-    "src/classes/model.js~model#pipe",
-    "class/src/classes/model.js~Model.html#instance-method-pipe",
-    "src/classes/model.js~Model#pipe",
-    "method"
-  ],
-  [
-    "src/classes/model.js~model#reset",
-    "class/src/classes/model.js~Model.html#instance-method-reset",
-    "src/classes/model.js~Model#reset",
-    "method"
-  ],
-  [
-    "src/classes/model.js~model#root",
-    "class/src/classes/model.js~Model.html#instance-get-root",
-    "src/classes/model.js~Model#root",
-    "member"
-  ],
-  [
-    "src/classes/model.js~model#rxvo",
-    "class/src/classes/model.js~Model.html#instance-get-rxvo",
-    "src/classes/model.js~Model#rxvo",
-    "member"
-  ],
-  [
-    "src/classes/model.js~model#schema",
-    "class/src/classes/model.js~Model.html#instance-get-schema",
-    "src/classes/model.js~Model#schema",
-    "member"
-  ],
-  [
-    "src/classes/model.js~model#subscribe",
-    "class/src/classes/model.js~Model.html#instance-method-subscribe",
-    "src/classes/model.js~Model#subscribe",
-    "method"
-  ],
-  [
-    "src/classes/model.js~model#subscribeto",
-    "class/src/classes/model.js~Model.html#instance-method-subscribeTo",
-    "src/classes/model.js~Model#subscribeTo",
-    "method"
-  ],
-  [
-    "src/classes/model.js~model#tojson",
-    "class/src/classes/model.js~Model.html#instance-method-toJSON",
-    "src/classes/model.js~Model#toJSON",
-    "method"
-  ],
-  [
-    "src/classes/model.js~model#tostring",
-    "class/src/classes/model.js~Model.html#instance-method-toString",
-    "src/classes/model.js~Model#toString",
-    "method"
-  ],
-  [
-    "src/classes/model.js~model#validate",
-    "class/src/classes/model.js~Model.html#instance-method-validate",
-    "src/classes/model.js~Model#validate",
-    "method"
-  ],
-  [
-    "src/classes/model.js~model#validationpath",
-    "class/src/classes/model.js~Model.html#instance-get-validationPath",
-    "src/classes/model.js~Model#validationPath",
-    "member"
-  ],
-  [
-    "src/classes/model.js~model#valueof",
-    "class/src/classes/model.js~Model.html#instance-method-valueOf",
-    "src/classes/model.js~Model#valueOf",
-    "method"
-  ],
-  [
-    "src/classes/model.js~model.createref",
-    "class/src/classes/model.js~Model.html#static-method-createRef",
-    "src/classes/model.js~Model.createRef",
-    "method"
-  ],
-  [
-    "src/classes/model.test.js",
-    "file/src/classes/model.test.js.html",
-    "src/classes/model.test.js",
+    "src/model/itemsmodel.js",
+    "file/src/Model/itemsModel.js.html",
+    "src/Model/itemsModel.js",
     "file"
   ],
   [
-    "src/classes/pipe.js",
-    "file/src/classes/pipe.js.html",
-    "src/classes/pipe.js",
+    "src/model/itemsmodel.js~itemsmodel#constructor",
+    "class/src/Model/itemsModel.js~ItemsModel.html#instance-constructor-constructor",
+    "src/Model/itemsModel.js~ItemsModel#constructor",
+    "method"
+  ],
+  [
+    "src/model/itemsmodel.js~itemsmodel#handler",
+    "class/src/Model/itemsModel.js~ItemsModel.html#instance-get-handler",
+    "src/Model/itemsModel.js~ItemsModel#handler",
+    "member"
+  ],
+  [
+    "src/model/itemsmodel.js~itemsmodel#length",
+    "class/src/Model/itemsModel.js~ItemsModel.html#instance-method-length",
+    "src/Model/itemsModel.js~ItemsModel#length",
+    "method"
+  ],
+  [
+    "src/model/itemsmodel.js~itemsmodel#model",
+    "class/src/Model/itemsModel.js~ItemsModel.html#instance-get-model",
+    "src/Model/itemsModel.js~ItemsModel#model",
+    "member"
+  ],
+  [
+    "src/model/itemsmodel.js~itemsmodel#model",
+    "class/src/Model/itemsModel.js~ItemsModel.html#instance-set-model",
+    "src/Model/itemsModel.js~ItemsModel#model",
+    "member"
+  ],
+  [
+    "src/model/itemsmodel.test.js",
+    "file/src/Model/itemsModel.test.js.html",
+    "src/Model/itemsModel.test.js",
     "file"
   ],
   [
-    "src/classes/pipe.js~pipe#clone",
-    "class/src/classes/pipe.js~Pipe.html#instance-method-clone",
-    "src/classes/pipe.js~Pipe#clone",
-    "method"
-  ],
-  [
-    "src/classes/pipe.js~pipe#close",
-    "class/src/classes/pipe.js~Pipe.html#instance-method-close",
-    "src/classes/pipe.js~Pipe#close",
-    "method"
-  ],
-  [
-    "src/classes/pipe.js~pipe#constructor",
-    "class/src/classes/pipe.js~Pipe.html#instance-constructor-constructor",
-    "src/classes/pipe.js~Pipe#constructor",
-    "method"
-  ],
-  [
-    "src/classes/pipe.js~pipe#errors",
-    "class/src/classes/pipe.js~Pipe.html#instance-get-errors",
-    "src/classes/pipe.js~Pipe#errors",
-    "member"
-  ],
-  [
-    "src/classes/pipe.js~pipe#exec",
-    "class/src/classes/pipe.js~Pipe.html#instance-method-exec",
-    "src/classes/pipe.js~Pipe#exec",
-    "method"
-  ],
-  [
-    "src/classes/pipe.js~pipe#iswritable",
-    "class/src/classes/pipe.js~Pipe.html#instance-get-isWritable",
-    "src/classes/pipe.js~Pipe#isWritable",
-    "member"
-  ],
-  [
-    "src/classes/pipe.js~pipe#link",
-    "class/src/classes/pipe.js~Pipe.html#instance-method-link",
-    "src/classes/pipe.js~Pipe#link",
-    "method"
-  ],
-  [
-    "src/classes/pipe.js~pipe#merge",
-    "class/src/classes/pipe.js~Pipe.html#instance-method-merge",
-    "src/classes/pipe.js~Pipe#merge",
-    "method"
-  ],
-  [
-    "src/classes/pipe.js~pipe#once",
-    "class/src/classes/pipe.js~Pipe.html#instance-method-once",
-    "src/classes/pipe.js~Pipe#once",
-    "method"
-  ],
-  [
-    "src/classes/pipe.js~pipe#pipe",
-    "class/src/classes/pipe.js~Pipe.html#instance-method-pipe",
-    "src/classes/pipe.js~Pipe#pipe",
-    "method"
-  ],
-  [
-    "src/classes/pipe.js~pipe#sample",
-    "class/src/classes/pipe.js~Pipe.html#instance-method-sample",
-    "src/classes/pipe.js~Pipe#sample",
-    "method"
-  ],
-  [
-    "src/classes/pipe.js~pipe#schema",
-    "class/src/classes/pipe.js~Pipe.html#instance-get-schema",
-    "src/classes/pipe.js~Pipe#schema",
-    "member"
-  ],
-  [
-    "src/classes/pipe.js~pipe#split",
-    "class/src/classes/pipe.js~Pipe.html#instance-method-split",
-    "src/classes/pipe.js~Pipe#split",
-    "method"
-  ],
-  [
-    "src/classes/pipe.js~pipe#subscribe",
-    "class/src/classes/pipe.js~Pipe.html#instance-method-subscribe",
-    "src/classes/pipe.js~Pipe#subscribe",
-    "method"
-  ],
-  [
-    "src/classes/pipe.js~pipe#tap",
-    "class/src/classes/pipe.js~Pipe.html#instance-method-tap",
-    "src/classes/pipe.js~Pipe#tap",
-    "method"
-  ],
-  [
-    "src/classes/pipe.js~pipe#throttle",
-    "class/src/classes/pipe.js~Pipe.html#instance-method-throttle",
-    "src/classes/pipe.js~Pipe#throttle",
-    "method"
-  ],
-  [
-    "src/classes/pipe.js~pipe#tojson",
-    "class/src/classes/pipe.js~Pipe.html#instance-method-toJSON",
-    "src/classes/pipe.js~Pipe#toJSON",
-    "method"
-  ],
-  [
-    "src/classes/pipe.js~pipe#tostring",
-    "class/src/classes/pipe.js~Pipe.html#instance-method-toString",
-    "src/classes/pipe.js~Pipe#toString",
-    "method"
-  ],
-  [
-    "src/classes/pipe.js~pipe#unlink",
-    "class/src/classes/pipe.js~Pipe.html#instance-method-unlink",
-    "src/classes/pipe.js~Pipe#unlink",
-    "method"
-  ],
-  [
-    "src/classes/pipe.js~pipe#write",
-    "class/src/classes/pipe.js~Pipe.html#instance-method-write",
-    "src/classes/pipe.js~Pipe#write",
-    "method"
-  ],
-  [
-    "src/classes/pipe.test.js",
-    "file/src/classes/pipe.test.js.html",
-    "src/classes/pipe.test.js",
+    "src/model/model-pipes.test.js",
+    "file/src/Model/model-pipes.test.js.html",
+    "src/Model/model-pipes.test.js",
     "file"
   ],
   [
-    "src/classes/propertiesmodel.js",
-    "file/src/classes/propertiesModel.js.html",
-    "src/classes/propertiesModel.js",
+    "src/model/model-rxjs.test.js",
+    "file/src/Model/model-rxjs.test.js.html",
+    "src/Model/model-rxjs.test.js",
     "file"
   ],
   [
-    "src/classes/propertiesmodel.js~propertiesmodel#constructor",
-    "class/src/classes/propertiesModel.js~PropertiesModel.html#instance-constructor-constructor",
-    "src/classes/propertiesModel.js~PropertiesModel#constructor",
-    "method"
-  ],
-  [
-    "src/classes/propertiesmodel.js~propertiesmodel#get",
-    "class/src/classes/propertiesModel.js~PropertiesModel.html#instance-method-get",
-    "src/classes/propertiesModel.js~PropertiesModel#get",
-    "method"
-  ],
-  [
-    "src/classes/propertiesmodel.js~propertiesmodel#handler",
-    "class/src/classes/propertiesModel.js~PropertiesModel.html#instance-get-handler",
-    "src/classes/propertiesModel.js~PropertiesModel#handler",
-    "member"
-  ],
-  [
-    "src/classes/propertiesmodel.js~propertiesmodel#model",
-    "class/src/classes/propertiesModel.js~PropertiesModel.html#instance-set-model",
-    "src/classes/propertiesModel.js~PropertiesModel#model",
-    "member"
-  ],
-  [
-    "src/classes/propertiesmodel.js~propertiesmodel#model",
-    "class/src/classes/propertiesModel.js~PropertiesModel.html#instance-get-model",
-    "src/classes/propertiesModel.js~PropertiesModel#model",
-    "member"
-  ],
-  [
-    "src/classes/propertiesmodel.js~propertiesmodel#set",
-    "class/src/classes/propertiesModel.js~PropertiesModel.html#instance-method-set",
-    "src/classes/propertiesModel.js~PropertiesModel#set",
-    "method"
-  ],
-  [
-    "src/classes/propertiesmodel.test.js",
-    "file/src/classes/propertiesModel.test.js.html",
-    "src/classes/propertiesModel.test.js",
+    "src/model/propertiesmodel.js",
+    "file/src/Model/propertiesModel.js.html",
+    "src/Model/propertiesModel.js",
     "file"
   ],
   [
-    "src/classes/rxvo.js",
-    "file/src/classes/rxvo.js.html",
-    "src/classes/rxvo.js",
+    "src/model/propertiesmodel.js~propertiesmodel#constructor",
+    "class/src/Model/propertiesModel.js~PropertiesModel.html#instance-constructor-constructor",
+    "src/Model/propertiesModel.js~PropertiesModel#constructor",
+    "method"
+  ],
+  [
+    "src/model/propertiesmodel.js~propertiesmodel#get",
+    "class/src/Model/propertiesModel.js~PropertiesModel.html#instance-method-get",
+    "src/Model/propertiesModel.js~PropertiesModel#get",
+    "method"
+  ],
+  [
+    "src/model/propertiesmodel.js~propertiesmodel#handler",
+    "class/src/Model/propertiesModel.js~PropertiesModel.html#instance-get-handler",
+    "src/Model/propertiesModel.js~PropertiesModel#handler",
+    "member"
+  ],
+  [
+    "src/model/propertiesmodel.js~propertiesmodel#model",
+    "class/src/Model/propertiesModel.js~PropertiesModel.html#instance-get-model",
+    "src/Model/propertiesModel.js~PropertiesModel#model",
+    "member"
+  ],
+  [
+    "src/model/propertiesmodel.js~propertiesmodel#model",
+    "class/src/Model/propertiesModel.js~PropertiesModel.html#instance-set-model",
+    "src/Model/propertiesModel.js~PropertiesModel#model",
+    "member"
+  ],
+  [
+    "src/model/propertiesmodel.js~propertiesmodel#set",
+    "class/src/Model/propertiesModel.js~PropertiesModel.html#instance-method-set",
+    "src/Model/propertiesModel.js~PropertiesModel#set",
+    "method"
+  ],
+  [
+    "src/model/propertiesmodel.test.js",
+    "file/src/Model/propertiesModel.test.js.html",
+    "src/Model/propertiesModel.test.js",
     "file"
   ],
   [
-    "src/classes/rxvo.js~rxvo#addschema",
-    "class/src/classes/rxvo.js~RxVO.html#instance-method-addSchema",
-    "src/classes/rxvo.js~RxVO#addSchema",
-    "method"
-  ],
-  [
-    "src/classes/rxvo.js~rxvo#constructor",
-    "class/src/classes/rxvo.js~RxVO.html#instance-constructor-constructor",
-    "src/classes/rxvo.js~RxVO#constructor",
-    "method"
-  ],
-  [
-    "src/classes/rxvo.js~rxvo#errors",
-    "class/src/classes/rxvo.js~RxVO.html#instance-get-errors",
-    "src/classes/rxvo.js~RxVO#errors",
-    "member"
-  ],
-  [
-    "src/classes/rxvo.js~rxvo#freeze",
-    "class/src/classes/rxvo.js~RxVO.html#instance-method-freeze",
-    "src/classes/rxvo.js~RxVO#freeze",
-    "method"
-  ],
-  [
-    "src/classes/rxvo.js~rxvo#getmodelsinpath",
-    "class/src/classes/rxvo.js~RxVO.html#instance-method-getModelsInPath",
-    "src/classes/rxvo.js~RxVO#getModelsInPath",
-    "method"
-  ],
-  [
-    "src/classes/rxvo.js~rxvo#getpath",
-    "class/src/classes/rxvo.js~RxVO.html#instance-method-getPath",
-    "src/classes/rxvo.js~RxVO#getPath",
-    "method"
-  ],
-  [
-    "src/classes/rxvo.js~rxvo#getschemaforkey",
-    "class/src/classes/rxvo.js~RxVO.html#instance-method-getSchemaForKey",
-    "src/classes/rxvo.js~RxVO#getSchemaForKey",
-    "method"
-  ],
-  [
-    "src/classes/rxvo.js~rxvo#getschemaforpath",
-    "class/src/classes/rxvo.js~RxVO.html#instance-method-getSchemaForPath",
-    "src/classes/rxvo.js~RxVO#getSchemaForPath",
-    "method"
-  ],
-  [
-    "src/classes/rxvo.js~rxvo#isfrozen",
-    "class/src/classes/rxvo.js~RxVO.html#instance-get-isFrozen",
-    "src/classes/rxvo.js~RxVO#isFrozen",
-    "member"
-  ],
-  [
-    "src/classes/rxvo.js~rxvo#model",
-    "class/src/classes/rxvo.js~RxVO.html#instance-get-model",
-    "src/classes/rxvo.js~RxVO#model",
-    "member"
-  ],
-  [
-    "src/classes/rxvo.js~rxvo#model",
-    "class/src/classes/rxvo.js~RxVO.html#instance-set-model",
-    "src/classes/rxvo.js~RxVO#model",
-    "member"
-  ],
-  [
-    "src/classes/rxvo.js~rxvo#schema",
-    "class/src/classes/rxvo.js~RxVO.html#instance-get-schema",
-    "src/classes/rxvo.js~RxVO#schema",
-    "member"
-  ],
-  [
-    "src/classes/rxvo.js~rxvo#subscribe",
-    "class/src/classes/rxvo.js~RxVO.html#instance-method-subscribe",
-    "src/classes/rxvo.js~RxVO#subscribe",
-    "method"
-  ],
-  [
-    "src/classes/rxvo.js~rxvo#subscribeto",
-    "class/src/classes/rxvo.js~RxVO.html#instance-method-subscribeTo",
-    "src/classes/rxvo.js~RxVO#subscribeTo",
-    "method"
-  ],
-  [
-    "src/classes/rxvo.js~rxvo#tojson",
-    "class/src/classes/rxvo.js~RxVO.html#instance-method-toJSON",
-    "src/classes/rxvo.js~RxVO#toJSON",
-    "method"
-  ],
-  [
-    "src/classes/rxvo.js~rxvo#tostring",
-    "class/src/classes/rxvo.js~RxVO.html#instance-method-toString",
-    "src/classes/rxvo.js~RxVO#toString",
-    "method"
-  ],
-  [
-    "src/classes/rxvo.js~rxvo#useschema",
-    "class/src/classes/rxvo.js~RxVO.html#instance-method-useSchema",
-    "src/classes/rxvo.js~RxVO#useSchema",
-    "method"
-  ],
-  [
-    "src/classes/rxvo.js~rxvo#validate",
-    "class/src/classes/rxvo.js~RxVO.html#instance-method-validate",
-    "src/classes/rxvo.js~RxVO#validate",
-    "method"
-  ],
-  [
-    "src/classes/rxvo.js~rxvo.fromjson",
-    "class/src/classes/rxvo.js~RxVO.html#static-method-fromJSON",
-    "src/classes/rxvo.js~RxVO.fromJSON",
-    "method"
-  ],
-  [
-    "src/classes/rxvo.test.js",
-    "file/src/classes/rxvo.test.js.html",
-    "src/classes/rxvo.test.js",
+    "src/model/utils.js",
+    "file/src/Model/utils.js.html",
+    "src/Model/utils.js",
     "file"
   ],
   [
-    "src/classes/utils.js",
-    "file/src/classes/utils.js.html",
-    "src/classes/utils.js",
+    "src/model/utils.test.js",
+    "file/src/Model/utils.test.js.html",
+    "src/Model/utils.test.js",
     "file"
   ],
   [
-    "src/classes/utils.test.js",
-    "file/src/classes/utils.test.js.html",
-    "src/classes/utils.test.js",
+    "src/pipe/executor.js",
+    "file/src/Pipe/Executor.js.html",
+    "src/Pipe/Executor.js",
+    "file"
+  ],
+  [
+    "src/pipe/executor.js~executor.exec",
+    "class/src/Pipe/Executor.js~Executor.html#static-method-exec",
+    "src/Pipe/Executor.js~Executor.exec",
+    "method"
+  ],
+  [
+    "src/pipe/iterator.js",
+    "file/src/Pipe/Iterator.js.html",
+    "src/Pipe/Iterator.js",
+    "file"
+  ],
+  [
+    "src/pipe/iterator.js~iterator#constructor",
+    "class/src/Pipe/Iterator.js~Iterator.html#instance-constructor-constructor",
+    "src/Pipe/Iterator.js~Iterator#constructor",
+    "method"
+  ],
+  [
+    "src/pipe/iterator.js~iterator#loop",
+    "class/src/Pipe/Iterator.js~Iterator.html#instance-method-loop",
+    "src/Pipe/Iterator.js~Iterator#loop",
+    "method"
+  ],
+  [
+    "src/pipe/iterator.js~iterator#schema",
+    "class/src/Pipe/Iterator.js~Iterator.html#instance-get-schema",
+    "src/Pipe/Iterator.js~Iterator#schema",
+    "member"
+  ],
+  [
+    "src/pipe/iterator.test.js",
+    "file/src/Pipe/Iterator.test.js.html",
+    "src/Pipe/Iterator.test.js",
+    "file"
+  ],
+  [
+    "src/pipe/pipe-api.test.js",
+    "file/src/Pipe/Pipe-api.test.js.html",
+    "src/Pipe/Pipe-api.test.js",
+    "file"
+  ],
+  [
+    "src/pipe/pipe-exec.js",
+    "file/src/Pipe/Pipe-exec.js.html",
+    "src/Pipe/Pipe-exec.js",
+    "file"
+  ],
+  [
+    "src/pipe/pipe.js",
+    "file/src/Pipe/Pipe.js.html",
+    "src/Pipe/Pipe.js",
+    "file"
+  ],
+  [
+    "src/pipe/pipe.js~pipe#clone",
+    "class/src/Pipe/Pipe.js~Pipe.html#instance-method-clone",
+    "src/Pipe/Pipe.js~Pipe#clone",
+    "method"
+  ],
+  [
+    "src/pipe/pipe.js~pipe#close",
+    "class/src/Pipe/Pipe.js~Pipe.html#instance-method-close",
+    "src/Pipe/Pipe.js~Pipe#close",
+    "method"
+  ],
+  [
+    "src/pipe/pipe.js~pipe#constructor",
+    "class/src/Pipe/Pipe.js~Pipe.html#instance-constructor-constructor",
+    "src/Pipe/Pipe.js~Pipe#constructor",
+    "method"
+  ],
+  [
+    "src/pipe/pipe.js~pipe#errors",
+    "class/src/Pipe/Pipe.js~Pipe.html#instance-get-errors",
+    "src/Pipe/Pipe.js~Pipe#errors",
+    "member"
+  ],
+  [
+    "src/pipe/pipe.js~pipe#link",
+    "class/src/Pipe/Pipe.js~Pipe.html#instance-method-link",
+    "src/Pipe/Pipe.js~Pipe#link",
+    "method"
+  ],
+  [
+    "src/pipe/pipe.js~pipe#merge",
+    "class/src/Pipe/Pipe.js~Pipe.html#instance-method-merge",
+    "src/Pipe/Pipe.js~Pipe#merge",
+    "method"
+  ],
+  [
+    "src/pipe/pipe.js~pipe#pipe",
+    "class/src/Pipe/Pipe.js~Pipe.html#instance-method-pipe",
+    "src/Pipe/Pipe.js~Pipe#pipe",
+    "method"
+  ],
+  [
+    "src/pipe/pipe.js~pipe#promise",
+    "class/src/Pipe/Pipe.js~Pipe.html#instance-method-promise",
+    "src/Pipe/Pipe.js~Pipe#promise",
+    "method"
+  ],
+  [
+    "src/pipe/pipe.js~pipe#sample",
+    "class/src/Pipe/Pipe.js~Pipe.html#instance-method-sample",
+    "src/Pipe/Pipe.js~Pipe#sample",
+    "method"
+  ],
+  [
+    "src/pipe/pipe.js~pipe#schema",
+    "class/src/Pipe/Pipe.js~Pipe.html#instance-get-schema",
+    "src/Pipe/Pipe.js~Pipe#schema",
+    "member"
+  ],
+  [
+    "src/pipe/pipe.js~pipe#schemas",
+    "class/src/Pipe/Pipe.js~Pipe.html#instance-get-schemas",
+    "src/Pipe/Pipe.js~Pipe#schemas",
+    "member"
+  ],
+  [
+    "src/pipe/pipe.js~pipe#split",
+    "class/src/Pipe/Pipe.js~Pipe.html#instance-method-split",
+    "src/Pipe/Pipe.js~Pipe#split",
+    "method"
+  ],
+  [
+    "src/pipe/pipe.js~pipe#subscribe",
+    "class/src/Pipe/Pipe.js~Pipe.html#instance-method-subscribe",
+    "src/Pipe/Pipe.js~Pipe#subscribe",
+    "method"
+  ],
+  [
+    "src/pipe/pipe.js~pipe#tap",
+    "class/src/Pipe/Pipe.js~Pipe.html#instance-method-tap",
+    "src/Pipe/Pipe.js~Pipe#tap",
+    "method"
+  ],
+  [
+    "src/pipe/pipe.js~pipe#throttle",
+    "class/src/Pipe/Pipe.js~Pipe.html#instance-method-throttle",
+    "src/Pipe/Pipe.js~Pipe#throttle",
+    "method"
+  ],
+  [
+    "src/pipe/pipe.js~pipe#tojson",
+    "class/src/Pipe/Pipe.js~Pipe.html#instance-method-toJSON",
+    "src/Pipe/Pipe.js~Pipe#toJSON",
+    "method"
+  ],
+  [
+    "src/pipe/pipe.js~pipe#tostring",
+    "class/src/Pipe/Pipe.js~Pipe.html#instance-method-toString",
+    "src/Pipe/Pipe.js~Pipe#toString",
+    "method"
+  ],
+  [
+    "src/pipe/pipe.js~pipe#unlink",
+    "class/src/Pipe/Pipe.js~Pipe.html#instance-method-unlink",
+    "src/Pipe/Pipe.js~Pipe#unlink",
+    "method"
+  ],
+  [
+    "src/pipe/pipe.js~pipe#writable",
+    "class/src/Pipe/Pipe.js~Pipe.html#instance-get-writable",
+    "src/Pipe/Pipe.js~Pipe#writable",
+    "member"
+  ],
+  [
+    "src/pipe/pipe.js~pipe#write",
+    "class/src/Pipe/Pipe.js~Pipe.html#instance-method-write",
+    "src/Pipe/Pipe.js~Pipe#write",
+    "method"
+  ],
+  [
+    "src/pipe/pipe.js~pipe#yield",
+    "class/src/Pipe/Pipe.js~Pipe.html#instance-method-yield",
+    "src/Pipe/Pipe.js~Pipe#yield",
+    "method"
+  ],
+  [
+    "src/pipe/pipe.js~pipe.getexecs",
+    "class/src/Pipe/Pipe.js~Pipe.html#static-method-getExecs",
+    "src/Pipe/Pipe.js~Pipe.getExecs",
+    "method"
+  ],
+  [
+    "src/pipe/pipe.js~pipelistener#complete",
+    "class/src/Pipe/Pipe.js~PipeListener.html#instance-method-complete",
+    "src/Pipe/Pipe.js~PipeListener#complete",
+    "method"
+  ],
+  [
+    "src/pipe/pipe.js~pipelistener#constructor",
+    "class/src/Pipe/Pipe.js~PipeListener.html#instance-constructor-constructor",
+    "src/Pipe/Pipe.js~PipeListener#constructor",
+    "method"
+  ],
+  [
+    "src/pipe/pipe.js~pipelistener#error",
+    "class/src/Pipe/Pipe.js~PipeListener.html#instance-method-error",
+    "src/Pipe/Pipe.js~PipeListener#error",
+    "method"
+  ],
+  [
+    "src/pipe/pipe.js~pipelistener#next",
+    "class/src/Pipe/Pipe.js~PipeListener.html#instance-method-next",
+    "src/Pipe/Pipe.js~PipeListener#next",
+    "method"
+  ],
+  [
+    "src/pipe/pipe.js~pipelistener#out",
+    "class/src/Pipe/Pipe.js~PipeListener.html#instance-get-out",
+    "src/Pipe/Pipe.js~PipeListener#out",
+    "member"
+  ],
+  [
+    "src/pipe/pipe.js~pipelistener#subscribe",
+    "class/src/Pipe/Pipe.js~PipeListener.html#instance-method-subscribe",
+    "src/Pipe/Pipe.js~PipeListener#subscribe",
+    "method"
+  ],
+  [
+    "src/pipe/pipe.js~pipelistener#target",
+    "class/src/Pipe/Pipe.js~PipeListener.html#instance-get-target",
+    "src/Pipe/Pipe.js~PipeListener#target",
+    "member"
+  ],
+  [
+    "src/pipe/pipe.js~pipelistener#vo",
+    "class/src/Pipe/Pipe.js~PipeListener.html#instance-get-vo",
+    "src/Pipe/Pipe.js~PipeListener#vo",
+    "member"
+  ],
+  [
+    "src/pipe/pipe.test.js",
+    "file/src/Pipe/Pipe.test.js.html",
+    "src/Pipe/Pipe.test.js",
+    "file"
+  ],
+  [
+    "src/pipe/properties.js",
+    "file/src/Pipe/Properties.js.html",
+    "src/Pipe/Properties.js",
+    "file"
+  ],
+  [
+    "src/pipe/properties.js~properties.init",
+    "class/src/Pipe/Properties.js~Properties.html#static-method-init",
+    "src/Pipe/Properties.js~Properties.init",
+    "method"
+  ],
+  [
+    "src/pipe/utils.js",
+    "file/src/Pipe/Utils.js.html",
+    "src/Pipe/Utils.js",
+    "file"
+  ],
+  [
+    "src/pipe/utils.test.js",
+    "file/src/Pipe/Utils.test.js.html",
+    "src/Pipe/Utils.test.js",
+    "file"
+  ],
+  [
+    "src/pipe/validator.js",
+    "file/src/Pipe/Validator.js.html",
+    "src/Pipe/Validator.js",
+    "file"
+  ],
+  [
+    "src/pipe/validator.js~validator#constructor",
+    "class/src/Pipe/Validator.js~Validator.html#instance-constructor-constructor",
+    "src/Pipe/Validator.js~Validator#constructor",
+    "method"
+  ],
+  [
+    "src/pipe/validator.js~validator#errors",
+    "class/src/Pipe/Validator.js~Validator.html#instance-get-errors",
+    "src/Pipe/Validator.js~Validator#errors",
+    "member"
+  ],
+  [
+    "src/pipe/validator.js~validator#freeze",
+    "class/src/Pipe/Validator.js~Validator.html#instance-method-freeze",
+    "src/Pipe/Validator.js~Validator#freeze",
+    "method"
+  ],
+  [
+    "src/pipe/validator.js~validator#isfrozen",
+    "class/src/Pipe/Validator.js~Validator.html#instance-get-isFrozen",
+    "src/Pipe/Validator.js~Validator#isFrozen",
+    "member"
+  ],
+  [
+    "src/pipe/validator.js~validator#model",
+    "class/src/Pipe/Validator.js~Validator.html#instance-set-model",
+    "src/Pipe/Validator.js~Validator#model",
+    "member"
+  ],
+  [
+    "src/pipe/validator.js~validator#model",
+    "class/src/Pipe/Validator.js~Validator.html#instance-get-model",
+    "src/Pipe/Validator.js~Validator#model",
+    "member"
+  ],
+  [
+    "src/pipe/validator.js~validator#subscribe",
+    "class/src/Pipe/Validator.js~Validator.html#instance-method-subscribe",
+    "src/Pipe/Validator.js~Validator#subscribe",
+    "method"
+  ],
+  [
+    "src/pipe/validator.js~validator#tojson",
+    "class/src/Pipe/Validator.js~Validator.html#instance-method-toJSON",
+    "src/Pipe/Validator.js~Validator#toJSON",
+    "method"
+  ],
+  [
+    "src/pipe/validator.js~validator#tostring",
+    "class/src/Pipe/Validator.js~Validator.html#instance-method-toString",
+    "src/Pipe/Validator.js~Validator#toString",
+    "method"
+  ],
+  [
+    "src/pipe/validator.js~validator#validate",
+    "class/src/Pipe/Validator.js~Validator.html#instance-method-validate",
+    "src/Pipe/Validator.js~Validator#validate",
+    "method"
+  ],
+  [
+    "src/pipe/validator.js~validator#valueof",
+    "class/src/Pipe/Validator.js~Validator.html#instance-method-valueOf",
+    "src/Pipe/Validator.js~Validator#valueOf",
+    "method"
+  ],
+  [
+    "src/pipe/validator.js~validator.deriveschema",
+    "class/src/Pipe/Validator.js~Validator.html#static-method-deriveSchema",
+    "src/Pipe/Validator.js~Validator.deriveSchema",
+    "method"
+  ],
+  [
+    "src/pipe/validator.js~validator.validateschemas",
+    "class/src/Pipe/Validator.js~Validator.html#static-method-validateSchemas",
+    "src/Pipe/Validator.js~Validator.validateSchemas",
+    "method"
+  ],
+  [
+    "src/pipe/validator.test.js",
+    "file/src/Pipe/Validator.test.js.html",
+    "src/Pipe/Validator.test.js",
+    "file"
+  ],
+  [
+    "src/pipe/_ajvwrapper.js",
+    "file/src/Pipe/_ajvWrapper.js.html",
+    "src/Pipe/_ajvWrapper.js",
+    "file"
+  ],
+  [
+    "src/pipe/_ajvwrapper.js~ajvwrapper#$ajv",
+    "class/src/Pipe/_ajvWrapper.js~AjvWrapper.html#instance-get-$ajv",
+    "src/Pipe/_ajvWrapper.js~AjvWrapper#$ajv",
+    "member"
+  ],
+  [
+    "src/pipe/_ajvwrapper.js~ajvwrapper#addschema",
+    "class/src/Pipe/_ajvWrapper.js~AjvWrapper.html#instance-method-addSchema",
+    "src/Pipe/_ajvWrapper.js~AjvWrapper#addSchema",
+    "method"
+  ],
+  [
+    "src/pipe/_ajvwrapper.js~ajvwrapper#constructor",
+    "class/src/Pipe/_ajvWrapper.js~AjvWrapper.html#instance-constructor-constructor",
+    "src/Pipe/_ajvWrapper.js~AjvWrapper#constructor",
+    "method"
+  ],
+  [
+    "src/pipe/_ajvwrapper.js~ajvwrapper#exec",
+    "class/src/Pipe/_ajvWrapper.js~AjvWrapper.html#instance-method-exec",
+    "src/Pipe/_ajvWrapper.js~AjvWrapper#exec",
+    "method"
+  ],
+  [
+    "src/pipe/_ajvwrapper.js~ajvwrapper#path",
+    "class/src/Pipe/_ajvWrapper.js~AjvWrapper.html#instance-member-path",
+    "src/Pipe/_ajvWrapper.js~AjvWrapper#path",
+    "member"
+  ],
+  [
+    "src/pipe/_ajvwrapper.js~ajvwrapper.getschemaid",
+    "class/src/Pipe/_ajvWrapper.js~AjvWrapper.html#static-method-getSchemaID",
+    "src/Pipe/_ajvWrapper.js~AjvWrapper.getSchemaID",
+    "method"
+  ],
+  [
+    "src/pipe/_ajvwrapper.test.js",
+    "file/src/Pipe/_ajvWrapper.test.js.html",
+    "src/Pipe/_ajvWrapper.test.js",
+    "file"
+  ],
+  [
+    "src/pipe/index.js",
+    "file/src/Pipe/index.js.html",
+    "src/Pipe/index.js",
+    "file"
+  ],
+  [
+    "src/pipe/vxbehaviorsubject.js",
+    "file/src/Pipe/vxBehaviorSubject.js.html",
+    "src/Pipe/vxBehaviorSubject.js",
+    "file"
+  ],
+  [
+    "src/pipe/vxbehaviorsubject.js~vxbehaviorsubject#complete",
+    "class/src/Pipe/vxBehaviorSubject.js~VxBehaviorSubject.html#instance-method-complete",
+    "src/Pipe/vxBehaviorSubject.js~VxBehaviorSubject#complete",
+    "method"
+  ],
+  [
+    "src/pipe/vxbehaviorsubject.js~vxbehaviorsubject#constructor",
+    "class/src/Pipe/vxBehaviorSubject.js~VxBehaviorSubject.html#instance-constructor-constructor",
+    "src/Pipe/vxBehaviorSubject.js~VxBehaviorSubject#constructor",
+    "method"
+  ],
+  [
+    "src/pipe/vxbehaviorsubject.js~vxbehaviorsubject#error",
+    "class/src/Pipe/vxBehaviorSubject.js~VxBehaviorSubject.html#instance-method-error",
+    "src/Pipe/vxBehaviorSubject.js~VxBehaviorSubject#error",
+    "method"
+  ],
+  [
+    "src/pipe/vxbehaviorsubject.js~vxbehaviorsubject#next",
+    "class/src/Pipe/vxBehaviorSubject.js~VxBehaviorSubject.html#instance-method-next",
+    "src/Pipe/vxBehaviorSubject.js~VxBehaviorSubject#next",
+    "method"
+  ],
+  [
+    "src/pipe/vxbehaviorsubject.js~vxbehaviorsubject#subscribe",
+    "class/src/Pipe/vxBehaviorSubject.js~VxBehaviorSubject.html#instance-method-subscribe",
+    "src/Pipe/vxBehaviorSubject.js~VxBehaviorSubject#subscribe",
+    "method"
+  ],
+  [
+    "src/pipe/vxbehaviorsubject.js~vxbehaviorsubject.create",
+    "class/src/Pipe/vxBehaviorSubject.js~VxBehaviorSubject.html#static-method-create",
+    "src/Pipe/vxBehaviorSubject.js~VxBehaviorSubject.create",
+    "method"
+  ],
+  [
+    "src/pipe/vxbehaviorsubject.test.js",
+    "file/src/Pipe/vxBehaviorSubject.test.js.html",
+    "src/Pipe/vxBehaviorSubject.test.js",
     "file"
   ],
   [
@@ -1269,6 +1695,24 @@ window.esdocSearchIndex = [
     "src/index.test.js",
     "file/src/index.test.js.html",
     "src/index.test.js",
+    "file"
+  ],
+  [
+    "src/schemas/default-pipe-vo.schema.js",
+    "file/src/schemas/default-pipe-vo.schema.js.html",
+    "src/schemas/default-pipe-vo.schema.js",
+    "file"
+  ],
+  [
+    "src/schemas/pipe-args.schema.js",
+    "file/src/schemas/pipe-args.schema.js.html",
+    "src/schemas/pipe-args.schema.js",
+    "file"
+  ],
+  [
+    "src/schemas/pipe-args.test.js",
+    "file/src/schemas/pipe-args.test.js.html",
+    "src/schemas/pipe-args.test.js",
     "file"
   ],
   [
