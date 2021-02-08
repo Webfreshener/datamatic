@@ -19,18 +19,18 @@ RxJS + JSON-Schema (Ajv) Based Observable and Validating Data Models and Pipelin
 **[Installation Instructions](#installation-instructions)**
 
 **[Usage Examples](#usage-examples)**
-   * [Basic Usage](#basicusage)
-   * [Data Pipelines and Transformation](#datapipelinesandtansformation)
+   * [Basic Usage](#basic-usage)
+   * [Data Pipelines and Transformation](#data-pipelines-and-transformation)
 
 **[Developer Guide](#developer-guide)**
-  * [Model Class](#modelclass)
-    * [Schemas Config](#modelschemasconfig)
-    * [Model Proxy Object](#modelproxyobject)
-    * [model vs $model](#modelvsmodel)
+  * [Model Class](#model-class)
+    * [Schemas Config](#schemas-config)
+    * [Model Proxy Object](#model-proxy-object)
+    * [model vs $model](#model-vs-$model)
   * [ItemsModel](#itemsmodel)
   * [PropertiesModel](#propertiesmodel)
-  * [Model Class](#modelclass)
-  * [Pipeline Class](#pipelineclass)
+  * [BaseModel Class](#basemodel-class)
+  * [Pipeline Class](#pipeline-class)
 
 ### Installation Instructions
 ```
@@ -293,7 +293,7 @@ Represents an Properties (Object} entry in the given schema
 | set | key (string), value (any) | applies Object.freeze to model hierarchy |
 
 
-#### Model Class ####
+#### BaseModel Class ####
 | Method        | Arguments | Description  |
 |:--------------|:----------|:-------|
 | freeze | | applies Object.freeze to model hierarchy |
