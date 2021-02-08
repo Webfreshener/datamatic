@@ -24,7 +24,7 @@ RxJS + JSON-Schema (Ajv) Based Observable and Validating Data Models and Pipelin
 
 **[Developer Guide](#developer-guide)**
   * [Model Class](#model-class)
-    * [Schemas Config](#schemas-config)
+    * [Model Schemas Config](#model-schemas-config)
     * [Model Proxy Object](#model-proxy-object)
     * [model vs $model](#model-vs-$model)
   * [ItemsModel](#itemsmodel)
