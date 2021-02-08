@@ -3,7 +3,7 @@
   "description": "Observable & Validatable Data Models and Pipelines",
   "homepage": "https://webfreshener.github.io/datamatic",
   "author": "Van Schroeder <van@webfreshener.com>",
-  "version": "0.9.0",
+  "version": "0.9.1",
   "main": "./dist/datamatic.node.js",
   "module": "./dist/datamatic.umd.js",
   "licenses": [
@@ -83,7 +83,9 @@
   },
   "jest": {
     "collectCoverage": true,
-    "testPathIgnorePatterns": ["/integration/"],
+    "testPathIgnorePatterns": [
+      "/integration/"
+    ],
     "coveragePathIgnorePatterns": [
       "/node_modules/",
       "/dist/",
