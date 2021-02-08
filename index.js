@@ -23,15 +23,16 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ############################################################################ */
+const {Model, Pipeline} = require('./dist/datamatic.node');
 module.exports = Object.defineProperties({}, {
     Model: {
-        value: require('./dist/datalux.node').Model,
+        value: Model,
         enumerable: true,
         configurable: false,
         writable: false,
     },
-    Pipe: {
-        value: require('./dist/datalux.node').Pipe,
+    Pipeline: {
+        value: Pipeline,
         enumerable: true,
         configurable: false,
         writable: false,

@@ -1,46 +1,42 @@
 const path = require("path");
-const webpack = require("webpack");
 const webpackRxjsExternals = require("webpack-rxjs-externals");
 module.exports = [{
-    externals: [
-        webpackRxjsExternals(),
-    ],
+    externals: [],
 	output: {
         path: path.join(__dirname, "dist"),
-        filename: 'datalux.js',
+        filename: 'datamatic.umd.js',
 		libraryTarget: "umd",
-		// library: "datalux",
 	},
     module: {
-        // rules: [
-        //     {
-        //         test: /\.js$/,
-        //         exclude: /node_modules/,
-        //         use: {
-        //             loader: "babel-loader"
-        //         },
-        //     },
-        // ],
+    },
+}, {
+    externals: [],
+    output: {
+        path: path.join(__dirname, "dist"),
+        filename: 'datamatic.window.js',
+        libraryTarget: "window",
+        library: "datamatic",
+    },
+    module: {
     },
 }, {
     externals: [
-        webpackRxjsExternals(),
+        // webpackRxjsExternals(),
     ],
     output: {
         path: path.join(__dirname, "dist"),
-        filename: 'datalux.node.js',
+        filename: "datamatic.node.js",
         libraryTarget: "commonjs",
-        // library: "datalux",
     },
     module: {
-        // rules: [
-        //     {
-        //         test: /\.js$/,
-        //         exclude: /node_modules/,
-        //         use: {
-        //             loader: "babel-loader",
-        //         },
-        //     },
-        // ],
+        rules: [
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                use: {
+                    loader: "babel-loader",
+                },
+            },
+        ],
     },
 }];

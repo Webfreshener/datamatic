@@ -27,5 +27,5 @@ SOFTWARE.
 if (typeof Object.assign !== "function") {
     Object.assign = require('object.assign/polyfill')();
 }
-export {Model} from "./Model";
-export {Pipeline} from "./Pipeline";
+export {Model as Model} from "./Model";
+export {Pipeline as Pipeline} from "./Pipeline";

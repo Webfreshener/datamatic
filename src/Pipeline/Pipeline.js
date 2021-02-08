@@ -41,7 +41,7 @@ export class Pipeline {
             _p = Array.isArray(_p) ? _p[0] : _p;
             return (d) => {
                 const _exec = ((typeof _p === "function") ? _p : void 0) ||
-                    // is pipe or implements pipe api
+                    // is pipeline or implements pipeline api
                     (_p["exec"]) ||
                     // is validator or implements validator api
                     (_p["validate"] ? ((d) => _p["validate"](d) ? d : false) : void 0) ||
@@ -133,7 +133,7 @@ export class Pipeline {
     }
 
     /**
-     * Creates new `pipe` segment
+     * Creates new `pipeline` segment
      * @param pipesOrSchemas
      * @returns {Pipeline}
      */
@@ -153,7 +153,7 @@ export class Pipeline {
     }
 
     /**
-     * links pipe segment to direct output to target pipe
+     * links pipeline segment to direct output to target pipeline
      * @param target
      * @param callbacks function[]
      * @returns {Pipeline}
@@ -170,7 +170,7 @@ export class Pipeline {
 
         callbacks = fill(callbacks || []);
 
-        // creates observer and stores it to links map for `pipe`
+        // creates observer and stores it to links map for `pipeline`
         const _sub = this.subscribe({
             next: (data) => {
                 const _res = Executor.exec(callbacks, data.toJSON ? data.toJSON() : data);
@@ -192,7 +192,7 @@ export class Pipeline {
     }
 
     /**
-     * Unlink `pipe` segment from target `pipe`
+     * Unlink `pipeline` segment from target `pipeline`
      * @param target
      * @returns {Pipeline}
      */
@@ -220,7 +220,7 @@ export class Pipeline {
     }
 
     /**
-     * Returns JSON-SCHEMA for `pipe` output
+     * Returns JSON-SCHEMA for `pipeline` output
      * @returns {object}
      */
     get schemas() {
@@ -228,7 +228,7 @@ export class Pipeline {
     }
 
     /**
-     * Creates array of new `pipe` segments that run in parallel
+     * Creates array of new `pipeline` segments that run in parallel
      * @param schemasOrPipes
      * @returns {*}
      */
@@ -237,7 +237,7 @@ export class Pipeline {
     }
 
     /**
-     * Iterates pipe callbacks via generator function
+     * Iterates pipeline callbacks via generator function
      * @param data
      * @returns {generator}
      */
@@ -289,7 +289,7 @@ export class Pipeline {
     }
 
     /**
-     * Writes data to pipe segment
+     * Writes data to pipeline segment
      * @param data
      * @returns {Pipeline}
      */
@@ -299,7 +299,7 @@ export class Pipeline {
     }
 
     /**
-     * Creates clone of current `pipe` segment
+     * Creates clone of current `pipeline` segment
      * @returns {Pipeline}
      */
     clone() {
@@ -315,7 +315,7 @@ export class Pipeline {
     }
 
     /**
-     * Terminates input on `pipe` segment. This is irrevocable
+     * Terminates input on `pipeline` segment. This is irrevocable
      * @returns {Pipeline}
      */
     close() {
@@ -324,7 +324,7 @@ export class Pipeline {
     }
 
     /**
-     * Returns write status of `pipe`
+     * Returns write status of `pipeline`
      * @returns {boolean}
      */
     get writable() {
@@ -332,7 +332,7 @@ export class Pipeline {
     }
 
     /**
-     * Informs `pipe` to rate limit notifications based on time interval
+     * Informs `pipeline` to rate limit notifications based on time interval
      * @param rate
      * @returns {Pipeline}
      */
@@ -361,7 +361,7 @@ export class Pipeline {
     }
 
     /**
-     * Returns product of Nth occurrence of `pipe` execution
+     * Returns product of Nth occurrence of `pipeline` execution
      * @param nth
      * @returns {Pipeline}
      */
@@ -371,7 +371,7 @@ export class Pipeline {
     }
 
     /**
-     * Subscribes to `pipe` output notifications
+     * Subscribes to `pipeline` output notifications
      * @param handler
      * @returns {Observable}
      */
@@ -384,7 +384,7 @@ export class Pipeline {
     }
 
     /**
-     * Provides current state of `pipe` output. alias for toJSON
+     * Provides current state of `pipeline` output. alias for toJSON
      * @returns {Object|Array}
      */
     tap() {
@@ -393,7 +393,7 @@ export class Pipeline {
 
     /**
      * Convenience Method for Promise based flows.
-     * Writes data to `pipe` and wraps observer in Promise
+     * Writes data to `pipeline` and wraps observer in Promise
      *
      * @param data
      * @returns {Promise<Pipeline>}
@@ -422,7 +422,7 @@ export class Pipeline {
     }
 
     /**
-     * Provides current state of `pipe` output.
+     * Provides current state of `pipeline` output.
      * @override
      * @returns {Object|Array}
      */
@@ -480,7 +480,7 @@ export class PipeListener {
     }
 
     /**
-     * closes `pipe` on complete notification
+     * closes `pipeline` on complete notification
      */
     complete() {
         this.target.close();

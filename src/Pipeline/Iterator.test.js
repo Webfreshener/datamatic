@@ -26,7 +26,7 @@ describe("TxIterator Tests", () => {
         expect(__.loop([1, 3, 5])).toEqual([1, 3, 5]);
         expect(__.loop([1, "3", 5])).toEqual([1, 5]);
     });
-    it("should work within pipe", (done) => {
+    it("should work within pipeline", (done) => {
         const _cb = jest.fn();
         const _tx = new Pipeline(
             new Iterator( {exec: (d) => d.active === true ? d : void 0}),

@@ -1,4 +1,4 @@
-Datamat
+Datamatic
 =============
 RxJS + JSON-Schema (Ajv) Based Observable and Validating Data Models and Pipelines
 
@@ -32,10 +32,32 @@ RxJS + JSON-Schema (Ajv) Based Observable and Validating Data Models and Pipelin
   * [Model Class](#model-class)
   * [Pipeline Class](#pipeline-class)
 
-#### Installation Instructions
+### Installation Instructions
 ```
-$ npm install @webfreshener/datamat
+$ npm install @webfreshener/datamatic
 ```
+
+#### UMD Usage for React and Angular
+```
+import * as datamatic from "datamatic";
+
+```
+
+#### CommonJS Usage for NodeJS
+```
+const {Model, Pipeline} = require("datamatic");
+
+```
+
+#### DOM Window Usage
+```
+    <script src="../../dist/datamatic.window.js"></script>
+    <script language="JavaScript">
+        const {Model, Pipeline} = window.datamatic;
+    </script>
+```
+
+
 
 ### Usage Examples
 
@@ -44,6 +66,8 @@ The example below defines a Model that expects a `name` value and
 list of `topScores` items
 
 ```
+const {Model} = require("datamatic");
+
 // JSON-SCHEMA for Scores Collection
 const schema = {
     "id": "root#",
@@ -130,7 +154,61 @@ Refer to the examples demo in `./examples/basic-usage` for more usage examples
 
 #### Data Pipelines and Transformation ####
 ```
+const {Pipeline} = require("datamatic");
 
+/*
+    defines a schema that requires name, age and active attributes
+    filters out all items that do not conform to JSON-Schema below
+ */
+const schema = {
+    type: "object",
+    required: ["name", "age", "active"],
+    properties: {
+        name: {
+            $comment: "names must be in form: First Middle|MI Last",
+            type: "string",
+            pattern: "^[a-zA-Z]{1,24}\\s?[a-zA-Z]?\\s+[a-zA-Z]{1,24}$",
+        },
+        age: {
+            $comment: "age must be a number equal to or higher than 21 and lower than 100",
+            type: "number",
+            minimum: 21,
+            maximum: 100,
+        },
+        active: {
+            $comment: "active must equal true",
+            type: "boolean",
+            const: true,
+        },
+    },
+};
+
+
+const pipeline = new Pipeline(
+    [
+        // By nesting an item schema within an iterator, the schema is applied as a filter
+        schema,
+        // the list can go on ...
+    ],
+    // the list can go on ...
+);
+
+pipeline.subscribe({
+    // should only contain active people who are 21 and over and name pattern match
+    next: (d) => console.log(`\nfiltered results:\n${JSON.stringify(d)}`),
+    // it should not encounter an error unless it is critical, so full stop
+    error: (e) => console.error(`\ngot error:\n${JSON.stringify(e)}`),
+});
+
+pipeline.write([
+    {name: "Alice Dodson", age: 30, active: false}, // will be filtered because of active status
+    {name: "Jim-Bob", age: 21, active: true}, // will be filtered because of name format
+    {name: "Bob Roberts", age: 38, active: true}, // will pass
+    {name: "Chris Appleton", age: 19, active: true}, // will be filtered because of age
+    {name: "Fred Franks", age: 20, active: true}, // will be filtered because of age
+    {name: "Sam Smith", age: 25, active: true}, // will pass
+    {name: "", active: null}, // will be filtered because of invalid object format
+]);
 ```
 
 ## Developer Guide
@@ -189,7 +267,7 @@ In usage, `model` always references the Proxied Data Model for validation and op
  console.log(`stringified: ${owner}`);
  
  // obtain model from  it's Owner
-  console.log(`stringified: ${JSON.stringify(owner.model)}`);
+ console.log(`stringified: ${JSON.stringify(owner.model)}`);
  
 ```
 
@@ -226,7 +304,7 @@ Represents an Properties (Object} entry in the given schema
 | options [getter]   | | retrieves options passed to Model instance |
 | path [getter]   | | retrieves json-schema path string for Model instance. eg: "#/this/is/my/path" |
 | parent [getter]   | | retrieves Model's parent Model instance |
-| pipe | ..pipesOrSchemas | returns Pipeline instance for operating on model |
+| pipeline | ...(pipes &#124; schemas) | returns Pipeline instance for operating on model |
 | reset | | resets model to initial state if operation is valid |
 | root [getter]   | | retrieves root Model instance |
 | model [getter]   | | retrieves Model's internal Model Document instance |
@@ -241,21 +319,21 @@ Represents an Properties (Object} entry in the given schema
 | Method        | Arguments | Description  |
 |:--------------|:----------|:-------|
 | constructor | ...pipesOrSchemas | class constructor method |
-| exec | data (object / array / string / number / boolean)| executes pipe's callback with data without writing to `pipe` |
-| subscribe | handler (object / function / schema / array)| subscribes to `pipe` output notifications |
-| toJSON | | Provides current state of `pipe` output as JSON |
-| toString | | Provides current state of `pipe` output as JSON string |
-| clone | | returns clone of current `pipe` segment |
-| close | | terminates input on `pipe` segment |
-| writable [getter] | | Returns write status of `pipe` |
-| link | target (Pipeline), ...pipesOrSchemas | links `pipe` segment to direct output to target `pipe` |
-| merge | pipeOrPipes, schema | merges multiple pipes into single output |
-| once | | informs `pipe` to close after first notification |
-| pipe | ...pipesOrSchemas | returns new chained `pipe` segment |
-| sample | nth | Returns product of Nth occurrence of `pipe` execution |
-| split | ...pipesOrSchemas | creates array of new `pipe` segments that run in parallel |
-| tap | | Provides current state of `pipe` output. alias for `toJSON` |
+| exec | data (object &#124; array &#124; string &#124; number &#124; boolean)| executes pipeline's callback with data without writing to `pipeline` |
+| subscribe | handler (object &#124; function &#124; schema &#124; array)| subscribes to `pipeline` output notifications |
+| toJSON | | Provides current state of `pipeline` output as JSON |
+| toString | | Provides current state of `pipeline` output as JSON string |
+| clone | | returns clone of current `pipeline` segment |
+| close | | terminates input on `pipeline` segment |
+| writable [getter] | | Returns write status of `pipeline` |
+| link | target (Pipeline), ...pipesOrSchemas | links `pipeline` segment to direct output to target `pipeline` |
+| merge | ...(pipes &#124; schemas) | merges multiple pipes into single output |
+| once | | informs `pipeline` to close after first notification |
+| pipeline | ...(pipes &#124; schemas) | returns new chained `pipeline` segment |
+| sample | nth | Returns product of Nth occurrence of `pipeline` execution |
+| split | ...(pipes &#124; schemas) | creates array of new `pipeline` segments that run in parallel |
+| tap | | Provides current state of `pipeline` output. alias for `toJSON` |
 | throttle | rate (number) | Limit notifications to rate based on time interval |
-| unlink | target (Pipeline)| unlinks `pipe` segment from target `pipe` |
-| write | data (object / array / string / number / boolean)| writes data to `pipe` |
+| unlink | target (Pipeline)| unlinks `pipeline` segment from target `pipeline` |
+| write | data (object &#124; array &#124; string &#124; number &#124; boolean)| writes data to `pipeline` |
 

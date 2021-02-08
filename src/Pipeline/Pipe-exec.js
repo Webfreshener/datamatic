@@ -65,7 +65,7 @@ describe("Pipeline Exec Tests", () => {
     });
 
 
-    it("should stop if a pipe returns false", (done) => {
+    it("should stop if a pipeline returns false", (done) => {
         const _p = new Pipeline(
             ...[
                 ..._pipesOrSchemas,
@@ -78,7 +78,7 @@ describe("Pipeline Exec Tests", () => {
         const _sub = _p.subscribe({
             next: () => {
                 _sub.unsubscribe();
-                done("pipe should not have sent next notification");
+                done("pipeline should not have sent next notification");
             },
             error: (e) => {
                 _sub.unsubscribe();
@@ -97,7 +97,7 @@ describe("Pipeline Exec Tests", () => {
         const _sub = _p.subscribe({
             next: () => {
                 _sub.unsubscribe();
-                done("pipe should have errored");
+                done("pipeline should have errored");
             },
             error: (e) => {
                 _sub.unsubscribe();
@@ -113,7 +113,7 @@ describe("Pipeline Exec Tests", () => {
     });
 
 
-    it("should send error if a pipe returns string", (done) => {
+    it("should send error if a pipeline returns string", (done) => {
         const _eMsg = "an important error message for you";
         const _p = new Pipeline(
             _pipesOrSchemas,
@@ -124,7 +124,7 @@ describe("Pipeline Exec Tests", () => {
         const _sub = _p.subscribe({
             next: () => {
                 _sub.unsubscribe();
-                done("pipe should not have sent next notification");
+                done("pipeline should not have sent next notification");
             },
             error: (e) => {
                 _sub.unsubscribe();

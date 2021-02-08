@@ -48,7 +48,7 @@ describe("Pipeline API Tests", () => {
         });
     });
 
-    it("should send error notification if a pipe returns false", (done) => {
+    it("should send error notification if a pipeline returns false", (done) => {
         const _p = new Pipeline(
             ...[
                 ..._pipesOrSchemas,
@@ -61,7 +61,7 @@ describe("Pipeline API Tests", () => {
         const _sub = _p.subscribe({
             next: () => {
                 _sub.unsubscribe();
-                done("pipe should not have sent next notification");
+                done("pipeline should not have sent next notification");
             },
             error: (e) => {
                 _sub.unsubscribe();
@@ -80,7 +80,7 @@ describe("Pipeline API Tests", () => {
         const _sub = _p.subscribe({
             next: () => {
                 _sub.unsubscribe();
-                done("pipe should have errored");
+                done("pipeline should have errored");
             },
             error: (e) => {
                 _sub.unsubscribe();
@@ -92,7 +92,7 @@ describe("Pipeline API Tests", () => {
         _p.write(data[0]);
     });
 
-    it("should split pipe", () => {
+    it("should split pipeline", () => {
         const _config = [
             {
                 exec: (d) => {
@@ -181,7 +181,7 @@ describe("Pipeline API Tests", () => {
         expect(_.next().done).toBe(true);
     });
 
-    it("pipe should pipe", (done) => {
+    it("pipeline should pipeline", (done) => {
         const _tx = new Pipeline();
 
         _tx.subscribe({
@@ -255,11 +255,11 @@ describe("Pipeline API Tests", () => {
 
         });
 
-        it("should link pipe", () => {
+        it("should link pipeline", () => {
 
         });
 
-        it("should unlink pipe", () => {
+        it("should unlink pipeline", () => {
 
         });
     });

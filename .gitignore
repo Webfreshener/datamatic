@@ -2,6 +2,7 @@
 .idea/*
 .project
 *.iml
+integration/*/node_modules/*
 codacy-report.sh
 package-lock.json
 node_modules/*

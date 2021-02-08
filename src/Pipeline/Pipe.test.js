@@ -53,7 +53,7 @@ describe("Pipeline Tests", () => {
         }, done).catch(done);
     });
 
-    it("async pipe should work as observable", (done) => {
+    it("async pipeline should work as observable", (done) => {
         const _tx = new Pipeline(
             async () => {
                 return new Promise((res) => {

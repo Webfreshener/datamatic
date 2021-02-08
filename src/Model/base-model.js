@@ -382,11 +382,11 @@ export class BaseModel {
     };
 
     /**
-     * returns `pipe` segment for process chaining
+     * returns `pipeline` segment for process chaining
      * @param pipesOrSchemas
      * @returns {Pipeline}
      */
-    pipe(...pipesOrSchemas) {
+    pipeline(...pipesOrSchemas) {
         const _p = new Pipeline(...pipesOrSchemas);
         const _sub = this.subscribe({
             next: (d) => {

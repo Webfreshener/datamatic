@@ -50,7 +50,7 @@ export class Executor {
 }
 
 /**
- * Promise-safe callback iterator for pipe transactions
+ * Promise-safe callback iterator for pipeline transactions
  * @param callbacks
  * @returns {{next: (function(*=): *)}}
  * @private

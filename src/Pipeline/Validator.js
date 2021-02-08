@@ -106,7 +106,7 @@ export class Validator {
     }
 
     /**
-     * Applies Object.freeze to model and triggers complete notification for pipe
+     * Applies Object.freeze to model and triggers complete notification for pipeline
      * @returns {Validator}
      */
     freeze() {

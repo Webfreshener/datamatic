@@ -1,272 +1,272 @@
 window.esdocSearchIndex = [
   [
-    "@webfreshener/vxlib/src/model/_ajvwrapper.js~ajvwrapper",
+    "datamatic/src/model/_ajvwrapper.js~ajvwrapper",
     "class/src/Model/_ajvWrapper.js~AjvWrapper.html",
-    "<span>AjvWrapper</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/_ajvWrapper.js</span>",
+    "<span>AjvWrapper</span> <span class=\"search-result-import-path\">datamatic/src/Model/_ajvWrapper.js</span>",
     "class"
   ],
   [
-    "@webfreshener/vxlib/src/pipe/_ajvwrapper.js~ajvwrapper",
+    "datamatic/src/pipeline/_ajvwrapper.js~ajvwrapper",
     "class/src/Pipeline/_ajvWrapper.js~AjvWrapper.html",
-    "<span>AjvWrapper</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipeline/_ajvWrapper.js</span>",
+    "<span>AjvWrapper</span> <span class=\"search-result-import-path\">datamatic/src/Pipeline/_ajvWrapper.js</span>",
     "class"
   ],
   [
-    "@webfreshener/vxlib/src/model/base-model.js~basemodel",
+    "datamatic/src/model/base-model.js~basemodel",
     "class/src/Model/base-model.js~BaseModel.html",
-    "<span>BaseModel</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/base-model.js</span>",
+    "<span>BaseModel</span> <span class=\"search-result-import-path\">datamatic/src/Model/base-model.js</span>",
     "class"
   ],
   [
-    "@webfreshener/vxlib/src/pipe/executor.js~executor",
+    "datamatic/src/pipeline/executor.js~executor",
     "class/src/Pipeline/Executor.js~Executor.html",
-    "<span>Executor</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipeline/Executor.js</span>",
+    "<span>Executor</span> <span class=\"search-result-import-path\">datamatic/src/Pipeline/Executor.js</span>",
     "class"
   ],
   [
-    "@webfreshener/vxlib/src/model/itemsmodel.js~itemsmodel",
+    "datamatic/src/model/itemsmodel.js~itemsmodel",
     "class/src/Model/itemsModel.js~ItemsModel.html",
-    "<span>ItemsModel</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/itemsModel.js</span>",
+    "<span>ItemsModel</span> <span class=\"search-result-import-path\">datamatic/src/Model/itemsModel.js</span>",
     "class"
   ],
   [
-    "@webfreshener/vxlib/src/pipe/iterator.js~iterator",
+    "datamatic/src/pipeline/iterator.js~iterator",
     "class/src/Pipeline/Iterator.js~Iterator.html",
-    "<span>Iterator</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipeline/Iterator.js</span>",
+    "<span>Iterator</span> <span class=\"search-result-import-path\">datamatic/src/Pipeline/Iterator.js</span>",
     "class"
   ],
   [
-    "@webfreshener/vxlib/src/model/_metadata.js~metadata",
+    "datamatic/src/model/_metadata.js~metadata",
     "class/src/Model/_metaData.js~MetaData.html",
-    "<span>MetaData</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/_metaData.js</span>",
+    "<span>MetaData</span> <span class=\"search-result-import-path\">datamatic/src/Model/_metaData.js</span>",
     "class"
   ],
   [
-    "@webfreshener/vxlib/src/model/index.js~model",
+    "datamatic/src/model/index.js~model",
     "class/src/Model/index.js~Model.html",
-    "<span>Model</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/index.js</span>",
+    "<span>Model</span> <span class=\"search-result-import-path\">datamatic/src/Model/index.js</span>",
     "class"
   ],
   [
-    "@webfreshener/vxlib/src/model/_branchnotifier.js~notifiers",
+    "datamatic/src/model/_branchnotifier.js~notifiers",
     "class/src/Model/_branchNotifier.js~Notifiers.html",
-    "<span>Notifiers</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/_branchNotifier.js</span>",
+    "<span>Notifiers</span> <span class=\"search-result-import-path\">datamatic/src/Model/_branchNotifier.js</span>",
     "class"
   ],
   [
-    "@webfreshener/vxlib/src/model/_observerbuilder.js~observerbuilder",
+    "datamatic/src/model/_observerbuilder.js~observerbuilder",
     "class/src/Model/_observerBuilder.js~ObserverBuilder.html",
-    "<span>ObserverBuilder</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/_observerBuilder.js</span>",
+    "<span>ObserverBuilder</span> <span class=\"search-result-import-path\">datamatic/src/Model/_observerBuilder.js</span>",
     "class"
   ],
   [
-    "@webfreshener/vxlib/src/pipe/pipe.js~pipe",
-    "class/src/Pipeline/Pipeline.js~Pipeline.html",
-    "<span>Pipeline</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipeline/Pipeline.js</span>",
-    "class"
-  ],
-  [
-    "@webfreshener/vxlib/src/pipe/pipe.js~pipelistener",
+    "datamatic/src/pipeline/pipeline.js~pipelistener",
     "class/src/Pipeline/Pipeline.js~PipeListener.html",
-    "<span>PipeListener</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipeline/Pipeline.js</span>",
+    "<span>PipeListener</span> <span class=\"search-result-import-path\">datamatic/src/Pipeline/Pipeline.js</span>",
     "class"
   ],
   [
-    "@webfreshener/vxlib/src/pipe/properties.js~properties",
+    "datamatic/src/pipeline/pipeline.js~pipeline",
+    "class/src/Pipeline/Pipeline.js~Pipeline.html",
+    "<span>Pipeline</span> <span class=\"search-result-import-path\">datamatic/src/Pipeline/Pipeline.js</span>",
+    "class"
+  ],
+  [
+    "datamatic/src/pipeline/properties.js~properties",
     "class/src/Pipeline/Properties.js~Properties.html",
-    "<span>Properties</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipeline/Properties.js</span>",
+    "<span>Properties</span> <span class=\"search-result-import-path\">datamatic/src/Pipeline/Properties.js</span>",
     "class"
   ],
   [
-    "@webfreshener/vxlib/src/model/propertiesmodel.js~propertiesmodel",
+    "datamatic/src/model/propertiesmodel.js~propertiesmodel",
     "class/src/Model/propertiesModel.js~PropertiesModel.html",
-    "<span>PropertiesModel</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/propertiesModel.js</span>",
+    "<span>PropertiesModel</span> <span class=\"search-result-import-path\">datamatic/src/Model/propertiesModel.js</span>",
     "class"
   ],
   [
-    "@webfreshener/vxlib/src/model/_schemahelpers.js~schemahelpers",
+    "datamatic/src/model/_schemahelpers.js~schemahelpers",
     "class/src/Model/_schemaHelpers.js~SchemaHelpers.html",
-    "<span>SchemaHelpers</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/_schemaHelpers.js</span>",
+    "<span>SchemaHelpers</span> <span class=\"search-result-import-path\">datamatic/src/Model/_schemaHelpers.js</span>",
     "class"
   ],
   [
-    "@webfreshener/vxlib/src/pipe/validator.js~validator",
+    "datamatic/src/pipeline/validator.js~validator",
     "class/src/Pipeline/Validator.js~Validator.html",
-    "<span>Validator</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipeline/Validator.js</span>",
+    "<span>Validator</span> <span class=\"search-result-import-path\">datamatic/src/Pipeline/Validator.js</span>",
     "class"
   ],
   [
-    "@webfreshener/vxlib/src/pipe/vxbehaviorsubject.js~vxbehaviorsubject",
+    "datamatic/src/pipeline/vxbehaviorsubject.js~vxbehaviorsubject",
     "class/src/Pipeline/vxBehaviorSubject.js~VxBehaviorSubject.html",
-    "<span>VxBehaviorSubject</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipeline/vxBehaviorSubject.js</span>",
+    "<span>VxBehaviorSubject</span> <span class=\"search-result-import-path\">datamatic/src/Pipeline/vxBehaviorSubject.js</span>",
     "class"
   ],
   [
-    "@webfreshener/vxlib/src/model/_references.js~_ajvref",
+    "datamatic/src/model/_references.js~_ajvref",
     "variable/index.html#static-variable-_ajvRef",
-    "<span>_ajvRef</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/_references.js</span>",
+    "<span>_ajvRef</span> <span class=\"search-result-import-path\">datamatic/src/Model/_references.js</span>",
     "variable"
   ],
   [
-    "@webfreshener/vxlib/src/model/_references.js~_dirtymodels",
+    "datamatic/src/model/_references.js~_dirtymodels",
     "variable/index.html#static-variable-_dirtyModels",
-    "<span>_dirtyModels</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/_references.js</span>",
+    "<span>_dirtyModels</span> <span class=\"search-result-import-path\">datamatic/src/Model/_references.js</span>",
     "variable"
   ],
   [
-    "@webfreshener/vxlib/src/model/_references.js~_exists",
+    "datamatic/src/model/_references.js~_exists",
     "variable/index.html#static-variable-_exists",
-    "<span>_exists</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/_references.js</span>",
+    "<span>_exists</span> <span class=\"search-result-import-path\">datamatic/src/Model/_references.js</span>",
     "variable"
   ],
   [
-    "@webfreshener/vxlib/src/model/_references.js~_mdref",
+    "datamatic/src/model/_references.js~_mdref",
     "variable/index.html#static-variable-_mdRef",
-    "<span>_mdRef</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/_references.js</span>",
+    "<span>_mdRef</span> <span class=\"search-result-import-path\">datamatic/src/Model/_references.js</span>",
     "variable"
   ],
   [
-    "@webfreshener/vxlib/src/model/_references.js~_obuilders",
+    "datamatic/src/model/_references.js~_obuilders",
     "variable/index.html#static-variable-_oBuilders",
-    "<span>_oBuilders</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/_references.js</span>",
+    "<span>_oBuilders</span> <span class=\"search-result-import-path\">datamatic/src/Model/_references.js</span>",
     "variable"
   ],
   [
-    "@webfreshener/vxlib/src/model/_references.js~_object",
+    "datamatic/src/model/_references.js~_object",
     "variable/index.html#static-variable-_object",
-    "<span>_object</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/_references.js</span>",
+    "<span>_object</span> <span class=\"search-result-import-path\">datamatic/src/Model/_references.js</span>",
     "variable"
   ],
   [
-    "@webfreshener/vxlib/src/model/_references.js~_observerpaths",
+    "datamatic/src/model/_references.js~_observerpaths",
     "variable/index.html#static-variable-_observerPaths",
-    "<span>_observerPaths</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/_references.js</span>",
+    "<span>_observerPaths</span> <span class=\"search-result-import-path\">datamatic/src/Model/_references.js</span>",
     "variable"
   ],
   [
-    "@webfreshener/vxlib/src/model/_references.js~_observers",
+    "datamatic/src/model/_references.js~_observers",
     "variable/index.html#static-variable-_observers",
-    "<span>_observers</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/_references.js</span>",
+    "<span>_observers</span> <span class=\"search-result-import-path\">datamatic/src/Model/_references.js</span>",
     "variable"
   ],
   [
-    "@webfreshener/vxlib/src/pipe/validator.js~_observers",
+    "datamatic/src/pipeline/validator.js~_observers",
     "variable/index.html#static-variable-_observers",
-    "<span>_observers</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipeline/Validator.js</span>",
+    "<span>_observers</span> <span class=\"search-result-import-path\">datamatic/src/Pipeline/Validator.js</span>",
     "variable"
   ],
   [
-    "@webfreshener/vxlib/src/model/_references.js~_schemahelpers",
+    "datamatic/src/model/_references.js~_schemahelpers",
     "variable/index.html#static-variable-_schemaHelpers",
-    "<span>_schemaHelpers</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/_references.js</span>",
+    "<span>_schemaHelpers</span> <span class=\"search-result-import-path\">datamatic/src/Model/_references.js</span>",
     "variable"
   ],
   [
-    "@webfreshener/vxlib/src/model/_references.js~_schemaoptions",
+    "datamatic/src/model/_references.js~_schemaoptions",
     "variable/index.html#static-variable-_schemaOptions",
-    "<span>_schemaOptions</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/_references.js</span>",
+    "<span>_schemaOptions</span> <span class=\"search-result-import-path\">datamatic/src/Model/_references.js</span>",
     "variable"
   ],
   [
-    "@webfreshener/vxlib/src/model/_references.js~_schemasignatures",
+    "datamatic/src/model/_references.js~_schemasignatures",
     "variable/index.html#static-variable-_schemaSignatures",
-    "<span>_schemaSignatures</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/_references.js</span>",
+    "<span>_schemaSignatures</span> <span class=\"search-result-import-path\">datamatic/src/Model/_references.js</span>",
     "variable"
   ],
   [
-    "@webfreshener/vxlib/src/model/_references.js~_validators",
+    "datamatic/src/model/_references.js~_validators",
     "variable/index.html#static-variable-_validators",
-    "<span>_validators</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/_references.js</span>",
+    "<span>_validators</span> <span class=\"search-result-import-path\">datamatic/src/Model/_references.js</span>",
     "variable"
   ],
   [
-    "@webfreshener/vxlib/src/pipe/utils.js~casttoexec",
+    "datamatic/src/pipeline/utils.js~casttoexec",
     "function/index.html#static-function-castToExec",
-    "<span>castToExec</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipeline/Utils.js</span>",
+    "<span>castToExec</span> <span class=\"search-result-import-path\">datamatic/src/Pipeline/Utils.js</span>",
     "function"
   ],
   [
-    "@webfreshener/vxlib/src/pipe/utils.js~fill",
+    "datamatic/src/pipeline/utils.js~fill",
     "function/index.html#static-function-fill",
-    "<span>fill</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipeline/Utils.js</span>",
+    "<span>fill</span> <span class=\"search-result-import-path\">datamatic/src/Pipeline/Utils.js</span>",
     "function"
   ],
   [
-    "@webfreshener/vxlib/src/model/utils.js~getdefaults",
+    "datamatic/src/model/utils.js~getdefaults",
     "function/index.html#static-function-getDefaults",
-    "<span>getDefaults</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/utils.js</span>",
+    "<span>getDefaults</span> <span class=\"search-result-import-path\">datamatic/src/Model/utils.js</span>",
     "function"
   ],
   [
-    "@webfreshener/vxlib/src/model/utils.js~getpatternpropertydefaults",
+    "datamatic/src/model/utils.js~getpatternpropertydefaults",
     "function/index.html#static-function-getPatternPropertyDefaults",
-    "<span>getPatternPropertyDefaults</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/utils.js</span>",
+    "<span>getPatternPropertyDefaults</span> <span class=\"search-result-import-path\">datamatic/src/Model/utils.js</span>",
     "function"
   ],
   [
-    "@webfreshener/vxlib/src/model/utils.js~getschemaid",
+    "datamatic/src/model/utils.js~getschemaid",
     "function/index.html#static-function-getSchemaID",
-    "<span>getSchemaID</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/utils.js</span>",
+    "<span>getSchemaID</span> <span class=\"search-result-import-path\">datamatic/src/Model/utils.js</span>",
     "function"
   ],
   [
-    "@webfreshener/vxlib/src/pipe/utils.js~handleasync",
+    "datamatic/src/pipeline/utils.js~handleasync",
     "function/index.html#static-function-handleAsync",
-    "<span>handleAsync</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipeline/Utils.js</span>",
+    "<span>handleAsync</span> <span class=\"search-result-import-path\">datamatic/src/Pipeline/Utils.js</span>",
     "function"
   ],
   [
-    "@webfreshener/vxlib/src/model/utils.js~makeclean",
+    "datamatic/src/model/utils.js~makeclean",
     "function/index.html#static-function-makeClean",
-    "<span>makeClean</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/utils.js</span>",
+    "<span>makeClean</span> <span class=\"search-result-import-path\">datamatic/src/Model/utils.js</span>",
     "function"
   ],
   [
-    "@webfreshener/vxlib/src/model/utils.js~makedirty",
+    "datamatic/src/model/utils.js~makedirty",
     "function/index.html#static-function-makeDirty",
-    "<span>makeDirty</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/utils.js</span>",
+    "<span>makeDirty</span> <span class=\"search-result-import-path\">datamatic/src/Model/utils.js</span>",
     "function"
   ],
   [
-    "@webfreshener/vxlib/src/pipe/utils.js~mapargs",
+    "datamatic/src/pipeline/utils.js~mapargs",
     "function/index.html#static-function-mapArgs",
-    "<span>mapArgs</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipeline/Utils.js</span>",
+    "<span>mapArgs</span> <span class=\"search-result-import-path\">datamatic/src/Pipeline/Utils.js</span>",
     "function"
   ],
   [
-    "@webfreshener/vxlib/src/model/utils.js~refatkeyvalidation",
+    "datamatic/src/model/utils.js~refatkeyvalidation",
     "function/index.html#static-function-refAtKeyValidation",
-    "<span>refAtKeyValidation</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/utils.js</span>",
+    "<span>refAtKeyValidation</span> <span class=\"search-result-import-path\">datamatic/src/Model/utils.js</span>",
     "function"
   ],
   [
-    "@webfreshener/vxlib/src/model/utils.js~refvalidation",
+    "datamatic/src/model/utils.js~refvalidation",
     "function/index.html#static-function-refValidation",
-    "<span>refValidation</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/utils.js</span>",
+    "<span>refValidation</span> <span class=\"search-result-import-path\">datamatic/src/Model/utils.js</span>",
     "function"
   ],
   [
-    "@webfreshener/vxlib/src/model/utils.js~validate",
+    "datamatic/src/model/utils.js~validate",
     "function/index.html#static-function-validate",
-    "<span>validate</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/utils.js</span>",
+    "<span>validate</span> <span class=\"search-result-import-path\">datamatic/src/Model/utils.js</span>",
     "function"
   ],
   [
-    "@webfreshener/vxlib/src/model/utils.js~walkobject",
+    "datamatic/src/model/utils.js~walkobject",
     "function/index.html#static-function-walkObject",
-    "<span>walkObject</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/utils.js</span>",
+    "<span>walkObject</span> <span class=\"search-result-import-path\">datamatic/src/Model/utils.js</span>",
     "function"
   ],
   [
-    "@webfreshener/vxlib/src/model/_references.js~wf",
+    "datamatic/src/model/_references.js~wf",
     "variable/index.html#static-variable-wf",
-    "<span>wf</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Model/_references.js</span>",
+    "<span>wf</span> <span class=\"search-result-import-path\">datamatic/src/Model/_references.js</span>",
     "variable"
   ],
   [
-    "@webfreshener/vxlib/src/pipe/utils.js~wrapcallback",
+    "datamatic/src/pipeline/utils.js~wrapcallback",
     "function/index.html#static-function-wrapCallback",
-    "<span>wrapCallback</span> <span class=\"search-result-import-path\">@webfreshener/vxlib/src/Pipeline/Utils.js</span>",
+    "<span>wrapCallback</span> <span class=\"search-result-import-path\">datamatic/src/Pipeline/Utils.js</span>",
     "function"
   ],
   [
@@ -888,9 +888,9 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
-    "src/model/base-model.js~basemodel#pipe",
-    "class/src/Model/base-model.js~BaseModel.html#instance-method-pipe",
-    "src/Model/base-model.js~BaseModel#pipe",
+    "src/model/base-model.js~basemodel#pipeline",
+    "class/src/Model/base-model.js~BaseModel.html#instance-method-pipeline",
+    "src/Model/base-model.js~BaseModel#pipeline",
     "method"
   ],
   [
@@ -1038,9 +1038,9 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
-    "src/model/index.js~model#pipe",
-    "class/src/Model/index.js~Model.html#instance-method-pipe",
-    "src/Model/index.js~Model#pipe",
+    "src/model/index.js~model#pipeline",
+    "class/src/Model/index.js~Model.html#instance-method-pipeline",
+    "src/Model/index.js~Model#pipeline",
     "method"
   ],
   [
@@ -1212,463 +1212,463 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
-    "src/pipe/executor.js",
+    "src/pipeline/executor.js",
     "file/src/Pipeline/Executor.js.html",
     "src/Pipeline/Executor.js",
     "file"
   ],
   [
-    "src/pipe/executor.js~executor.exec",
+    "src/pipeline/executor.js~executor.exec",
     "class/src/Pipeline/Executor.js~Executor.html#static-method-exec",
     "src/Pipeline/Executor.js~Executor.exec",
     "method"
   ],
   [
-    "src/pipe/iterator.js",
+    "src/pipeline/iterator.js",
     "file/src/Pipeline/Iterator.js.html",
     "src/Pipeline/Iterator.js",
     "file"
   ],
   [
-    "src/pipe/iterator.js~iterator#constructor",
+    "src/pipeline/iterator.js~iterator#constructor",
     "class/src/Pipeline/Iterator.js~Iterator.html#instance-constructor-constructor",
     "src/Pipeline/Iterator.js~Iterator#constructor",
     "method"
   ],
   [
-    "src/pipe/iterator.js~iterator#loop",
+    "src/pipeline/iterator.js~iterator#loop",
     "class/src/Pipeline/Iterator.js~Iterator.html#instance-method-loop",
     "src/Pipeline/Iterator.js~Iterator#loop",
     "method"
   ],
   [
-    "src/pipe/iterator.js~iterator#schema",
+    "src/pipeline/iterator.js~iterator#schema",
     "class/src/Pipeline/Iterator.js~Iterator.html#instance-get-schema",
     "src/Pipeline/Iterator.js~Iterator#schema",
     "member"
   ],
   [
-    "src/pipe/iterator.test.js",
+    "src/pipeline/iterator.test.js",
     "file/src/Pipeline/Iterator.test.js.html",
     "src/Pipeline/Iterator.test.js",
     "file"
   ],
   [
-    "src/pipe/pipe-api.test.js",
-    "file/src/Pipeline/Pipeline-api.test.js.html",
-    "src/Pipeline/Pipeline-api.test.js",
+    "src/pipeline/pipe-api.test.js",
+    "file/src/Pipeline/Pipe-api.test.js.html",
+    "src/Pipeline/Pipe-api.test.js",
     "file"
   ],
   [
-    "src/pipe/pipe-exec.js",
-    "file/src/Pipeline/Pipeline-exec.js.html",
-    "src/Pipeline/Pipeline-exec.js",
+    "src/pipeline/pipe-exec.js",
+    "file/src/Pipeline/Pipe-exec.js.html",
+    "src/Pipeline/Pipe-exec.js",
     "file"
   ],
   [
-    "src/pipe/pipe.js",
+    "src/pipeline/pipe.test.js",
+    "file/src/Pipeline/Pipe.test.js.html",
+    "src/Pipeline/Pipe.test.js",
+    "file"
+  ],
+  [
+    "src/pipeline/pipeline.js",
     "file/src/Pipeline/Pipeline.js.html",
     "src/Pipeline/Pipeline.js",
     "file"
   ],
   [
-    "src/pipe/pipe.js~pipe#clone",
-    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-clone",
-    "src/Pipeline/Pipeline.js~Pipeline#clone",
-    "method"
-  ],
-  [
-    "src/pipe/pipe.js~pipe#close",
-    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-close",
-    "src/Pipeline/Pipeline.js~Pipeline#close",
-    "method"
-  ],
-  [
-    "src/pipe/pipe.js~pipe#constructor",
-    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-constructor-constructor",
-    "src/Pipeline/Pipeline.js~Pipeline#constructor",
-    "method"
-  ],
-  [
-    "src/pipe/pipe.js~pipe#errors",
-    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-get-errors",
-    "src/Pipeline/Pipeline.js~Pipeline#errors",
-    "member"
-  ],
-  [
-    "src/pipe/pipe.js~pipe#link",
-    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-link",
-    "src/Pipeline/Pipeline.js~Pipeline#link",
-    "method"
-  ],
-  [
-    "src/pipe/pipe.js~pipe#merge",
-    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-merge",
-    "src/Pipeline/Pipeline.js~Pipeline#merge",
-    "method"
-  ],
-  [
-    "src/pipe/pipe.js~pipe#pipe",
-    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-pipe",
-    "src/Pipeline/Pipeline.js~Pipeline#pipe",
-    "method"
-  ],
-  [
-    "src/pipe/pipe.js~pipe#promise",
-    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-promise",
-    "src/Pipeline/Pipeline.js~Pipeline#promise",
-    "method"
-  ],
-  [
-    "src/pipe/pipe.js~pipe#sample",
-    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-sample",
-    "src/Pipeline/Pipeline.js~Pipeline#sample",
-    "method"
-  ],
-  [
-    "src/pipe/pipe.js~pipe#schema",
-    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-get-schema",
-    "src/Pipeline/Pipeline.js~Pipeline#schema",
-    "member"
-  ],
-  [
-    "src/pipe/pipe.js~pipe#schemas",
-    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-get-schemas",
-    "src/Pipeline/Pipeline.js~Pipeline#schemas",
-    "member"
-  ],
-  [
-    "src/pipe/pipe.js~pipe#split",
-    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-split",
-    "src/Pipeline/Pipeline.js~Pipeline#split",
-    "method"
-  ],
-  [
-    "src/pipe/pipe.js~pipe#subscribe",
-    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-subscribe",
-    "src/Pipeline/Pipeline.js~Pipeline#subscribe",
-    "method"
-  ],
-  [
-    "src/pipe/pipe.js~pipe#tap",
-    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-tap",
-    "src/Pipeline/Pipeline.js~Pipeline#tap",
-    "method"
-  ],
-  [
-    "src/pipe/pipe.js~pipe#throttle",
-    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-throttle",
-    "src/Pipeline/Pipeline.js~Pipeline#throttle",
-    "method"
-  ],
-  [
-    "src/pipe/pipe.js~pipe#tojson",
-    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-toJSON",
-    "src/Pipeline/Pipeline.js~Pipeline#toJSON",
-    "method"
-  ],
-  [
-    "src/pipe/pipe.js~pipe#tostring",
-    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-toString",
-    "src/Pipeline/Pipeline.js~Pipeline#toString",
-    "method"
-  ],
-  [
-    "src/pipe/pipe.js~pipe#unlink",
-    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-unlink",
-    "src/Pipeline/Pipeline.js~Pipeline#unlink",
-    "method"
-  ],
-  [
-    "src/pipe/pipe.js~pipe#writable",
-    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-get-writable",
-    "src/Pipeline/Pipeline.js~Pipeline#writable",
-    "member"
-  ],
-  [
-    "src/pipe/pipe.js~pipe#write",
-    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-write",
-    "src/Pipeline/Pipeline.js~Pipeline#write",
-    "method"
-  ],
-  [
-    "src/pipe/pipe.js~pipe#yield",
-    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-yield",
-    "src/Pipeline/Pipeline.js~Pipeline#yield",
-    "method"
-  ],
-  [
-    "src/pipe/pipe.js~pipe.getexecs",
-    "class/src/Pipeline/Pipeline.js~Pipeline.html#static-method-getExecs",
-    "src/Pipeline/Pipeline.js~Pipeline.getExecs",
-    "method"
-  ],
-  [
-    "src/pipe/pipe.js~pipelistener#complete",
+    "src/pipeline/pipeline.js~pipelistener#complete",
     "class/src/Pipeline/Pipeline.js~PipeListener.html#instance-method-complete",
     "src/Pipeline/Pipeline.js~PipeListener#complete",
     "method"
   ],
   [
-    "src/pipe/pipe.js~pipelistener#constructor",
+    "src/pipeline/pipeline.js~pipelistener#constructor",
     "class/src/Pipeline/Pipeline.js~PipeListener.html#instance-constructor-constructor",
     "src/Pipeline/Pipeline.js~PipeListener#constructor",
     "method"
   ],
   [
-    "src/pipe/pipe.js~pipelistener#error",
+    "src/pipeline/pipeline.js~pipelistener#error",
     "class/src/Pipeline/Pipeline.js~PipeListener.html#instance-method-error",
     "src/Pipeline/Pipeline.js~PipeListener#error",
     "method"
   ],
   [
-    "src/pipe/pipe.js~pipelistener#next",
+    "src/pipeline/pipeline.js~pipelistener#next",
     "class/src/Pipeline/Pipeline.js~PipeListener.html#instance-method-next",
     "src/Pipeline/Pipeline.js~PipeListener#next",
     "method"
   ],
   [
-    "src/pipe/pipe.js~pipelistener#out",
+    "src/pipeline/pipeline.js~pipelistener#out",
     "class/src/Pipeline/Pipeline.js~PipeListener.html#instance-get-out",
     "src/Pipeline/Pipeline.js~PipeListener#out",
     "member"
   ],
   [
-    "src/pipe/pipe.js~pipelistener#subscribe",
+    "src/pipeline/pipeline.js~pipelistener#subscribe",
     "class/src/Pipeline/Pipeline.js~PipeListener.html#instance-method-subscribe",
     "src/Pipeline/Pipeline.js~PipeListener#subscribe",
     "method"
   ],
   [
-    "src/pipe/pipe.js~pipelistener#target",
+    "src/pipeline/pipeline.js~pipelistener#target",
     "class/src/Pipeline/Pipeline.js~PipeListener.html#instance-get-target",
     "src/Pipeline/Pipeline.js~PipeListener#target",
     "member"
   ],
   [
-    "src/pipe/pipe.js~pipelistener#vo",
+    "src/pipeline/pipeline.js~pipelistener#vo",
     "class/src/Pipeline/Pipeline.js~PipeListener.html#instance-get-vo",
     "src/Pipeline/Pipeline.js~PipeListener#vo",
     "member"
   ],
   [
-    "src/pipe/pipe.test.js",
-    "file/src/Pipeline/Pipeline.test.js.html",
-    "src/Pipeline/Pipeline.test.js",
-    "file"
+    "src/pipeline/pipeline.js~pipeline#clone",
+    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-clone",
+    "src/Pipeline/Pipeline.js~Pipeline#clone",
+    "method"
   ],
   [
-    "src/pipe/properties.js",
+    "src/pipeline/pipeline.js~pipeline#close",
+    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-close",
+    "src/Pipeline/Pipeline.js~Pipeline#close",
+    "method"
+  ],
+  [
+    "src/pipeline/pipeline.js~pipeline#constructor",
+    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-constructor-constructor",
+    "src/Pipeline/Pipeline.js~Pipeline#constructor",
+    "method"
+  ],
+  [
+    "src/pipeline/pipeline.js~pipeline#errors",
+    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-get-errors",
+    "src/Pipeline/Pipeline.js~Pipeline#errors",
+    "member"
+  ],
+  [
+    "src/pipeline/pipeline.js~pipeline#link",
+    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-link",
+    "src/Pipeline/Pipeline.js~Pipeline#link",
+    "method"
+  ],
+  [
+    "src/pipeline/pipeline.js~pipeline#merge",
+    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-merge",
+    "src/Pipeline/Pipeline.js~Pipeline#merge",
+    "method"
+  ],
+  [
+    "src/pipeline/pipeline.js~pipeline#pipe",
+    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-pipe",
+    "src/Pipeline/Pipeline.js~Pipeline#pipe",
+    "method"
+  ],
+  [
+    "src/pipeline/pipeline.js~pipeline#promise",
+    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-promise",
+    "src/Pipeline/Pipeline.js~Pipeline#promise",
+    "method"
+  ],
+  [
+    "src/pipeline/pipeline.js~pipeline#sample",
+    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-sample",
+    "src/Pipeline/Pipeline.js~Pipeline#sample",
+    "method"
+  ],
+  [
+    "src/pipeline/pipeline.js~pipeline#schema",
+    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-get-schema",
+    "src/Pipeline/Pipeline.js~Pipeline#schema",
+    "member"
+  ],
+  [
+    "src/pipeline/pipeline.js~pipeline#schemas",
+    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-get-schemas",
+    "src/Pipeline/Pipeline.js~Pipeline#schemas",
+    "member"
+  ],
+  [
+    "src/pipeline/pipeline.js~pipeline#split",
+    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-split",
+    "src/Pipeline/Pipeline.js~Pipeline#split",
+    "method"
+  ],
+  [
+    "src/pipeline/pipeline.js~pipeline#subscribe",
+    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-subscribe",
+    "src/Pipeline/Pipeline.js~Pipeline#subscribe",
+    "method"
+  ],
+  [
+    "src/pipeline/pipeline.js~pipeline#tap",
+    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-tap",
+    "src/Pipeline/Pipeline.js~Pipeline#tap",
+    "method"
+  ],
+  [
+    "src/pipeline/pipeline.js~pipeline#throttle",
+    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-throttle",
+    "src/Pipeline/Pipeline.js~Pipeline#throttle",
+    "method"
+  ],
+  [
+    "src/pipeline/pipeline.js~pipeline#tojson",
+    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-toJSON",
+    "src/Pipeline/Pipeline.js~Pipeline#toJSON",
+    "method"
+  ],
+  [
+    "src/pipeline/pipeline.js~pipeline#tostring",
+    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-toString",
+    "src/Pipeline/Pipeline.js~Pipeline#toString",
+    "method"
+  ],
+  [
+    "src/pipeline/pipeline.js~pipeline#unlink",
+    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-unlink",
+    "src/Pipeline/Pipeline.js~Pipeline#unlink",
+    "method"
+  ],
+  [
+    "src/pipeline/pipeline.js~pipeline#writable",
+    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-get-writable",
+    "src/Pipeline/Pipeline.js~Pipeline#writable",
+    "member"
+  ],
+  [
+    "src/pipeline/pipeline.js~pipeline#write",
+    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-write",
+    "src/Pipeline/Pipeline.js~Pipeline#write",
+    "method"
+  ],
+  [
+    "src/pipeline/pipeline.js~pipeline#yield",
+    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-yield",
+    "src/Pipeline/Pipeline.js~Pipeline#yield",
+    "method"
+  ],
+  [
+    "src/pipeline/pipeline.js~pipeline.getexecs",
+    "class/src/Pipeline/Pipeline.js~Pipeline.html#static-method-getExecs",
+    "src/Pipeline/Pipeline.js~Pipeline.getExecs",
+    "method"
+  ],
+  [
+    "src/pipeline/properties.js",
     "file/src/Pipeline/Properties.js.html",
     "src/Pipeline/Properties.js",
     "file"
   ],
   [
-    "src/pipe/properties.js~properties.init",
+    "src/pipeline/properties.js~properties.init",
     "class/src/Pipeline/Properties.js~Properties.html#static-method-init",
     "src/Pipeline/Properties.js~Properties.init",
     "method"
   ],
   [
-    "src/pipe/utils.js",
+    "src/pipeline/utils.js",
     "file/src/Pipeline/Utils.js.html",
     "src/Pipeline/Utils.js",
     "file"
   ],
   [
-    "src/pipe/utils.test.js",
+    "src/pipeline/utils.test.js",
     "file/src/Pipeline/Utils.test.js.html",
     "src/Pipeline/Utils.test.js",
     "file"
   ],
   [
-    "src/pipe/validator.js",
+    "src/pipeline/validator.js",
     "file/src/Pipeline/Validator.js.html",
     "src/Pipeline/Validator.js",
     "file"
   ],
   [
-    "src/pipe/validator.js~validator#constructor",
+    "src/pipeline/validator.js~validator#constructor",
     "class/src/Pipeline/Validator.js~Validator.html#instance-constructor-constructor",
     "src/Pipeline/Validator.js~Validator#constructor",
     "method"
   ],
   [
-    "src/pipe/validator.js~validator#errors",
+    "src/pipeline/validator.js~validator#errors",
     "class/src/Pipeline/Validator.js~Validator.html#instance-get-errors",
     "src/Pipeline/Validator.js~Validator#errors",
     "member"
   ],
   [
-    "src/pipe/validator.js~validator#freeze",
+    "src/pipeline/validator.js~validator#freeze",
     "class/src/Pipeline/Validator.js~Validator.html#instance-method-freeze",
     "src/Pipeline/Validator.js~Validator#freeze",
     "method"
   ],
   [
-    "src/pipe/validator.js~validator#isfrozen",
+    "src/pipeline/validator.js~validator#isfrozen",
     "class/src/Pipeline/Validator.js~Validator.html#instance-get-isFrozen",
     "src/Pipeline/Validator.js~Validator#isFrozen",
     "member"
   ],
   [
-    "src/pipe/validator.js~validator#model",
+    "src/pipeline/validator.js~validator#model",
     "class/src/Pipeline/Validator.js~Validator.html#instance-set-model",
     "src/Pipeline/Validator.js~Validator#model",
     "member"
   ],
   [
-    "src/pipe/validator.js~validator#model",
+    "src/pipeline/validator.js~validator#model",
     "class/src/Pipeline/Validator.js~Validator.html#instance-get-model",
     "src/Pipeline/Validator.js~Validator#model",
     "member"
   ],
   [
-    "src/pipe/validator.js~validator#subscribe",
+    "src/pipeline/validator.js~validator#subscribe",
     "class/src/Pipeline/Validator.js~Validator.html#instance-method-subscribe",
     "src/Pipeline/Validator.js~Validator#subscribe",
     "method"
   ],
   [
-    "src/pipe/validator.js~validator#tojson",
+    "src/pipeline/validator.js~validator#tojson",
     "class/src/Pipeline/Validator.js~Validator.html#instance-method-toJSON",
     "src/Pipeline/Validator.js~Validator#toJSON",
     "method"
   ],
   [
-    "src/pipe/validator.js~validator#tostring",
+    "src/pipeline/validator.js~validator#tostring",
     "class/src/Pipeline/Validator.js~Validator.html#instance-method-toString",
     "src/Pipeline/Validator.js~Validator#toString",
     "method"
   ],
   [
-    "src/pipe/validator.js~validator#validate",
+    "src/pipeline/validator.js~validator#validate",
     "class/src/Pipeline/Validator.js~Validator.html#instance-method-validate",
     "src/Pipeline/Validator.js~Validator#validate",
     "method"
   ],
   [
-    "src/pipe/validator.js~validator#valueof",
+    "src/pipeline/validator.js~validator#valueof",
     "class/src/Pipeline/Validator.js~Validator.html#instance-method-valueOf",
     "src/Pipeline/Validator.js~Validator#valueOf",
     "method"
   ],
   [
-    "src/pipe/validator.js~validator.deriveschema",
+    "src/pipeline/validator.js~validator.deriveschema",
     "class/src/Pipeline/Validator.js~Validator.html#static-method-deriveSchema",
     "src/Pipeline/Validator.js~Validator.deriveSchema",
     "method"
   ],
   [
-    "src/pipe/validator.js~validator.validateschemas",
+    "src/pipeline/validator.js~validator.validateschemas",
     "class/src/Pipeline/Validator.js~Validator.html#static-method-validateSchemas",
     "src/Pipeline/Validator.js~Validator.validateSchemas",
     "method"
   ],
   [
-    "src/pipe/validator.test.js",
+    "src/pipeline/validator.test.js",
     "file/src/Pipeline/Validator.test.js.html",
     "src/Pipeline/Validator.test.js",
     "file"
   ],
   [
-    "src/pipe/_ajvwrapper.js",
+    "src/pipeline/_ajvwrapper.js",
     "file/src/Pipeline/_ajvWrapper.js.html",
     "src/Pipeline/_ajvWrapper.js",
     "file"
   ],
   [
-    "src/pipe/_ajvwrapper.js~ajvwrapper#$ajv",
+    "src/pipeline/_ajvwrapper.js~ajvwrapper#$ajv",
     "class/src/Pipeline/_ajvWrapper.js~AjvWrapper.html#instance-get-$ajv",
     "src/Pipeline/_ajvWrapper.js~AjvWrapper#$ajv",
     "member"
   ],
   [
-    "src/pipe/_ajvwrapper.js~ajvwrapper#addschema",
+    "src/pipeline/_ajvwrapper.js~ajvwrapper#addschema",
     "class/src/Pipeline/_ajvWrapper.js~AjvWrapper.html#instance-method-addSchema",
     "src/Pipeline/_ajvWrapper.js~AjvWrapper#addSchema",
     "method"
   ],
   [
-    "src/pipe/_ajvwrapper.js~ajvwrapper#constructor",
+    "src/pipeline/_ajvwrapper.js~ajvwrapper#constructor",
     "class/src/Pipeline/_ajvWrapper.js~AjvWrapper.html#instance-constructor-constructor",
     "src/Pipeline/_ajvWrapper.js~AjvWrapper#constructor",
     "method"
   ],
   [
-    "src/pipe/_ajvwrapper.js~ajvwrapper#exec",
+    "src/pipeline/_ajvwrapper.js~ajvwrapper#exec",
     "class/src/Pipeline/_ajvWrapper.js~AjvWrapper.html#instance-method-exec",
     "src/Pipeline/_ajvWrapper.js~AjvWrapper#exec",
     "method"
   ],
   [
-    "src/pipe/_ajvwrapper.js~ajvwrapper#path",
+    "src/pipeline/_ajvwrapper.js~ajvwrapper#path",
     "class/src/Pipeline/_ajvWrapper.js~AjvWrapper.html#instance-member-path",
     "src/Pipeline/_ajvWrapper.js~AjvWrapper#path",
     "member"
   ],
   [
-    "src/pipe/_ajvwrapper.js~ajvwrapper.getschemaid",
+    "src/pipeline/_ajvwrapper.js~ajvwrapper.getschemaid",
     "class/src/Pipeline/_ajvWrapper.js~AjvWrapper.html#static-method-getSchemaID",
     "src/Pipeline/_ajvWrapper.js~AjvWrapper.getSchemaID",
     "method"
   ],
   [
-    "src/pipe/_ajvwrapper.test.js",
+    "src/pipeline/_ajvwrapper.test.js",
     "file/src/Pipeline/_ajvWrapper.test.js.html",
     "src/Pipeline/_ajvWrapper.test.js",
     "file"
   ],
   [
-    "src/pipe/index.js",
+    "src/pipeline/index.js",
     "file/src/Pipeline/index.js.html",
     "src/Pipeline/index.js",
     "file"
   ],
   [
-    "src/pipe/vxbehaviorsubject.js",
+    "src/pipeline/vxbehaviorsubject.js",
     "file/src/Pipeline/vxBehaviorSubject.js.html",
     "src/Pipeline/vxBehaviorSubject.js",
     "file"
   ],
   [
-    "src/pipe/vxbehaviorsubject.js~vxbehaviorsubject#complete",
+    "src/pipeline/vxbehaviorsubject.js~vxbehaviorsubject#complete",
     "class/src/Pipeline/vxBehaviorSubject.js~VxBehaviorSubject.html#instance-method-complete",
     "src/Pipeline/vxBehaviorSubject.js~VxBehaviorSubject#complete",
     "method"
   ],
   [
-    "src/pipe/vxbehaviorsubject.js~vxbehaviorsubject#constructor",
+    "src/pipeline/vxbehaviorsubject.js~vxbehaviorsubject#constructor",
     "class/src/Pipeline/vxBehaviorSubject.js~VxBehaviorSubject.html#instance-constructor-constructor",
     "src/Pipeline/vxBehaviorSubject.js~VxBehaviorSubject#constructor",
     "method"
   ],
   [
-    "src/pipe/vxbehaviorsubject.js~vxbehaviorsubject#error",
+    "src/pipeline/vxbehaviorsubject.js~vxbehaviorsubject#error",
     "class/src/Pipeline/vxBehaviorSubject.js~VxBehaviorSubject.html#instance-method-error",
     "src/Pipeline/vxBehaviorSubject.js~VxBehaviorSubject#error",
     "method"
   ],
   [
-    "src/pipe/vxbehaviorsubject.js~vxbehaviorsubject#next",
+    "src/pipeline/vxbehaviorsubject.js~vxbehaviorsubject#next",
     "class/src/Pipeline/vxBehaviorSubject.js~VxBehaviorSubject.html#instance-method-next",
     "src/Pipeline/vxBehaviorSubject.js~VxBehaviorSubject#next",
     "method"
   ],
   [
-    "src/pipe/vxbehaviorsubject.js~vxbehaviorsubject#subscribe",
+    "src/pipeline/vxbehaviorsubject.js~vxbehaviorsubject#subscribe",
     "class/src/Pipeline/vxBehaviorSubject.js~VxBehaviorSubject.html#instance-method-subscribe",
     "src/Pipeline/vxBehaviorSubject.js~VxBehaviorSubject#subscribe",
     "method"
   ],
   [
-    "src/pipe/vxbehaviorsubject.js~vxbehaviorsubject.create",
+    "src/pipeline/vxbehaviorsubject.js~vxbehaviorsubject.create",
     "class/src/Pipeline/vxBehaviorSubject.js~VxBehaviorSubject.html#static-method-create",
     "src/Pipeline/vxBehaviorSubject.js~VxBehaviorSubject.create",
     "method"
   ],
   [
-    "src/pipe/vxbehaviorsubject.test.js",
+    "src/pipeline/vxbehaviorsubject.test.js",
     "file/src/Pipeline/vxBehaviorSubject.test.js.html",
     "src/Pipeline/vxBehaviorSubject.test.js",
     "file"
@@ -1707,24 +1707,6 @@ window.esdocSearchIndex = [
     "src/schemas/pipe-args.schema.js",
     "file/src/schemas/pipe-args.schema.js.html",
     "src/schemas/pipe-args.schema.js",
-    "file"
-  ],
-  [
-    "src/schemas/pipe-args.test.js",
-    "file/src/schemas/pipe-args.test.js.html",
-    "src/schemas/pipe-args.test.js",
-    "file"
-  ],
-  [
-    "src/schemas/pipe-keys.schema.js",
-    "file/src/schemas/pipe-keys.schema.js.html",
-    "src/schemas/pipe-keys.schema.js",
-    "file"
-  ],
-  [
-    "src/schemas/rxvo.schema.js",
-    "file/src/schemas/rxvo.schema.js.html",
-    "src/schemas/rxvo.schema.js",
     "file"
   ]
 ]

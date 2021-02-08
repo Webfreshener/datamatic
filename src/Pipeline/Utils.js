@@ -87,12 +87,12 @@ export const castToExec = (obj) => {
         });
     }
 
-    // -- if is pipe config item, we normalize for intake
+    // -- if is pipeline config item, we normalize for intake
     if ((typeof obj) === "function") {
         return Object.assign({}, DefaultPipeTx, {exec: obj});
     }
 
-    // -- if is pipe norm,normalized config item, we pass in for intake
+    // -- if is pipeline norm,normalized config item, we pass in for intake
     if ((typeof obj.exec) === "function") {
         return Object.assign({}, DefaultPipeTx, obj);
     }
@@ -177,6 +177,6 @@ export const mapArgs = (...args) => {
         return [DefaultPipeTx, DefaultPipeTx];
     }
 
-    // normalizes args list and wraps in pipe Protocol
+    // normalizes args list and wraps in pipeline Protocol
     return [...args].map(castToExec);
 };

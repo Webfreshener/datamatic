@@ -1,7 +1,7 @@
 import {Model} from './index';
-import {Model as DistModel} from '../dist/datalux'
+import {Model as DistModel} from '../index'
 
-describe.skip("Index Tests", () => {
+describe("Index Tests", () => {
     describe("Package Validation Tests", () => {
         it("should import from ES6 Source", function () {
             expect(typeof Model).toEqual('function');
@@ -12,7 +12,7 @@ describe.skip("Index Tests", () => {
         });
 
         it("should import from ES5 `require`", () => {
-            expect(typeof (require('../index').RxVO)).toEqual('function');
+            expect(typeof (require('../index').Model)).toEqual('function');
         });
     });
 
