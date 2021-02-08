@@ -41,7 +41,7 @@ export class ObserverBuilder {
     /**
      * Retrieves BehaviorSubject Collection for given Model
      * @param target {BaseModel}
-     * @returns {Observer|null} Observer at path reference
+     * @returns {BaseModel|null} Observer at path reference
      */
     get(target) {
         return _observers.get(this).get(target) || null;
@@ -49,7 +49,7 @@ export class ObserverBuilder {
 
     /**
      * Retrieves BehaviorSubject Collection for Model at given path
-     * @param path
+     * @param path {string}
      * @returns {*}
      */
     getObserverForPath(path) {
@@ -59,7 +59,7 @@ export class ObserverBuilder {
 
     /**
      * Lists all registered observer paths
-     * @returns {*}
+     * @returns {[string]}
      */
     list() {
         return _observerPaths.get(this).map((o) => o[0]);

@@ -1,7 +1,33 @@
 {
+  "name": "datamatic",
+  "description": "Observable & Validatable Data Models and Pipelines",
+  "homepage": "https://webfreshener.github.io/datamatic",
   "author": "Van Schroeder <van@webfreshener.com>",
-  "name": "datamat",
-  "description": "JSON-Schema Based Observable Data Models",
+  "version": "0.9.0",
+  "main": "./dist/datamatic.node.js",
+  "module": "./dist/datamatic.umd.js",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://www.opensource.org/licenses/MIT"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Webfreshener/datamatic.git"
+  },
+  "scripts": {
+    "test": "jest",
+    "cover": "jest --coverage && cat ./coverage/lcov.info | codacy-coverage --token \"$CODACY_ID\"",
+    "build-test": "webpack --mode development; npm test",
+    "build": "webpack --mode production",
+    "docs": "./node_modules/.bin/esdoc",
+    "report": "$HOME/Library/Caches/Codacy/coverage-reporter/11.9.2/codacy-coverage-reporter report"
+  },
+  "files": [
+    "index.js",
+    "dist/*"
+  ],
   "keywords": [
     "rxjs",
     "json-schema",
@@ -18,29 +44,15 @@
     "map",
     "dictionary"
   ],
-  "version": "1.1.0-beta.1",
-  "main": "./index.js",
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "http://www.opensource.org/licenses/MIT"
-    }
-  ],
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/Webfreshener/RxVO.git"
-  },
-  "dependencies": {
-    "ajv": "^7.0.3",
-    "rxjs": "^6.6.3",
-    "rxjs-compat": "^6.6.3"
-  },
   "devDependencies": {
     "@babel/cli": "^7.12.10",
     "@babel/core": "^7.12.10",
     "@babel/plugin-transform-runtime": "^7.12.10",
     "@babel/preset-env": "^7.12.11",
+    "@babel/preset-react": "^7.12.10",
+    "@babel/runtime": "^7.12.5",
     "@webpack-cli/init": "^1.1.3",
+    "ajv": "^7.0.3",
     "ajv-formats": "^1.5.1",
     "babel-loader": "^8.2.2",
     "chai": "^4.2.0",
@@ -62,26 +74,20 @@
     "mocha-lcov-reporter": "^1.3.0",
     "object.assign": "^4.1.2",
     "ofs-utils": "^1.0.0",
-    "txpipe": "git+https://github.com/Webfreshener/txpipe.git",
+    "rxjs": "^6.6.3",
+    "rxjs-compat": "^6.6.3",
     "weakmap": "^0.0.6",
     "webpack": "^5.16.0",
     "webpack-cli": "^4.4.0",
     "webpack-rxjs-externals": "^2.0.0"
   },
-  "homepage": "https://webfreshener.github.io/RxVO/",
-  "scripts": {
-    "test": "jest",
-    "cover": "jest --coverage && cat ./coverage/lcov.info | codacy-coverage --token \"$CODACY_ID\"",
-    "build-test": "webpack --mode development; npm test",
-    "build": "webpack --config webpack.config.js --mode production",
-    "docs": "./node_modules/.bin/esdoc",
-    "report": "$HOME/Library/Caches/Codacy/coverage-reporter/11.9.2/codacy-coverage-reporter report"
-  },
   "jest": {
     "collectCoverage": true,
+    "testPathIgnorePatterns": ["/integration/"],
     "coveragePathIgnorePatterns": [
       "/node_modules/",
-      "/dist/"
+      "/dist/",
+      "/integration/"
     ]
   }
 }

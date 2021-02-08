@@ -270,8 +270,8 @@ export class Model {
      * @param pipesOrSchemas
      * @returns {Pipe}
      */
-    pipe(...pipesOrSchemas) {
-        return _documents.get(this).pipe(...pipesOrSchemas);
+    pipeline(...pipesOrSchemas) {
+        return _documents.get(this).pipeline(...pipesOrSchemas);
     }
 
 

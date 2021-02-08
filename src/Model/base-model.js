@@ -29,7 +29,7 @@ import {
 import {Model} from "./index";
 import {MetaData} from "./_metaData";
 import {makeClean, makeDirty, validate} from "./utils";
-import {Pipe} from "../Pipe";
+import {Pipeline} from "../Pipeline";
 /**
  *
  * @param ref
@@ -382,12 +382,12 @@ export class BaseModel {
     };
 
     /**
-     * returns `pipe` segment for process chaining
+     * returns `pipeline` segment for process chaining
      * @param pipesOrSchemas
-     * @returns {Pipe}
+     * @returns {Pipeline}
      */
-    pipe(...pipesOrSchemas) {
-        const _p = new Pipe(...pipesOrSchemas);
+    pipeline(...pipesOrSchemas) {
+        const _p = new Pipeline(...pipesOrSchemas);
         const _sub = this.subscribe({
             next: (d) => {
                 _p.write(d.model);

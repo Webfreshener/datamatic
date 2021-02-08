@@ -8,18 +8,18 @@ describe("Pipes tests", () => {
 
     beforeEach(() => {
         _vo = new Model({schemas: [basicCollection]});
-        _p = _vo.pipe(
+        _p = _vo.pipeline(
             [(itm) => itm.active ? itm : undefined],
             basicCollection,
         );
     });
 
-    it("should provide a pipe", (done) => {
-        // subscribe to pipe
+    it("should provide a pipeline", (done) => {
+        // subscribe to pipeline
         const _sub = _p.subscribe({
                 next: (d) => {
                     _sub.unsubscribe();
-                    // data in VO as been filtered by Pipe
+                    // data in VO as been filtered by Pipeline
                     expect(d.length).toEqual(3);
                     done();
                 },

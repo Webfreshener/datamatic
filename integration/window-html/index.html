@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Datamatic Integration</title>
+    <script src="../../dist/datamatic.window.js"></script>
+    <script language="JavaScript">
+        const {Pipeline} = window.datamatic;
+        pipeline = new Pipeline({type: "array", items: {type: "string"}});
+        pipeline.subscribe((d) => console.log(d), (e) => console.error(e));
+        pipeline.write(["a", "b", "c"]);
+    </script>
+</head>
+<body>
+
+</body>
+</html>
