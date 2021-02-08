@@ -2,12 +2,12 @@ Datamatic
 =============
 RxJS + JSON-Schema (Ajv) Based Observable and Validating Data Models and Pipelines
 
-[![Build Status](https://travis-ci.com/Webfreshener/datamat.svg?branch=master)](https://travis-ci.com/Webfreshener/datamat)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/49624d8edeec44e9af6fc484f8b414af)](https://www.codacy.com/gh/Webfreshener/datamat/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Webfreshener/datamat&amp;utm_campaign=Badge_Grade)
-[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/49624d8edeec44e9af6fc484f8b414af)](https://www.codacy.com/gh/Webfreshener/datamat/dashboard?utm_source=github.com&utm_medium=referral&utm_content=Webfreshener/datamat&utm_campaign=Badge_Coverage)
-[![Maintainability](https://api.codeclimate.com/v1/badges/a578a2291adea1b5045b/maintainability)](https://codeclimate.com/github/Webfreshener/datamat/maintainability)
+[![Build Status](https://travis-ci.org/Webfreshener/datamatic.svg?branch=master)](https://travis-ci.org/Webfreshener/datamatic)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/49624d8edeec44e9af6fc484f8b414af)](https://www.codacy.com/gh/Webfreshener/datamatic/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Webfreshener/datamatic&amp;utm_campaign=Badge_Grade)
+[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/49624d8edeec44e9af6fc484f8b414af)](https://www.codacy.com/gh/Webfreshener/datamatic/dashboard?utm_source=github.com&utm_medium=referral&utm_content=Webfreshener/datamatic&utm_campaign=Badge_Coverage)
+[![Maintainability](https://api.codeclimate.com/v1/badges/f0bfbe06d67c3c489f4d/maintainability)](https://codeclimate.com/github/Webfreshener/datamatic/maintainability)
 
-[Online Developer Documentation](https://webfreshener.github.io/datamat/)
+[Online Developer Documentation](https://webfreshener.github.io/datamatic/)
 
 ### Goals 
  * Provide a means to quickly and easily validate complex data-sets
