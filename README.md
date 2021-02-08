@@ -19,18 +19,18 @@ RxJS + JSON-Schema (Ajv) Based Observable and Validating Data Models and Pipelin
 **[Installation Instructions](#installation-instructions)**
 
 **[Usage Examples](#usage-examples)**
-   * [Basic Usage](#basic-usage)
-   * [Data Pipelines and Transformation](#data-pipelines-and-tansformation)
+   * [Basic Usage](#basicusage)
+   * [Data Pipelines and Transformation](#datapipelinesandtansformation)
 
 **[Developer Guide](#developer-guide)**
-  * [Model Class](#owner-class)
-    * [Schemas Config](#owner-schemas-config)
-    * [Model Proxy Object](#model-proxy-object)
-    * [model vs $model](#model-vs-model)
+  * [Model Class](#modelclass)
+    * [Schemas Config](#modelschemasconfig)
+    * [Model Proxy Object](#modelproxyobject)
+    * [model vs $model](#modelvsmodel)
   * [ItemsModel](#itemsmodel)
   * [PropertiesModel](#propertiesmodel)
-  * [Model Class](#model-class)
-  * [Pipeline Class](#pipeline-class)
+  * [Model Class](#modelclass)
+  * [Pipeline Class](#pipelineclass)
 
 ### Installation Instructions
 ```
@@ -218,7 +218,7 @@ This class represents the Document entry point
 
 | Method        | Arguments | Description  |
 |:--------------|:----------|:-------|
-| constructor   | [schemas config](#owner-schemas-config) (object), [options (object)] | creates new Model instance |
+| constructor   | [schemas config](#model-schemas-config) (object), [options (object)] | creates new Model instance |
 | errors [getter]   | | retrieves errors (if any) from last json-schema validation |
 | model [getter/setter]   | | retrieves root [model proxy object](#model-proxy-object) for operation |
 | getModelsInPath   | to (string) | retrieves models at given path |
