@@ -30,6 +30,7 @@
   ],
   "keywords": [
     "rxjs",
+    "ajv",
     "json-schema",
     "validation",
     "validatable",
@@ -41,6 +42,7 @@
     "object",
     "array",
     "hash",
+    "filter",
     "map",
     "dictionary"
   ],
