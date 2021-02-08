@@ -4,7 +4,6 @@
 *.iml
 integration/*/node_modules/*
 codacy-report.sh
-package-lock.json
 node_modules/*
 test/_orig
 coverage/*
