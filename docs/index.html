@@ -79,11 +79,11 @@
 </nav>
 
 <div class="content" data-ice="content"><div data-ice="index" class="github-markdown"><h1 id="datamatic">Datamatic</h1><p>RxJS + JSON-Schema (Ajv) Based Observable and Validating Data Models and Pipelines</p>
-<p><a href="https://travis-ci.com/Webfreshener/datamat"><img src="https://travis-ci.com/Webfreshener/datamat.svg?branch=master" alt="Build Status"></a>
-<a href="https://www.codacy.com/gh/Webfreshener/datamat/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Webfreshener/datamat&amp;utm_campaign=Badge_Grade"><img src="https://app.codacy.com/project/badge/Grade/49624d8edeec44e9af6fc484f8b414af" alt="Codacy Badge"></a>
-<a href="https://www.codacy.com/gh/Webfreshener/datamat/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Webfreshener/datamat&amp;utm_campaign=Badge_Coverage"><img src="https://app.codacy.com/project/badge/Coverage/49624d8edeec44e9af6fc484f8b414af" alt="Codacy Badge"></a>
-<a href="https://codeclimate.com/github/Webfreshener/datamat/maintainability"><img src="https://api.codeclimate.com/v1/badges/a578a2291adea1b5045b/maintainability" alt="Maintainability"></a></p>
-<p><a href="https://webfreshener.github.io/datamat/">Online Developer Documentation</a></p>
+<p><a href="https://travis-ci.org/Webfreshener/datamatic"><img src="https://travis-ci.org/Webfreshener/datamatic.svg?branch=master" alt="Build Status"></a>
+<a href="https://www.codacy.com/gh/Webfreshener/datamatic/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Webfreshener/datamatic&amp;utm_campaign=Badge_Grade"><img src="https://app.codacy.com/project/badge/Grade/49624d8edeec44e9af6fc484f8b414af" alt="Codacy Badge"></a>
+<a href="https://www.codacy.com/gh/Webfreshener/datamatic/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Webfreshener/datamatic&amp;utm_campaign=Badge_Coverage"><img src="https://app.codacy.com/project/badge/Coverage/49624d8edeec44e9af6fc484f8b414af" alt="Codacy Badge"></a>
+<a href="https://codeclimate.com/github/Webfreshener/datamatic/maintainability"><img src="https://api.codeclimate.com/v1/badges/f0bfbe06d67c3c489f4d/maintainability" alt="Maintainability"></a></p>
+<p><a href="https://webfreshener.github.io/datamatic/">Online Developer Documentation</a></p>
 <h3 id="goals">Goals</h3><ul>
 <li>Provide a means to quickly and easily validate complex data-sets</li>
 <li>Look and feel like a standard JS Object for ease of use and adaptability</li>
@@ -119,7 +119,9 @@
     &lt;/script&gt;</code>
 </code></pre><h3 id="usage-examples">Usage Examples</h3><h4 id="basic-example">Basic Example</h4><p>The example below defines a Model that expects a <code>name</code> value and 
 list of <code>topScores</code> items</p>
-<pre><code><code class="source-code prettyprint">// JSON-SCHEMA for Scores Collection
+<pre><code><code class="source-code prettyprint">const {Model} = require(&quot;datamatic&quot;);
+
+// JSON-SCHEMA for Scores Collection
 const schema = {
     &quot;id&quot;: &quot;root#&quot;,
     &quot;type&quot;: &quot;object&quot;,
@@ -201,7 +203,61 @@ obj.model.topScores[0].score = &quot;1234&quot;;
 delete obj.model.topScores;
 </code>
 </code></pre><p>Refer to the examples demo in <code>./examples/basic-usage</code> for more usage examples</p>
-<h4 id="data-pipelines-and-transformation">Data Pipelines and Transformation</h4><pre><code><code class="source-code prettyprint"></code>
+<h4 id="data-pipelines-and-transformation">Data Pipelines and Transformation</h4><pre><code><code class="source-code prettyprint">const {Pipeline} = require(&quot;datamatic&quot;);
+
+/*
+    defines a schema that requires name, age and active attributes
+    filters out all items that do not conform to JSON-Schema below
+ */
+const schema = {
+    type: &quot;object&quot;,
+    required: [&quot;name&quot;, &quot;age&quot;, &quot;active&quot;],
+    properties: {
+        name: {
+            $comment: &quot;names must be in form: First Middle|MI Last&quot;,
+            type: &quot;string&quot;,
+            pattern: &quot;^[a-zA-Z]{1,24}\\s?[a-zA-Z]?\\s+[a-zA-Z]{1,24}$&quot;,
+        },
+        age: {
+            $comment: &quot;age must be a number equal to or higher than 21 and lower than 100&quot;,
+            type: &quot;number&quot;,
+            minimum: 21,
+            maximum: 100,
+        },
+        active: {
+            $comment: &quot;active must equal true&quot;,
+            type: &quot;boolean&quot;,
+            const: true,
+        },
+    },
+};
+
+
+const pipeline = new Pipeline(
+    [
+        // By nesting an item schema within an iterator, the schema is applied as a filter
+        schema,
+        // the list can go on ...
+    ],
+    // the list can go on ...
+);
+
+pipeline.subscribe({
+    // should only contain active people who are 21 and over and name pattern match
+    next: (d) =&gt; console.log(`\nfiltered results:\n${JSON.stringify(d)}`),
+    // it should not encounter an error unless it is critical, so full stop
+    error: (e) =&gt; console.error(`\ngot error:\n${JSON.stringify(e)}`),
+});
+
+pipeline.write([
+    {name: &quot;Alice Dodson&quot;, age: 30, active: false}, // will be filtered because of active status
+    {name: &quot;Jim-Bob&quot;, age: 21, active: true}, // will be filtered because of name format
+    {name: &quot;Bob Roberts&quot;, age: 38, active: true}, // will pass
+    {name: &quot;Chris Appleton&quot;, age: 19, active: true}, // will be filtered because of age
+    {name: &quot;Fred Franks&quot;, age: 20, active: true}, // will be filtered because of age
+    {name: &quot;Sam Smith&quot;, age: 25, active: true}, // will pass
+    {name: &quot;&quot;, active: null}, // will be filtered because of invalid object format
+]);</code>
 </code></pre><h2 id="developer-guide">Developer Guide</h2><h4 id="model-class">Model Class</h4><p>This class represents the Document entry point</p>
 <table>
 <thead>
@@ -338,7 +394,7 @@ It is a Proxy Object that has traps for all operations that alter the state of t
  console.log(`stringified: ${owner}`);
 
  // obtain model from  it&apos;s Owner
-  console.log(`stringified: ${JSON.stringify(owner.model)}`);
+ console.log(`stringified: ${JSON.stringify(owner.model)}`);
 </code>
 </code></pre><h4 id="itemsmodel">ItemsModel</h4><h6 id="subclass-of--a-href---model-class--model-class--a-">subclass of <a href="#model-class">Model Class</a></h6><p>Represents an Items (Array) entry in the given schema
 Note: the <code>model</code> param presents a Proxied Array, with all <code>Array.prototype</code> methods trapped and validatable</p>
@@ -436,7 +492,7 @@ Note: the <code>model</code> param presents a Proxied Array, with all <code>Arra
 </tr>
 <tr>
 <td style="text-align:left">pipeline</td>
-<td style="text-align:left">..pipesOrSchemas</td>
+<td style="text-align:left">...(pipes | schemas)</td>
 <td style="text-align:left">returns Pipeline instance for operating on model</td>
 </tr>
 <tr>
@@ -502,12 +558,12 @@ Note: the <code>model</code> param presents a Proxied Array, with all <code>Arra
 </tr>
 <tr>
 <td style="text-align:left">exec</td>
-<td style="text-align:left">data (object / array / string / number / boolean)</td>
+<td style="text-align:left">data (object | array | string | number | boolean)</td>
 <td style="text-align:left">executes pipeline&apos;s callback with data without writing to <code>pipeline</code></td>
 </tr>
 <tr>
 <td style="text-align:left">subscribe</td>
-<td style="text-align:left">handler (object / function / schema / array)</td>
+<td style="text-align:left">handler (object | function | schema | array)</td>
 <td style="text-align:left">subscribes to <code>pipeline</code> output notifications</td>
 </tr>
 <tr>
@@ -542,7 +598,7 @@ Note: the <code>model</code> param presents a Proxied Array, with all <code>Arra
 </tr>
 <tr>
 <td style="text-align:left">merge</td>
-<td style="text-align:left">pipeOrPipes, schema</td>
+<td style="text-align:left">...(pipes | schemas)</td>
 <td style="text-align:left">merges multiple pipes into single output</td>
 </tr>
 <tr>
@@ -552,7 +608,7 @@ Note: the <code>model</code> param presents a Proxied Array, with all <code>Arra
 </tr>
 <tr>
 <td style="text-align:left">pipeline</td>
-<td style="text-align:left">...pipesOrSchemas</td>
+<td style="text-align:left">...(pipes | schemas)</td>
 <td style="text-align:left">returns new chained <code>pipeline</code> segment</td>
 </tr>
 <tr>
@@ -562,7 +618,7 @@ Note: the <code>model</code> param presents a Proxied Array, with all <code>Arra
 </tr>
 <tr>
 <td style="text-align:left">split</td>
-<td style="text-align:left">...pipesOrSchemas</td>
+<td style="text-align:left">...(pipes | schemas)</td>
 <td style="text-align:left">creates array of new <code>pipeline</code> segments that run in parallel</td>
 </tr>
 <tr>
@@ -582,7 +638,7 @@ Note: the <code>model</code> param presents a Proxied Array, with all <code>Arra
 </tr>
 <tr>
 <td style="text-align:left">write</td>
-<td style="text-align:left">data (object / array / string / number / boolean)</td>
+<td style="text-align:left">data (object | array | string | number | boolean)</td>
 <td style="text-align:left">writes data to <code>pipeline</code></td>
 </tr>
 </tbody>
