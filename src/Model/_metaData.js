@@ -35,7 +35,6 @@ export class MetaData {
      * @param {object} _data -- Initial Data {parent:PropertiesModel|ItemsModel}
      */
     constructor(_oRef, _data = {}) {
-        console.log(_oRef);
         let _cName = wf.Fun.getConstructorName(_oRef);
 
         if (this._createID == null) {
