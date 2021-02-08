@@ -1,6 +1,6 @@
 {
   "name": "datamatic",
-  "description": "Observable & Validatable Data Models and Pipelines",
+  "description": "RxJS + JSON-Schema (Ajv) Based Observable and Validating Data Models and Pipelines",
   "homepage": "https://webfreshener.github.io/datamatic",
   "author": "Van Schroeder <van@webfreshener.com>",
   "version": "0.9.1",
