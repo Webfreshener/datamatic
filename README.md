@@ -34,7 +34,7 @@ RxJS + JSON-Schema (Ajv) Based Observable and Validating Data Models and Pipelin
 
 ### Installation Instructions
 ```
-$ npm install @webfreshener/datamatic
+$ npm install datamatic
 ```
 
 #### UMD Usage for React and Angular
