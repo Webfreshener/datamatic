@@ -6,12 +6,7 @@
   "version": "0.9.2",
   "main": "./dist/datamatic.node.js",
   "module": "./dist/datamatic.umd.js",
-  "licenses": [
-    {
-      "type": "MIT",
-      "url": "http://www.opensource.org/licenses/MIT"
-    }
-  ],
+  "licenses": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/Webfreshener/datamatic.git"
