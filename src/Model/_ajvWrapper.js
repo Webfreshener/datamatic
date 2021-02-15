@@ -220,8 +220,9 @@ export class AjvWrapper {
         try {
             _res = this.$ajv.validate(path, value);
         } catch (e) {
-
-            if (path.replace(/(items|properties)\/?/, "").split("/").length) {
+            console.log(`error at "${path}": ${JSON.stringify(e, null, 2)}`);
+            if (path.match(/(items|properties)+\/?/) &&
+                path.replace(/(items|properties)+\/?/, "").split("/").length) {
                 return this.exec(`${this.path}/`, _preconstruct(path, value, this.$owner));
             }
 

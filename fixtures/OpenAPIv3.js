@@ -1,7 +1,7 @@
 export default {
     title: "A JSON Schema for OpenAPI 3.0.",
     $id: "http://openapis.org/v3/schema.json#",
-    // schema: "http://json-schema.org/draft-04/schema#",
+    $schema: "http://json-schema.org/draft-07/schema",
     type: "object",
     description: "This is the root document object of the OpenAPI definition file.",
     required: [
@@ -1199,6 +1199,7 @@ export default {
             additionalProperties: true
         },
         any: {
+            type: "object",
             additionalProperties: true
         },
         expression: {
