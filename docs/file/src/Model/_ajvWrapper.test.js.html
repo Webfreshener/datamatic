@@ -13,10 +13,10 @@
 
 <header>
   <a href="./">Home</a>
-  
+
   <a href="identifiers.html">Reference</a>
   <a href="source.html">Source</a>
-  
+
   <div class="search-box">
   <span>
     <img src="./image/search.png">
@@ -28,7 +28,7 @@
 
 <nav class="navigation" data-ice="nav"><div>
   <ul>
-    
+
   <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#model">Model</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_branchNotifier.js~Notifiers.html">Notifiers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_metaData.js~MetaData.html">MetaData</a></span></span></li>
@@ -81,7 +81,7 @@
 <div class="content" data-ice="content"><h1 data-ice="title">src/Model/_ajvWrapper.test.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {default as JSONSchemaV4} from &quot;../schemas/json-schema-draft-04&quot;;
 import {default as JSONSchemaV6} from &quot;../schemas/json-schema-draft-06&quot;;
-import {default as OpenAPIv2} from &quot;../../fixtures/OpenAPIv2&quot;;
+import {default as Swagger} from &quot;../../fixtures/Swagger&quot;;
 import {default as PetStoreV2} from &quot;../../fixtures/petstore.v2&quot;;
 import {default as BasicAPI} from &quot;../../fixtures/basic-api.swagger&quot;;
 import Ajv from &quot;ajv&quot;;
@@ -99,7 +99,7 @@ describe(&quot;AJVWrapper Tests&quot;, () =&gt; {
             addFormats(_ajv);
 
             _ajv.addSchema(JSONSchemaV4,&quot;http://json-schema.org/draft-04/schema#&quot;);
-            _ajv.addSchema(OpenAPIv2, &quot;http://swagger.io/v2/schema.json#&quot;);
+            _ajv.addSchema(Swagger, &quot;http://swagger.io/v2/schema.json#&quot;);
 
             const _v = _ajv.validate(&quot;http://swagger.io/v2/schema.json#&quot;, PetStoreV2);
 
@@ -113,7 +113,7 @@ describe(&quot;AJVWrapper Tests&quot;, () =&gt; {
         it(&quot;should handle v6 Schemas&quot;, () =&gt; {
             const schemas = {
                 meta: [JSONSchemaV4],
-                schemas: [OpenAPIv2],
+                schemas: [Swagger],
             };
 
             const owner = new Model(schemas);

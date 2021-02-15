@@ -13,10 +13,10 @@
 
 <header>
   <a href="./">Home</a>
-  
+
   <a href="identifiers.html">Reference</a>
   <a href="source.html">Source</a>
-  
+
   <div class="search-box">
   <span>
     <img src="./image/search.png">
@@ -28,7 +28,7 @@
 
 <nav class="navigation" data-ice="nav"><div>
   <ul>
-    
+
   <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#model">Model</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_branchNotifier.js~Notifiers.html">Notifiers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_metaData.js~MetaData.html">MetaData</a></span></span></li>
@@ -81,7 +81,7 @@
 <div class="content" data-ice="content"><h1 data-ice="title">src/complex-schema.test.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {default as Schema} from &quot;../fixtures/basic-refs.schema&quot;;
 import {default as Data} from &quot;../fixtures/basic-refs.data&quot;;
-import {default as OpenAPIv2} from &quot;../fixtures/OpenAPIv2&quot;;
+import {default as Swagger} from &quot;../fixtures/Swagger&quot;;
 import {default as JSONSchema4} from &quot;../fixtures/json-schema-draft04.schema&quot;;
 import {default as basicAPI} from &quot;../fixtures/petstore.v2&quot;
 import {Model} from &quot;./Model&quot;;
@@ -105,10 +105,10 @@ describe(&quot;Basic Refs&quot;, () =&gt; {
     });
 
     describe(&quot;OPenAPI Tests&quot;, () =&gt; {
-        it(&quot;should load and validate OpenAPIv2 Schema&quot;, () =&gt; {
+        it(&quot;should load and validate Swagger Schema&quot;, () =&gt; {
             const _owner = new Model({
                 meta: [JSONSchema4],
-                schemas: [OpenAPIv2],
+                schemas: [Swagger],
                 use: &quot;http://swagger.io/v2/schema.json#&quot;
             });
                 _owner.model = basicAPI;
