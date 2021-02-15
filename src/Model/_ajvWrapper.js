@@ -214,7 +214,6 @@ export class AjvWrapper {
         }
 
         let _res = false;
-        console.log(JSON.stringify(value, null, 2));
         /*
             makes initial validation attempt and reattempts from top on failure
          */
