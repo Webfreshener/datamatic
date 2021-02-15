@@ -45,10 +45,15 @@ const _validators = new WeakMap();
 const _preconstruct = (path, data, owner) => {
     const _p = path.replace(/^[a-z0-9_]*#+/i, "").split("/");
     let _o = Object.assign({}, data);
-
     while(_p.length > 0) {
         _p.pop();
-        _o = Object.assign({}, owner.getPath(_p.join(".")), _o);
+        try {
+            _o = Object.assign({}, owner.getPath(_p.join(".")), _o);
+        } catch (e) {
+            _p.splice(0, _p.length-1);
+            throw e;
+        }
+
     }
 
     return _o;
@@ -209,16 +214,19 @@ export class AjvWrapper {
         }
 
         let _res = false;
-
+        console.log(JSON.stringify(value, null, 2));
         /*
             makes initial validation attempt and reattempts from top on failure
          */
         try {
             _res = this.$ajv.validate(path, value);
         } catch (e) {
+
             if (path.replace(/(items|properties)\/?/, "").split("/").length) {
                 return this.exec(`${this.path}/`, _preconstruct(path, value, this.$owner));
             }
+
+            throw(e);
         }
 
         return _res;
