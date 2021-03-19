@@ -113,12 +113,13 @@ export class ObserverBuilder {
         if (!target || target.isDirty) {
             return;
         }
+        setTimeout(() => {
+            const _o = !_observerCache.get(target) ? this.get(target) : null;
 
-        let _o = !_observerCache.get(target) ? this.get(target) : null;
-
-        if (_o !== null) {
-            _o.onNext.next(target);
-        }
+            if (_o !== null) {
+                _o.onNext.next(target);
+            }
+        }, 0);
     }
 
     /**

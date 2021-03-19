@@ -24,7 +24,10 @@ SOFTWARE.
 
 ############################################################################ */
 import {wf, _mdRef} from "./_references";
+import {PropertiesModel} from "./propertiesModel";
+import {ItemsModel} from "./itemsModel";
 const _mData = new WeakMap();
+
 /**
  * @private
  */

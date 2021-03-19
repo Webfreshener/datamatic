@@ -42,7 +42,7 @@ export class PropertiesModel extends BaseModel {
      *
      */
     constructor() {
-        super(arguments[0]);
+        super(...arguments);
 
         // stores SchemaHelpers reference for use
         _schemaHelpers.set(this, new SchemaHelpers(this));

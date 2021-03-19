@@ -38,21 +38,23 @@ import {Pipeline} from "../Pipeline";
 const createMetaDataRef = (ref, metaRef, path) => {
     let _md;
     if (metaRef instanceof Model) {
+        console.log(path + " metRef is model");
         // root properties are handed the Model object
         // will create new MetaData and set reference as root element
         _md = new MetaData(ref, {
-            _path: path, //"",
+            _path: path || "root#",
             _parent: null,
             _root: ref,
-            _owner: metaRef,
+            _owner: metaRef || null,
         });
     } else if ((typeof metaRef) === "object") {
+        // console.log(path + " metRef is object");
         // extends MetaData reference
         if (metaRef instanceof MetaData) {
             _md = metaRef;
-        } else {
-            // todo: re-evaluate this line for possible removal
-            _md = new MetaData(this, metaRef);
+        // } else {
+        //     // todo: re-evaluate this line for possible removal
+        //     _md = new MetaData(this, metaRef);
         }
     } else {
         throw "Invalid attempt to construct Model." +
@@ -67,6 +69,7 @@ const createMetaDataRef = (ref, metaRef, path) => {
  */
 export class BaseModel {
     constructor() {
+        console.log(arguments);
         createMetaDataRef(this, ...arguments);
     }
 
@@ -101,7 +104,7 @@ export class BaseModel {
         // references to subscriptions for Observable
         const _subRefs = [];
 
-        // init's observer handlers if defined on passed `func` object
+        // inits observer handlers if defined on passed `func` object
         [
             {call: "onNext", func: "next"},
             {call: "onError", func: "error"},
@@ -286,7 +289,7 @@ export class BaseModel {
      * @returns {BaseModel}
      */
     get root() {
-        return _mdRef.get(this).root || this;
+        return _mdRef.get(this)._root || this;
     }
 
     /**
@@ -295,7 +298,7 @@ export class BaseModel {
      */
     get path() {
         // console.log(JSON.stringify(Object.keys(_mdRef.get(this)), null, 2));
-        return _mdRef.get(this).path || "";//this.schema.$id;
+        return _mdRef.get(this).path;//this.schema.$id;
     }
 
     /**

@@ -96,10 +96,11 @@ class Notifier {
         if (forPath[0] !== ".") {
             forPath = `.${forPath}`;
         }
-
-        this.$owner.getModelsInPath(forPath).forEach(
-            (m) => _oBuilders.get(this.$owner).next(m.$model)
-        );
+        setTimeout(() => {
+            this.$owner.getModelsInPath(forPath).forEach(
+                (m) => _oBuilders.get(this.$owner).next(m.$model)
+            );
+        });
     }
 
     /**
