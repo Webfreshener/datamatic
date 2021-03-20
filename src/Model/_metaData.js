@@ -57,6 +57,8 @@ export class MetaData {
             _created: Date.now()
         });
 
+        console.log(`_cName: "${_cName}" _data._id: "${_data._id}"`);
+
         _mData.set(this, _data);
         _mdRef.set(this, this);
     }
@@ -66,7 +68,7 @@ export class MetaData {
      */
     get(key) {
         let __ = _mData.get(this);
-        return __.hasOwnProperty(key) ? __[key] : null;
+        return __ && __.hasOwnProperty(key) ? __[key] : null;
     }
 
     /**

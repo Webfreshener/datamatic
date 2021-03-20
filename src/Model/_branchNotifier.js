@@ -98,9 +98,12 @@ class Notifier {
         }
         setTimeout(() => {
             this.$owner.getModelsInPath(forPath).forEach(
-                (m) => _oBuilders.get(this.$owner).next(m.$model)
+                (m) => {
+                    // console.log(`this.$owner.objectID: ${this.$owner} m.$model.objectID: ${m.$model}`);
+                    _oBuilders.get(this.$owner).next(m.$model)
+                }
             );
-        });
+        }, 0);
     }
 
     /**

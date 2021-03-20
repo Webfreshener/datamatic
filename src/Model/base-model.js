@@ -38,7 +38,6 @@ import {Pipeline} from "../Pipeline";
 const createMetaDataRef = (ref, metaRef, path) => {
     let _md;
     if (metaRef instanceof Model) {
-        console.log(path + " metRef is model");
         // root properties are handed the Model object
         // will create new MetaData and set reference as root element
         _md = new MetaData(ref, {
@@ -48,13 +47,12 @@ const createMetaDataRef = (ref, metaRef, path) => {
             _owner: metaRef || null,
         });
     } else if ((typeof metaRef) === "object") {
-        // console.log(path + " metRef is object");
         // extends MetaData reference
         if (metaRef instanceof MetaData) {
             _md = metaRef;
-        // } else {
-        //     // todo: re-evaluate this line for possible removal
-        //     _md = new MetaData(this, metaRef);
+        } else {
+            // todo: re-evaluate this line for possible removal
+            _md = new MetaData(this, metaRef);
         }
     } else {
         throw "Invalid attempt to construct Model." +
@@ -69,7 +67,6 @@ const createMetaDataRef = (ref, metaRef, path) => {
  */
 export class BaseModel {
     constructor() {
-        console.log(arguments);
         createMetaDataRef(this, ...arguments);
     }
 
