@@ -88,9 +88,13 @@ export class BaseModel {
     subscribeTo(path, func) {
         const _oBuilder = _oBuilders.get(this.owner);
         const _o = _oBuilder.getObserverForPath(path);
-        if (_o === null) {
-            return _o;
+
+        if (!_o) {
+            console.log(`no observer for ${path}. Registered Observers: ${_oBuilder.list()}`);
+            return false;
         }
+
+        console.log(`${path} subscribe targetId: ${_o.targetId}`);
 
         // support next handler being passed directly
         // todo: review other valid manners of passing observer callbacks
