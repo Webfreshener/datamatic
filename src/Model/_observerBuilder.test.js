@@ -28,7 +28,7 @@ describe("ObserverBuilder Unit Test Suite", () => {
 
         it("should create an observer", function () {
             expect(Object.keys(_observer.get(_model)))
-                .toEqual([ 'onNext', 'onError', 'onComplete' ]);
+                .toEqual([ 'onNext', 'onError', 'onComplete', 'path', 'jsonPath', 'targetId' ]);
         });
 
         it("should subscribe to observer and get value", function (done) {

@@ -100,6 +100,7 @@ export class PropertiesModel extends BaseModel {
         // defines new Proxy Object for data modeling
         _object.set(this,
             new Proxy(BaseModel.createRef(this, {}), this.handler));
+
         Object.keys(value).forEach((k) => {
             // -- added try/catch to avoid error in JSFiddle
             try {

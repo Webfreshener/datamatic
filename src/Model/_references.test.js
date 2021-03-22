@@ -8,11 +8,6 @@ import {
 } from "./_references";
 
 describe("Maps Units", () => {
-    describe("_exists method", () => {
-        it("expects _exists to be defined", () => {
-            expect(typeof _exists).toBe("function");
-        });
-    });
 
     describe("Shared WeakMap Reference Holders", () => {
         each([

@@ -75,6 +75,9 @@ export class ObserverBuilder {
             onNext: new BehaviorSubject(null).skip(1),
             onError: new BehaviorSubject(null).skip(1),
             onComplete: new BehaviorSubject(null).skip(1),
+            path: target.path,
+            jsonPath: target.jsonPath,
+            targetId: target.objectID,
         };
         _o.set(target, _h);
         _observerPaths.get(this).splice(0, 0, [`${target.path}`, target]);
@@ -114,13 +117,11 @@ export class ObserverBuilder {
             return;
         }
 
-        setTimeout(() => {
-            const _o = !_observerCache.get(target) ? this.get(target) : null;
+        let _o = !_observerCache.get(target) ? this.get(target) : null;
 
-            if (_o !== null) {
-                _o.onNext.next(target);
-            }
-        }, 0);
+        if (_o !== null) {
+            _o.onNext.next(target);
+        }
     }
 
     /**

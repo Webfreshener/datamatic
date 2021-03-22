@@ -23,7 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ############################################################################ */
-import {wf, _mdRef} from "./_references";
+import {_mdRef} from "./_references";
 import {PropertiesModel} from "./propertiesModel";
 import {ItemsModel} from "./itemsModel";
 const _mData = new WeakMap();
@@ -34,12 +34,11 @@ const _mData = new WeakMap();
 export class MetaData {
     /**
      * @constructor
-     * @param {PropertiesModel|Set} _oRef -- Object Reference to item being described
+     * @param {PropertiesModel|ItemsModel} _oRef -- Object Reference to item being described
      * @param {object} _data -- Initial Data {parent:PropertiesModel|ItemsModel}
      */
     constructor(_oRef, _data = {}) {
-        let _cName = wf.Fun.getConstructorName(_oRef);
-
+        let _cName = _oRef.constructor.name;
         if (this._createID == null) {
             let _id = 0;
             MetaData.prototype._createID = function () {
@@ -56,8 +55,6 @@ export class MetaData {
             _className: _cName,
             _created: Date.now()
         });
-
-        console.log(`_cName: "${_cName}" _data._id: "${_data._id}"`);
 
         _mData.set(this, _data);
         _mdRef.set(this, this);

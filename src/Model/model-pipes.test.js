@@ -105,8 +105,6 @@ describe("Pipes tests", () => {
             // _vo.model.setB = [data[0]];
             _vo.model.setA = data.slice(0,3);
         });
-
-
     });
 
 });

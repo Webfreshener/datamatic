@@ -96,14 +96,14 @@ class Notifier {
         if (forPath[0] !== ".") {
             forPath = `.${forPath}`;
         }
-        setTimeout(() => {
+        // setTimeout(() => {
             this.$owner.getModelsInPath(forPath).forEach(
                 (m) => {
                     // console.log(`this.$owner.objectID: ${this.$owner} m.$model.objectID: ${m.$model}`);
                     _oBuilders.get(this.$owner).next(m.$model)
                 }
             );
-        }, 0);
+        // }, 0);
     }
 
     /**
@@ -139,13 +139,13 @@ export default class Notifiers {
      */
     static create(owner) {
         new Notifier(owner);
-        return Notifiers.get(owner);
+        return notifiers.get(owner);
     }
 
     /**
      *
      * @param owner
-     * @returns {Notifier}
+     * @returns {*}
      */
     static get(owner) {
         return notifiers.get(owner);

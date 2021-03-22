@@ -23,7 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ############################################################################ */
-import {_exists, _mdRef, _oBuilders} from "./_references";
+import {_mdRef, _oBuilders} from "./_references";
 import {MetaData} from "./_metaData";
 import {PropertiesModel} from "./propertiesModel";
 import {ItemsModel} from "./itemsModel";
@@ -36,7 +36,7 @@ export class SchemaHelpers {
      * @constructor
      */
     constructor(_ref) {
-        if (!_exists(_ref) || (typeof _ref) !== "object") {
+        if (!_ref || (typeof _ref) !== "object") {
             throw new Error("arguments[0] must be an object");
         }
 
@@ -78,8 +78,7 @@ export class SchemaHelpers {
 
         if (typeof _s === "string") {
             return _s;
-        } else if (!_exists(_s) ||
-            typeof _s !== "object") {
+        } else if (!_s  || typeof _s !== "object") {
             return `'${key}' was invalid`;
         }
 

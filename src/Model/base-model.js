@@ -87,14 +87,12 @@ export class BaseModel {
      */
     subscribeTo(path, func) {
         const _oBuilder = _oBuilders.get(this.owner);
-        const _o = _oBuilder.getObserverForPath(path);
+        let _o = _oBuilder.getObserverForPath(path);
 
         if (!_o) {
             console.log(`no observer for ${path}. Registered Observers: ${_oBuilder.list()}`);
             return false;
         }
-
-        console.log(`${path} subscribe targetId: ${_o.targetId}`);
 
         // support next handler being passed directly
         // todo: review other valid manners of passing observer callbacks
@@ -283,6 +281,7 @@ export class BaseModel {
      */
     get objectID() {
         return _mdRef.get(this)._id;
+        // return _mdRef.get(this).objectID;
     }
 
     /**
@@ -394,7 +393,7 @@ export class BaseModel {
         const _p = new Pipeline(...pipesOrSchemas);
         const _sub = this.subscribe({
             next: (d) => {
-                _p.write(d.model);
+                _p.write(d);
             },
             complete: () => {
                 _sub.unsubscribe();

@@ -251,8 +251,7 @@ export class Model {
             .filter((itm, idx, arr) => arr.indexOf(itm) > -1))
             .forEach((step) => {
                 if (_ref[step]) {
-                    _ref = _ref[step];
-                    _steps.push(_ref);
+                    _steps[_steps.length] = _ref = _ref[step];
                 }
             });
         return _steps;
