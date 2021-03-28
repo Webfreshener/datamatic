@@ -84,13 +84,13 @@ describe("Pipes tests", () => {
             }, 100);
         });
 
-        it.only("should only receive on a given element", (done) => {
+        it("should only receive on a given element", (done) => {
             // subscribe to pipeline
             const _sub = _p.subscribe({
                 next: (d) => {
                     _sub.unsubscribe();
                     // data in VO as been filtered by Pipeline
-                    expect(d.length).toEqual(3);
+                    expect(d).toEqual(data.slice(0,3));
                     done();
                 },
                 error: (e) => {
@@ -99,8 +99,8 @@ describe("Pipes tests", () => {
                 }
             });
 
-            // -- write to VO
-            // _vo.model.setB = [data[0]];
+            // -- write to model sub-elements
+            _vo.model.setB = [data[0]];
             _vo.model.setA = data.slice(0,3);
         });
     });
