@@ -52,7 +52,7 @@ const createMetaDataRef = (ref, metaRef, path) => {
             _md = metaRef;
         } else {
             // todo: re-evaluate this line for possible removal
-            _md = new MetaData(this, metaRef);
+            _md = new MetaData(ref, metaRef);
         }
     } else {
         throw "Invalid attempt to construct Model." +
@@ -88,10 +88,10 @@ export class BaseModel {
     subscribeTo(path, func) {
         const _oBuilder = _oBuilders.get(this.owner);
         let _o = _oBuilder.getObserverForPath(path);
-
         if (!_o) {
             console.log(`no observer for ${path}. Registered Observers: ${_oBuilder.list()}`);
-            return false;
+            // return false;
+            _o = _oBuilder.create(this, `${this.path}`);
         }
 
         // support next handler being passed directly
@@ -110,7 +110,7 @@ export class BaseModel {
             {call: "onComplete", func: "complete"},
         ].forEach((obs) => {
             if (func.hasOwnProperty(obs.func)) {
-                _subRefs.push(_o[obs.call].subscribe({next: func[obs.func]}));
+                _subRefs.push( _o[obs.call].subscribe({next: func[obs.func]}) );
             }
         });
 
@@ -297,8 +297,7 @@ export class BaseModel {
      * @returns {string}
      */
     get path() {
-        // console.log(JSON.stringify(Object.keys(_mdRef.get(this)), null, 2));
-        return _mdRef.get(this).path;//this.schema.$id;
+        return _mdRef.get(this).path;
     }
 
     /**
@@ -306,8 +305,9 @@ export class BaseModel {
      * @returns {string}
      */
     get jsonPath() {
-        return this.path.replace(/\/?(properties|items)+\/?/g, ".")
-            .replace(/^\./, "");
+        const __ = this.path.replace(/\/?(properties|items)+\/?/g, "/").split("/");
+        __.shift();
+        return __.join(".");
     }
 
     /**

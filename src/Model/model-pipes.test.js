@@ -56,7 +56,6 @@ describe("Pipes tests", () => {
 
             _p = _vo.model.setA.$model.pipeline(
                 [(itm) => {
-                    console.log("pipe called");
                     return itm;
                 }],
                 // basicCollection,
@@ -67,7 +66,6 @@ describe("Pipes tests", () => {
             // subscribe to pipeline
             const _sub = _p.subscribe({
                 next: (d) => {
-                    console.log("pipe subscriber called");
                     _sub.unsubscribe();
                     // data in VO as been filtered by Pipeline
                     expect(d.length).toEqual(3);

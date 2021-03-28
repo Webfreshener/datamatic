@@ -1,7 +1,7 @@
 import each from "jest-each";
 import {
     _validators, _schemaHelpers,
-    _exists, _mdRef, _object,
+    _mdRef, _object,
     _observers, _oBuilders,
     _dirtyModels,
     _schemaSignatures

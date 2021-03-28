@@ -72,7 +72,6 @@ export class SchemaHelpers {
     setChildObject(key, value) {
         let _mdData = _mdRef.get(this._ref);
         let _s = this.createSchemaChild(key, value, _mdData);
-
         // creates Observables for new Child Model
         _oBuilders.get(this._ref.owner).create(_s);
 

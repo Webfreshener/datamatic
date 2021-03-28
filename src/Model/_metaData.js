@@ -96,7 +96,7 @@ export class MetaData {
      * @returns {string}
      */
     get path() {
-        return this.get("_path");
+        return `${this.get("_path")}`;
     }
 
     /**

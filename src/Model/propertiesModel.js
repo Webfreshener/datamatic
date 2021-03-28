@@ -117,8 +117,8 @@ export class PropertiesModel extends BaseModel {
         // marks model as in sync with tree
         makeClean(this);
 
-        // // calls next's observable to update subscribers
-        if (!this.isDirty) {
+        // calls next's observable to update subscribers
+        if (!((this.parent && this.parent.isDirty) || this.isDirty)) {
             Notifiers.get(this.owner).sendNext(this.jsonPath);
         }
 

@@ -93,17 +93,13 @@ class Notifier {
      * @param forPath
      */
     sendNext(forPath) {
-        if (forPath[0] !== ".") {
-            forPath = `.${forPath}`;
-        }
-        // setTimeout(() => {
+        setTimeout(() => {
             this.$owner.getModelsInPath(forPath).forEach(
                 (m) => {
-                    // console.log(`this.$owner.objectID: ${this.$owner} m.$model.objectID: ${m.$model}`);
                     _oBuilders.get(this.$owner).next(m.$model)
                 }
             );
-        // }, 0);
+        }, 0);
     }
 
     /**
