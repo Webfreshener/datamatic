@@ -114,11 +114,13 @@ export class PropertiesModel extends BaseModel {
             }
         });
 
-        // marks model as in sync with tree
-        makeClean(this);
+        // setTimeout(() => {
+            // marks model as in sync with tree
+            makeClean(this);
+        // }, 0);
 
         // calls next's observable to update subscribers
-        if (!((this.parent && this.parent.isDirty) || this.isDirty)) {
+        if ((this.parent && !this.parent.isDirty) || !this.isDirty) {
             Notifiers.get(this.owner).sendNext(this.jsonPath);
         }
 

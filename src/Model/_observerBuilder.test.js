@@ -52,7 +52,7 @@ describe("ObserverBuilder Unit Test Suite", () => {
                 .toEqual(['onNext', 'onError', 'onComplete', 'path', 'jsonPath', 'targetId']);
         });
 
-        it("should subscribe to observer and get value", function (done) {
+        it.skip("should subscribe to observer and get value", function (done) {
             const _data = {
                 name: "item-A",
                 active: true

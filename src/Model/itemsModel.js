@@ -94,8 +94,6 @@ export class ItemsModel extends BaseModel {
             value.forEach((val) => {
                 _object.get(this)[cnt++] = val;
             });
-            // todo: review why this wont fly
-            // _object.get(this).splice(0,0, ...value);
         } catch (e) {
             makeClean(this);
             _oBuilders.get(this.owner).unmute(this);
@@ -169,14 +167,6 @@ export class ItemsModel extends BaseModel {
                 }
 
                 t[idx] = value;
-
-                // makes clean if not serial operation
-                if (_oDel !== void (0)) {
-                    makeClean(this);
-                    // updates observers
-                    // Notifiers.get(this.owner).sendNext(this.jsonPath);
-                }
-
                 return true;
             },
 
