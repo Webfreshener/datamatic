@@ -20,23 +20,36 @@ describe("Pipes Sub-Class Tests", () => {
 });
 
 describe("TXPipe Error Handling", () => {
-    it("should detect validation errors", (done) => {
-        const _tx = new Pipeline({
-            type: "string",
-        }, () => false);
+    it("should observe validation errors", (done) => {
+        const _tx = new Pipeline(
+            (d) => d,
+            {
+                type: "string",
+            });
 
         _tx.subscribe({
             next: (d) => {
                 done("should have errored");
             },
             error: (e) => {
-                expect(e.error[0].message).toEqual("should be string");
+                expect(e.error.error[0].message).toEqual("should be string");
                 done();
             }
         });
 
         _tx.write(true);
-    })
+    });
+
+
+    it("should throw validation errors", () => {
+        const _tx = new Pipeline(
+            (d) => d,
+            {
+                type: "string",
+            });
+
+        expect(() => _tx.exec(true)).toThrow();
+    });
 });
 
 describe("Pipeline Tests", () => {
