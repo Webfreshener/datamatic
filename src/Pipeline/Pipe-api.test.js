@@ -43,7 +43,7 @@ describe("Pipeline API Tests", () => {
             try {
                 _p.exec("invalid value");
             } catch (e) {
-                expect(e.error[0].message).toEqual("should be array");
+                expect(e.error[0].message).toEqual("must be array");
             }
         });
     });
@@ -65,7 +65,7 @@ describe("Pipeline API Tests", () => {
             },
             error: (e) => {
                 _sub.unsubscribe();
-                expect(e.error[0].message).toEqual("should be array");
+                expect(e.error[0].message).toEqual("must be array");
                 expect(JSON.stringify(e.data)).toEqual(JSON.stringify(data[0]));
                 done();
             },

@@ -57,7 +57,6 @@ export class Pipeline {
      * @param pipesOrVOsOrSchemas
      */
     constructor(...pipesOrVOsOrSchemas) {
-        _pipes.set(this, {});
         _cache.set(this, []);
 
         // TODO: solve this issue with async methods to remove kludge
@@ -67,63 +66,18 @@ export class Pipeline {
 
         pipesOrVOsOrSchemas = mapArgs(...pipesOrVOsOrSchemas);
 
-        // enforces 2 callback minimum for `reduce` by appending pass-thru callbacks
-        const _callbacks = fill(Pipeline.getExecs(...pipesOrVOsOrSchemas));
-
-        const _inPipe = (
-            Array.isArray(pipesOrVOsOrSchemas) && pipesOrVOsOrSchemas.length
-        ) ? pipesOrVOsOrSchemas[0] : pipesOrVOsOrSchemas.length ?
-            pipesOrVOsOrSchemas : {
-                schema: [DefaultVOSchema, DefaultVOSchema],
-                exec: (d) => d,
-            };
-
-        const _pSchemas = [...pipesOrVOsOrSchemas]
-            .filter((_p) => {
-                // filters array for validators and valid schemas
-                return (
-                    // returns true if TxValidator
-                    (_p instanceof Validator) ||
-                    // returns true if has `schema` attribute and is a valid `json-schema`
-                    _p["schema"] && Validator.validateSchemas(_p.schema)
-                );
-            }).map(_ => _.schema);
-
-        const _getInSchema = () => {
-            if (_pSchemas.length) {
-                return (_pSchemas[0] instanceof Validator) ?
-                    _pSchemas[0].schema : _pSchemas[0];
-            }
-            return DefaultVOSchema;
-        };
-
-        const _inSchema = _getInSchema();
-        const _outSchema = _pSchemas.length > 1 ? _pSchemas[_pSchemas.length - 1] : _inSchema;
-
-        if (!_pSchemas.length) {
-            _pSchemas.splice(0, 0, {schemas: [DefaultVOSchema]}, {schemas: [DefaultVOSchema]});
-        }
-
         // stores config & state
         _pipes.set(this,
             Properties.init(this, {
-                vo: (_inPipe instanceof Validator) ? _inPipe : new Validator(_inSchema),
-                callbacks: _callbacks,
-                schemas: _pSchemas,
-                inSchema: _inSchema,
-                outSchema: _outSchema,
-                pOS: pipesOrVOsOrSchemas,
-                _pipes: _pipes,
-            }),
+                callbacks: fill(Pipeline.getExecs(...pipesOrVOsOrSchemas)),
+                pipesOrVOsOrSchemas: pipesOrVOsOrSchemas,
+                pipes: _pipes,
+            })
         );
-
-        _pipes.get(this).ivl = 0;
-        _pipes.get(this).ivlVal = 0;
-        _pipes.get(this).listeners = [new PipeListener(this)];
 
         // define exec in constructor to ensure method visibility
         Object.defineProperty(this, "exec", {
-            // value: (data) => _pipes.get(this).exec(data),
+            // value: (data) => pipes.get(this).exec(data),
             value: (data) => {
                 return _pipes.get(this).exec(data);
             },
@@ -138,7 +92,9 @@ export class Pipeline {
      * @returns {Pipeline}
      */
     pipe(...pipesOrSchemas) {
-        return new Pipeline([_pipes.get(this).out, ...pipesOrSchemas]);
+        return new Pipeline([
+            _pipes.get(this).out, ...pipesOrSchemas
+        ]);
     }
 
     /**
@@ -436,9 +392,19 @@ export class PipeListener {
      *
      * @param target
      */
-    constructor(target) {
+    constructor(target, vo) {
         const _self = this;
-        _pipes.set(_self, target);
+
+        Object.defineProperties(this, {
+            vo: {
+                get: () => vo,
+                enumerable: true,
+                configurable: false,
+                // writable: false,
+            }
+        })
+
+        _pipes.set(this, target);
         this.vo.subscribe({
             next: (d) => _self.next(d),
             error: (e) => _self.error(e),
@@ -454,13 +420,14 @@ export class PipeListener {
         return _pipes.get(this);
     }
 
-    /**
-     *
-     * @returns {Validator}
-     */
-    get vo() {
-        return _pipes.get(this.target).vo;
-    }
+    // /**
+    //  *
+    //  * @returns {Validator}
+    //  */
+    // get vo() {
+    //     console.log(`vo _pipes.get(this): ${_pipes.get(this)}`);
+    //     return {};//_pipes.get(_pipes.get(this)).vo;
+    // }
 
     /**
      *

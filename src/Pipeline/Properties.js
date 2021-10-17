@@ -25,14 +25,54 @@ SOFTWARE.
 ############################################################################ */
 import {Executor} from "./Executor";
 import {_observers, Validator} from "./Validator";
+import {default as DefaultVOSchema} from "../schemas/default-pipe-vo.schema";
+import {PipeListener} from "./Pipeline";
 
 /**
  *
  */
 export class Properties {
     static init(pipe, properties) {
-        const {callbacks, inSchema, outSchema, schemas, vo, pOS, _pipes} = properties;
+        const {callbacks, pipesOrVOsOrSchemas, pipes} = properties;
         const _txP = {};
+
+
+        const _inPipe = (
+            Array.isArray(pipesOrVOsOrSchemas) && pipesOrVOsOrSchemas.length
+        ) ? pipesOrVOsOrSchemas[0] : pipesOrVOsOrSchemas.length ?
+            pipesOrVOsOrSchemas : {
+                schema: [DefaultVOSchema, DefaultVOSchema],
+                exec: (d) => d,
+            };
+
+        const _pSchemas = [...pipesOrVOsOrSchemas]
+            .filter((_p) => {
+                // filters array for validators and valid schemas
+                return (
+                    // returns true if TxValidator
+                    (_p instanceof Validator) ||
+                    // returns true if has `schema` attribute and is a valid `json-schema`
+                    _p["schema"] && Validator.validateSchemas(_p.schema)
+                );
+            }).map(_ => _.schema);
+
+        const _getInSchema = () => {
+            if (_pSchemas.length) {
+                return (_pSchemas[0] instanceof Validator) ?
+                    _pSchemas[0].schema : _pSchemas[0];
+            }
+            return DefaultVOSchema;
+        };
+
+        const _inSchema = _getInSchema();
+        const _outSchema = _pSchemas.length > 1 ? _pSchemas[_pSchemas.length - 1] : _inSchema;
+
+        if (!_pSchemas.length) {
+            _pSchemas.splice(0, 0, {schemas: [DefaultVOSchema]}, {schemas: [DefaultVOSchema]});
+        }
+
+        const _vo = (_inPipe instanceof Validator) ? _inPipe : new Validator(_inSchema);
+
         return Object.defineProperties(_txP, {
             callbacks: {
                 value: callbacks,
@@ -69,12 +109,12 @@ export class Properties {
             },
             out: {
                 value: (() => {
-                    const _txV = new Validator(outSchema);
+                    const _txV = new Validator(_outSchema);
                     // unsubscribe all observers on complete notification (freeze/close)
                     _txV.subscribe({
                         complete: () => {
-                            _pipes.get(pipe).listeners.forEach((_) => _.unsubscribe());
-                            _pipes.get(pipe).listeners = [];
+                            (pipes.get(pipe).listeners || []).forEach((_) => _.unsubscribe());
+                            pipes.get(pipe).listeners = [];
                         },
                     });
                     return _txV;
@@ -83,27 +123,45 @@ export class Properties {
                 configurable: false,
             },
             schema: {
-                value: [inSchema, outSchema],
+                value: [_inSchema, _outSchema],
                 enumerable: true,
                 configurable: false,
             },
             schemas: {
                 // enforces 2 schema minimum (in/out)
-                value: schemas.length < 2 ? [...schemas, ...schemas] : schemas,
+                value: _pSchemas.length < 2 ? [..._pSchemas, ..._pSchemas] : _pSchemas,
                 enumerable: true,
                 configurable: false,
             },
-
             vo: {
-                get: () => vo,
+                value: _vo,
                 enumerable: true,
                 configurable: false,
+                writable: false,
             },
             pOS: {
-                value: pOS,
+                value: pipesOrVOsOrSchemas,
                 enumerable: false,
                 configurable: false,
-            }
+            },
+            listeners: {
+                value: [new PipeListener(pipe, _vo)],
+                enumerable: true,
+                configurable: false,
+                writable: true,
+            },
+            ivl: {
+                value: 0,
+                enumerable: true,
+                configurable: false,
+                writable: true,
+            },
+            ivlVal: {
+                value: 0,
+                enumerable: true,
+                configurable: false,
+                writable: true,
+            },
         });
     }
 }

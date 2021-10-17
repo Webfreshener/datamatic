@@ -61,7 +61,7 @@ describe("Utils tests", () => {
             it("should fail validation against refValidation", () => {
                 const _res = refValidation(_owner.model.$model,
                     {name: "test", age: "99", active: true});
-                expect(_res).toBe("data/age should be number");
+                expect(_res).toBe("data/age must be number");
             });
         });
 
@@ -85,7 +85,7 @@ describe("Utils tests", () => {
                 _data.aObject.bObject.bValue = "123";
                 const _res = refAtKeyValidation(_owner.model.aObject.$model,
                     "properties/bObject", _data.aObject.bObject);
-                expect(_res).toBe("data/bValue should be integer");
+                expect(_res).toBe("data/bValue must be integer");
             });
         });
 
@@ -100,7 +100,7 @@ describe("Utils tests", () => {
             it("should fail validation against refValidation", () => {
                 _data.age = "99"
                 const _res = validate(_owner.model.$model, "", _data);
-                expect(_res).toBe("data/age should be number");
+                expect(_res).toBe("data/age must be number");
             });
         });
     });

@@ -327,7 +327,7 @@ describe("ItemsModel Class Suite", function () {
 
         it("should quietly validate data with the validate method", () => {
             _owner = new Model({schemas: [stringsCollection]});
-            expect(_owner.model.$model.validate([1, 2, 3])).toBe("data/0 should be string");
+            expect(_owner.model.$model.validate([1, 2, 3])).toBe("data/0 must be string");
             expect(_owner.model.$model.validate(["1", "2", "3"])).toBe(true);
         });
 

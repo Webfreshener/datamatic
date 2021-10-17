@@ -24,7 +24,7 @@ SOFTWARE.
 
 ############################################################################ */
 import {_observers} from "./_references";
-import {BehaviorSubject} from "rxjs/Rx";
+import {BehaviorSubject, skip} from "rxjs";
 
 const _observerPaths = new WeakMap();
 const _observerCache = new WeakMap();
@@ -72,7 +72,6 @@ export class ObserverBuilder {
      */
     create(target) {
         if (!target.path) {
-            console.log(`invalid target: ${target} cname: ${target.constructor.name} target.path: ${target.path}`);
             throw ("target object is invalid");
         }
 
@@ -89,13 +88,20 @@ export class ObserverBuilder {
         }
 
         const _h = {
-            onNext: new BehaviorSubject(null).skip(1),
-            onError: new BehaviorSubject(null).skip(1),
-            onComplete: new BehaviorSubject(null).skip(1),
             path: target.path,
             jsonPath: target.jsonPath,
             targetId: target.objectID,
         };
+
+        ["onNext", "onError", "onComplete"].forEach((_k) => {
+            const _subj = new BehaviorSubject(null);
+            Object.defineProperty(_h, _k, {
+                value: _subj.pipe(skip(1)),
+                enumerable: false,
+                configurable: false,
+                writable: false,
+            });
+        });
 
         _o.set(target, _h);
 
