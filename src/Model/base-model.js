@@ -89,8 +89,6 @@ export class BaseModel {
         const _oBuilder = _oBuilders.get(this.owner);
         let _o = _oBuilder.getObserverForPath(path);
         if (!_o) {
-            console.log(`no observer for ${path}. Registered Observers: ${_oBuilder.list()}`);
-            // return false;
             _o = _oBuilder.create(this, `${this.path}`);
         }
 

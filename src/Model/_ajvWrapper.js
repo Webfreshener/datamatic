@@ -26,11 +26,12 @@ SOFTWARE.
 /**
  * @private
  */
-import {_ajvRef} from "./_references";
-import {Model} from "./index";
 import Ajv from "ajv";
+import {default as ajvOptions} from "../ajv-options";
+import {Model} from "./index";
 import addFormats from "ajv-formats";
 import {getSchemaID} from "./utils";
+import {_ajvRef} from "./_references";
 
 const _validators = new WeakMap();
 
@@ -113,7 +114,7 @@ export class AjvWrapper {
      * @param schemas
      * @param ajvOptions
      */
-    constructor(owner, schemas, ajvOptions = {}) {
+    constructor(owner, schemas, options = {}) {
         // ensures that we are given something that represents a Model object
         if ((!owner) || !(owner instanceof Model)) {
             throw "Model is required at arguments[0]";
@@ -130,7 +131,7 @@ export class AjvWrapper {
         });
 
         // applies user specified options over our default Ajv Options
-        const opts = Object.assign(_ajvOptions, ajvOptions);
+        const opts = Object.assign(ajvOptions, options);
 
         // makes user defined options object accessible for evaluation
         Object.defineProperty(this, "options", {
@@ -230,52 +231,3 @@ export class AjvWrapper {
         return _res;
     }
 }
-
-/**
- * AJV Options Config in it's entirely for reference
- * only Model specific option changes are enabled
- * @type {*}
- * @private
- */
-const _ajvOptions = {
-    // strict mode options (NEW)
-    strict: true,
-    strictTypes: "log",
-    strictTuples: "log",
-    allowUnionTypes: true,
-    allowMatchingProperties: false,
-    validateFormats: true,
-    // validation and reporting options:
-    $data: false,
-    allErrors: false,
-    verbose: false,
-    $comment: false,
-    formats: {},
-    keywords: [],
-    schemas: {},
-    logger: undefined,
-    loadSchema: undefined, // function(uri: string): Promise {}
-    // options to modify validated data:
-    removeAdditional: false,
-    useDefaults: false,
-    coerceTypes: false,
-    // advanced options:
-    meta: true,
-    validateSchema: true,
-    addUsedSchema: true,
-    inlineRefs: true,
-    passContext: false,
-    loopRequired: Infinity,
-    loopEnum: Infinity, // NEW
-    ownProperties: false,
-    multipleOfPrecision: undefined,
-    messages: true,
-    code: {
-        // NEW
-        es5: false,
-        lines: false,
-        source: false,
-        process: undefined, // (code: string) => string
-        optimize: true,
-    },
-};

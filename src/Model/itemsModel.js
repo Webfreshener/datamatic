@@ -66,15 +66,6 @@ export class ItemsModel extends BaseModel {
             return false;
         }
 
-        let _idx = 0;
-        // value.forEach((itm) => {
-        //     let _defaults = this.owner.getDefaultsForPath(this.jsonPath);
-        //     if (Object.keys(_defaults).length) {
-        //         value[_idx] = merge(_defaults, itm);
-        //     }
-        //     _idx++;
-        // });
-
         if (refValidation(this, value) !== true) {
             Notifiers.get(this.owner).sendError(this.jsonPath, this.owner.errors);
             return `${JSON.stringify(this.owner.errors)}`;
@@ -180,8 +171,8 @@ export class ItemsModel extends BaseModel {
      * Returns length of model array
      * @returns {number}
      */
-    length() {
-        return this.model.length();
+    get length() {
+        return this.model.length;
     }
 }
 

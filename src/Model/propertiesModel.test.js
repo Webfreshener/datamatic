@@ -248,8 +248,8 @@ describe("PropertiesModel Class Suite", function () {
             _owner.model = {name: "test", nested: {test1: {foo1: "bar1"}}};
             _owner.model.nested["test1"] = false;
             expect(_owner.errors === null).toBe(false);
-            expect(`${_owner.errors[0].dataPath}`).toEqual("/test1");
-            expect(`${_owner.errors[0].message}`).toEqual("should be object");
+            expect(`${_owner.errors[0].instancePath}`).toEqual("/test1");
+            expect(`${_owner.errors[0].message}`).toEqual("must be object");
         });
 
     });

@@ -45,7 +45,6 @@ describe("Pipeline Exec Tests", () => {
         );
 
         const _ivl = setInterval(() => {
-            console.log("interval...");
             _p.write("ok");
         }, 10);
 

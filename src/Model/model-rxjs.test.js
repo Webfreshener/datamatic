@@ -68,13 +68,14 @@ describe("RXJS Test Suite", () => {
 
                 let cnt = 0;
 
-                const _sub = _owner1.subscribe({
+                const _sub = _owner1.model.topScores.$model.subscribe({
                     next: (res) => {
-                        // expect(res.model.topScores.length).toBe(3);
-                        // _sub.unsubscribe();
+                        expect(res.length).toBe(3);
+                        _sub.unsubscribe();
                         done()
                     },
                     error: (e) => {
+                        _sub.unsubscribe();
                         done(JSON.stringify(e));
                     }
                 });

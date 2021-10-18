@@ -420,14 +420,13 @@ export class PipeListener {
         return _pipes.get(this);
     }
 
-    // /**
-    //  *
-    //  * @returns {Validator}
-    //  */
-    // get vo() {
-    //     console.log(`vo _pipes.get(this): ${_pipes.get(this)}`);
-    //     return {};//_pipes.get(_pipes.get(this)).vo;
-    // }
+    /**
+     *
+     * @returns {Validator}
+     */
+    get vo() {
+        return _pipes.get(_pipes.get(this)).vo;
+    }
 
     /**
      *

@@ -97,7 +97,7 @@ export class ObserverBuilder {
             const _subj = new BehaviorSubject(null);
             Object.defineProperty(_h, _k, {
                 value: _subj.pipe(skip(1)),
-                enumerable: false,
+                enumerable: true,
                 configurable: false,
                 writable: false,
             });

@@ -8,7 +8,7 @@ import {
 import {BaseModel} from "./base-model";
 import {basicCollection} from "../../fixtures/PropertiesModel.schemas";
 
-describe("ItemsModel Class Suite", function () {
+describe("ItemsModel Class", function () {
 
     describe("Simple ItemsModel Tests", () => {
 
@@ -61,7 +61,7 @@ describe("ItemsModel Class Suite", function () {
                 _d = [99, 100, 101];
 
                 _owner.model = _d;
-                expect(deepEqual(_owner.model, {})).toBe(true);
+                expect(_owner.model.length).toEqual(0);
             });
         });
     });
