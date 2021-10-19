@@ -24,7 +24,7 @@ SOFTWARE.
 
 ############################################################################ */
 import {Executor} from "./Executor";
-import {_observers, Validator} from "./Validator";
+import {Validator} from "./Validator";
 import {default as DefaultVOSchema} from "../schemas/default-pipe-vo.schema";
 import {PipeListener} from "./Pipeline";
 
@@ -35,7 +35,6 @@ export class Properties {
     static init(pipe, properties) {
         const {callbacks, pipesOrVOsOrSchemas, pipes} = properties;
         const _txP = {};
-
 
         const _inPipe = (
             Array.isArray(pipesOrVOsOrSchemas) && pipesOrVOsOrSchemas.length
