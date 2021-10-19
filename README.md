@@ -37,7 +37,7 @@ RxJS + JSON-Schema (Ajv) Based Observable and Validating Data Models and Pipelin
 $ npm install datamatic
 ```
 
-#### UMD Usage for React and Angular
+#### UMD Usage (React, Angular, Vue et al)
 ```
 import * as datamatic from "datamatic";
 

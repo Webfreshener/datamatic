@@ -38,7 +38,7 @@ describe("AJVWrapper Tests", () => {
             const owner = new Model(schemas);
             const _ajv = new AjvWrapper(owner, schemas);
 
-            const _isValid = _ajv.exec("http://swagger.io/v2/schema.json#", PetStoreV2);
+            const _isValid = _ajv.exec(`${OpenAPIv2.$id}`, PetStoreV2);
             owner.model = PetStoreV2;
 
             expect(owner.errors).toBe(null);

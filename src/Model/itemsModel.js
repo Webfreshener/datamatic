@@ -24,7 +24,7 @@ SOFTWARE.
 
 ############################################################################ */
 import {
-    _object, _schemaHelpers, _oBuilders,
+    _object, _schemaHelpers, _oBuilders, _dirtyModels
 } from "./_references";
 import {BaseModel} from "./base-model";
 import {SchemaHelpers} from "./_schemaHelpers";
@@ -66,15 +66,6 @@ export class ItemsModel extends BaseModel {
             return false;
         }
 
-        let _idx = 0;
-        // value.forEach((itm) => {
-        //     let _defaults = this.owner.getDefaultsForPath(this.jsonPath);
-        //     if (Object.keys(_defaults).length) {
-        //         value[_idx] = merge(_defaults, itm);
-        //     }
-        //     _idx++;
-        // });
-
         if (refValidation(this, value) !== true) {
             Notifiers.get(this.owner).sendError(this.jsonPath, this.owner.errors);
             return `${JSON.stringify(this.owner.errors)}`;
@@ -86,18 +77,14 @@ export class ItemsModel extends BaseModel {
         }
 
         _oBuilders.get(this.owner).mute(this);
-
         _object.set(this, new Proxy(BaseModel.createRef(this, []), this.handler));
         _observerDelegates.set(this, true);
 
         try {
             let cnt = 0;
-
             value.forEach((val) => {
                 _object.get(this)[cnt++] = val;
             });
-            // todo: review why this wont fly
-            // _object.get(this).splice(0,0, value);
         } catch (e) {
             makeClean(this);
             _oBuilders.get(this.owner).unmute(this);
@@ -157,7 +144,7 @@ export class ItemsModel extends BaseModel {
                 let _oDel = _observerDelegates.get(this);
 
                 if (refAtKeyValidation(this, "items", value) !== true) {
-                    if (_oDel !== void(0)) {
+                    if (_oDel !== void (0)) {
                         makeClean(this);
                         Notifiers.get(this.owner).sendError(this.jsonPath, this.owner.errors);
                     }
@@ -171,14 +158,6 @@ export class ItemsModel extends BaseModel {
                 }
 
                 t[idx] = value;
-
-                // makes clean if not serial operation
-                if (_oDel !== void(0)) {
-                    makeClean(this);
-                    // updates observers
-                    // Notifiers.get(this.owner).sendNext(this.jsonPath);
-                }
-
                 return true;
             },
 
@@ -192,8 +171,8 @@ export class ItemsModel extends BaseModel {
      * Returns length of model array
      * @returns {number}
      */
-    length() {
-        return this.model.length();
+    get length() {
+        return this.model.length;
     }
 }
 

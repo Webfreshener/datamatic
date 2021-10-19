@@ -18,7 +18,7 @@ describe("Model Class Tests", () => {
         it("should validate models against schema", () => {
             expect(_owner.model.$model.validate(_d)).toBe(true);
             _d.active = "1234";
-            expect(_owner.model.$model.validate(_d)).toBe("data/active should be boolean");
+            expect(_owner.model.$model.validate(_d)).toBe("data/active must be boolean");
         });
 
         it("should support subscription callbacks object", (done) => {

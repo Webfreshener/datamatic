@@ -28,6 +28,8 @@ SOFTWARE.
  */
 
 import Ajv from "ajv";
+import {default as ajvOptions} from "../ajv-options";
+
 const _validators = new WeakMap();
 const _ajvRef = new WeakMap();
 const _idRef = new WeakMap();
@@ -43,12 +45,12 @@ const addSchema = ($ajv, schema, schemaId) => {
     }
 
     // try {
-        if (_idRef.get($ajv).indexOf(schemaId) === -1) {
-            _idRef.get($ajv).splice(_idRef.get($ajv).length, 0, schemaId);
+    if (_idRef.get($ajv).indexOf(schemaId) === -1) {
+        _idRef.get($ajv).splice(_idRef.get($ajv).length, 0, schemaId);
 
-            $ajv.addSchema(schema, schemaId);
-            return true
-        }
+        $ajv.addSchema(schema, schemaId);
+        return true
+    }
     // } catch (e) {
     //    return
     // }
@@ -90,7 +92,7 @@ export class AjvWrapper {
 
         // processes schema "id" for JSON-schemas =< v04 and >= v06
         const _procSchema = (_s) => {
-            const _key = ["$id","id"].find((k) => _s.hasOwnProperty(`${k}`));
+            const _key = ["$id", "id"].find((k) => _s.hasOwnProperty(`${k}`));
             if (_key) {
                 _s[_key] = _procID(_s[_key]);
             }
@@ -162,7 +164,7 @@ export class AjvWrapper {
      * @param schema
      * @param schemaId
      */
-    addSchema(schema, schemaId=false) {
+    addSchema(schema, schemaId = false) {
         addSchema(this, schema, schemaId);
         return this;
     }
@@ -229,43 +231,6 @@ const createAJV = (schemas, opts) => {
  * @type {*}
  * @private
  */
-const _ajvOptions = {
-    // // validation and reporting options:
-    // $data:            false,
-    // allErrors:        true,
-    allowUnionTypes:     true,
-    // verbose:          true,
-    // $comment:         false, // NEW in Ajv version 6.0
-    // uniqueItems:      true,
-    // unicode:          true,
-    // format:           'fast',
-    // formats:          {},
-    // unknownFormats:   true,
-    // schemas:          {},
-    // logger:           undefined,
-    // // referenced schema options:
-    // schemaId: 'auto',
-    // missingRefs:      true,
-    // loadSchema:       undefined, // function(uri: string): Promise {}
-    // // options to modify validated data:
-    removeAdditional: false,
-    // useDefaults: true,
-    // coerceTypes:      false,
-    // // asynchronous validation options:
-    // transpile:        undefined, // requires ajv-async package
-    // // advanced options:
-    // meta:             true,
-    // validateSchema:   true,
-    // addUsedSchema:    true,
-    // inlineRefs:       true,
-    // passContext:      false,
-    // loopRequired:     Infinity,
-    // ownProperties:    false,
-    // multipleOfPrecision: false,
-    // errorDataPath:    'object', // deprecated
-    // messages:         true,
-    // sourceCode:       false,
-    // processCode:      undefined, // function (str: string): string {}
-    // cache:            new Cache,
-    // serialize:        undefined
-};
+const _ajvOptions = Object.assign({}, ajvOptions, {
+    allowUnionTypes: true,
+});

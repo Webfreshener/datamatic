@@ -23,7 +23,7 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
 ############################################################################ */
-import {BehaviorSubject} from "rxjs/Rx";
+import {BehaviorSubject, skip} from "rxjs";
 
 const _observers = new WeakMap();
 
@@ -32,11 +32,18 @@ export class VxBehaviorSubject {
      * @constructor
      */
     constructor() {
-        _observers.set(this, {
-            onNext: new BehaviorSubject(null).skip(1),
-            onError: new BehaviorSubject(null).skip(1),
-            onComplete: new BehaviorSubject(null).skip(1),
+        const __ = {};
+        ["onNext", "onError", "onComplete"].forEach((_k) => {
+            const _subj = new BehaviorSubject(null);
+            Object.defineProperty(__, _k, {
+                value: _subj.pipe(skip(1)),
+                enumerable: true,
+                configurable: false,
+                writable: false,
+            });
         });
+
+        _observers.set(this, __);
     }
 
     /**

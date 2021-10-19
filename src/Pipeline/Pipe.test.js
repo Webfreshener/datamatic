@@ -6,6 +6,7 @@ import {default as _pipesOrSchemas} from "../../fixtures/pipes-or-schema"
 describe("Pipes Sub-Class Tests", () => {
     const _data = {body: "ok"};
     const _res = {body: "yada-yada"};
+
     it("should sub class", () => {
         const _unit = new Pipeline({
             exec: () => {
@@ -20,23 +21,36 @@ describe("Pipes Sub-Class Tests", () => {
 });
 
 describe("TXPipe Error Handling", () => {
-    it("should detect validation errors", (done) => {
-        const _tx = new Pipeline({
-            type: "string",
-        }, () => false);
+    it("should observe validation errors", (done) => {
+        const _tx = new Pipeline(
+            (d) => d,
+            {
+                type: "string",
+            });
 
         _tx.subscribe({
             next: (d) => {
                 done("should have errored");
             },
             error: (e) => {
-                expect(e.error[0].message).toEqual("should be string");
+                expect(e.error.error[0].message).toEqual("must be string");
                 done();
             }
         });
 
         _tx.write(true);
-    })
+    });
+
+
+    it("should throw validation errors", () => {
+        const _tx = new Pipeline(
+            (d) => d,
+            {
+                type: "string",
+            });
+
+        expect(() => _tx.exec(true)).toThrow();
+    });
 });
 
 describe("Pipeline Tests", () => {
@@ -191,5 +205,4 @@ describe("Pipeline Tests", () => {
 
         _iterator.next();
     });
-
 });

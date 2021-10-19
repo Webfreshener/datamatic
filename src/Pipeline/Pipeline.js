@@ -57,7 +57,6 @@ export class Pipeline {
      * @param pipesOrVOsOrSchemas
      */
     constructor(...pipesOrVOsOrSchemas) {
-        _pipes.set(this, {});
         _cache.set(this, []);
 
         // TODO: solve this issue with async methods to remove kludge
@@ -67,63 +66,18 @@ export class Pipeline {
 
         pipesOrVOsOrSchemas = mapArgs(...pipesOrVOsOrSchemas);
 
-        // enforces 2 callback minimum for `reduce` by appending pass-thru callbacks
-        const _callbacks = fill(Pipeline.getExecs(...pipesOrVOsOrSchemas));
-
-        const _inPipe = (
-            Array.isArray(pipesOrVOsOrSchemas) && pipesOrVOsOrSchemas.length
-        ) ? pipesOrVOsOrSchemas[0] : pipesOrVOsOrSchemas.length ?
-            pipesOrVOsOrSchemas : {
-                schema: [DefaultVOSchema, DefaultVOSchema],
-                exec: (d) => d,
-            };
-
-        const _pSchemas = [...pipesOrVOsOrSchemas]
-            .filter((_p) => {
-                // filters array for validators and valid schemas
-                return (
-                    // returns true if TxValidator
-                    (_p instanceof Validator) ||
-                    // returns true if has `schema` attribute and is a valid `json-schema`
-                    _p["schema"] && Validator.validateSchemas(_p.schema)
-                );
-            }).map(_ => _.schema);
-
-        const _getInSchema = () => {
-            if (_pSchemas.length) {
-                return (_pSchemas[0] instanceof Validator) ?
-                    _pSchemas[0].schema : _pSchemas[0];
-            }
-            return DefaultVOSchema;
-        };
-
-        const _inSchema = _getInSchema();
-        const _outSchema = _pSchemas.length > 1 ? _pSchemas[_pSchemas.length - 1] : _inSchema;
-
-        if (!_pSchemas.length) {
-            _pSchemas.splice(0, 0, {schemas: [DefaultVOSchema]}, {schemas: [DefaultVOSchema]});
-        }
-
         // stores config & state
         _pipes.set(this,
             Properties.init(this, {
-                vo: (_inPipe instanceof Validator) ? _inPipe : new Validator(_inSchema),
-                callbacks: _callbacks,
-                schemas: _pSchemas,
-                inSchema: _inSchema,
-                outSchema: _outSchema,
-                pOS: pipesOrVOsOrSchemas,
-                _pipes: _pipes,
-            }),
+                callbacks: fill(Pipeline.getExecs(...pipesOrVOsOrSchemas)),
+                pipesOrVOsOrSchemas: pipesOrVOsOrSchemas,
+                pipes: _pipes,
+            })
         );
-
-        _pipes.get(this).ivl = 0;
-        _pipes.get(this).ivlVal = 0;
-        _pipes.get(this).listeners = [new PipeListener(this)];
 
         // define exec in constructor to ensure method visibility
         Object.defineProperty(this, "exec", {
-            // value: (data) => _pipes.get(this).exec(data),
+            // value: (data) => pipes.get(this).exec(data),
             value: (data) => {
                 return _pipes.get(this).exec(data);
             },
@@ -138,7 +92,13 @@ export class Pipeline {
      * @returns {Pipeline}
      */
     pipe(...pipesOrSchemas) {
-        return new Pipeline([_pipes.get(this).out, ...pipesOrSchemas]);
+        const __ = new Pipeline(...pipesOrSchemas);
+        this.subscribe({
+            next: (d) => {
+                __.write(d);
+            }
+        });
+        return __;
     }
 
     /**
@@ -337,27 +297,31 @@ export class Pipeline {
      * @returns {Pipeline}
      */
     throttle(rate) {
-        const _ivl = _pipes.get(this).tO;
-
-        if (_ivl) {
-            _ivl.clearInterval();
-        }
+        this.clearThrottle();
 
         if (rate >= 0) {
-            _pipes.get(this).tO = setInterval(
-                () => {
-                    if (_cache.get(this).length) {
-                        const _func = _cache.get(this).pop();
-                        if ((typeof _func) === "function") {
-                            _pipes.get(this).out.model = _func();
+            _pipes.set(this, Object.assign(_pipes.get(this), {
+                    tO: setInterval(() => {
+                        if (_cache.get(this).length) {
+                            const _func = _cache.get(this).splice(0, 1);
+                            if ((typeof _func[0]) === "function") {
+                                _pipes.get(this).out.model = _func[0]();
+                            }
                         }
-                    }
-                    delete _pipes.get(this).tO;
-                },
+                    }),
+                }),
                 parseInt(rate, 10)
             );
         }
         return this;
+    }
+
+    clearThrottle() {
+        const _ivl = _pipes.get(this).tO;
+
+        if (_ivl) {
+            clearInterval(_ivl);
+        }
     }
 
     /**
@@ -436,9 +400,19 @@ export class PipeListener {
      *
      * @param target
      */
-    constructor(target) {
+    constructor(target, vo) {
         const _self = this;
-        _pipes.set(_self, target);
+
+        Object.defineProperties(this, {
+            vo: {
+                get: () => vo,
+                enumerable: true,
+                configurable: false,
+                // writable: false,
+            }
+        })
+
+        _pipes.set(this, target);
         this.vo.subscribe({
             next: (d) => _self.next(d),
             error: (e) => _self.error(e),
@@ -459,7 +433,7 @@ export class PipeListener {
      * @returns {Validator}
      */
     get vo() {
-        return _pipes.get(this.target).vo;
+        return _pipes.get(_pipes.get(this)).vo;
     }
 
     /**
@@ -494,14 +468,19 @@ export class PipeListener {
     next(data) {
         // enforces JSON formatting if feature is present
         data = data && data.toJSON ? data.toJSON() : data;
-        const _target = _pipes.get(this);
+        const _targetProps = _pipes.get(this.target);
         // tests for presence of rate-limit timeout
-        if (_pipes.get(_target).tO) {
-            // caches operation for later execution. ordering is FIFO
-            _cache.get(_target).splice(0, 0, () => _pipes.get(_target).cb(data));
+        if (_targetProps.tO) {
+            const __ = () => {
+                return _pipes.get(this.target).exec(data);
+            };
+            // caches operation for later execution. Exec ordering is FIFO
+            _cache.get(this.target).splice(_cache.get(this.target).length, 0, __);
             // cancels current execution
             return void 0;
         }
+
+        const _target = _pipes.get(this);
 
         // tests for interval (ivl)
         if (_pipes.get(_target).ivl !== 0) {
