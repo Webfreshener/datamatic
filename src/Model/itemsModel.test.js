@@ -214,7 +214,7 @@ describe("ItemsModel Class", function () {
                 _owner = new Model({schemas: [objectCollection]});
             });
 
-            it("should notifiy subsequent validations", () => {
+            it("should notify subsequent validations", (done) => {
                 const _d = [{
                     name: "Item A",
                     value: 1,
@@ -230,13 +230,22 @@ describe("ItemsModel Class", function () {
                 setTimeout(() => {
                     _owner.subscribe({
                         next: (m) => {
-                            expect(m.models.length).toEqual(3);
+                            expect(m.model.length).toEqual(3);
                             done()
                         },
                         error: done,
                     });
 
-                    _owner.model = _d;
+                    _owner.model = [{
+                        name: "Item D",
+                        value: 1,
+                    }, {
+                        name: "Item E",
+                        value: 2,
+                    }, {
+                        name: "Item F",
+                        value: 3,
+                    }];
                 }, 100);
             });
         });

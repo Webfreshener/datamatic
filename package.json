@@ -13,7 +13,8 @@
   },
   "scripts": {
     "test": "jest",
-    "cover": "jest --coverage && cat ./coverage/lcov.info | codacy-coverage --token \"$CODACY_ID\"",
+    "clear-tests": "jest --clearCache",
+    "cover": "jest --coverage && cat ./coverage/lcov.info | codacy-coverage --token \"$CODACY_PROJECT_TOKEN\"",
     "build-test": "webpack --mode development; npm test",
     "build": "webpack --mode production",
     "docs": "./node_modules/.bin/esdoc",

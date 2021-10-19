@@ -6,18 +6,18 @@ import {
 } from "../../fixtures/PropertiesModel.schemas";
 
 describe("PropertiesModel Class Suite", function () {
-
+    let _owner;
     describe("Simple PropertiesModel Tests", () => {
         beforeEach(() => {
-            this.owner = new Model({schemas: [basicModel]});
+            _owner = new Model({schemas: [basicModel]});
         });
 
         describe("LifeCycle: Instantiation", () => {
             it("should initialize a schema and a schema object", () => {
-                expect(this.owner.model.$model).toBeDefined();
-                expect(this.owner.model.$model instanceof PropertiesModel).toBe(true);
-                expect(this.owner.model.$model).toBeDefined();
-                expect(this.owner.model.$model instanceof PropertiesModel).toBe(true);
+                expect(_owner.model.$model).toBeDefined();
+                expect(_owner.model.$model instanceof PropertiesModel).toBe(true);
+                expect(_owner.model.$model).toBeDefined();
+                expect(_owner.model.$model instanceof PropertiesModel).toBe(true);
             });
 
             it("should not initialize a invalid schema and schema object", () => {
@@ -43,8 +43,8 @@ describe("PropertiesModel Class Suite", function () {
                     active: true,
                 };
 
-                this.owner.model = _d;
-                expect(deepEqual(this.owner.model, _d)).toBe(true);
+                _owner.model = _d;
+                expect(deepEqual(_owner.model, _d)).toBe(true);
             });
 
             it("should reject invalid data and leave model pristine", () => {
@@ -54,8 +54,8 @@ describe("PropertiesModel Class Suite", function () {
                     active: "123",
                 };
 
-                this.owner.model = _d;
-                expect(deepEqual(this.owner.model, {})).toBe(true);
+                _owner.model = _d;
+                expect(deepEqual(_owner.model, {})).toBe(true);
             });
         });
 
@@ -67,17 +67,17 @@ describe("PropertiesModel Class Suite", function () {
             };
 
             beforeEach(() => {
-                this.owner.model = _d;
+                _owner.model = _d;
             });
 
             it("should update with valid data", () => {
-                this.owner.model.active = false;
-                expect(deepEqual(this.owner.model, _d)).toBe(false);
+                _owner.model.active = false;
+                expect(deepEqual(_owner.model, _d)).toBe(false);
             });
 
             it("should reject invalid data update", () => {
-                this.owner.model.active = "false";
-                expect(deepEqual(this.owner.model, _d)).toBe(true);
+                _owner.model.active = "false";
+                expect(deepEqual(_owner.model, _d)).toBe(true);
             });
         });
     });

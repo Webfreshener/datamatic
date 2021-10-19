@@ -92,9 +92,13 @@ export class Pipeline {
      * @returns {Pipeline}
      */
     pipe(...pipesOrSchemas) {
-        return new Pipeline([
-            _pipes.get(this).out, ...pipesOrSchemas
-        ]);
+        const __ = new Pipeline(...pipesOrSchemas);
+        this.subscribe({
+            next: (d) => {
+                __.write(d);
+            }
+        });
+        return __;
     }
 
     /**
@@ -293,27 +297,31 @@ export class Pipeline {
      * @returns {Pipeline}
      */
     throttle(rate) {
-        const _ivl = _pipes.get(this).tO;
-
-        if (_ivl) {
-            _ivl.clearInterval();
-        }
+        this.clearThrottle();
 
         if (rate >= 0) {
-            _pipes.get(this).tO = setInterval(
-                () => {
-                    if (_cache.get(this).length) {
-                        const _func = _cache.get(this).pop();
-                        if ((typeof _func) === "function") {
-                            _pipes.get(this).out.model = _func();
+            _pipes.set(this, Object.assign(_pipes.get(this), {
+                    tO: setInterval(() => {
+                        if (_cache.get(this).length) {
+                            const _func = _cache.get(this).splice(0, 1);
+                            if ((typeof _func[0]) === "function") {
+                                _pipes.get(this).out.model = _func[0]();
+                            }
                         }
-                    }
-                    delete _pipes.get(this).tO;
-                },
+                    }),
+                }),
                 parseInt(rate, 10)
             );
         }
         return this;
+    }
+
+    clearThrottle() {
+        const _ivl = _pipes.get(this).tO;
+
+        if (_ivl) {
+            clearInterval(_ivl);
+        }
     }
 
     /**
@@ -460,14 +468,19 @@ export class PipeListener {
     next(data) {
         // enforces JSON formatting if feature is present
         data = data && data.toJSON ? data.toJSON() : data;
-        const _target = _pipes.get(this);
+        const _targetProps = _pipes.get(this.target);
         // tests for presence of rate-limit timeout
-        if (_pipes.get(_target).tO) {
-            // caches operation for later execution. ordering is FIFO
-            _cache.get(_target).splice(0, 0, () => _pipes.get(_target).cb(data));
+        if (_targetProps.tO) {
+            const __ = () => {
+                return _pipes.get(this.target).exec(data);
+            };
+            // caches operation for later execution. Exec ordering is FIFO
+            _cache.get(this.target).splice(_cache.get(this.target).length, 0, __);
             // cancels current execution
             return void 0;
         }
+
+        const _target = _pipes.get(this);
 
         // tests for interval (ivl)
         if (_pipes.get(_target).ivl !== 0) {

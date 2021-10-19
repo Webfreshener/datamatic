@@ -92,7 +92,7 @@ describe("Pipeline API Tests", () => {
         _p.write(data[0]);
     });
 
-    it("should split pipeline", () => {
+    it("should split pipeline", (done) => {
         const _config = [
             {
                 exec: (d) => {
@@ -104,9 +104,14 @@ describe("Pipeline API Tests", () => {
             },
         ];
 
-        const _cb = jest.fn();
+        // const _cb = jest.fn();
+        let _cnt = 0;
         _p = new Pipeline({
             exec: (d) => d
+        });
+
+        _p.subscribe({
+            error: done,
         });
 
         const _split = _p.split(_config);
@@ -115,7 +120,7 @@ describe("Pipeline API Tests", () => {
         _split.forEach((pipe) => {
             const _sub = pipe.subscribe({
                 next: () => {
-                    _cb();
+                    _cnt++;
                     _sub.unsubscribe();
                 },
                 error: (e) => {
@@ -125,39 +130,65 @@ describe("Pipeline API Tests", () => {
             });
         });
 
+        _p.write(data);
+
         setTimeout(() => {
-            _p.write(data);
-            expect(_cb).toHaveBeenCalledTimes(2);
+            // expect(_cb).toHaveBeenCalledTimes(2);
+            expect(_cnt).toEqual(2);
             expect(_split[0].tap()[0].name.match(/.*\sRENAMED+$/)).toBeTruthy();
             expect(_split[1].tap()[0].age).toEqual(99);
+            done();
         }, 50);
     });
 
-    it("should exec multiple pipes inline", () => {
-        const _p1 = new Pipeline({
-            schema: basicCollection,
-            exec: (d) => d.map((m) => Object.assign(m, {name: `${m.name} RENAMED`})),
-        });
+    it("should exec multiple pipes inline", (done) => {
+        const _p1 = new Pipeline(
+            basicCollection,
+            (d) => d.map((m) => Object.assign(m, {name: `${m.name} RENAMED`}))
+        );
 
-        const _p2 = new Pipeline({
-            schema: basicCollection,
-            exec: (d) => d.map((m) => Object.assign(m, {age: 99})),
-        });
+        const _p2 = new Pipeline(
+            basicCollection,
+            (d) => d.map((m) => Object.assign(m, {age: 99}))
+        );
 
         const _inline = _p.pipe(_p1, _p2);
+
+        _inline.subscribe({
+            next: (d) => {
+                expect(d.length).toEqual(data.length);
+                expect(d[data.length - 1].name.match(/.*\sRENAMED+$/)).toBeTruthy();
+                expect(d[data.length - 1].age).toEqual(99);
+                expect(1).toBeTruthy();
+            },
+            error: done,
+        });
 
         _inline.write(data);
 
         setTimeout(() => {
-            expect(JSON.stringify(_inline.schemas[0].schemas[0].schema)).toEqual(JSON.stringify(basicCollection));
             expect(_inline.tap().length).toEqual(data.length);
-            expect(_inline.tap()[0].name.match(/.*\sRENAMED+$/)).toBeTruthy();
-            expect(_inline.tap()[0].age).toEqual(99);
             expect(_inline.tap()[data.length - 1].name.match(/.*\sRENAMED+$/)).toBeTruthy();
             expect(_inline.tap()[data.length - 1].age).toEqual(99);
+            expect(1).toBeTruthy();
+            done();
             _inline.close();
-        }, 0);
+        }, 50);
 
+    });
+
+    test("pipe", (done) => {
+        const _pipe = new Pipeline(
+            basicCollection,
+            (d) => d.map((m) => Object.assign(m, {name: `${m.name} RENAMED`}))
+        );
+
+        _pipe.pipe((d) => d).subscribe({
+            next: () => done(),
+            error: done,
+        });
+
+        _pipe.write(data);
     });
 
     test("yield", () => {
@@ -197,22 +228,61 @@ describe("Pipeline API Tests", () => {
         _tx.write(data);
     });
 
-    test("throttle", () => {
-        const _cb = jest.fn();
-        const _sub = _p.throttle(150).subscribe(() => _cb());
-        data.forEach((d) => {
-            _p.write([d]);
+    describe("throttle/clearThrottle", () => {
+        test("throttle", (done) => {
+            let _cnt = 0;
+            const rate = 150;
+            const _sub = _p.throttle(rate).subscribe(() => _cnt++);
+            data.forEach((d) => {
+                _p.write([d]);
+            });
+
+            expect(_p.errors).toEqual(null);
+
+            const _ivl = setInterval(() => {
+                if (_cnt === data.length) {
+                    _p.clearThrottle();
+                    clearInterval(_ivl);
+                    expect(_p.tap().length).toEqual(1);
+                    expect(_p.tap()[0].hasOwnProperty("name")).toBeTruthy();
+                    expect(_p.tap()[0].name).toEqual(data[data.length - 1].name);
+                    _sub.unsubscribe();
+                    done();
+                } else {
+                    done(`did not receive all data via throttle\nexpected: ${data.length}\nreceived: ${_cnt}\n`);
+                }
+            }, (data.length * rate) + 10);
         });
 
-        expect(_p.errors).toEqual(null);
-        let _cnt = 0;
-        const _ivl = setInterval(() => {
-            expect(_cb).toHaveBeenCalledTimes(_cnt++);
-            if (_cnt === data.length) {
-                clearInterval(_ivl);
-                _sub.unsubscribe();
-            }
-        }, 151);
+        test.skip("clearThrottle", (done) => {
+            let _cnt = 0;
+            const rate = 150;
+            const _sub = _p.throttle(rate).subscribe({
+                next: (d) => {
+                    _p.clearThrottle();
+                    _cnt++;
+                },
+                error: done,
+            });
+
+            const _ivl = setInterval(() => {
+                if (_cnt === 1) {
+                    expect(Array.isArray(_p.tap())).toBeTruthy();
+                    expect(_p.tap().length).toEqual(1);
+                    expect(typeof _p.tap()[0]).toBe("object");
+                    expect(_p.tap()[0].name).toBe("Alice");
+                    clearInterval(_ivl);
+                    _sub.unsubscribe();
+                    done();
+                } else {
+                    done(`did not receive correct data via throttle\nexpected: 1\nreceived: ${_cnt}\n`);
+                }
+            }, rate);
+
+            data.forEach((d) => {
+                _p.write([d]);
+            });
+        })
     });
 
     test("sample", () => {

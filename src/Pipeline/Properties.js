@@ -108,12 +108,19 @@ export class Properties {
                 configurable: false,
             },
             out: {
+                /**
+                 * validates output
+                 */
                 value: (() => {
                     const _txV = new Validator(_outSchema);
                     // unsubscribe all observers on complete notification (freeze/close)
                     _txV.subscribe({
                         complete: () => {
-                            (pipes.get(pipe).listeners || []).forEach((_) => _.unsubscribe());
+                            (pipes.get(pipe).listeners || []).forEach((_) => {
+                                if (_.unsubscribe) {
+                                    _.unsubscribe();
+                                }
+                            });
                             pipes.get(pipe).listeners = [];
                         },
                     });
