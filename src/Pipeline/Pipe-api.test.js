@@ -103,29 +103,17 @@ describe("Pipeline API Tests", () => {
         _p = new Pipeline(..._pipesOrSchemas);
     });
 
-    describe.only("Pipeline Schema", () => {
-        it("should intake and output a schema", () => {
-            let _pipe;
+    describe("Pipeline Schema", () => {
+        it("should accept schema", () => {
             expect(
-                () => _pipe = (new Pipeline(basicCollection))
+                () => (new Pipeline(basicCollection))
             ).not.toThrow();
-
-            expect(JSON.stringify(_pipe.schemas[0])).toEqual(
-                JSON.stringify(basicCollection)
-            );
         });
 
-        it.only("should accept schema config", () => {
-            let _pipe;
+        it("should accept schema config", () => {
             expect(
-                () => _pipe = (new Pipeline(_schemaDef))
+                () => (new Pipeline(_schemaDef))
             ).not.toThrow();
-
-            console.log(`_pipe.schemas: ${JSON.stringify(_pipe.schemas, null, 2)}`);
-
-            expect(JSON.stringify(_pipe.schemas[0])).toEqual(
-                JSON.stringify(_schemaDef.schemas[1])
-            );
         });
     });
 

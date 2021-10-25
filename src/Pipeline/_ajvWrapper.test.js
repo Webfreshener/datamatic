@@ -11,13 +11,13 @@ describe("AJVWrapper Tests", () => {
     };
 
     describe.only("AJV Schema Validation", () => {
-        beforeEach(() => {
-            _ajv = new AjvWrapper({
-                schemas: [basicModel],
-            });
-        });
 
         it("should accept valid schemas", () => {
+            let _ajv;
+            expect(() => _ajv = new AjvWrapper({
+                schemas: [basicModel],
+            })).not.toThrow();
+
             const _res = _ajv.exec(basicModel.$id, Object.assign(_data, {active: true}));
             // should have no validator errors
             expect(_ajv.$ajv.errors).toEqual(null);
@@ -25,10 +25,6 @@ describe("AJVWrapper Tests", () => {
             expect(_res).toBe(true);
         });
 
-        it("should provide configured schemas", () => {
-            expect(JSON.stringify(_ajv.schemas[0]))
-                .toEqual(JSON.stringify(basicModel, null, 2));
-        })
     });
 
     describe("Meta-Schemas", () => {
