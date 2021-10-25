@@ -10,20 +10,21 @@ describe("AJVWrapper Tests", () => {
         age: 99
     };
 
-    describe("AJV Schema Validation", () => {
-        beforeEach(() => {
-            _ajv = new AjvWrapper({
-                schemas: [basicModel],
-            });
-        });
+    describe.only("AJV Schema Validation", () => {
 
         it("should accept valid schemas", () => {
+            let _ajv;
+            expect(() => _ajv = new AjvWrapper({
+                schemas: [basicModel],
+            })).not.toThrow();
+
             const _res = _ajv.exec(basicModel.$id, Object.assign(_data, {active: true}));
             // should have no validator errors
             expect(_ajv.$ajv.errors).toEqual(null);
             // validator should return true
             expect(_res).toBe(true);
         });
+
     });
 
     describe("Meta-Schemas", () => {
