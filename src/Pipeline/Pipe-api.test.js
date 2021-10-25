@@ -4,17 +4,129 @@ import {basicCollection} from "../../fixtures/PropertiesModel.schemas";
 import {default as data} from "../../fixtures/pipes-test.data";
 import {default as _pipesOrSchemas} from "../../fixtures/pipes-or-schema"
 
+const _schemaDef = {
+    "schemas": [
+        {
+            "$id": "http://api-hero.webfreshener.com/v1/namespace.json#",
+            "type": "object",
+            "required": [
+                "basePath"
+            ],
+            "properties": {
+                "basePath": {
+                    "type": "string",
+                },
+                "servers": {
+                    "type": "object"
+                },
+                "options": {
+                    "type": "object"
+                },
+                "operations": {
+                    "$ref": "#/definitions/Operations"
+                }
+            },
+            "definitions": {
+                "Operations": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/OperationItem"
+                    }
+                },
+                "OperationItem": {
+                    "type": "object",
+                    "required": [
+                        "operationId",
+                        "method",
+                        "path"
+                    ],
+                    "additionalProperties": false,
+                    "properties": {
+                        "operationId": {
+                            "type": "string"
+                        },
+                        "method": {
+                            "type": "string",
+                            "enum": [
+                                "delete",
+                                "get",
+                                "head",
+                                "options",
+                                "patch",
+                                "post",
+                                "put"
+                            ]
+                        },
+                        "path": {
+                            "type": "string"
+                        },
+                        "request": {
+                            "type": "object"
+                        },
+                        "responses": {
+                            "type": "object"
+                        }
+                    }
+                }
+            }
+        },
+        {
+            "$id": "http://api-hero.webfreshener.com/v1/namespace/operations.json#",
+            // "$schema": "http://api-hero.webfreshener.com/v1/namespace.json#",
+            "allOf": [
+                {
+                    "required": [
+                        "elementClass",
+                        "target"
+                    ],
+                    "properties": {
+                        "elementClass": {
+                            "type": "object"
+                        },
+                        "target": {
+                            "type": "object"
+                        }
+                    }
+                },
+                {
+                    "$ref": "http://api-hero.webfreshener.com/v1/namespace.json#/definitions/Operations"
+                }
+            ]
+        }
+    ],
+    "use": "http://api-hero.webfreshener.com/v1/namespace/operations.json#"
+};
+
 describe("Pipeline API Tests", () => {
     let _p;
     beforeEach(() => {
         _p = new Pipeline(..._pipesOrSchemas);
     });
 
-    test("Pipeline schema", () => {
-        const _p = (new Pipeline(..._pipesOrSchemas)).schemas;
-        expect(JSON.stringify(_p[0])).toEqual(
-            JSON.stringify(_pipesOrSchemas[0])
-        );
+    describe.only("Pipeline Schema", () => {
+        it("should intake and output a schema", () => {
+            let _pipe;
+            expect(
+                () => _pipe = (new Pipeline(basicCollection))
+            ).not.toThrow();
+
+            expect(JSON.stringify(_pipe.schemas[0])).toEqual(
+                JSON.stringify(basicCollection)
+            );
+        });
+
+        it.only("should accept schema config", () => {
+            let _pipe;
+            expect(
+                () => _pipe = (new Pipeline(_schemaDef))
+            ).not.toThrow();
+
+            console.log(`_pipe.schemas: ${JSON.stringify(_pipe.schemas, null, 2)}`);
+
+            expect(JSON.stringify(_pipe.schemas[0])).toEqual(
+                JSON.stringify(_schemaDef.schemas[1])
+            );
+        });
     });
 
     describe("Pipeline exec", () => {

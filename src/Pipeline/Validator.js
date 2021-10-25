@@ -57,7 +57,7 @@ export class Validator {
     /**
      *
      * @param schemasOrConfig
-     * @returns {Object|null|*|undefined}
+     * @returns {Object|null}
      */
     static deriveSchema(schemasOrConfig) {
         if ((typeof schemasOrConfig) === "object" && !schemasOrConfig.schemas) {
@@ -65,7 +65,12 @@ export class Validator {
         }
 
         if (schemasOrConfig.use) {
-            return schemasOrConfig.schemas.find((_) => _.$id === schemasOrConfig.use).schema;
+            const _useSchema = schemasOrConfig.schemas.find((_) => _.$id === schemasOrConfig.use);
+            if (_useSchema) {
+                return _useSchema.schema;
+            } else {
+                return null;
+            }
         }
 
         return schemasOrConfig.schemas.length ? schemasOrConfig.schemas[schemasOrConfig.schemas.length - 1] : null;

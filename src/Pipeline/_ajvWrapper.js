@@ -94,7 +94,7 @@ export class AjvWrapper {
         const _procSchema = (_s) => {
             const _key = ["$id", "id"].find((k) => _s.hasOwnProperty(`${k}`));
             if (_key) {
-                _s[_key] = _procID(_s[_key]);
+                _s["$id"] = _procID(_s[_key]);
             }
             return _s;
         };
