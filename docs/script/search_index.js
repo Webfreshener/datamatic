@@ -12,6 +12,12 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
+    "datamatic/src/ajvwrapper.js~ajvwrapper",
+    "class/src/ajvWrapper.js~AjvWrapper.html",
+    "<span>AjvWrapper</span> <span class=\"search-result-import-path\">datamatic/src/ajvWrapper.js</span>",
+    "class"
+  ],
+  [
     "datamatic/src/model/base-model.js~basemodel",
     "class/src/Model/base-model.js~BaseModel.html",
     "<span>BaseModel</span> <span class=\"search-result-import-path\">datamatic/src/Model/base-model.js</span>",
@@ -111,12 +117,6 @@ window.esdocSearchIndex = [
     "datamatic/src/model/_references.js~_dirtymodels",
     "variable/index.html#static-variable-_dirtyModels",
     "<span>_dirtyModels</span> <span class=\"search-result-import-path\">datamatic/src/Model/_references.js</span>",
-    "variable"
-  ],
-  [
-    "datamatic/src/model/_references.js~_exists",
-    "variable/index.html#static-variable-_exists",
-    "<span>_exists</span> <span class=\"search-result-import-path\">datamatic/src/Model/_references.js</span>",
     "variable"
   ],
   [
@@ -256,12 +256,6 @@ window.esdocSearchIndex = [
     "function/index.html#static-function-walkObject",
     "<span>walkObject</span> <span class=\"search-result-import-path\">datamatic/src/Model/utils.js</span>",
     "function"
-  ],
-  [
-    "datamatic/src/model/_references.js~wf",
-    "variable/index.html#static-variable-wf",
-    "<span>wf</span> <span class=\"search-result-import-path\">datamatic/src/Model/_references.js</span>",
-    "variable"
   ],
   [
     "datamatic/src/pipeline/utils.js~wrapcallback",
@@ -714,9 +708,9 @@ window.esdocSearchIndex = [
     "method"
   ],
   [
-    "src/model/_observerbuilder.js~observerbuilder#get",
-    "class/src/Model/_observerBuilder.js~ObserverBuilder.html#instance-method-get",
-    "src/Model/_observerBuilder.js~ObserverBuilder#get",
+    "src/model/_observerbuilder.js~observerbuilder#getobserverformodel",
+    "class/src/Model/_observerBuilder.js~ObserverBuilder.html#instance-method-getObserverForModel",
+    "src/Model/_observerBuilder.js~ObserverBuilder#getObserverForModel",
     "method"
   ],
   [
@@ -1117,9 +1111,9 @@ window.esdocSearchIndex = [
   ],
   [
     "src/model/itemsmodel.js~itemsmodel#length",
-    "class/src/Model/itemsModel.js~ItemsModel.html#instance-method-length",
+    "class/src/Model/itemsModel.js~ItemsModel.html#instance-get-length",
     "src/Model/itemsModel.js~ItemsModel#length",
-    "method"
+    "member"
   ],
   [
     "src/model/itemsmodel.js~itemsmodel#model",
@@ -1324,6 +1318,12 @@ window.esdocSearchIndex = [
     "class/src/Pipeline/Pipeline.js~PipeListener.html#instance-get-vo",
     "src/Pipeline/Pipeline.js~PipeListener#vo",
     "member"
+  ],
+  [
+    "src/pipeline/pipeline.js~pipeline#clearthrottle",
+    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-clearThrottle",
+    "src/Pipeline/Pipeline.js~Pipeline#clearThrottle",
+    "method"
   ],
   [
     "src/pipeline/pipeline.js~pipeline#clone",
@@ -1672,6 +1672,48 @@ window.esdocSearchIndex = [
     "file/src/Pipeline/vxBehaviorSubject.test.js.html",
     "src/Pipeline/vxBehaviorSubject.test.js",
     "file"
+  ],
+  [
+    "src/ajv-options.js",
+    "file/src/ajv-options.js.html",
+    "src/ajv-options.js",
+    "file"
+  ],
+  [
+    "src/ajvwrapper.js",
+    "file/src/ajvWrapper.js.html",
+    "src/ajvWrapper.js",
+    "file"
+  ],
+  [
+    "src/ajvwrapper.js~ajvwrapper#constructor",
+    "class/src/ajvWrapper.js~AjvWrapper.html#instance-constructor-constructor",
+    "src/ajvWrapper.js~AjvWrapper#constructor",
+    "method"
+  ],
+  [
+    "src/ajvwrapper.js~ajvwrapper#errors",
+    "class/src/ajvWrapper.js~AjvWrapper.html#instance-get-errors",
+    "src/ajvWrapper.js~AjvWrapper#errors",
+    "member"
+  ],
+  [
+    "src/ajvwrapper.js~ajvwrapper#exec",
+    "class/src/ajvWrapper.js~AjvWrapper.html#instance-method-exec",
+    "src/ajvWrapper.js~AjvWrapper#exec",
+    "method"
+  ],
+  [
+    "src/ajvwrapper.js~ajvwrapper#path",
+    "class/src/ajvWrapper.js~AjvWrapper.html#instance-member-path",
+    "src/ajvWrapper.js~AjvWrapper#path",
+    "member"
+  ],
+  [
+    "src/ajvwrapper.js~ajvwrapper.resolvepath",
+    "class/src/ajvWrapper.js~AjvWrapper.html#static-method-resolvePath",
+    "src/ajvWrapper.js~AjvWrapper.resolvePath",
+    "method"
   ],
   [
     "src/complex-schema.test.js",

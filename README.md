@@ -319,6 +319,7 @@ Represents an Properties (Object} entry in the given schema
 | Method        | Arguments | Description  |
 |:--------------|:----------|:-------|
 | constructor | ...pipesOrSchemas | class constructor method |
+| errors [getter]   | | retrieves errors (if any) from last json-schema validation |
 | exec | data (object &#124; array &#124; string &#124; number &#124; boolean)| executes pipeline's callback with data without writing to `pipeline` |
 | subscribe | handler (object &#124; function &#124; schema &#124; array)| subscribes to `pipeline` output notifications |
 | toJSON | | Provides current state of `pipeline` output as JSON |

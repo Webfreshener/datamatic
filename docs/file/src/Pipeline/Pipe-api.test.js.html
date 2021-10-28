@@ -8,7 +8,7 @@
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
   <script src="script/manual.js"></script>
-<meta name="description" content="Observable &amp; Validatable Data Models and Pipelines"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="datamatic"><meta property="twitter:description" content="Observable &amp; Validatable Data Models and Pipelines"></head>
+<meta name="description" content="RxJS + JSON-Schema (Ajv) Based Observable and Validating Data Models and Pipelines"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="datamatic"><meta property="twitter:description" content="RxJS + JSON-Schema (Ajv) Based Observable and Validating Data Models and Pipelines"></head>
 <body class="layout-container" data-ice="rootContainer">
 
 <header>
@@ -29,7 +29,8 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#model">Model</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#model">Model</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_branchNotifier.js~Notifiers.html">Notifiers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_metaData.js~MetaData.html">MetaData</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_observerBuilder.js~ObserverBuilder.html">ObserverBuilder</a></span></span></li>
@@ -49,7 +50,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-walkObject">walkObject</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ajvRef">_ajvRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_dirtyModels">_dirtyModels</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_oBuilders">_oBuilders</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_object">_object</a></span></span></li>
@@ -59,7 +59,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaOptions">_schemaOptions</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaSignatures">_schemaSignatures</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validators">_validators</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-wf">wf</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pipeline">Pipeline</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/Executor.js~Executor.html">Executor</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/Iterator.js~Iterator.html">Iterator</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/Pipeline.js~PipeListener.html">PipeListener</a></span></span></li>
@@ -85,17 +84,117 @@ import {basicCollection} from &quot;../../fixtures/PropertiesModel.schemas&quot;
 import {default as data} from &quot;../../fixtures/pipes-test.data&quot;;
 import {default as _pipesOrSchemas} from &quot;../../fixtures/pipes-or-schema&quot;
 
+const _schemaDef = {
+    &quot;schemas&quot;: [
+        {
+            &quot;$id&quot;: &quot;http://api-hero.webfreshener.com/v1/namespace.json#&quot;,
+            &quot;type&quot;: &quot;object&quot;,
+            &quot;required&quot;: [
+                &quot;basePath&quot;
+            ],
+            &quot;properties&quot;: {
+                &quot;basePath&quot;: {
+                    &quot;type&quot;: &quot;string&quot;,
+                },
+                &quot;servers&quot;: {
+                    &quot;type&quot;: &quot;object&quot;
+                },
+                &quot;options&quot;: {
+                    &quot;type&quot;: &quot;object&quot;
+                },
+                &quot;operations&quot;: {
+                    &quot;$ref&quot;: &quot;#/definitions/Operations&quot;
+                }
+            },
+            &quot;definitions&quot;: {
+                &quot;Operations&quot;: {
+                    &quot;type&quot;: &quot;array&quot;,
+                    &quot;items&quot;: {
+                        &quot;$ref&quot;: &quot;#/definitions/OperationItem&quot;
+                    }
+                },
+                &quot;OperationItem&quot;: {
+                    &quot;type&quot;: &quot;object&quot;,
+                    &quot;required&quot;: [
+                        &quot;operationId&quot;,
+                        &quot;method&quot;,
+                        &quot;path&quot;
+                    ],
+                    &quot;additionalProperties&quot;: false,
+                    &quot;properties&quot;: {
+                        &quot;operationId&quot;: {
+                            &quot;type&quot;: &quot;string&quot;
+                        },
+                        &quot;method&quot;: {
+                            &quot;type&quot;: &quot;string&quot;,
+                            &quot;enum&quot;: [
+                                &quot;delete&quot;,
+                                &quot;get&quot;,
+                                &quot;head&quot;,
+                                &quot;options&quot;,
+                                &quot;patch&quot;,
+                                &quot;post&quot;,
+                                &quot;put&quot;
+                            ]
+                        },
+                        &quot;path&quot;: {
+                            &quot;type&quot;: &quot;string&quot;
+                        },
+                        &quot;request&quot;: {
+                            &quot;type&quot;: &quot;object&quot;
+                        },
+                        &quot;responses&quot;: {
+                            &quot;type&quot;: &quot;object&quot;
+                        }
+                    }
+                }
+            }
+        },
+        {
+            &quot;$id&quot;: &quot;http://api-hero.webfreshener.com/v1/namespace/operations.json#&quot;,
+            // &quot;$schema&quot;: &quot;http://api-hero.webfreshener.com/v1/namespace.json#&quot;,
+            &quot;allOf&quot;: [
+                {
+                    &quot;required&quot;: [
+                        &quot;elementClass&quot;,
+                        &quot;target&quot;
+                    ],
+                    &quot;properties&quot;: {
+                        &quot;elementClass&quot;: {
+                            &quot;type&quot;: &quot;object&quot;
+                        },
+                        &quot;target&quot;: {
+                            &quot;type&quot;: &quot;object&quot;
+                        }
+                    }
+                },
+                {
+                    &quot;$ref&quot;: &quot;http://api-hero.webfreshener.com/v1/namespace.json#/definitions/Operations&quot;
+                }
+            ]
+        }
+    ],
+    &quot;use&quot;: &quot;http://api-hero.webfreshener.com/v1/namespace/operations.json#&quot;
+};
+
 describe(&quot;Pipeline API Tests&quot;, () =&gt; {
     let _p;
     beforeEach(() =&gt; {
         _p = new Pipeline(..._pipesOrSchemas);
     });
 
-    test(&quot;Pipeline schema&quot;, () =&gt; {
-        const _p = (new Pipeline(..._pipesOrSchemas)).schemas;
-        expect(JSON.stringify(_p[0])).toEqual(
-            JSON.stringify(_pipesOrSchemas[0])
-        );
+    describe(&quot;Pipeline Schema&quot;, () =&gt; {
+        it(&quot;should accept schema&quot;, () =&gt; {
+            expect(
+                () =&gt; (new Pipeline(basicCollection))
+            ).not.toThrow();
+        });
+
+        it(&quot;should accept schema config&quot;, () =&gt; {
+            expect(
+                () =&gt; (new Pipeline(_schemaDef))
+            ).not.toThrow();
+        });
     });
 
     describe(&quot;Pipeline exec&quot;, () =&gt; {
@@ -124,7 +223,7 @@ describe(&quot;Pipeline API Tests&quot;, () =&gt; {
             try {
                 _p.exec(&quot;invalid value&quot;);
             } catch (e) {
-                expect(e.error[0].message).toEqual(&quot;should be array&quot;);
+                expect(e.error[0].message).toEqual(&quot;must be array&quot;);
             }
         });
     });
@@ -146,7 +245,7 @@ describe(&quot;Pipeline API Tests&quot;, () =&gt; {
             },
             error: (e) =&gt; {
                 _sub.unsubscribe();
-                expect(e.error[0].message).toEqual(&quot;should be array&quot;);
+                expect(e.error[0].message).toEqual(&quot;must be array&quot;);
                 expect(JSON.stringify(e.data)).toEqual(JSON.stringify(data[0]));
                 done();
             },
@@ -173,7 +272,7 @@ describe(&quot;Pipeline API Tests&quot;, () =&gt; {
         _p.write(data[0]);
     });
 
-    it(&quot;should split pipeline&quot;, () =&gt; {
+    it(&quot;should split pipeline&quot;, (done) =&gt; {
         const _config = [
             {
                 exec: (d) =&gt; {
@@ -185,9 +284,14 @@ describe(&quot;Pipeline API Tests&quot;, () =&gt; {
             },
         ];
 
-        const _cb = jest.fn();
+        // const _cb = jest.fn();
+        let _cnt = 0;
         _p = new Pipeline({
             exec: (d) =&gt; d
+        });
+
+        _p.subscribe({
+            error: done,
         });
 
         const _split = _p.split(_config);
@@ -196,7 +300,7 @@ describe(&quot;Pipeline API Tests&quot;, () =&gt; {
         _split.forEach((pipe) =&gt; {
             const _sub = pipe.subscribe({
                 next: () =&gt; {
-                    _cb();
+                    _cnt++;
                     _sub.unsubscribe();
                 },
                 error: (e) =&gt; {
@@ -206,39 +310,65 @@ describe(&quot;Pipeline API Tests&quot;, () =&gt; {
             });
         });
 
+        _p.write(data);
+
         setTimeout(() =&gt; {
-            _p.write(data);
-            expect(_cb).toHaveBeenCalledTimes(2);
+            // expect(_cb).toHaveBeenCalledTimes(2);
+            expect(_cnt).toEqual(2);
             expect(_split[0].tap()[0].name.match(/.*\sRENAMED+$/)).toBeTruthy();
             expect(_split[1].tap()[0].age).toEqual(99);
+            done();
         }, 50);
     });
 
-    it(&quot;should exec multiple pipes inline&quot;, () =&gt; {
-        const _p1 = new Pipeline({
-            schema: basicCollection,
-            exec: (d) =&gt; d.map((m) =&gt; Object.assign(m, {name: `${m.name} RENAMED`})),
-        });
+    it(&quot;should exec multiple pipes inline&quot;, (done) =&gt; {
+        const _p1 = new Pipeline(
+            basicCollection,
+            (d) =&gt; d.map((m) =&gt; Object.assign(m, {name: `${m.name} RENAMED`}))
+        );
 
-        const _p2 = new Pipeline({
-            schema: basicCollection,
-            exec: (d) =&gt; d.map((m) =&gt; Object.assign(m, {age: 99})),
-        });
+        const _p2 = new Pipeline(
+            basicCollection,
+            (d) =&gt; d.map((m) =&gt; Object.assign(m, {age: 99}))
+        );
 
         const _inline = _p.pipe(_p1, _p2);
+
+        _inline.subscribe({
+            next: (d) =&gt; {
+                expect(d.length).toEqual(data.length);
+                expect(d[data.length - 1].name.match(/.*\sRENAMED+$/)).toBeTruthy();
+                expect(d[data.length - 1].age).toEqual(99);
+                expect(1).toBeTruthy();
+            },
+            error: done,
+        });
 
         _inline.write(data);
 
         setTimeout(() =&gt; {
-            expect(JSON.stringify(_inline.schemas[0].schemas[0].schema)).toEqual(JSON.stringify(basicCollection));
             expect(_inline.tap().length).toEqual(data.length);
-            expect(_inline.tap()[0].name.match(/.*\sRENAMED+$/)).toBeTruthy();
-            expect(_inline.tap()[0].age).toEqual(99);
             expect(_inline.tap()[data.length - 1].name.match(/.*\sRENAMED+$/)).toBeTruthy();
             expect(_inline.tap()[data.length - 1].age).toEqual(99);
+            expect(1).toBeTruthy();
+            done();
             _inline.close();
-        }, 0);
+        }, 50);
 
+    });
+
+    test(&quot;pipe&quot;, (done) =&gt; {
+        const _pipe = new Pipeline(
+            basicCollection,
+            (d) =&gt; d.map((m) =&gt; Object.assign(m, {name: `${m.name} RENAMED`}))
+        );
+
+        _pipe.pipe((d) =&gt; d).subscribe({
+            next: () =&gt; done(),
+            error: done,
+        });
+
+        _pipe.write(data);
     });
 
     test(&quot;yield&quot;, () =&gt; {
@@ -278,22 +408,61 @@ describe(&quot;Pipeline API Tests&quot;, () =&gt; {
         _tx.write(data);
     });
 
-    test(&quot;throttle&quot;, () =&gt; {
-        const _cb = jest.fn();
-        const _sub = _p.throttle(150).subscribe(() =&gt; _cb());
-        data.forEach((d) =&gt; {
-            _p.write([d]);
+    describe(&quot;throttle/clearThrottle&quot;, () =&gt; {
+        test(&quot;throttle&quot;, (done) =&gt; {
+            let _cnt = 0;
+            const rate = 150;
+            const _sub = _p.throttle(rate).subscribe(() =&gt; _cnt++);
+            data.forEach((d) =&gt; {
+                _p.write([d]);
+            });
+
+            expect(_p.errors).toEqual(null);
+
+            const _ivl = setInterval(() =&gt; {
+                if (_cnt === data.length) {
+                    _p.clearThrottle();
+                    clearInterval(_ivl);
+                    expect(_p.tap().length).toEqual(1);
+                    expect(_p.tap()[0].hasOwnProperty(&quot;name&quot;)).toBeTruthy();
+                    expect(_p.tap()[0].name).toEqual(data[data.length - 1].name);
+                    _sub.unsubscribe();
+                    done();
+                } else {
+                    done(`did not receive all data via throttle\nexpected: ${data.length}\nreceived: ${_cnt}\n`);
+                }
+            }, (data.length * rate) + 10);
         });
 
-        expect(_p.errors).toEqual(null);
-        let _cnt = 0;
-        const _ivl = setInterval(() =&gt; {
-            expect(_cb).toHaveBeenCalledTimes(_cnt++);
-            if (_cnt === data.length) {
-                clearInterval(_ivl);
-                _sub.unsubscribe();
-            }
-        }, 151);
+        test.skip(&quot;clearThrottle&quot;, (done) =&gt; {
+            let _cnt = 0;
+            const rate = 150;
+            const _sub = _p.throttle(rate).subscribe({
+                next: (d) =&gt; {
+                    _p.clearThrottle();
+                    _cnt++;
+                },
+                error: done,
+            });
+
+            const _ivl = setInterval(() =&gt; {
+                if (_cnt === 1) {
+                    expect(Array.isArray(_p.tap())).toBeTruthy();
+                    expect(_p.tap().length).toEqual(1);
+                    expect(typeof _p.tap()[0]).toBe(&quot;object&quot;);
+                    expect(_p.tap()[0].name).toBe(&quot;Alice&quot;);
+                    clearInterval(_ivl);
+                    _sub.unsubscribe();
+                    done();
+                } else {
+                    done(`did not receive correct data via throttle\nexpected: 1\nreceived: ${_cnt}\n`);
+                }
+            }, rate);
+
+            data.forEach((d) =&gt; {
+                _p.write([d]);
+            });
+        })
     });
 
     test(&quot;sample&quot;, () =&gt; {

@@ -8,7 +8,7 @@
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
   <script src="script/manual.js"></script>
-<meta name="description" content="Observable &amp; Validatable Data Models and Pipelines"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="datamatic"><meta property="twitter:description" content="Observable &amp; Validatable Data Models and Pipelines"></head>
+<meta name="description" content="RxJS + JSON-Schema (Ajv) Based Observable and Validating Data Models and Pipelines"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="datamatic"><meta property="twitter:description" content="RxJS + JSON-Schema (Ajv) Based Observable and Validating Data Models and Pipelines"></head>
 <body class="layout-container" data-ice="rootContainer">
 
 <header>
@@ -29,7 +29,8 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#model">Model</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#model">Model</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_branchNotifier.js~Notifiers.html">Notifiers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_metaData.js~MetaData.html">MetaData</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_observerBuilder.js~ObserverBuilder.html">ObserverBuilder</a></span></span></li>
@@ -49,7 +50,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-walkObject">walkObject</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ajvRef">_ajvRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_dirtyModels">_dirtyModels</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_oBuilders">_oBuilders</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_object">_object</a></span></span></li>
@@ -59,7 +59,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaOptions">_schemaOptions</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaSignatures">_schemaSignatures</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validators">_validators</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-wf">wf</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pipeline">Pipeline</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/Executor.js~Executor.html">Executor</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/Iterator.js~Iterator.html">Iterator</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/Pipeline.js~PipeListener.html">PipeListener</a></span></span></li>
@@ -136,7 +135,7 @@
           
           
           
-          <span class="code" data-ice="name"><span><a href="class/src/Pipeline/Validator.js~Validator.html#static-method-deriveSchema">deriveSchema</a></span></span><span class="code" data-ice="signature">(schemasOrConfig: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null">null</a></span> | <span>*</span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></span></span>
+          <span class="code" data-ice="name"><span><a href="class/src/Pipeline/Validator.js~Validator.html#static-method-deriveSchema">deriveSchema</a></span></span><span class="code" data-ice="signature">(schemasOrConfig: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null">null</a></span></span>
         </p>
       </div>
       <div>
@@ -535,7 +534,7 @@
     
     
     
-    <span class="code" data-ice="name">deriveSchema</span><span class="code" data-ice="signature">(schemasOrConfig: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null">null</a></span> | <span>*</span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></span></span>
+    <span class="code" data-ice="name">deriveSchema</span><span class="code" data-ice="signature">(schemasOrConfig: <span>*</span>): <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null">null</a></span></span>
     <span class="right-info">
       
       
@@ -574,7 +573,7 @@
     <table>
       <tbody>
         <tr>
-          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null">null</a></span> | <span>*</span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined">undefined</a></span></td>
+          <td class="return-type code" data-ice="returnType"><span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></span> | <span><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/null">null</a></span></td>
           
         </tr>
       </tbody>
@@ -684,7 +683,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Pipeline/Validator.js.html#lineNumber79">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Pipeline/Validator.js.html#lineNumber84">source</a></span></span>
     </span>
   </h3>
 
@@ -754,7 +753,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Pipeline/Validator.js.html#lineNumber133">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Pipeline/Validator.js.html#lineNumber138">source</a></span></span>
     </span>
   </h3>
 
@@ -810,7 +809,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Pipeline/Validator.js.html#lineNumber122">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Pipeline/Validator.js.html#lineNumber127">source</a></span></span>
     </span>
   </h3>
 
@@ -866,7 +865,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Pipeline/Validator.js.html#lineNumber166">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Pipeline/Validator.js.html#lineNumber171">source</a></span></span>
     </span>
   </h3>
 
@@ -910,7 +909,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Pipeline/Validator.js.html#lineNumber194">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Pipeline/Validator.js.html#lineNumber199">source</a></span></span>
     </span>
   </h3>
 
@@ -969,7 +968,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Pipeline/Validator.js.html#lineNumber112">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Pipeline/Validator.js.html#lineNumber117">source</a></span></span>
     </span>
   </h3>
 
@@ -1025,7 +1024,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Pipeline/Validator.js.html#lineNumber142">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Pipeline/Validator.js.html#lineNumber147">source</a></span></span>
     </span>
   </h3>
 
@@ -1097,7 +1096,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Pipeline/Validator.js.html#lineNumber203">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Pipeline/Validator.js.html#lineNumber208">source</a></span></span>
     </span>
   </h3>
 
@@ -1153,7 +1152,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Pipeline/Validator.js.html#lineNumber211">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Pipeline/Validator.js.html#lineNumber216">source</a></span></span>
     </span>
   </h3>
 
@@ -1209,7 +1208,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Pipeline/Validator.js.html#lineNumber150">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Pipeline/Validator.js.html#lineNumber155">source</a></span></span>
     </span>
   </h3>
 
@@ -1281,7 +1280,7 @@
     <span class="right-info">
       
       
-      <span data-ice="source"><span><a href="file/src/Pipeline/Validator.js.html#lineNumber219">source</a></span></span>
+      <span data-ice="source"><span><a href="file/src/Pipeline/Validator.js.html#lineNumber224">source</a></span></span>
     </span>
   </h3>
 

@@ -8,7 +8,7 @@
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
   <script src="script/manual.js"></script>
-<meta name="description" content="Observable &amp; Validatable Data Models and Pipelines"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="datamatic"><meta property="twitter:description" content="Observable &amp; Validatable Data Models and Pipelines"></head>
+<meta name="description" content="RxJS + JSON-Schema (Ajv) Based Observable and Validating Data Models and Pipelines"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="datamatic"><meta property="twitter:description" content="RxJS + JSON-Schema (Ajv) Based Observable and Validating Data Models and Pipelines"></head>
 <body class="layout-container" data-ice="rootContainer">
 
 <header>
@@ -29,7 +29,8 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#model">Model</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#model">Model</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_branchNotifier.js~Notifiers.html">Notifiers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_metaData.js~MetaData.html">MetaData</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_observerBuilder.js~ObserverBuilder.html">ObserverBuilder</a></span></span></li>
@@ -49,7 +50,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-walkObject">walkObject</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ajvRef">_ajvRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_dirtyModels">_dirtyModels</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_oBuilders">_oBuilders</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_object">_object</a></span></span></li>
@@ -59,7 +59,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaOptions">_schemaOptions</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaSignatures">_schemaSignatures</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validators">_validators</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-wf">wf</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pipeline">Pipeline</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/Executor.js~Executor.html">Executor</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/Iterator.js~Iterator.html">Iterator</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/Pipeline.js~PipeListener.html">PipeListener</a></span></span></li>
@@ -118,7 +117,7 @@ const _documents = new WeakMap();
 /**
  * returns Items or Properties model class based on type of expected property
  * @param el
- * @returns {ItemsModel|PropertiesModel}
+ * @returns {ItemsModel|PropertiesModel|Function}
  * @private
  */
 const _getModelClass = (el) =&gt; {
@@ -161,16 +160,10 @@ export class Model {
         _schemaSignatures.set(this, schemas);
         _oBuilders.set(this, new ObserverBuilder());
 
-        let _doc;
+        const _schema = schemas.hasOwnProperty(&quot;schemas&quot;) ?
+            schemas.schemas[schemas.schemas.length - 1] : schemas;
 
-        if (schemas.hasOwnProperty(&quot;schemas&quot;)) {
-            // if value of type is &quot;array&quot; or an array of items is defined,
-            // we handle as Array
-            _doc = new (_getModelClass(schemas.schemas[schemas.schemas.length - 1]))
-            (this, schemas.schemas[schemas.schemas.length - 1].$id);
-        } else {
-            _doc = new (_getModelClass(schemas))(this, schemas.$id);
-        }
+        const _doc = new (_getModelClass(_schema))(this, _schema.$id || &quot;root#&quot;);
 
         // creates holder for dirty model flags in this scope
         _dirtyModels.set(this, {});
@@ -338,8 +331,7 @@ export class Model {
             .filter((itm, idx, arr) =&gt; arr.indexOf(itm) &gt; -1))
             .forEach((step) =&gt; {
                 if (_ref[step]) {
-                    _ref = _ref[step];
-                    _steps.push(_ref);
+                    _steps[_steps.length] = _ref = _ref[step];
                 }
             });
         return _steps;

@@ -8,15 +8,15 @@
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
   <script src="script/manual.js"></script>
-<meta name="description" content="Observable &amp; Validatable Data Models and Pipelines"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="datamatic"><meta property="twitter:description" content="Observable &amp; Validatable Data Models and Pipelines"></head>
+<meta name="description" content="RxJS + JSON-Schema (Ajv) Based Observable and Validating Data Models and Pipelines"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="datamatic"><meta property="twitter:description" content="RxJS + JSON-Schema (Ajv) Based Observable and Validating Data Models and Pipelines"></head>
 <body class="layout-container" data-ice="rootContainer">
 
 <header>
   <a href="./">Home</a>
-
+  
   <a href="identifiers.html">Reference</a>
   <a href="source.html">Source</a>
-
+  
   <div class="search-box">
   <span>
     <img src="./image/search.png">
@@ -28,8 +28,9 @@
 
 <nav class="navigation" data-ice="nav"><div>
   <ul>
-
-  <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#model">Model</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
+    
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#model">Model</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_branchNotifier.js~Notifiers.html">Notifiers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_metaData.js~MetaData.html">MetaData</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_observerBuilder.js~ObserverBuilder.html">ObserverBuilder</a></span></span></li>
@@ -49,7 +50,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-walkObject">walkObject</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ajvRef">_ajvRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_dirtyModels">_dirtyModels</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_oBuilders">_oBuilders</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_object">_object</a></span></span></li>
@@ -59,7 +59,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaOptions">_schemaOptions</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaSignatures">_schemaSignatures</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validators">_validators</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-wf">wf</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pipeline">Pipeline</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/Executor.js~Executor.html">Executor</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/Iterator.js~Iterator.html">Iterator</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/Pipeline.js~PipeListener.html">PipeListener</a></span></span></li>
@@ -81,7 +80,8 @@
 <div class="content" data-ice="content"><h1 data-ice="title">src/complex-schema.test.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {default as Schema} from &quot;../fixtures/basic-refs.schema&quot;;
 import {default as Data} from &quot;../fixtures/basic-refs.data&quot;;
-import {default as Swagger} from &quot;../fixtures/Swagger&quot;;
+import {default as Swagger} from &quot;../fixtures/OpenAPIv2&quot;;
+import {default as OpenAPIv3} from &quot;../fixtures/OpenAPIv3&quot;;
 import {default as JSONSchema4} from &quot;../fixtures/json-schema-draft04.schema&quot;;
 import {default as basicAPI} from &quot;../fixtures/petstore.v2&quot;
 import {Model} from &quot;./Model&quot;;
@@ -109,17 +109,37 @@ describe(&quot;Basic Refs&quot;, () =&gt; {
             const _owner = new Model({
                 meta: [JSONSchema4],
                 schemas: [Swagger],
-                use: &quot;http://swagger.io/v2/schema.json#&quot;
+                use: &quot;http://swagger.io/v2/schema.json#&quot;,
             });
-                _owner.model = basicAPI;
+            _owner.model = basicAPI;
             // test to ensure no errors were logged
             expect(_owner.errors).toBe(null);
             // test for completeness
             expect(_owner.toJSON()).toEqual(basicAPI);
-        })
-            ;
-        })
+        });
+
+        it(&quot;should load and validate OpenAPIv3 Schema&quot;, () =&gt; {
+            const _d = {
+                openapi: &quot;3.0.1&quot;,
+                info: {
+                    title: &quot;testing&quot;,
+                    version: &quot;1.0.0&quot;,
+                },
+                paths: {},
+            };
+            const _owner = new Model({
+                meta: [JSONSchema4],
+                schemas: [OpenAPIv3],
+                use: &quot;http://openapis.org/v3/schema.json#&quot;,
+            });
+            _owner.model = _d;
+            // test to ensure no errors were logged
+            expect(_owner.errors).toBe(null);
+            // test for completeness
+            expect(_owner.toJSON()).toEqual(_d);
+        });
     });
+});
 </code></pre>
 
 </div>

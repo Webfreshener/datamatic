@@ -8,7 +8,7 @@
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
   <script src="script/manual.js"></script>
-<meta name="description" content="Observable &amp; Validatable Data Models and Pipelines"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="datamatic"><meta property="twitter:description" content="Observable &amp; Validatable Data Models and Pipelines"></head>
+<meta name="description" content="RxJS + JSON-Schema (Ajv) Based Observable and Validating Data Models and Pipelines"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="datamatic"><meta property="twitter:description" content="RxJS + JSON-Schema (Ajv) Based Observable and Validating Data Models and Pipelines"></head>
 <body class="layout-container" data-ice="rootContainer">
 
 <header>
@@ -29,7 +29,8 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#model">Model</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#model">Model</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_branchNotifier.js~Notifiers.html">Notifiers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_metaData.js~MetaData.html">MetaData</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_observerBuilder.js~ObserverBuilder.html">ObserverBuilder</a></span></span></li>
@@ -49,7 +50,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-walkObject">walkObject</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ajvRef">_ajvRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_dirtyModels">_dirtyModels</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_oBuilders">_oBuilders</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_object">_object</a></span></span></li>
@@ -59,7 +59,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaOptions">_schemaOptions</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaSignatures">_schemaSignatures</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validators">_validators</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-wf">wf</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pipeline">Pipeline</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/Executor.js~Executor.html">Executor</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/Iterator.js~Iterator.html">Iterator</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/Pipeline.js~PipeListener.html">PipeListener</a></span></span></li>
@@ -138,7 +137,6 @@ export class Pipeline {
      * @param pipesOrVOsOrSchemas
      */
     constructor(...pipesOrVOsOrSchemas) {
-        _pipes.set(this, {});
         _cache.set(this, []);
 
         // TODO: solve this issue with async methods to remove kludge
@@ -148,63 +146,18 @@ export class Pipeline {
 
         pipesOrVOsOrSchemas = mapArgs(...pipesOrVOsOrSchemas);
 
-        // enforces 2 callback minimum for `reduce` by appending pass-thru callbacks
-        const _callbacks = fill(Pipeline.getExecs(...pipesOrVOsOrSchemas));
-
-        const _inPipe = (
-            Array.isArray(pipesOrVOsOrSchemas) &amp;&amp; pipesOrVOsOrSchemas.length
-        ) ? pipesOrVOsOrSchemas[0] : pipesOrVOsOrSchemas.length ?
-            pipesOrVOsOrSchemas : {
-                schema: [DefaultVOSchema, DefaultVOSchema],
-                exec: (d) =&gt; d,
-            };
-
-        const _pSchemas = [...pipesOrVOsOrSchemas]
-            .filter((_p) =&gt; {
-                // filters array for validators and valid schemas
-                return (
-                    // returns true if TxValidator
-                    (_p instanceof Validator) ||
-                    // returns true if has `schema` attribute and is a valid `json-schema`
-                    _p[&quot;schema&quot;] &amp;&amp; Validator.validateSchemas(_p.schema)
-                );
-            }).map(_ =&gt; _.schema);
-
-        const _getInSchema = () =&gt; {
-            if (_pSchemas.length) {
-                return (_pSchemas[0] instanceof Validator) ?
-                    _pSchemas[0].schema : _pSchemas[0];
-            }
-            return DefaultVOSchema;
-        };
-
-        const _inSchema = _getInSchema();
-        const _outSchema = _pSchemas.length &gt; 1 ? _pSchemas[_pSchemas.length - 1] : _inSchema;
-
-        if (!_pSchemas.length) {
-            _pSchemas.splice(0, 0, {schemas: [DefaultVOSchema]}, {schemas: [DefaultVOSchema]});
-        }
-
         // stores config &amp; state
         _pipes.set(this,
             Properties.init(this, {
-                vo: (_inPipe instanceof Validator) ? _inPipe : new Validator(_inSchema),
-                callbacks: _callbacks,
-                schemas: _pSchemas,
-                inSchema: _inSchema,
-                outSchema: _outSchema,
-                pOS: pipesOrVOsOrSchemas,
-                _pipes: _pipes,
-            }),
+                callbacks: fill(Pipeline.getExecs(...pipesOrVOsOrSchemas)),
+                pipesOrVOsOrSchemas: pipesOrVOsOrSchemas,
+                pipes: _pipes,
+            })
         );
-
-        _pipes.get(this).ivl = 0;
-        _pipes.get(this).ivlVal = 0;
-        _pipes.get(this).listeners = [new PipeListener(this)];
 
         // define exec in constructor to ensure method visibility
         Object.defineProperty(this, &quot;exec&quot;, {
-            // value: (data) =&gt; _pipes.get(this).exec(data),
+            // value: (data) =&gt; pipes.get(this).exec(data),
             value: (data) =&gt; {
                 return _pipes.get(this).exec(data);
             },
@@ -219,7 +172,13 @@ export class Pipeline {
      * @returns {Pipeline}
      */
     pipe(...pipesOrSchemas) {
-        return new Pipeline([_pipes.get(this).out, ...pipesOrSchemas]);
+        const __ = new Pipeline(...pipesOrSchemas);
+        this.subscribe({
+            next: (d) =&gt; {
+                __.write(d);
+            }
+        });
+        return __;
     }
 
     /**
@@ -294,10 +253,10 @@ export class Pipeline {
 
     /**
      * Returns validation errors
-     * @returns {*}
+     * @returns {*|null}
      */
     get errors() {
-        return _pipes.get(this).vo.errors;
+        return _pipes.get(this).vo.errors || null;
     }
 
     /**
@@ -418,27 +377,31 @@ export class Pipeline {
      * @returns {Pipeline}
      */
     throttle(rate) {
-        const _ivl = _pipes.get(this).tO;
-
-        if (_ivl) {
-            _ivl.clearInterval();
-        }
+        this.clearThrottle();
 
         if (rate &gt;= 0) {
-            _pipes.get(this).tO = setInterval(
-                () =&gt; {
-                    if (_cache.get(this).length) {
-                        const _func = _cache.get(this).pop();
-                        if ((typeof _func) === &quot;function&quot;) {
-                            _pipes.get(this).out.model = _func();
+            _pipes.set(this, Object.assign(_pipes.get(this), {
+                    tO: setInterval(() =&gt; {
+                        if (_cache.get(this).length) {
+                            const _func = _cache.get(this).splice(0, 1);
+                            if ((typeof _func[0]) === &quot;function&quot;) {
+                                _pipes.get(this).out.model = _func[0]();
+                            }
                         }
-                    }
-                    delete _pipes.get(this).tO;
-                },
+                    }),
+                }),
                 parseInt(rate, 10)
             );
         }
         return this;
+    }
+
+    clearThrottle() {
+        const _ivl = _pipes.get(this).tO;
+
+        if (_ivl) {
+            clearInterval(_ivl);
+        }
     }
 
     /**
@@ -517,9 +480,19 @@ export class PipeListener {
      *
      * @param target
      */
-    constructor(target) {
+    constructor(target, vo) {
         const _self = this;
-        _pipes.set(_self, target);
+
+        Object.defineProperties(this, {
+            vo: {
+                get: () =&gt; vo,
+                enumerable: true,
+                configurable: false,
+                // writable: false,
+            }
+        })
+
+        _pipes.set(this, target);
         this.vo.subscribe({
             next: (d) =&gt; _self.next(d),
             error: (e) =&gt; _self.error(e),
@@ -540,7 +513,7 @@ export class PipeListener {
      * @returns {Validator}
      */
     get vo() {
-        return _pipes.get(this.target).vo;
+        return _pipes.get(_pipes.get(this)).vo;
     }
 
     /**
@@ -575,14 +548,19 @@ export class PipeListener {
     next(data) {
         // enforces JSON formatting if feature is present
         data = data &amp;&amp; data.toJSON ? data.toJSON() : data;
-        const _target = _pipes.get(this);
+        const _targetProps = _pipes.get(this.target);
         // tests for presence of rate-limit timeout
-        if (_pipes.get(_target).tO) {
-            // caches operation for later execution. ordering is FIFO
-            _cache.get(_target).splice(0, 0, () =&gt; _pipes.get(_target).cb(data));
+        if (_targetProps.tO) {
+            const __ = () =&gt; {
+                return _pipes.get(this.target).exec(data);
+            };
+            // caches operation for later execution. Exec ordering is FIFO
+            _cache.get(this.target).splice(_cache.get(this.target).length, 0, __);
             // cancels current execution
             return void 0;
         }
+
+        const _target = _pipes.get(this);
 
         // tests for interval (ivl)
         if (_pipes.get(_target).ivl !== 0) {

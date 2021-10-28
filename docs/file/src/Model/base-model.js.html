@@ -8,7 +8,7 @@
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
   <script src="script/manual.js"></script>
-<meta name="description" content="Observable &amp; Validatable Data Models and Pipelines"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="datamatic"><meta property="twitter:description" content="Observable &amp; Validatable Data Models and Pipelines"></head>
+<meta name="description" content="RxJS + JSON-Schema (Ajv) Based Observable and Validating Data Models and Pipelines"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="datamatic"><meta property="twitter:description" content="RxJS + JSON-Schema (Ajv) Based Observable and Validating Data Models and Pipelines"></head>
 <body class="layout-container" data-ice="rootContainer">
 
 <header>
@@ -29,7 +29,8 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#model">Model</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#model">Model</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_branchNotifier.js~Notifiers.html">Notifiers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_metaData.js~MetaData.html">MetaData</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_observerBuilder.js~ObserverBuilder.html">ObserverBuilder</a></span></span></li>
@@ -49,7 +50,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-walkObject">walkObject</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ajvRef">_ajvRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_dirtyModels">_dirtyModels</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_oBuilders">_oBuilders</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_object">_object</a></span></span></li>
@@ -59,7 +59,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaOptions">_schemaOptions</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaSignatures">_schemaSignatures</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validators">_validators</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-wf">wf</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pipeline">Pipeline</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/Executor.js~Executor.html">Executor</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/Iterator.js~Iterator.html">Iterator</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/Pipeline.js~PipeListener.html">PipeListener</a></span></span></li>
@@ -122,10 +121,10 @@ const createMetaDataRef = (ref, metaRef, path) =&gt; {
         // root properties are handed the Model object
         // will create new MetaData and set reference as root element
         _md = new MetaData(ref, {
-            _path: path, //&quot;&quot;,
+            _path: path || &quot;root#&quot;,
             _parent: null,
             _root: ref,
-            _owner: metaRef,
+            _owner: metaRef || null,
         });
     } else if ((typeof metaRef) === &quot;object&quot;) {
         // extends MetaData reference
@@ -133,7 +132,7 @@ const createMetaDataRef = (ref, metaRef, path) =&gt; {
             _md = metaRef;
         } else {
             // todo: re-evaluate this line for possible removal
-            _md = new MetaData(this, metaRef);
+            _md = new MetaData(ref, metaRef);
         }
     } else {
         throw &quot;Invalid attempt to construct Model.&quot; +
@@ -168,9 +167,9 @@ export class BaseModel {
      */
     subscribeTo(path, func) {
         const _oBuilder = _oBuilders.get(this.owner);
-        const _o = _oBuilder.getObserverForPath(path);
-        if (_o === null) {
-            return _o;
+        let _o = _oBuilder.getObserverForPath(path);
+        if (!_o) {
+            _o = _oBuilder.create(this, `${this.path}`);
         }
 
         // support next handler being passed directly
@@ -182,14 +181,14 @@ export class BaseModel {
         // references to subscriptions for Observable
         const _subRefs = [];
 
-        // init&apos;s observer handlers if defined on passed `func` object
+        // inits observer handlers if defined on passed `func` object
         [
             {call: &quot;onNext&quot;, func: &quot;next&quot;},
             {call: &quot;onError&quot;, func: &quot;error&quot;},
             {call: &quot;onComplete&quot;, func: &quot;complete&quot;},
         ].forEach((obs) =&gt; {
             if (func.hasOwnProperty(obs.func)) {
-                _subRefs.push(_o[obs.call].subscribe({next: func[obs.func]}));
+                _subRefs.push( _o[obs.call].subscribe({next: func[obs.func]}) );
             }
         });
 
@@ -360,6 +359,7 @@ export class BaseModel {
      */
     get objectID() {
         return _mdRef.get(this)._id;
+        // return _mdRef.get(this).objectID;
     }
 
     /**
@@ -367,7 +367,7 @@ export class BaseModel {
      * @returns {BaseModel}
      */
     get root() {
-        return _mdRef.get(this).root || this;
+        return _mdRef.get(this)._root || this;
     }
 
     /**
@@ -375,8 +375,7 @@ export class BaseModel {
      * @returns {string}
      */
     get path() {
-        // console.log(JSON.stringify(Object.keys(_mdRef.get(this)), null, 2));
-        return _mdRef.get(this).path || &quot;&quot;;//this.schema.$id;
+        return _mdRef.get(this).path;
     }
 
     /**
@@ -384,8 +383,9 @@ export class BaseModel {
      * @returns {string}
      */
     get jsonPath() {
-        return this.path.replace(/\/?(properties|items)+\/?/g, &quot;.&quot;)
-            .replace(/^\./, &quot;&quot;);
+        const __ = this.path.replace(/\/?(properties|items)+\/?/g, &quot;/&quot;).split(&quot;/&quot;);
+        __.shift();
+        return __.join(&quot;.&quot;);
     }
 
     /**
@@ -471,7 +471,7 @@ export class BaseModel {
         const _p = new Pipeline(...pipesOrSchemas);
         const _sub = this.subscribe({
             next: (d) =&gt; {
-                _p.write(d.model);
+                _p.write(d);
             },
             complete: () =&gt; {
                 _sub.unsubscribe();

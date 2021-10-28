@@ -173,10 +173,10 @@ export class Pipeline {
 
     /**
      * Returns validation errors
-     * @returns {*}
+     * @returns {*|null}
      */
     get errors() {
-        return _pipes.get(this).vo.errors;
+        return _pipes.get(this).vo.errors || null;
     }
 
     /**

@@ -8,7 +8,7 @@
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
   <script src="script/manual.js"></script>
-<meta name="description" content="Observable &amp; Validatable Data Models and Pipelines"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="datamatic"><meta property="twitter:description" content="Observable &amp; Validatable Data Models and Pipelines"></head>
+<meta name="description" content="RxJS + JSON-Schema (Ajv) Based Observable and Validating Data Models and Pipelines"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="datamatic"><meta property="twitter:description" content="RxJS + JSON-Schema (Ajv) Based Observable and Validating Data Models and Pipelines"></head>
 <body class="layout-container" data-ice="rootContainer">
 
 <header>
@@ -29,7 +29,8 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#model">Model</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#model">Model</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_branchNotifier.js~Notifiers.html">Notifiers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_metaData.js~MetaData.html">MetaData</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_observerBuilder.js~ObserverBuilder.html">ObserverBuilder</a></span></span></li>
@@ -49,7 +50,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-walkObject">walkObject</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ajvRef">_ajvRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_dirtyModels">_dirtyModels</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_oBuilders">_oBuilders</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_object">_object</a></span></span></li>
@@ -59,7 +59,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaOptions">_schemaOptions</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaSignatures">_schemaSignatures</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validators">_validators</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-wf">wf</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pipeline">Pipeline</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/Executor.js~Executor.html">Executor</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/Iterator.js~Iterator.html">Iterator</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/Pipeline.js~PipeListener.html">PipeListener</a></span></span></li>
@@ -87,18 +86,18 @@ import {
 } from &quot;../../fixtures/PropertiesModel.schemas&quot;;
 
 describe(&quot;PropertiesModel Class Suite&quot;, function () {
-
+    let _owner;
     describe(&quot;Simple PropertiesModel Tests&quot;, () =&gt; {
         beforeEach(() =&gt; {
-            this.owner = new Model({schemas: [basicModel]});
+            _owner = new Model({schemas: [basicModel]});
         });
 
         describe(&quot;LifeCycle: Instantiation&quot;, () =&gt; {
             it(&quot;should initialize a schema and a schema object&quot;, () =&gt; {
-                expect(this.owner.model.$model).toBeDefined();
-                expect(this.owner.model.$model instanceof PropertiesModel).toBe(true);
-                expect(this.owner.model.$model).toBeDefined();
-                expect(this.owner.model.$model instanceof PropertiesModel).toBe(true);
+                expect(_owner.model.$model).toBeDefined();
+                expect(_owner.model.$model instanceof PropertiesModel).toBe(true);
+                expect(_owner.model.$model).toBeDefined();
+                expect(_owner.model.$model instanceof PropertiesModel).toBe(true);
             });
 
             it(&quot;should not initialize a invalid schema and schema object&quot;, () =&gt; {
@@ -124,8 +123,8 @@ describe(&quot;PropertiesModel Class Suite&quot;, function () {
                     active: true,
                 };
 
-                this.owner.model = _d;
-                expect(deepEqual(this.owner.model, _d)).toBe(true);
+                _owner.model = _d;
+                expect(deepEqual(_owner.model, _d)).toBe(true);
             });
 
             it(&quot;should reject invalid data and leave model pristine&quot;, () =&gt; {
@@ -135,8 +134,8 @@ describe(&quot;PropertiesModel Class Suite&quot;, function () {
                     active: &quot;123&quot;,
                 };
 
-                this.owner.model = _d;
-                expect(deepEqual(this.owner.model, {})).toBe(true);
+                _owner.model = _d;
+                expect(deepEqual(_owner.model, {})).toBe(true);
             });
         });
 
@@ -148,17 +147,17 @@ describe(&quot;PropertiesModel Class Suite&quot;, function () {
             };
 
             beforeEach(() =&gt; {
-                this.owner.model = _d;
+                _owner.model = _d;
             });
 
             it(&quot;should update with valid data&quot;, () =&gt; {
-                this.owner.model.active = false;
-                expect(deepEqual(this.owner.model, _d)).toBe(false);
+                _owner.model.active = false;
+                expect(deepEqual(_owner.model, _d)).toBe(false);
             });
 
             it(&quot;should reject invalid data update&quot;, () =&gt; {
-                this.owner.model.active = &quot;false&quot;;
-                expect(deepEqual(this.owner.model, _d)).toBe(true);
+                _owner.model.active = &quot;false&quot;;
+                expect(deepEqual(_owner.model, _d)).toBe(true);
             });
         });
     });
@@ -329,8 +328,8 @@ describe(&quot;PropertiesModel Class Suite&quot;, function () {
             _owner.model = {name: &quot;test&quot;, nested: {test1: {foo1: &quot;bar1&quot;}}};
             _owner.model.nested[&quot;test1&quot;] = false;
             expect(_owner.errors === null).toBe(false);
-            expect(`${_owner.errors[0].dataPath}`).toEqual(&quot;/test1&quot;);
-            expect(`${_owner.errors[0].message}`).toEqual(&quot;should be object&quot;);
+            expect(`${_owner.errors[0].instancePath}`).toEqual(&quot;/test1&quot;);
+            expect(`${_owner.errors[0].message}`).toEqual(&quot;must be object&quot;);
         });
 
     });
