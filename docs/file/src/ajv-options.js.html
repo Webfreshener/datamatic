@@ -2,8 +2,8 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <base data-ice="baseUrl" href="../../../">
-  <title data-ice="title">src/Model/base-model.test.js | datamatic</title>
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">src/ajv-options.js | datamatic</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -77,62 +77,66 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><h1 data-ice="title">src/Model/base-model.test.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {basicModel} from &quot;../../fixtures/PropertiesModel.schemas&quot;;
-import {Model} from &quot;./index&quot;;
-
-describe(&quot;Model Class Tests&quot;, () =&gt; {
-    describe(&quot;Test Method&quot;, () =&gt; {
-        let _owner;
-        const _d = {
-            name: &quot;Ed Testy&quot;,
-            age: 99,
-            active: true,
-        };
-
-        beforeEach(() =&gt; {
-            _owner = new Model({schemas: [basicModel]});
-            _d.active = true;
-        });
-
-        it(&quot;should validate models against schema&quot;, () =&gt; {
-            expect(_owner.model.$model.validate(_d)).toBe(true);
-            _d.active = &quot;1234&quot;;
-            expect(_owner.model.$model.validate(_d)).toBe(&quot;data/active must be boolean&quot;);
-        });
-
-        it(&quot;should support subscription callbacks object&quot;, (done) =&gt; {
-            _owner.subscribe({
-                next: () =&gt; done(),
-                error: done,
-            });
-            _owner.model = _d;
-        });
-
-        it(&quot;should allow function as next callback&quot;, (done) =&gt; {
-            _owner.subscribe(() =&gt; done());
-            _owner.model = _d;
-        });
-
-        it(&quot;should be observable&quot;, (done) =&gt; {
-            let _ival = 0;
-            const _arr = new Array(0, 2000);
-            const _iterator = {
-                next: (
-                    () =&gt; _ival++ &lt; _arr.length ? {
-                        value: _owner.model = _d,
-                        done: false,
-                    } : {
-                        value: _owner.freeze(),
-                        done: true,
-                    }
-                ),
-            };
-            _owner.subscribe({next: _iterator.next, complete: done});
-            _iterator.next();
-        });
-    });
-});
+<div class="content" data-ice="content"><h1 data-ice="title">src/ajv-options.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/**
+ * AJV Options Config in it&apos;s entirely for reference
+ * only Model specific option changes are enabled
+ *
+ * taken verbatim from: https://ajv.js.org/options.html
+ * @type {*}
+ *
+ */
+export default {
+    // strict mode options (NEW)
+    strict: undefined,
+    strictSchema: true,
+    strictNumbers: true,
+    strictTypes: &quot;log&quot;,
+    strictTuples: &quot;log&quot;,
+    strictRequired: false,
+    allowUnionTypes: false,
+    allowMatchingProperties: false,
+    validateFormats: true,
+    // validation and reporting options:
+    $data: false,
+    allErrors: false,
+    verbose: false,
+    discriminator: false,
+    unicodeRegExp: true,
+    timestamp: undefined,
+    parseDate: false,
+    allowDate: false,
+    int32range: true,
+    $comment: false,
+    formats: {},
+    keywords: [],
+    schemas: {},
+    logger: undefined,
+    loadSchema: undefined, // function(uri: string): Promise {}
+    // options to modify validated data:
+    removeAdditional: false,
+    useDefaults: false,
+    coerceTypes: false,
+    // advanced options:
+    meta: true,
+    validateSchema: true,
+    addUsedSchema: true,
+    inlineRefs: true,
+    passContext: false,
+    loopRequired: 200,
+    loopEnum: 200, // NEW
+    ownProperties: false,
+    multipleOfPrecision: undefined,
+    messages: true, // false with JTD
+    code: {
+        // NEW
+        es5: false,
+        lines: false,
+        source: false,
+        process: undefined, // (code: string) =&gt; string
+        optimize: true,
+    },
+};
 </code></pre>
 
 </div>

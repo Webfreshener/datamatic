@@ -8,7 +8,7 @@
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
   <script src="script/manual.js"></script>
-<meta name="description" content="Observable &amp; Validatable Data Models and Pipelines"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="datamatic"><meta property="twitter:description" content="Observable &amp; Validatable Data Models and Pipelines"></head>
+<meta name="description" content="RxJS + JSON-Schema (Ajv) Based Observable and Validating Data Models and Pipelines"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="datamatic"><meta property="twitter:description" content="RxJS + JSON-Schema (Ajv) Based Observable and Validating Data Models and Pipelines"></head>
 <body class="layout-container" data-ice="rootContainer">
 
 <header>
@@ -29,7 +29,8 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#model">Model</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#model">Model</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_branchNotifier.js~Notifiers.html">Notifiers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_metaData.js~MetaData.html">MetaData</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_observerBuilder.js~ObserverBuilder.html">ObserverBuilder</a></span></span></li>
@@ -49,7 +50,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-walkObject">walkObject</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ajvRef">_ajvRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_dirtyModels">_dirtyModels</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_oBuilders">_oBuilders</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_object">_object</a></span></span></li>
@@ -59,7 +59,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaOptions">_schemaOptions</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaSignatures">_schemaSignatures</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validators">_validators</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-wf">wf</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pipeline">Pipeline</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/Executor.js~Executor.html">Executor</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/Iterator.js~Iterator.html">Iterator</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/Pipeline.js~PipeListener.html">PipeListener</a></span></span></li>
@@ -87,18 +86,21 @@ import {
     objectCollection, objectCollectionDefaults
 } from &quot;../../fixtures/ItemsModel.schemas&quot;;
 import {BaseModel} from &quot;./base-model&quot;;
+import {basicCollection} from &quot;../../fixtures/PropertiesModel.schemas&quot;;
 
-describe(&quot;ItemsModel Class Suite&quot;, function () {
+describe(&quot;ItemsModel Class&quot;, function () {
 
     describe(&quot;Simple ItemsModel Tests&quot;, () =&gt; {
-        beforeEach(() =&gt; {
-            this.owner = new Model({schemas: [stringsCollection]});
-        });
 
         describe(&quot;LifeCycle: Instantiation&quot;, () =&gt; {
+            let _owner;
+            beforeEach(() =&gt; {
+                _owner = new Model({schemas: [stringsCollection]});
+            });
+
             it(&quot;should initialize a schema and a schema object&quot;, () =&gt; {
-                expect(this.owner.model.$model).toBeDefined();
-                expect(this.owner.model.$model instanceof BaseModel).toBe(true);
+                expect(_owner.model.$model).toBeDefined();
+                expect(_owner.model.$model instanceof BaseModel).toBe(true);
             });
 
             it(&quot;should not initialize a invalid schema and schema object&quot;, () =&gt; {
@@ -110,17 +112,19 @@ describe(&quot;ItemsModel Class Suite&quot;, function () {
         });
 
         describe(&quot;ItemsModel LifeCycle: Creation&quot;, () =&gt; {
+            let _d, _owner;
 
-            let _d;
+            beforeEach(() =&gt; {
+                _owner = new Model({schemas: [stringsCollection]});
+            });
 
             it(&quot;should populate with valid data and make that data accessible&quot;, (done) =&gt; {
                 _d = [&quot;abc&quot;, &quot;def&quot;, &quot;ghi&quot;];
                 let _cnt = 0;
-
-                this.owner.subscribe({
+                _owner.subscribe({
                     next: (m) =&gt; {
                         _cnt++;
-                        expect(deepEqual(this.owner.model, _d)).toBe(true);
+                        expect(deepEqual(_owner.model, _d)).toBe(true);
                     },
                     error: done,
                 });
@@ -130,35 +134,39 @@ describe(&quot;ItemsModel Class Suite&quot;, function () {
                     done();
                 }, 100);
 
-                this.owner.model = _d;
+                _owner.model = _d;
             });
 
             it(&quot;should reject invalid data and leave model pristine&quot;, () =&gt; {
                 _d = [99, 100, 101];
 
-                this.owner.model = _d;
-                expect(deepEqual(this.owner.model, {})).toBe(true);
+                _owner.model = _d;
+                expect(_owner.model.length).toEqual(0);
             });
         });
     });
 
     describe(&quot;Nested Elements Tests&quot;, () =&gt; {
-        beforeEach(() =&gt; {
-            this.owner = new Model({schemas: [objectCollection]});
-        });
 
         describe(&quot;LifeCycle: Instantiation&quot;, () =&gt; {
+            let _owner;
+            beforeEach(() =&gt; {
+                _owner = new Model({schemas: [objectCollection]});
+            });
+
             it(&quot;should initialize a valid schema and a schema object&quot;, () =&gt; {
-                expect(this.owner.model.$model).toBeDefined();
-                expect(this.owner.model.$model instanceof BaseModel).toBe(true);
-                expect(this.owner.model.$model).toBeDefined();
-                expect(this.owner.model.$model instanceof BaseModel).toBe(true);
+                expect(_owner.model.$model).toBeDefined();
+                expect(_owner.model.$model instanceof BaseModel).toBe(true);
+                expect(_owner.model.$model).toBeDefined();
+                expect(_owner.model.$model instanceof BaseModel).toBe(true);
             });
         });
 
         describe(&quot;ItemsModel LifeCycle: Nested Create&quot;, () =&gt; {
-
-            let _d;
+            let _d, _owner;
+            beforeEach(() =&gt; {
+                _owner = new Model({schemas: [objectCollection]});
+            });
 
             it(&quot;should populate with valid data and make that data accessible&quot;, (done) =&gt; {
                 _d = [{
@@ -173,7 +181,7 @@ describe(&quot;ItemsModel Class Suite&quot;, function () {
 
                 let _cnt = 0;
 
-                this.owner.subscribe({
+                _owner.subscribe({
                     next: (m) =&gt; {
                         _cnt++;
                     },
@@ -185,8 +193,8 @@ describe(&quot;ItemsModel Class Suite&quot;, function () {
                     done();
                 }, 100);
 
-                this.owner.model = _d;
-                // expect(deepEqual(this.owner.model, _d)).toBe(true);
+                _owner.model = _d;
+                // expect(deepEqual(_owner.model, _d)).toBe(true);
             });
 
             it(&quot;should reject invalid data and leave model pristine&quot;, () =&gt; {
@@ -199,15 +207,18 @@ describe(&quot;ItemsModel Class Suite&quot;, function () {
                     value: 2,
                 }];
 
-                this.owner.model = _d;
-                expect(typeof this.owner.errors).toBe(&quot;object&quot;);
-                expect(deepEqual(this.owner.model, [])).toBe(true);
+                _owner.model = _d;
+                expect(typeof _owner.errors).toBe(&quot;object&quot;);
+                expect(deepEqual(_owner.model, [])).toBe(true);
             });
         });
 
         describe(&quot;LifeCycle: Update&quot;, () =&gt; {
 
-            let _d;
+            let _d, _owner;
+            beforeEach(() =&gt; {
+                _owner = new Model({schemas: [objectCollection]});
+            });
 
             it(&quot;should update nested models with valid data and pass validation&quot;, () =&gt; {
                 _d = [{
@@ -220,15 +231,15 @@ describe(&quot;ItemsModel Class Suite&quot;, function () {
                     value: 2,
                 }];
 
-                this.owner.model = _d;
+                _owner.model = _d;
 
-                this.owner.model[1] = {
+                _owner.model[1] = {
                     name: &quot;Item B&quot;,
                     value: 3
                 };
 
-                expect(this.owner.errors).toBe(null);
-                expect(this.owner.model[1]).toEqual({name: &quot;Item B&quot;, value: 3});
+                expect(_owner.errors).toBe(null);
+                expect(_owner.model[1]).toEqual({name: &quot;Item B&quot;, value: 3});
             });
 
             it(&quot;should updated properties in nested objects with valid data and pass validation&quot;, () =&gt; {
@@ -242,46 +253,48 @@ describe(&quot;ItemsModel Class Suite&quot;, function () {
                     value: 2,
                 }];
 
-                this.owner.model = _d;
+                _owner.model = _d;
 
-                this.owner.model[1].value = 3;
+                _owner.model[1].value = 3;
 
 
-                expect(this.owner.errors).toBe(null);
-                expect(this.owner.model[1]).toEqual({name: &quot;Item B&quot;, value: 3});
+                expect(_owner.errors).toBe(null);
+                expect(_owner.model[1]).toEqual({name: &quot;Item B&quot;, value: 3});
             });
         });
 
         describe(&quot;LifeCycle: Delete&quot;, () =&gt; {
+            let _owner;
             beforeEach(() =&gt; {
-                this.owner = new Model({schemas: [stringsMinMaxCollection]});
+                _owner = new Model({schemas: [stringsCollection]});
             });
 
             let _d = [&quot;Item A&quot;, &quot;Item B&quot;, &quot;Item C&quot;];
 
             it(&quot;should allow deletion of nested properties that are not required&quot;, () =&gt; {
-                this.owner.model = _d;
-                delete this.owner.model[1];
-                expect(this.owner.errors).toBe(null);
-                expect(this.owner.model.length).toBe(2);
+                _owner.model = _d;
+                delete _owner.model[1];
+                expect(_owner.errors).toBe(null);
+                expect(_owner.model.length).toBe(2);
             });
 
             it(&quot;should prevent deletion of nested properties that are required&quot;, () =&gt; {
-                this.owner.model = _d;
-                delete this.owner.model[0];
-                delete this.owner.model[1];
-                delete this.owner.model[2];
-                expect(typeof this.owner.errors).toBe(&quot;object&quot;);
-                expect(this.owner.model.length).toBe(1);
+                _owner.model = _d;
+                delete _owner.model[0];
+                delete _owner.model[1];
+                delete _owner.model[2];
+                expect(typeof _owner.errors).toBe(&quot;object&quot;);
+                expect(_owner.model.length).toBe(1);
             });
         });
 
         describe(&quot;LifeCycle: Reset&quot;, () =&gt; {
+            let _owner;
             beforeEach(() =&gt; {
-                this.owner = new Model({schemas: [objectCollection]});
+                _owner = new Model({schemas: [objectCollection]});
             });
 
-            it(&quot;should notifiy subsequent validations&quot;, () =&gt; {
+            it(&quot;should notify subsequent validations&quot;, (done) =&gt; {
                 const _d = [{
                     name: &quot;Item A&quot;,
                     value: 1,
@@ -292,18 +305,27 @@ describe(&quot;ItemsModel Class Suite&quot;, function () {
                     value: 2,
                 }];
 
-                this.owner.model = _d;
+                _owner.model = _d;
 
                 setTimeout(() =&gt; {
-                    this.owner.subscribe({
+                    _owner.subscribe({
                         next: (m) =&gt; {
-                            expect(m.models.length).toEqual(3);
+                            expect(m.model.length).toEqual(3);
                             done()
                         },
                         error: done,
                     });
 
-                    this.owner.model = _d;
+                    _owner.model = [{
+                        name: &quot;Item D&quot;,
+                        value: 1,
+                    }, {
+                        name: &quot;Item E&quot;,
+                        value: 2,
+                    }, {
+                        name: &quot;Item F&quot;,
+                        value: 3,
+                    }];
                 }, 100);
             });
         });
@@ -312,79 +334,80 @@ describe(&quot;ItemsModel Class Suite&quot;, function () {
     });
 
     describe(&quot;Array Prototype method tests&quot;, () =&gt; {
+        let _owner;
         beforeEach(() =&gt; {
-            this.owner = new Model({schemas: [stringsMinMaxCollection]});
-            this.owner.model = [&quot;Item A&quot;, &quot;Item B&quot;, &quot;Item C&quot;];
+            _owner = new Model({schemas: [stringsMinMaxCollection]});
+            _owner.model = [&quot;Item A&quot;, &quot;Item B&quot;, &quot;Item C&quot;];
         });
 
         it(&quot;should fill with validation&quot;, () =&gt; {
-            this.owner.model.fill([&quot;Item A&quot;, &quot;Item B&quot;, &quot;Item C&quot;, &quot;Item D&quot;]);
-            expect(typeof this.owner.errors).toBe(&quot;object&quot;);
-            expect(this.owner.model.length).toBe(3);
+            _owner.model.fill([&quot;Item A&quot;, &quot;Item B&quot;, &quot;Item C&quot;, &quot;Item D&quot;]);
+            expect(typeof _owner.errors).toBe(&quot;object&quot;);
+            expect(_owner.model.length).toBe(3);
         });
 
         it(&quot;should pop with validation&quot;, () =&gt; {
-            this.owner.model.pop();
-            this.owner.model.pop();
-            this.owner.model.pop();
-            expect(typeof this.owner.errors).toBe(&quot;object&quot;);
-            expect(this.owner.model.length).toBe(1);
+            _owner.model.pop();
+            _owner.model.pop();
+            _owner.model.pop();
+            expect(typeof _owner.errors).toBe(&quot;object&quot;);
+            expect(_owner.model.length).toBe(1);
         });
 
         it(&quot;should push with validation&quot;, () =&gt; {
-            this.owner.model.push(&quot;Item D&quot;);
-            expect(typeof this.owner.errors).toBe(&quot;object&quot;);
-            expect(this.owner.model.length).toBe(3);
-            expect(this.owner.model[2]).toBe(&quot;Item C&quot;);
+            _owner.model.push(&quot;Item D&quot;);
+            expect(typeof _owner.errors).toBe(&quot;object&quot;);
+            expect(_owner.model.length).toBe(3);
+            expect(_owner.model[2]).toBe(&quot;Item C&quot;);
         });
 
         it(&quot;should shift with validation&quot;, () =&gt; {
-            this.owner.model.shift();
-            this.owner.model.shift();
-            this.owner.model.shift();
-            expect(typeof this.owner.errors).toBe(&quot;object&quot;);
-            expect(this.owner.model.length).toBe(1);
+            _owner.model.shift();
+            _owner.model.shift();
+            _owner.model.shift();
+            expect(typeof _owner.errors).toBe(&quot;object&quot;);
+            expect(_owner.model.length).toBe(1);
         });
 
         it(&quot;should splice with validation&quot;, () =&gt; {
             // remove all..
-            this.owner.model.splice(0, -1);
-            expect(typeof this.owner.errors).toBe(&quot;object&quot;);
-            expect(this.owner.model.length).toBe(3);
+            _owner.model.splice(0, -1);
+            expect(typeof _owner.errors).toBe(&quot;object&quot;);
+            expect(_owner.model.length).toBe(3);
             // append element...
-            this.owner.model.splice(0, 0, &quot;Item D&quot;);
-            expect(typeof this.owner.errors).toBe(&quot;object&quot;);
-            expect(this.owner.model.length).toBe(3);
+            _owner.model.splice(0, 0, &quot;Item D&quot;);
+            expect(typeof _owner.errors).toBe(&quot;object&quot;);
+            expect(_owner.model.length).toBe(3);
         });
 
         it(&quot;should unshift with validation&quot;, () =&gt; {
-            this.owner.model.unshift(&quot;Item Z&quot;);
-            expect(typeof this.owner.errors).toBe(&quot;object&quot;);
-            expect(this.owner.model.length).toBe(3);
+            _owner.model.unshift(&quot;Item Z&quot;);
+            expect(typeof _owner.errors).toBe(&quot;object&quot;);
+            expect(_owner.model.length).toBe(3);
         });
     });
 
     describe(&quot;Default Values&quot;, () =&gt; {
         it(&quot;should apply defaults to items&quot;, () =&gt; {
-            this.owner = new Model({schemas: [objectCollectionDefaults]}, {ajvOptions: {useDefaults: true}});
-            this.owner.model = [{}];
-            expect(this.owner.model[0]).toEqual({name: &quot;abc&quot;});
+            const _owner = new Model({schemas: [objectCollectionDefaults]}, {ajvOptions: {useDefaults: true}});
+            _owner.model = [{}];
+            expect(_owner.model[0]).toEqual({name: &quot;abc&quot;});
         });
     });
 
     describe(&quot;Model Class methods &quot;, () =&gt; {
+        let _owner;
 
         it(&quot;should not reset if it would invalidate model&quot;, () =&gt; {
-            const _owner = new Model({schemas: [stringsMinMaxCollection]});
+            _owner = new Model({schemas: [stringsMinMaxCollection]});
             _owner.model = [&quot;Item A&quot;, &quot;Item B&quot;, &quot;Item C&quot;];
             expect(_owner.model.length).toBe(3);
             _owner.model.$model.reset();
             expect(_owner.model.length).toBe(3);
         });
 
-        it(&quot;should reset it&apos;s collection if allowed&quot;, () =&gt; {
-            const _owner = new Model({schemas: [stringsCollection]});
-            _owner.model = [&quot;Item A&quot;, &quot;Item B&quot;, &quot;Item C&quot;];
+        it(&quot;should reset its collection if allowed&quot;, () =&gt; {
+            _owner = new Model({schemas: [stringsCollection]});
             _owner.model = [&quot;Item A&quot;, &quot;Item B&quot;, &quot;Item C&quot;];
             expect(_owner.model.length).toBe(3);
             _owner.model.$model.reset();
@@ -392,13 +415,13 @@ describe(&quot;ItemsModel Class Suite&quot;, function () {
         });
 
         it(&quot;should quietly validate data with the validate method&quot;, () =&gt; {
-            const _owner = new Model({schemas: [stringsCollection]});
-            expect(_owner.model.$model.validate([1, 2, 3])).toBe(&quot;data/0 should be string&quot;);
+            _owner = new Model({schemas: [stringsCollection]});
+            expect(_owner.model.$model.validate([1, 2, 3])).toBe(&quot;data/0 must be string&quot;);
             expect(_owner.model.$model.validate([&quot;1&quot;, &quot;2&quot;, &quot;3&quot;])).toBe(true);
         });
 
-        it(&quot;should freeze it&apos;s model&quot;, () =&gt; {
-            const _owner = new Model({schemas: [stringsCollection]});
+        it(&quot;should freeze its model&quot;, () =&gt; {
+            _owner = new Model({schemas: [stringsCollection]});
             _owner.model = [&quot;Item A&quot;, &quot;Item B&quot;, &quot;Item C&quot;];
             _owner.model.$model.freeze();
             expect(_owner.model.$model.isFrozen).toBe(true);
@@ -406,13 +429,12 @@ describe(&quot;ItemsModel Class Suite&quot;, function () {
             expect(deepEqual(_owner.model, [&quot;Item A&quot;, &quot;Item B&quot;, &quot;Item C&quot;])).toBe(true);
         });
 
-        it(&quot;should freeze it&apos;s model hierarchy&quot;, () =&gt; {
-            const _owner = new Model({schemas: [objectCollection]});
+        it(&quot;should freeze its model hierarchy&quot;, () =&gt; {
             const _orig = [{
                 name: &quot;My Name&quot;,
                 active: true,
             }];
-
+            _owner = new Model({schemas: [basicCollection]});
             _owner.model = _orig;
             _owner.model.$model.freeze();
 

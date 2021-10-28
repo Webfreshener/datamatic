@@ -1,14 +1,14 @@
 {
-  "coverage": "82.15%",
-  "expectCount": 241,
-  "actualCount": 198,
+  "coverage": "81.1%",
+  "expectCount": 254,
+  "actualCount": 206,
   "files": {
     "src/Model/_ajvWrapper.js": {
-      "expectCount": 10,
-      "actualCount": 8,
+      "expectCount": 9,
+      "actualCount": 7,
       "undocumentLines": [
-        35,
-        138
+        36,
+        143
       ]
     },
     "src/Model/_branchNotifier.js": {
@@ -23,8 +23,8 @@
       "expectCount": 12,
       "actualCount": 10,
       "undocumentLines": [
-        27,
-        46
+        29,
+        47
       ]
     },
     "src/Model/_observerBuilder.js": {
@@ -37,18 +37,22 @@
       ]
     },
     "src/Model/_references.js": {
-      "expectCount": 13,
+      "expectCount": 11,
       "actualCount": 11,
-      "undocumentLines": [
-        30,
-        31
-      ]
+      "undocumentLines": []
     },
     "src/Model/_schemaHelpers.js": {
       "expectCount": 6,
       "actualCount": 5,
       "undocumentLines": [
         43
+      ]
+    },
+    "src/Model/_schemaHelpers.test.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        6
       ]
     },
     "src/Model/base-model.js": {
@@ -70,7 +74,7 @@
       "actualCount": 7,
       "undocumentLines": [
         34,
-        119
+        106
       ]
     },
     "src/Model/propertiesModel.js": {
@@ -102,22 +106,30 @@
         17
       ]
     },
+    "src/Pipeline/Pipe-api.test.js": {
+      "expectCount": 1,
+      "actualCount": 0,
+      "undocumentLines": [
+        7
+      ]
+    },
     "src/Pipeline/Pipeline.js": {
-      "expectCount": 34,
+      "expectCount": 35,
       "actualCount": 29,
       "undocumentLines": [
         32,
         33,
         39,
-        434,
-        574
+        319,
+        398,
+        553
       ]
     },
     "src/Pipeline/Properties.js": {
       "expectCount": 2,
       "actualCount": 1,
       "undocumentLines": [
-        33
+        35
       ]
     },
     "src/Pipeline/Utils.js": {
@@ -147,11 +159,11 @@
       "expectCount": 15,
       "actualCount": 10,
       "undocumentLines": [
-        31,
-        32,
         33,
-        57,
-        86
+        34,
+        35,
+        59,
+        88
       ]
     },
     "src/Pipeline/vxBehaviorSubject.js": {
@@ -160,6 +172,16 @@
       "undocumentLines": [
         28,
         30
+      ]
+    },
+    "src/ajvWrapper.js": {
+      "expectCount": 13,
+      "actualCount": 9,
+      "undocumentLines": [
+        34,
+        75,
+        172,
+        205
       ]
     },
     "src/dist.test.js": {

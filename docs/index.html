@@ -8,7 +8,7 @@
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
   <script src="script/manual.js"></script>
-<meta name="description" content="Observable &amp; Validatable Data Models and Pipelines"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="datamatic"><meta property="twitter:description" content="Observable &amp; Validatable Data Models and Pipelines"></head>
+<meta name="description" content="RxJS + JSON-Schema (Ajv) Based Observable and Validating Data Models and Pipelines"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="datamatic"><meta property="twitter:description" content="RxJS + JSON-Schema (Ajv) Based Observable and Validating Data Models and Pipelines"></head>
 <body class="layout-container" data-ice="rootContainer">
 
 <header>
@@ -29,7 +29,8 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#model">Model</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#model">Model</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_branchNotifier.js~Notifiers.html">Notifiers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_metaData.js~MetaData.html">MetaData</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_observerBuilder.js~ObserverBuilder.html">ObserverBuilder</a></span></span></li>
@@ -49,7 +50,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-walkObject">walkObject</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ajvRef">_ajvRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_dirtyModels">_dirtyModels</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_oBuilders">_oBuilders</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_object">_object</a></span></span></li>
@@ -59,7 +59,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaOptions">_schemaOptions</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaSignatures">_schemaSignatures</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validators">_validators</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-wf">wf</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pipeline">Pipeline</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/Executor.js~Executor.html">Executor</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/Iterator.js~Iterator.html">Iterator</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/Pipeline.js~PipeListener.html">PipeListener</a></span></span></li>
@@ -92,24 +91,24 @@
 <h3 id="table-of-contents">Table of Contents</h3><p><strong><a href="#installation-instructions">Installation Instructions</a></strong></p>
 <p><strong><a href="#usage-examples">Usage Examples</a></strong></p>
 <ul>
-<li><a href="#basic-usage">Basic Usage</a></li>
-<li><a href="#data-pipelines-and-tansformation">Data Pipelines and Transformation</a></li>
+<li><a href="#basic-example">Basic Example</a></li>
+<li><a href="#data-pipelines-and-transformation">Data Pipelines and Transformation</a></li>
 </ul>
 <p><strong><a href="#developer-guide">Developer Guide</a></strong></p>
 <ul>
-<li><a href="#owner-class">Model Class</a><ul>
-<li><a href="#owner-schemas-config">Schemas Config</a></li>
+<li><a href="#model-class">Model Class</a><ul>
+<li><a href="#model-schemas-config">Model Schemas Config</a></li>
 <li><a href="#model-proxy-object">Model Proxy Object</a></li>
-<li><a href="#model-vs-model">model vs $model</a></li>
+<li><a href="#model-vs-$model">model vs $model</a></li>
 </ul>
 </li>
 <li><a href="#itemsmodel">ItemsModel</a></li>
 <li><a href="#propertiesmodel">PropertiesModel</a></li>
-<li><a href="#model-class">Model Class</a></li>
+<li><a href="#basemodel-class">BaseModel Class</a></li>
 <li><a href="#pipeline-class">Pipeline Class</a></li>
 </ul>
-<h3 id="installation-instructions">Installation Instructions</h3><pre><code><code class="source-code prettyprint">$ npm install @webfreshener/datamatic</code>
-</code></pre><h4 id="umd-usage-for-react-and-angular">UMD Usage for React and Angular</h4><pre><code><code class="source-code prettyprint">import * as datamatic from &quot;datamatic&quot;;
+<h3 id="installation-instructions">Installation Instructions</h3><pre><code><code class="source-code prettyprint">$ npm install datamatic</code>
+</code></pre><h4 id="umd-usage--react--angular--vue-et-al-">UMD Usage (React, Angular, Vue et al)</h4><pre><code><code class="source-code prettyprint">import * as datamatic from &quot;datamatic&quot;;
 </code>
 </code></pre><h4 id="commonjs-usage-for-nodejs">CommonJS Usage for NodeJS</h4><pre><code><code class="source-code prettyprint">const {Model, Pipeline} = require(&quot;datamatic&quot;);
 </code>
@@ -270,7 +269,7 @@ pipeline.write([
 <tbody>
 <tr>
 <td style="text-align:left">constructor</td>
-<td style="text-align:left"><a href="#owner-schemas-config">schemas config</a> (object), [options (object)]</td>
+<td style="text-align:left"><a href="#model-schemas-config">schemas config</a> (object), [options (object)]</td>
 <td style="text-align:left">creates new Model instance</td>
 </tr>
 <tr>
@@ -441,7 +440,7 @@ Note: the <code>model</code> param presents a Proxied Array, with all <code>Arra
 </tr>
 </tbody>
 </table>
-<h4 id="model-class">Model Class</h4><table>
+<h4 id="basemodel-class">BaseModel Class</h4><table>
 <thead>
 <tr>
 <th style="text-align:left">Method</th>

@@ -8,7 +8,7 @@
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
   <script src="script/manual.js"></script>
-<meta name="description" content="Observable &amp; Validatable Data Models and Pipelines"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="datamatic"><meta property="twitter:description" content="Observable &amp; Validatable Data Models and Pipelines"></head>
+<meta name="description" content="RxJS + JSON-Schema (Ajv) Based Observable and Validating Data Models and Pipelines"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="datamatic"><meta property="twitter:description" content="RxJS + JSON-Schema (Ajv) Based Observable and Validating Data Models and Pipelines"></head>
 <body class="layout-container" data-ice="rootContainer">
 
 <header>
@@ -29,7 +29,8 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#model">Model</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#model">Model</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_branchNotifier.js~Notifiers.html">Notifiers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_metaData.js~MetaData.html">MetaData</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_observerBuilder.js~ObserverBuilder.html">ObserverBuilder</a></span></span></li>
@@ -49,7 +50,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-walkObject">walkObject</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ajvRef">_ajvRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_dirtyModels">_dirtyModels</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_oBuilders">_oBuilders</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_object">_object</a></span></span></li>
@@ -59,7 +59,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaOptions">_schemaOptions</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaSignatures">_schemaSignatures</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validators">_validators</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-wf">wf</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pipeline">Pipeline</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/Executor.js~Executor.html">Executor</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/Iterator.js~Iterator.html">Iterator</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/Pipeline.js~PipeListener.html">PipeListener</a></span></span></li>
@@ -78,7 +77,7 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><h1>Source <img data-ice="coverageBadge" src="./badge.svg"><span data-ice="totalCoverageCount" class="total-coverage-count">198/241</span></h1>
+<div class="content" data-ice="content"><h1>Source <img data-ice="coverageBadge" src="./badge.svg"><span data-ice="totalCoverageCount" class="total-coverage-count">206/254</span></h1>
 
 <table class="files-summary" data-ice="files" data-use-coverage="true">
   <thead>
@@ -94,36 +93,36 @@
   <tbody>
     
   <tr data-ice="file">
-      <td data-ice="filePath"><span><a href="file/src/Model/_ajvWrapper.js.html#errorLines=138,35">src/Model/_ajvWrapper.js</a></span></td>
+      <td data-ice="filePath"><span><a href="file/src/Model/_ajvWrapper.js.html#errorLines=143,36">src/Model/_ajvWrapper.js</a></span></td>
       <td data-ice="identifier" class="identifiers"><span><a href="class/src/Model/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></td>
-      <td class="coverage"><span data-ice="coverage">80 %</span><span data-ice="coverageCount" class="coverage-count">8/10</span></td>
-      <td style="display: none;" data-ice="size">7962 byte</td>
-      <td style="display: none;" data-ice="lines">275</td>
-      <td style="display: none;" data-ice="updated">2021-02-07 15:05:53 (UTC)</td>
+      <td class="coverage"><span data-ice="coverage">77 %</span><span data-ice="coverageCount" class="coverage-count">7/9</span></td>
+      <td style="display: none;" data-ice="size">6952 byte</td>
+      <td style="display: none;" data-ice="lines">233</td>
+      <td style="display: none;" data-ice="updated">2021-10-07 19:06:01 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/Model/_ajvWrapper.test.js.html">src/Model/_ajvWrapper.test.js</a></span></td>
       <td data-ice="identifier" class="identifiers">-</td>
       <td class="coverage"><span data-ice="coverage">-</span></td>
-      <td style="display: none;" data-ice="size">1756 byte</td>
+      <td style="display: none;" data-ice="size">1739 byte</td>
       <td style="display: none;" data-ice="lines">49</td>
-      <td style="display: none;" data-ice="updated">2021-02-07 15:05:53 (UTC)</td>
+      <td style="display: none;" data-ice="updated">2021-10-03 18:47:22 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/Model/_branchNotifier.js.html#errorLines=28,52">src/Model/_branchNotifier.js</a></span></td>
       <td data-ice="identifier" class="identifiers"><span><a href="class/src/Model/_branchNotifier.js~Notifiers.html">Notifiers</a></span></td>
       <td class="coverage"><span data-ice="coverage">85 %</span><span data-ice="coverageCount" class="coverage-count">12/14</span></td>
-      <td style="display: none;" data-ice="size">3940 byte</td>
+      <td style="display: none;" data-ice="size">3945 byte</td>
       <td style="display: none;" data-ice="lines">149</td>
-      <td style="display: none;" data-ice="updated">2021-02-07 15:05:53 (UTC)</td>
+      <td style="display: none;" data-ice="updated">2021-10-03 18:47:22 (UTC)</td>
     </tr>
 <tr data-ice="file">
-      <td data-ice="filePath"><span><a href="file/src/Model/_metaData.js.html#errorLines=27,46">src/Model/_metaData.js</a></span></td>
+      <td data-ice="filePath"><span><a href="file/src/Model/_metaData.js.html#errorLines=29,47">src/Model/_metaData.js</a></span></td>
       <td data-ice="identifier" class="identifiers"><span><a href="class/src/Model/_metaData.js~MetaData.html">MetaData</a></span></td>
       <td class="coverage"><span data-ice="coverage">83 %</span><span data-ice="coverageCount" class="coverage-count">10/12</span></td>
-      <td style="display: none;" data-ice="size">3375 byte</td>
-      <td style="display: none;" data-ice="lines">124</td>
-      <td style="display: none;" data-ice="updated">2021-02-02 03:08:52 (UTC)</td>
+      <td style="display: none;" data-ice="size">3443 byte</td>
+      <td style="display: none;" data-ice="lines">125</td>
+      <td style="display: none;" data-ice="updated">2021-10-03 18:47:22 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/Model/_metadata.test.js.html">src/Model/_metadata.test.js</a></span></td>
@@ -137,23 +136,22 @@
       <td data-ice="filePath"><span><a href="file/src/Model/_observerBuilder.js.html#errorLines=29,30,32">src/Model/_observerBuilder.js</a></span></td>
       <td data-ice="identifier" class="identifiers"><span><a href="class/src/Model/_observerBuilder.js~ObserverBuilder.html">ObserverBuilder</a></span></td>
       <td class="coverage"><span data-ice="coverage">76 %</span><span data-ice="coverageCount" class="coverage-count">10/13</span></td>
-      <td style="display: none;" data-ice="size">4343 byte</td>
-      <td style="display: none;" data-ice="lines">146</td>
-      <td style="display: none;" data-ice="updated">2021-02-02 03:08:52 (UTC)</td>
+      <td style="display: none;" data-ice="size">4871 byte</td>
+      <td style="display: none;" data-ice="lines">170</td>
+      <td style="display: none;" data-ice="updated">2021-10-03 18:47:22 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/Model/_observerBuilder.test.js.html">src/Model/_observerBuilder.test.js</a></span></td>
       <td data-ice="identifier" class="identifiers">-</td>
       <td class="coverage"><span data-ice="coverage">-</span></td>
-      <td style="display: none;" data-ice="size">1551 byte</td>
-      <td style="display: none;" data-ice="lines">53</td>
-      <td style="display: none;" data-ice="updated">2021-02-02 03:08:52 (UTC)</td>
+      <td style="display: none;" data-ice="size">2228 byte</td>
+      <td style="display: none;" data-ice="lines">74</td>
+      <td style="display: none;" data-ice="updated">2021-10-03 18:47:22 (UTC)</td>
     </tr>
 <tr data-ice="file">
-      <td data-ice="filePath"><span><a href="file/src/Model/_references.js.html#errorLines=30,31">src/Model/_references.js</a></span></td>
+      <td data-ice="filePath"><span><a href="file/src/Model/_references.js.html">src/Model/_references.js</a></span></td>
       <td data-ice="identifier" class="identifiers"><span><a href="variable/index.html#static-variable-_ajvRef">_ajvRef</a></span>
 <span><a href="variable/index.html#static-variable-_dirtyModels">_dirtyModels</a></span>
-<span><a href="variable/index.html#static-variable-_exists">_exists</a></span>
 <span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span>
 <span><a href="variable/index.html#static-variable-_oBuilders">_oBuilders</a></span>
 <span><a href="variable/index.html#static-variable-_object">_object</a></span>
@@ -162,60 +160,59 @@
 <span><a href="variable/index.html#static-variable-_schemaHelpers">_schemaHelpers</a></span>
 <span><a href="variable/index.html#static-variable-_schemaOptions">_schemaOptions</a></span>
 <span><a href="variable/index.html#static-variable-_schemaSignatures">_schemaSignatures</a></span>
-<span><a href="variable/index.html#static-variable-_validators">_validators</a></span>
-<span><a href="variable/index.html#static-variable-wf">wf</a></span></td>
-      <td class="coverage"><span data-ice="coverage">84 %</span><span data-ice="coverageCount" class="coverage-count">11/13</span></td>
-      <td style="display: none;" data-ice="size">2841 byte</td>
-      <td style="display: none;" data-ice="lines">116</td>
-      <td style="display: none;" data-ice="updated">2021-02-07 15:05:53 (UTC)</td>
+<span><a href="variable/index.html#static-variable-_validators">_validators</a></span></td>
+      <td class="coverage"><span data-ice="coverage">100 %</span><span data-ice="coverageCount" class="coverage-count">11/11</span></td>
+      <td style="display: none;" data-ice="size">2665 byte</td>
+      <td style="display: none;" data-ice="lines">106</td>
+      <td style="display: none;" data-ice="updated">2021-10-03 18:47:22 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/Model/_references.test.js.html">src/Model/_references.test.js</a></span></td>
       <td data-ice="identifier" class="identifiers">-</td>
       <td class="coverage"><span data-ice="coverage">-</span></td>
-      <td style="display: none;" data-ice="size">960 byte</td>
-      <td style="display: none;" data-ice="lines">32</td>
-      <td style="display: none;" data-ice="updated">2021-02-07 15:05:53 (UTC)</td>
+      <td style="display: none;" data-ice="size">787 byte</td>
+      <td style="display: none;" data-ice="lines">27</td>
+      <td style="display: none;" data-ice="updated">2021-10-03 18:47:22 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/Model/_schemaHelpers.js.html#errorLines=43">src/Model/_schemaHelpers.js</a></span></td>
       <td data-ice="identifier" class="identifiers"><span><a href="class/src/Model/_schemaHelpers.js~SchemaHelpers.html">SchemaHelpers</a></span></td>
       <td class="coverage"><span data-ice="coverage">83 %</span><span data-ice="coverageCount" class="coverage-count">5/6</span></td>
-      <td style="display: none;" data-ice="size">3764 byte</td>
-      <td style="display: none;" data-ice="lines">114</td>
-      <td style="display: none;" data-ice="updated">2021-02-07 15:05:53 (UTC)</td>
+      <td style="display: none;" data-ice="size">3725 byte</td>
+      <td style="display: none;" data-ice="lines">112</td>
+      <td style="display: none;" data-ice="updated">2021-10-03 18:47:22 (UTC)</td>
     </tr>
 <tr data-ice="file">
-      <td data-ice="filePath"><span><a href="file/src/Model/_schemaHelpers.test.js.html">src/Model/_schemaHelpers.test.js</a></span></td>
+      <td data-ice="filePath"><span><a href="file/src/Model/_schemaHelpers.test.js.html#errorLines=6">src/Model/_schemaHelpers.test.js</a></span></td>
       <td data-ice="identifier" class="identifiers">-</td>
-      <td class="coverage"><span data-ice="coverage">-</span></td>
-      <td style="display: none;" data-ice="size">1688 byte</td>
-      <td style="display: none;" data-ice="lines">45</td>
-      <td style="display: none;" data-ice="updated">2021-02-07 15:05:53 (UTC)</td>
+      <td class="coverage"><span data-ice="coverage">0 %</span><span data-ice="coverageCount" class="coverage-count">0/1</span></td>
+      <td style="display: none;" data-ice="size">1748 byte</td>
+      <td style="display: none;" data-ice="lines">48</td>
+      <td style="display: none;" data-ice="updated">2021-10-03 18:47:22 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/Model/base-model.js.html#errorLines=69">src/Model/base-model.js</a></span></td>
       <td data-ice="identifier" class="identifiers"><span><a href="class/src/Model/base-model.js~BaseModel.html">BaseModel</a></span></td>
       <td class="coverage"><span data-ice="coverage">96 %</span><span data-ice="coverageCount" class="coverage-count">25/26</span></td>
-      <td style="display: none;" data-ice="size">11452 byte</td>
-      <td style="display: none;" data-ice="lines">402</td>
-      <td style="display: none;" data-ice="updated">2021-02-02 03:08:52 (UTC)</td>
+      <td style="display: none;" data-ice="size">11457 byte</td>
+      <td style="display: none;" data-ice="lines">403</td>
+      <td style="display: none;" data-ice="updated">2021-10-03 18:47:22 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/Model/base-model.test.js.html">src/Model/base-model.test.js</a></span></td>
       <td data-ice="identifier" class="identifiers">-</td>
       <td class="coverage"><span data-ice="coverage">-</span></td>
-      <td style="display: none;" data-ice="size">1676 byte</td>
+      <td style="display: none;" data-ice="size">1674 byte</td>
       <td style="display: none;" data-ice="lines">55</td>
-      <td style="display: none;" data-ice="updated">2021-02-07 15:05:53 (UTC)</td>
+      <td style="display: none;" data-ice="updated">2021-10-03 18:47:22 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/Model/index.js.html#errorLines=36">src/Model/index.js</a></span></td>
       <td data-ice="identifier" class="identifiers"><span><a href="class/src/Model/index.js~Model.html">Model</a></span></td>
       <td class="coverage"><span data-ice="coverage">95 %</span><span data-ice="coverageCount" class="coverage-count">22/23</span></td>
-      <td style="display: none;" data-ice="size">9059 byte</td>
-      <td style="display: none;" data-ice="lines">332</td>
-      <td style="display: none;" data-ice="updated">2021-02-02 03:08:52 (UTC)</td>
+      <td style="display: none;" data-ice="size">8835 byte</td>
+      <td style="display: none;" data-ice="lines">325</td>
+      <td style="display: none;" data-ice="updated">2021-10-01 17:34:03 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/Model/index.test.js.html">src/Model/index.test.js</a></span></td>
@@ -223,55 +220,55 @@
       <td class="coverage"><span data-ice="coverage">-</span></td>
       <td style="display: none;" data-ice="size">1864 byte</td>
       <td style="display: none;" data-ice="lines">60</td>
-      <td style="display: none;" data-ice="updated">2021-02-07 15:05:53 (UTC)</td>
+      <td style="display: none;" data-ice="updated">2021-10-07 19:06:01 (UTC)</td>
     </tr>
 <tr data-ice="file">
-      <td data-ice="filePath"><span><a href="file/src/Model/itemsModel.js.html#errorLines=119,34">src/Model/itemsModel.js</a></span></td>
+      <td data-ice="filePath"><span><a href="file/src/Model/itemsModel.js.html#errorLines=106,34">src/Model/itemsModel.js</a></span></td>
       <td data-ice="identifier" class="identifiers"><span><a href="class/src/Model/itemsModel.js~ItemsModel.html">ItemsModel</a></span></td>
       <td class="coverage"><span data-ice="coverage">77 %</span><span data-ice="coverageCount" class="coverage-count">7/9</span></td>
-      <td style="display: none;" data-ice="size">8820 byte</td>
-      <td style="display: none;" data-ice="lines">291</td>
-      <td style="display: none;" data-ice="updated">2021-02-07 15:05:53 (UTC)</td>
+      <td style="display: none;" data-ice="size">8168 byte</td>
+      <td style="display: none;" data-ice="lines">270</td>
+      <td style="display: none;" data-ice="updated">2021-10-03 18:47:22 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/Model/itemsModel.test.js.html">src/Model/itemsModel.test.js</a></span></td>
       <td data-ice="identifier" class="identifiers">-</td>
       <td class="coverage"><span data-ice="coverage">-</span></td>
-      <td style="display: none;" data-ice="size">11674 byte</td>
-      <td style="display: none;" data-ice="lines">342</td>
-      <td style="display: none;" data-ice="updated">2021-02-07 15:05:53 (UTC)</td>
+      <td style="display: none;" data-ice="size">12168 byte</td>
+      <td style="display: none;" data-ice="lines">365</td>
+      <td style="display: none;" data-ice="updated">2021-10-03 18:47:22 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/Model/model-pipes.test.js.html">src/Model/model-pipes.test.js</a></span></td>
       <td data-ice="identifier" class="identifiers">-</td>
       <td class="coverage"><span data-ice="coverage">-</span></td>
-      <td style="display: none;" data-ice="size">980 byte</td>
-      <td style="display: none;" data-ice="lines">35</td>
-      <td style="display: none;" data-ice="updated">2021-02-02 03:08:52 (UTC)</td>
+      <td style="display: none;" data-ice="size">3247 byte</td>
+      <td style="display: none;" data-ice="lines">108</td>
+      <td style="display: none;" data-ice="updated">2021-10-03 18:47:22 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/Model/model-rxjs.test.js.html">src/Model/model-rxjs.test.js</a></span></td>
       <td data-ice="identifier" class="identifiers">-</td>
       <td class="coverage"><span data-ice="coverage">-</span></td>
-      <td style="display: none;" data-ice="size">2932 byte</td>
-      <td style="display: none;" data-ice="lines">97</td>
-      <td style="display: none;" data-ice="updated">2021-02-07 15:05:53 (UTC)</td>
+      <td style="display: none;" data-ice="size">2977 byte</td>
+      <td style="display: none;" data-ice="lines">98</td>
+      <td style="display: none;" data-ice="updated">2021-10-03 18:47:22 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/Model/propertiesModel.js.html">src/Model/propertiesModel.js</a></span></td>
       <td data-ice="identifier" class="identifiers"><span><a href="class/src/Model/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></td>
       <td class="coverage"><span data-ice="coverage">100 %</span><span data-ice="coverageCount" class="coverage-count">11/11</span></td>
-      <td style="display: none;" data-ice="size">7694 byte</td>
-      <td style="display: none;" data-ice="lines">273</td>
-      <td style="display: none;" data-ice="updated">2021-02-07 15:05:53 (UTC)</td>
+      <td style="display: none;" data-ice="size">7789 byte</td>
+      <td style="display: none;" data-ice="lines">276</td>
+      <td style="display: none;" data-ice="updated">2021-10-03 18:47:22 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/Model/propertiesModel.test.js.html">src/Model/propertiesModel.test.js</a></span></td>
       <td data-ice="identifier" class="identifiers">-</td>
       <td class="coverage"><span data-ice="coverage">-</span></td>
-      <td style="display: none;" data-ice="size">8918 byte</td>
+      <td style="display: none;" data-ice="size">8879 byte</td>
       <td style="display: none;" data-ice="lines">256</td>
-      <td style="display: none;" data-ice="updated">2021-02-07 15:05:53 (UTC)</td>
+      <td style="display: none;" data-ice="updated">2021-10-03 18:47:22 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/Model/utils.js.html">src/Model/utils.js</a></span></td>
@@ -293,9 +290,9 @@
       <td data-ice="filePath"><span><a href="file/src/Model/utils.test.js.html">src/Model/utils.test.js</a></span></td>
       <td data-ice="identifier" class="identifiers">-</td>
       <td class="coverage"><span data-ice="coverage">-</span></td>
-      <td style="display: none;" data-ice="size">6202 byte</td>
+      <td style="display: none;" data-ice="size">6196 byte</td>
       <td style="display: none;" data-ice="lines">166</td>
-      <td style="display: none;" data-ice="updated">2021-02-07 15:05:53 (UTC)</td>
+      <td style="display: none;" data-ice="updated">2021-10-07 19:06:01 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/Pipeline/Executor.js.html#errorLines=28">src/Pipeline/Executor.js</a></span></td>
@@ -322,45 +319,45 @@
       <td style="display: none;" data-ice="updated">2021-02-02 03:08:52 (UTC)</td>
     </tr>
 <tr data-ice="file">
-      <td data-ice="filePath"><span><a href="file/src/Pipeline/Pipe-api.test.js.html">src/Pipeline/Pipe-api.test.js</a></span></td>
+      <td data-ice="filePath"><span><a href="file/src/Pipeline/Pipe-api.test.js.html#errorLines=7">src/Pipeline/Pipe-api.test.js</a></span></td>
       <td data-ice="identifier" class="identifiers">-</td>
-      <td class="coverage"><span data-ice="coverage">-</span></td>
-      <td style="display: none;" data-ice="size">10436 byte</td>
-      <td style="display: none;" data-ice="lines">376</td>
-      <td style="display: none;" data-ice="updated">2021-02-02 03:08:52 (UTC)</td>
+      <td class="coverage"><span data-ice="coverage">0 %</span><span data-ice="coverageCount" class="coverage-count">0/1</span></td>
+      <td style="display: none;" data-ice="size">15757 byte</td>
+      <td style="display: none;" data-ice="lines">546</td>
+      <td style="display: none;" data-ice="updated">2021-10-02 13:23:41 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/Pipeline/Pipe-exec.js.html">src/Pipeline/Pipe-exec.js</a></span></td>
       <td data-ice="identifier" class="identifiers">-</td>
       <td class="coverage"><span data-ice="coverage">-</span></td>
-      <td style="display: none;" data-ice="size">3729 byte</td>
-      <td style="display: none;" data-ice="lines">138</td>
-      <td style="display: none;" data-ice="updated">2021-02-02 03:08:52 (UTC)</td>
+      <td style="display: none;" data-ice="size">3689 byte</td>
+      <td style="display: none;" data-ice="lines">137</td>
+      <td style="display: none;" data-ice="updated">2021-10-03 18:47:22 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/Pipeline/Pipe.test.js.html">src/Pipeline/Pipe.test.js</a></span></td>
       <td data-ice="identifier" class="identifiers">-</td>
       <td class="coverage"><span data-ice="coverage">-</span></td>
-      <td style="display: none;" data-ice="size">5151 byte</td>
-      <td style="display: none;" data-ice="lines">195</td>
-      <td style="display: none;" data-ice="updated">2021-02-02 03:08:52 (UTC)</td>
+      <td style="display: none;" data-ice="size">5413 byte</td>
+      <td style="display: none;" data-ice="lines">208</td>
+      <td style="display: none;" data-ice="updated">2021-10-03 18:47:22 (UTC)</td>
     </tr>
 <tr data-ice="file">
-      <td data-ice="filePath"><span><a href="file/src/Pipeline/Pipeline.js.html#errorLines=32,33,39,434,574">src/Pipeline/Pipeline.js</a></span></td>
+      <td data-ice="filePath"><span><a href="file/src/Pipeline/Pipeline.js.html#errorLines=319,32,33,39,398,553">src/Pipeline/Pipeline.js</a></span></td>
       <td data-ice="identifier" class="identifiers"><span><a href="class/src/Pipeline/Pipeline.js~PipeListener.html">PipeListener</a></span>
 <span><a href="class/src/Pipeline/Pipeline.js~Pipeline.html">Pipeline</a></span></td>
-      <td class="coverage"><span data-ice="coverage">85 %</span><span data-ice="coverageCount" class="coverage-count">29/34</span></td>
-      <td style="display: none;" data-ice="size">16499 byte</td>
-      <td style="display: none;" data-ice="lines">577</td>
-      <td style="display: none;" data-ice="updated">2021-02-02 03:08:52 (UTC)</td>
+      <td class="coverage"><span data-ice="coverage">82 %</span><span data-ice="coverageCount" class="coverage-count">29/35</span></td>
+      <td style="display: none;" data-ice="size">15304 byte</td>
+      <td style="display: none;" data-ice="lines">556</td>
+      <td style="display: none;" data-ice="updated">2021-10-05 13:50:06 (UTC)</td>
     </tr>
 <tr data-ice="file">
-      <td data-ice="filePath"><span><a href="file/src/Pipeline/Properties.js.html#errorLines=33">src/Pipeline/Properties.js</a></span></td>
+      <td data-ice="filePath"><span><a href="file/src/Pipeline/Properties.js.html#errorLines=35">src/Pipeline/Properties.js</a></span></td>
       <td data-ice="identifier" class="identifiers"><span><a href="class/src/Pipeline/Properties.js~Properties.html">Properties</a></span></td>
       <td class="coverage"><span data-ice="coverage">50 %</span><span data-ice="coverageCount" class="coverage-count">1/2</span></td>
-      <td style="display: none;" data-ice="size">3943 byte</td>
-      <td style="display: none;" data-ice="lines">109</td>
-      <td style="display: none;" data-ice="updated">2021-02-02 03:08:52 (UTC)</td>
+      <td style="display: none;" data-ice="size">6277 byte</td>
+      <td style="display: none;" data-ice="lines">173</td>
+      <td style="display: none;" data-ice="updated">2021-10-03 18:47:22 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/Pipeline/Utils.js.html">src/Pipeline/Utils.js</a></span></td>
@@ -372,7 +369,7 @@
       <td class="coverage"><span data-ice="coverage">100 %</span><span data-ice="coverageCount" class="coverage-count">6/6</span></td>
       <td style="display: none;" data-ice="size">5055 byte</td>
       <td style="display: none;" data-ice="lines">182</td>
-      <td style="display: none;" data-ice="updated">2021-02-02 03:08:52 (UTC)</td>
+      <td style="display: none;" data-ice="updated">2021-10-01 16:23:48 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/Pipeline/Utils.test.js.html#errorLines=4">src/Pipeline/Utils.test.js</a></span></td>
@@ -387,9 +384,9 @@
       <td data-ice="identifier" class="identifiers"><span><a href="class/src/Pipeline/Validator.js~Validator.html">Validator</a></span>
 <span><a href="variable/index.html#static-variable-_observers">_observers</a></span></td>
       <td class="coverage"><span data-ice="coverage">72 %</span><span data-ice="coverageCount" class="coverage-count">13/18</span></td>
-      <td style="display: none;" data-ice="size">6621 byte</td>
-      <td style="display: none;" data-ice="lines">222</td>
-      <td style="display: none;" data-ice="updated">2021-02-02 03:08:52 (UTC)</td>
+      <td style="display: none;" data-ice="size">6750 byte</td>
+      <td style="display: none;" data-ice="lines">227</td>
+      <td style="display: none;" data-ice="updated">2021-10-02 13:23:41 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/Pipeline/Validator.test.js.html">src/Pipeline/Validator.test.js</a></span></td>
@@ -400,20 +397,20 @@
       <td style="display: none;" data-ice="updated">2021-02-02 03:08:52 (UTC)</td>
     </tr>
 <tr data-ice="file">
-      <td data-ice="filePath"><span><a href="file/src/Pipeline/_ajvWrapper.js.html#errorLines=31,32,33,57,86">src/Pipeline/_ajvWrapper.js</a></span></td>
+      <td data-ice="filePath"><span><a href="file/src/Pipeline/_ajvWrapper.js.html#errorLines=33,34,35,59,88">src/Pipeline/_ajvWrapper.js</a></span></td>
       <td data-ice="identifier" class="identifiers"><span><a href="class/src/Pipeline/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></td>
       <td class="coverage"><span data-ice="coverage">66 %</span><span data-ice="coverageCount" class="coverage-count">10/15</span></td>
-      <td style="display: none;" data-ice="size">7835 byte</td>
-      <td style="display: none;" data-ice="lines">271</td>
-      <td style="display: none;" data-ice="updated">2021-02-02 03:08:52 (UTC)</td>
+      <td style="display: none;" data-ice="size">6537 byte</td>
+      <td style="display: none;" data-ice="lines">236</td>
+      <td style="display: none;" data-ice="updated">2021-10-02 13:23:41 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/Pipeline/_ajvWrapper.test.js.html">src/Pipeline/_ajvWrapper.test.js</a></span></td>
       <td data-ice="identifier" class="identifiers">-</td>
       <td class="coverage"><span data-ice="coverage">-</span></td>
-      <td style="display: none;" data-ice="size">2120 byte</td>
-      <td style="display: none;" data-ice="lines">71</td>
-      <td style="display: none;" data-ice="updated">2021-02-02 03:08:52 (UTC)</td>
+      <td style="display: none;" data-ice="size">2138 byte</td>
+      <td style="display: none;" data-ice="lines">72</td>
+      <td style="display: none;" data-ice="updated">2021-10-02 13:23:41 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/Pipeline/index.js.html">src/Pipeline/index.js</a></span></td>
@@ -427,9 +424,9 @@
       <td data-ice="filePath"><span><a href="file/src/Pipeline/vxBehaviorSubject.js.html#errorLines=28,30">src/Pipeline/vxBehaviorSubject.js</a></span></td>
       <td data-ice="identifier" class="identifiers"><span><a href="class/src/Pipeline/vxBehaviorSubject.js~VxBehaviorSubject.html">VxBehaviorSubject</a></span></td>
       <td class="coverage"><span data-ice="coverage">75 %</span><span data-ice="coverageCount" class="coverage-count">6/8</span></td>
-      <td style="display: none;" data-ice="size">3936 byte</td>
-      <td style="display: none;" data-ice="lines">122</td>
-      <td style="display: none;" data-ice="updated">2021-02-02 03:08:52 (UTC)</td>
+      <td style="display: none;" data-ice="size">4119 byte</td>
+      <td style="display: none;" data-ice="lines">129</td>
+      <td style="display: none;" data-ice="updated">2021-10-03 18:47:22 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/Pipeline/vxBehaviorSubject.test.js.html">src/Pipeline/vxBehaviorSubject.test.js</a></span></td>
@@ -440,12 +437,28 @@
       <td style="display: none;" data-ice="updated">2021-02-02 03:08:52 (UTC)</td>
     </tr>
 <tr data-ice="file">
+      <td data-ice="filePath"><span><a href="file/src/ajv-options.js.html">src/ajv-options.js</a></span></td>
+      <td data-ice="identifier" class="identifiers">-</td>
+      <td class="coverage"><span data-ice="coverage">-</span></td>
+      <td style="display: none;" data-ice="size">1466 byte</td>
+      <td style="display: none;" data-ice="lines">59</td>
+      <td style="display: none;" data-ice="updated">2021-10-03 18:47:22 (UTC)</td>
+    </tr>
+<tr data-ice="file">
+      <td data-ice="filePath"><span><a href="file/src/ajvWrapper.js.html#errorLines=172,205,34,75">src/ajvWrapper.js</a></span></td>
+      <td data-ice="identifier" class="identifiers"><span><a href="class/src/ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></td>
+      <td class="coverage"><span data-ice="coverage">69 %</span><span data-ice="coverageCount" class="coverage-count">9/13</span></td>
+      <td style="display: none;" data-ice="size">6466 byte</td>
+      <td style="display: none;" data-ice="lines">239</td>
+      <td style="display: none;" data-ice="updated">2021-10-02 13:23:41 (UTC)</td>
+    </tr>
+<tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/complex-schema.test.js.html">src/complex-schema.test.js</a></span></td>
       <td data-ice="identifier" class="identifiers">-</td>
       <td class="coverage"><span data-ice="coverage">-</span></td>
-      <td style="display: none;" data-ice="size">1509 byte</td>
-      <td style="display: none;" data-ice="lines">41</td>
-      <td style="display: none;" data-ice="updated">2021-02-07 15:05:53 (UTC)</td>
+      <td style="display: none;" data-ice="size">2242 byte</td>
+      <td style="display: none;" data-ice="lines">62</td>
+      <td style="display: none;" data-ice="updated">2021-10-03 18:47:22 (UTC)</td>
     </tr>
 <tr data-ice="file">
       <td data-ice="filePath"><span><a href="file/src/dist.test.js.html#errorLines=2">src/dist.test.js</a></span></td>

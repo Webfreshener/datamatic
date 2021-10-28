@@ -2,8 +2,8 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <base data-ice="baseUrl" href="../../../">
-  <title data-ice="title">src/Model/base-model.test.js | datamatic</title>
+  <base data-ice="baseUrl" href="../../">
+  <title data-ice="title">src/ajvWrapper.js | datamatic</title>
   <link type="text/css" rel="stylesheet" href="css/style.css">
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
@@ -77,62 +77,246 @@
 </div>
 </nav>
 
-<div class="content" data-ice="content"><h1 data-ice="title">src/Model/base-model.test.js</h1>
-<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {basicModel} from &quot;../../fixtures/PropertiesModel.schemas&quot;;
-import {Model} from &quot;./index&quot;;
+<div class="content" data-ice="content"><h1 data-ice="title">src/ajvWrapper.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">/* ############################################################################
+The MIT License (MIT)
 
-describe(&quot;Model Class Tests&quot;, () =&gt; {
-    describe(&quot;Test Method&quot;, () =&gt; {
-        let _owner;
-        const _d = {
-            name: &quot;Ed Testy&quot;,
-            age: 99,
-            active: true,
+Copyright (c) 2016 - 2019 Van Schroeder
+Copyright (c) 2017-2019 Webfreshener, LLC
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the &quot;Software&quot;), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED &quot;AS IS&quot;, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+############################################################################ */
+/**
+ * @private
+ */
+import Ajv from &quot;ajv&quot;;
+import {default as ajvOptions} from &quot;./ajv-options&quot;;
+import {Model} from &quot;./Model&quot;;
+import addFormats from &quot;ajv-formats&quot;;
+
+const _validators = new WeakMap();
+
+/**
+ * backreferences object tree for top-down evaluation
+ * @param path
+ * @param data
+ * @param owner
+ * @returns {any}
+ * @private
+ */
+const _preconstruct = (path, data, owner) =&gt; {
+    const _p = path.replace(/^[a-z0-9_]*#+/i, &quot;&quot;).split(&quot;/&quot;);
+    let _o = Object.assign({}, data);
+    while (_p.length &gt; 0) {
+        _p.pop();
+        try {
+            _o = Object.assign({}, owner.getPath(_p.join(&quot;.&quot;)), _o);
+        } catch (e) {
+            _p.splice(0, _p.length - 1);
+            throw e;
+        }
+    }
+
+    return _o;
+};
+
+let $ajv;
+
+/**
+ *
+ * @param opts
+ */
+const ajvInit = (opts) =&gt; {
+    if ($ajv) {
+        return $ajv;
+    }
+
+    addFormats($ajv = new Ajv(opts));
+}
+
+
+class SchemaUtils {
+    /**
+     * Processes schema &quot;id&quot; for JSON-Schema versions =&lt; v04 and &gt;= v06
+     *
+     * @param schema
+     * @return {boolean|string|*}
+     */
+    static getSchemaID(schema) {
+        const _id = schema[&quot;$id&quot;] || schema[&quot;id&quot;];
+
+        if (!_id) {
+            return false;
+        }
+
+        // ensures trailing &quot;#&quot; to end of &quot;id&quot; string
+        return _id.match(/#+$/) === null ? `${_id}#` : _id;
+    }
+
+    /**
+     * &#x2022; Evaluates contents of schemas to normalize &quot;id&quot; attributes
+     * &#x2022; Ensures schemas value is array
+     *
+     * @param schemas
+     * @return {*}
+     */
+    static normalizeSchemas(schemas) {
+        if ((schemas.hasOwnProperty(&quot;schemas&quot;))) {
+            schemas = schemas.schemas;
+        }
+
+        const assignSchemaId = (__) =&gt; {
+            return Object.assign(__, {id: SchemaUtils.getSchemaID});
         };
 
-        beforeEach(() =&gt; {
-            _owner = new Model({schemas: [basicModel]});
-            _d.active = true;
+        return Array.isArray(schemas) ?
+            schemas.map(assignSchemaId) : [
+                assignSchemaId(
+                    (typeof schemas) === &quot;string&quot; ?
+                        JSON.parse(schemas) : schemas
+                )
+            ];
+    }
+
+    /**
+     *
+     * @param schemas
+     * @return {*}
+     */
+    static addSchemas(schemas = {}) {
+        if (schemas.hasOwnProperty(&quot;meta&quot;)) {
+            schemas.meta.forEach($ajv.addMetaSchema);
+        }
+
+        schemas.schemas.forEach((schema) =&gt; {
+            $ajv.addSchema(schema, schema.id);
+        });
+    }
+}
+
+/**
+ * Wrapper for Ajv JSON-PropertiesModel Validator
+ * @private
+ */
+export class AjvWrapper {
+    /**
+     * @constructor
+     * @param owner
+     * @param schemas
+     * @param ajvOptions
+     */
+    constructor(owner, schemas, options = {}) {
+        // ensures that we are given something that represents a Model object
+        if ((!owner) || !(owner instanceof Model)) {
+            throw &quot;Model is required at arguments[0]&quot;;
+        }
+
+        if (_validators.get(this) === void (0)) {
+            _validators.set(this, {});
+        }
+
+        // defines getter for parent Model reference
+        Object.defineProperty(this, &quot;$owner&quot;, {
+            get: () =&gt; owner,
+            enumerable: false,
         });
 
-        it(&quot;should validate models against schema&quot;, () =&gt; {
-            expect(_owner.model.$model.validate(_d)).toBe(true);
-            _d.active = &quot;1234&quot;;
-            expect(_owner.model.$model.validate(_d)).toBe(&quot;data/active must be boolean&quot;);
+        // applies user specified ajv options and makes accessible for evaluation
+        Object.defineProperty(this, &quot;options&quot;, {
+            value: Object.assign(ajvOptions, options),
+            enumerable: true,
+            configurable: false,
+            writable: false,
         });
 
-        it(&quot;should support subscription callbacks object&quot;, (done) =&gt; {
-            _owner.subscribe({
-                next: () =&gt; done(),
-                error: done,
-            });
-            _owner.model = _d;
-        });
+        ajvInit(this.options);
 
-        it(&quot;should allow function as next callback&quot;, (done) =&gt; {
-            _owner.subscribe(() =&gt; done());
-            _owner.model = _d;
-        });
+        // declares default path of root# for validation queries
+        this.path = &quot;root#&quot;;
 
-        it(&quot;should be observable&quot;, (done) =&gt; {
-            let _ival = 0;
-            const _arr = new Array(0, 2000);
-            const _iterator = {
-                next: (
-                    () =&gt; _ival++ &lt; _arr.length ? {
-                        value: _owner.model = _d,
-                        done: false,
-                    } : {
-                        value: _owner.freeze(),
-                        done: true,
-                    }
-                ),
-            };
-            _owner.subscribe({next: _iterator.next, complete: done});
-            _iterator.next();
-        });
-    });
-});
+        const _schemas = SchemaUtils.normalizeSchemas(schemas);
+
+        // const _ajv = createAjv(this, schemas, opts);
+        if (!_vDict.hasOwnProperty(path)) {
+            _vDict[path] = this.$ajv.getSchema(path);
+            console.log(`_vDict[&quot;${path}&quot;]: ${JSON.stringify(this.$ajv.getSchema(path), null, 2)}`);
+        }
+
+        // accept no further modifications to this object
+        Object.seal(this);
+    }
+
+    /**
+     * Helper method to derive path for given model
+     * todo: review for removal
+     * @param model
+     * @return {string}
+     */
+    static resolvePath(model) {
+        return &quot;not yet implemented&quot;;
+    }
+
+    // /**
+    //  * Getter for captive Ajv validator
+    //  * -- use this for Ajv API Methods
+    //  * @returns {ajv}
+    //  */
+    // get $ajv() {
+    //     return _ajvRef.get(this);
+    // }
+
+    get errors() {
+        return $ajv.errors;
+    }
+
+    /**
+     * Executes validator at PropertiesModel $model `path` against `value`
+     * @param {string} path
+     * @param {any} value
+     */
+    exec(path, value) {
+        // appends id ref to path
+        if (path.indexOf(&quot;#&quot;) &lt; 0) {
+            path = `${this.path}${path}`;
+        }
+
+        const _vDict = _validators.get(this);
+        let _res = false;
+
+        /*
+            makes initial validation attempt and re-attempts from top on failure
+         */
+        try {
+            _res = _vDict[path](value);
+        } catch (e) {
+
+            if (path.replace(/(items|properties)\/?/, &quot;&quot;).split(&quot;/&quot;).length) {
+                return this.exec(`${this.path}/`, _preconstruct(path, value, this.$owner));
+            }
+
+            throw(e);
+        }
+
+        return _res;
+    }
+}
 </code></pre>
 
 </div>

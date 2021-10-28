@@ -8,7 +8,7 @@
   <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
   <script src="script/prettify/prettify.js"></script>
   <script src="script/manual.js"></script>
-<meta name="description" content="Observable &amp; Validatable Data Models and Pipelines"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="datamatic"><meta property="twitter:description" content="Observable &amp; Validatable Data Models and Pipelines"></head>
+<meta name="description" content="RxJS + JSON-Schema (Ajv) Based Observable and Validating Data Models and Pipelines"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="datamatic"><meta property="twitter:description" content="RxJS + JSON-Schema (Ajv) Based Observable and Validating Data Models and Pipelines"></head>
 <body class="layout-container" data-ice="rootContainer">
 
 <header>
@@ -29,7 +29,8 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#model">Model</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
+  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#model">Model</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_branchNotifier.js~Notifiers.html">Notifiers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_metaData.js~MetaData.html">MetaData</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_observerBuilder.js~ObserverBuilder.html">ObserverBuilder</a></span></span></li>
@@ -49,7 +50,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-walkObject">walkObject</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ajvRef">_ajvRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_dirtyModels">_dirtyModels</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_exists">_exists</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_oBuilders">_oBuilders</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_object">_object</a></span></span></li>
@@ -59,7 +59,6 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaOptions">_schemaOptions</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaSignatures">_schemaSignatures</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validators">_validators</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-wf">wf</a></span></span></li>
 <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pipeline">Pipeline</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/Executor.js~Executor.html">Executor</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/Iterator.js~Iterator.html">Iterator</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/Pipeline.js~PipeListener.html">PipeListener</a></span></span></li>
@@ -105,7 +104,7 @@ SOFTWARE.
 
 ############################################################################ */
 import {
-    _object, _schemaHelpers, _oBuilders,
+    _object, _schemaHelpers, _oBuilders, _dirtyModels
 } from &quot;./_references&quot;;
 import {BaseModel} from &quot;./base-model&quot;;
 import {SchemaHelpers} from &quot;./_schemaHelpers&quot;;
@@ -147,15 +146,6 @@ export class ItemsModel extends BaseModel {
             return false;
         }
 
-        let _idx = 0;
-        // value.forEach((itm) =&gt; {
-        //     let _defaults = this.owner.getDefaultsForPath(this.jsonPath);
-        //     if (Object.keys(_defaults).length) {
-        //         value[_idx] = merge(_defaults, itm);
-        //     }
-        //     _idx++;
-        // });
-
         if (refValidation(this, value) !== true) {
             Notifiers.get(this.owner).sendError(this.jsonPath, this.owner.errors);
             return `${JSON.stringify(this.owner.errors)}`;
@@ -167,18 +157,14 @@ export class ItemsModel extends BaseModel {
         }
 
         _oBuilders.get(this.owner).mute(this);
-
         _object.set(this, new Proxy(BaseModel.createRef(this, []), this.handler));
         _observerDelegates.set(this, true);
 
         try {
             let cnt = 0;
-
             value.forEach((val) =&gt; {
                 _object.get(this)[cnt++] = val;
             });
-            // todo: review why this wont fly
-            // _object.get(this).splice(0,0, value);
         } catch (e) {
             makeClean(this);
             _oBuilders.get(this.owner).unmute(this);
@@ -238,7 +224,7 @@ export class ItemsModel extends BaseModel {
                 let _oDel = _observerDelegates.get(this);
 
                 if (refAtKeyValidation(this, &quot;items&quot;, value) !== true) {
-                    if (_oDel !== void(0)) {
+                    if (_oDel !== void (0)) {
                         makeClean(this);
                         Notifiers.get(this.owner).sendError(this.jsonPath, this.owner.errors);
                     }
@@ -252,14 +238,6 @@ export class ItemsModel extends BaseModel {
                 }
 
                 t[idx] = value;
-
-                // makes clean if not serial operation
-                if (_oDel !== void(0)) {
-                    makeClean(this);
-                    // updates observers
-                    // Notifiers.get(this.owner).sendNext(this.jsonPath);
-                }
-
                 return true;
             },
 
@@ -273,8 +251,8 @@ export class ItemsModel extends BaseModel {
      * Returns length of model array
      * @returns {number}
      */
-    length() {
-        return this.model.length();
+    get length() {
+        return this.model.length;
     }
 }
 
