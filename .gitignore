@@ -8,4 +8,4 @@ node_modules/*
 test/_orig
 coverage/*
 environment.sh
-./src/ajvWrapper.js
+src/ajvWrapper.js
