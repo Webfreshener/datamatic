@@ -350,6 +350,7 @@ describe("Pipeline API Tests", () => {
                 expect(_p.tap()[0].hasOwnProperty("name")).toBeTruthy();
                 expect(_p.tap()[0].name).toEqual(data[data.length - 1].name);
                 _sub.unsubscribe();
+                _p.unthrottle();
                 done();
             }, (data.length * rate) + 20);
         });
