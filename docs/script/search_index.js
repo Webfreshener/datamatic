@@ -1320,12 +1320,6 @@ window.esdocSearchIndex = [
     "member"
   ],
   [
-    "src/pipeline/pipeline.js~pipeline#clearthrottle",
-    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-clearThrottle",
-    "src/Pipeline/Pipeline.js~Pipeline#clearThrottle",
-    "method"
-  ],
-  [
     "src/pipeline/pipeline.js~pipeline#clone",
     "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-clone",
     "src/Pipeline/Pipeline.js~Pipeline#clone",
@@ -1431,6 +1425,12 @@ window.esdocSearchIndex = [
     "src/pipeline/pipeline.js~pipeline#unlink",
     "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-unlink",
     "src/Pipeline/Pipeline.js~Pipeline#unlink",
+    "method"
+  ],
+  [
+    "src/pipeline/pipeline.js~pipeline#unthrottle",
+    "class/src/Pipeline/Pipeline.js~Pipeline.html#instance-method-unthrottle",
+    "src/Pipeline/Pipeline.js~Pipeline#unthrottle",
     "method"
   ],
   [

@@ -1,7 +1,7 @@
 {
-  "coverage": "81.1%",
-  "expectCount": 254,
-  "actualCount": 206,
+  "coverage": "81.17%",
+  "expectCount": 255,
+  "actualCount": 207,
   "files": {
     "src/Model/_ajvWrapper.js": {
       "expectCount": 9,
@@ -114,15 +114,15 @@
       ]
     },
     "src/Pipeline/Pipeline.js": {
-      "expectCount": 35,
-      "actualCount": 29,
+      "expectCount": 36,
+      "actualCount": 30,
       "undocumentLines": [
         32,
         33,
-        39,
-        319,
-        398,
-        553
+        35,
+        46,
+        421,
+        576
       ]
     },
     "src/Pipeline/Properties.js": {

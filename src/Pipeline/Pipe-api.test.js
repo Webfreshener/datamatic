@@ -2,7 +2,7 @@ import {Validator} from "./Validator";
 import {Pipeline} from "./Pipeline";
 import {basicCollection} from "../../fixtures/PropertiesModel.schemas";
 import {default as data} from "../../fixtures/pipes-test.data";
-import {default as _pipesOrSchemas} from "../../fixtures/pipes-or-schema"
+import {default as _pipesOrSchemas} from "../../fixtures/pipes-or-schema";
 
 const _schemaDef = {
     "schemas": [
@@ -328,7 +328,7 @@ describe("Pipeline API Tests", () => {
         _tx.write(data);
     });
 
-    describe("throttle/clearThrottle", () => {
+    describe("throttle/unthrottle", () => {
         test("throttle", (done) => {
             let _cnt = 0;
             const rate = 150;
@@ -340,49 +340,120 @@ describe("Pipeline API Tests", () => {
             expect(_p.errors).toEqual(null);
 
             const _ivl = setInterval(() => {
-                if (_cnt === data.length) {
-                    _p.clearThrottle();
-                    clearInterval(_ivl);
-                    expect(_p.tap().length).toEqual(1);
-                    expect(_p.tap()[0].hasOwnProperty("name")).toBeTruthy();
-                    expect(_p.tap()[0].name).toEqual(data[data.length - 1].name);
-                    _sub.unsubscribe();
-                    done();
-                } else {
-                    done(`did not receive all data via throttle\nexpected: ${data.length}\nreceived: ${_cnt}\n`);
+                clearInterval(_ivl);
+
+                if (_cnt !== data.length) {
+                    done(`Throttled Pipeline did not send all data.\nExpected: ${data.length}\nReceived: ${_cnt}`);
                 }
-            }, (data.length * rate) + 10);
+
+                expect(_p.tap().length).toEqual(1);
+                expect(_p.tap()[0].hasOwnProperty("name")).toBeTruthy();
+                expect(_p.tap()[0].name).toEqual(data[data.length - 1].name);
+                _sub.unsubscribe();
+                done();
+            }, (data.length * rate) + 20);
         });
 
-        test.skip("clearThrottle", (done) => {
+        test("throttle reset", (done) => {
             let _cnt = 0;
             const rate = 150;
-            const _sub = _p.throttle(rate).subscribe({
+            const _sub = _p.throttle(rate).subscribe(() => {
+                _p.throttle(0);
+                _cnt++
+            });
+
+            data.forEach((d) => {
+                _p.write([d]);
+            });
+
+            expect(_p.errors).toEqual(null);
+
+            const _ivl = setInterval(() => {
+                clearInterval(_ivl);
+
+                if (_cnt !== data.length) {
+                    done(`Pipeline did not release all data after throttle reset.\nExpected: ${data.length}\nReceived: ${_cnt}`);
+                }
+
+                _sub.unsubscribe();
+                done();
+            }, rate + 20);
+        });
+
+        test("throttle reset discard cache", (done) => {
+            let _cnt = 0;
+            const rate = 150;
+            const _sub = _p.throttle(rate).subscribe(() => {
+                _p.throttle(-1);
+                _cnt++;
+            });
+
+            data.forEach((d) => {
+                _p.write([d]);
+            });
+
+            expect(_p.errors).toEqual(null);
+
+            const _ivl = setInterval(() => {
+                clearInterval(_ivl);
+
+                if (_cnt !== 1) {
+                    done(`Pipeline did not discard cached data after throttle reset.\nExpected: 1\nReceived: ${_cnt}`);
+                }
+
+                _sub.unsubscribe();
+                done();
+            }, rate * data.length);
+        });
+
+        test("unthrottle", (done) => {
+            const _pipe = new Pipeline(..._pipesOrSchemas);
+            let _cnt = 0;
+            const rate = 150;
+            const _sub = _pipe.throttle(rate).subscribe({
                 next: (d) => {
-                    _p.clearThrottle();
+                    _pipe.unthrottle();
                     _cnt++;
                 },
                 error: done,
             });
 
+            data.forEach((d) => {
+                _pipe.write([d]);
+            });
+
             const _ivl = setInterval(() => {
-                if (_cnt === 1) {
-                    expect(Array.isArray(_p.tap())).toBeTruthy();
-                    expect(_p.tap().length).toEqual(1);
-                    expect(typeof _p.tap()[0]).toBe("object");
-                    expect(_p.tap()[0].name).toBe("Alice");
-                    clearInterval(_ivl);
-                    _sub.unsubscribe();
-                    done();
-                } else {
-                    done(`did not receive correct data via throttle\nexpected: 1\nreceived: ${_cnt}\n`);
-                }
-            }, rate);
+                clearInterval(_ivl);
+                expect(_cnt).toEqual(6);
+                done();
+            }, rate + 10);
+
+        });
+
+        test("unthrottle discard cache", (done) => {
+            const _pipe = new Pipeline(..._pipesOrSchemas);
+            let _cnt = 0;
+            const rate = 150;
+            const _sub = _pipe.throttle(rate).subscribe({
+                next: () => {
+                    _pipe.unthrottle(true);
+                    _cnt++;
+                },
+                error: done,
+            });
 
             data.forEach((d) => {
-                _p.write([d]);
+                _pipe.write([d]);
             });
-        })
+
+            const _ivl = setInterval(() => {
+                clearInterval(_ivl);
+                expect(_cnt).toEqual(1);
+                _sub.unsubscribe();
+                done();
+            }, rate + 10);
+
+        });
     });
 
     test("sample", () => {

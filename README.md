@@ -335,6 +335,7 @@ Represents an Properties (Object} entry in the given schema
 | split | ...(pipes &#124; schemas) | creates array of new `pipeline` segments that run in parallel |
 | tap | | Provides current state of `pipeline` output. alias for `toJSON` |
 | throttle | rate (number) | Limit notifications to rate based on time interval |
+| unthrottle | discardCacheQueue (boolean) | Clears throttle interval. Optionally discards contents of `Pipeline` cache |
 | unlink | target (Pipeline)| unlinks `pipeline` segment from target `pipeline` |
 | write | data (object &#124; array &#124; string &#124; number &#124; boolean)| writes data to `pipeline` |
 

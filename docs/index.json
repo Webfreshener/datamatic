@@ -5711,7 +5711,7 @@
     "__docId__": 228,
     "kind": "file",
     "name": "src/Pipeline/Pipe-api.test.js",
-    "content": "import {Validator} from \"./Validator\";\nimport {Pipeline} from \"./Pipeline\";\nimport {basicCollection} from \"../../fixtures/PropertiesModel.schemas\";\nimport {default as data} from \"../../fixtures/pipes-test.data\";\nimport {default as _pipesOrSchemas} from \"../../fixtures/pipes-or-schema\"\n\nconst _schemaDef = {\n    \"schemas\": [\n        {\n            \"$id\": \"http://api-hero.webfreshener.com/v1/namespace.json#\",\n            \"type\": \"object\",\n            \"required\": [\n                \"basePath\"\n            ],\n            \"properties\": {\n                \"basePath\": {\n                    \"type\": \"string\",\n                },\n                \"servers\": {\n                    \"type\": \"object\"\n                },\n                \"options\": {\n                    \"type\": \"object\"\n                },\n                \"operations\": {\n                    \"$ref\": \"#/definitions/Operations\"\n                }\n            },\n            \"definitions\": {\n                \"Operations\": {\n                    \"type\": \"array\",\n                    \"items\": {\n                        \"$ref\": \"#/definitions/OperationItem\"\n                    }\n                },\n                \"OperationItem\": {\n                    \"type\": \"object\",\n                    \"required\": [\n                        \"operationId\",\n                        \"method\",\n                        \"path\"\n                    ],\n                    \"additionalProperties\": false,\n                    \"properties\": {\n                        \"operationId\": {\n                            \"type\": \"string\"\n                        },\n                        \"method\": {\n                            \"type\": \"string\",\n                            \"enum\": [\n                                \"delete\",\n                                \"get\",\n                                \"head\",\n                                \"options\",\n                                \"patch\",\n                                \"post\",\n                                \"put\"\n                            ]\n                        },\n                        \"path\": {\n                            \"type\": \"string\"\n                        },\n                        \"request\": {\n                            \"type\": \"object\"\n                        },\n                        \"responses\": {\n                            \"type\": \"object\"\n                        }\n                    }\n                }\n            }\n        },\n        {\n            \"$id\": \"http://api-hero.webfreshener.com/v1/namespace/operations.json#\",\n            // \"$schema\": \"http://api-hero.webfreshener.com/v1/namespace.json#\",\n            \"allOf\": [\n                {\n                    \"required\": [\n                        \"elementClass\",\n                        \"target\"\n                    ],\n                    \"properties\": {\n                        \"elementClass\": {\n                            \"type\": \"object\"\n                        },\n                        \"target\": {\n                            \"type\": \"object\"\n                        }\n                    }\n                },\n                {\n                    \"$ref\": \"http://api-hero.webfreshener.com/v1/namespace.json#/definitions/Operations\"\n                }\n            ]\n        }\n    ],\n    \"use\": \"http://api-hero.webfreshener.com/v1/namespace/operations.json#\"\n};\n\ndescribe(\"Pipeline API Tests\", () => {\n    let _p;\n    beforeEach(() => {\n        _p = new Pipeline(..._pipesOrSchemas);\n    });\n\n    describe(\"Pipeline Schema\", () => {\n        it(\"should accept schema\", () => {\n            expect(\n                () => (new Pipeline(basicCollection))\n            ).not.toThrow();\n        });\n\n        it(\"should accept schema config\", () => {\n            expect(\n                () => (new Pipeline(_schemaDef))\n            ).not.toThrow();\n        });\n    });\n\n    describe(\"Pipeline exec\", () => {\n        it(\"should not be an observable\", (done) => {\n            const _p = new Pipeline(..._pipesOrSchemas);\n            _p.subscribe({\n                next: () => {\n                    done(\"should not be observable if called with exec\");\n                },\n                error: () => {\n                    done(\"should not be observable if called with exec\");\n                }\n            });\n\n            expect(_p.exec(data).length).toEqual(3);\n            expect(Object.keys(_p.tap()).length).toEqual(0);\n            setTimeout(() => done(), 10);\n        });\n\n        it(\"should not be a promise\", () => {\n            expect(_p.exec(data).then).toBeUndefined();\n        });\n\n        it(\"should throw\", () => {\n            const _p = new Pipeline(..._pipesOrSchemas);\n            try {\n                _p.exec(\"invalid value\");\n            } catch (e) {\n                expect(e.error[0].message).toEqual(\"must be array\");\n            }\n        });\n    });\n\n    it(\"should send error notification if a pipeline returns false\", (done) => {\n        const _p = new Pipeline(\n            ...[\n                ..._pipesOrSchemas,\n                {\n                    exec: () => false,\n                }\n            ]\n        );\n\n        const _sub = _p.subscribe({\n            next: () => {\n                _sub.unsubscribe();\n                done(\"pipeline should not have sent next notification\");\n            },\n            error: (e) => {\n                _sub.unsubscribe();\n                expect(e.error[0].message).toEqual(\"must be array\");\n                expect(JSON.stringify(e.data)).toEqual(JSON.stringify(data[0]));\n                done();\n            },\n        });\n\n        _p.write(data[0]);\n    });\n\n    it(\"should provide errors\", (done) => {\n        const _p = new Pipeline(\n            {type: \"boolean\"});\n        const _sub = _p.subscribe({\n            next: () => {\n                _sub.unsubscribe();\n                done(\"pipeline should have errored\");\n            },\n            error: (e) => {\n                _sub.unsubscribe();\n                expect(e.error !== void 0).toBe(true);\n                done();\n            }\n        });\n\n        _p.write(data[0]);\n    });\n\n    it(\"should split pipeline\", (done) => {\n        const _config = [\n            {\n                exec: (d) => {\n                    return d.map((m) => Object.assign(m, {name: `${m.name} RENAMED`}))\n                },\n            },\n            {\n                exec: (d) => d.map((m) => Object.assign(m, {age: 99})),\n            },\n        ];\n\n        // const _cb = jest.fn();\n        let _cnt = 0;\n        _p = new Pipeline({\n            exec: (d) => d\n        });\n\n        _p.subscribe({\n            error: done,\n        });\n\n        const _split = _p.split(_config);\n        expect(_split.length).toEqual(2);\n\n        _split.forEach((pipe) => {\n            const _sub = pipe.subscribe({\n                next: () => {\n                    _cnt++;\n                    _sub.unsubscribe();\n                },\n                error: (e) => {\n                    _sub.unsubscribe();\n                    throw e;\n                }\n            });\n        });\n\n        _p.write(data);\n\n        setTimeout(() => {\n            // expect(_cb).toHaveBeenCalledTimes(2);\n            expect(_cnt).toEqual(2);\n            expect(_split[0].tap()[0].name.match(/.*\\sRENAMED+$/)).toBeTruthy();\n            expect(_split[1].tap()[0].age).toEqual(99);\n            done();\n        }, 50);\n    });\n\n    it(\"should exec multiple pipes inline\", (done) => {\n        const _p1 = new Pipeline(\n            basicCollection,\n            (d) => d.map((m) => Object.assign(m, {name: `${m.name} RENAMED`}))\n        );\n\n        const _p2 = new Pipeline(\n            basicCollection,\n            (d) => d.map((m) => Object.assign(m, {age: 99}))\n        );\n\n        const _inline = _p.pipe(_p1, _p2);\n\n        _inline.subscribe({\n            next: (d) => {\n                expect(d.length).toEqual(data.length);\n                expect(d[data.length - 1].name.match(/.*\\sRENAMED+$/)).toBeTruthy();\n                expect(d[data.length - 1].age).toEqual(99);\n                expect(1).toBeTruthy();\n            },\n            error: done,\n        });\n\n        _inline.write(data);\n\n        setTimeout(() => {\n            expect(_inline.tap().length).toEqual(data.length);\n            expect(_inline.tap()[data.length - 1].name.match(/.*\\sRENAMED+$/)).toBeTruthy();\n            expect(_inline.tap()[data.length - 1].age).toEqual(99);\n            expect(1).toBeTruthy();\n            done();\n            _inline.close();\n        }, 50);\n\n    });\n\n    test(\"pipe\", (done) => {\n        const _pipe = new Pipeline(\n            basicCollection,\n            (d) => d.map((m) => Object.assign(m, {name: `${m.name} RENAMED`}))\n        );\n\n        _pipe.pipe((d) => d).subscribe({\n            next: () => done(),\n            error: done,\n        });\n\n        _pipe.write(data);\n    });\n\n    test(\"yield\", () => {\n        const _pOS = [\n            {\n                exec: () => \"foo\",\n            },\n            new Pipeline({\n                exec: () => \"bar\",\n            }),\n            {\n                exec: () => \"baz\",\n            },\n        ];\n\n        const _ = (new Pipeline(..._pOS)).yield(data);\n\n        expect(_.next().value).toBe(\"foo\");\n        expect(_.next().value).toBe(\"bar\");\n        expect(_.next().value).toBe(\"baz\");\n        expect(_.next().done).toBe(true);\n    });\n\n    it(\"pipeline should pipeline\", (done) => {\n        const _tx = new Pipeline();\n\n        _tx.subscribe({\n            next: (d) => {\n                expect(d).toEqual(data);\n                done();\n            },\n            error: (e) => {\n                done(e);\n            }\n        });\n\n        _tx.write(data);\n    });\n\n    describe(\"throttle/clearThrottle\", () => {\n        test(\"throttle\", (done) => {\n            let _cnt = 0;\n            const rate = 150;\n            const _sub = _p.throttle(rate).subscribe(() => _cnt++);\n            data.forEach((d) => {\n                _p.write([d]);\n            });\n\n            expect(_p.errors).toEqual(null);\n\n            const _ivl = setInterval(() => {\n                if (_cnt === data.length) {\n                    _p.clearThrottle();\n                    clearInterval(_ivl);\n                    expect(_p.tap().length).toEqual(1);\n                    expect(_p.tap()[0].hasOwnProperty(\"name\")).toBeTruthy();\n                    expect(_p.tap()[0].name).toEqual(data[data.length - 1].name);\n                    _sub.unsubscribe();\n                    done();\n                } else {\n                    done(`did not receive all data via throttle\\nexpected: ${data.length}\\nreceived: ${_cnt}\\n`);\n                }\n            }, (data.length * rate) + 10);\n        });\n\n        test.skip(\"clearThrottle\", (done) => {\n            let _cnt = 0;\n            const rate = 150;\n            const _sub = _p.throttle(rate).subscribe({\n                next: (d) => {\n                    _p.clearThrottle();\n                    _cnt++;\n                },\n                error: done,\n            });\n\n            const _ivl = setInterval(() => {\n                if (_cnt === 1) {\n                    expect(Array.isArray(_p.tap())).toBeTruthy();\n                    expect(_p.tap().length).toEqual(1);\n                    expect(typeof _p.tap()[0]).toBe(\"object\");\n                    expect(_p.tap()[0].name).toBe(\"Alice\");\n                    clearInterval(_ivl);\n                    _sub.unsubscribe();\n                    done();\n                } else {\n                    done(`did not receive correct data via throttle\\nexpected: 1\\nreceived: ${_cnt}\\n`);\n                }\n            }, rate);\n\n            data.forEach((d) => {\n                _p.write([d]);\n            });\n        })\n    });\n\n    test(\"sample\", () => {\n        const _cb = jest.fn();\n        _p.sample(3).subscribe({\n            next: () => _cb(),\n            error: console.log,\n        });\n\n        data.slice(0, 4).forEach((m) => {\n            _p.write([m]);\n        });\n\n        expect(_cb).toHaveBeenCalledTimes(1);\n    });\n\n    test(\"clone\", () => {\n        let _cnt = 0;\n\n        const _h = () => _cnt++;\n\n        const _sub1 = _p.subscribe(_h);\n\n        const _clone = _p.clone();\n\n        const _sub2 = _clone.subscribe(_h);\n\n        _clone.write(data);\n        expect(_cnt).toEqual(2);\n\n        _cnt = 0;\n\n        _sub1.unsubscribe();\n        _sub2.unsubscribe();\n    });\n\n    describe(\"link / unlink\", () => {\n\n        beforeAll(() => {\n\n        });\n\n        it(\"should link pipeline\", () => {\n\n        });\n\n        it(\"should unlink pipeline\", () => {\n\n        });\n    });\n\n    test(\"should link and unlink pipes\", () => {\n        const _cb = jest.fn();\n        const _TxValidator = new Validator({schemas: [basicCollection]});\n        const _link = new Pipeline(_TxValidator, {schemas: [basicCollection]});\n\n        _p.link(_link, (d) => {\n            _cb();\n            return d;\n        });\n\n        _p.write(data);\n        expect(_p.errors).toEqual(null);\n        expect(_cb).toHaveBeenCalledTimes(1);\n\n        // we capture state for comparison\n        const _state = `${_p}`;\n\n        expect(`${_link}`).toEqual(`${_state}`);\n        expect(`${_link}` === `${_p}`).toBe(true);\n\n        _p.unlink(_link);\n\n        // this will add an item to _p but not to _link\n        _p.write([\n            ..._p.tap(),\n            {\n                name: \"Added Item\",\n                active: true,\n                age: 100,\n            }\n        ]);\n\n        expect(_p.errors).toEqual(null);\n\n        // we expect to discover no further executions and the state to be unchanged\n        expect(_cb).toHaveBeenCalledTimes(1);\n        expect(`${_link}`).toEqual(`${_state}`);\n        expect(`${_link}` === `${_p}`).toBe(false);\n    });\n\n    it(\"should close\", () => {\n        const _cb = jest.fn();\n        const _sub = _p.subscribe({\n            next: () => {\n                // will close on first invocation\n                _p.close();\n                _cb();\n            },\n            error: (e) => {\n                _sub.unsubscribe();\n                throw e;\n            },\n        });\n\n        data.forEach((d) => {\n            _p.write(Array.isArray(_p.tap()) ? [..._p.tap(), d] : [d]);\n        });\n\n        expect(_p.errors).toEqual(null);\n        expect(_p.tap().length).toEqual(1);\n        expect(_cb).toHaveBeenCalledTimes(1);\n        expect(_p.writable).toBe(false);\n        _sub.unsubscribe();\n    });\n\n\n    it(\"should merge multiple pipes into a single output\", (done) => {\n        const _vo = {\n            schema: _pipesOrSchemas[0].schema,\n        };\n\n        const _p1 = new Pipeline({\n            schema: _vo.schema,\n            exec: (d) => d.map((m) => Object.assign(m, {name: `${m.name} RENAMED`})),\n        });\n\n        const _p2 = new Pipeline({\n                schema: _vo.schema,\n                exec: (d) => d.map((m) => Object.assign(m, {age: 99}))\n            }\n        );\n\n        const _merged = _p.merge([_p1, _p2], {\n            schema: _vo.schema,\n            exec: (d) => d.map(\n                (m) => Object.assign(m, {active: false})\n            )\n        });\n\n        let _cnt = 0;\n        _merged.subscribe({\n            next: (d) => {\n                if (!_cnt) {\n                    _cnt++;\n                    expect(_merged.tap()[0].name.match(/.*\\sRENAMED+$/)).toBeTruthy();\n                    expect(_merged.tap()[data.length - 1].name.match(/.*\\sRENAMED+$/)).toBeTruthy();\n                    _p2.write(data);\n                } else {\n                    expect(_merged.tap().length).toEqual(data.length);\n                    expect(_merged.tap()[0].age).toEqual(99);\n                    expect(_merged.tap()[data.length - 1].age).toEqual(99);\n                    done();\n                }\n            }\n        });\n\n        _p1.write(data);\n    });\n\n});\n",
+    "content": "import {Validator} from \"./Validator\";\nimport {Pipeline} from \"./Pipeline\";\nimport {basicCollection} from \"../../fixtures/PropertiesModel.schemas\";\nimport {default as data} from \"../../fixtures/pipes-test.data\";\nimport {default as _pipesOrSchemas} from \"../../fixtures/pipes-or-schema\";\n\nconst _schemaDef = {\n    \"schemas\": [\n        {\n            \"$id\": \"http://api-hero.webfreshener.com/v1/namespace.json#\",\n            \"type\": \"object\",\n            \"required\": [\n                \"basePath\"\n            ],\n            \"properties\": {\n                \"basePath\": {\n                    \"type\": \"string\",\n                },\n                \"servers\": {\n                    \"type\": \"object\"\n                },\n                \"options\": {\n                    \"type\": \"object\"\n                },\n                \"operations\": {\n                    \"$ref\": \"#/definitions/Operations\"\n                }\n            },\n            \"definitions\": {\n                \"Operations\": {\n                    \"type\": \"array\",\n                    \"items\": {\n                        \"$ref\": \"#/definitions/OperationItem\"\n                    }\n                },\n                \"OperationItem\": {\n                    \"type\": \"object\",\n                    \"required\": [\n                        \"operationId\",\n                        \"method\",\n                        \"path\"\n                    ],\n                    \"additionalProperties\": false,\n                    \"properties\": {\n                        \"operationId\": {\n                            \"type\": \"string\"\n                        },\n                        \"method\": {\n                            \"type\": \"string\",\n                            \"enum\": [\n                                \"delete\",\n                                \"get\",\n                                \"head\",\n                                \"options\",\n                                \"patch\",\n                                \"post\",\n                                \"put\"\n                            ]\n                        },\n                        \"path\": {\n                            \"type\": \"string\"\n                        },\n                        \"request\": {\n                            \"type\": \"object\"\n                        },\n                        \"responses\": {\n                            \"type\": \"object\"\n                        }\n                    }\n                }\n            }\n        },\n        {\n            \"$id\": \"http://api-hero.webfreshener.com/v1/namespace/operations.json#\",\n            // \"$schema\": \"http://api-hero.webfreshener.com/v1/namespace.json#\",\n            \"allOf\": [\n                {\n                    \"required\": [\n                        \"elementClass\",\n                        \"target\"\n                    ],\n                    \"properties\": {\n                        \"elementClass\": {\n                            \"type\": \"object\"\n                        },\n                        \"target\": {\n                            \"type\": \"object\"\n                        }\n                    }\n                },\n                {\n                    \"$ref\": \"http://api-hero.webfreshener.com/v1/namespace.json#/definitions/Operations\"\n                }\n            ]\n        }\n    ],\n    \"use\": \"http://api-hero.webfreshener.com/v1/namespace/operations.json#\"\n};\n\ndescribe(\"Pipeline API Tests\", () => {\n    let _p;\n    beforeEach(() => {\n        _p = new Pipeline(..._pipesOrSchemas);\n    });\n\n    describe(\"Pipeline Schema\", () => {\n        it(\"should accept schema\", () => {\n            expect(\n                () => (new Pipeline(basicCollection))\n            ).not.toThrow();\n        });\n\n        it(\"should accept schema config\", () => {\n            expect(\n                () => (new Pipeline(_schemaDef))\n            ).not.toThrow();\n        });\n    });\n\n    describe(\"Pipeline exec\", () => {\n        it(\"should not be an observable\", (done) => {\n            const _p = new Pipeline(..._pipesOrSchemas);\n            _p.subscribe({\n                next: () => {\n                    done(\"should not be observable if called with exec\");\n                },\n                error: () => {\n                    done(\"should not be observable if called with exec\");\n                }\n            });\n\n            expect(_p.exec(data).length).toEqual(3);\n            expect(Object.keys(_p.tap()).length).toEqual(0);\n            setTimeout(() => done(), 10);\n        });\n\n        it(\"should not be a promise\", () => {\n            expect(_p.exec(data).then).toBeUndefined();\n        });\n\n        it(\"should throw\", () => {\n            const _p = new Pipeline(..._pipesOrSchemas);\n            try {\n                _p.exec(\"invalid value\");\n            } catch (e) {\n                expect(e.error[0].message).toEqual(\"must be array\");\n            }\n        });\n    });\n\n    it(\"should send error notification if a pipeline returns false\", (done) => {\n        const _p = new Pipeline(\n            ...[\n                ..._pipesOrSchemas,\n                {\n                    exec: () => false,\n                }\n            ]\n        );\n\n        const _sub = _p.subscribe({\n            next: () => {\n                _sub.unsubscribe();\n                done(\"pipeline should not have sent next notification\");\n            },\n            error: (e) => {\n                _sub.unsubscribe();\n                expect(e.error[0].message).toEqual(\"must be array\");\n                expect(JSON.stringify(e.data)).toEqual(JSON.stringify(data[0]));\n                done();\n            },\n        });\n\n        _p.write(data[0]);\n    });\n\n    it(\"should provide errors\", (done) => {\n        const _p = new Pipeline(\n            {type: \"boolean\"});\n        const _sub = _p.subscribe({\n            next: () => {\n                _sub.unsubscribe();\n                done(\"pipeline should have errored\");\n            },\n            error: (e) => {\n                _sub.unsubscribe();\n                expect(e.error !== void 0).toBe(true);\n                done();\n            }\n        });\n\n        _p.write(data[0]);\n    });\n\n    it(\"should split pipeline\", (done) => {\n        const _config = [\n            {\n                exec: (d) => {\n                    return d.map((m) => Object.assign(m, {name: `${m.name} RENAMED`}))\n                },\n            },\n            {\n                exec: (d) => d.map((m) => Object.assign(m, {age: 99})),\n            },\n        ];\n\n        // const _cb = jest.fn();\n        let _cnt = 0;\n        _p = new Pipeline({\n            exec: (d) => d\n        });\n\n        _p.subscribe({\n            error: done,\n        });\n\n        const _split = _p.split(_config);\n        expect(_split.length).toEqual(2);\n\n        _split.forEach((pipe) => {\n            const _sub = pipe.subscribe({\n                next: () => {\n                    _cnt++;\n                    _sub.unsubscribe();\n                },\n                error: (e) => {\n                    _sub.unsubscribe();\n                    throw e;\n                }\n            });\n        });\n\n        _p.write(data);\n\n        setTimeout(() => {\n            // expect(_cb).toHaveBeenCalledTimes(2);\n            expect(_cnt).toEqual(2);\n            expect(_split[0].tap()[0].name.match(/.*\\sRENAMED+$/)).toBeTruthy();\n            expect(_split[1].tap()[0].age).toEqual(99);\n            done();\n        }, 50);\n    });\n\n    it(\"should exec multiple pipes inline\", (done) => {\n        const _p1 = new Pipeline(\n            basicCollection,\n            (d) => d.map((m) => Object.assign(m, {name: `${m.name} RENAMED`}))\n        );\n\n        const _p2 = new Pipeline(\n            basicCollection,\n            (d) => d.map((m) => Object.assign(m, {age: 99}))\n        );\n\n        const _inline = _p.pipe(_p1, _p2);\n\n        _inline.subscribe({\n            next: (d) => {\n                expect(d.length).toEqual(data.length);\n                expect(d[data.length - 1].name.match(/.*\\sRENAMED+$/)).toBeTruthy();\n                expect(d[data.length - 1].age).toEqual(99);\n                expect(1).toBeTruthy();\n            },\n            error: done,\n        });\n\n        _inline.write(data);\n\n        setTimeout(() => {\n            expect(_inline.tap().length).toEqual(data.length);\n            expect(_inline.tap()[data.length - 1].name.match(/.*\\sRENAMED+$/)).toBeTruthy();\n            expect(_inline.tap()[data.length - 1].age).toEqual(99);\n            expect(1).toBeTruthy();\n            done();\n            _inline.close();\n        }, 50);\n\n    });\n\n    test(\"pipe\", (done) => {\n        const _pipe = new Pipeline(\n            basicCollection,\n            (d) => d.map((m) => Object.assign(m, {name: `${m.name} RENAMED`}))\n        );\n\n        _pipe.pipe((d) => d).subscribe({\n            next: () => done(),\n            error: done,\n        });\n\n        _pipe.write(data);\n    });\n\n    test(\"yield\", () => {\n        const _pOS = [\n            {\n                exec: () => \"foo\",\n            },\n            new Pipeline({\n                exec: () => \"bar\",\n            }),\n            {\n                exec: () => \"baz\",\n            },\n        ];\n\n        const _ = (new Pipeline(..._pOS)).yield(data);\n\n        expect(_.next().value).toBe(\"foo\");\n        expect(_.next().value).toBe(\"bar\");\n        expect(_.next().value).toBe(\"baz\");\n        expect(_.next().done).toBe(true);\n    });\n\n    it(\"pipeline should pipeline\", (done) => {\n        const _tx = new Pipeline();\n\n        _tx.subscribe({\n            next: (d) => {\n                expect(d).toEqual(data);\n                done();\n            },\n            error: (e) => {\n                done(e);\n            }\n        });\n\n        _tx.write(data);\n    });\n\n    describe(\"throttle/unthrottle\", () => {\n        test(\"throttle\", (done) => {\n            let _cnt = 0;\n            const rate = 150;\n            const _sub = _p.throttle(rate).subscribe(() => _cnt++);\n            data.forEach((d) => {\n                _p.write([d]);\n            });\n\n            expect(_p.errors).toEqual(null);\n\n            const _ivl = setInterval(() => {\n                clearInterval(_ivl);\n\n                if (_cnt !== data.length) {\n                    done(`Throttled Pipeline did not send all data.\\nExpected: ${data.length}\\nReceived: ${_cnt}`);\n                }\n\n                expect(_p.tap().length).toEqual(1);\n                expect(_p.tap()[0].hasOwnProperty(\"name\")).toBeTruthy();\n                expect(_p.tap()[0].name).toEqual(data[data.length - 1].name);\n                _sub.unsubscribe();\n                done();\n            }, (data.length * rate) + 20);\n        });\n\n        test(\"throttle reset\", (done) => {\n            let _cnt = 0;\n            const rate = 150;\n            const _sub = _p.throttle(rate).subscribe(() => {\n                _p.throttle(0);\n                _cnt++\n            });\n\n            data.forEach((d) => {\n                _p.write([d]);\n            });\n\n            expect(_p.errors).toEqual(null);\n\n            const _ivl = setInterval(() => {\n                clearInterval(_ivl);\n\n                if (_cnt !== data.length) {\n                    done(`Pipeline did not release all data after throttle reset.\\nExpected: ${data.length}\\nReceived: ${_cnt}`);\n                }\n\n                _sub.unsubscribe();\n                done();\n            }, rate + 20);\n        });\n\n        test(\"throttle reset discard cache\", (done) => {\n            let _cnt = 0;\n            const rate = 150;\n            const _sub = _p.throttle(rate).subscribe(() => {\n                _p.throttle(-1);\n                _cnt++;\n            });\n\n            data.forEach((d) => {\n                _p.write([d]);\n            });\n\n            expect(_p.errors).toEqual(null);\n\n            const _ivl = setInterval(() => {\n                clearInterval(_ivl);\n\n                if (_cnt !== 1) {\n                    done(`Pipeline did not discard cached data after throttle reset.\\nExpected: 1\\nReceived: ${_cnt}`);\n                }\n\n                _sub.unsubscribe();\n                done();\n            }, rate * data.length);\n        });\n\n        test(\"unthrottle\", (done) => {\n            const _pipe = new Pipeline(..._pipesOrSchemas);\n            let _cnt = 0;\n            const rate = 150;\n            const _sub = _pipe.throttle(rate).subscribe({\n                next: (d) => {\n                    _pipe.unthrottle();\n                    _cnt++;\n                },\n                error: done,\n            });\n\n            data.forEach((d) => {\n                _pipe.write([d]);\n            });\n\n            const _ivl = setInterval(() => {\n                clearInterval(_ivl);\n                expect(_cnt).toEqual(6);\n                done();\n            }, rate + 10);\n\n        });\n\n        test(\"unthrottle discard cache\", (done) => {\n            const _pipe = new Pipeline(..._pipesOrSchemas);\n            let _cnt = 0;\n            const rate = 150;\n            const _sub = _pipe.throttle(rate).subscribe({\n                next: () => {\n                    _pipe.unthrottle(true);\n                    _cnt++;\n                },\n                error: done,\n            });\n\n            data.forEach((d) => {\n                _pipe.write([d]);\n            });\n\n            const _ivl = setInterval(() => {\n                clearInterval(_ivl);\n                expect(_cnt).toEqual(1);\n                _sub.unsubscribe();\n                done();\n            }, rate + 10);\n\n        });\n    });\n\n    test(\"sample\", () => {\n        const _cb = jest.fn();\n        _p.sample(3).subscribe({\n            next: () => _cb(),\n            error: console.log,\n        });\n\n        data.slice(0, 4).forEach((m) => {\n            _p.write([m]);\n        });\n\n        expect(_cb).toHaveBeenCalledTimes(1);\n    });\n\n    test(\"clone\", () => {\n        let _cnt = 0;\n\n        const _h = () => _cnt++;\n\n        const _sub1 = _p.subscribe(_h);\n\n        const _clone = _p.clone();\n\n        const _sub2 = _clone.subscribe(_h);\n\n        _clone.write(data);\n        expect(_cnt).toEqual(2);\n\n        _cnt = 0;\n\n        _sub1.unsubscribe();\n        _sub2.unsubscribe();\n    });\n\n    describe(\"link / unlink\", () => {\n\n        beforeAll(() => {\n\n        });\n\n        it(\"should link pipeline\", () => {\n\n        });\n\n        it(\"should unlink pipeline\", () => {\n\n        });\n    });\n\n    test(\"should link and unlink pipes\", () => {\n        const _cb = jest.fn();\n        const _TxValidator = new Validator({schemas: [basicCollection]});\n        const _link = new Pipeline(_TxValidator, {schemas: [basicCollection]});\n\n        _p.link(_link, (d) => {\n            _cb();\n            return d;\n        });\n\n        _p.write(data);\n        expect(_p.errors).toEqual(null);\n        expect(_cb).toHaveBeenCalledTimes(1);\n\n        // we capture state for comparison\n        const _state = `${_p}`;\n\n        expect(`${_link}`).toEqual(`${_state}`);\n        expect(`${_link}` === `${_p}`).toBe(true);\n\n        _p.unlink(_link);\n\n        // this will add an item to _p but not to _link\n        _p.write([\n            ..._p.tap(),\n            {\n                name: \"Added Item\",\n                active: true,\n                age: 100,\n            }\n        ]);\n\n        expect(_p.errors).toEqual(null);\n\n        // we expect to discover no further executions and the state to be unchanged\n        expect(_cb).toHaveBeenCalledTimes(1);\n        expect(`${_link}`).toEqual(`${_state}`);\n        expect(`${_link}` === `${_p}`).toBe(false);\n    });\n\n    it(\"should close\", () => {\n        const _cb = jest.fn();\n        const _sub = _p.subscribe({\n            next: () => {\n                // will close on first invocation\n                _p.close();\n                _cb();\n            },\n            error: (e) => {\n                _sub.unsubscribe();\n                throw e;\n            },\n        });\n\n        data.forEach((d) => {\n            _p.write(Array.isArray(_p.tap()) ? [..._p.tap(), d] : [d]);\n        });\n\n        expect(_p.errors).toEqual(null);\n        expect(_p.tap().length).toEqual(1);\n        expect(_cb).toHaveBeenCalledTimes(1);\n        expect(_p.writable).toBe(false);\n        _sub.unsubscribe();\n    });\n\n\n    it(\"should merge multiple pipes into a single output\", (done) => {\n        const _vo = {\n            schema: _pipesOrSchemas[0].schema,\n        };\n\n        const _p1 = new Pipeline({\n            schema: _vo.schema,\n            exec: (d) => d.map((m) => Object.assign(m, {name: `${m.name} RENAMED`})),\n        });\n\n        const _p2 = new Pipeline({\n                schema: _vo.schema,\n                exec: (d) => d.map((m) => Object.assign(m, {age: 99}))\n            }\n        );\n\n        const _merged = _p.merge([_p1, _p2], {\n            schema: _vo.schema,\n            exec: (d) => d.map(\n                (m) => Object.assign(m, {active: false})\n            )\n        });\n\n        let _cnt = 0;\n        _merged.subscribe({\n            next: (d) => {\n                if (!_cnt) {\n                    _cnt++;\n                    expect(_merged.tap()[0].name.match(/.*\\sRENAMED+$/)).toBeTruthy();\n                    expect(_merged.tap()[data.length - 1].name.match(/.*\\sRENAMED+$/)).toBeTruthy();\n                    _p2.write(data);\n                } else {\n                    expect(_merged.tap().length).toEqual(data.length);\n                    expect(_merged.tap()[0].age).toEqual(99);\n                    expect(_merged.tap()[data.length - 1].age).toEqual(99);\n                    done();\n                }\n            }\n        });\n\n        _p1.write(data);\n    });\n\n});\n",
     "static": true,
     "longname": "/Users/vanschroeder/IdeaProjects/webfreshener-datamatic/src/Pipeline/Pipe-api.test.js",
     "access": "public",
@@ -5765,7 +5765,7 @@
     "__docId__": 232,
     "kind": "file",
     "name": "src/Pipeline/Pipeline.js",
-    "content": "/* ############################################################################\nThe MIT License (MIT)\n\nCopyright (c) 2019 Van Schroeder\nCopyright (c) 2019 Webfreshener, LLC\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n\n############################################################################ */\nimport {_observers, Validator} from \"./Validator\";\nimport {fill, mapArgs} from \"./Utils\";\nimport {Executor} from \"./Executor\";\nimport {default as DefaultVOSchema} from \"../schemas/default-pipe-vo.schema\";\nimport {Properties} from \"./Properties\";\n\nconst _pipes = new WeakMap();\nconst _cache = new WeakMap();\n\n/**\n * Pipeline Class\n */\nexport class Pipeline {\n    static getExecs(..._pvs) {\n        return _pvs.map((_p) => {\n            _p = Array.isArray(_p) ? _p[0] : _p;\n            return (d) => {\n                const _exec = ((typeof _p === \"function\") ? _p : void 0) ||\n                    // is pipeline or implements pipeline api\n                    (_p[\"exec\"]) ||\n                    // is validator or implements validator api\n                    (_p[\"validate\"] ? ((d) => _p[\"validate\"](d) ? d : false) : void 0) ||\n                    // default\n                    ((_) => _);\n                return (_exec).apply(null, [d]);\n            };\n        });\n    }\n\n    /**\n     *\n     * @param pipesOrVOsOrSchemas\n     */\n    constructor(...pipesOrVOsOrSchemas) {\n        _cache.set(this, []);\n\n        // TODO: solve this issue with async methods to remove kludge\n        if (pipesOrVOsOrSchemas[0] instanceof Function) {\n            pipesOrVOsOrSchemas.splice(0, 0, DefaultVOSchema);\n        }\n\n        pipesOrVOsOrSchemas = mapArgs(...pipesOrVOsOrSchemas);\n\n        // stores config & state\n        _pipes.set(this,\n            Properties.init(this, {\n                callbacks: fill(Pipeline.getExecs(...pipesOrVOsOrSchemas)),\n                pipesOrVOsOrSchemas: pipesOrVOsOrSchemas,\n                pipes: _pipes,\n            })\n        );\n\n        // define exec in constructor to ensure method visibility\n        Object.defineProperty(this, \"exec\", {\n            // value: (data) => pipes.get(this).exec(data),\n            value: (data) => {\n                return _pipes.get(this).exec(data);\n            },\n            enumerable: true,\n            configurable: false,\n        });\n    }\n\n    /**\n     * Creates new `pipeline` segment\n     * @param pipesOrSchemas\n     * @returns {Pipeline}\n     */\n    pipe(...pipesOrSchemas) {\n        const __ = new Pipeline(...pipesOrSchemas);\n        this.subscribe({\n            next: (d) => {\n                __.write(d);\n            }\n        });\n        return __;\n    }\n\n    /**\n     * Returns arr\n     * @returns {*[]}\n     */\n    get schema() {\n        return [\n            _pipes.get(this).vo.schema,\n            _pipes.get(this).out.schema\n        ];\n    }\n\n    /**\n     * links pipeline segment to direct output to target pipeline\n     * @param target\n     * @param callbacks function[]\n     * @returns {Pipeline}\n     */\n    link(target, ...callbacks) {\n        if (!(target instanceof Pipeline)) {\n            throw `item for \"target\" was not a Pipe`;\n        }\n\n        // allow for array literal in place of inline assignment\n        if (Array.isArray(callbacks[0])) {\n            callbacks = callbacks[0];\n        }\n\n        callbacks = fill(callbacks || []);\n\n        // creates observer and stores it to links map for `pipeline`\n        const _sub = this.subscribe({\n            next: (data) => {\n                const _res = Executor.exec(callbacks, data.toJSON ? data.toJSON() : data);\n                if (_res instanceof Promise) {\n                    return _res.then((_) => target.write(_));\n                }\n\n                target.write(_res);\n            },\n            error: (e) => {\n                console.error(e);\n            },\n            // handles unlink & cleanup on complete\n            complete: () => this.unlink(target)\n        });\n\n        _pipes.get(this).links.set(target, _sub);\n        return this;\n    }\n\n    /**\n     * Unlink `pipeline` segment from target `pipeline`\n     * @param target\n     * @returns {Pipeline}\n     */\n    unlink(target) {\n        if (!(target instanceof Pipeline)) {\n            throw `item for \"target\" was not a Pipe`;\n        }\n\n        const _sub = _pipes.get(this).links.get(target);\n\n        if (_sub) {\n            _sub.unsubscribe();\n            _pipes.get(this).links.delete(target);\n        }\n\n        return this;\n    }\n\n    /**\n     * Returns validation errors\n     * @returns {*|null}\n     */\n    get errors() {\n        return _pipes.get(this).vo.errors || null;\n    }\n\n    /**\n     * Returns JSON-SCHEMA for `pipeline` output\n     * @returns {object}\n     */\n    get schemas() {\n        return [..._pipes.get(this).schemas];\n    }\n\n    /**\n     * Creates array of new `pipeline` segments that run in parallel\n     * @param schemasOrPipes\n     * @returns {*}\n     */\n    split(schemasOrPipes) {\n        return schemasOrPipes.map((_) => this.pipe(_));\n    }\n\n    /**\n     * Iterates pipeline callbacks via generator function\n     * @param data\n     * @returns {generator}\n     */\n    yield(data) {\n        let _fill = _pipes.get(this).pOS.map((_) => _.exec || ((_) => _));\n\n        if (!_fill.length) {\n            _fill[0] = (d) => d;\n        }\n\n        const _f = new Function(\"$scope\", \"$cb\",\n            [\n                \"return (function* (data) { \",\n                \"try {\",\n                Object.keys(_fill)\n                    .map((_) => `yield data=($cb[${_}].bind($scope))(data)`)\n                    .join(\"; \"),\n                \"} catch (e) { $scope.error(e); }\",\n                \"}).bind($scope);\",\n            ].join(\" \")\n        );\n\n        return _f(this, _fill)(data);\n    }\n\n    /**\n     * Merges multiple pipes into single output\n     * @param pipeOrPipes\n     * @param pipeOrSchema\n     * @returns {Pipeline}\n     */\n    merge(pipeOrPipes, pipeOrSchema = {schemas: [DefaultVOSchema]}) {\n        const _out = new Pipeline(pipeOrSchema);\n        _pipes.get(this).listeners = [\n            ..._pipes.get(this).listeners,\n            // -- feeds output of map to listeners array\n            ...(Array.isArray(pipeOrPipes) ? pipeOrPipes : [pipeOrPipes])\n                .filter((_p) => ((typeof _p.subscribe) === \"function\"))\n                .map((_p) => {\n                    _p.subscribe((d) => {\n                        // -- all pipes now write to output tx\n                        _out.write(d.toJSON ? d.toJSON() : d);\n                    });\n                    return _p;\n                })\n        ];\n        // -- returns output tx for observation\n        return _out;\n    }\n\n    /**\n     * Writes data to pipeline segment\n     * @param data\n     * @returns {Pipeline}\n     */\n    write(data) {\n        _pipes.get(this).vo.model = data;\n        return this;\n    }\n\n    /**\n     * Creates clone of current `pipeline` segment\n     * @returns {Pipeline}\n     */\n    clone() {\n        const $ref = _pipes.get(this);\n        const _cz = class extends Pipeline {\n            constructor() {\n                super();\n                _pipes.set(this, $ref);\n                _pipes.get(this).listeners = [...$ref.listeners];\n            }\n        };\n        return new _cz();\n    }\n\n    /**\n     * Terminates input on `pipeline` segment. This is irrevocable\n     * @returns {Pipeline}\n     */\n    close() {\n        _pipes.get(this).out.freeze();\n        return this;\n    }\n\n    /**\n     * Returns write status of `pipeline`\n     * @returns {boolean}\n     */\n    get writable() {\n        return !_pipes.get(this).out.isFrozen;\n    }\n\n    /**\n     * Informs `pipeline` to rate limit notifications based on time interval\n     * @param rate\n     * @returns {Pipeline}\n     */\n    throttle(rate) {\n        this.clearThrottle();\n\n        if (rate >= 0) {\n            _pipes.set(this, Object.assign(_pipes.get(this), {\n                    tO: setInterval(() => {\n                        if (_cache.get(this).length) {\n                            const _func = _cache.get(this).splice(0, 1);\n                            if ((typeof _func[0]) === \"function\") {\n                                _pipes.get(this).out.model = _func[0]();\n                            }\n                        }\n                    }),\n                }),\n                parseInt(rate, 10)\n            );\n        }\n        return this;\n    }\n\n    clearThrottle() {\n        const _ivl = _pipes.get(this).tO;\n\n        if (_ivl) {\n            clearInterval(_ivl);\n        }\n    }\n\n    /**\n     * Returns product of Nth occurrence of `pipeline` execution\n     * @param nth\n     * @returns {Pipeline}\n     */\n    sample(nth) {\n        _pipes.get(this).ivl = nth;\n        return this;\n    }\n\n    /**\n     * Subscribes to `pipeline` output notifications\n     * @param handler\n     * @returns {Observable}\n     */\n    subscribe(handler) {\n        if (!(typeof handler).match(/^(function|object)$/)) {\n            throw \"handler required for Pipeline::subscribe\";\n        }\n\n        return _pipes.get(this).out.subscribe(handler);\n    }\n\n    /**\n     * Provides current state of `pipeline` output. alias for toJSON\n     * @returns {Object|Array}\n     */\n    tap() {\n        return this.toJSON();\n    }\n\n    /**\n     * Convenience Method for Promise based flows.\n     * Writes data to `pipeline` and wraps observer in Promise\n     *\n     * @param data\n     * @returns {Promise<Pipeline>}\n     */\n    async promise(data) {\n        return await new Promise((resolve, reject) => {\n            this.subscribe({\n                next: (d) => {\n                    resolve(d);\n                },\n                error: (e) => {\n                    reject(e);\n                }\n            });\n            this.write(data);\n        });\n    }\n\n    /**\n     * Overrides Object's toString method\n     * @override\n     * @returns {String}\n     */\n    toString() {\n        return JSON.stringify(this.toJSON());\n    }\n\n    /**\n     * Provides current state of `pipeline` output.\n     * @override\n     * @returns {Object|Array}\n     */\n    toJSON() {\n        return _pipes.get(this).out.toJSON();\n    }\n}\n\nexport class PipeListener {\n    /**\n     *\n     * @param target\n     */\n    constructor(target, vo) {\n        const _self = this;\n\n        Object.defineProperties(this, {\n            vo: {\n                get: () => vo,\n                enumerable: true,\n                configurable: false,\n                // writable: false,\n            }\n        })\n\n        _pipes.set(this, target);\n        this.vo.subscribe({\n            next: (d) => _self.next(d),\n            error: (e) => _self.error(e),\n            complete: () => _self.complete(),\n        });\n    }\n\n    /**\n     *\n     * @returns {Pipeline}\n     */\n    get target() {\n        return _pipes.get(this);\n    }\n\n    /**\n     *\n     * @returns {Validator}\n     */\n    get vo() {\n        return _pipes.get(_pipes.get(this)).vo;\n    }\n\n    /**\n     *\n     * @returns {Validator}\n     */\n    get out() {\n        return _pipes.get(this.target).out;\n    }\n\n    /**\n     *\n     * @param e\n     */\n    error(e) {\n        // sends error notification through out validator's observable\n        _observers.get(this.out).error(e);\n    }\n\n    /**\n     * closes `pipeline` on complete notification\n     */\n    complete() {\n        this.target.close();\n    }\n\n    /**\n     *\n     * @param data\n     * @returns {Promise<void | never>}\n     */\n    next(data) {\n        // enforces JSON formatting if feature is present\n        data = data && data.toJSON ? data.toJSON() : data;\n        const _targetProps = _pipes.get(this.target);\n        // tests for presence of rate-limit timeout\n        if (_targetProps.tO) {\n            const __ = () => {\n                return _pipes.get(this.target).exec(data);\n            };\n            // caches operation for later execution. Exec ordering is FIFO\n            _cache.get(this.target).splice(_cache.get(this.target).length, 0, __);\n            // cancels current execution\n            return void 0;\n        }\n\n        const _target = _pipes.get(this);\n\n        // tests for interval (ivl)\n        if (_pipes.get(_target).ivl !== 0) {\n            // tics the counter and tests if count is fulfilled\n            if ((++_pipes.get(_target).ivlVal) !== _pipes.get(_target).ivl) {\n                // count is not fulfilled. stops the execution\n                return void 0;\n            } else {\n                // resets the count and lets the operation proceed\n                _pipes.get(_target).ivlVal = 0;\n            }\n        }\n\n        let _t, _type;\n        const _out = (_) => {\n            // else we set the model for validation\n            try {\n                this.out.model = _.toJSON ? _.toJSON() : _;\n            } catch (e) {\n                _observers.get(this.out).error({\n                    error: e,\n                    data: data,\n                });\n            }\n        };\n\n        // capture output of callback\n        try {\n            _t = _pipes.get(this).exec(data); //_pipes.get(_pipes.get(this)).exec(data);\n            _type = typeof _t;\n        } catch (e) {\n            return _observers.get(this.out).error({\n                error: e,\n                data: data,\n            });\n        }\n\n        // tests if object and if object is writable\n        if ((_t instanceof Promise) || ((_type === \"function\") || (_type === \"object\")) && _target.writable) {\n            if (_t instanceof Promise) {\n                return _t.then((_) => {\n                    _out(_)\n                })\n                    .catch((e) => {\n                        _observers.get(this.out).error({\n                            error: e,\n                            data: data,\n                        });\n                    });\n            }\n\n            if (_type === \"function\") {\n                const __ = _t();\n                if (__ instanceof Promise) {\n                    return __.then((_) => {\n                        _out(_)\n                    }).catch((e) => {\n                        _observers.get(this.out).error({\n                            error: e,\n                            data: data,\n                        });\n                    });\n                }\n            }\n        }\n\n        _out(_t);\n    }\n\n    subscribe(handler) {\n        _observers.get(this.out).subscribe(handler);\n    }\n}\n",
+    "content": "/* ############################################################################\nThe MIT License (MIT)\n\nCopyright (c) 2019 Van Schroeder\nCopyright (c) 2019 Webfreshener, LLC\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n\n############################################################################ */\nimport {_observers, Validator} from \"./Validator\";\nimport {fill, mapArgs} from \"./Utils\";\nimport {Executor} from \"./Executor\";\nimport {default as DefaultVOSchema} from \"../schemas/default-pipe-vo.schema\";\nimport {Properties} from \"./Properties\";\n\nconst _pipes = new WeakMap();\nconst _cache = new WeakMap();\n\nconst clearPipeInterval = (pipe) => {\n    const _ivl = _pipes.get(pipe).tO;\n    if (_ivl) {\n        clearInterval(_ivl);\n    }\n}\n\n/**\n * Pipeline Class\n */\nexport class Pipeline {\n    static getExecs(..._pvs) {\n        return _pvs.map((_p) => {\n            _p = Array.isArray(_p) ? _p[0] : _p;\n            return (d) => {\n                const _exec = ((typeof _p === \"function\") ? _p : void 0) ||\n                    // is pipeline or implements pipeline api\n                    (_p[\"exec\"]) ||\n                    // is validator or implements validator api\n                    (_p[\"validate\"] ? ((d) => _p[\"validate\"](d) ? d : false) : void 0) ||\n                    // default\n                    ((_) => _);\n                return (_exec).apply(null, [d]);\n            };\n        });\n    }\n\n    /**\n     *\n     * @param pipesOrVOsOrSchemas\n     */\n    constructor(...pipesOrVOsOrSchemas) {\n        _cache.set(this, []);\n\n        // TODO: solve this issue with async methods to remove kludge\n        if (pipesOrVOsOrSchemas[0] instanceof Function) {\n            pipesOrVOsOrSchemas.splice(0, 0, DefaultVOSchema);\n        }\n\n        pipesOrVOsOrSchemas = mapArgs(...pipesOrVOsOrSchemas);\n\n        // stores config & state\n        _pipes.set(this,\n            Properties.init(this, {\n                callbacks: fill(Pipeline.getExecs(...pipesOrVOsOrSchemas)),\n                pipesOrVOsOrSchemas: pipesOrVOsOrSchemas,\n                pipes: _pipes,\n            })\n        );\n\n        // define exec in constructor to ensure method visibility\n        Object.defineProperty(this, \"exec\", {\n            // value: (data) => pipes.get(this).exec(data),\n            value: (data) => {\n                return _pipes.get(this).exec(data);\n            },\n            enumerable: true,\n            configurable: false,\n        });\n    }\n\n    /**\n     * Creates new `pipeline` segment\n     * @param pipesOrSchemas\n     * @returns {Pipeline}\n     */\n    pipe(...pipesOrSchemas) {\n        const __ = new Pipeline(...pipesOrSchemas);\n        this.subscribe({\n            next: (d) => {\n                __.write(d);\n            }\n        });\n        return __;\n    }\n\n    /**\n     * Returns arr\n     * @returns {*[]}\n     */\n    get schema() {\n        return [\n            _pipes.get(this).vo.schema,\n            _pipes.get(this).out.schema\n        ];\n    }\n\n    /**\n     * links pipeline segment to direct output to target pipeline\n     * @param target\n     * @param callbacks function[]\n     * @returns {Pipeline}\n     */\n    link(target, ...callbacks) {\n        if (!(target instanceof Pipeline)) {\n            throw `item for \"target\" was not a Pipe`;\n        }\n\n        // allow for array literal in place of inline assignment\n        if (Array.isArray(callbacks[0])) {\n            callbacks = callbacks[0];\n        }\n\n        callbacks = fill(callbacks || []);\n\n        // creates observer and stores it to links map for `pipeline`\n        const _sub = this.subscribe({\n            next: (data) => {\n                const _res = Executor.exec(callbacks, data.toJSON ? data.toJSON() : data);\n                if (_res instanceof Promise) {\n                    return _res.then((_) => target.write(_));\n                }\n\n                target.write(_res);\n            },\n            error: (e) => {\n                console.error(e);\n            },\n            // handles unlink & cleanup on complete\n            complete: () => this.unlink(target)\n        });\n\n        _pipes.get(this).links.set(target, _sub);\n        return this;\n    }\n\n    /**\n     * Unlink `pipeline` segment from target `pipeline`\n     * @param target\n     * @returns {Pipeline}\n     */\n    unlink(target) {\n        if (!(target instanceof Pipeline)) {\n            throw `item for \"target\" was not a Pipe`;\n        }\n\n        const _sub = _pipes.get(this).links.get(target);\n\n        if (_sub) {\n            _sub.unsubscribe();\n            _pipes.get(this).links.delete(target);\n        }\n\n        return this;\n    }\n\n    /**\n     * Returns validation errors\n     * @returns {*|null}\n     */\n    get errors() {\n        return _pipes.get(this).vo.errors || null;\n    }\n\n    /**\n     * Returns JSON-SCHEMA for `pipeline` output\n     * @returns {object}\n     */\n    get schemas() {\n        return [..._pipes.get(this).schemas];\n    }\n\n    /**\n     * Creates array of new `pipeline` segments that run in parallel\n     * @param schemasOrPipes\n     * @returns {*}\n     */\n    split(schemasOrPipes) {\n        return schemasOrPipes.map((_) => this.pipe(_));\n    }\n\n    /**\n     * Iterates pipeline callbacks via generator function\n     * @param data\n     * @returns {generator}\n     */\n    yield(data) {\n        let _fill = _pipes.get(this).pOS.map((_) => _.exec || ((_) => _));\n\n        if (!_fill.length) {\n            _fill[0] = (d) => d;\n        }\n\n        const _f = new Function(\"$scope\", \"$cb\",\n            [\n                \"return (function* (data) { \",\n                \"try {\",\n                Object.keys(_fill)\n                    .map((_) => `yield data=($cb[${_}].bind($scope))(data)`)\n                    .join(\"; \"),\n                \"} catch (e) { $scope.error(e); }\",\n                \"}).bind($scope);\",\n            ].join(\" \")\n        );\n\n        return _f(this, _fill)(data);\n    }\n\n    /**\n     * Merges multiple pipes into single output\n     * @param pipeOrPipes\n     * @param pipeOrSchema\n     * @returns {Pipeline}\n     */\n    merge(pipeOrPipes, pipeOrSchema = {schemas: [DefaultVOSchema]}) {\n        const _out = new Pipeline(pipeOrSchema);\n        _pipes.get(this).listeners = [\n            ..._pipes.get(this).listeners,\n            // -- feeds output of map to listeners array\n            ...(Array.isArray(pipeOrPipes) ? pipeOrPipes : [pipeOrPipes])\n                .filter((_p) => ((typeof _p.subscribe) === \"function\"))\n                .map((_p) => {\n                    _p.subscribe((d) => {\n                        // -- all pipes now write to output tx\n                        _out.write(d.toJSON ? d.toJSON() : d);\n                    });\n                    return _p;\n                })\n        ];\n        // -- returns output tx for observation\n        return _out;\n    }\n\n    /**\n     * Writes data to pipeline segment\n     * @param data\n     * @returns {Pipeline}\n     */\n    write(data) {\n        _pipes.get(this).vo.model = data;\n        return this;\n    }\n\n    /**\n     * Creates clone of current `pipeline` segment\n     * @returns {Pipeline}\n     */\n    clone() {\n        const $ref = _pipes.get(this);\n        const _cz = class extends Pipeline {\n            constructor() {\n                super();\n                _pipes.set(this, $ref);\n                _pipes.get(this).listeners = [...$ref.listeners];\n            }\n        };\n        return new _cz();\n    }\n\n    /**\n     * Terminates input on `pipeline` segment. This is irrevocable\n     * @returns {Pipeline}\n     */\n    close() {\n        _pipes.get(this).out.freeze();\n        return this;\n    }\n\n    /**\n     * Returns write status of `pipeline`\n     * @returns {boolean}\n     */\n    get writable() {\n        return !_pipes.get(this).out.isFrozen;\n    }\n\n    /**\n     * Informs `Pipeline` to rate limit notifications based on time interval\n     * @param rate\n     * @returns {Pipeline}\n     */\n    throttle(rate) {\n        if (rate > 0) {\n            clearPipeInterval(this);\n            const __ = setInterval(\n                () => {\n                    if (_cache.get(this).length) {\n                        const _func = _cache.get(this).splice(0, 1);\n                        if ((typeof _func[0]) === \"function\") {\n                            const _res = _func[0]();\n                            _pipes.get(this).out.model = _res;\n                        }\n                    }\n                }, parseInt(rate, 10)\n            );\n\n            Object.assign(_pipes.get(this), {tO: __});\n        } else if (rate === -1) {\n            this.unthrottle(true);\n        } else {\n            this.unthrottle();\n        }\n\n        return this;\n    }\n\n    /**\n     * Removes rate limiting from `Pipeline` and optionally deletes unprocessed cache items\n     * @param discardCacheQueue\n     */\n    unthrottle(discardCacheQueue=false) {\n        clearPipeInterval(this);\n        if (!discardCacheQueue) {\n            _cache.get(this).forEach(() => {\n                const _func = _cache.get(this).splice(0, 1);\n                if ((typeof _func[0]) === \"function\") {\n                    _pipes.get(this).out.model = _func[0]();\n                }\n            });\n        } else {\n            const _c = _cache.get(this);\n            _c.splice(0, _c.length);\n        }\n    }\n\n    /**\n     * Returns product of Nth occurrence of `pipeline` execution\n     * @param nth\n     * @returns {Pipeline}\n     */\n    sample(nth) {\n        _pipes.get(this).ivl = nth;\n        return this;\n    }\n\n    /**\n     * Subscribes to `pipeline` output notifications\n     * @param handler\n     * @returns {Observable}\n     */\n    subscribe(handler) {\n        if (!(typeof handler).match(/^(function|object)$/)) {\n            throw \"handler required for Pipeline::subscribe\";\n        }\n\n        return _pipes.get(this).out.subscribe(handler);\n    }\n\n    /**\n     * Provides current state of `pipeline` output. alias for `toJSON`\n     * @returns {Object|Array}\n     */\n    tap() {\n        return this.toJSON();\n    }\n\n    /**\n     * Convenience Method for Promise based flows.\n     * Writes data to `pipeline` and wraps observer in Promise\n     *\n     * @param data\n     * @returns {Promise<Pipeline>}\n     */\n    async promise(data) {\n        return await new Promise((resolve, reject) => {\n            this.subscribe({\n                next: (d) => {\n                    resolve(d);\n                },\n                error: (e) => {\n                    reject(e);\n                }\n            });\n            this.write(data);\n        });\n    }\n\n    /**\n     * Overrides Object's toString method\n     * @override\n     * @returns {String}\n     */\n    toString() {\n        return JSON.stringify(this.toJSON());\n    }\n\n    /**\n     * Provides current state of `pipeline` output.\n     * @override\n     * @returns {Object|Array}\n     */\n    toJSON() {\n        return _pipes.get(this).out.toJSON();\n    }\n}\n\nexport class PipeListener {\n    /**\n     *\n     * @param target\n     */\n    constructor(target, vo) {\n        const _self = this;\n\n        Object.defineProperties(this, {\n            vo: {\n                get: () => vo,\n                enumerable: true,\n                configurable: false,\n                // writable: false,\n            }\n        })\n\n        _pipes.set(this, target);\n        this.vo.subscribe({\n            next: (d) => _self.next(d),\n            error: (e) => _self.error(e),\n            complete: () => _self.complete(),\n        });\n    }\n\n    /**\n     *\n     * @returns {Pipeline}\n     */\n    get target() {\n        return _pipes.get(this);\n    }\n\n    /**\n     *\n     * @returns {Validator}\n     */\n    get vo() {\n        return _pipes.get(_pipes.get(this)).vo;\n    }\n\n    /**\n     *\n     * @returns {Validator}\n     */\n    get out() {\n        return _pipes.get(this.target).out;\n    }\n\n    /**\n     *\n     * @param e\n     */\n    error(e) {\n        // sends error notification through out validator's observable\n        _observers.get(this.out).error(e);\n    }\n\n    /**\n     * closes `pipeline` on complete notification\n     */\n    complete() {\n        this.target.close();\n    }\n\n    /**\n     *\n     * @param data\n     * @returns {Promise<void | never>}\n     */\n    next(data) {\n        // enforces JSON formatting if feature is present\n        data = data && data.toJSON ? data.toJSON() : data;\n        const _targetProps = _pipes.get(this.target);\n        // tests for presence of rate-limit timeout\n        if (_targetProps.tO) {\n            const __ = () => {\n                return _pipes.get(this.target).exec(data);\n            };\n            // caches operation for later execution. Exec ordering is FIFO\n            _cache.get(this.target).splice(_cache.get(this.target).length, 0, __);\n            // cancels current execution\n            return void 0;\n        }\n\n        const _target = _pipes.get(this);\n\n        // tests for interval (ivl)\n        if (_pipes.get(_target).ivl !== 0) {\n            // tics the counter and tests if count is fulfilled\n            if ((++_pipes.get(_target).ivlVal) !== _pipes.get(_target).ivl) {\n                // count is not fulfilled. stops the execution\n                return void 0;\n            } else {\n                // resets the count and lets the operation proceed\n                _pipes.get(_target).ivlVal = 0;\n            }\n        }\n\n        let _t, _type;\n        const _out = (_) => {\n            // else we set the model for validation\n            try {\n                this.out.model = _.toJSON ? _.toJSON() : _;\n            } catch (e) {\n                _observers.get(this.out).error({\n                    error: e,\n                    data: data,\n                });\n            }\n        };\n\n        // capture output of callback\n        try {\n            _t = _pipes.get(this).exec(data); //_pipes.get(_pipes.get(this)).exec(data);\n            _type = typeof _t;\n        } catch (e) {\n            return _observers.get(this.out).error({\n                error: e,\n                data: data,\n            });\n        }\n\n        // tests if object and if object is writable\n        if ((_t instanceof Promise) || ((_type === \"function\") || (_type === \"object\")) && _target.writable) {\n            if (_t instanceof Promise) {\n                return _t.then((_) => {\n                    _out(_)\n                })\n                    .catch((e) => {\n                        _observers.get(this.out).error({\n                            error: e,\n                            data: data,\n                        });\n                    });\n            }\n\n            if (_type === \"function\") {\n                const __ = _t();\n                if (__ instanceof Promise) {\n                    return __.then((_) => {\n                        _out(_)\n                    }).catch((e) => {\n                        _observers.get(this.out).error({\n                            error: e,\n                            data: data,\n                        });\n                    });\n                }\n            }\n        }\n\n        _out(_t);\n    }\n\n    subscribe(handler) {\n        _observers.get(this.out).subscribe(handler);\n    }\n}\n",
     "static": true,
     "longname": "/Users/vanschroeder/IdeaProjects/webfreshener-datamatic/src/Pipeline/Pipeline.js",
     "access": "public",
@@ -5816,6 +5816,33 @@
   },
   {
     "__docId__": 235,
+    "kind": "function",
+    "name": "clearPipeInterval",
+    "memberof": "src/Pipeline/Pipeline.js",
+    "generator": false,
+    "async": false,
+    "static": true,
+    "longname": "src/Pipeline/Pipeline.js~clearPipeInterval",
+    "access": "public",
+    "export": false,
+    "importPath": "datamatic/src/Pipeline/Pipeline.js",
+    "importStyle": null,
+    "description": null,
+    "lineNumber": 35,
+    "undocument": true,
+    "params": [
+      {
+        "name": "pipe",
+        "types": [
+          "*"
+        ]
+      }
+    ],
+    "return": null,
+    "ignore": true
+  },
+  {
+    "__docId__": 236,
     "kind": "class",
     "name": "Pipeline",
     "memberof": "src/Pipeline/Pipeline.js",
@@ -5826,11 +5853,11 @@
     "importPath": "datamatic/src/Pipeline/Pipeline.js",
     "importStyle": "{Pipeline}",
     "description": "Pipeline Class",
-    "lineNumber": 38,
+    "lineNumber": 45,
     "interface": false
   },
   {
-    "__docId__": 236,
+    "__docId__": 237,
     "kind": "method",
     "name": "getExecs",
     "memberof": "src/Pipeline/Pipeline.js~Pipeline",
@@ -5840,7 +5867,7 @@
     "longname": "src/Pipeline/Pipeline.js~Pipeline.getExecs",
     "access": "public",
     "description": null,
-    "lineNumber": 39,
+    "lineNumber": 46,
     "undocument": true,
     "params": [
       {
@@ -5858,7 +5885,7 @@
     }
   },
   {
-    "__docId__": 237,
+    "__docId__": 238,
     "kind": "constructor",
     "name": "constructor",
     "memberof": "src/Pipeline/Pipeline.js~Pipeline",
@@ -5868,7 +5895,7 @@
     "longname": "src/Pipeline/Pipeline.js~Pipeline#constructor",
     "access": "public",
     "description": "",
-    "lineNumber": 59,
+    "lineNumber": 66,
     "params": [
       {
         "nullable": null,
@@ -5883,7 +5910,7 @@
     ]
   },
   {
-    "__docId__": 238,
+    "__docId__": 239,
     "kind": "method",
     "name": "pipe",
     "memberof": "src/Pipeline/Pipeline.js~Pipeline",
@@ -5893,7 +5920,7 @@
     "longname": "src/Pipeline/Pipeline.js~Pipeline#pipe",
     "access": "public",
     "description": "Creates new `pipeline` segment",
-    "lineNumber": 94,
+    "lineNumber": 101,
     "unknown": [
       {
         "tagName": "@returns",
@@ -5922,7 +5949,7 @@
     }
   },
   {
-    "__docId__": 239,
+    "__docId__": 240,
     "kind": "get",
     "name": "schema",
     "memberof": "src/Pipeline/Pipeline.js~Pipeline",
@@ -5932,7 +5959,7 @@
     "longname": "src/Pipeline/Pipeline.js~Pipeline#schema",
     "access": "public",
     "description": "Returns arr",
-    "lineNumber": 108,
+    "lineNumber": 115,
     "unknown": [
       {
         "tagName": "@returns",
@@ -5954,7 +5981,7 @@
     }
   },
   {
-    "__docId__": 240,
+    "__docId__": 241,
     "kind": "method",
     "name": "link",
     "memberof": "src/Pipeline/Pipeline.js~Pipeline",
@@ -5964,7 +5991,7 @@
     "longname": "src/Pipeline/Pipeline.js~Pipeline#link",
     "access": "public",
     "description": "links pipeline segment to direct output to target pipeline",
-    "lineNumber": 121,
+    "lineNumber": 128,
     "unknown": [
       {
         "tagName": "@returns",
@@ -6003,7 +6030,7 @@
     }
   },
   {
-    "__docId__": 241,
+    "__docId__": 242,
     "kind": "method",
     "name": "unlink",
     "memberof": "src/Pipeline/Pipeline.js~Pipeline",
@@ -6013,7 +6040,7 @@
     "longname": "src/Pipeline/Pipeline.js~Pipeline#unlink",
     "access": "public",
     "description": "Unlink `pipeline` segment from target `pipeline`",
-    "lineNumber": 159,
+    "lineNumber": 166,
     "unknown": [
       {
         "tagName": "@returns",
@@ -6042,7 +6069,7 @@
     }
   },
   {
-    "__docId__": 242,
+    "__docId__": 243,
     "kind": "get",
     "name": "errors",
     "memberof": "src/Pipeline/Pipeline.js~Pipeline",
@@ -6052,7 +6079,7 @@
     "longname": "src/Pipeline/Pipeline.js~Pipeline#errors",
     "access": "public",
     "description": "Returns validation errors",
-    "lineNumber": 178,
+    "lineNumber": 185,
     "unknown": [
       {
         "tagName": "@returns",
@@ -6075,7 +6102,7 @@
     }
   },
   {
-    "__docId__": 243,
+    "__docId__": 244,
     "kind": "get",
     "name": "schemas",
     "memberof": "src/Pipeline/Pipeline.js~Pipeline",
@@ -6085,7 +6112,7 @@
     "longname": "src/Pipeline/Pipeline.js~Pipeline#schemas",
     "access": "public",
     "description": "Returns JSON-SCHEMA for `pipeline` output",
-    "lineNumber": 186,
+    "lineNumber": 193,
     "unknown": [
       {
         "tagName": "@returns",
@@ -6107,7 +6134,7 @@
     }
   },
   {
-    "__docId__": 244,
+    "__docId__": 245,
     "kind": "method",
     "name": "split",
     "memberof": "src/Pipeline/Pipeline.js~Pipeline",
@@ -6117,7 +6144,7 @@
     "longname": "src/Pipeline/Pipeline.js~Pipeline#split",
     "access": "public",
     "description": "Creates array of new `pipeline` segments that run in parallel",
-    "lineNumber": 195,
+    "lineNumber": 202,
     "unknown": [
       {
         "tagName": "@returns",
@@ -6146,7 +6173,7 @@
     }
   },
   {
-    "__docId__": 245,
+    "__docId__": 246,
     "kind": "method",
     "name": "yield",
     "memberof": "src/Pipeline/Pipeline.js~Pipeline",
@@ -6156,7 +6183,7 @@
     "longname": "src/Pipeline/Pipeline.js~Pipeline#yield",
     "access": "public",
     "description": "Iterates pipeline callbacks via generator function",
-    "lineNumber": 204,
+    "lineNumber": 211,
     "unknown": [
       {
         "tagName": "@returns",
@@ -6185,7 +6212,7 @@
     }
   },
   {
-    "__docId__": 246,
+    "__docId__": 247,
     "kind": "method",
     "name": "merge",
     "memberof": "src/Pipeline/Pipeline.js~Pipeline",
@@ -6195,7 +6222,7 @@
     "longname": "src/Pipeline/Pipeline.js~Pipeline#merge",
     "access": "public",
     "description": "Merges multiple pipes into single output",
-    "lineNumber": 232,
+    "lineNumber": 239,
     "unknown": [
       {
         "tagName": "@returns",
@@ -6234,7 +6261,7 @@
     }
   },
   {
-    "__docId__": 247,
+    "__docId__": 248,
     "kind": "method",
     "name": "write",
     "memberof": "src/Pipeline/Pipeline.js~Pipeline",
@@ -6244,7 +6271,7 @@
     "longname": "src/Pipeline/Pipeline.js~Pipeline#write",
     "access": "public",
     "description": "Writes data to pipeline segment",
-    "lineNumber": 256,
+    "lineNumber": 263,
     "unknown": [
       {
         "tagName": "@returns",
@@ -6273,7 +6300,7 @@
     }
   },
   {
-    "__docId__": 248,
+    "__docId__": 249,
     "kind": "method",
     "name": "clone",
     "memberof": "src/Pipeline/Pipeline.js~Pipeline",
@@ -6283,35 +6310,7 @@
     "longname": "src/Pipeline/Pipeline.js~Pipeline#clone",
     "access": "public",
     "description": "Creates clone of current `pipeline` segment",
-    "lineNumber": 265,
-    "unknown": [
-      {
-        "tagName": "@returns",
-        "tagValue": "{Pipeline}"
-      }
-    ],
-    "return": {
-      "nullable": null,
-      "types": [
-        "Pipeline"
-      ],
-      "spread": false,
-      "description": ""
-    },
-    "params": []
-  },
-  {
-    "__docId__": 249,
-    "kind": "method",
-    "name": "close",
-    "memberof": "src/Pipeline/Pipeline.js~Pipeline",
-    "generator": false,
-    "async": false,
-    "static": false,
-    "longname": "src/Pipeline/Pipeline.js~Pipeline#close",
-    "access": "public",
-    "description": "Terminates input on `pipeline` segment. This is irrevocable",
-    "lineNumber": 281,
+    "lineNumber": 272,
     "unknown": [
       {
         "tagName": "@returns",
@@ -6330,6 +6329,34 @@
   },
   {
     "__docId__": 250,
+    "kind": "method",
+    "name": "close",
+    "memberof": "src/Pipeline/Pipeline.js~Pipeline",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/Pipeline/Pipeline.js~Pipeline#close",
+    "access": "public",
+    "description": "Terminates input on `pipeline` segment. This is irrevocable",
+    "lineNumber": 288,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Pipeline}"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Pipeline"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "params": []
+  },
+  {
+    "__docId__": 251,
     "kind": "get",
     "name": "writable",
     "memberof": "src/Pipeline/Pipeline.js~Pipeline",
@@ -6339,7 +6366,7 @@
     "longname": "src/Pipeline/Pipeline.js~Pipeline#writable",
     "access": "public",
     "description": "Returns write status of `pipeline`",
-    "lineNumber": 290,
+    "lineNumber": 297,
     "unknown": [
       {
         "tagName": "@returns",
@@ -6361,7 +6388,7 @@
     }
   },
   {
-    "__docId__": 251,
+    "__docId__": 252,
     "kind": "method",
     "name": "throttle",
     "memberof": "src/Pipeline/Pipeline.js~Pipeline",
@@ -6370,8 +6397,8 @@
     "static": false,
     "longname": "src/Pipeline/Pipeline.js~Pipeline#throttle",
     "access": "public",
-    "description": "Informs `pipeline` to rate limit notifications based on time interval",
-    "lineNumber": 299,
+    "description": "Informs `Pipeline` to rate limit notifications based on time interval",
+    "lineNumber": 306,
     "unknown": [
       {
         "tagName": "@returns",
@@ -6400,23 +6427,33 @@
     }
   },
   {
-    "__docId__": 252,
+    "__docId__": 253,
     "kind": "method",
-    "name": "clearThrottle",
+    "name": "unthrottle",
     "memberof": "src/Pipeline/Pipeline.js~Pipeline",
     "generator": false,
     "async": false,
     "static": false,
-    "longname": "src/Pipeline/Pipeline.js~Pipeline#clearThrottle",
+    "longname": "src/Pipeline/Pipeline.js~Pipeline#unthrottle",
     "access": "public",
-    "description": null,
-    "lineNumber": 319,
-    "undocument": true,
-    "params": [],
+    "description": "Removes rate limiting from `Pipeline` and optionally deletes unprocessed cache items",
+    "lineNumber": 335,
+    "params": [
+      {
+        "nullable": null,
+        "types": [
+          "*"
+        ],
+        "spread": false,
+        "optional": false,
+        "name": "discardCacheQueue",
+        "description": ""
+      }
+    ],
     "return": null
   },
   {
-    "__docId__": 253,
+    "__docId__": 254,
     "kind": "method",
     "name": "sample",
     "memberof": "src/Pipeline/Pipeline.js~Pipeline",
@@ -6426,7 +6463,7 @@
     "longname": "src/Pipeline/Pipeline.js~Pipeline#sample",
     "access": "public",
     "description": "Returns product of Nth occurrence of `pipeline` execution",
-    "lineNumber": 332,
+    "lineNumber": 355,
     "unknown": [
       {
         "tagName": "@returns",
@@ -6455,7 +6492,7 @@
     }
   },
   {
-    "__docId__": 254,
+    "__docId__": 255,
     "kind": "method",
     "name": "subscribe",
     "memberof": "src/Pipeline/Pipeline.js~Pipeline",
@@ -6465,7 +6502,7 @@
     "longname": "src/Pipeline/Pipeline.js~Pipeline#subscribe",
     "access": "public",
     "description": "Subscribes to `pipeline` output notifications",
-    "lineNumber": 342,
+    "lineNumber": 365,
     "unknown": [
       {
         "tagName": "@returns",
@@ -6494,7 +6531,7 @@
     }
   },
   {
-    "__docId__": 255,
+    "__docId__": 256,
     "kind": "method",
     "name": "tap",
     "memberof": "src/Pipeline/Pipeline.js~Pipeline",
@@ -6503,8 +6540,8 @@
     "static": false,
     "longname": "src/Pipeline/Pipeline.js~Pipeline#tap",
     "access": "public",
-    "description": "Provides current state of `pipeline` output. alias for toJSON",
-    "lineNumber": 354,
+    "description": "Provides current state of `pipeline` output. alias for `toJSON`",
+    "lineNumber": 377,
     "unknown": [
       {
         "tagName": "@returns",
@@ -6523,7 +6560,7 @@
     "params": []
   },
   {
-    "__docId__": 256,
+    "__docId__": 257,
     "kind": "method",
     "name": "promise",
     "memberof": "src/Pipeline/Pipeline.js~Pipeline",
@@ -6533,7 +6570,7 @@
     "longname": "src/Pipeline/Pipeline.js~Pipeline#promise",
     "access": "public",
     "description": "Convenience Method for Promise based flows.\nWrites data to `pipeline` and wraps observer in Promise",
-    "lineNumber": 365,
+    "lineNumber": 388,
     "unknown": [
       {
         "tagName": "@returns",
@@ -6562,7 +6599,7 @@
     }
   },
   {
-    "__docId__": 257,
+    "__docId__": 258,
     "kind": "method",
     "name": "toString",
     "memberof": "src/Pipeline/Pipeline.js~Pipeline",
@@ -6572,7 +6609,7 @@
     "longname": "src/Pipeline/Pipeline.js~Pipeline#toString",
     "access": "public",
     "description": "Overrides Object's toString method",
-    "lineNumber": 384,
+    "lineNumber": 407,
     "unknown": [
       {
         "tagName": "@returns",
@@ -6591,7 +6628,7 @@
     "params": []
   },
   {
-    "__docId__": 258,
+    "__docId__": 259,
     "kind": "method",
     "name": "toJSON",
     "memberof": "src/Pipeline/Pipeline.js~Pipeline",
@@ -6601,7 +6638,7 @@
     "longname": "src/Pipeline/Pipeline.js~Pipeline#toJSON",
     "access": "public",
     "description": "Provides current state of `pipeline` output.",
-    "lineNumber": 393,
+    "lineNumber": 416,
     "unknown": [
       {
         "tagName": "@returns",
@@ -6621,7 +6658,7 @@
     "params": []
   },
   {
-    "__docId__": 259,
+    "__docId__": 260,
     "kind": "class",
     "name": "PipeListener",
     "memberof": "src/Pipeline/Pipeline.js",
@@ -6632,12 +6669,12 @@
     "importPath": "datamatic/src/Pipeline/Pipeline.js",
     "importStyle": "{PipeListener}",
     "description": null,
-    "lineNumber": 398,
+    "lineNumber": 421,
     "undocument": true,
     "interface": false
   },
   {
-    "__docId__": 260,
+    "__docId__": 261,
     "kind": "constructor",
     "name": "constructor",
     "memberof": "src/Pipeline/Pipeline.js~PipeListener",
@@ -6647,7 +6684,7 @@
     "longname": "src/Pipeline/Pipeline.js~PipeListener#constructor",
     "access": "public",
     "description": "",
-    "lineNumber": 403,
+    "lineNumber": 426,
     "params": [
       {
         "nullable": null,
@@ -6662,7 +6699,7 @@
     ]
   },
   {
-    "__docId__": 261,
+    "__docId__": 262,
     "kind": "get",
     "name": "target",
     "memberof": "src/Pipeline/Pipeline.js~PipeListener",
@@ -6672,7 +6709,7 @@
     "longname": "src/Pipeline/Pipeline.js~PipeListener#target",
     "access": "public",
     "description": "",
-    "lineNumber": 427,
+    "lineNumber": 450,
     "unknown": [
       {
         "tagName": "@returns",
@@ -6694,7 +6731,7 @@
     }
   },
   {
-    "__docId__": 262,
+    "__docId__": 263,
     "kind": "get",
     "name": "vo",
     "memberof": "src/Pipeline/Pipeline.js~PipeListener",
@@ -6704,39 +6741,7 @@
     "longname": "src/Pipeline/Pipeline.js~PipeListener#vo",
     "access": "public",
     "description": "",
-    "lineNumber": 435,
-    "unknown": [
-      {
-        "tagName": "@returns",
-        "tagValue": "{Validator}"
-      }
-    ],
-    "return": {
-      "nullable": null,
-      "types": [
-        "Validator"
-      ],
-      "spread": false,
-      "description": ""
-    },
-    "type": {
-      "types": [
-        "*"
-      ]
-    }
-  },
-  {
-    "__docId__": 263,
-    "kind": "get",
-    "name": "out",
-    "memberof": "src/Pipeline/Pipeline.js~PipeListener",
-    "generator": false,
-    "async": false,
-    "static": false,
-    "longname": "src/Pipeline/Pipeline.js~PipeListener#out",
-    "access": "public",
-    "description": "",
-    "lineNumber": 443,
+    "lineNumber": 458,
     "unknown": [
       {
         "tagName": "@returns",
@@ -6759,6 +6764,38 @@
   },
   {
     "__docId__": 264,
+    "kind": "get",
+    "name": "out",
+    "memberof": "src/Pipeline/Pipeline.js~PipeListener",
+    "generator": false,
+    "async": false,
+    "static": false,
+    "longname": "src/Pipeline/Pipeline.js~PipeListener#out",
+    "access": "public",
+    "description": "",
+    "lineNumber": 466,
+    "unknown": [
+      {
+        "tagName": "@returns",
+        "tagValue": "{Validator}"
+      }
+    ],
+    "return": {
+      "nullable": null,
+      "types": [
+        "Validator"
+      ],
+      "spread": false,
+      "description": ""
+    },
+    "type": {
+      "types": [
+        "*"
+      ]
+    }
+  },
+  {
+    "__docId__": 265,
     "kind": "method",
     "name": "error",
     "memberof": "src/Pipeline/Pipeline.js~PipeListener",
@@ -6768,7 +6805,7 @@
     "longname": "src/Pipeline/Pipeline.js~PipeListener#error",
     "access": "public",
     "description": "",
-    "lineNumber": 451,
+    "lineNumber": 474,
     "params": [
       {
         "nullable": null,
@@ -6784,7 +6821,7 @@
     "return": null
   },
   {
-    "__docId__": 265,
+    "__docId__": 266,
     "kind": "method",
     "name": "complete",
     "memberof": "src/Pipeline/Pipeline.js~PipeListener",
@@ -6794,12 +6831,12 @@
     "longname": "src/Pipeline/Pipeline.js~PipeListener#complete",
     "access": "public",
     "description": "closes `pipeline` on complete notification",
-    "lineNumber": 459,
+    "lineNumber": 482,
     "params": [],
     "return": null
   },
   {
-    "__docId__": 266,
+    "__docId__": 267,
     "kind": "method",
     "name": "next",
     "memberof": "src/Pipeline/Pipeline.js~PipeListener",
@@ -6809,7 +6846,7 @@
     "longname": "src/Pipeline/Pipeline.js~PipeListener#next",
     "access": "public",
     "description": "",
-    "lineNumber": 468,
+    "lineNumber": 491,
     "unknown": [
       {
         "tagName": "@returns",
@@ -6838,7 +6875,7 @@
     }
   },
   {
-    "__docId__": 267,
+    "__docId__": 268,
     "kind": "method",
     "name": "subscribe",
     "memberof": "src/Pipeline/Pipeline.js~PipeListener",
@@ -6848,7 +6885,7 @@
     "longname": "src/Pipeline/Pipeline.js~PipeListener#subscribe",
     "access": "public",
     "description": null,
-    "lineNumber": 553,
+    "lineNumber": 576,
     "undocument": true,
     "params": [
       {
@@ -6861,7 +6898,7 @@
     "return": null
   },
   {
-    "__docId__": 268,
+    "__docId__": 269,
     "kind": "file",
     "name": "src/Pipeline/Properties.js",
     "content": "/* ############################################################################\nThe MIT License (MIT)\n\nCopyright (c) 2019 Van Schroeder\nCopyright (c) 2019 Webfreshener, LLC\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n\n############################################################################ */\nimport {Executor} from \"./Executor\";\nimport {Validator} from \"./Validator\";\nimport {default as DefaultVOSchema} from \"../schemas/default-pipe-vo.schema\";\nimport {PipeListener} from \"./Pipeline\";\n\n/**\n *\n */\nexport class Properties {\n    static init(pipe, properties) {\n        const {callbacks, pipesOrVOsOrSchemas, pipes} = properties;\n        const _txP = {};\n\n        const _inPipe = (\n            Array.isArray(pipesOrVOsOrSchemas) && pipesOrVOsOrSchemas.length\n        ) ? pipesOrVOsOrSchemas[0] : pipesOrVOsOrSchemas.length ?\n            pipesOrVOsOrSchemas : {\n                schema: [DefaultVOSchema, DefaultVOSchema],\n                exec: (d) => d,\n            };\n\n        const _pSchemas = [...pipesOrVOsOrSchemas]\n            .filter((_p) => {\n                // filters array for validators and valid schemas\n                return (\n                    // returns true if TxValidator\n                    (_p instanceof Validator) ||\n                    // returns true if has `schema` attribute and is a valid `json-schema`\n                    _p[\"schema\"] && Validator.validateSchemas(_p.schema)\n                );\n            }).map(_ => _.schema);\n\n        const _getInSchema = () => {\n            if (_pSchemas.length) {\n                return (_pSchemas[0] instanceof Validator) ?\n                    _pSchemas[0].schema : _pSchemas[0];\n            }\n            return DefaultVOSchema;\n        };\n\n        const _inSchema = _getInSchema();\n        const _outSchema = _pSchemas.length > 1 ? _pSchemas[_pSchemas.length - 1] : _inSchema;\n\n        if (!_pSchemas.length) {\n            _pSchemas.splice(0, 0, {schemas: [DefaultVOSchema]}, {schemas: [DefaultVOSchema]});\n        }\n\n        const _vo = (_inPipe instanceof Validator) ? _inPipe : new Validator(_inSchema);\n\n        return Object.defineProperties(_txP, {\n            callbacks: {\n                value: callbacks,\n                enumerable: true,\n                configurable: false,\n            },\n            rate: {\n                value: 1,\n                enumerable: true,\n                configurable: true,\n            },\n            links: {\n                value: new WeakMap(),\n                enumerable: true,\n                configurable: false,\n            },\n            exec: {\n                value: (data) => {\n                    try {\n                        return Executor.exec(callbacks, data);\n                    } catch (e) {\n                        throw {\n                            error: e,\n                            data: data,\n                        };\n                        // _observers.get(_txP.out).error({\n                        //     error: e,\n                        //     data: data,\n                        // });\n                    }\n                },\n                enumerable: false,\n                configurable: false,\n            },\n            out: {\n                /**\n                 * validates output\n                 */\n                value: (() => {\n                    const _txV = new Validator(_outSchema);\n                    // unsubscribe all observers on complete notification (freeze/close)\n                    _txV.subscribe({\n                        complete: () => {\n                            (pipes.get(pipe).listeners || []).forEach((_) => {\n                                if (_.unsubscribe) {\n                                    _.unsubscribe();\n                                }\n                            });\n                            pipes.get(pipe).listeners = [];\n                        },\n                    });\n                    return _txV;\n                })(),\n                enumerable: true,\n                configurable: false,\n            },\n            schema: {\n                value: [_inSchema, _outSchema],\n                enumerable: true,\n                configurable: false,\n            },\n            schemas: {\n                // enforces 2 schema minimum (in/out)\n                value: _pSchemas.length < 2 ? [..._pSchemas, ..._pSchemas] : _pSchemas,\n                enumerable: true,\n                configurable: false,\n            },\n            vo: {\n                value: _vo,\n                enumerable: true,\n                configurable: false,\n                writable: false,\n            },\n            pOS: {\n                value: pipesOrVOsOrSchemas,\n                enumerable: false,\n                configurable: false,\n            },\n            listeners: {\n                value: [new PipeListener(pipe, _vo)],\n                enumerable: true,\n                configurable: false,\n                writable: true,\n            },\n            ivl: {\n                value: 0,\n                enumerable: true,\n                configurable: false,\n                writable: true,\n            },\n            ivlVal: {\n                value: 0,\n                enumerable: true,\n                configurable: false,\n                writable: true,\n            },\n        });\n    }\n}\n",
@@ -6872,7 +6909,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 269,
+    "__docId__": 270,
     "kind": "class",
     "name": "Properties",
     "memberof": "src/Pipeline/Properties.js",
@@ -6887,7 +6924,7 @@
     "interface": false
   },
   {
-    "__docId__": 270,
+    "__docId__": 271,
     "kind": "method",
     "name": "init",
     "memberof": "src/Pipeline/Properties.js~Properties",
@@ -6920,7 +6957,7 @@
     }
   },
   {
-    "__docId__": 271,
+    "__docId__": 272,
     "kind": "file",
     "name": "src/Pipeline/Utils.js",
     "content": "/* ############################################################################\nThe MIT License (MIT)\n\nCopyright (c) 2019 Van Schroeder\nCopyright (c) 2019 Webfreshener, LLC\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n\n############################################################################ */\nimport {Iterator} from \"./Iterator\";\nimport {Pipeline} from \"./Pipeline\";\nimport {Validator} from \"./Validator\";\nimport {default as DefaultVOSchema} from \"../schemas/default-pipe-vo.schema\"\n\n/**\n * provides default schema and pass through execution\n * @type {{schema: {$schema: string, $id: string}, exec: (function(*): *)}}\n */\nconst DefaultPipeTx = {\n    schema: DefaultVOSchema,\n    exec: (d) => d,\n};\n\n/**\n * Fills array to enforce 2 callback minimum\n * @param arr\n * @param value\n * @param min\n * @returns {any[]}\n */\nexport const fill = (arr, value = ((d) => d), min = 2) => {\n    arr = [...arr];\n    if (arr.length >= min) {\n        return arr;\n    }\n    return [\n        ...(arr = arr || []),\n        ...(Array(min - arr.length).fill(value, 0))\n    ];\n};\n\n/**\n *\n * @param obj\n * @returns {{exec: function}|Iterator|Pipeline|Validator}\n */\nexport const castToExec = (obj) => {\n    if (!obj) {\n        return DefaultPipeTx;\n    }\n\n    if ((!(obj instanceof Iterator) && !Array.isArray(obj)) && obj[\"loop\"]) {\n        obj = new Iterator(...obj);\n    }\n\n    if (Array.isArray(obj)) {\n        let _k = 0;\n        obj.forEach((o) => {\n            if (Validator.validateSchemas(o)) {\n                obj[_k] = new Validator(o);\n            }\n            _k++;\n        });\n        obj = new Iterator(...obj);\n\n    }\n\n    if (obj instanceof Iterator) {\n        return new Pipeline({\n            exec: (d) => obj.loop(d),\n        });\n    }\n\n    // -- if is pipeline config item, we normalize for intake\n    if ((typeof obj) === \"function\") {\n        return Object.assign({}, DefaultPipeTx, {exec: obj});\n    }\n\n    // -- if is pipeline norm,normalized config item, we pass in for intake\n    if ((typeof obj.exec) === \"function\") {\n        return Object.assign({}, DefaultPipeTx, obj);\n    }\n\n    // -- if Pipeline, our work here is already done\n    if (obj instanceof Pipeline) {\n        return obj;\n    }\n\n    // -- if is JSON-Schema, cast as TxValidator instance\n    if (Validator.validateSchemas(obj)) {\n        obj = new Validator(obj);\n    }\n\n    // -- wraps Validators as executable\n    if ((typeof obj[\"validate\"]) === \"function\") {\n        return Object.defineProperties({}, {\n            exec: {\n                value: (d) => {\n                    obj[\"validate\"](d);\n                    if (obj.errors) {\n                        throw obj.errors;\n                    }\n\n                    return d;\n                },\n                enumerable: true,\n                configurable: false,\n            },\n            schema: {\n                get: () => obj.schema,\n                enumerable: true,\n                configurable: false,\n            },\n            errors: {\n                get: () => obj.errors,\n                enumerable: true,\n                configurable: false,\n            },\n        });\n    }\n\n    // attempts to map to Tx-able object\n    return Object.assign({}, DefaultPipeTx, obj);\n};\n\n/**\n *\n * @param cb\n * @returns {function}\n */\nexport const handleAsync = (cb) => (\n    async (d) => await new Promise(\n        (resolve) => d.then((_) => resolve(cb(_)))\n            .catch((e) => {\n                throw e;\n            })\n    ).catch((e) => { throw e; })\n);\n\n/**\n *\n * @param cb\n * @returns {Function}\n */\nexport const wrapCallback = (cb) => ((dataOrPromise) => {\n    if (dataOrPromise instanceof Promise) {\n        // delegates Promise\n        return handleAsync(dataOrPromise);\n    }\n\n    return cb(dataOrPromise)\n});\n\n/**\n *\n * @param args\n * @returns {*[]|{schema: {schema, anyOf, $id}, exec: (function(*): *)}[]}\n */\nexport const mapArgs = (...args) => {\n    if (!args.length) {\n        return [DefaultPipeTx, DefaultPipeTx];\n    }\n\n    // normalizes args list and wraps in pipeline Protocol\n    return [...args].map(castToExec);\n};\n",
@@ -6931,7 +6968,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 272,
+    "__docId__": 273,
     "kind": "variable",
     "name": "DefaultPipeTx",
     "memberof": "src/Pipeline/Utils.js",
@@ -6954,7 +6991,7 @@
     "ignore": true
   },
   {
-    "__docId__": 273,
+    "__docId__": 274,
     "kind": "function",
     "name": "fill",
     "memberof": "src/Pipeline/Utils.js",
@@ -7016,7 +7053,7 @@
     }
   },
   {
-    "__docId__": 274,
+    "__docId__": 275,
     "kind": "function",
     "name": "castToExec",
     "memberof": "src/Pipeline/Utils.js",
@@ -7058,7 +7095,7 @@
     }
   },
   {
-    "__docId__": 275,
+    "__docId__": 276,
     "kind": "function",
     "name": "handleAsync",
     "memberof": "src/Pipeline/Utils.js",
@@ -7100,7 +7137,7 @@
     }
   },
   {
-    "__docId__": 276,
+    "__docId__": 277,
     "kind": "function",
     "name": "wrapCallback",
     "memberof": "src/Pipeline/Utils.js",
@@ -7142,7 +7179,7 @@
     }
   },
   {
-    "__docId__": 277,
+    "__docId__": 278,
     "kind": "function",
     "name": "mapArgs",
     "memberof": "src/Pipeline/Utils.js",
@@ -7185,7 +7222,7 @@
     }
   },
   {
-    "__docId__": 278,
+    "__docId__": 279,
     "kind": "file",
     "name": "src/Pipeline/Utils.test.js",
     "content": "import {fill, castToExec} from \"./Utils\";\nimport {Pipeline} from \"./Pipeline\";\nimport {Validator} from \"./Validator\";\nconst _schema = {\n    \"$id\": \"root#\",\n    \"$schema\": \"http://json-schema.org/draft-07/schema#\",\n    \"type\": \"object\",\n    \"required\": [\"name\"],\n    \"properties\": {\n        \"name\": {\n            \"type\": \"string\"\n        }\n    }\n};\n\ndescribe(\"TxUtils Tests\", () => {\n    describe(\"castToExec tests\", () => {\n        describe(\"function handling\", () => {\n            const _func = () => ({res: true});\n            it(\"should accept functions as pipes\", () => {\n                expect((typeof castToExec(_func).exec)).toEqual(\"function\");\n            });\n            it(\"should execute functions as pipes\", () => {\n                expect(castToExec(_func).exec().res).toBe(true);\n            });\n        });\n        describe(\"iterator handling\", () => {\n            it(\"should cast array to iterator\", () => {\n                const _res = castToExec([() => \"ok\"]);\n                expect(_res instanceof Pipeline).toBe(true);\n                expect(JSON.stringify(_res.exec([1, 2, 3]))).toEqual(\"[\\\"ok\\\",\\\"ok\\\",\\\"ok\\\"]\");\n            });\n\n            it(\"should iterate schemas\", () => {\n                const _res = castToExec([_schema]);\n                expect(_res.exec).toBeDefined()\n                expect((typeof _res.exec) === \"function\").toBeTruthy();\n                expect(_res.exec([{name: \"Testing\"}])).toEqual([{name: \"Testing\"}]);\n                expect(_res.exec([{badKey: \"Testing\"}])).toEqual([]);\n            });\n\n            it(\"should exec\", () => {\n                const _res = castToExec([() => \"ok\"]);\n                expect(JSON.stringify(new Pipeline(_res).exec([1, 2, 3]))).toEqual(\"[\\\"ok\\\",\\\"ok\\\",\\\"ok\\\"]\");\n            });\n        });\n        describe(\"schema handling\", () => {\n            it(\"should accept json-schema\", () => {\n                const _res = castToExec(_schema);\n\n                expect(_res.exec).toBeDefined()\n                expect((typeof _res.exec) === \"function\").toBeTruthy();\n                expect(_res.schema).toBeDefined();\n                expect(_res.errors).toBeDefined();\n            });\n        })\n    });\n\n    describe(\"fill tests\", () => {\n        it(\"should fill array with a given value\", () => {\n            const _ = fill([], () => ({ok: true}));\n            expect(_.length).toEqual(2);\n            expect(_[0]().ok).toBe(true);\n            expect(_[1]().ok).toBe(true);\n        });\n\n        it(\"should handle many callbacks\", () => {\n            const _ = fill([\n                () => ({ok: true}),\n                () => ({ok: true}),\n                () => ({ok: true}),\n                () => ({ok: true}),\n                () => ({ok: \"yada-yada\"}),\n            ]);\n            expect(_.length).toEqual(5);\n            expect(_[0]({ok: true}).ok).toBe(true);\n            expect(_[_.length - 1]({ok: true}).ok).toBe(\"yada-yada\");\n        });\n\n\n        it(\"should not replace existing values\", () => {\n            const _ = fill([() => ({ok: true})], (d) => d);\n            expect(_.length).toEqual(2);\n            expect(_[0]({ok: false}).ok).toBe(true);\n            expect(_[1]({ok: false}).ok).toBe(false);\n        });\n    });\n});\n",
@@ -7196,7 +7233,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 279,
+    "__docId__": 280,
     "kind": "variable",
     "name": "_schema",
     "memberof": "src/Pipeline/Utils.test.js",
@@ -7217,7 +7254,7 @@
     "ignore": true
   },
   {
-    "__docId__": 280,
+    "__docId__": 281,
     "kind": "file",
     "name": "src/Pipeline/Validator.js",
     "content": "/* ############################################################################\nThe MIT License (MIT)\n\nCopyright (c) 2019 Van Schroeder\nCopyright (c) 2019 Webfreshener, LLC\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n\n############################################################################ */\nimport {AjvWrapper} from \"./_ajvWrapper\";\nimport {VxBehaviorSubject} from \"./vxBehaviorSubject\";\nimport {default as TxArgs} from \"../schemas/pipe-args.schema\";\nimport {default as DefaultVO} from \"../schemas/default-pipe-vo.schema\";\n\nconst _models = new WeakMap();\nconst _validators = new WeakMap();\nexport const _observers = new WeakMap();\n\nconst argsValidator = new AjvWrapper({schemas: [TxArgs]});\n\nexport class Validator {\n    /**\n     *\n     * @param schemas\n     * @returns {boolean}\n     */\n    static validateSchemas(schemas) {\n        if (schemas[\"schema\"]) {\n            if (typeof schemas.schema === \"string\") {\n                return argsValidator.exec(TxArgs.$id, schemas);\n            }\n            return false;\n        }\n        if (schemas[\"schemas\"]) {\n            return argsValidator.exec(TxArgs.$id, schemas.schemas);\n        }\n\n        return argsValidator.exec(TxArgs.$id, schemas);\n    }\n\n    /**\n     *\n     * @param schemasOrConfig\n     * @returns {Object|null}\n     */\n    static deriveSchema(schemasOrConfig) {\n        if ((typeof schemasOrConfig) === \"object\" && !schemasOrConfig.schemas) {\n            return schemasOrConfig;\n        }\n\n        if (schemasOrConfig.use) {\n            const _useSchema = schemasOrConfig.schemas.find((_) => _.$id === schemasOrConfig.use);\n            if (_useSchema) {\n                return _useSchema.schema;\n            } else {\n                return null;\n            }\n        }\n\n        return schemasOrConfig.schemas.length ? schemasOrConfig.schemas[schemasOrConfig.schemas.length - 1] : null;\n    }\n\n    /**\n     * Accepts one `json-schema` or `tx-config` per instance and an (optional) Ajv config\n     * @param schemaOrConfig\n     * @param options (optional)\n     */\n    constructor(schemaOrConfig, options) {\n        if (!schemaOrConfig) {\n            throw \"Schema or Schema Config required\";\n        }\n        if (!Validator.validateSchemas(schemaOrConfig)) {\n            throw `Unable to process schema: ${JSON.stringify(argsValidator.$ajv.errors)}`;\n        }\n\n        if (!schemaOrConfig[\"schemas\"]) {\n            schemaOrConfig = {\n                schemas: Array.isArray(schemaOrConfig) ? schemaOrConfig : [schemaOrConfig],\n            };\n        }\n\n        Object.defineProperty(this, \"schema\", {\n            value: Validator.deriveSchema(schemaOrConfig) || {schemas: [DefaultVO]},\n            enumerable: true,\n        });\n\n        const _baseSchema = schemaOrConfig.schemas[schemaOrConfig.schemas.length - 1] || DefaultVO;\n\n        // this is just a quick guess at our default data type (object|array)\n        _models.set(this, _baseSchema.hasOwnProperty(\"items\") ? [] : {});\n\n        _observers.set(this, new VxBehaviorSubject());\n\n        _validators.set(this, new AjvWrapper(schemaOrConfig, options || {}));\n    }\n\n    /**\n     * Applies Object.freeze to model and triggers complete notification for pipeline\n     * @returns {Validator}\n     */\n    freeze() {\n        _models.set(this, Object.freeze(_models.get(this)));\n        _observers.get(this).complete();\n        return this;\n    }\n\n    /**\n     * Getter for Object.isFrozen status of this node and it's ancestors\n     * @returns {boolean}\n     */\n    get isFrozen() {\n        if ((typeof _models.get(this)) !== \"object\") {\n            return false;\n        }\n        return Object.isFrozen(_models.get(this));\n    }\n\n    /**\n     * Getter for validation errors incurred from model setter\n     * @returns {*}\n     */\n    get errors() {\n        return _validators.get(this).$ajv.errors;\n    }\n\n    /**\n     * Registers notification handler to observable\n     * @param handler\n     * @returns {*}\n     */\n    subscribe(handler) {\n        return _observers.get(this).subscribe(handler);\n    }\n\n    /**\n     * Performs schema validation of value\n     * @param value\n     */\n    validate(value) {\n        const $id = AjvWrapper.getSchemaID(this.schema[0] || this.schema);\n        const __ = _validators.get(this).exec($id, value);\n        if (this.errors) {\n            _observers.get(this).error({\n                error: this.errors,\n                data: value,\n            });\n        }\n        return __;\n    }\n\n    /**\n     * Setter for validator data value\n     * @param data\n     */\n    set model(data) {\n        if (this.isFrozen) {\n            return;\n        }\n\n        const _t = this.validate(data);\n        if (_t === true) {\n            _models.set(this, data);\n            _observers.get(this).next(data);\n        } else {\n            if (_t === false) {\n                _observers.get(this).error({\n                    error: this.errors,\n                    data: data,\n                });\n            } else {\n                _observers.get(this).error({\n                    error: _t,\n                    data: data,\n                });\n            }\n        }\n    }\n\n    /**\n     * Getter for validator data value\n     * @returns {{}|[]}\n     */\n    get model() {\n        const _d = _models.get(this);\n        return Array.isArray(_d) ? [..._d] : Object.assign({}, _d);\n    }\n\n    /**\n     * Provides model value as JSON\n     * @returns {{}|*[]}\n     */\n    toJSON() {\n        return this.model;\n    }\n\n    /**\n     * Overrides toString. Provides model value as String\n     * @returns {string}\n     */\n    toString() {\n        return JSON.stringify(this.model);\n    }\n\n    /**\n     * Overrides valueOf. Provides model value as JSON\n     * @returns {{}|*[]}\n     */\n    valueOf() {\n        return this.model;\n    }\n}\n",
@@ -7228,7 +7265,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 281,
+    "__docId__": 282,
     "kind": "variable",
     "name": "_models",
     "memberof": "src/Pipeline/Validator.js",
@@ -7249,7 +7286,7 @@
     "ignore": true
   },
   {
-    "__docId__": 282,
+    "__docId__": 283,
     "kind": "variable",
     "name": "_validators",
     "memberof": "src/Pipeline/Validator.js",
@@ -7270,7 +7307,7 @@
     "ignore": true
   },
   {
-    "__docId__": 283,
+    "__docId__": 284,
     "kind": "variable",
     "name": "_observers",
     "memberof": "src/Pipeline/Validator.js",
@@ -7290,7 +7327,7 @@
     }
   },
   {
-    "__docId__": 284,
+    "__docId__": 285,
     "kind": "variable",
     "name": "argsValidator",
     "memberof": "src/Pipeline/Validator.js",
@@ -7311,7 +7348,7 @@
     "ignore": true
   },
   {
-    "__docId__": 285,
+    "__docId__": 286,
     "kind": "class",
     "name": "Validator",
     "memberof": "src/Pipeline/Validator.js",
@@ -7327,7 +7364,7 @@
     "interface": false
   },
   {
-    "__docId__": 286,
+    "__docId__": 287,
     "kind": "method",
     "name": "validateSchemas",
     "memberof": "src/Pipeline/Validator.js~Validator",
@@ -7366,7 +7403,7 @@
     }
   },
   {
-    "__docId__": 287,
+    "__docId__": 288,
     "kind": "method",
     "name": "deriveSchema",
     "memberof": "src/Pipeline/Validator.js~Validator",
@@ -7406,7 +7443,7 @@
     }
   },
   {
-    "__docId__": 288,
+    "__docId__": 289,
     "kind": "constructor",
     "name": "constructor",
     "memberof": "src/Pipeline/Validator.js~Validator",
@@ -7441,7 +7478,7 @@
     ]
   },
   {
-    "__docId__": 289,
+    "__docId__": 290,
     "kind": "method",
     "name": "freeze",
     "memberof": "src/Pipeline/Validator.js~Validator",
@@ -7469,7 +7506,7 @@
     "params": []
   },
   {
-    "__docId__": 290,
+    "__docId__": 291,
     "kind": "get",
     "name": "isFrozen",
     "memberof": "src/Pipeline/Validator.js~Validator",
@@ -7501,7 +7538,7 @@
     }
   },
   {
-    "__docId__": 291,
+    "__docId__": 292,
     "kind": "get",
     "name": "errors",
     "memberof": "src/Pipeline/Validator.js~Validator",
@@ -7533,7 +7570,7 @@
     }
   },
   {
-    "__docId__": 292,
+    "__docId__": 293,
     "kind": "method",
     "name": "subscribe",
     "memberof": "src/Pipeline/Validator.js~Validator",
@@ -7572,7 +7609,7 @@
     }
   },
   {
-    "__docId__": 293,
+    "__docId__": 294,
     "kind": "method",
     "name": "validate",
     "memberof": "src/Pipeline/Validator.js~Validator",
@@ -7602,7 +7639,7 @@
     }
   },
   {
-    "__docId__": 294,
+    "__docId__": 295,
     "kind": "set",
     "name": "model",
     "memberof": "src/Pipeline/Validator.js~Validator",
@@ -7627,7 +7664,7 @@
     ]
   },
   {
-    "__docId__": 295,
+    "__docId__": 296,
     "kind": "get",
     "name": "model",
     "memberof": "src/Pipeline/Validator.js~Validator",
@@ -7659,7 +7696,7 @@
     }
   },
   {
-    "__docId__": 296,
+    "__docId__": 297,
     "kind": "method",
     "name": "toJSON",
     "memberof": "src/Pipeline/Validator.js~Validator",
@@ -7687,7 +7724,7 @@
     "params": []
   },
   {
-    "__docId__": 297,
+    "__docId__": 298,
     "kind": "method",
     "name": "toString",
     "memberof": "src/Pipeline/Validator.js~Validator",
@@ -7715,7 +7752,7 @@
     "params": []
   },
   {
-    "__docId__": 298,
+    "__docId__": 299,
     "kind": "method",
     "name": "valueOf",
     "memberof": "src/Pipeline/Validator.js~Validator",
@@ -7743,7 +7780,7 @@
     "params": []
   },
   {
-    "__docId__": 299,
+    "__docId__": 300,
     "kind": "file",
     "name": "src/Pipeline/Validator.test.js",
     "content": "import {Validator} from \"./Validator\";\nimport {basicModel, nameRequiredSchema} from \"../../fixtures/PropertiesModel.schemas\";\nimport {default as DefaultVO} from \"../schemas/default-pipe-vo.schema\";\n\ndescribe(\"TxValidator Test Suite\", () => {\n   describe(\"Schema Handling\", () => {\n      it(\"should accept stand-alone schema\", () => {\n         const _txV = new Validator(DefaultVO);\n         expect(_txV.errors).toEqual(null);\n      });\n      it(\"should accept schema config\", () => {\n          const _txV = new Validator( {\n              schemas: [DefaultVO]\n          });\n          expect(_txV.errors).toEqual(null);\n      });\n   });\n\n   describe(\"TxValidator.validateSchemas\", () => {\n      it(\"should pass valid schema\", () => {\n         expect(Validator.validateSchemas(nameRequiredSchema)).toEqual(true);\n      })\n   });\n\n   describe(\"basic validation\", () => {\n      let _txV;\n      beforeEach(() => {\n         _txV = new Validator( {\n            meta: [],\n            schemas: [basicModel]\n         });\n      });\n      it(\"should validate data\", () => {\n         const model = {\n            name: \"test\",\n            active: true,\n            age: 99,\n         };\n         expect(_txV.errors === null).toBe(true);\n\n         // set age to invalid data type\n         _txV.model = Object.assign({}, model, {age: \"99\"});\n         expect(_txV.errors === null).toBe(false);\n      });\n   });\n\n   // TODO: find other use-case for meta besides disco'd Schema Draft 04\n   describe.skip(\"validation with meta\", () => {\n      let _txV;\n      beforeEach(() => {\n         _txV = new Validator( {\n            meta: [JSONSchemaDraft04],\n            schemas: [Object.assign(basicModel, {\n               $schema: \"http://json-schema.org/draft-04/schema#\",\n            })],\n         });\n      });\n      it(\"should validate data with meta\", () => {\n         _txV.model = {\n            name: \"test\",\n            active: true,\n            age: 99,\n         };\n         expect(_txV.errors === null).toBe(true);\n         _txV.model = {\n            name: \"test\",\n            active: \"true\",\n            foo: \"bar\",\n            age: \"99\",\n         };\n         expect(_txV.errors === null).toBe(false);\n      });\n   });\n});\n",
@@ -7754,7 +7791,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 300,
+    "__docId__": 301,
     "kind": "file",
     "name": "src/Pipeline/_ajvWrapper.js",
     "content": "/* ############################################################################\nThe MIT License (MIT)\n\nCopyright (c) 2019 Van Schroeder\nCopyright (c) 2019 Webfreshener, LLC\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n\n############################################################################ */\n/**\n * @private\n */\n\nimport Ajv from \"ajv\";\nimport {default as ajvOptions} from \"../ajv-options\";\n\nconst _validators = new WeakMap();\nconst _ajvRef = new WeakMap();\nconst _idRef = new WeakMap();\n/**\n *\n * @param $ajv\n * @param schema\n * @param schemaId\n */\nconst addSchema = ($ajv, schema, schemaId) => {\n    if (!schemaId) {\n        schemaId = AjvWrapper.getSchemaID(schema);\n    }\n\n    // try {\n    if (_idRef.get($ajv).indexOf(schemaId) === -1) {\n        _idRef.get($ajv).splice(_idRef.get($ajv).length, 0, schemaId);\n\n        $ajv.addSchema(schema, schemaId);\n        return true\n    }\n    // } catch (e) {\n    //    return\n    // }\n};\n\nconst addMetaSchema = ($ajv, schema) => {\n    $ajv.addMetaSchema(schema);\n};\n\n/**\n * Wrapper for Ajv JSON-PropertiesModel Validator\n * @private\n */\nexport class AjvWrapper {\n    /**\n     * @constructor\n     * @param schemas\n     * @param ajvOptions\n     */\n    constructor(schemas, ajvOptions = {}) {\n        if (_validators.get(this) === void (0)) {\n            _validators.set(this, {});\n        }\n\n        // applies user specified options over our default Ajv Options\n        const opts = Object.assign(_ajvOptions, ajvOptions);\n\n        // makes user defined options object accessible for evaluation\n        Object.defineProperty(this, \"options\", {\n            get: () => opts,\n            enumerable: true,\n        });\n\n        // declares default path of root# for validation queries\n        this.path = \"root#\";\n\n        // appends trailing \"#\" to end of \"id\" string if missing\n        const _procID = (id) => id.match(/#+$/) === null ? `${id}#` : id;\n\n        // processes schema \"id\" for JSON-schemas =< v04 and >= v06\n        const _procSchema = (_s) => {\n            const _key = [\"$id\", \"id\"].find((k) => _s.hasOwnProperty(`${k}`));\n            if (_key) {\n                _s[\"$id\"] = _procID(_s[_key]);\n            }\n            return _s;\n        };\n\n        // evaluates contents of schemas to normalize \"id\" attributes to have trailing \"#\"\n        if ((typeof schemas) === \"object\") {\n            if (schemas.hasOwnProperty(\"schemas\")) {\n                if (Array.isArray(schemas.schemas)) {\n                    schemas.schemas = schemas.schemas.map(_procSchema);\n                } else {\n                    schemas.schemas = _procSchema(schemas.schemas);\n\n                }\n            } else {\n                if (Array.isArray(schemas)) {\n                    schemas = schemas.map(_procSchema);\n                } else {\n                    schemas = _procSchema(schemas);\n                }\n            }\n        }\n\n        // initializes Ajv instance for this Doc and stores it to WeakMap\n        _ajvRef.set(this, createAJV(schemas, opts));\n\n        // accept no further modifications to this object\n        Object.seal(this);\n    }\n\n    /**\n     * Getter for captive Ajv validator\n     * -- use this for Ajv API Methods\n     * @returns {ajv}\n     */\n    get $ajv() {\n        return _ajvRef.get(this);\n    }\n\n    /**\n     * Executes validator at PropertiesModel $model `path` against `value`\n     * @param {string} path\n     * @param {any} value\n     */\n    exec(path, value) {\n        // appends id ref to path\n        if (path.indexOf(\"#\") < 0) {\n            path = `${this.path}${path}`;\n        }\n\n        let _res = false;\n\n        try {\n            _res = this.$ajv.validate(path, value);\n            if (this.$ajv.errors) {\n                return false; //JSON.stringify(this.$ajv.errors);\n            }\n        } catch (e) {\n            return e.toString();\n        }\n\n\n        return _res;\n    }\n\n    /**\n     *\n     * @param schema\n     * @param schemaId\n     */\n    addSchema(schema, schemaId = false) {\n        addSchema(this, schema, schemaId);\n        return this;\n    }\n\n    /**\n     * retrieves ID attribute from schema\n     * @param schema\n     * @returns {string}\n     */\n    static getSchemaID(schema) {\n        const id = [\"$id\", \"id\"].filter((id) => schema.hasOwnProperty(id));\n        return id.length ? schema[id[0]] : \"root#\";\n    }\n}\n\n/**\n *\n * @param $ajv\n * @param _s\n * @private\n */\nconst _metaTest = ($ajv, _s) => {\n    if (_s.hasOwnProperty(\"meta\")) {\n        if (Array.isArray(_s.meta)) {\n            _s.meta.forEach((meta) => {\n                addMetaSchema($ajv, meta);\n            });\n        }\n    }\n};\n\n/**\n *\n * @param schemas\n * @param opts\n * @returns {ajv | ajv.Ajv}\n */\nconst createAJV = (schemas, opts) => {\n    const _ajv = new Ajv(opts);\n    _idRef.set(_ajv, []);\n    if (schemas) {\n        _metaTest(_ajv, schemas);\n        // todo: review performance of addSchema\n        schemas = schemas[\"schemas\"] ? schemas.schemas : schemas;\n        if (Array.isArray(schemas)) {\n            schemas.forEach((schema) => {\n                // _metaTest(_ajv, schema);\n                addSchema(_ajv, schema);\n            });\n        } else {\n            if ((typeof schemas).match(/^(object|boolean)$/)) {\n                _metaTest(_ajv, schemas);\n                addSchema(_ajv, schemas);\n            }\n        }\n    }\n\n    return _ajv;\n};\n\n/**\n * AJV Options Config in it's entirely for reference\n * only Pipeline specific option changes are enabled\n * @type {*}\n * @private\n */\nconst _ajvOptions = Object.assign({}, ajvOptions, {\n    allowUnionTypes: true,\n});\n",
@@ -7765,7 +7802,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 301,
+    "__docId__": 302,
     "kind": "variable",
     "name": "_validators",
     "memberof": "src/Pipeline/_ajvWrapper.js",
@@ -7786,7 +7823,7 @@
     "ignore": true
   },
   {
-    "__docId__": 302,
+    "__docId__": 303,
     "kind": "variable",
     "name": "_ajvRef",
     "memberof": "src/Pipeline/_ajvWrapper.js",
@@ -7807,7 +7844,7 @@
     "ignore": true
   },
   {
-    "__docId__": 303,
+    "__docId__": 304,
     "kind": "variable",
     "name": "_idRef",
     "memberof": "src/Pipeline/_ajvWrapper.js",
@@ -7828,7 +7865,7 @@
     "ignore": true
   },
   {
-    "__docId__": 304,
+    "__docId__": 305,
     "kind": "function",
     "name": "addSchema",
     "memberof": "src/Pipeline/_ajvWrapper.js",
@@ -7882,7 +7919,7 @@
     "ignore": true
   },
   {
-    "__docId__": 305,
+    "__docId__": 306,
     "kind": "function",
     "name": "addMetaSchema",
     "memberof": "src/Pipeline/_ajvWrapper.js",
@@ -7915,7 +7952,7 @@
     "ignore": true
   },
   {
-    "__docId__": 306,
+    "__docId__": 307,
     "kind": "class",
     "name": "AjvWrapper",
     "memberof": "src/Pipeline/_ajvWrapper.js",
@@ -7930,7 +7967,7 @@
     "interface": false
   },
   {
-    "__docId__": 307,
+    "__docId__": 308,
     "kind": "constructor",
     "name": "constructor",
     "memberof": "src/Pipeline/_ajvWrapper.js~AjvWrapper",
@@ -7971,7 +8008,7 @@
     ]
   },
   {
-    "__docId__": 308,
+    "__docId__": 309,
     "kind": "member",
     "name": "path",
     "memberof": "src/Pipeline/_ajvWrapper.js~AjvWrapper",
@@ -7988,7 +8025,7 @@
     }
   },
   {
-    "__docId__": 309,
+    "__docId__": 310,
     "kind": "get",
     "name": "$ajv",
     "memberof": "src/Pipeline/_ajvWrapper.js~AjvWrapper",
@@ -8020,7 +8057,7 @@
     }
   },
   {
-    "__docId__": 310,
+    "__docId__": 311,
     "kind": "method",
     "name": "exec",
     "memberof": "src/Pipeline/_ajvWrapper.js~AjvWrapper",
@@ -8060,7 +8097,7 @@
     }
   },
   {
-    "__docId__": 311,
+    "__docId__": 312,
     "kind": "method",
     "name": "addSchema",
     "memberof": "src/Pipeline/_ajvWrapper.js~AjvWrapper",
@@ -8100,7 +8137,7 @@
     }
   },
   {
-    "__docId__": 312,
+    "__docId__": 313,
     "kind": "method",
     "name": "getSchemaID",
     "memberof": "src/Pipeline/_ajvWrapper.js~AjvWrapper",
@@ -8139,7 +8176,7 @@
     }
   },
   {
-    "__docId__": 313,
+    "__docId__": 314,
     "kind": "function",
     "name": "_metaTest",
     "memberof": "src/Pipeline/_ajvWrapper.js",
@@ -8179,7 +8216,7 @@
     "ignore": true
   },
   {
-    "__docId__": 314,
+    "__docId__": 315,
     "kind": "function",
     "name": "createAJV",
     "memberof": "src/Pipeline/_ajvWrapper.js",
@@ -8233,7 +8270,7 @@
     "ignore": true
   },
   {
-    "__docId__": 315,
+    "__docId__": 316,
     "kind": "variable",
     "name": "_ajvOptions",
     "memberof": "src/Pipeline/_ajvWrapper.js",
@@ -8256,7 +8293,7 @@
     "ignore": true
   },
   {
-    "__docId__": 316,
+    "__docId__": 317,
     "kind": "file",
     "name": "src/Pipeline/_ajvWrapper.test.js",
     "content": "import {AjvWrapper} from \"./_ajvWrapper\";\nimport {default as TxArgsSchema} from \"../schemas/pipe-args.schema\";\nimport {basicModel} from \"../../fixtures/PropertiesModel.schemas\";\n\ndescribe(\"AJVWrapper Tests\", () => {\n    let _ajv = null;\n    const _data = {\n        name: \"Test\",\n        active: \"true\",\n        age: 99\n    };\n\n    describe.only(\"AJV Schema Validation\", () => {\n\n        it(\"should accept valid schemas\", () => {\n            let _ajv;\n            expect(() => _ajv = new AjvWrapper({\n                schemas: [basicModel],\n            })).not.toThrow();\n\n            const _res = _ajv.exec(basicModel.$id, Object.assign(_data, {active: true}));\n            // should have no validator errors\n            expect(_ajv.$ajv.errors).toEqual(null);\n            // validator should return true\n            expect(_res).toBe(true);\n        });\n\n    });\n\n    describe(\"Meta-Schemas\", () => {\n        const _04Schema = Object.assign({}, basicModel, {\n            $schema: \"http://json-schema.org/draft-04/schema#\"\n        });\n\n        it(\"should reject < draft-07 schema refs\", () => {\n            // should fail with errors\n            expect(() => new AjvWrapper({schemas: [_04Schema],})).toThrow();\n        });\n\n        // todo: find replacement for JSON schema 04 for metaschema\n        it.skip(\"should reject with meta-schema\", () => {\n            // should fail with errors\n            expect(() => new AjvWrapper({\n                meta: [JSONSchemaV4],\n                schemas: [_04Schema]\n            })).toThrow();\n        });\n    });\n\n    describe(\"Schema as Data Validation\", () => {\n        beforeEach(() => {\n            _ajv = new AjvWrapper({\n                schemas: [TxArgsSchema],\n            });\n        });\n\n        it(\"should reject invalid data\", () => {\n            const _res = _ajv.exec(TxArgsSchema.$id, {\n                schema: {},\n                exec: () => {\n                },\n            });\n\n            // should have errors\n            expect(_ajv.$ajv.errors === null).toBe(false);\n            // validator result should be false\n            expect(_res).toBe(false);\n\n        });\n    });\n});\n\n",
@@ -8267,7 +8304,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 317,
+    "__docId__": 318,
     "kind": "file",
     "name": "src/Pipeline/index.js",
     "content": "/* ############################################################################\nThe MIT License (MIT)\n\nCopyright (c) 2019 Van Schroeder\nCopyright (c) 2019 Webfreshener, LLC\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n\n############################################################################ */\nexport {Pipeline as Pipeline} from './Pipeline';\nexport {Validator as TxValidator} from './Validator';\n",
@@ -8278,7 +8315,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 318,
+    "__docId__": 319,
     "kind": "file",
     "name": "src/Pipeline/vxBehaviorSubject.js",
     "content": "/* ############################################################################\nThe MIT License (MIT)\n\nCopyright (c) 2019 Van Schroeder\nCopyright (c) 2019 Webfreshener, LLC\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n\n############################################################################ */\nimport {BehaviorSubject, skip} from \"rxjs\";\n\nconst _observers = new WeakMap();\n\nexport class VxBehaviorSubject {\n    /**\n     * @constructor\n     */\n    constructor() {\n        const __ = {};\n        [\"onNext\", \"onError\", \"onComplete\"].forEach((_k) => {\n            const _subj = new BehaviorSubject(null);\n            Object.defineProperty(__, _k, {\n                value: _subj.pipe(skip(1)),\n                enumerable: true,\n                configurable: false,\n                writable: false,\n            });\n        });\n\n        _observers.set(this, __);\n    }\n\n    /**\n     * Creates BehaviorSubjects\n     * @returns {VxBehaviorSubject}\n     */\n    static create() {\n        return new VxBehaviorSubject();\n    }\n\n    /**\n     * Calls next on Next Subject\n     */\n    next(value) {\n        const _o = _observers.get(this);\n        if (_o !== null) {\n            _o.onNext.next(value);\n        }\n    }\n\n    /**\n     * Calls next on Error Subject\n     * @param error\n     */\n    error(error) {\n        const _o = _observers.get(this);\n        if (_o !== null) {\n            _o.onError.next(error);\n        }\n    }\n\n    /**\n     * Calls next on Complete Subject\n     */\n    complete() {\n        const _o = _observers.get(this);\n        if (_o !== null) {\n            _o.onComplete.next();\n            // calls complete on all Subjects\n            Object.keys(_o).forEach(_ => _o[_].complete());\n        }\n    }\n\n    /**\n     * Subscribes handler method to property observer\n     * @param handler\n     * @returns {object|boolean}\n     */\n    subscribe(handler) {\n        const _o = _observers.get(this);\n        // references to subscriptions for Observable\n        const _subRefs = [];\n\n        // creates an extensible object to hold our unsubscribe method\n        // and adds unsubscribe calls to the Proto object\n        const _subs = class { };\n\n        if ((typeof handler) === \"function\") {\n            // if is raw function, we pass straight in as `next`\n            _subRefs.push(_o.onNext.subscribe(handler));\n        } else {\n            // inits observer handlers if defined on passed `func` object\n            [\n                {call: \"onNext\", func: \"next\"},\n                {call: \"onError\", func: \"error\"},\n                {call: \"onComplete\", func: \"complete\"},\n            ].forEach((obs) => {\n                // use of braces is due to unreliability of `hasOwnProperty`\n                if (handler[obs.func]) {\n                    // if the notification type handler is present, subscribe to it\n                    _subRefs.push(_o[obs.call].subscribe(handler[obs.func]));\n                }\n            });\n        }\n\n        // adds unsubscribe to the Proto object\n        _subs.prototype.unsubscribe = () => {\n            _subRefs.forEach((sub) => sub.unsubscribe());\n        };\n\n        return new _subs();\n    }\n}\n",
@@ -8289,7 +8326,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 319,
+    "__docId__": 320,
     "kind": "variable",
     "name": "_observers",
     "memberof": "src/Pipeline/vxBehaviorSubject.js",
@@ -8310,7 +8347,7 @@
     "ignore": true
   },
   {
-    "__docId__": 320,
+    "__docId__": 321,
     "kind": "class",
     "name": "VxBehaviorSubject",
     "memberof": "src/Pipeline/vxBehaviorSubject.js",
@@ -8326,7 +8363,7 @@
     "interface": false
   },
   {
-    "__docId__": 321,
+    "__docId__": 322,
     "kind": "constructor",
     "name": "constructor",
     "memberof": "src/Pipeline/vxBehaviorSubject.js~VxBehaviorSubject",
@@ -8345,7 +8382,7 @@
     ]
   },
   {
-    "__docId__": 322,
+    "__docId__": 323,
     "kind": "method",
     "name": "create",
     "memberof": "src/Pipeline/vxBehaviorSubject.js~VxBehaviorSubject",
@@ -8373,7 +8410,7 @@
     "params": []
   },
   {
-    "__docId__": 323,
+    "__docId__": 324,
     "kind": "method",
     "name": "next",
     "memberof": "src/Pipeline/vxBehaviorSubject.js~VxBehaviorSubject",
@@ -8395,7 +8432,7 @@
     "return": null
   },
   {
-    "__docId__": 324,
+    "__docId__": 325,
     "kind": "method",
     "name": "error",
     "memberof": "src/Pipeline/vxBehaviorSubject.js~VxBehaviorSubject",
@@ -8421,7 +8458,7 @@
     "return": null
   },
   {
-    "__docId__": 325,
+    "__docId__": 326,
     "kind": "method",
     "name": "complete",
     "memberof": "src/Pipeline/vxBehaviorSubject.js~VxBehaviorSubject",
@@ -8436,7 +8473,7 @@
     "return": null
   },
   {
-    "__docId__": 326,
+    "__docId__": 327,
     "kind": "method",
     "name": "subscribe",
     "memberof": "src/Pipeline/vxBehaviorSubject.js~VxBehaviorSubject",
@@ -8476,7 +8513,7 @@
     }
   },
   {
-    "__docId__": 327,
+    "__docId__": 328,
     "kind": "file",
     "name": "src/Pipeline/vxBehaviorSubject.test.js",
     "content": "import {VxBehaviorSubject} from \"./vxBehaviorSubject\";\n\ndescribe(\"vxBehaviorSubject\", () => {\n    let _t;\n    beforeEach(() => {\n        _t = VxBehaviorSubject.create();\n    });\n\n    it(\"should handle next\", (done) => {\n        let _cnt = 0;\n\n        _t.subscribe({\n            next: (d) => {\n                expect(d).toEqual(\"ok\");\n                if ((++_cnt) === 2) {\n                    done();\n                }\n            }\n        });\n\n        _t.next(\"ok\");\n        _t.next(\"ok\");\n    });\n\n    it(\"should handle error\", (done) => {\n        const _d = \"error message\";\n        let _cnt = 0;\n\n        _t.subscribe({\n            error: (d) => {\n                expect(d).toEqual(_d);\n                if ((++_cnt) === 2) {\n                    done();\n                }\n            }\n        });\n\n        _t.error(_d);\n        _t.error(_d);\n    });\n\n    it(\"should handle complete\", (done) => {\n        _t.subscribe({\n            complete: () => {\n                done();\n            },\n\n        });\n        _t.complete();\n    })\n});\n",
@@ -8487,7 +8524,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 328,
+    "__docId__": 329,
     "kind": "file",
     "name": "src/ajv-options.js",
     "content": "/**\n * AJV Options Config in it's entirely for reference\n * only Model specific option changes are enabled\n *\n * taken verbatim from: https://ajv.js.org/options.html\n * @type {*}\n *\n */\nexport default {\n    // strict mode options (NEW)\n    strict: undefined,\n    strictSchema: true,\n    strictNumbers: true,\n    strictTypes: \"log\",\n    strictTuples: \"log\",\n    strictRequired: false,\n    allowUnionTypes: false,\n    allowMatchingProperties: false,\n    validateFormats: true,\n    // validation and reporting options:\n    $data: false,\n    allErrors: false,\n    verbose: false,\n    discriminator: false,\n    unicodeRegExp: true,\n    timestamp: undefined,\n    parseDate: false,\n    allowDate: false,\n    int32range: true,\n    $comment: false,\n    formats: {},\n    keywords: [],\n    schemas: {},\n    logger: undefined,\n    loadSchema: undefined, // function(uri: string): Promise {}\n    // options to modify validated data:\n    removeAdditional: false,\n    useDefaults: false,\n    coerceTypes: false,\n    // advanced options:\n    meta: true,\n    validateSchema: true,\n    addUsedSchema: true,\n    inlineRefs: true,\n    passContext: false,\n    loopRequired: 200,\n    loopEnum: 200, // NEW\n    ownProperties: false,\n    multipleOfPrecision: undefined,\n    messages: true, // false with JTD\n    code: {\n        // NEW\n        es5: false,\n        lines: false,\n        source: false,\n        process: undefined, // (code: string) => string\n        optimize: true,\n    },\n};\n",
@@ -8498,7 +8535,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 329,
+    "__docId__": 330,
     "kind": "file",
     "name": "src/ajvWrapper.js",
     "content": "/* ############################################################################\nThe MIT License (MIT)\n\nCopyright (c) 2016 - 2019 Van Schroeder\nCopyright (c) 2017-2019 Webfreshener, LLC\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n\n############################################################################ */\n/**\n * @private\n */\nimport Ajv from \"ajv\";\nimport {default as ajvOptions} from \"./ajv-options\";\nimport {Model} from \"./Model\";\nimport addFormats from \"ajv-formats\";\n\nconst _validators = new WeakMap();\n\n/**\n * backreferences object tree for top-down evaluation\n * @param path\n * @param data\n * @param owner\n * @returns {any}\n * @private\n */\nconst _preconstruct = (path, data, owner) => {\n    const _p = path.replace(/^[a-z0-9_]*#+/i, \"\").split(\"/\");\n    let _o = Object.assign({}, data);\n    while (_p.length > 0) {\n        _p.pop();\n        try {\n            _o = Object.assign({}, owner.getPath(_p.join(\".\")), _o);\n        } catch (e) {\n            _p.splice(0, _p.length - 1);\n            throw e;\n        }\n    }\n\n    return _o;\n};\n\nlet $ajv;\n\n/**\n *\n * @param opts\n */\nconst ajvInit = (opts) => {\n    if ($ajv) {\n        return $ajv;\n    }\n\n    addFormats($ajv = new Ajv(opts));\n}\n\n\nclass SchemaUtils {\n    /**\n     * Processes schema \"id\" for JSON-Schema versions =< v04 and >= v06\n     *\n     * @param schema\n     * @return {boolean|string|*}\n     */\n    static getSchemaID(schema) {\n        const _id = schema[\"$id\"] || schema[\"id\"];\n\n        if (!_id) {\n            return false;\n        }\n\n        // ensures trailing \"#\" to end of \"id\" string\n        return _id.match(/#+$/) === null ? `${_id}#` : _id;\n    }\n\n    /**\n     * • Evaluates contents of schemas to normalize \"id\" attributes\n     * • Ensures schemas value is array\n     *\n     * @param schemas\n     * @return {*}\n     */\n    static normalizeSchemas(schemas) {\n        if ((schemas.hasOwnProperty(\"schemas\"))) {\n            schemas = schemas.schemas;\n        }\n\n        const assignSchemaId = (__) => {\n            return Object.assign(__, {id: SchemaUtils.getSchemaID});\n        };\n\n        return Array.isArray(schemas) ?\n            schemas.map(assignSchemaId) : [\n                assignSchemaId(\n                    (typeof schemas) === \"string\" ?\n                        JSON.parse(schemas) : schemas\n                )\n            ];\n    }\n\n    /**\n     *\n     * @param schemas\n     * @return {*}\n     */\n    static addSchemas(schemas = {}) {\n        if (schemas.hasOwnProperty(\"meta\")) {\n            schemas.meta.forEach($ajv.addMetaSchema);\n        }\n\n        schemas.schemas.forEach((schema) => {\n            $ajv.addSchema(schema, schema.id);\n        });\n    }\n}\n\n/**\n * Wrapper for Ajv JSON-PropertiesModel Validator\n * @private\n */\nexport class AjvWrapper {\n    /**\n     * @constructor\n     * @param owner\n     * @param schemas\n     * @param ajvOptions\n     */\n    constructor(owner, schemas, options = {}) {\n        // ensures that we are given something that represents a Model object\n        if ((!owner) || !(owner instanceof Model)) {\n            throw \"Model is required at arguments[0]\";\n        }\n\n        if (_validators.get(this) === void (0)) {\n            _validators.set(this, {});\n        }\n\n        // defines getter for parent Model reference\n        Object.defineProperty(this, \"$owner\", {\n            get: () => owner,\n            enumerable: false,\n        });\n\n        // applies user specified ajv options and makes accessible for evaluation\n        Object.defineProperty(this, \"options\", {\n            value: Object.assign(ajvOptions, options),\n            enumerable: true,\n            configurable: false,\n            writable: false,\n        });\n\n        ajvInit(this.options);\n\n        // declares default path of root# for validation queries\n        this.path = \"root#\";\n\n        const _schemas = SchemaUtils.normalizeSchemas(schemas);\n\n        // const _ajv = createAjv(this, schemas, opts);\n        if (!_vDict.hasOwnProperty(path)) {\n            _vDict[path] = this.$ajv.getSchema(path);\n            console.log(`_vDict[\"${path}\"]: ${JSON.stringify(this.$ajv.getSchema(path), null, 2)}`);\n        }\n\n        // accept no further modifications to this object\n        Object.seal(this);\n    }\n\n    /**\n     * Helper method to derive path for given model\n     * todo: review for removal\n     * @param model\n     * @return {string}\n     */\n    static resolvePath(model) {\n        return \"not yet implemented\";\n    }\n\n    // /**\n    //  * Getter for captive Ajv validator\n    //  * -- use this for Ajv API Methods\n    //  * @returns {ajv}\n    //  */\n    // get $ajv() {\n    //     return _ajvRef.get(this);\n    // }\n\n    get errors() {\n        return $ajv.errors;\n    }\n\n    /**\n     * Executes validator at PropertiesModel $model `path` against `value`\n     * @param {string} path\n     * @param {any} value\n     */\n    exec(path, value) {\n        // appends id ref to path\n        if (path.indexOf(\"#\") < 0) {\n            path = `${this.path}${path}`;\n        }\n\n        const _vDict = _validators.get(this);\n        let _res = false;\n\n        /*\n            makes initial validation attempt and re-attempts from top on failure\n         */\n        try {\n            _res = _vDict[path](value);\n        } catch (e) {\n\n            if (path.replace(/(items|properties)\\/?/, \"\").split(\"/\").length) {\n                return this.exec(`${this.path}/`, _preconstruct(path, value, this.$owner));\n            }\n\n            throw(e);\n        }\n\n        return _res;\n    }\n}\n",
@@ -8509,7 +8546,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 330,
+    "__docId__": 331,
     "kind": "variable",
     "name": "_validators",
     "memberof": "src/ajvWrapper.js",
@@ -8530,7 +8567,7 @@
     "ignore": true
   },
   {
-    "__docId__": 331,
+    "__docId__": 332,
     "kind": "function",
     "name": "_preconstruct",
     "memberof": "src/ajvWrapper.js",
@@ -8593,7 +8630,7 @@
     "ignore": true
   },
   {
-    "__docId__": 332,
+    "__docId__": 333,
     "kind": "function",
     "name": "ajvInit",
     "memberof": "src/ajvWrapper.js",
@@ -8627,7 +8664,7 @@
     "ignore": true
   },
   {
-    "__docId__": 333,
+    "__docId__": 334,
     "kind": "class",
     "name": "SchemaUtils",
     "memberof": "src/ajvWrapper.js",
@@ -8644,7 +8681,7 @@
     "ignore": true
   },
   {
-    "__docId__": 334,
+    "__docId__": 335,
     "kind": "method",
     "name": "getSchemaID",
     "memberof": "src/ajvWrapper.js~SchemaUtils",
@@ -8679,7 +8716,7 @@
     }
   },
   {
-    "__docId__": 335,
+    "__docId__": 336,
     "kind": "method",
     "name": "normalizeSchemas",
     "memberof": "src/ajvWrapper.js~SchemaUtils",
@@ -8712,7 +8749,7 @@
     }
   },
   {
-    "__docId__": 336,
+    "__docId__": 337,
     "kind": "method",
     "name": "addSchemas",
     "memberof": "src/ajvWrapper.js~SchemaUtils",
@@ -8745,7 +8782,7 @@
     }
   },
   {
-    "__docId__": 337,
+    "__docId__": 338,
     "kind": "class",
     "name": "AjvWrapper",
     "memberof": "src/ajvWrapper.js",
@@ -8760,7 +8797,7 @@
     "interface": false
   },
   {
-    "__docId__": 338,
+    "__docId__": 339,
     "kind": "constructor",
     "name": "constructor",
     "memberof": "src/ajvWrapper.js~AjvWrapper",
@@ -8811,7 +8848,7 @@
     ]
   },
   {
-    "__docId__": 339,
+    "__docId__": 340,
     "kind": "member",
     "name": "path",
     "memberof": "src/ajvWrapper.js~AjvWrapper",
@@ -8828,7 +8865,7 @@
     }
   },
   {
-    "__docId__": 340,
+    "__docId__": 341,
     "kind": "method",
     "name": "resolvePath",
     "memberof": "src/ajvWrapper.js~AjvWrapper",
@@ -8861,7 +8898,7 @@
     }
   },
   {
-    "__docId__": 341,
+    "__docId__": 342,
     "kind": "get",
     "name": "errors",
     "memberof": "src/ajvWrapper.js~AjvWrapper",
@@ -8880,7 +8917,7 @@
     }
   },
   {
-    "__docId__": 342,
+    "__docId__": 343,
     "kind": "method",
     "name": "exec",
     "memberof": "src/ajvWrapper.js~AjvWrapper",
@@ -8920,7 +8957,7 @@
     }
   },
   {
-    "__docId__": 343,
+    "__docId__": 344,
     "kind": "file",
     "name": "src/complex-schema.test.js",
     "content": "import {default as Schema} from \"../fixtures/basic-refs.schema\";\nimport {default as Data} from \"../fixtures/basic-refs.data\";\nimport {default as Swagger} from \"../fixtures/OpenAPIv2\";\nimport {default as OpenAPIv3} from \"../fixtures/OpenAPIv3\";\nimport {default as JSONSchema4} from \"../fixtures/json-schema-draft04.schema\";\nimport {default as basicAPI} from \"../fixtures/petstore.v2\"\nimport {Model} from \"./Model\";\n\ndescribe(\"Basic Refs\", () => {\n    describe(\"ref handling\", () => {\n        it(\"should validate schema containing $refs and definitions\", (done) => {\n            const _owner = new Model({schemas: [Schema]});\n            _owner.subscribe({\n                next: (model) => {\n                    expect(_owner.errors).toBe(null);\n                    expect(model.toJSON()).toEqual(Data);\n                    done();\n                },\n                error: (e) => {\n                    done(`${e}`);\n                }\n            });\n            _owner.model = Data;\n        });\n    });\n\n    describe(\"OPenAPI Tests\", () => {\n        it(\"should load and validate Swagger Schema\", () => {\n            const _owner = new Model({\n                meta: [JSONSchema4],\n                schemas: [Swagger],\n                use: \"http://swagger.io/v2/schema.json#\",\n            });\n            _owner.model = basicAPI;\n            // test to ensure no errors were logged\n            expect(_owner.errors).toBe(null);\n            // test for completeness\n            expect(_owner.toJSON()).toEqual(basicAPI);\n        });\n\n        it(\"should load and validate OpenAPIv3 Schema\", () => {\n            const _d = {\n                openapi: \"3.0.1\",\n                info: {\n                    title: \"testing\",\n                    version: \"1.0.0\",\n                },\n                paths: {},\n            };\n            const _owner = new Model({\n                meta: [JSONSchema4],\n                schemas: [OpenAPIv3],\n                use: \"http://openapis.org/v3/schema.json#\",\n            });\n            _owner.model = _d;\n            // test to ensure no errors were logged\n            expect(_owner.errors).toBe(null);\n            // test for completeness\n            expect(_owner.toJSON()).toEqual(_d);\n        });\n    });\n});\n",
@@ -8931,7 +8968,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 344,
+    "__docId__": 345,
     "kind": "file",
     "name": "src/dist.test.js",
     "content": "import {basicModel} from \"../fixtures/PropertiesModel.schemas\";\nconst _d = {\n    name: \"Ed Testy\",\n    age: 99,\n    active: true,\n};\n\ndescribe(\"node commonjs require\", () => {\n    const {Model} = require(\"../index\");\n    let _model;\n\n    beforeEach(() => {\n        _model = new Model({\n            schemas: [basicModel],\n        });\n    });\n\n    it(\"should import Model and create document\", ()=> {\n        _model.model = {\n            foo: \"bar\"\n        };\n        expect(_model.model.foo).toBe(\"bar\");\n    });\n\n    it(\"should be an observable\", (done) => {\n        let _ival = 0;\n        const _arr = new Array(0, 2000);\n        const _iterator = {\n            next: (\n                () => _ival++ < _arr.length ? {\n                    value: _model.model = _d,\n                    done: false,\n                } : {\n                    value: _model.freeze(),\n                    done: true,\n                }\n            ),\n        };\n        _model.subscribe({next: _iterator.next, complete: done});\n        _iterator.next();\n    });\n});\n",
@@ -8942,7 +8979,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 345,
+    "__docId__": 346,
     "kind": "variable",
     "name": "_d",
     "memberof": "src/dist.test.js",
@@ -8963,7 +9000,7 @@
     "ignore": true
   },
   {
-    "__docId__": 346,
+    "__docId__": 347,
     "kind": "file",
     "name": "src/index.js",
     "content": "/* ############################################################################\nThe MIT License (MIT)\n\nCopyright (c) 2016 - 2019 Van Schroeder\nCopyright (c) 2017-2019 Webfreshener, LLC\n\nPermission is hereby granted, free of charge, to any person obtaining a copy\nof this software and associated documentation files (the \"Software\"), to deal\nin the Software without restriction, including without limitation the rights\nto use, copy, modify, merge, publish, distribute, sublicense, and/or sell\ncopies of the Software, and to permit persons to whom the Software is\nfurnished to do so, subject to the following conditions:\n\nThe above copyright notice and this permission notice shall be included in all\ncopies or substantial portions of the Software.\n\nTHE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\nIMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\nFITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\nAUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\nLIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\nOUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\nSOFTWARE.\n\n############################################################################ */\n//== Polyfills Object.assign\nif (typeof Object.assign !== \"function\") {\n    Object.assign = require('object.assign/polyfill')();\n}\nexport {Model as Model} from \"./Model\";\nexport {Pipeline as Pipeline} from \"./Pipeline\";\n",
@@ -8974,7 +9011,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 347,
+    "__docId__": 348,
     "kind": "file",
     "name": "src/index.test.js",
     "content": "import {Model} from './index';\nimport {Model as DistModel} from '../index'\n\ndescribe(\"Index Tests\", () => {\n    describe(\"Package Validation Tests\", () => {\n        it(\"should import from ES6 Source\", function () {\n            expect(typeof Model).toEqual('function');\n        });\n\n        it(\"should import from WebPacked Lib\", function () {\n            expect(typeof DistModel).toEqual('function');\n        });\n\n        it(\"should import from ES5 `require`\", () => {\n            expect(typeof (require('../index').Model)).toEqual('function');\n        });\n    });\n\n    describe(\"Polyfill\", () => {\n        // this test is strictly for the sake of jest coverage\n        // todo: put browser testing on this, node has Object.assign\n        // todo: review browser support requirements\n        it(\"tests the polyfill for Object.assign\", () => {\n            expect(Object.hasOwnProperty(\"assign\")).toBe(true);\n            expect(typeof Object.assign).toEqual(\"function\");\n        })\n    });\n\n});\n",
@@ -8985,7 +9022,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 348,
+    "__docId__": 349,
     "kind": "file",
     "name": "src/schemas/default-pipe-vo.schema.js",
     "content": "export default {\n    $id: \"http://schemas.webfreshener.com/v1/pipe-vo#\",\n    $schema: \"http://json-schema.org/draft-07/schema#\",\n    oneOf: [\n        {\n            type: \"object\",\n        },\n        {\n            type: \"array\",\n        },\n        {\n            type: \"string\",\n        },\n        {\n            type: \"boolean\",\n        },\n        {\n            type: \"number\",\n        },\n    ]\n};\n",
@@ -8996,7 +9033,7 @@
     "lineNumber": 1
   },
   {
-    "__docId__": 349,
+    "__docId__": 350,
     "kind": "file",
     "name": "src/schemas/pipe-args.schema.js",
     "content": "export default {\n    $id: \"http://schemas.webfreshener.com/v1/vxlib/pipe-args#\",\n    $schema: \"http://json-schema.org/draft-07/schema#\",\n    definitions: {\n        Config: {\n            $id: \"#/definitions/Config\",\n            type: \"object\",\n            allOf: [{\n                required: [\"schemas\"],\n                additionalProperties: false,\n                type: \"object\",\n                properties: {\n                    schemas: {\n                        $ref: \"#/definitions/Schemas\",\n                    },\n                    meta: {\n                        $ref: \"#/definitions/Schemas\",\n                    },\n                    use: {\n                        type: \"string\",\n                    },\n                },\n            }]\n        },\n        Schemas: {\n            $id: \"#/definitions/Schemas\",\n            type: \"array\",\n            items: {\n                allOf: [\n                    {\n                        type: \"object\"\n                    }, {\n                        $ref: \"#/definitions/Schema\",\n                    }\n                ]\n\n            },\n            minItems: 1,\n            maxItems: 2,\n        },\n        Schema: {\n            $id: \"#/definitions/Schema\",\n            type: \"object\",\n            properties: {\n                $id: {\n                    type: \"string\",\n                },\n                $schema: {\n                    type: \"string\",\n                },\n                type: {\n                    type: [\"string\", \"array\"],\n                },\n                exec: {\n                    not: {},\n                },\n                execute: {\n                    not: {},\n                },\n                iterate: {\n                    not: {},\n                },\n                loop: {\n                    not: {},\n                },\n                schemas: {\n                    not: {},\n                },\n                meta: {\n                    not: {},\n                },\n                use: {\n                    not: {},\n                },\n            },\n        },\n    },\n    anyOf: [\n        {$ref: \"#/definitions/Config\"},\n        {$ref: \"#/definitions/Schema\"},\n        {$ref: \"#/definitions/Schemas\"},\n    ],\n};\n",
@@ -9008,7 +9045,7 @@
   },
   {
     "kind": "index",
-    "content": "Datamatic\n=============\nRxJS + JSON-Schema (Ajv) Based Observable and Validating Data Models and Pipelines\n\n[![Build Status](https://travis-ci.org/Webfreshener/datamatic.svg?branch=master)](https://travis-ci.org/Webfreshener/datamatic)\n[![Codacy Badge](https://app.codacy.com/project/badge/Grade/49624d8edeec44e9af6fc484f8b414af)](https://www.codacy.com/gh/Webfreshener/datamatic/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Webfreshener/datamatic&amp;utm_campaign=Badge_Grade)\n[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/49624d8edeec44e9af6fc484f8b414af)](https://www.codacy.com/gh/Webfreshener/datamatic/dashboard?utm_source=github.com&utm_medium=referral&utm_content=Webfreshener/datamatic&utm_campaign=Badge_Coverage)\n[![Maintainability](https://api.codeclimate.com/v1/badges/f0bfbe06d67c3c489f4d/maintainability)](https://codeclimate.com/github/Webfreshener/datamatic/maintainability)\n\n[Online Developer Documentation](https://webfreshener.github.io/datamatic/)\n\n### Goals \n * Provide a means to quickly and easily validate complex data-sets\n * Look and feel like a standard JS Object for ease of use and adaptability\n * Automate data evaluation and transformation\n\n### Table of Contents\n\n**[Installation Instructions](#installation-instructions)**\n\n**[Usage Examples](#usage-examples)**\n   * [Basic Example](#basic-example)\n   * [Data Pipelines and Transformation](#data-pipelines-and-transformation)\n\n**[Developer Guide](#developer-guide)**\n  * [Model Class](#model-class)\n    * [Model Schemas Config](#model-schemas-config)\n    * [Model Proxy Object](#model-proxy-object)\n    * [model vs $model](#model-vs-&dollar;model)\n  * [ItemsModel](#itemsmodel)\n  * [PropertiesModel](#propertiesmodel)\n  * [BaseModel Class](#basemodel-class)\n  * [Pipeline Class](#pipeline-class)\n\n### Installation Instructions\n```\n$ npm install datamatic\n```\n\n#### UMD Usage (React, Angular, Vue et al)\n```\nimport * as datamatic from \"datamatic\";\n\n```\n\n#### CommonJS Usage for NodeJS\n```\nconst {Model, Pipeline} = require(\"datamatic\");\n\n```\n\n#### DOM Window Usage\n```\n    <script src=\"../../dist/datamatic.window.js\"></script>\n    <script language=\"JavaScript\">\n        const {Model, Pipeline} = window.datamatic;\n    </script>\n```\n\n\n\n### Usage Examples\n\n#### Basic Example\nThe example below defines a Model that expects a `name` value and \nlist of `topScores` items\n\n```\nconst {Model} = require(\"datamatic\");\n\n// JSON-SCHEMA for Scores Collection\nconst schema = {\n    \"id\": \"root#\",\n    \"type\": \"object\",\n    \"properties\": {\n        \"name\": {\n            \"type\": \"string\",\n        },\n        \"topScores\": {\n            \"type\": \"array\",\n            \"minItems\": 1,\n            \"maxItems\": 3,\n            \"items\": {\n                \"type\": \"object\",\n                \"properties\": {\n                    \"name\": {\n                        \"type\": \"string\"\n                    },\n                    \"score\": {\n                        \"type\": \"integer\",\n                        \"default\": 0\n                    }\n                },\n                \"required\": [\"name\"]\n            }\n        }\n    },\n    required: [\"name\", \"topScores\"],\n};\n\n\n// instantiate our Model\nconst obj = new Model({schemas: [schema]});\n\n// subscribes an observer to the Model\nobj.subscribe({\n    next: function (ref) {\n        console.log(\"\\t>> update succeeded!\\n\\t%s\\n\\t%s\\n\\n\",\n            \"current object state:\", \"\" + JSON.stringify(ref));\n    },\n    complete: function (ref) {\n        console.log(\"\\t>> %s\",\n            \"object is frozen and no longer editable\");\n    },\n    error: function (e) {\n        console.log(\"\\t>> update FAILED with error:\\n\\t%s\\n\",\n            JSON.stringify(e));\n        console.log(\"\\tcurrent object state:\\n\\t%s\\n\", obj);\n    },\n});\n\n// populate the Model with data\n// -- this will trigger the \"next\" notification\nobj.model = {\n    name: \"JSONville\",\n    topScores: [{\n        name: \"Player 1\",\n        score: 12300000,\n    }, {\n        name: \"Player 2\",\n        score: 45600000,\n    }, {\n        name: \"Player 3\",\n        score: 78900000,\n    }]\n};\n\n// update the model\n// this will trigger the next notification\nobj.model.topScores[0].score++;\n\n// invalid attempt update the model\n// this will trigger the error notification\n// reason: \"topScores/items/score\" is type is integer \nobj.model.topScores[0].score = \"1234\";\n\n// invalid attempt update the model\n// this will trigger the error notification\n// reason: \"topScores\" is marked as required\ndelete obj.model.topScores;\n\n```\nRefer to the examples demo in `./examples/basic-usage` for more usage examples\n\n#### Data Pipelines and Transformation ####\n```\nconst {Pipeline} = require(\"datamatic\");\n\n/*\n    defines a schema that requires name, age and active attributes\n    filters out all items that do not conform to JSON-Schema below\n */\nconst schema = {\n    type: \"object\",\n    required: [\"name\", \"age\", \"active\"],\n    properties: {\n        name: {\n            $comment: \"names must be in form: First Middle|MI Last\",\n            type: \"string\",\n            pattern: \"^[a-zA-Z]{1,24}\\\\s?[a-zA-Z]?\\\\s+[a-zA-Z]{1,24}$\",\n        },\n        age: {\n            $comment: \"age must be a number equal to or higher than 21 and lower than 100\",\n            type: \"number\",\n            minimum: 21,\n            maximum: 100,\n        },\n        active: {\n            $comment: \"active must equal true\",\n            type: \"boolean\",\n            const: true,\n        },\n    },\n};\n\n\nconst pipeline = new Pipeline(\n    [\n        // By nesting an item schema within an iterator, the schema is applied as a filter\n        schema,\n        // the list can go on ...\n    ],\n    // the list can go on ...\n);\n\npipeline.subscribe({\n    // should only contain active people who are 21 and over and name pattern match\n    next: (d) => console.log(`\\nfiltered results:\\n${JSON.stringify(d)}`),\n    // it should not encounter an error unless it is critical, so full stop\n    error: (e) => console.error(`\\ngot error:\\n${JSON.stringify(e)}`),\n});\n\npipeline.write([\n    {name: \"Alice Dodson\", age: 30, active: false}, // will be filtered because of active status\n    {name: \"Jim-Bob\", age: 21, active: true}, // will be filtered because of name format\n    {name: \"Bob Roberts\", age: 38, active: true}, // will pass\n    {name: \"Chris Appleton\", age: 19, active: true}, // will be filtered because of age\n    {name: \"Fred Franks\", age: 20, active: true}, // will be filtered because of age\n    {name: \"Sam Smith\", age: 25, active: true}, // will pass\n    {name: \"\", active: null}, // will be filtered because of invalid object format\n]);\n```\n\n## Developer Guide\n\n#### Model Class ####\nThis class represents the Document entry point\n\n| Method        | Arguments | Description  |\n|:--------------|:----------|:-------|\n| constructor   | [schemas config](#model-schemas-config) (object), [options (object)] | creates new Model instance |\n| errors [getter]   | | retrieves errors (if any) from last json-schema validation |\n| model [getter/setter]   | | retrieves root [model proxy object](#model-proxy-object) for operation |\n| getModelsInPath   | to (string) | retrieves models at given path |\n| getSchemaForKey   | key (string) | retrieves json-schema with given key as ID |\n| getSchemaForPath   | path (string) | retrieves json-schema for model at given path |\n| schema [getter]   | | retrieves json-schema for root model |\n| subscribe   |  observers (object) | Subscribes Observers to the Model Model Root |\n| subscribeTo   |  path (string), observers (object) | Subscribes Observers to the Model at path \n| toString   | | retrieves root model as JSON String |\n| toJSON   | | retrieves root model as JSON Object |\n| validate   | path (string), value (object) | validates data at given ath against JSON-Schema |\n| *static* fromJSON   | json (string &#124; object) | creates new Model from static method |\n\n##### Model Schemas Config\n| Property        | Type | Description  |\n|:--------------|:----------|:-------|\n| meta | array | Array of MetaSchema references to validate Schemas against\n| schemas | array | Array of Schema references to validate data against \n| use | string | key/id of schema to use for data validation\n\n##### Model Proxy Object \n\nThis is the Data Model most usage will be based around.\nIt is a Proxy Object that has traps for all operations that alter the state of the given Array or Object\n\n| Property        | Type | Description  |\n|:--------------|:----------|:-------|\n| $model | (PropertiesModel &#124; ItemsModel) | references Proxy Object owner class\n\n##### model vs $model \n\nIn usage, `model` always references the Proxied Data Model for validation and operation where `$model` references the owner Model Class\n\n*example:*\n```\n const _owner = new Model({schemas: [schema]});\n \n // access the root model:\n console.log(`JSON.stringify(_owner.model)`);\n \n // access the model's owner Model Class:\n const owner = _owner.model.$model;\n console.log(`is frozen: ${owner.isFrozen}`);\n \n // call toString on Owner\n console.log(`stringified: ${owner}`);\n \n // obtain model from  it's Owner\n console.log(`stringified: ${JSON.stringify(owner.model)}`);\n \n```\n\n#### ItemsModel ####\n###### subclass of [Model Class](#model-class)\n\nRepresents an Items (Array) entry in the given schema\nNote: the `model` param presents a Proxied Array, with all `Array.prototype` methods trapped and validatable\n\n| Method        | Arguments | Description  |\n|:--------------|:----------|:-------|\n| model [getter/setter]   | | setter/getter for [model proxy object](#model-proxy-object) for operation |\n\n#### PropertiesModel ####\n###### subclass of [Model Class](#model-class)\n\nRepresents an Properties (Object} entry in the given schema\n\n| Method        | Arguments | Description  |\n|:--------------|:----------|:-------|\n| get | key (string) | applies Object.freeze to model hierarchy |\n| model [getter/setter]   | | setter/getter for [model proxy object](#model-proxy-object) for operation |\n| set | key (string), value (any) | applies Object.freeze to model hierarchy |\n\n\n#### BaseModel Class ####\n| Method        | Arguments | Description  |\n|:--------------|:----------|:-------|\n| freeze | | applies Object.freeze to model hierarchy |\n| isDirty [getter]   | | returns dirtyness of model heirarchy (is dirty if operation in progress) |\n| isFrozen [getter]   | | returns Object.freeze status of Model hierarchy |\n| jsonPath [getter]   | | retrieves json path string for Model instance. eg: \"this.is.my.path\" |\n| objectID [getter]   | | retrieves Unique ObjectID of Model instance |\n| options [getter]   | | retrieves options passed to Model instance |\n| path [getter]   | | retrieves json-schema path string for Model instance. eg: \"#/this/is/my/path\" |\n| parent [getter]   | | retrieves Model's parent Model instance |\n| pipeline | ...(pipes &#124; schemas) | returns Pipeline instance for operating on model |\n| reset | | resets model to initial state if operation is valid |\n| root [getter]   | | retrieves root Model instance |\n| model [getter]   | | retrieves Model's internal Model Document instance |\n| subscribe   |  observers (object) | Subscribes Observers to the Model Model Root |\n| subscribeTo   |  path (string), observers (object) | Subscribes Observers to the Model at path |\n| toString   | | retrieves root model as JSON String |\n| toJSON   | | retrieves root model as JSON Object |\n| validate   | path (string), value (object) | validates data at given ath against JSON-Schema |\n| validationPath [getter] | | retrieves json-schema path string for Model validation |\n\n#### Pipeline Class ####\n| Method        | Arguments | Description  |\n|:--------------|:----------|:-------|\n| constructor | ...pipesOrSchemas | class constructor method |\n| exec | data (object &#124; array &#124; string &#124; number &#124; boolean)| executes pipeline's callback with data without writing to `pipeline` |\n| subscribe | handler (object &#124; function &#124; schema &#124; array)| subscribes to `pipeline` output notifications |\n| toJSON | | Provides current state of `pipeline` output as JSON |\n| toString | | Provides current state of `pipeline` output as JSON string |\n| clone | | returns clone of current `pipeline` segment |\n| close | | terminates input on `pipeline` segment |\n| writable [getter] | | Returns write status of `pipeline` |\n| link | target (Pipeline), ...pipesOrSchemas | links `pipeline` segment to direct output to target `pipeline` |\n| merge | ...(pipes &#124; schemas) | merges multiple pipes into single output |\n| once | | informs `pipeline` to close after first notification |\n| pipeline | ...(pipes &#124; schemas) | returns new chained `pipeline` segment |\n| sample | nth | Returns product of Nth occurrence of `pipeline` execution |\n| split | ...(pipes &#124; schemas) | creates array of new `pipeline` segments that run in parallel |\n| tap | | Provides current state of `pipeline` output. alias for `toJSON` |\n| throttle | rate (number) | Limit notifications to rate based on time interval |\n| unlink | target (Pipeline)| unlinks `pipeline` segment from target `pipeline` |\n| write | data (object &#124; array &#124; string &#124; number &#124; boolean)| writes data to `pipeline` |\n\n",
+    "content": "Datamatic\n=============\nRxJS + JSON-Schema (Ajv) Based Observable and Validating Data Models and Pipelines\n\n[![Build Status](https://travis-ci.org/Webfreshener/datamatic.svg?branch=master)](https://travis-ci.org/Webfreshener/datamatic)\n[![Codacy Badge](https://app.codacy.com/project/badge/Grade/49624d8edeec44e9af6fc484f8b414af)](https://www.codacy.com/gh/Webfreshener/datamatic/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Webfreshener/datamatic&amp;utm_campaign=Badge_Grade)\n[![Codacy Badge](https://app.codacy.com/project/badge/Coverage/49624d8edeec44e9af6fc484f8b414af)](https://www.codacy.com/gh/Webfreshener/datamatic/dashboard?utm_source=github.com&utm_medium=referral&utm_content=Webfreshener/datamatic&utm_campaign=Badge_Coverage)\n[![Maintainability](https://api.codeclimate.com/v1/badges/f0bfbe06d67c3c489f4d/maintainability)](https://codeclimate.com/github/Webfreshener/datamatic/maintainability)\n\n[Online Developer Documentation](https://webfreshener.github.io/datamatic/)\n\n### Goals \n * Provide a means to quickly and easily validate complex data-sets\n * Look and feel like a standard JS Object for ease of use and adaptability\n * Automate data evaluation and transformation\n\n### Table of Contents\n\n**[Installation Instructions](#installation-instructions)**\n\n**[Usage Examples](#usage-examples)**\n   * [Basic Example](#basic-example)\n   * [Data Pipelines and Transformation](#data-pipelines-and-transformation)\n\n**[Developer Guide](#developer-guide)**\n  * [Model Class](#model-class)\n    * [Model Schemas Config](#model-schemas-config)\n    * [Model Proxy Object](#model-proxy-object)\n    * [model vs $model](#model-vs-&dollar;model)\n  * [ItemsModel](#itemsmodel)\n  * [PropertiesModel](#propertiesmodel)\n  * [BaseModel Class](#basemodel-class)\n  * [Pipeline Class](#pipeline-class)\n\n### Installation Instructions\n```\n$ npm install datamatic\n```\n\n#### UMD Usage (React, Angular, Vue et al)\n```\nimport * as datamatic from \"datamatic\";\n\n```\n\n#### CommonJS Usage for NodeJS\n```\nconst {Model, Pipeline} = require(\"datamatic\");\n\n```\n\n#### DOM Window Usage\n```\n    <script src=\"../../dist/datamatic.window.js\"></script>\n    <script language=\"JavaScript\">\n        const {Model, Pipeline} = window.datamatic;\n    </script>\n```\n\n\n\n### Usage Examples\n\n#### Basic Example\nThe example below defines a Model that expects a `name` value and \nlist of `topScores` items\n\n```\nconst {Model} = require(\"datamatic\");\n\n// JSON-SCHEMA for Scores Collection\nconst schema = {\n    \"id\": \"root#\",\n    \"type\": \"object\",\n    \"properties\": {\n        \"name\": {\n            \"type\": \"string\",\n        },\n        \"topScores\": {\n            \"type\": \"array\",\n            \"minItems\": 1,\n            \"maxItems\": 3,\n            \"items\": {\n                \"type\": \"object\",\n                \"properties\": {\n                    \"name\": {\n                        \"type\": \"string\"\n                    },\n                    \"score\": {\n                        \"type\": \"integer\",\n                        \"default\": 0\n                    }\n                },\n                \"required\": [\"name\"]\n            }\n        }\n    },\n    required: [\"name\", \"topScores\"],\n};\n\n\n// instantiate our Model\nconst obj = new Model({schemas: [schema]});\n\n// subscribes an observer to the Model\nobj.subscribe({\n    next: function (ref) {\n        console.log(\"\\t>> update succeeded!\\n\\t%s\\n\\t%s\\n\\n\",\n            \"current object state:\", \"\" + JSON.stringify(ref));\n    },\n    complete: function (ref) {\n        console.log(\"\\t>> %s\",\n            \"object is frozen and no longer editable\");\n    },\n    error: function (e) {\n        console.log(\"\\t>> update FAILED with error:\\n\\t%s\\n\",\n            JSON.stringify(e));\n        console.log(\"\\tcurrent object state:\\n\\t%s\\n\", obj);\n    },\n});\n\n// populate the Model with data\n// -- this will trigger the \"next\" notification\nobj.model = {\n    name: \"JSONville\",\n    topScores: [{\n        name: \"Player 1\",\n        score: 12300000,\n    }, {\n        name: \"Player 2\",\n        score: 45600000,\n    }, {\n        name: \"Player 3\",\n        score: 78900000,\n    }]\n};\n\n// update the model\n// this will trigger the next notification\nobj.model.topScores[0].score++;\n\n// invalid attempt update the model\n// this will trigger the error notification\n// reason: \"topScores/items/score\" is type is integer \nobj.model.topScores[0].score = \"1234\";\n\n// invalid attempt update the model\n// this will trigger the error notification\n// reason: \"topScores\" is marked as required\ndelete obj.model.topScores;\n\n```\nRefer to the examples demo in `./examples/basic-usage` for more usage examples\n\n#### Data Pipelines and Transformation ####\n```\nconst {Pipeline} = require(\"datamatic\");\n\n/*\n    defines a schema that requires name, age and active attributes\n    filters out all items that do not conform to JSON-Schema below\n */\nconst schema = {\n    type: \"object\",\n    required: [\"name\", \"age\", \"active\"],\n    properties: {\n        name: {\n            $comment: \"names must be in form: First Middle|MI Last\",\n            type: \"string\",\n            pattern: \"^[a-zA-Z]{1,24}\\\\s?[a-zA-Z]?\\\\s+[a-zA-Z]{1,24}$\",\n        },\n        age: {\n            $comment: \"age must be a number equal to or higher than 21 and lower than 100\",\n            type: \"number\",\n            minimum: 21,\n            maximum: 100,\n        },\n        active: {\n            $comment: \"active must equal true\",\n            type: \"boolean\",\n            const: true,\n        },\n    },\n};\n\n\nconst pipeline = new Pipeline(\n    [\n        // By nesting an item schema within an iterator, the schema is applied as a filter\n        schema,\n        // the list can go on ...\n    ],\n    // the list can go on ...\n);\n\npipeline.subscribe({\n    // should only contain active people who are 21 and over and name pattern match\n    next: (d) => console.log(`\\nfiltered results:\\n${JSON.stringify(d)}`),\n    // it should not encounter an error unless it is critical, so full stop\n    error: (e) => console.error(`\\ngot error:\\n${JSON.stringify(e)}`),\n});\n\npipeline.write([\n    {name: \"Alice Dodson\", age: 30, active: false}, // will be filtered because of active status\n    {name: \"Jim-Bob\", age: 21, active: true}, // will be filtered because of name format\n    {name: \"Bob Roberts\", age: 38, active: true}, // will pass\n    {name: \"Chris Appleton\", age: 19, active: true}, // will be filtered because of age\n    {name: \"Fred Franks\", age: 20, active: true}, // will be filtered because of age\n    {name: \"Sam Smith\", age: 25, active: true}, // will pass\n    {name: \"\", active: null}, // will be filtered because of invalid object format\n]);\n```\n\n## Developer Guide\n\n#### Model Class ####\nThis class represents the Document entry point\n\n| Method        | Arguments | Description  |\n|:--------------|:----------|:-------|\n| constructor   | [schemas config](#model-schemas-config) (object), [options (object)] | creates new Model instance |\n| errors [getter]   | | retrieves errors (if any) from last json-schema validation |\n| model [getter/setter]   | | retrieves root [model proxy object](#model-proxy-object) for operation |\n| getModelsInPath   | to (string) | retrieves models at given path |\n| getSchemaForKey   | key (string) | retrieves json-schema with given key as ID |\n| getSchemaForPath   | path (string) | retrieves json-schema for model at given path |\n| schema [getter]   | | retrieves json-schema for root model |\n| subscribe   |  observers (object) | Subscribes Observers to the Model Model Root |\n| subscribeTo   |  path (string), observers (object) | Subscribes Observers to the Model at path \n| toString   | | retrieves root model as JSON String |\n| toJSON   | | retrieves root model as JSON Object |\n| validate   | path (string), value (object) | validates data at given ath against JSON-Schema |\n| *static* fromJSON   | json (string &#124; object) | creates new Model from static method |\n\n##### Model Schemas Config\n| Property        | Type | Description  |\n|:--------------|:----------|:-------|\n| meta | array | Array of MetaSchema references to validate Schemas against\n| schemas | array | Array of Schema references to validate data against \n| use | string | key/id of schema to use for data validation\n\n##### Model Proxy Object \n\nThis is the Data Model most usage will be based around.\nIt is a Proxy Object that has traps for all operations that alter the state of the given Array or Object\n\n| Property        | Type | Description  |\n|:--------------|:----------|:-------|\n| $model | (PropertiesModel &#124; ItemsModel) | references Proxy Object owner class\n\n##### model vs $model \n\nIn usage, `model` always references the Proxied Data Model for validation and operation where `$model` references the owner Model Class\n\n*example:*\n```\n const _owner = new Model({schemas: [schema]});\n \n // access the root model:\n console.log(`JSON.stringify(_owner.model)`);\n \n // access the model's owner Model Class:\n const owner = _owner.model.$model;\n console.log(`is frozen: ${owner.isFrozen}`);\n \n // call toString on Owner\n console.log(`stringified: ${owner}`);\n \n // obtain model from  it's Owner\n console.log(`stringified: ${JSON.stringify(owner.model)}`);\n \n```\n\n#### ItemsModel ####\n###### subclass of [Model Class](#model-class)\n\nRepresents an Items (Array) entry in the given schema\nNote: the `model` param presents a Proxied Array, with all `Array.prototype` methods trapped and validatable\n\n| Method        | Arguments | Description  |\n|:--------------|:----------|:-------|\n| model [getter/setter]   | | setter/getter for [model proxy object](#model-proxy-object) for operation |\n\n#### PropertiesModel ####\n###### subclass of [Model Class](#model-class)\n\nRepresents an Properties (Object} entry in the given schema\n\n| Method        | Arguments | Description  |\n|:--------------|:----------|:-------|\n| get | key (string) | applies Object.freeze to model hierarchy |\n| model [getter/setter]   | | setter/getter for [model proxy object](#model-proxy-object) for operation |\n| set | key (string), value (any) | applies Object.freeze to model hierarchy |\n\n\n#### BaseModel Class ####\n| Method        | Arguments | Description  |\n|:--------------|:----------|:-------|\n| freeze | | applies Object.freeze to model hierarchy |\n| isDirty [getter]   | | returns dirtyness of model heirarchy (is dirty if operation in progress) |\n| isFrozen [getter]   | | returns Object.freeze status of Model hierarchy |\n| jsonPath [getter]   | | retrieves json path string for Model instance. eg: \"this.is.my.path\" |\n| objectID [getter]   | | retrieves Unique ObjectID of Model instance |\n| options [getter]   | | retrieves options passed to Model instance |\n| path [getter]   | | retrieves json-schema path string for Model instance. eg: \"#/this/is/my/path\" |\n| parent [getter]   | | retrieves Model's parent Model instance |\n| pipeline | ...(pipes &#124; schemas) | returns Pipeline instance for operating on model |\n| reset | | resets model to initial state if operation is valid |\n| root [getter]   | | retrieves root Model instance |\n| model [getter]   | | retrieves Model's internal Model Document instance |\n| subscribe   |  observers (object) | Subscribes Observers to the Model Model Root |\n| subscribeTo   |  path (string), observers (object) | Subscribes Observers to the Model at path |\n| toString   | | retrieves root model as JSON String |\n| toJSON   | | retrieves root model as JSON Object |\n| validate   | path (string), value (object) | validates data at given ath against JSON-Schema |\n| validationPath [getter] | | retrieves json-schema path string for Model validation |\n\n#### Pipeline Class ####\n| Method        | Arguments | Description  |\n|:--------------|:----------|:-------|\n| constructor | ...pipesOrSchemas | class constructor method |\n| errors [getter]   | | retrieves errors (if any) from last json-schema validation |\n| exec | data (object &#124; array &#124; string &#124; number &#124; boolean)| executes pipeline's callback with data without writing to `pipeline` |\n| subscribe | handler (object &#124; function &#124; schema &#124; array)| subscribes to `pipeline` output notifications |\n| toJSON | | Provides current state of `pipeline` output as JSON |\n| toString | | Provides current state of `pipeline` output as JSON string |\n| clone | | returns clone of current `pipeline` segment |\n| close | | terminates input on `pipeline` segment |\n| writable [getter] | | Returns write status of `pipeline` |\n| link | target (Pipeline), ...pipesOrSchemas | links `pipeline` segment to direct output to target `pipeline` |\n| merge | ...(pipes &#124; schemas) | merges multiple pipes into single output |\n| once | | informs `pipeline` to close after first notification |\n| pipeline | ...(pipes &#124; schemas) | returns new chained `pipeline` segment |\n| sample | nth | Returns product of Nth occurrence of `pipeline` execution |\n| split | ...(pipes &#124; schemas) | creates array of new `pipeline` segments that run in parallel |\n| tap | | Provides current state of `pipeline` output. alias for `toJSON` |\n| throttle | rate (number) | Limit notifications to rate based on time interval |\n| unthrottle | discardCacheQueue (boolean) | Clears throttle interval. Optionally discards contents of `Pipeline` cache |\n| unlink | target (Pipeline)| unlinks `pipeline` segment from target `pipeline` |\n| write | data (object &#124; array &#124; string &#124; number &#124; boolean)| writes data to `pipeline` |\n\n",
     "longname": "/Users/vanschroeder/IdeaProjects/webfreshener-datamatic/README.md",
     "name": "./README.md",
     "static": true,
@@ -9016,7 +9053,7 @@
   },
   {
     "kind": "packageJSON",
-    "content": "{\n  \"name\": \"datamatic\",\n  \"description\": \"RxJS + JSON-Schema (Ajv) Based Observable and Validating Data Models and Pipelines\",\n  \"homepage\": \"https://webfreshener.github.io/datamatic\",\n  \"author\": \"Van Schroeder <van@webfreshener.com>\",\n  \"version\": \"0.9.9\",\n  \"main\": \"./dist/datamatic.node.js\",\n  \"module\": \"./dist/datamatic.umd.js\",\n  \"license\": \"MIT\",\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"https://github.com/Webfreshener/datamatic.git\"\n  },\n  \"scripts\": {\n    \"test\": \"jest\",\n    \"clear-tests\": \"jest --clearCache\",\n    \"cover\": \"jest --coverage && cat ./coverage/lcov.info | codacy-coverage --token \\\"$CODACY_PROJECT_TOKEN\\\"\",\n    \"build-test\": \"webpack --mode development; npm test\",\n    \"build\": \"webpack --mode production\",\n    \"docs\": \"./node_modules/.bin/esdoc\",\n    \"report\": \"$HOME/Library/Caches/Codacy/coverage-reporter/11.9.2/codacy-coverage-reporter report\"\n  },\n  \"files\": [\n    \"index.js\",\n    \"dist/*\"\n  ],\n  \"keywords\": [\n    \"rxjs\",\n    \"ajv\",\n    \"json-schema\",\n    \"validation\",\n    \"validatable\",\n    \"observable\",\n    \"proxy\",\n    \"model\",\n    \"json\",\n    \"data\",\n    \"object\",\n    \"array\",\n    \"hash\",\n    \"filter\",\n    \"map\",\n    \"dictionary\"\n  ],\n  \"devDependencies\": {\n    \"@babel/cli\": \"^7.15.7\",\n    \"@babel/core\": \"^7.15.8\",\n    \"@babel/plugin-transform-runtime\": \"^7.15.8\",\n    \"@babel/preset-env\": \"^7.15.8\",\n    \"@babel/preset-react\": \"^7.14.5\",\n    \"@babel/runtime\": \"^7.15.4\",\n    \"@webpack-cli/init\": \"^1.1.3\",\n    \"ajv\": \"^8.6.3\",\n    \"ajv-formats\": \"^2.1.1\",\n    \"babel-loader\": \"^8.2.2\",\n    \"chai\": \"^4.3.4\",\n    \"codacy-coverage\": \"^3.4.0\",\n    \"deep-equal\": \"^2.0.5\",\n    \"es6-weak-map\": \"^2.0.3\",\n    \"esdoc\": \"^1.1.0\",\n    \"esdoc-accessor-plugin\": \"^1.0.0\",\n    \"esdoc-exclude-source-plugin\": \"^1.0.0\",\n    \"esdoc-standard-plugin\": \"^1.0.0\",\n    \"jest\": \"^27.2.5\",\n    \"jest-babel-istanbul\": \"^0.1.0\",\n    \"jest-each\": \"^27.2.5\",\n    \"jshint\": \"^2.13.1\",\n    \"json-schema-migrate\": \"^2.0.0\",\n    \"jsonpath\": \"^1.1.1\",\n    \"lodash.merge\": \"^4.6.2\",\n    \"mocha\": \"^9.1.3\",\n    \"mocha-lcov-reporter\": \"^1.3.0\",\n    \"object.assign\": \"^4.1.2\",\n    \"rxjs\": \"^7.4.0\",\n    \"rxjs-compat\": \"^6.6.7\",\n    \"weakmap\": \"^0.0.6\",\n    \"webpack\": \"^5.58.2\",\n    \"webpack-cli\": \"^4.9.0\",\n    \"webpack-rxjs-externals\": \"^2.0.0\"\n  },\n  \"jest\": {\n    \"collectCoverage\": true,\n    \"testPathIgnorePatterns\": [\n      \"/integration/\"\n    ],\n    \"coveragePathIgnorePatterns\": [\n      \"/node_modules/\",\n      \"/dist/\",\n      \"/integration/\"\n    ]\n  }\n}\n",
+    "content": "{\n  \"name\": \"datamatic\",\n  \"description\": \"RxJS + JSON-Schema (Ajv) Based Observable and Validating Data Models and Pipelines\",\n  \"homepage\": \"https://webfreshener.github.io/datamatic\",\n  \"author\": \"Van Schroeder <van@webfreshener.com>\",\n  \"version\": \"0.9.10\",\n  \"main\": \"./dist/datamatic.node.js\",\n  \"module\": \"./dist/datamatic.umd.js\",\n  \"license\": \"MIT\",\n  \"repository\": {\n    \"type\": \"git\",\n    \"url\": \"https://github.com/Webfreshener/datamatic.git\"\n  },\n  \"scripts\": {\n    \"test\": \"jest\",\n    \"clear-tests\": \"jest --clearCache\",\n    \"cover\": \"jest --coverage && cat ./coverage/lcov.info | codacy-coverage --token \\\"$CODACY_PROJECT_TOKEN\\\"\",\n    \"build-test\": \"webpack --mode development; npm test\",\n    \"build\": \"webpack --mode production\",\n    \"docs\": \"./node_modules/.bin/esdoc\",\n    \"report\": \"$HOME/Library/Caches/Codacy/coverage-reporter/11.9.2/codacy-coverage-reporter report\"\n  },\n  \"files\": [\n    \"index.js\",\n    \"dist/*\"\n  ],\n  \"keywords\": [\n    \"rxjs\",\n    \"ajv\",\n    \"json-schema\",\n    \"validation\",\n    \"validatable\",\n    \"observable\",\n    \"proxy\",\n    \"model\",\n    \"json\",\n    \"data\",\n    \"object\",\n    \"array\",\n    \"hash\",\n    \"filter\",\n    \"map\",\n    \"dictionary\"\n  ],\n  \"devDependencies\": {\n    \"@babel/cli\": \"^7.15.7\",\n    \"@babel/core\": \"^7.15.8\",\n    \"@babel/plugin-transform-runtime\": \"^7.15.8\",\n    \"@babel/preset-env\": \"^7.15.8\",\n    \"@babel/preset-react\": \"^7.14.5\",\n    \"@babel/runtime\": \"^7.15.4\",\n    \"@webpack-cli/init\": \"^1.1.3\",\n    \"ajv\": \"^8.6.3\",\n    \"ajv-formats\": \"^2.1.1\",\n    \"babel-loader\": \"^8.2.2\",\n    \"chai\": \"^4.3.4\",\n    \"codacy-coverage\": \"^3.4.0\",\n    \"deep-equal\": \"^2.0.5\",\n    \"es6-weak-map\": \"^2.0.3\",\n    \"esdoc\": \"^1.1.0\",\n    \"esdoc-accessor-plugin\": \"^1.0.0\",\n    \"esdoc-exclude-source-plugin\": \"^1.0.0\",\n    \"esdoc-standard-plugin\": \"^1.0.0\",\n    \"jest\": \"^27.2.5\",\n    \"jest-babel-istanbul\": \"^0.1.0\",\n    \"jest-each\": \"^27.2.5\",\n    \"jshint\": \"^2.13.1\",\n    \"json-schema-migrate\": \"^2.0.0\",\n    \"jsonpath\": \"^1.1.1\",\n    \"lodash.merge\": \"^4.6.2\",\n    \"mocha\": \"^9.1.3\",\n    \"mocha-lcov-reporter\": \"^1.3.0\",\n    \"object.assign\": \"^4.1.2\",\n    \"rxjs\": \"^7.4.0\",\n    \"rxjs-compat\": \"^6.6.7\",\n    \"weakmap\": \"^0.0.6\",\n    \"webpack\": \"^5.58.2\",\n    \"webpack-cli\": \"^4.9.0\",\n    \"webpack-rxjs-externals\": \"^2.0.0\"\n  },\n  \"jest\": {\n    \"collectCoverage\": true,\n    \"testPathIgnorePatterns\": [\n      \"/integration/\"\n    ],\n    \"coveragePathIgnorePatterns\": [\n      \"/node_modules/\",\n      \"/dist/\",\n      \"/integration/\"\n    ]\n  }\n}\n",
     "longname": "/Users/vanschroeder/IdeaProjects/webfreshener-datamatic/package.json",
     "name": "package.json",
     "static": true,
