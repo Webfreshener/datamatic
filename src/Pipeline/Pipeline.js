@@ -32,6 +32,13 @@ import {Properties} from "./Properties";
 const _pipes = new WeakMap();
 const _cache = new WeakMap();
 
+const clearPipeInterval = (pipe) => {
+    const _ivl = _pipes.get(pipe).tO;
+    if (_ivl) {
+        clearInterval(_ivl);
+    }
+}
+
 /**
  * Pipeline Class
  */
@@ -292,35 +299,51 @@ export class Pipeline {
     }
 
     /**
-     * Informs `pipeline` to rate limit notifications based on time interval
+     * Informs `Pipeline` to rate limit notifications based on time interval
      * @param rate
      * @returns {Pipeline}
      */
     throttle(rate) {
-        this.clearThrottle();
-
-        if (rate >= 0) {
-            _pipes.set(this, Object.assign(_pipes.get(this), {
-                    tO: setInterval(() => {
-                        if (_cache.get(this).length) {
-                            const _func = _cache.get(this).splice(0, 1);
-                            if ((typeof _func[0]) === "function") {
-                                _pipes.get(this).out.model = _func[0]();
-                            }
+        if (rate > 0) {
+            clearPipeInterval(this);
+            const __ = setInterval(
+                () => {
+                    if (_cache.get(this).length) {
+                        const _func = _cache.get(this).splice(0, 1);
+                        if ((typeof _func[0]) === "function") {
+                            const _res = _func[0]();
+                            _pipes.get(this).out.model = _res;
                         }
-                    }),
-                }),
-                parseInt(rate, 10)
+                    }
+                }, parseInt(rate, 10)
             );
+
+            Object.assign(_pipes.get(this), {tO: __});
+        } else if (rate === -1) {
+            this.unthrottle(true);
+        } else {
+            this.unthrottle();
         }
+
         return this;
     }
 
-    clearThrottle() {
-        const _ivl = _pipes.get(this).tO;
-
-        if (_ivl) {
-            clearInterval(_ivl);
+    /**
+     * Removes rate limiting from `Pipeline` and optionally deletes unprocessed cache items
+     * @param discardCacheQueue
+     */
+    unthrottle(discardCacheQueue=false) {
+        clearPipeInterval(this);
+        if (!discardCacheQueue) {
+            _cache.get(this).forEach(() => {
+                const _func = _cache.get(this).splice(0, 1);
+                if ((typeof _func[0]) === "function") {
+                    _pipes.get(this).out.model = _func[0]();
+                }
+            });
+        } else {
+            const _c = _cache.get(this);
+            _c.splice(0, _c.length);
         }
     }
 
@@ -348,7 +371,7 @@ export class Pipeline {
     }
 
     /**
-     * Provides current state of `pipeline` output. alias for toJSON
+     * Provides current state of `pipeline` output. alias for `toJSON`
      * @returns {Object|Array}
      */
     tap() {
