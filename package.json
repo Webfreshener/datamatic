@@ -3,7 +3,7 @@
   "description": "RxJS + JSON-Schema (Ajv) Based Observable and Validating Data Models and Pipelines",
   "homepage": "https://webfreshener.github.io/datamatic",
   "author": "Van Schroeder <van@webfreshener.com>",
-  "version": "0.9.11",
+  "version": "0.9.12",
   "main": "./dist/datamatic.node.js",
   "module": "./dist/datamatic.umd.js",
   "license": "MIT",
