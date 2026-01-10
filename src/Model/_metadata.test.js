@@ -32,4 +32,32 @@ describe("MetaData Units", () => {
             expect(typeof _md.parent).toEqual("object");
         });
     });
+
+    it("reuses an existing _createID implementation", () => {
+        const originalCreateID = MetaData.prototype._createID;
+        MetaData.prototype._createID = function () {
+            if (!this.__objID) {
+                this.__objID = "PinnedId";
+            }
+            return this.__objID;
+        };
+        const meta = new MetaData({constructor: {name: "Pinned"}}, {_path: "", _root: null});
+        expect(meta.objectID).toBe("PinnedId");
+        MetaData.prototype._createID = originalCreateID;
+    });
+
+    it("returns existing object IDs without reassigning", () => {
+        const originalCreateID = MetaData.prototype._createID;
+        MetaData.prototype._createID = null;
+        const meta = new MetaData({constructor: {name: "Reuse"}}, {_path: "", _root: null});
+        const first = meta._createID();
+        const second = meta._createID();
+        expect(second).toBe(first);
+        MetaData.prototype._createID = originalCreateID;
+    });
+
+    it("uses default data when none is provided", () => {
+        const meta = new MetaData({constructor: {name: "Default"}});
+        expect(typeof meta.objectID).toBe("string");
+    });
 });

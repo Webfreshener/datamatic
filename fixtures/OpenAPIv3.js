@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 export default {
     title: "A JSON Schema for OpenAPI 3.0.",
     $id: "http://openapis.org/v3/schema.json#",

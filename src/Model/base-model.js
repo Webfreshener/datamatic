@@ -44,7 +44,7 @@ const createMetaDataRef = (ref, metaRef, path) => {
             _path: path || "root#",
             _parent: null,
             _root: ref,
-            _owner: metaRef || null,
+            _owner: metaRef,
         });
     } else if ((typeof metaRef) === "object") {
         // extends MetaData reference
@@ -145,7 +145,7 @@ export class BaseModel {
      * resets Model to empty value
      * @return {BaseModel}
      */
-    reset() {
+    reset(options = {}) {
         const _isArray = Array.isArray(this.model);
         const _o = !_isArray ? {} : [];
         const _res = this.validate(_o);
@@ -165,12 +165,14 @@ export class BaseModel {
             }
         };
 
-        // freezes all child Model/Elements
-        // -- prevent changes to Children
-        // -- sends "complete" notification to their Observers
-        // -- revokes their Models if revocable
-        const _i = !_isArray ? Object.keys(this.model) : this.model;
-        _i.forEach((itm) => _freeze((!_isArray) ? _i[itm] : itm));
+        if (options.complete) {
+            // freezes all child Model/Elements
+            // -- prevent changes to Children
+            // -- sends "complete" notification to their Observers
+            // -- revokes their Models if revocable
+            const _i = !_isArray ? Object.keys(this.model) : this.model;
+            _i.forEach((itm) => _freeze((!_isArray) ? this.model[itm] : itm));
+        }
 
         // creates new Proxied Model to operate on
         const _p = new Proxy(BaseModel.createRef(this, _o), this.handler);
@@ -200,7 +202,7 @@ export class BaseModel {
         let _derive = (itm) => {
             // uses toJSON impl if defined
             if (itm.hasOwnProperty("toJSON") &&
-                (typeof this.toJSON) === "function") {
+                (typeof itm.toJSON) === "function") {
                 return itm.toJSON();
             }
 

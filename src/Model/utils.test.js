@@ -119,6 +119,51 @@ describe("Utils tests", () => {
             expect(getDefaults(_schema)).toEqual({name: "a name"});
         });
 
+        it("should getDefaults from typed item schemas", () => {
+            const _schema = {
+                items: {
+                    type: "object",
+                    properties: {
+                        value: {default: 1},
+                    },
+                },
+            };
+            expect(getDefaults(_schema)).toEqual({value: 1});
+        });
+
+        it("should getDefaults from array item schemas", () => {
+            const _schema = {
+                items: {
+                    type: "array",
+                    items: {
+                        type: "object",
+                        properties: {
+                            value: {default: 2},
+                        },
+                    },
+                },
+            };
+            expect(getDefaults(_schema)).toEqual({value: 2});
+        });
+
+        it("returns null when typed schemas have no properties", () => {
+            const _schema = {
+                items: {
+                    type: "object",
+                },
+            };
+            expect(getDefaults(_schema)).toBeNull();
+        });
+
+        it("returns null for non-object item types", () => {
+            const _schema = {
+                items: {
+                    type: "string",
+                },
+            };
+            expect(getDefaults(_schema)).toBeNull();
+        });
+
         it("should getDefaults from PatternProperty schema", () => {
             const _schema = {
                 type: "object",

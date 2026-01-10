@@ -147,3 +147,6 @@ export default class Notifiers {
         return notifiers.get(owner);
     }
 }
+
+export const _ErrorNotification = ErrorNotification;
+export const _CompleteNotification = CompleteNotification;

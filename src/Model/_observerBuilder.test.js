@@ -52,6 +52,30 @@ describe("ObserverBuilder Unit Test Suite", () => {
                 .toEqual(['path', 'jsonPath', 'targetId', 'onNext', 'onError', 'onComplete']);
         });
 
+        it("returns existing observer when path is cached", () => {
+            const originalGetObserverForPath = _observer.getObserverForPath;
+            _observer.getObserverForPath = () => ({path: _model.path});
+            expect(_observer.create(_model)).toBe(_observerForModel);
+            _observer.getObserverForPath = originalGetObserverForPath;
+        });
+
+        it("returns cached model observer when path is missing", () => {
+            const originalGetObserverForPath = _observer.getObserverForPath;
+            const other = new PropertiesModel(new Model({schemas: [_schema]}), "other#");
+            _observer.getObserverForPath = () => ({path: other.path});
+            expect(_observer.create(other)).toBeUndefined();
+            _observer.getObserverForPath = originalGetObserverForPath;
+        });
+
+        it("returns null for unknown model and skips notifications", () => {
+            const other = new PropertiesModel(new Model({schemas: [_schema]}), "other#");
+            expect(_observer.getObserverForModel(other)).toBeNull();
+            _observer.next({isDirty: true});
+            _observer.next(other);
+            _observer.complete(other);
+            _observer.error(other, "bad");
+        });
+
         it.skip("should subscribe to observer and get value", function (done) {
             const _data = {
                 name: "item-A",

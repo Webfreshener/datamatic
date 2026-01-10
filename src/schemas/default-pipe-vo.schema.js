@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 export default {
     $id: "http://schemas.webfreshener.com/v1/pipe-vo#",
     $schema: "http://json-schema.org/draft-07/schema#",

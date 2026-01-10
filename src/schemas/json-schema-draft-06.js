@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 export default {
     $id: "http://json-schema.org/draft-06/schema#",
     title: "Core schema meta-schema",

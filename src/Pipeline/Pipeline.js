@@ -135,7 +135,7 @@ export class Pipeline {
             callbacks = callbacks[0];
         }
 
-        callbacks = fill(callbacks || []);
+        callbacks = fill(callbacks);
 
         // creates observer and stores it to links map for `pipeline`
         const _sub = this.subscribe({

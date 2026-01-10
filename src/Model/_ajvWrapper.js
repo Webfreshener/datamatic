@@ -131,7 +131,7 @@ export class AjvWrapper {
         });
 
         // applies user specified options over our default Ajv Options
-        const opts = Object.assign(ajvOptions, options);
+        const opts = Object.assign({}, ajvOptions, options);
 
         // makes user defined options object accessible for evaluation
         Object.defineProperty(this, "options", {

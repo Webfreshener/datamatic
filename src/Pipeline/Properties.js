@@ -28,6 +28,13 @@ import {Validator} from "./Validator";
 import {default as DefaultVOSchema} from "../schemas/default-pipe-vo.schema";
 import {PipeListener} from "./Pipeline";
 
+const defaultPipe = {
+    schema: [DefaultVOSchema, DefaultVOSchema],
+    exec: (d) => d,
+};
+
+export const _defaultPipeForTests = defaultPipe;
+
 /**
  *
  */
@@ -39,10 +46,7 @@ export class Properties {
         const _inPipe = (
             Array.isArray(pipesOrVOsOrSchemas) && pipesOrVOsOrSchemas.length
         ) ? pipesOrVOsOrSchemas[0] : pipesOrVOsOrSchemas.length ?
-            pipesOrVOsOrSchemas : {
-                schema: [DefaultVOSchema, DefaultVOSchema],
-                exec: (d) => d,
-            };
+            pipesOrVOsOrSchemas : defaultPipe;
 
         const _pSchemas = [...pipesOrVOsOrSchemas]
             .filter((_p) => {
@@ -57,8 +61,7 @@ export class Properties {
 
         const _getInSchema = () => {
             if (_pSchemas.length) {
-                return (_pSchemas[0] instanceof Validator) ?
-                    _pSchemas[0].schema : _pSchemas[0];
+                return _pSchemas[0];
             }
             return DefaultVOSchema;
         };

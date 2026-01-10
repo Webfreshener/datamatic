@@ -48,4 +48,20 @@ describe("vxBehaviorSubject", () => {
         });
         _t.complete();
     })
+
+    it("does nothing when observers are cleared", () => {
+        const originalGet = WeakMap.prototype.get;
+        WeakMap.prototype.get = function (key) {
+            if (key === _t) {
+                return null;
+            }
+            return originalGet.call(this, key);
+        };
+        expect(() => {
+            _t.next("x");
+            _t.error(new Error("e"));
+            _t.complete();
+        }).not.toThrow();
+        WeakMap.prototype.get = originalGet;
+    });
 });

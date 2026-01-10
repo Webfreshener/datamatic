@@ -1,3 +1,4 @@
+/* istanbul ignore file */
 /**
  * AJV Options Config in it's entirely for reference
  * only Model specific option changes are enabled

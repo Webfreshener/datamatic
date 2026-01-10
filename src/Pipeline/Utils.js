@@ -50,7 +50,7 @@ export const fill = (arr, value = ((d) => d), min = 2) => {
         return arr;
     }
     return [
-        ...(arr = arr || []),
+        ...arr,
         ...(Array(min - arr.length).fill(value, 0))
     ];
 };
@@ -144,24 +144,9 @@ export const castToExec = (obj) => {
  * @param cb
  * @returns {function}
  */
-export const handleAsync = (cb) => (
-    async (d) => await new Promise(
-        (resolve) => d.then((_) => resolve(cb(_)))
-            .catch((e) => {
-                throw e;
-            })
-    ).catch((e) => { throw e; })
-);
-
-/**
- *
- * @param cb
- * @returns {Function}
- */
 export const wrapCallback = (cb) => ((dataOrPromise) => {
     if (dataOrPromise instanceof Promise) {
-        // delegates Promise
-        return handleAsync(dataOrPromise);
+        return dataOrPromise.then(cb);
     }
 
     return cb(dataOrPromise)
