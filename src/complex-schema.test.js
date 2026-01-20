@@ -6,6 +6,16 @@ import {default as JSONSchema4} from "../fixtures/json-schema-draft04.schema";
 import {default as basicAPI} from "../fixtures/petstore.v2"
 import {Model} from "./Model";
 
+const hasDraft04 = () => {
+    try {
+        // eslint-disable-next-line global-require
+        const mod = require("ajv-draft-04");
+        return Boolean(mod && (mod.default || mod));
+    } catch (e) {
+        return false;
+    }
+};
+
 describe("Basic Refs", () => {
     describe("ref handling", () => {
         it("should validate schema containing $refs and definitions", (done) => {
@@ -26,6 +36,15 @@ describe("Basic Refs", () => {
 
     describe("OPenAPI Tests", () => {
         it("should load and validate Swagger Schema", () => {
+            if (!hasDraft04()) {
+                expect(() => new Model({
+                    meta: [JSONSchema4],
+                    schemas: [Swagger],
+                    use: "http://swagger.io/v2/schema.json#",
+                })).toThrow("ajv-draft-04");
+                return;
+            }
+
             const _owner = new Model({
                 meta: [JSONSchema4],
                 schemas: [Swagger],
@@ -47,6 +66,14 @@ describe("Basic Refs", () => {
                 },
                 paths: {},
             };
+            if (!hasDraft04()) {
+                expect(() => new Model({
+                    meta: [JSONSchema4],
+                    schemas: [OpenAPIv3],
+                    use: "http://openapis.org/v3/schema.json#",
+                })).toThrow("ajv-draft-04");
+                return;
+            }
             const _owner = new Model({
                 meta: [JSONSchema4],
                 schemas: [OpenAPIv3],

@@ -9,6 +9,16 @@ import {Model} from "./index";
 import addFormats from "ajv-formats";
 
 describe("AJVWrapper Tests", () => {
+    const hasDraft04 = () => {
+        try {
+            // eslint-disable-next-line global-require
+            const mod = require("ajv-draft-04");
+            return Boolean(mod && (mod.default || mod));
+        } catch (e) {
+            return false;
+        }
+    };
+
     describe("AJV Standalone -- version integrity & debug", () => {
         it("should handle OpenAPI2.0 Schemas (updated to JSON-Schema draft-07)", () => {
             const _ajv = new Ajv({
@@ -34,6 +44,11 @@ describe("AJVWrapper Tests", () => {
                 meta: [JSONSchemaV4],
                 schemas: [OpenAPIv2],
             };
+
+            if (!hasDraft04()) {
+                expect(() => new Model(schemas)).toThrow("ajv-draft-04");
+                return;
+            }
 
             const owner = new Model(schemas);
             const _ajv = new AjvWrapper(owner, schemas);

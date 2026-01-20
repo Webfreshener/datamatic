@@ -212,6 +212,9 @@ export const walkObject = (path, toWalk, delimiter = "/") => {
  * @returns {string}
  */
 export const getSchemaID = (schema) => {
+    if (schema.$schema === "http://json-schema.org/draft-04/schema#" && schema.id) {
+        return schema.id;
+    }
     const id = ["$id", "id"].filter((id) => schema.hasOwnProperty(id));
     return id.length ? schema[id[0]] : "root#";
 };
