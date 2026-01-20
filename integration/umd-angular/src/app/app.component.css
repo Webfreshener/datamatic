@@ -1,0 +1,106 @@
+:host {
+  display: block;
+  font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+  color: #1b1f24;
+  background: radial-gradient(circle at top, #fef4e8 0%, #f7f3ef 40%, #eef1f5 100%);
+  min-height: 100vh;
+}
+
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 48px 20px 72px;
+}
+
+.hero {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  background: #ffffff;
+  padding: 24px 28px;
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(23, 32, 41, 0.1);
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-size: 12px;
+  margin: 0 0 8px;
+  color: #8a4b2e;
+}
+
+h1 {
+  margin: 0 0 12px;
+  font-size: 32px;
+}
+
+.lede {
+  margin: 0;
+  max-width: 520px;
+  color: #4b5563;
+}
+
+.cta {
+  border: none;
+  background: #f97316;
+  color: #ffffff;
+  padding: 12px 18px;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 10px 20px rgba(249, 115, 22, 0.25);
+}
+
+.panel {
+  margin-top: 28px;
+  background: #ffffff;
+  padding: 22px 26px;
+  border-radius: 16px;
+  border: 1px solid #f1f1f1;
+}
+
+.panel h2 {
+  margin: 0 0 6px;
+}
+
+.hint {
+  margin: 0 0 16px;
+  color: #6b7280;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.chip {
+  background: #fde68a;
+  color: #92400e;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.empty {
+  margin-top: 12px;
+  color: #9ca3af;
+}
+
+.error {
+  border-color: #fecaca;
+  background: #fff1f2;
+  color: #991b1b;
+}
+
+@media (max-width: 700px) {
+  .hero {
+    flex-direction: column;
+  }
+
+  h1 {
+    font-size: 26px;
+  }
+}
