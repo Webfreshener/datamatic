@@ -1,4 +1,6 @@
 import {Model} from "./index"
+import {ItemsModel} from "./itemsModel";
+import {_schemaSignatures} from "./_references";
 import {basicModel} from "../../fixtures/PropertiesModel.schemas";
 import {default as basicRefs} from "../../fixtures/basic-refs.schema";
 import {default as refsData} from "../../fixtures/basic-refs.data";
@@ -32,13 +34,12 @@ describe("Model Instance Test", () => {
 
     it("runs schema validator", () => {
         const _owner = new Model({
-            properties:
-                {
-                    id: {type: 'integer'},
-                    name: {type: 'string'},
-                    value: {type: 'integer'},
-                    createdOn: {type: 'string'}
-                },
+            properties: {
+                id: {type: "integer"},
+                name: {type: "string"},
+                value: {type: "integer"},
+                createdOn: {type: "string"}
+            },
         });
 
         expect(_owner.errors).toBe(null);
@@ -56,5 +57,48 @@ describe("Model Instance Test", () => {
             expect(_owner.errors).toBe(null);
             expect(_owner.model).toEqual(refsData);
         });
+    });
+
+    it("throws when AjvWrapper reports invalid schema", () => {
+        jest.isolateModules(() => {
+            jest.doMock("./_ajvWrapper", () => ({
+                AjvWrapper: class AjvWrapper {
+                    constructor() {
+                        this.$ajv = {
+                            validateSchema: () => false,
+                            errors: ["bad schema"],
+                        };
+                    }
+                },
+            }));
+            const {Model: MockedModel} = require("./index");
+            expect(() => new MockedModel({schemas: [basicModel]})).toThrow();
+        });
+    });
+
+    it("selects ItemsModel and supports legacy schema ids", () => {
+        const arrayOwner = new Model({schemas: [{
+            $id: "root#",
+            type: "array",
+            items: {type: "string"},
+        }]});
+        expect(arrayOwner.model.$model).toBeInstanceOf(ItemsModel);
+
+        const tupleOwner = new Model({schemas: [{
+            $id: "tuple#",
+            items: [{type: "string"}],
+        }]});
+        expect(tupleOwner.model.$model).toBeInstanceOf(ItemsModel);
+
+        const legacyOwner = new Model({schemas: [{
+            id: "legacy#",
+            type: "object",
+        }]});
+        _schemaSignatures.set(legacyOwner, {schemas: [{id: "legacy#"}]});
+        expect(legacyOwner.getSchemaForKey("legacy#").id).toBe("legacy#");
+
+        const legacyOnly = Object.create(Model.prototype);
+        _schemaSignatures.set(legacyOnly, {schemas: [{id: "only#"}]});
+        expect(legacyOnly.getSchemaForKey("only#").id).toBe("only#");
     });
 });

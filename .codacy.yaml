@@ -1,0 +1,10 @@
+runtimes:
+  - node@24.13.0
+tools:
+  - semgrep@1.78.0
+exclude_paths:
+  - "**/node_modules/**"
+  - "**/*.test.js"
+  - "**/*.spec.js"
+  - "**/__tests__/**"
+  - "integration/**"

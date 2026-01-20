@@ -1,38 +1,170 @@
-.App {
-  text-align: center;
+.page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 48px 20px 72px;
+  font-family: "Space Grotesk", "Segoe UI", sans-serif;
+  color: #0f172a;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.hero {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 24px;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 24px 28px;
+  border-radius: 20px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.12);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.25em;
+  font-size: 12px;
+  margin: 0 0 8px;
+  color: #0f766e;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+h1 {
+  margin: 0 0 12px;
+  font-size: 32px;
+}
+
+.lede {
+  margin: 0;
+  max-width: 520px;
+  color: #475569;
+}
+
+.controls {
+  margin-top: 16px;
   display: flex;
   flex-direction: column;
+  gap: 12px;
+}
+
+.controls-row {
+  display: flex;
+  gap: 10px;
+}
+
+.controls input {
+  flex: 1;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  font-size: 14px;
+}
+
+.ghost {
+  border: 1px solid #14b8a6;
+  background: #ecfeff;
+  color: #0f766e;
+  padding: 10px 14px;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.list-item {
+  display: inline-flex;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  gap: 8px;
+  background: #e0f2fe;
+  color: #0f766e;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-weight: 600;
 }
 
-.App-link {
-  color: #61dafb;
+.list-item button {
+  border: none;
+  background: #0f766e;
+  color: #fff;
+  border-radius: 999px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 1;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.cta {
+  border: none;
+  background: linear-gradient(135deg, #14b8a6, #0ea5e9);
+  color: #ffffff;
+  padding: 12px 18px;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 10px 20px rgba(14, 165, 233, 0.2);
+}
+
+.panel {
+  margin-top: 28px;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 22px 26px;
+  border-radius: 16px;
+  border: 1px solid rgba(226, 232, 240, 0.8);
+}
+
+.panel h2 {
+  margin: 0 0 6px;
+}
+
+.hint {
+  margin: 0 0 16px;
+  color: #64748b;
+}
+
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.chip {
+  background: #ccfbf1;
+  color: #0f766e;
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-weight: 600;
+}
+
+.empty {
+  margin-top: 12px;
+  color: #94a3b8;
+}
+
+.error {
+  border-color: rgba(248, 113, 113, 0.5);
+  background: #fff1f2;
+  color: #b91c1c;
+}
+
+.error pre {
+  margin: 0;
+  white-space: pre-wrap;
+  font-family: "IBM Plex Mono", "SFMono-Regular", monospace;
+}
+
+@media (max-width: 700px) {
+  .hero {
+    flex-direction: column;
   }
-  to {
-    transform: rotate(360deg);
+
+  h1 {
+    font-size: 26px;
+  }
+
+  .controls-row {
+    flex-direction: column;
   }
 }

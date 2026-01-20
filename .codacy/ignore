@@ -1,0 +1,5 @@
+# Codacy ignore patterns
+**/*.test.js
+**/*.spec.js
+**/__tests__/**
+src/Model/index.test.js

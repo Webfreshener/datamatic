@@ -167,16 +167,11 @@ export class Model {
         let _schema = null;
         const _schemas = _schemaSignatures.get(this);
         _schemas.schemas.some((schema) => {
-            if (schema.hasOwnProperty("$id")) {
-                if (schema.$id === id) {
-                    _schema = schema;
-                    return true;
-                }
-            } else if (schema.hasOwnProperty("id")) {
-                if (schema.id === id) {
-                    _schema = schema;
-                    return true;
-                }
+            const schemaId = (schema.hasOwnProperty("$id") && schema.$id) ||
+                (schema.hasOwnProperty("id") && schema.id);
+            if (schemaId === id) {
+                _schema = schema;
+                return true;
             }
             return false;
         });
@@ -230,7 +225,7 @@ export class Model {
         let _ref = this.model;
         to = to.replace(/\/?(properties|items)+\//g, ".").replace(/^\./, "");
         (to.split(".")).forEach((step) => {
-            if (_ref[step]) {
+            if (_ref && Object.prototype.hasOwnProperty.call(_ref, step)) {
                 _ref = _ref[step];
             }
         });
@@ -250,7 +245,7 @@ export class Model {
         (to.split(".")
             .filter((itm, idx, arr) => arr.indexOf(itm) > -1))
             .forEach((step) => {
-                if (_ref[step]) {
+                if (_ref && Object.prototype.hasOwnProperty.call(_ref, step)) {
                     _steps[_steps.length] = _ref = _ref[step];
                 }
             });

@@ -76,7 +76,7 @@ export class AjvWrapper {
         }
 
         // applies user specified options over our default Ajv Options
-        const opts = Object.assign(_ajvOptions, ajvOptions);
+        const opts = Object.assign({}, _ajvOptions, ajvOptions);
 
         // makes user defined options object accessible for evaluation
         Object.defineProperty(this, "options", {
@@ -165,7 +165,7 @@ export class AjvWrapper {
      * @param schemaId
      */
     addSchema(schema, schemaId = false) {
-        addSchema(this, schema, schemaId);
+        addSchema(this.$ajv, schema, schemaId);
         return this;
     }
 

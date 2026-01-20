@@ -3,6 +3,7 @@
 .project
 *.iml
 integration/*/node_modules/*
+integration/*/.angular/*
 codacy-report.sh
 node_modules/*
 test/_orig

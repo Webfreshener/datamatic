@@ -1,4 +1,5 @@
 import {Model} from "./index";
+import {ItemsModel} from "./itemsModel";
 import {default as deepEqual} from "deep-equal";
 import {
     stringsCollection,
@@ -62,6 +63,80 @@ describe("ItemsModel Class", function () {
 
                 _owner.model = _d;
                 expect(_owner.model.length).toEqual(0);
+            });
+
+            it("throws when set trap is invoked on frozen models", () => {
+                _owner.model = ["abc"];
+                _owner.model.$model.freeze();
+                expect(() => _owner.model.$model.handler.set(_owner.model, 0, "def"))
+                    .toThrow("non-configurable and non-writable");
+            });
+
+            it("throws when isFrozen is forced true", () => {
+                _owner.model = ["abc"];
+                const modelRef = _owner.model.$model;
+                Object.defineProperty(modelRef, "isFrozen", {
+                    get: () => true,
+                    configurable: true,
+                });
+                expect(() => modelRef.handler.set(_owner.model, 0, "xyz"))
+                    .toThrow("non-configurable and non-writable");
+                delete modelRef.isFrozen;
+            });
+
+            it("throws with empty path when frozen", () => {
+                const emptyPathModel = new ItemsModel(new Model({schemas: [stringsCollection]}), "");
+                Object.defineProperty(emptyPathModel, "isFrozen", {
+                    get: () => true,
+                    configurable: true,
+                });
+                Object.defineProperty(emptyPathModel, "path", {
+                    get: () => "",
+                    configurable: true,
+                });
+                expect(() => emptyPathModel.handler.set([], 0, "x"))
+                    .toThrow("non-configurable and non-writable");
+                delete emptyPathModel.isFrozen;
+                delete emptyPathModel.path;
+            });
+
+            it("returns error when delete trap fails to splice", () => {
+                _owner.model = ["abc"];
+                const handler = _owner.model.$model.handler;
+                const originalSplice = Array.prototype.splice;
+                Array.prototype.splice = () => { throw new Error("boom"); };
+                const res = handler.deleteProperty(_owner.model, 0);
+                Array.prototype.splice = originalSplice;
+                expect(typeof res).toBe("string");
+            });
+
+            it("returns error on delete trap without delegates", () => {
+                const owner = new Model({schemas: [stringsCollection]});
+                const modelRef = new ItemsModel(owner, "root#");
+                const originalSplice = Array.prototype.splice;
+                Array.prototype.splice = () => { throw new Error("boom"); };
+                const res = modelRef.handler.deleteProperty([], 0);
+                Array.prototype.splice = originalSplice;
+                expect(typeof res).toBe("string");
+            });
+
+            it("skips delete trap notifications when delegated", () => {
+                _owner.model = ["abc"];
+                const handler = _owner.model.$model.handler;
+                const setter = Object.getOwnPropertyDescriptor(
+                    Object.getPrototypeOf(_owner.model.$model),
+                    "model"
+                ).set;
+                const badArray = ["abc"];
+                badArray.forEach = () => { throw new Error("boom"); };
+                const setRes = setter.call(_owner.model.$model, badArray);
+                expect(typeof setRes).toBe("string");
+
+                const originalSplice = Array.prototype.splice;
+                Array.prototype.splice = () => { throw new Error("boom"); };
+                const res = handler.deleteProperty(_owner.model, 0);
+                Array.prototype.splice = originalSplice;
+                expect(typeof res).toBe("string");
             });
         });
     });

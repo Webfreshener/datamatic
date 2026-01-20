@@ -1,17 +1,342 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Datamatic Integration</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Datamatic Window Integration</title>
     <script src="../../dist/datamatic.window.js"></script>
-    <script language="JavaScript">
-        const {Pipeline} = window.datamatic;
-        pipeline = new Pipeline({type: "array", items: {type: "string"}});
-        pipeline.subscribe((d) => console.log(d), (e) => console.error(e));
-        pipeline.write(["a", "b", "c"]);
-    </script>
-</head>
-<body>
+    <style>
+      :root {
+        color-scheme: light;
+      }
 
-</body>
+      body {
+        margin: 0;
+        min-height: 100vh;
+        background: radial-gradient(circle at top, #ffb3e1 0%, #ffd1eb 45%, #fff0f8 100%);
+        font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
+        color: #1b1f24;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      .page {
+        max-width: 900px;
+        margin: 0 auto;
+        padding: 48px 20px 72px;
+      }
+
+      .hero {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 24px;
+        background: #ffffff;
+        padding: 24px 28px;
+        border-radius: 20px;
+        box-shadow: 0 20px 50px rgba(23, 32, 41, 0.1);
+      }
+
+      .eyebrow {
+        text-transform: uppercase;
+        letter-spacing: 0.2em;
+        font-size: 12px;
+        margin: 0 0 8px;
+        color: #ff2d96;
+      }
+
+      h1 {
+        margin: 0 0 12px;
+        font-size: 32px;
+      }
+
+      .lede {
+        margin: 0;
+        max-width: 520px;
+        color: #4b5563;
+      }
+
+      .controls {
+        margin-top: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .controls-row {
+        display: flex;
+        gap: 10px;
+      }
+
+      .controls input {
+        flex: 1;
+        padding: 10px 12px;
+        border-radius: 10px;
+        border: 1px solid #f1b3d2;
+        font-size: 14px;
+      }
+
+      .ghost {
+        border: 1px solid #ff6ad5;
+        background: #fff0f8;
+        color: #b0005f;
+        padding: 10px 14px;
+        border-radius: 999px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      .list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .list-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #ffe3f1;
+        color: #9f124f;
+        border-radius: 999px;
+        padding: 6px 12px;
+        font-weight: 600;
+      }
+
+      .list-item button {
+        border: none;
+        background: #ff2d96;
+        color: #fff;
+        border-radius: 999px;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        font-size: 12px;
+        line-height: 1;
+      }
+
+      .cta {
+        border: none;
+        background: linear-gradient(135deg, #ff2d96, #ff6ad5);
+        color: #ffffff;
+        padding: 12px 18px;
+        border-radius: 999px;
+        font-weight: 600;
+        cursor: pointer;
+        box-shadow: 0 10px 20px rgba(255, 45, 150, 0.25);
+      }
+
+      .panel {
+        margin-top: 28px;
+        background: #ffffff;
+        padding: 22px 26px;
+        border-radius: 16px;
+        border: 1px solid #f1f1f1;
+      }
+
+      .panel h2 {
+        margin: 0 0 6px;
+      }
+
+      .hint {
+        margin: 0 0 16px;
+        color: #6b7280;
+      }
+
+      .chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .chip {
+        background: #ffd1eb;
+        color: #b0005f;
+        padding: 6px 12px;
+        border-radius: 999px;
+        font-weight: 600;
+      }
+
+      .empty {
+        margin-top: 12px;
+        color: #9ca3af;
+      }
+
+      .error {
+        border-color: #fecaca;
+        background: #fff1f2;
+        color: #991b1b;
+      }
+
+      @media (max-width: 700px) {
+        .hero {
+          flex-direction: column;
+        }
+
+        h1 {
+          font-size: 26px;
+        }
+
+        .controls-row {
+          flex-direction: column;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="page">
+      <header class="hero">
+        <div>
+          <p class="eyebrow">Window + Datamatic (UMD)</p>
+          <h1>Datamatic Window Integration</h1>
+          <p class="lede">
+            This example uses the global `window.datamatic` UMD build and renders
+            pipeline output in the browser.
+          </p>
+          <div class="controls">
+            <div class="controls-row">
+              <input id="item-input" type="text" placeholder="Add an item" />
+              <button type="button" class="ghost" id="add-item">Add item</button>
+            </div>
+            <div class="list" id="item-list"></div>
+          </div>
+        </div>
+        <button type="button" class="cta" id="run-sample">Run sample</button>
+      </header>
+
+      <section class="panel">
+        <h2>Pipeline output</h2>
+        <p class="hint">Latest items emitted by the pipeline.</p>
+        <div class="chips" id="output"></div>
+        <p class="empty" id="empty">No data yet. Click "Run sample".</p>
+      </section>
+
+      <section class="panel error" id="error-panel" hidden>
+        <h2>Errors</h2>
+        <p id="error-message"></p>
+      </section>
+    </div>
+
+    <script>
+      const output = document.getElementById('output');
+      const empty = document.getElementById('empty');
+      const errorPanel = document.getElementById('error-panel');
+      const errorMessage = document.getElementById('error-message');
+      const runButton = document.getElementById('run-sample');
+      const itemInput = document.getElementById('item-input');
+      const addItemButton = document.getElementById('add-item');
+      const itemList = document.getElementById('item-list');
+
+      const api = window.datamatic;
+      const pipeline = new api.Pipeline({
+        type: 'array',
+        items: {
+          type: 'string'
+        }
+      });
+
+      let items = ['alpha', 'beta', 'gamma'];
+      let intervalId = null;
+      const normalizeList = (list) =>
+        list.filter((item) => typeof item === 'string' && item.trim().length > 0);
+
+      const setError = (message) => {
+        if (message) {
+          errorMessage.textContent = message;
+          errorPanel.hidden = false;
+        } else {
+          errorMessage.textContent = '';
+          errorPanel.hidden = true;
+        }
+      };
+
+      const renderItems = () => {
+        itemList.innerHTML = '';
+        items.forEach((item, index) => {
+          const chip = document.createElement('span');
+          chip.className = 'list-item';
+          chip.textContent = item;
+          const remove = document.createElement('button');
+          remove.type = 'button';
+          remove.textContent = '×';
+          remove.addEventListener('click', () => {
+            items = items.filter((_, i) => i !== index);
+            renderItems();
+            runSample();
+          });
+          chip.appendChild(remove);
+          itemList.appendChild(chip);
+        });
+      };
+
+      const render = (items) => {
+        output.innerHTML = '';
+        if (!items || items.length === 0) {
+          empty.hidden = false;
+          return;
+        }
+        empty.hidden = true;
+        items.forEach((item) => {
+          const chip = document.createElement('span');
+          chip.className = 'chip';
+          chip.textContent = item;
+          output.appendChild(chip);
+        });
+      };
+
+      pipeline.subscribe({
+        next: (data) => {
+          render(Array.isArray(data) ? data : []);
+        },
+        error: (error) => {
+          setError(String(error || 'Unknown error'));
+        }
+      });
+
+      const startInterval = () => {
+        if (intervalId) {
+          clearInterval(intervalId);
+        }
+        let index = 0;
+        let current = [];
+        render([]);
+        const safeList = normalizeList(items);
+        if (safeList.length === 0) {
+          return;
+        }
+        intervalId = setInterval(() => {
+          if (index >= safeList.length) {
+            clearInterval(intervalId);
+            intervalId = null;
+            return;
+          }
+          current = current.concat(safeList[index]);
+          pipeline.write(current);
+          index += 1;
+        }, 600);
+      };
+
+      const runSample = () => {
+        setError('');
+        startInterval();
+      };
+
+      addItemButton.addEventListener('click', () => {
+        const value = itemInput.value.trim();
+        if (!value) {
+          return;
+        }
+        items = items.concat(value);
+        itemInput.value = '';
+        renderItems();
+        runSample();
+      });
+
+      runButton.addEventListener('click', runSample);
+      renderItems();
+      runSample();
+    </script>
+  </body>
 </html>

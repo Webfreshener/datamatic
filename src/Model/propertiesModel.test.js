@@ -20,6 +20,38 @@ describe("PropertiesModel Class Suite", function () {
                 expect(_owner.model.$model instanceof PropertiesModel).toBe(true);
             });
 
+            it("handles handler.set before and after freeze", () => {
+                const handler = _owner.model.$model.handler;
+                expect(handler.set(_owner.model, "name", "ok")).toBe(true);
+                _owner.model.$model.freeze();
+                expect(() => handler.set(_owner.model, "name", "x"))
+                    .toThrow("non-configurable and non-writable");
+
+                Object.defineProperty(_owner.model.$model, "isFrozen", {
+                    get: () => true,
+                    configurable: true,
+                });
+                expect(() => handler.set(_owner.model, "name", "y"))
+                    .toThrow("non-configurable and non-writable");
+                delete _owner.model.$model.isFrozen;
+            });
+
+            it("throws with empty path when frozen", () => {
+                const emptyPathModel = new PropertiesModel(new Model({schemas: [basicModel]}), "");
+                Object.defineProperty(emptyPathModel, "isFrozen", {
+                    get: () => true,
+                    configurable: true,
+                });
+                Object.defineProperty(emptyPathModel, "path", {
+                    get: () => "",
+                    configurable: true,
+                });
+                expect(() => emptyPathModel.handler.set({}, "name", "x"))
+                    .toThrow("non-configurable and non-writable");
+                delete emptyPathModel.isFrozen;
+                delete emptyPathModel.path;
+            });
+
             it("should not initialize a invalid schema and schema object", () => {
                 let badSchema = Object.assign({}, basicModel, {
                     properties: {
