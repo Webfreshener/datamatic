@@ -7,6 +7,24 @@
         This example runs a Datamatic pipeline in Angular and renders the
         streamed output below.
       </p>
+      <div class="controls">
+        <div class="controls-row">
+          <input
+            type="text"
+            placeholder="Add an item"
+            [(ngModel)]="newItem"
+          />
+          <button type="button" class="ghost" (click)="addItem()">
+            Add item
+          </button>
+        </div>
+        <div class="list">
+          <span class="list-item" *ngFor="let item of items; let i = index">
+            {{ item }}
+            <button type="button" (click)="removeItem(i)">×</button>
+          </span>
+        </div>
+      </div>
     </div>
     <button type="button" class="cta" (click)="runSample()">Run sample</button>
   </header>

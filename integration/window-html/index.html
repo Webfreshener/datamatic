@@ -58,6 +58,65 @@
         color: #4b5563;
       }
 
+      .controls {
+        margin-top: 16px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+      }
+
+      .controls-row {
+        display: flex;
+        gap: 10px;
+      }
+
+      .controls input {
+        flex: 1;
+        padding: 10px 12px;
+        border-radius: 10px;
+        border: 1px solid #f1b3d2;
+        font-size: 14px;
+      }
+
+      .ghost {
+        border: 1px solid #ff6ad5;
+        background: #fff0f8;
+        color: #b0005f;
+        padding: 10px 14px;
+        border-radius: 999px;
+        font-weight: 600;
+        cursor: pointer;
+      }
+
+      .list {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+
+      .list-item {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        background: #ffe3f1;
+        color: #9f124f;
+        border-radius: 999px;
+        padding: 6px 12px;
+        font-weight: 600;
+      }
+
+      .list-item button {
+        border: none;
+        background: #ff2d96;
+        color: #fff;
+        border-radius: 999px;
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        font-size: 12px;
+        line-height: 1;
+      }
+
       .cta {
         border: none;
         background: linear-gradient(135deg, #ff2d96, #ff6ad5);
@@ -119,6 +178,10 @@
         h1 {
           font-size: 26px;
         }
+
+        .controls-row {
+          flex-direction: column;
+        }
       }
     </style>
   </head>
@@ -132,6 +195,13 @@
             This example uses the global `window.datamatic` UMD build and renders
             pipeline output in the browser.
           </p>
+          <div class="controls">
+            <div class="controls-row">
+              <input id="item-input" type="text" placeholder="Add an item" />
+              <button type="button" class="ghost" id="add-item">Add item</button>
+            </div>
+            <div class="list" id="item-list"></div>
+          </div>
         </div>
         <button type="button" class="cta" id="run-sample">Run sample</button>
       </header>
@@ -155,6 +225,9 @@
       const errorPanel = document.getElementById('error-panel');
       const errorMessage = document.getElementById('error-message');
       const runButton = document.getElementById('run-sample');
+      const itemInput = document.getElementById('item-input');
+      const addItemButton = document.getElementById('add-item');
+      const itemList = document.getElementById('item-list');
 
       const api = window.datamatic;
       const pipeline = new api.Pipeline({
@@ -164,6 +237,9 @@
         }
       });
 
+      let items = ['alpha', 'beta', 'gamma'];
+      let intervalId = null;
+
       const setError = (message) => {
         if (message) {
           errorMessage.textContent = message;
@@ -172,6 +248,25 @@
           errorMessage.textContent = '';
           errorPanel.hidden = true;
         }
+      };
+
+      const renderItems = () => {
+        itemList.innerHTML = '';
+        items.forEach((item, index) => {
+          const chip = document.createElement('span');
+          chip.className = 'list-item';
+          chip.textContent = item;
+          const remove = document.createElement('button');
+          remove.type = 'button';
+          remove.textContent = '×';
+          remove.addEventListener('click', () => {
+            items = items.filter((_, i) => i !== index);
+            renderItems();
+            runSample();
+          });
+          chip.appendChild(remove);
+          itemList.appendChild(chip);
+        });
       };
 
       const render = (items) => {
@@ -198,12 +293,43 @@
         }
       });
 
-      const runSample = () => {
-        setError('');
-        pipeline.write(['alpha', 'beta', 'gamma']);
+      const startInterval = () => {
+        if (intervalId) {
+          clearInterval(intervalId);
+        }
+        let index = 0;
+        let current = [];
+        render([]);
+        intervalId = setInterval(() => {
+          if (index >= items.length) {
+            clearInterval(intervalId);
+            intervalId = null;
+            return;
+          }
+          current = current.concat(items[index]);
+          pipeline.write(current);
+          index += 1;
+        }, 600);
       };
 
+      const runSample = () => {
+        setError('');
+        startInterval();
+      };
+
+      addItemButton.addEventListener('click', () => {
+        const value = itemInput.value.trim();
+        if (!value) {
+          return;
+        }
+        items = items.concat(value);
+        itemInput.value = '';
+        renderItems();
+        runSample();
+      });
+
       runButton.addEventListener('click', runSample);
+      renderItems();
       runSample();
     </script>
   </body>

@@ -37,6 +37,65 @@ h1 {
   color: #475569;
 }
 
+.controls {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.controls-row {
+  display: flex;
+  gap: 10px;
+}
+
+.controls input {
+  flex: 1;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(226, 232, 240, 0.9);
+  font-size: 14px;
+}
+
+.ghost {
+  border: 1px solid #14b8a6;
+  background: #ecfeff;
+  color: #0f766e;
+  padding: 10px 14px;
+  border-radius: 999px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.list-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: #e0f2fe;
+  color: #0f766e;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-weight: 600;
+}
+
+.list-item button {
+  border: none;
+  background: #0f766e;
+  color: #fff;
+  border-radius: 999px;
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  font-size: 12px;
+  line-height: 1;
+}
+
 .cta {
   border: none;
   background: linear-gradient(135deg, #14b8a6, #0ea5e9);
@@ -97,5 +156,9 @@ h1 {
 
   h1 {
     font-size: 26px;
+  }
+
+  .controls-row {
+    flex-direction: column;
   }
 }

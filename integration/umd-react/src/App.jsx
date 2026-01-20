@@ -1,13 +1,15 @@
 import { useEffect, useRef, useState } from 'react';
 import './App.css';
 
-const sampleData = ['alpha', 'beta', 'gamma'];
 const getDatamatic = () => (typeof window === 'undefined' ? null : window.datamatic);
 
 function App() {
   const pipelineRef = useRef(null);
+  const intervalRef = useRef(null);
   const [data, setData] = useState([]);
   const [errorMessage, setErrorMessage] = useState('');
+  const [items, setItems] = useState(['alpha', 'beta', 'gamma']);
+  const [newItem, setNewItem] = useState('');
 
   if (!pipelineRef.current) {
     const api = getDatamatic();
@@ -37,14 +39,49 @@ function App() {
       }
     });
 
-    pipelineRef.current.write(sampleData);
+    runSample();
 
     return () => subscription?.unsubscribe?.();
   }, []);
 
-  const runSample = () => {
+  useEffect(() => () => clearInterval(intervalRef.current), []);
+
+  const addItem = () => {
+    const value = newItem.trim();
+    if (!value) {
+      return;
+    }
+    const nextItems = [...items, value];
+    setItems(nextItems);
+    setNewItem('');
+    runSample(nextItems);
+  };
+
+  const removeItem = (index) => {
+    const nextItems = items.filter((_, i) => i !== index);
+    setItems(nextItems);
+    runSample(nextItems);
+  };
+
+  const runSample = (list = items) => {
     setErrorMessage('');
-    pipelineRef.current?.write(sampleData);
+    if (!pipelineRef.current) {
+      return;
+    }
+    clearInterval(intervalRef.current);
+    setData([]);
+
+    let index = 0;
+    let current = [];
+    intervalRef.current = setInterval(() => {
+      if (index >= list.length) {
+        clearInterval(intervalRef.current);
+        return;
+      }
+      current = current.concat(list[index]);
+      pipelineRef.current.write(current);
+      index += 1;
+    }, 600);
   };
 
   return (
@@ -57,6 +94,29 @@ function App() {
             This example streams data from a Datamatic pipeline into a React
             component.
           </p>
+          <div className="controls">
+            <div className="controls-row">
+              <input
+                type="text"
+                value={newItem}
+                placeholder="Add an item"
+                onChange={(event) => setNewItem(event.target.value)}
+              />
+              <button type="button" className="ghost" onClick={addItem}>
+                Add item
+              </button>
+            </div>
+            <div className="list">
+              {items.map((item, index) => (
+                <span className="list-item" key={`${item}-${index}`}>
+                  {item}
+                  <button type="button" onClick={() => removeItem(index)}>
+                    ×
+                  </button>
+                </span>
+              ))}
+            </div>
+          </div>
         </div>
         <button type="button" className="cta" onClick={runSample}>
           Run sample
