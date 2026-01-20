@@ -25,7 +25,10 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+              "datamatic"
+            ]
           },
           "configurations": {
             "production": {
@@ -98,5 +101,8 @@
         }
       }
     }},
-  "defaultProject": "webapp-ng"
+  "defaultProject": "webapp-ng",
+  "cli": {
+    "analytics": false
+  }
 }
