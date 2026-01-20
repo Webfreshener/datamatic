@@ -1,5 +1,5 @@
 import {Model} from "./index"
-import ItemsModel from "./itemsModel";
+import {ItemsModel} from "./itemsModel";
 import {_schemaSignatures} from "./_references";
 import {basicModel} from "../../fixtures/PropertiesModel.schemas";
 import {default as basicRefs} from "../../fixtures/basic-refs.schema";

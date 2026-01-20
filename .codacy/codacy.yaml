@@ -13,3 +13,7 @@ tools:
     - revive@1.7.0
     - semgrep@1.78.0
     - trivy@0.66.0
+exclude_paths:
+  - "**/*.test.js"
+  - "**/*.spec.js"
+  - "**/__tests__/**"
