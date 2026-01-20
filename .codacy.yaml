@@ -7,4 +7,4 @@ exclude_paths:
   - "**/*.test.js"
   - "**/*.spec.js"
   - "**/__tests__/**"
-  - "**/integration/**"
+  - "integration/**"
