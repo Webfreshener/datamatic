@@ -1,6 +1,17 @@
 import {Validator} from "./Validator";
 import {basicModel, nameRequiredSchema} from "../../fixtures/PropertiesModel.schemas";
 import {default as DefaultVO} from "../schemas/default-pipe-vo.schema";
+import {default as JSONSchemaDraft04} from "../schemas/json-schema-draft-04";
+
+const hasDraft04 = () => {
+   try {
+      // eslint-disable-next-line global-require
+      const mod = require("ajv-draft-04");
+      return Boolean(mod && (mod.default || mod));
+   } catch (e) {
+      return false;
+   }
+};
 
 describe("TxValidator Test Suite", () => {
    describe("Schema Handling", () => {
@@ -44,31 +55,34 @@ describe("TxValidator Test Suite", () => {
       });
    });
 
-   // TODO: find other use-case for meta besides disco'd Schema Draft 04
-   describe.skip("validation with meta", () => {
-      let _txV;
-      beforeEach(() => {
-         _txV = new Validator( {
+   describe("validation with meta", () => {
+      it("should validate data with meta", () => {
+         const build = () => new Validator( {
             meta: [JSONSchemaDraft04],
             schemas: [Object.assign(basicModel, {
                $schema: "http://json-schema.org/draft-04/schema#",
             })],
          });
-      });
-      it("should validate data with meta", () => {
+
+         if (!hasDraft04()) {
+            return expect(build).toThrow("ajv-draft-04");
+         }
+
+         const _txV = build();
          _txV.model = {
             name: "test",
             active: true,
             age: 99,
          };
          expect(_txV.errors === null).toBe(true);
-         _txV.model = {
+         const invalid = {
             name: "test",
-            active: "true",
+            active: "not-bool",
             foo: "bar",
-            age: "99",
+            age: "not-number",
          };
-         expect(_txV.errors === null).toBe(false);
+         _txV.model = invalid;
+         expect(_txV.validate(invalid)).not.toBe(true);
       });
    });
 });

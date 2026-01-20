@@ -1,6 +1,7 @@
 import {AjvWrapper} from "./_ajvWrapper";
 import {default as TxArgsSchema} from "../schemas/pipe-args.schema";
 import {basicModel} from "../../fixtures/PropertiesModel.schemas";
+import {default as JSONSchemaDraft04} from "../schemas/json-schema-draft-04";
 
 describe("AJVWrapper Tests", () => {
     let _ajv = null;
@@ -10,7 +11,17 @@ describe("AJVWrapper Tests", () => {
         age: 99
     };
 
-    describe.only("AJV Schema Validation", () => {
+    const hasDraft04 = () => {
+        try {
+            // eslint-disable-next-line global-require
+            const mod = require("ajv-draft-04");
+            return Boolean(mod && (mod.default || mod));
+        } catch (e) {
+            return false;
+        }
+    };
+
+    describe("AJV Schema Validation", () => {
 
         it("should accept valid schemas", () => {
             let _ajv;
@@ -37,13 +48,16 @@ describe("AJVWrapper Tests", () => {
             expect(() => new AjvWrapper({schemas: [_04Schema],})).toThrow();
         });
 
-        // todo: find replacement for JSON schema 04 for metaschema
-        it.skip("should reject with meta-schema", () => {
-            // should fail with errors
-            expect(() => new AjvWrapper({
-                meta: [JSONSchemaV4],
+        it("handles draft-04 meta schema opt-in", () => {
+            const build = () => new AjvWrapper({
+                meta: [JSONSchemaDraft04],
                 schemas: [_04Schema]
-            })).toThrow();
+            });
+            if (hasDraft04()) {
+                expect(build).not.toThrow();
+            } else {
+                expect(build).toThrow("ajv-draft-04");
+            }
         });
     });
 
@@ -69,4 +83,3 @@ describe("AJVWrapper Tests", () => {
         });
     });
 });
-

@@ -7,6 +7,7 @@ describe("ObserverBuilder Unit Test Suite", () => {
         let _observer = null;
         let _observerForModel = null;
         let _model = null;
+        let _root = null;
         const _schema = {
             $id: "root#",
             type: "object",
@@ -28,7 +29,7 @@ describe("ObserverBuilder Unit Test Suite", () => {
             //     console.error(e);
             // }
 
-            const _root = new Model({
+            _root = new Model({
                 schemas: [_schema],
                 //     [{
                 //     $id: "root#",
@@ -42,7 +43,7 @@ describe("ObserverBuilder Unit Test Suite", () => {
                 // }]
             });
 
-            _model = new PropertiesModel(_root, "root#")
+            _model = _root.model.$model;
 
             _observerForModel = _observer.create(_model);
         });
@@ -76,23 +77,38 @@ describe("ObserverBuilder Unit Test Suite", () => {
             _observer.error(other, "bad");
         });
 
-        it.skip("should subscribe to observer and get value", function (done) {
+        it("should subscribe to observer and get value", async () => {
             const _data = {
                 name: "item-A",
                 active: true
             };
 
-            const _f = {
-                next: (o) => {
-                    expect(`${o}`).toBe(JSON.stringify(_data));
-                    done();
-                },
-                error: (e) => {
-                    done(e);
-                }
-            };
-            _model.subscribe(_f);
-            _model.model = _data;
+            await new Promise((resolve, reject) => {
+                const timeout = setTimeout(() => {
+                    reject(new Error("observer did not emit in time"));
+                }, 500);
+
+                const observer = _observer.getObserverForModel(_model);
+                observer.onNext.subscribe({
+                    next: (o) => {
+                        try {
+                            expect(`${o}`).toBe(JSON.stringify(_data));
+                            clearTimeout(timeout);
+                            resolve();
+                        } catch (e) {
+                            clearTimeout(timeout);
+                            reject(e);
+                        }
+                    },
+                    error: (e) => {
+                        clearTimeout(timeout);
+                        reject(e);
+                    }
+                });
+
+                _root.model = _data;
+                _observer.next(_model);
+            });
         });
     });
 });

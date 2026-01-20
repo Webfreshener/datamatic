@@ -85,6 +85,9 @@
     "webpack-cli": "^6.0.1",
     "webpack-rxjs-externals": "^2.0.0"
   },
+  "optionalDependencies": {
+    "ajv-draft-04": "^1.0.0"
+  },
   "jest": {
     "collectCoverage": true,
     "testPathIgnorePatterns": [
