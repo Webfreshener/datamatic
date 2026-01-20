@@ -64,17 +64,21 @@ export class AppComponent implements OnInit, OnDestroy {
       clearInterval(this.intervalId);
     }
     this.data = [];
+    const safeList = this.items.filter((item) => item.trim().length > 0);
+    if (safeList.length === 0) {
+      return;
+    }
     let index = 0;
     let current: string[] = [];
     this.intervalId = setInterval(() => {
-      if (index >= this.items.length) {
+      if (index >= safeList.length) {
         if (this.intervalId) {
           clearInterval(this.intervalId);
           this.intervalId = null;
         }
         return;
       }
-      current = current.concat(this.items[index]);
+      current = current.concat(safeList[index]);
       this.tx.write(current);
       index += 1;
     }, 600);

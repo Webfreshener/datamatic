@@ -37,6 +37,16 @@ RxJS + JSON-Schema (Ajv) Based Observable and Validating Data Models and Pipelin
 $ npm install datamatic
 ```
 
+### Demo Scripts
+Run the integration demos from the repo root:
+
+```
+npm run demo:window-html
+npm run demo:umd-react
+npm run demo:umd-angular
+npm run demo:commonjs
+```
+
 #### UMD Usage (React, Angular, Vue et al)
 ```
 import * as datamatic from "datamatic";
@@ -338,4 +348,3 @@ Represents an Properties (Object} entry in the given schema
 | unthrottle | discardCacheQueue (boolean) | Clears throttle interval. Optionally discards contents of `Pipeline` cache |
 | unlink | target (Pipeline)| unlinks `pipeline` segment from target `pipeline` |
 | write | data (object &#124; array &#124; string &#124; number &#124; boolean)| writes data to `pipeline` |
-

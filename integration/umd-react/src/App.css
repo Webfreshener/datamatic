@@ -149,6 +149,12 @@ h1 {
   color: #b91c1c;
 }
 
+.error pre {
+  margin: 0;
+  white-space: pre-wrap;
+  font-family: "IBM Plex Mono", "SFMono-Regular", monospace;
+}
+
 @media (max-width: 700px) {
   .hero {
     flex-direction: column;

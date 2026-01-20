@@ -23,6 +23,26 @@ function App() {
     }
   }
 
+  const formatError = (error) => {
+    if (!error) {
+      return 'Unknown error';
+    }
+    if (typeof error === 'string') {
+      return error;
+    }
+    if (error instanceof Error) {
+      return error.message;
+    }
+    try {
+      return JSON.stringify(error, null, 2);
+    } catch (stringifyError) {
+      return String(error);
+    }
+  };
+
+  const normalizeList = (list) =>
+    list.filter((item) => typeof item === 'string' && item.trim().length > 0);
+
   useEffect(() => {
     const api = getDatamatic();
     if (!api?.Pipeline) {
@@ -35,7 +55,7 @@ function App() {
         setData(Array.isArray(payload) ? payload : []);
       },
       error: (error) => {
-        setErrorMessage(`${error ?? 'Unknown error'}`);
+        setErrorMessage(formatError(error));
       }
     });
 
@@ -63,7 +83,8 @@ function App() {
     runSample(nextItems);
   };
 
-  const runSample = (list = items) => {
+  const runSample = (listOrEvent) => {
+    const list = Array.isArray(listOrEvent) ? listOrEvent : items;
     setErrorMessage('');
     if (!pipelineRef.current) {
       return;
@@ -71,14 +92,19 @@ function App() {
     clearInterval(intervalRef.current);
     setData([]);
 
+    const safeList = normalizeList(list);
+    if (safeList.length === 0) {
+      return;
+    }
+
     let index = 0;
     let current = [];
     intervalRef.current = setInterval(() => {
-      if (index >= list.length) {
+      if (index >= safeList.length) {
         clearInterval(intervalRef.current);
         return;
       }
-      current = current.concat(list[index]);
+      current = current.concat(safeList[index]);
       pipelineRef.current.write(current);
       index += 1;
     }, 600);
@@ -141,7 +167,7 @@ function App() {
       {errorMessage ? (
         <section className="panel error">
           <h2>Errors</h2>
-          <p>{errorMessage}</p>
+          <pre>{errorMessage}</pre>
         </section>
       ) : null}
     </div>

@@ -239,6 +239,8 @@
 
       let items = ['alpha', 'beta', 'gamma'];
       let intervalId = null;
+      const normalizeList = (list) =>
+        list.filter((item) => typeof item === 'string' && item.trim().length > 0);
 
       const setError = (message) => {
         if (message) {
@@ -300,13 +302,17 @@
         let index = 0;
         let current = [];
         render([]);
+        const safeList = normalizeList(items);
+        if (safeList.length === 0) {
+          return;
+        }
         intervalId = setInterval(() => {
-          if (index >= items.length) {
+          if (index >= safeList.length) {
             clearInterval(intervalId);
             intervalId = null;
             return;
           }
-          current = current.concat(items[index]);
+          current = current.concat(safeList[index]);
           pipeline.write(current);
           index += 1;
         }, 600);

@@ -2,7 +2,7 @@
   display: block;
   font-family: "IBM Plex Sans", "Segoe UI", sans-serif;
   color: #1b1f24;
-  background: radial-gradient(circle at top, #fef4e8 0%, #f7f3ef 40%, #eef1f5 100%);
+  background: radial-gradient(circle at top, #ffe5d0 0%, #fff3e8 45%, #fff9f5 100%);
   min-height: 100vh;
 }
 
@@ -28,7 +28,7 @@
   letter-spacing: 0.2em;
   font-size: 12px;
   margin: 0 0 8px;
-  color: #8a4b2e;
+  color: #f97316;
 }
 
 h1 {
@@ -63,9 +63,9 @@ h1 {
 }
 
 .ghost {
-  border: 1px solid #ff6ad5;
-  background: #fff0f8;
-  color: #b0005f;
+  border: 1px solid #f97316;
+  background: #fff3e8;
+  color: #c2410c;
   padding: 10px 14px;
   border-radius: 999px;
   font-weight: 600;
@@ -82,8 +82,8 @@ h1 {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: #ffe3f1;
-  color: #9f124f;
+  background: #ffedd5;
+  color: #c2410c;
   border-radius: 999px;
   padding: 6px 12px;
   font-weight: 600;
@@ -91,7 +91,7 @@ h1 {
 
 .list-item button {
   border: none;
-  background: #ff2d96;
+  background: #f97316;
   color: #fff;
   border-radius: 999px;
   width: 20px;
