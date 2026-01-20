@@ -34,13 +34,12 @@ describe("Model Instance Test", () => {
 
     it("runs schema validator", () => {
         const _owner = new Model({
-            properties:
-                {
-                    id: {type: 'integer'},
-                    name: {type: 'string'},
-                    value: {type: 'integer'},
-                    createdOn: {type: 'string'}
-                },
+            properties: {
+                id: {type: "integer"},
+                name: {type: "string"},
+                value: {type: "integer"},
+                createdOn: {type: "string"}
+            },
         });
 
         expect(_owner.errors).toBe(null);

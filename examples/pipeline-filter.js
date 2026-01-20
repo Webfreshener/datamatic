@@ -40,7 +40,7 @@ pipeline.subscribe({
     // should only contain active people who are 21 and over and name pattern match
     next: (d) => console.log(`filtered results:\n${JSON.stringify(d)}`),
     // it should not encounter an error unless it is critical, so full stop
-    error: (e) => throw(`pipeline encountered error:\n${JSON.stringify(e)}`),
+    error: (e) => { throw(`pipeline encountered error:\n${JSON.stringify(e)}`) },
 });
 
 pipeline.write([
