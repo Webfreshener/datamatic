@@ -19,6 +19,7 @@
     "build": "webpack --mode production",
     "docs": "./node_modules/.bin/esdoc",
     "report": "$HOME/Library/Caches/Codacy/coverage-reporter/11.9.2/codacy-coverage-reporter report",
+    "release": "bash scripts/release.sh",
     "demo:window-html": "open integration/window-html/index.html",
     "demo:umd-react": "npm --prefix integration/umd-react run dev",
     "demo:umd-angular": "npm --prefix integration/umd-angular start",
