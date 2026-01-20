@@ -14,7 +14,7 @@
   "scripts": {
     "test": "jest",
     "clear-tests": "jest --clearCache",
-    "cover": "jest --coverage && cat ./coverage/lcov.info | codacy-coverage --token \"$CODACY_PROJECT_TOKEN\"",
+    "cover": "jest --coverage && codacy-cli analyze --config .codacy/codacy.yaml",
     "build-test": "webpack --mode development; npm test",
     "build": "webpack --mode production",
     "docs": "./node_modules/.bin/esdoc",
@@ -23,6 +23,9 @@
     "demo:umd-react": "npm --prefix integration/umd-react run dev",
     "demo:umd-angular": "npm --prefix integration/umd-angular start",
     "demo:commonjs": "node integration/commonjs-node/index.js"
+  },
+  "engines": {
+    "node": "24.13.0"
   },
   "files": [
     "index.js",

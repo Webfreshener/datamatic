@@ -1,0 +1,52 @@
+rules:
+  - id: js-no-eval
+    pattern: eval(...)
+    message: "Avoid eval; use safer alternatives."
+    languages: [javascript, typescript]
+    severity: WARNING
+
+  - id: js-no-new-function
+    pattern: new Function(...)
+    message: "Avoid Function constructor; it is hard to audit and debug."
+    languages: [javascript, typescript]
+    severity: WARNING
+
+  - id: js-no-implied-eval-settimeout
+    pattern: setTimeout("...", ...)
+    message: "Avoid string arguments to setTimeout; pass a function instead."
+    languages: [javascript, typescript]
+    severity: WARNING
+
+  - id: js-no-implied-eval-setinterval
+    pattern: setInterval("...", ...)
+    message: "Avoid string arguments to setInterval; pass a function instead."
+    languages: [javascript, typescript]
+    severity: WARNING
+
+  - id: js-use-strict-equality
+    pattern-either:
+      - pattern: $X == $Y
+      - pattern: $X != $Y
+    message: "Use strict equality (===/!==) for predictable behavior."
+    languages: [javascript, typescript]
+    severity: WARNING
+
+  - id: js-avoid-var
+    pattern-either:
+      - pattern: var $X = ...
+      - pattern: var $X;
+    message: "Avoid var; use let or const."
+    languages: [javascript, typescript]
+    severity: INFO
+
+  - id: js-parseint-without-radix
+    pattern: parseInt($X)
+    message: "Specify a radix when using parseInt."
+    languages: [javascript, typescript]
+    severity: WARNING
+
+  - id: js-no-new-array
+    pattern: new Array(...)
+    message: "Prefer array literals [] for clarity."
+    languages: [javascript, typescript]
+    severity: INFO
