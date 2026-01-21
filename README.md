@@ -160,7 +160,8 @@ obj.model.topScores[0].score = "1234";
 delete obj.model.topScores;
 
 ```
-Refer to the examples demo in `./examples/basic-usage` for more usage examples
+Refer to `examples/model-example.js`, `examples/pipeline-filter.js`, and
+`examples/pipeline-validate.js` for more usage examples
 
 #### Data Pipelines and Transformation ####
 ```
@@ -239,7 +240,7 @@ This class represents the Document entry point
 | subscribeTo   |  path (string), observers (object) | Subscribes Observers to the Model at path 
 | toString   | | retrieves root model as JSON String |
 | toJSON   | | retrieves root model as JSON Object |
-| validate   | path (string), value (object) | validates data at given ath against JSON-Schema |
+| validate   | path (string), value (object) | validates data at given path against JSON-Schema |
 | *static* fromJSON   | json (string &#124; object) | creates new Model from static method |
 
 ##### Model Schemas Config
@@ -294,7 +295,7 @@ Note: the `model` param presents a Proxied Array, with all `Array.prototype` met
 #### PropertiesModel ####
 ###### subclass of [Model Class](#model-class)
 
-Represents an Properties (Object} entry in the given schema
+Represents a Properties (Object) entry in the given schema
 
 | Method        | Arguments | Description  |
 |:--------------|:----------|:-------|
@@ -307,7 +308,7 @@ Represents an Properties (Object} entry in the given schema
 | Method        | Arguments | Description  |
 |:--------------|:----------|:-------|
 | freeze | | applies Object.freeze to model hierarchy |
-| isDirty [getter]   | | returns dirtyness of model heirarchy (is dirty if operation in progress) |
+| isDirty [getter]   | | returns dirtiness of model hierarchy (is dirty if operation in progress) |
 | isFrozen [getter]   | | returns Object.freeze status of Model hierarchy |
 | jsonPath [getter]   | | retrieves json path string for Model instance. eg: "this.is.my.path" |
 | objectID [getter]   | | retrieves Unique ObjectID of Model instance |
@@ -322,7 +323,7 @@ Represents an Properties (Object} entry in the given schema
 | subscribeTo   |  path (string), observers (object) | Subscribes Observers to the Model at path |
 | toString   | | retrieves root model as JSON String |
 | toJSON   | | retrieves root model as JSON Object |
-| validate   | path (string), value (object) | validates data at given ath against JSON-Schema |
+| validate   | path (string), value (object) | validates data at given path against JSON-Schema |
 | validationPath [getter] | | retrieves json-schema path string for Model validation |
 
 #### Pipeline Class ####

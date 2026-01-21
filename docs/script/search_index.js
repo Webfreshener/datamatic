@@ -12,12 +12,6 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
-    "datamatic/src/ajvwrapper.js~ajvwrapper",
-    "class/src/ajvWrapper.js~AjvWrapper.html",
-    "<span>AjvWrapper</span> <span class=\"search-result-import-path\">datamatic/src/ajvWrapper.js</span>",
-    "class"
-  ],
-  [
     "datamatic/src/model/base-model.js~basemodel",
     "class/src/Model/base-model.js~BaseModel.html",
     "<span>BaseModel</span> <span class=\"search-result-import-path\">datamatic/src/Model/base-model.js</span>",
@@ -108,9 +102,27 @@ window.esdocSearchIndex = [
     "class"
   ],
   [
+    "datamatic/src/model/_branchnotifier.js~_completenotification",
+    "variable/index.html#static-variable-_CompleteNotification",
+    "<span>_CompleteNotification</span> <span class=\"search-result-import-path\">datamatic/src/Model/_branchNotifier.js</span>",
+    "variable"
+  ],
+  [
+    "datamatic/src/model/_branchnotifier.js~_errornotification",
+    "variable/index.html#static-variable-_ErrorNotification",
+    "<span>_ErrorNotification</span> <span class=\"search-result-import-path\">datamatic/src/Model/_branchNotifier.js</span>",
+    "variable"
+  ],
+  [
     "datamatic/src/model/_references.js~_ajvref",
     "variable/index.html#static-variable-_ajvRef",
     "<span>_ajvRef</span> <span class=\"search-result-import-path\">datamatic/src/Model/_references.js</span>",
+    "variable"
+  ],
+  [
+    "datamatic/src/pipeline/properties.js~_defaultpipefortests",
+    "variable/index.html#static-variable-_defaultPipeForTests",
+    "<span>_defaultPipeForTests</span> <span class=\"search-result-import-path\">datamatic/src/Pipeline/Properties.js</span>",
     "variable"
   ],
   [
@@ -207,12 +219,6 @@ window.esdocSearchIndex = [
     "datamatic/src/model/utils.js~getschemaid",
     "function/index.html#static-function-getSchemaID",
     "<span>getSchemaID</span> <span class=\"search-result-import-path\">datamatic/src/Model/utils.js</span>",
-    "function"
-  ],
-  [
-    "datamatic/src/pipeline/utils.js~handleasync",
-    "function/index.html#static-function-handleAsync",
-    "<span>handleAsync</span> <span class=\"search-result-import-path\">datamatic/src/Pipeline/Utils.js</span>",
     "function"
   ],
   [
@@ -544,6 +550,12 @@ window.esdocSearchIndex = [
     "https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/undefined",
     "src/.external-ecmascript.js~undefined",
     "external"
+  ],
+  [
+    "src/model/_ajvwrapper-mock.test.js",
+    "file/src/Model/_ajvWrapper-mock.test.js.html",
+    "src/Model/_ajvWrapper-mock.test.js",
+    "file"
   ],
   [
     "src/model/_ajvwrapper.js",
@@ -960,6 +972,12 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/model/coverage-extra.test.js",
+    "file/src/Model/coverage-extra.test.js.html",
+    "src/Model/coverage-extra.test.js",
+    "file"
+  ],
+  [
     "src/model/index.js",
     "file/src/Model/index.js.html",
     "src/Model/index.js",
@@ -1143,6 +1161,12 @@ window.esdocSearchIndex = [
     "src/model/model-rxjs.test.js",
     "file/src/Model/model-rxjs.test.js.html",
     "src/Model/model-rxjs.test.js",
+    "file"
+  ],
+  [
+    "src/model/observability.test.js",
+    "file/src/Model/observability.test.js.html",
+    "src/Model/observability.test.js",
     "file"
   ],
   [
@@ -1572,6 +1596,12 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
+    "src/pipeline/_ajvwrapper-mock.test.js",
+    "file/src/Pipeline/_ajvWrapper-mock.test.js.html",
+    "src/Pipeline/_ajvWrapper-mock.test.js",
+    "file"
+  ],
+  [
     "src/pipeline/_ajvwrapper.js",
     "file/src/Pipeline/_ajvWrapper.js.html",
     "src/Pipeline/_ajvWrapper.js",
@@ -1617,6 +1647,12 @@ window.esdocSearchIndex = [
     "src/pipeline/_ajvwrapper.test.js",
     "file/src/Pipeline/_ajvWrapper.test.js.html",
     "src/Pipeline/_ajvWrapper.test.js",
+    "file"
+  ],
+  [
+    "src/pipeline/coverage-extra.test.js",
+    "file/src/Pipeline/coverage-extra.test.js.html",
+    "src/Pipeline/coverage-extra.test.js",
     "file"
   ],
   [
@@ -1680,42 +1716,6 @@ window.esdocSearchIndex = [
     "file"
   ],
   [
-    "src/ajvwrapper.js",
-    "file/src/ajvWrapper.js.html",
-    "src/ajvWrapper.js",
-    "file"
-  ],
-  [
-    "src/ajvwrapper.js~ajvwrapper#constructor",
-    "class/src/ajvWrapper.js~AjvWrapper.html#instance-constructor-constructor",
-    "src/ajvWrapper.js~AjvWrapper#constructor",
-    "method"
-  ],
-  [
-    "src/ajvwrapper.js~ajvwrapper#errors",
-    "class/src/ajvWrapper.js~AjvWrapper.html#instance-get-errors",
-    "src/ajvWrapper.js~AjvWrapper#errors",
-    "member"
-  ],
-  [
-    "src/ajvwrapper.js~ajvwrapper#exec",
-    "class/src/ajvWrapper.js~AjvWrapper.html#instance-method-exec",
-    "src/ajvWrapper.js~AjvWrapper#exec",
-    "method"
-  ],
-  [
-    "src/ajvwrapper.js~ajvwrapper#path",
-    "class/src/ajvWrapper.js~AjvWrapper.html#instance-member-path",
-    "src/ajvWrapper.js~AjvWrapper#path",
-    "member"
-  ],
-  [
-    "src/ajvwrapper.js~ajvwrapper.resolvepath",
-    "class/src/ajvWrapper.js~AjvWrapper.html#static-method-resolvePath",
-    "src/ajvWrapper.js~AjvWrapper.resolvePath",
-    "method"
-  ],
-  [
     "src/complex-schema.test.js",
     "file/src/complex-schema.test.js.html",
     "src/complex-schema.test.js",
@@ -1725,6 +1725,12 @@ window.esdocSearchIndex = [
     "src/dist.test.js",
     "file/src/dist.test.js.html",
     "src/dist.test.js",
+    "file"
+  ],
+  [
+    "src/index-polyfill.test.js",
+    "file/src/index-polyfill.test.js.html",
+    "src/index-polyfill.test.js",
     "file"
   ],
   [
@@ -1749,6 +1755,12 @@ window.esdocSearchIndex = [
     "src/schemas/pipe-args.schema.js",
     "file/src/schemas/pipe-args.schema.js.html",
     "src/schemas/pipe-args.schema.js",
+    "file"
+  ],
+  [
+    "src/static-modules.test.js",
+    "file/src/static-modules.test.js.html",
+    "src/static-modules.test.js",
     "file"
   ]
 ]

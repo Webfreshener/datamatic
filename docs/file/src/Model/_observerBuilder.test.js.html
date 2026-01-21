@@ -29,8 +29,7 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
-<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#model">Model</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
+  <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#model">Model</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_branchNotifier.js~Notifiers.html">Notifiers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_metaData.js~MetaData.html">MetaData</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_observerBuilder.js~ObserverBuilder.html">ObserverBuilder</a></span></span></li>
@@ -48,6 +47,8 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refValidation">refValidation</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-validate">validate</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-walkObject">walkObject</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_CompleteNotification">_CompleteNotification</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ErrorNotification">_ErrorNotification</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ajvRef">_ajvRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_dirtyModels">_dirtyModels</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span></li>
@@ -69,9 +70,9 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/vxBehaviorSubject.js~VxBehaviorSubject.html">VxBehaviorSubject</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-castToExec">castToExec</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-fill">fill</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-handleAsync">handleAsync</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-mapArgs">mapArgs</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-wrapCallback">wrapCallback</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_defaultPipeForTests">_defaultPipeForTests</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_observers">_observers</a></span></span></li>
 </ul>
 </div>
@@ -87,6 +88,7 @@ describe(&quot;ObserverBuilder Unit Test Suite&quot;, () =&gt; {
         let _observer = null;
         let _observerForModel = null;
         let _model = null;
+        let _root = null;
         const _schema = {
             $id: &quot;root#&quot;,
             type: &quot;object&quot;,
@@ -108,7 +110,7 @@ describe(&quot;ObserverBuilder Unit Test Suite&quot;, () =&gt; {
             //     console.error(e);
             // }
 
-            const _root = new Model({
+            _root = new Model({
                 schemas: [_schema],
                 //     [{
                 //     $id: &quot;root#&quot;,
@@ -122,7 +124,7 @@ describe(&quot;ObserverBuilder Unit Test Suite&quot;, () =&gt; {
                 // }]
             });
 
-            _model = new PropertiesModel(_root, &quot;root#&quot;)
+            _model = _root.model.$model;
 
             _observerForModel = _observer.create(_model);
         });
@@ -132,23 +134,62 @@ describe(&quot;ObserverBuilder Unit Test Suite&quot;, () =&gt; {
                 .toEqual([&apos;path&apos;, &apos;jsonPath&apos;, &apos;targetId&apos;, &apos;onNext&apos;, &apos;onError&apos;, &apos;onComplete&apos;]);
         });
 
-        it.skip(&quot;should subscribe to observer and get value&quot;, function (done) {
+        it(&quot;returns existing observer when path is cached&quot;, () =&gt; {
+            const originalGetObserverForPath = _observer.getObserverForPath;
+            _observer.getObserverForPath = () =&gt; ({path: _model.path});
+            expect(_observer.create(_model)).toBe(_observerForModel);
+            _observer.getObserverForPath = originalGetObserverForPath;
+        });
+
+        it(&quot;returns cached model observer when path is missing&quot;, () =&gt; {
+            const originalGetObserverForPath = _observer.getObserverForPath;
+            const other = new PropertiesModel(new Model({schemas: [_schema]}), &quot;other#&quot;);
+            _observer.getObserverForPath = () =&gt; ({path: other.path});
+            expect(_observer.create(other)).toBeUndefined();
+            _observer.getObserverForPath = originalGetObserverForPath;
+        });
+
+        it(&quot;returns null for unknown model and skips notifications&quot;, () =&gt; {
+            const other = new PropertiesModel(new Model({schemas: [_schema]}), &quot;other#&quot;);
+            expect(_observer.getObserverForModel(other)).toBeNull();
+            _observer.next({isDirty: true});
+            _observer.next(other);
+            _observer.complete(other);
+            _observer.error(other, &quot;bad&quot;);
+        });
+
+        it(&quot;should subscribe to observer and get value&quot;, async () =&gt; {
             const _data = {
                 name: &quot;item-A&quot;,
                 active: true
             };
 
-            const _f = {
-                next: (o) =&gt; {
-                    expect(`${o}`).toBe(JSON.stringify(_data));
-                    done();
-                },
-                error: (e) =&gt; {
-                    done(e);
-                }
-            };
-            _model.subscribe(_f);
-            _model.model = _data;
+            await new Promise((resolve, reject) =&gt; {
+                const timeout = setTimeout(() =&gt; {
+                    reject(new Error(&quot;observer did not emit in time&quot;));
+                }, 500);
+
+                const observer = _observer.getObserverForModel(_model);
+                observer.onNext.subscribe({
+                    next: (o) =&gt; {
+                        try {
+                            expect(`${o}`).toBe(JSON.stringify(_data));
+                            clearTimeout(timeout);
+                            resolve();
+                        } catch (e) {
+                            clearTimeout(timeout);
+                            reject(e);
+                        }
+                    },
+                    error: (e) =&gt; {
+                        clearTimeout(timeout);
+                        reject(e);
+                    }
+                });
+
+                _root.model = _data;
+                _observer.next(_model);
+            });
         });
     });
 });

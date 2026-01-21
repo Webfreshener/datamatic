@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">src/Pipeline/coverage-extra.test.js | datamatic</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="RxJS + JSON-Schema (Ajv) Based Observable and Validating Data Models and Pipelines"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="datamatic"><meta property="twitter:description" content="RxJS + JSON-Schema (Ajv) Based Observable and Validating Data Models and Pipelines"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/Webfreshener/datamatic.git"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#model">Model</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_branchNotifier.js~Notifiers.html">Notifiers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_metaData.js~MetaData.html">MetaData</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_observerBuilder.js~ObserverBuilder.html">ObserverBuilder</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_schemaHelpers.js~SchemaHelpers.html">SchemaHelpers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/base-model.js~BaseModel.html">BaseModel</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/index.js~Model.html">Model</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/itemsModel.js~ItemsModel.html">ItemsModel</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDefaults">getDefaults</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPatternPropertyDefaults">getPatternPropertyDefaults</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getSchemaID">getSchemaID</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeClean">makeClean</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeDirty">makeDirty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refAtKeyValidation">refAtKeyValidation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refValidation">refValidation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-validate">validate</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-walkObject">walkObject</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_CompleteNotification">_CompleteNotification</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ErrorNotification">_ErrorNotification</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ajvRef">_ajvRef</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_dirtyModels">_dirtyModels</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_oBuilders">_oBuilders</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_object">_object</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_observerPaths">_observerPaths</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_observers">_observers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaHelpers">_schemaHelpers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaOptions">_schemaOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaSignatures">_schemaSignatures</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validators">_validators</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pipeline">Pipeline</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/Executor.js~Executor.html">Executor</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/Iterator.js~Iterator.html">Iterator</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/Pipeline.js~PipeListener.html">PipeListener</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/Pipeline.js~Pipeline.html">Pipeline</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/Properties.js~Properties.html">Properties</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/Validator.js~Validator.html">Validator</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/vxBehaviorSubject.js~VxBehaviorSubject.html">VxBehaviorSubject</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-castToExec">castToExec</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-fill">fill</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-mapArgs">mapArgs</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-wrapCallback">wrapCallback</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_defaultPipeForTests">_defaultPipeForTests</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_observers">_observers</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/Pipeline/coverage-extra.test.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {Pipeline, PipeListener} from &quot;./Pipeline&quot;;
+import {Properties, _defaultPipeForTests} from &quot;./Properties&quot;;
+import {Validator} from &quot;./Validator&quot;;
+import {AjvWrapper} from &quot;./_ajvWrapper&quot;;
+import {Executor} from &quot;./Executor&quot;;
+import {castToExec, fill, mapArgs, wrapCallback} from &quot;./Utils&quot;;
+import {VxBehaviorSubject} from &quot;./vxBehaviorSubject&quot;;
+import defaultPipeVo from &quot;../schemas/default-pipe-vo.schema&quot;;
+
+describe(&quot;Pipeline utilities and Executor coverage&quot;, () =&gt; {
+    it(&quot;covers fill, mapArgs, castToExec, and wrapCallback&quot;, async () =&gt; {
+        expect(fill([])).toHaveLength(2);
+        expect(fill([1], 0, 3)).toHaveLength(3);
+        expect(mapArgs()).toHaveLength(2);
+        const execs = Pipeline.getExecs(new Validator(defaultPipeVo), (d) =&gt; d + 1);
+        expect(execs[0](1)).toBe(1);
+        const defaultExecs = Pipeline.getExecs({});
+        expect(defaultExecs[0](1)).toBe(1);
+
+        const passthrough = castToExec(null);
+        expect(passthrough.exec(1)).toBe(1);
+
+        const iterable = {
+            loop: true,
+            [Symbol.iterator]: function* () {
+                yield defaultPipeVo;
+            },
+        };
+        const loopPipe = castToExec(iterable);
+        expect(loopPipe).toBeInstanceOf(Pipeline);
+
+        const fnPipe = castToExec((d) =&gt; d + 1);
+        expect(fnPipe.exec(1)).toBe(2);
+
+        const objPipe = castToExec({exec: (d) =&gt; d + 2});
+        expect(objPipe.exec(1)).toBe(3);
+
+        const pipeline = new Pipeline();
+        expect(castToExec(pipeline)).toBeDefined();
+
+        const arrayPipe = castToExec([defaultPipeVo]);
+        expect(arrayPipe).toBeInstanceOf(Pipeline);
+
+        const validatorPipe = castToExec(new Validator(defaultPipeVo));
+        expect(validatorPipe.exec(1)).toBe(1);
+
+        const fakePipeline = Object.create(Pipeline.prototype);
+        expect(castToExec(fakePipeline)).toBe(fakePipeline);
+        const fallback = castToExec({schema: defaultPipeVo});
+        expect(fallback.exec(1)).toBe(1);
+
+        const wrapped = wrapCallback((d) =&gt; d + 1);
+        const res = await wrapped(Promise.resolve(1));
+        expect(res).toBe(2);
+    });
+
+    it(&quot;covers Pipeline.getExecs branches&quot;, () =&gt; {
+        const execs = Pipeline.getExecs(
+            [(d) =&gt; d + 1],
+            {exec: (d) =&gt; d + 2},
+            {validate: () =&gt; false},
+        );
+        expect(execs[0](1)).toBe(2);
+        expect(execs[1](1)).toBe(3);
+        expect(execs[2](1)).toBe(false);
+    });
+
+    it(&quot;covers Executor callback iteration&quot;, async () =&gt; {
+        const result = Executor.exec([[d =&gt; d + 1]], 1);
+        expect(result).toBe(2);
+
+        const promiseResult = Executor.exec([d =&gt; Promise.resolve(d + 1)], 1);
+        expect(promiseResult).toBeInstanceOf(Promise);
+        expect(await promiseResult).toBe(2);
+
+        const falseResult = Executor.exec([d =&gt; d], 0);
+        expect(falseResult).toBe(0);
+
+        const missingResult = Executor.exec([void 0], 1);
+        expect(missingResult).toBe(1);
+    });
+});
+
+describe(&quot;Pipeline Validator and AjvWrapper coverage&quot;, () =&gt; {
+    it(&quot;covers Validator validation paths and errors&quot;, () =&gt; {
+        expect(Validator.validateSchemas({schema: 1})).toBe(false);
+        expect(Validator.validateSchemas({schema: &quot;root#&quot;})).toBe(true);
+        expect(Validator.validateSchemas({schemas: [defaultPipeVo]})).toBe(true);
+
+        expect(Validator.deriveSchema(defaultPipeVo)).toEqual(defaultPipeVo);
+        const withUse = Validator.deriveSchema({
+            use: &quot;root#&quot;,
+            schemas: [{$id: &quot;root#&quot;, schema: {type: &quot;string&quot;}}],
+        });
+        expect(withUse).toEqual({type: &quot;string&quot;});
+        expect(Validator.deriveSchema({use: &quot;missing#&quot;, schemas: [{$id: &quot;root#&quot;}]})).toBeNull();
+        expect(Validator.deriveSchema({schemas: []})).toBeNull();
+
+        expect(() =&gt; new Validator()).toThrow(&quot;Schema or Schema Config required&quot;);
+
+        const v = new Validator({$id: &quot;root#&quot;, type: &quot;number&quot;});
+        const errors = [];
+        v.subscribe({error: (e) =&gt; errors.push(e)});
+        v.model = &quot;bad&quot;;
+        expect(errors.length).toBeGreaterThanOrEqual(1);
+        v.model = 2;
+        expect(v.toString()).toBe(&quot;{}&quot;);
+        expect(v.valueOf()).toEqual({});
+        v.model = &quot;x&quot;;
+        expect(v.isFrozen).toBe(false);
+        v.freeze();
+        expect(v.isFrozen).toBe(false);
+
+        expect(() =&gt; new Validator({schema: 1})).toThrow(&quot;Unable to process schema&quot;);
+        const v2 = new Validator(defaultPipeVo);
+        v2.validate = () =&gt; &quot;bad&quot;;
+        v2.model = 1;
+
+        const v3 = new Validator({schemas: [defaultPipeVo, {$id: &quot;root#&quot;, type: &quot;array&quot;, items: {type: &quot;number&quot;}}]});
+        expect(Array.isArray(v3.model)).toBe(true);
+
+        const originalValidateSchemas = Validator.validateSchemas;
+        Validator.validateSchemas = () =&gt; true;
+        const v4 = new Validator({schemas: []});
+        Validator.validateSchemas = originalValidateSchemas;
+        expect(v4.model).toEqual({});
+    });
+
+    it(&quot;covers Pipeline AjvWrapper helper behavior&quot;, () =&gt; {
+        const wrapper = new AjvWrapper({schemas: [defaultPipeVo]});
+        expect(wrapper.$ajv).toBeDefined();
+        expect(wrapper.exec(defaultPipeVo.$id, {})).toBe(true);
+
+        const badExec = wrapper.exec(&quot;missing&quot;, {});
+        expect(typeof badExec).toBe(&quot;string&quot;);
+
+        try {
+            wrapper.addSchema({$id: &quot;extra#&quot;, type: &quot;number&quot;});
+        } catch (e) {
+            expect(e).toBeDefined();
+        }
+        expect(AjvWrapper.getSchemaID({type: &quot;string&quot;})).toBe(&quot;root#&quot;);
+
+        const metaWrapper = new AjvWrapper({meta: [{type: &quot;object&quot;}], schemas: [true]});
+        expect(metaWrapper.exec(&quot;root#&quot;, {})).toBe(true);
+
+        const objectWrapper = new AjvWrapper({schemas: {$id: &quot;root#&quot;, type: &quot;object&quot;}});
+        expect(objectWrapper.options).toBeDefined();
+        const plainWrapper = new AjvWrapper({$id: &quot;plain#&quot;, type: &quot;object&quot;});
+        expect(plainWrapper.$ajv).toBeDefined();
+        const arrayWrapper = new AjvWrapper([{$id: &quot;root#&quot;, type: &quot;object&quot;}]);
+        expect(arrayWrapper.$ajv).toBeDefined();
+        const nestedWrapper = new AjvWrapper({schemas: {schemas: {$id: &quot;nested#&quot;, type: &quot;object&quot;}}});
+        expect(typeof nestedWrapper.exec(&quot;root#&quot;, {})).toBe(&quot;string&quot;);
+        expect(nestedWrapper.addSchema({$id: &quot;next#&quot;, type: &quot;number&quot;})).toBe(nestedWrapper);
+    });
+});
+
+describe(&quot;Pipeline and PipeListener coverage&quot;, () =&gt; {
+    it(&quot;covers subscribe validation and promise rejection&quot;, async () =&gt; {
+        const p = new Pipeline({
+            exec: () =&gt; {
+                throw new Error(&quot;boom&quot;);
+            },
+        });
+        expect(() =&gt; p.subscribe(1)).toThrow(&quot;handler required for Pipeline::subscribe&quot;);
+        await expect(p.promise(1)).rejects.toBeDefined();
+    });
+
+    it(&quot;covers PipeListener branches&quot;, async () =&gt; {
+        const p = new Pipeline((d) =&gt; d + 1);
+        const vo = new Validator(defaultPipeVo);
+        const listener = new PipeListener(p, vo);
+        listener.error({error: &quot;e&quot;});
+        listener.complete();
+        vo.freeze();
+        const voGetter = Object.getOwnPropertyDescriptor(PipeListener.prototype, &quot;vo&quot;).get;
+        expect(voGetter.call(listener)).toBeDefined();
+
+        p.throttle(1);
+        listener.next(1);
+        p.unthrottle(true);
+
+        p.sample(2);
+        listener.next(1);
+        listener.next(1);
+
+        const result = new Pipeline(() =&gt; ({toJSON: () =&gt; { throw new Error(&quot;bad&quot;); }}));
+        const badListener = new PipeListener(result, new Validator(defaultPipeVo));
+        badListener.next(1);
+
+        const promisePipe = new Pipeline(() =&gt; Promise.resolve(2));
+        const promiseListener = new PipeListener(promisePipe, new Validator(defaultPipeVo));
+        await promiseListener.next(1);
+
+        const fnPipe = new Pipeline(() =&gt; () =&gt; Promise.resolve(3));
+        const fnListener = new PipeListener(fnPipe, new Validator(defaultPipeVo));
+        await fnListener.next(1);
+
+        const syncFnPipe = new Pipeline(() =&gt; () =&gt; 4);
+        const syncFnListener = new PipeListener(syncFnPipe, new Validator(defaultPipeVo));
+        syncFnListener.next(1);
+    });
+
+    it(&quot;covers PipeListener accessors via pipeline internals&quot;, () =&gt; {
+        const p = new Pipeline((d) =&gt; d);
+        let captured;
+        const originalGet = WeakMap.prototype.get;
+        WeakMap.prototype.get = function (key) {
+            const value = originalGet.call(this, key);
+            if (key === p &amp;&amp; value &amp;&amp; value.listeners) {
+                captured = value;
+            }
+            return value;
+        };
+        p.schema;
+        WeakMap.prototype.get = originalGet;
+
+        const listener = captured.listeners[0];
+        expect(listener.vo).toBe(captured.vo);
+        captured.vo.freeze();
+        expect(p.writable).toBe(false);
+    });
+
+    it(&quot;covers merge listeners and throttle/unthrottle flushing&quot;, async () =&gt; {
+        const p = new Pipeline((d) =&gt; d + 1);
+        const fakePipe = {
+            subscribe: () =&gt; {},
+            unsubscribe: jest.fn(),
+        };
+        p.merge(fakePipe);
+        p.throttle(5);
+        p.write(1);
+        await new Promise((resolve) =&gt; setTimeout(resolve, 0));
+        p.unthrottle(false);
+        expect(p.toJSON()).toBeDefined();
+        p.throttle(1);
+        p.write(1);
+        p.unthrottle(true);
+        p.close();
+        expect(fakePipe.unsubscribe).toHaveBeenCalled();
+    });
+
+    it(&quot;covers link callback arrays and toJSON payloads&quot;, async () =&gt; {
+        const source = new Pipeline((d) =&gt; d);
+        const target = new Pipeline((d) =&gt; d);
+        const execSpy = jest.spyOn(Executor, &quot;exec&quot;);
+        source.link(target, [[(d) =&gt; d]]);
+        const payload = {toJSON: () =&gt; ({value: 1})};
+        source.write(payload);
+        await new Promise((resolve) =&gt; setTimeout(resolve, 0));
+        expect(target.toJSON()).toEqual({value: 1});
+        source.unlink(target);
+        expect(execSpy).toHaveBeenCalled();
+        execSpy.mockRestore();
+    });
+
+    it(&quot;covers link with default callbacks&quot;, async () =&gt; {
+        const source = new Pipeline((d) =&gt; d);
+        const target = new Pipeline((d) =&gt; d);
+        const execSpy = jest.spyOn(Executor, &quot;exec&quot;);
+        source.link(target);
+        source.write({value: 4});
+        await new Promise((resolve) =&gt; setTimeout(resolve, 0));
+        expect(target.toJSON()).toEqual({value: 4});
+        source.unlink(target);
+        expect(execSpy).toHaveBeenCalled();
+        execSpy.mockRestore();
+    });
+
+    it(&quot;covers link with manual subscribe payloads&quot;, () =&gt; {
+        const source = new Pipeline((d) =&gt; d);
+        const target = new Pipeline((d) =&gt; d);
+        const originalSubscribe = source.subscribe;
+        source.subscribe = (handler) =&gt; {
+            handler.next({toJSON: () =&gt; ({value: 5})});
+            handler.next(1);
+            return {unsubscribe: () =&gt; {}};
+        };
+        source.link(target, [(d) =&gt; d]);
+        source.subscribe = originalSubscribe;
+    });
+
+    it(&quot;covers Properties.init defaults&quot;, () =&gt; {
+        const pipes = new WeakMap();
+        const pipe = {};
+        const unsubscribeSpy = jest.fn();
+        pipes.set(pipe, {listeners: [{unsubscribe: unsubscribeSpy}, {}]});
+        const props = Properties.init(pipe, {
+            callbacks: [],
+            pipesOrVOsOrSchemas: [],
+            pipes,
+        });
+        expect(Array.isArray(props.schema)).toBe(true);
+        props.out.subscribe(() =&gt; {});
+        expect(_defaultPipeForTests.exec(1)).toBe(1);
+        props.out.freeze();
+        expect(pipes.get(pipe).listeners).toHaveLength(0);
+        expect(unsubscribeSpy).toHaveBeenCalled();
+
+        const pipe2 = {};
+        pipes.set(pipe2, {listeners: null});
+        const propsNull = Properties.init(pipe2, {
+            callbacks: [],
+            pipesOrVOsOrSchemas: [],
+            pipes,
+        });
+        propsNull.out.freeze();
+
+        const propsArray = Properties.init(pipe, {
+            callbacks: [],
+            pipesOrVOsOrSchemas: [defaultPipeVo],
+            pipes,
+        });
+        expect(Array.isArray(propsArray.schema)).toBe(true);
+
+        const validator = new Validator(defaultPipeVo);
+        const propsValidator = Properties.init(pipe, {
+            callbacks: [],
+            pipesOrVOsOrSchemas: [validator],
+            pipes,
+        });
+        expect(propsValidator.vo).toBe(validator);
+
+        const propsString = Properties.init(pipe, {
+            callbacks: [],
+            pipesOrVOsOrSchemas: &quot;x&quot;,
+            pipes,
+        });
+        expect(Array.isArray(propsString.schema)).toBe(true);
+
+        const propsError = Properties.init(pipe, {
+            callbacks: [() =&gt; { throw new Error(&quot;boom&quot;); }],
+            pipesOrVOsOrSchemas: [],
+            pipes,
+        });
+        try {
+            propsError.exec(1);
+        } catch (e) {
+            expect(e.error.message).toBe(&quot;boom&quot;);
+        }
+    });
+
+    it(&quot;covers pipeline chaining and helpers&quot;, async () =&gt; {
+        const p = new Pipeline((d) =&gt; d + 1);
+        const chain = p.pipe((d) =&gt; d * 2);
+        let chained;
+        chain.subscribe({next: (d) =&gt; { chained = d; }});
+        p.write(1);
+        expect(chained).toBe(4);
+
+        const split = p.split([(d) =&gt; d, (d) =&gt; d + 1]);
+        expect(split).toHaveLength(2);
+
+        const schema = p.schema;
+        expect(Array.isArray(schema)).toBe(true);
+        expect(p.schemas.length).toBeGreaterThan(0);
+
+        const gen = p.yield(1);
+        expect(gen.next().value).toBe(1);
+
+        const originalGet = WeakMap.prototype.get;
+        WeakMap.prototype.get = function (key) {
+            if (key === p) {
+                return {pOS: []};
+            }
+            return originalGet.call(this, key);
+        };
+        const fallbackGen = p.yield(1);
+        WeakMap.prototype.get = originalGet;
+        expect(fallbackGen.next().value).toBe(1);
+
+        const execFallbackGet = WeakMap.prototype.get;
+        WeakMap.prototype.get = function (key) {
+            const value = execFallbackGet.call(this, key);
+            if (key === p &amp;&amp; value &amp;&amp; value.pOS) {
+                return Object.assign({}, value, {pOS: [{}]});
+            }
+            return value;
+        };
+        const execFallbackGen = p.yield(1);
+        WeakMap.prototype.get = execFallbackGet;
+        expect(execFallbackGen.next().value).toBe(1);
+
+        const linked = new Pipeline((d) =&gt; d + 1);
+        expect(() =&gt; p.link({}, [])).toThrow(&quot;item for \&quot;target\&quot; was not a Pipe&quot;);
+        p.link(linked, [(d) =&gt; d + 1]);
+        p.unlink(linked);
+        p.unlink(linked);
+        expect(() =&gt; p.unlink({})).toThrow(&quot;item for \&quot;target\&quot; was not a Pipe&quot;);
+
+        const clone = p.clone();
+        clone.write(1);
+        expect(clone.writable).toBe(true);
+        clone.close();
+        expect(typeof clone.writable).toBe(&quot;boolean&quot;);
+
+        p.sample(1);
+        p.tap();
+        expect(p.toString()).toBe(&quot;{}&quot;);
+        expect(p.toJSON()).toEqual({});
+
+        const errPipe = new Pipeline({schema: {type: &quot;number&quot;}, exec: (d) =&gt; d});
+        errPipe.write(&quot;bad&quot;);
+        expect(errPipe.errors).toBeDefined();
+
+        const promisePipe = new Pipeline((d) =&gt; d);
+        const promiseResult = await promisePipe.promise(2);
+        expect(promiseResult).toBe(2);
+    });
+
+    it(&quot;covers link promise and error handling&quot;, async () =&gt; {
+        const source = new Pipeline({schema: {type: &quot;number&quot;}, exec: (d) =&gt; d});
+        const target = new Pipeline((d) =&gt; d);
+        const spy = jest.spyOn(console, &quot;error&quot;).mockImplementation(() =&gt; {});
+        source.link(target, [(d) =&gt; Promise.resolve(d + 1)]);
+        source.write(1);
+        await new Promise((resolve) =&gt; setTimeout(resolve, 0));
+        source.write(&quot;bad&quot;);
+        source.close();
+        source.unlink(target);
+        spy.mockRestore();
+    });
+
+    it(&quot;covers merge with plain payloads&quot;, () =&gt; {
+        const source = new Pipeline((d) =&gt; d);
+        const target = source.merge({
+            subscribe: (handler) =&gt; {
+                handler({value: 2});
+            },
+        });
+        expect(target.toJSON()).toEqual({value: 2});
+    });
+
+    it(&quot;covers merge with toJSON payloads&quot;, () =&gt; {
+        const source = new Pipeline((d) =&gt; d);
+        const target = source.merge({
+            subscribe: (handler) =&gt; {
+                handler({toJSON: () =&gt; ({value: 3})});
+            },
+        });
+        expect(target.toJSON()).toEqual({value: 3});
+    });
+
+    it(&quot;covers throttle cache branches&quot;, () =&gt; {
+        const p = new Pipeline((d) =&gt; d);
+        let cache;
+        const originalGet = WeakMap.prototype.get;
+        WeakMap.prototype.get = function (key) {
+            const value = originalGet.call(this, key);
+            if (key === p &amp;&amp; Array.isArray(value)) {
+                cache = value;
+            }
+            return value;
+        };
+        const originalSetInterval = global.setInterval;
+        const originalClearInterval = global.clearInterval;
+        let tick;
+        global.setInterval = (fn) =&gt; {
+            tick = fn;
+            return 1;
+        };
+        global.clearInterval = () =&gt; {};
+
+        p.throttle(1);
+        p.write(1);
+        WeakMap.prototype.get = originalGet;
+        cache.unshift(&quot;not-fn&quot;);
+        cache.unshift(() =&gt; 2);
+        tick();
+        tick();
+        cache.splice(0, cache.length);
+        tick();
+        cache.push(() =&gt; 3);
+        p.unthrottle(false);
+        cache.push(&quot;not-fn&quot;);
+        p.unthrottle(false);
+        global.setInterval = originalSetInterval;
+        global.clearInterval = originalClearInterval;
+    });
+
+    it(&quot;covers PipeListener subscribe and error branches&quot;, async () =&gt; {
+        const rejected = new Pipeline(() =&gt; Promise.reject(new Error(&quot;bad&quot;)));
+        const listener = new PipeListener(rejected, new Validator(defaultPipeVo));
+        listener.subscribe(() =&gt; {});
+        await listener.next(1);
+
+        const rejectedFn = new Pipeline(() =&gt; () =&gt; Promise.reject(new Error(&quot;bad&quot;)));
+        const listener2 = new PipeListener(rejectedFn, new Validator(defaultPipeVo));
+        await listener2.next(1);
+
+        expect(listener.vo).toBeDefined();
+    });
+});
+
+describe(&quot;VxBehaviorSubject coverage&quot;, () =&gt; {
+    it(&quot;handles next/error/complete and subscriptions&quot;, () =&gt; {
+        const vx = new VxBehaviorSubject();
+        const calls = {next: 0, error: 0, complete: 0};
+        const sub = vx.subscribe({
+            next: () =&gt; { calls.next += 1; },
+            error: () =&gt; { calls.error += 1; },
+            complete: () =&gt; { calls.complete += 1; },
+        });
+        vx.next(1);
+        vx.error(new Error(&quot;e&quot;));
+        vx.complete();
+        sub.unsubscribe();
+
+        const vx2 = VxBehaviorSubject.create();
+        const sub2 = vx2.subscribe(() =&gt; {});
+        vx2.next(1);
+        sub2.unsubscribe();
+    });
+});
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

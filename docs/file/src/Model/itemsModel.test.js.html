@@ -29,8 +29,7 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
-<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#model">Model</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
+  <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#model">Model</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_branchNotifier.js~Notifiers.html">Notifiers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_metaData.js~MetaData.html">MetaData</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_observerBuilder.js~ObserverBuilder.html">ObserverBuilder</a></span></span></li>
@@ -48,6 +47,8 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refValidation">refValidation</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-validate">validate</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-walkObject">walkObject</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_CompleteNotification">_CompleteNotification</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ErrorNotification">_ErrorNotification</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ajvRef">_ajvRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_dirtyModels">_dirtyModels</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span></li>
@@ -69,9 +70,9 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/vxBehaviorSubject.js~VxBehaviorSubject.html">VxBehaviorSubject</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-castToExec">castToExec</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-fill">fill</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-handleAsync">handleAsync</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-mapArgs">mapArgs</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-wrapCallback">wrapCallback</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_defaultPipeForTests">_defaultPipeForTests</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_observers">_observers</a></span></span></li>
 </ul>
 </div>
@@ -79,6 +80,7 @@
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/Model/itemsModel.test.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {Model} from &quot;./index&quot;;
+import {ItemsModel} from &quot;./itemsModel&quot;;
 import {default as deepEqual} from &quot;deep-equal&quot;;
 import {
     stringsCollection,
@@ -142,6 +144,80 @@ describe(&quot;ItemsModel Class&quot;, function () {
 
                 _owner.model = _d;
                 expect(_owner.model.length).toEqual(0);
+            });
+
+            it(&quot;throws when set trap is invoked on frozen models&quot;, () =&gt; {
+                _owner.model = [&quot;abc&quot;];
+                _owner.model.$model.freeze();
+                expect(() =&gt; _owner.model.$model.handler.set(_owner.model, 0, &quot;def&quot;))
+                    .toThrow(&quot;non-configurable and non-writable&quot;);
+            });
+
+            it(&quot;throws when isFrozen is forced true&quot;, () =&gt; {
+                _owner.model = [&quot;abc&quot;];
+                const modelRef = _owner.model.$model;
+                Object.defineProperty(modelRef, &quot;isFrozen&quot;, {
+                    get: () =&gt; true,
+                    configurable: true,
+                });
+                expect(() =&gt; modelRef.handler.set(_owner.model, 0, &quot;xyz&quot;))
+                    .toThrow(&quot;non-configurable and non-writable&quot;);
+                delete modelRef.isFrozen;
+            });
+
+            it(&quot;throws with empty path when frozen&quot;, () =&gt; {
+                const emptyPathModel = new ItemsModel(new Model({schemas: [stringsCollection]}), &quot;&quot;);
+                Object.defineProperty(emptyPathModel, &quot;isFrozen&quot;, {
+                    get: () =&gt; true,
+                    configurable: true,
+                });
+                Object.defineProperty(emptyPathModel, &quot;path&quot;, {
+                    get: () =&gt; &quot;&quot;,
+                    configurable: true,
+                });
+                expect(() =&gt; emptyPathModel.handler.set([], 0, &quot;x&quot;))
+                    .toThrow(&quot;non-configurable and non-writable&quot;);
+                delete emptyPathModel.isFrozen;
+                delete emptyPathModel.path;
+            });
+
+            it(&quot;returns error when delete trap fails to splice&quot;, () =&gt; {
+                _owner.model = [&quot;abc&quot;];
+                const handler = _owner.model.$model.handler;
+                const originalSplice = Array.prototype.splice;
+                Array.prototype.splice = () =&gt; { throw new Error(&quot;boom&quot;); };
+                const res = handler.deleteProperty(_owner.model, 0);
+                Array.prototype.splice = originalSplice;
+                expect(typeof res).toBe(&quot;string&quot;);
+            });
+
+            it(&quot;returns error on delete trap without delegates&quot;, () =&gt; {
+                const owner = new Model({schemas: [stringsCollection]});
+                const modelRef = new ItemsModel(owner, &quot;root#&quot;);
+                const originalSplice = Array.prototype.splice;
+                Array.prototype.splice = () =&gt; { throw new Error(&quot;boom&quot;); };
+                const res = modelRef.handler.deleteProperty([], 0);
+                Array.prototype.splice = originalSplice;
+                expect(typeof res).toBe(&quot;string&quot;);
+            });
+
+            it(&quot;skips delete trap notifications when delegated&quot;, () =&gt; {
+                _owner.model = [&quot;abc&quot;];
+                const handler = _owner.model.$model.handler;
+                const setter = Object.getOwnPropertyDescriptor(
+                    Object.getPrototypeOf(_owner.model.$model),
+                    &quot;model&quot;
+                ).set;
+                const badArray = [&quot;abc&quot;];
+                badArray.forEach = () =&gt; { throw new Error(&quot;boom&quot;); };
+                const setRes = setter.call(_owner.model.$model, badArray);
+                expect(typeof setRes).toBe(&quot;string&quot;);
+
+                const originalSplice = Array.prototype.splice;
+                Array.prototype.splice = () =&gt; { throw new Error(&quot;boom&quot;); };
+                const res = handler.deleteProperty(_owner.model, 0);
+                Array.prototype.splice = originalSplice;
+                expect(typeof res).toBe(&quot;string&quot;);
             });
         });
     });

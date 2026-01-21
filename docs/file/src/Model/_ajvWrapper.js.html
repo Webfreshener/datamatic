@@ -29,8 +29,7 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
-<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#model">Model</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
+  <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#model">Model</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_branchNotifier.js~Notifiers.html">Notifiers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_metaData.js~MetaData.html">MetaData</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_observerBuilder.js~ObserverBuilder.html">ObserverBuilder</a></span></span></li>
@@ -48,6 +47,8 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refValidation">refValidation</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-validate">validate</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-walkObject">walkObject</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_CompleteNotification">_CompleteNotification</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ErrorNotification">_ErrorNotification</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ajvRef">_ajvRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_dirtyModels">_dirtyModels</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span></li>
@@ -69,9 +70,9 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/vxBehaviorSubject.js~VxBehaviorSubject.html">VxBehaviorSubject</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-castToExec">castToExec</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-fill">fill</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-handleAsync">handleAsync</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-mapArgs">mapArgs</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-wrapCallback">wrapCallback</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_defaultPipeForTests">_defaultPipeForTests</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_observers">_observers</a></span></span></li>
 </ul>
 </div>
@@ -114,6 +115,85 @@ import {getSchemaID} from &quot;./utils&quot;;
 import {_ajvRef} from &quot;./_references&quot;;
 
 const _validators = new WeakMap();
+const DRAFT_04_META_ID = &quot;http://json-schema.org/draft-04/schema#&quot;;
+const DRAFT_04_META_ID_NOHASH = &quot;http://json-schema.org/draft-04/schema&quot;;
+const DRAFT_07_META_ID = &quot;http://json-schema.org/draft-07/schema&quot;;
+const DRAFT_07_META_ID_HASH = &quot;http://json-schema.org/draft-07/schema#&quot;;
+let _ajvDraft04 = null;
+
+const loadAjvDraft04 = () =&gt; {
+    if (_ajvDraft04 !== null) {
+        return _ajvDraft04 || null;
+    }
+    try {
+        // Lazy-load to avoid hard dependency for non-draft-04 users.
+        // eslint-disable-next-line global-require
+        const mod = require(&quot;ajv-draft-04&quot;);
+        _ajvDraft04 = mod &amp;&amp; mod.default ? mod.default : mod;
+    } catch (e) {
+        _ajvDraft04 = false;
+    }
+    return _ajvDraft04 || null;
+};
+
+const isDraft04Meta = (meta) =&gt; {
+    if (!meta || typeof meta !== &quot;object&quot;) {
+        return false;
+    }
+    return meta.$id === DRAFT_04_META_ID
+        || meta.id === DRAFT_04_META_ID
+        || meta.$id === DRAFT_04_META_ID_NOHASH
+        || meta.id === DRAFT_04_META_ID_NOHASH;
+};
+
+const isDraft04Schema = (schema) =&gt; {
+    if (!schema || typeof schema !== &quot;object&quot;) {
+        return false;
+    }
+    return schema.$schema === DRAFT_04_META_ID || schema.$schema === DRAFT_04_META_ID_NOHASH;
+};
+
+const isDraft07Schema = (schema) =&gt; {
+    if (!schema || typeof schema !== &quot;object&quot;) {
+        return false;
+    }
+    return schema.$schema === DRAFT_07_META_ID || schema.$schema === DRAFT_07_META_ID_HASH;
+};
+
+const usesDraft07 = (schemas) =&gt; {
+    if (!schemas || typeof schemas !== &quot;object&quot;) {
+        return false;
+    }
+    const list = schemas.schemas ? schemas.schemas : schemas;
+    const arr = Array.isArray(list) ? list : [list];
+    return arr.some(isDraft07Schema);
+};
+
+const usesDraft04 = (schemas) =&gt; {
+    if (!schemas || typeof schemas !== &quot;object&quot;) {
+        return false;
+    }
+    const list = schemas.schemas ? schemas.schemas : schemas;
+    const arr = Array.isArray(list) ? list : [list];
+    return arr.some(isDraft04Schema);
+};
+
+const addMetaSchemaLenient = (_ajv, meta) =&gt; {
+    const original = _ajv.opts.validateSchema;
+    _ajv.opts.validateSchema = false;
+    try {
+        _ajv.addMetaSchema(meta);
+    } finally {
+        _ajv.opts.validateSchema = original;
+    }
+};
+
+const wantsDraft04 = (schemas, opts) =&gt; {
+    if (opts &amp;&amp; opts.draft04 === true) {
+        return true;
+    }
+    return Boolean(schemas &amp;&amp; Array.isArray(schemas.meta) &amp;&amp; schemas.meta.some(isDraft04Meta));
+};
 
 /**
  * backreferences object tree for top-down evaluation
@@ -147,15 +227,46 @@ const _preconstruct = (path, data, owner) =&gt; {
  * @returns {ajv | ajv.Ajv}
  */
 const createAjv = (inst, schemas, opts) =&gt; {
-    const _ajv = new Ajv(opts);
+    const draft04Requested = wantsDraft04(schemas, opts);
+    const hasDraft04Schemas = usesDraft04(schemas);
+    const hasDraft07Schemas = usesDraft07(schemas);
+    if (hasDraft04Schemas &amp;&amp; !draft04Requested) {
+        throw new Error(&quot;Draft-04 schema detected but draft-04 support is not enabled.&quot;);
+    }
+    const useDraft04 = draft04Requested &amp;&amp; hasDraft04Schemas &amp;&amp; !hasDraft07Schemas;
+    let AjvCtor = Ajv;
+    const ajvOpts = (useDraft04 &amp;&amp; !opts.schemaId) ? Object.assign({}, opts, {schemaId: &quot;id&quot;}) : opts;
+    if (useDraft04) {
+        const Draft04 = loadAjvDraft04();
+        if (!Draft04) {
+            throw new Error(&quot;Draft-04 requested but ajv-draft-04 is not installed.&quot;);
+        }
+        AjvCtor = Draft04;
+    }
+    const _ajv = new AjvCtor(ajvOpts);
     addFormats(_ajv);
 
     if (schemas) {
         if (schemas.hasOwnProperty(&quot;meta&quot;)) {
             if (Array.isArray(schemas.meta)) {
                 schemas.meta.forEach((meta) =&gt; {
+                    if (useDraft04 &amp;&amp; isDraft04Meta(meta)) {
+                        // AjvDraft04 already ships with draft-04 meta schema.
+                        return;
+                    }
+                    if (isDraft04Meta(meta)) {
+                        addMetaSchemaLenient(_ajv, meta);
+                        return;
+                    }
                     _ajv.addMetaSchema(meta);
                 });
+            }
+        }
+
+        if (!useDraft04 &amp;&amp; hasDraft07Schemas) {
+            if (!_ajv.getSchema(DRAFT_07_META_ID) &amp;&amp; !_ajv.getSchema(DRAFT_07_META_ID_HASH)) {
+                // eslint-disable-next-line global-require
+                _ajv.addMetaSchema(require(&quot;ajv/dist/refs/json-schema-draft-07.json&quot;));
             }
         }
 
@@ -211,7 +322,7 @@ export class AjvWrapper {
         });
 
         // applies user specified options over our default Ajv Options
-        const opts = Object.assign(ajvOptions, options);
+        const opts = Object.assign({}, ajvOptions, options);
 
         // makes user defined options object accessible for evaluation
         Object.defineProperty(this, &quot;options&quot;, {
@@ -222,6 +333,11 @@ export class AjvWrapper {
         // declares default path of root# for validation queries
         this.path = &quot;root#&quot;;
 
+        const draft04Requested = wantsDraft04(schemas, opts);
+        const hasDraft04Schemas = usesDraft04(schemas);
+        const hasDraft07Schemas = usesDraft07(schemas);
+        const useDraft04 = draft04Requested &amp;&amp; hasDraft04Schemas &amp;&amp; !hasDraft07Schemas;
+
         // appends trailing &quot;#&quot; to end of &quot;id&quot; string if missing
         const _procID = (id) =&gt; id.match(/#+$/) === null ? `${id}#` : id;
 
@@ -229,6 +345,9 @@ export class AjvWrapper {
         const _procSchema = (_s) =&gt; {
             if (_s.hasOwnProperty(&quot;$id&quot;)) {
                 _s[&quot;$id&quot;] = _procID(_s[&quot;$id&quot;]);
+                if (useDraft04 &amp;&amp; !_s.hasOwnProperty(&quot;id&quot;)) {
+                    _s[&quot;id&quot;] = _s[&quot;$id&quot;];
+                }
             }
 
             if (_s.hasOwnProperty(&quot;id&quot;)) {
@@ -301,8 +420,9 @@ export class AjvWrapper {
             _res = this.$ajv.validate(path, value);
         } catch (e) {
 
-            if (path.replace(/(items|properties)\/?/, &quot;&quot;).split(&quot;/&quot;).length) {
-                return this.exec(`${this.path}/`, _preconstruct(path, value, this.$owner));
+            const isRootPath = path === this.path || path === `${this.path}/`;
+            if (!isRootPath &amp;&amp; path.replace(/(items|properties)\/?/, &quot;&quot;).split(&quot;/&quot;).length) {
+                return this.exec(this.path, _preconstruct(path, value, this.$owner));
             }
 
             throw(e);
