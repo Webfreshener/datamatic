@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <base data-ice="baseUrl" href="../../../">
+  <title data-ice="title">src/Model/coverage-extra.test.js | datamatic</title>
+  <link type="text/css" rel="stylesheet" href="css/style.css">
+  <link type="text/css" rel="stylesheet" href="css/prettify-tomorrow.css">
+  <script src="script/prettify/prettify.js"></script>
+  <script src="script/manual.js"></script>
+<meta name="description" content="RxJS + JSON-Schema (Ajv) Based Observable and Validating Data Models and Pipelines"><meta property="twitter:card" content="summary"><meta property="twitter:title" content="datamatic"><meta property="twitter:description" content="RxJS + JSON-Schema (Ajv) Based Observable and Validating Data Models and Pipelines"></head>
+<body class="layout-container" data-ice="rootContainer">
+
+<header>
+  <a href="./">Home</a>
+  
+  <a href="identifiers.html">Reference</a>
+  <a href="source.html">Source</a>
+  
+  <div class="search-box">
+  <span>
+    <img src="./image/search.png">
+    <span class="search-input-edge"></span><input class="search-input"><span class="search-input-edge"></span>
+  </span>
+    <ul class="search-result"></ul>
+  </div>
+<a style="position:relative; top:3px;" href="https://github.com/Webfreshener/datamatic.git"><img width="20px" src="./image/github.png"></a></header>
+
+<nav class="navigation" data-ice="nav"><div>
+  <ul>
+    
+  <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#model">Model</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_branchNotifier.js~Notifiers.html">Notifiers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_metaData.js~MetaData.html">MetaData</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_observerBuilder.js~ObserverBuilder.html">ObserverBuilder</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_schemaHelpers.js~SchemaHelpers.html">SchemaHelpers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/base-model.js~BaseModel.html">BaseModel</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/index.js~Model.html">Model</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/itemsModel.js~ItemsModel.html">ItemsModel</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/propertiesModel.js~PropertiesModel.html">PropertiesModel</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getDefaults">getDefaults</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getPatternPropertyDefaults">getPatternPropertyDefaults</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-getSchemaID">getSchemaID</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeClean">makeClean</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-makeDirty">makeDirty</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refAtKeyValidation">refAtKeyValidation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refValidation">refValidation</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-validate">validate</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-walkObject">walkObject</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_CompleteNotification">_CompleteNotification</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ErrorNotification">_ErrorNotification</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ajvRef">_ajvRef</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_dirtyModels">_dirtyModels</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_oBuilders">_oBuilders</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_object">_object</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_observerPaths">_observerPaths</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_observers">_observers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaHelpers">_schemaHelpers</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaOptions">_schemaOptions</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_schemaSignatures">_schemaSignatures</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_validators">_validators</a></span></span></li>
+<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#pipeline">Pipeline</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/Executor.js~Executor.html">Executor</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/Iterator.js~Iterator.html">Iterator</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/Pipeline.js~PipeListener.html">PipeListener</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/Pipeline.js~Pipeline.html">Pipeline</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/Properties.js~Properties.html">Properties</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/Validator.js~Validator.html">Validator</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/vxBehaviorSubject.js~VxBehaviorSubject.html">VxBehaviorSubject</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-castToExec">castToExec</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-fill">fill</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-mapArgs">mapArgs</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-wrapCallback">wrapCallback</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_defaultPipeForTests">_defaultPipeForTests</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_observers">_observers</a></span></span></li>
+</ul>
+</div>
+</nav>
+
+<div class="content" data-ice="content"><h1 data-ice="title">src/Model/coverage-extra.test.js</h1>
+<pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {Model} from &quot;./index&quot;;
+import {PropertiesModel} from &quot;./propertiesModel&quot;;
+import {BaseModel} from &quot;./base-model&quot;;
+import {ObserverBuilder} from &quot;./_observerBuilder&quot;;
+import {MetaData} from &quot;./_metaData&quot;;
+import {SchemaHelpers} from &quot;./_schemaHelpers&quot;;
+import Notifiers, {_CompleteNotification, _ErrorNotification} from &quot;./_branchNotifier&quot;;
+import {
+    getDefaults,
+    getPatternPropertyDefaults,
+    makeDirty,
+    refAtKeyValidation,
+    validate,
+} from &quot;./utils&quot;;
+import {AjvWrapper} from &quot;./_ajvWrapper&quot;;
+import {_oBuilders, _schemaHelpers, _observerPaths, _validators, _object} from &quot;./_references&quot;;
+
+const schemaLegacy = {
+    id: &quot;legacy#&quot;,
+    type: &quot;object&quot;,
+    properties: {
+        count: {type: &quot;integer&quot;},
+    },
+};
+
+const schemaRoot = {
+    $id: &quot;root#&quot;,
+    type: &quot;object&quot;,
+    required: [&quot;name&quot;],
+    properties: {
+        name: {type: &quot;string&quot;},
+        count: {type: &quot;integer&quot;},
+        data: {
+            type: &quot;object&quot;,
+            required: [&quot;flag&quot;],
+            properties: {
+                flag: {type: &quot;boolean&quot;},
+            },
+        },
+        list: {
+            type: &quot;array&quot;,
+            minItems: 1,
+            items: {type: &quot;string&quot;},
+        },
+    },
+};
+
+describe(&quot;Model and BaseModel extra coverage&quot;, () =&gt; {
+    it(&quot;supports schema lookup and model helpers&quot;, () =&gt; {
+        const owner = new Model({schemas: [schemaLegacy, schemaRoot]});
+        owner.model = {name: &quot;&quot;, count: 0, data: {flag: false}, list: [&quot;a&quot;]};
+
+        expect(owner.getSchemaForKey(&quot;legacy#&quot;)).toEqual(schemaLegacy);
+        expect(owner.getSchemaForKey(&quot;root#&quot;)).toEqual(schemaRoot);
+        expect(owner.getSchemaForPath(&quot;/properties/count&quot;)).toEqual({type: &quot;integer&quot;});
+        expect(owner.schema).toEqual(schemaRoot);
+        expect(owner.model.$model.owner).toBe(owner);
+
+        expect(owner.addSchema({$id: &quot;extra#&quot;, type: &quot;number&quot;})).toBe(true);
+        expect(() =&gt; owner.useSchema(&quot;root#&quot;)).not.toThrow();
+
+        expect(owner.validate(&quot;root#/properties/name&quot;, &quot;ok&quot;)).toBe(true);
+        owner.model.name = 1;
+        expect(Array.isArray(owner.errors)).toBe(true);
+
+        expect(owner.getPath(&quot;properties/name&quot;)).toBe(&quot;&quot;);
+        expect(owner.getPath(&quot;properties/count&quot;)).toBe(0);
+        expect(owner.getPath(&quot;properties/data/properties/flag&quot;)).toBe(false);
+        expect(owner.getModelsInPath(&quot;properties/data&quot;)).toHaveLength(2);
+
+        expect(owner.toString()).toContain(&quot;\&quot;name\&quot;&quot;);
+        expect(owner.toJSON()).toEqual(owner.model.$model.toJSON());
+
+        const sub = owner.subscribeTo(&quot;properties/data&quot;, {next: () =&gt; {}});
+        sub.unsubscribe();
+    });
+
+    it(&quot;supports fromJSON variants and errors&quot;, () =&gt; {
+        const fromObj = Model.fromJSON({schemas: [schemaRoot]});
+        expect(fromObj).toBeInstanceOf(Model);
+        const fromStr = Model.fromJSON(JSON.stringify({schemas: [schemaRoot]}));
+        expect(fromStr).toBeInstanceOf(Model);
+        expect(() =&gt; Model.fromJSON(1)).toThrow(&quot;json must be either JSON formatted string or object&quot;);
+    });
+
+    it(&quot;handles reset complete option and pipeline close&quot;, () =&gt; {
+        const owner = new Model({schemas: [schemaRoot]});
+        owner.model = {name: &quot;ok&quot;, data: {flag: true}, list: [&quot;a&quot;]};
+
+        const child = owner.model.data.$model;
+        let completed = false;
+        child.subscribe({complete: () =&gt; { completed = true; }});
+
+        owner.model.$model.reset();
+        expect(completed).toBe(false);
+
+        owner.model = {name: &quot;ok&quot;, data: {flag: true}, list: [&quot;a&quot;]};
+        owner.model.$model.reset({complete: true});
+        expect(completed).toBe(false);
+
+        const pipeline = owner.model.$model.pipeline();
+        owner.freeze();
+        expect(pipeline.writable).toBe(false);
+    });
+
+    it(&quot;covers BaseModel accessors and handlers&quot;, () =&gt; {
+        const base = new BaseModel({_path: &quot;&quot;, _parent: null, _root: null, _owner: null});
+        expect(base.model).toBeNull();
+        expect(base.options).toBeUndefined();
+        expect(base.handler.apply()).toBe(false);
+        expect(base.handler.setPrototypeOf()).toBe(false);
+
+        const owner = new Model({schemas: [schemaRoot]});
+        owner.model = {name: &quot;ok&quot;, data: {flag: true}, list: [&quot;a&quot;]};
+        const root = owner.model.$model;
+        expect(root.schema).toEqual({});
+
+        const objWithToJSON = {toJSON: () =&gt; ({x: 1})};
+        owner.model = {name: &quot;ok&quot;, data: {flag: true}, list: [&quot;a&quot;], extra: objWithToJSON};
+        expect(owner.toJSON().extra).toEqual({x: 1});
+    });
+
+    it(&quot;skips inherited properties during toJSON&quot;, () =&gt; {
+        const base = new BaseModel({_path: &quot;&quot;, _parent: null, _root: null, _owner: null});
+        base.valueOf = () =&gt; Object.create({inherited: &quot;x&quot;});
+        expect(base.toJSON()).toEqual({});
+    });
+
+    it(&quot;covers BaseModel construction errors and validation fallback&quot;, () =&gt; {
+        expect(() =&gt; new BaseModel(1)).toThrow(&quot;Invalid attempt to construct Model.&quot;);
+        const base = new BaseModel({_path: &quot;&quot;, _parent: null, _root: null, _owner: null});
+        expect(base.validate({})).toBe(true);
+
+        const permissive = new Model({schemas: [{
+            $id: &quot;root#&quot;,
+            type: &quot;object&quot;,
+            properties: {
+                name: {type: &quot;string&quot;},
+            },
+        }]});
+        permissive.model = {name: &quot;ok&quot;};
+        permissive.model.$model.reset({complete: true});
+        permissive.freeze();
+        expect(permissive.isFrozen).toBe(true);
+
+        const resetSchema = {
+            $id: &quot;root#&quot;,
+            type: &quot;object&quot;,
+            properties: {
+                child: {type: &quot;object&quot;},
+            },
+        };
+        const resetOwner = new Model({schemas: [resetSchema]});
+        const child = {freeze: jest.fn()};
+        resetOwner.model = {child};
+        resetOwner.model.$model.reset({complete: true});
+        expect(child.freeze).toHaveBeenCalled();
+    });
+
+    it(&quot;freezes array children on reset with complete&quot;, () =&gt; {
+        const arrayOwner = new Model({schemas: [{
+            $id: &quot;root#&quot;,
+            type: &quot;array&quot;,
+            items: {
+                type: &quot;object&quot;,
+                properties: {name: {type: &quot;string&quot;}},
+            },
+        }]});
+        const arrayModel = arrayOwner.model.$model;
+        const child = {freeze: jest.fn()};
+        _object.set(arrayModel, [child]);
+        arrayModel.reset({complete: true});
+        expect(child.freeze).toHaveBeenCalled();
+    });
+
+    it(&quot;throws on invalid schema configuration&quot;, () =&gt; {
+        expect(() =&gt; new Model({schemas: [{type: 1}]})).toThrow();
+    });
+});
+
+describe(&quot;ObserverBuilder, Notifiers, and MetaData coverage&quot;, () =&gt; {
+    it(&quot;handles observer builder paths and notifications&quot;, () =&gt; {
+        const owner = new Model({schemas: [schemaRoot]});
+        const builder = new ObserverBuilder();
+        const target = owner.model.$model;
+        expect(() =&gt; builder.create({})).toThrow(&quot;target object is invalid&quot;);
+        expect(builder.create(target)).toBeDefined();
+        expect(builder.create(target)).toBeDefined();
+        expect(Array.isArray(builder.list())).toBe(true);
+
+        const originalGetObserverForPath = builder.getObserverForPath;
+        const observerPaths = {hasOwnProperty: () =&gt; false};
+        _observerPaths.set(builder, observerPaths);
+        builder.getObserverForPath = () =&gt; ({path: target.path});
+        builder.create(target);
+        builder.getObserverForPath = originalGetObserverForPath;
+
+        const observer = builder.getObserverForModel(target);
+        expect(observer.path).toBe(target.path);
+
+        let nextCount = 0;
+        observer.onNext.subscribe(() =&gt; { nextCount += 1; });
+        builder.mute(target);
+        builder.unmute(target);
+        builder.next(target);
+        builder.next(null);
+        expect(nextCount).toBe(1);
+
+        builder.complete(target);
+        builder.error(target, &quot;oops&quot;);
+    });
+
+    it(&quot;sends notifications through Notifiers&quot;, async () =&gt; {
+        const owner = new Model({schemas: [schemaRoot]});
+        owner.model = {name: &quot;ok&quot;, data: {flag: true}, list: [&quot;a&quot;]};
+        const notifier = Notifiers.get(owner);
+        let errRef;
+        const sub = owner.subscribe({
+            next: jest.fn(),
+            error: (e) =&gt; { errRef = e; },
+            complete: jest.fn(),
+        });
+
+        notifier.sendNext(&quot;.&quot;);
+        await new Promise((resolve) =&gt; setTimeout(resolve, 0));
+
+        notifier.sendError(&quot;.&quot;, &quot;err&quot;);
+        expect(errRef.toString()).toContain(&quot;err&quot;);
+        notifier.sendComplete(&quot;.&quot;);
+        sub.unsubscribe();
+    });
+
+    it(&quot;covers MetaData accessors&quot;, () =&gt; {
+        const originalCreateID = MetaData.prototype._createID;
+        MetaData.prototype._createID = null;
+        const meta = new MetaData({constructor: {name: &quot;Foo&quot;}}, {
+            _path: &quot;root#&quot;,
+            _root: &quot;root&quot;,
+            _owner: &quot;owner&quot;,
+            _parent: &quot;parent&quot;,
+        });
+        expect(typeof meta.objectID).toBe(&quot;string&quot;);
+        expect(meta.root).toBe(&quot;root&quot;);
+        expect(meta.path).toBe(&quot;root#&quot;);
+        expect(meta.owner).toBe(&quot;owner&quot;);
+        expect(meta.parent).toBe(&quot;parent&quot;);
+        expect(meta.set()).toBe(meta);
+        expect(() =&gt; JSON.parse(meta.toString())).not.toThrow();
+        MetaData.prototype._createID = originalCreateID;
+    });
+
+    it(&quot;exposes CompleteNotification helpers&quot;, () =&gt; {
+        const err = new _ErrorNotification(&quot;root#&quot;, &quot;bad&quot;);
+        expect(err.path).toBe(&quot;root#&quot;);
+        expect(err.error).toBe(&quot;bad&quot;);
+        expect(err.toString()).toContain(&quot;bad&quot;);
+
+        const complete = new _CompleteNotification(&quot;root#&quot;);
+        expect(complete.path).toBe(&quot;root#&quot;);
+    });
+});
+
+describe(&quot;SchemaHelpers and utils coverage&quot;, () =&gt; {
+    it(&quot;covers SchemaHelpers error handling and child creation&quot;, () =&gt; {
+        expect(() =&gt; new SchemaHelpers()).toThrow(&quot;arguments[0] must be an object&quot;);
+        const fakeOwner = {};
+        _oBuilders.set(fakeOwner, {create: () =&gt; {}});
+        const fakeRef = {owner: fakeOwner, set: () =&gt; &quot;bad&quot;};
+        const helper = new SchemaHelpers(fakeRef);
+        expect(helper.setObject(&quot;value&quot;)).toBe(&quot;value&quot;);
+        expect(() =&gt; helper.setObject({a: 1})).toThrow(&quot;bad&quot;);
+
+        const originalCreateSchemaChild = SchemaHelpers.prototype.createSchemaChild;
+        SchemaHelpers.prototype.createSchemaChild = () =&gt; &quot;bad&quot;;
+        expect(helper.setChildObject(&quot;x&quot;, {})).toBe(&quot;bad&quot;);
+
+        SchemaHelpers.prototype.createSchemaChild = () =&gt; null;
+        expect(helper.setChildObject(&quot;x&quot;, {})).toBe(&quot;&apos;x&apos; was invalid&quot;);
+        SchemaHelpers.prototype.createSchemaChild = originalCreateSchemaChild;
+
+        const owner = new Model({schemas: [schemaRoot]});
+        owner.model = {name: &quot;ok&quot;, data: {flag: true}, list: [&quot;a&quot;]};
+        const realHelper = new SchemaHelpers(owner.model.$model);
+        const child = realHelper.createSchemaChild(&quot;data&quot;, {flag: true});
+        expect(child).toBeDefined();
+    });
+
+    it(&quot;covers utility helpers&quot;, () =&gt; {
+        const owner = new Model({schemas: [schemaRoot]});
+        owner.model = {name: &quot;ok&quot;, data: {flag: true}, list: [&quot;a&quot;]};
+        const base = owner.model.$model;
+
+        makeDirty(base);
+        expect(refAtKeyValidation(base, &quot;name&quot;, &quot;ok&quot;)).toBe(true);
+        expect(typeof validate(base, &quot;root#/properties/name&quot;, 1)).toBe(&quot;string&quot;);
+
+        const defaults = getDefaults({
+            default: {a: 1},
+            properties: {
+                foo: {default: &quot;bar&quot;},
+                nested: {type: &quot;object&quot;, properties: {x: {default: 2}}},
+            },
+        });
+        expect(defaults).toEqual({a: 1, foo: &quot;bar&quot;, nested: {x: 2}});
+
+        const typeDefaults = getDefaults({
+            type: &quot;object&quot;,
+            properties: {
+                inner: {default: 3},
+            },
+        });
+        expect(typeDefaults).toEqual({inner: 3});
+
+        const itemDefaults = getDefaults({
+            items: {default: {a: 2}},
+        });
+        expect(itemDefaults).toEqual({a: 2});
+
+        const deepDefaults = getDefaults({
+            items: {
+                type: &quot;object&quot;,
+                properties: {
+                    nested: {
+                        type: &quot;array&quot;,
+                        items: {default: {z: 3}},
+                    },
+                },
+            },
+        });
+        expect(deepDefaults).toEqual({nested: {z: 3}});
+
+        const typedDefaults = getDefaults({
+            items: {
+                type: &quot;object&quot;,
+                properties: {value: {default: 5}},
+            },
+        });
+        expect(typedDefaults).toEqual({value: 5});
+
+        expect(getPatternPropertyDefaults(null)).toBeNull();
+        const patternDefaults = getPatternPropertyDefaults({
+            patternProperties: {
+                &quot;^x-&quot;: {default: {a: 1}},
+            },
+        });
+        expect(patternDefaults).toEqual({&quot;^x-&quot;: {a: 1}});
+    });
+});
+
+describe(&quot;ItemsModel and PropertiesModel edge cases&quot;, () =&gt; {
+    it(&quot;covers ItemsModel setter and delete behavior&quot;, () =&gt; {
+        const owner = new Model({schemas: [{
+            $id: &quot;root#&quot;,
+            type: &quot;array&quot;,
+            minItems: 1,
+            items: {type: &quot;string&quot;},
+        }]});
+        const items = owner.model.$model;
+        items.model = &quot;nope&quot;;
+        expect(items.model).toEqual([]);
+
+        owner.model = [&quot;a&quot;];
+        items.freeze();
+        items.model = [&quot;b&quot;];
+        expect(items.model).toEqual([&quot;a&quot;]);
+
+        const arr = owner.model;
+        expect(arr.pop()).toBe(false);
+
+        const objectItemsOwner = new Model({schemas: [{
+            $id: &quot;root#&quot;,
+            type: &quot;array&quot;,
+            items: {
+                type: &quot;object&quot;,
+                properties: {name: {type: &quot;string&quot;}},
+                required: [&quot;name&quot;],
+            },
+        }]});
+        objectItemsOwner.model = [{name: &quot;ok&quot;}];
+        expect(() =&gt; { objectItemsOwner.model[0] = 1; }).not.toThrow();
+    });
+
+    it(&quot;covers ItemsModel delete trap error branches&quot;, () =&gt; {
+        const owner = new Model({schemas: [{
+            $id: &quot;root#&quot;,
+            type: &quot;array&quot;,
+            minItems: 1,
+            items: {type: &quot;string&quot;},
+        }]});
+        owner.model = [&quot;a&quot;];
+        const handler = owner.model.$model.handler;
+        const originalSplice = Array.prototype.splice;
+        Array.prototype.splice = () =&gt; { throw new Error(&quot;boom&quot;); };
+        const res = handler.deleteProperty(owner.model, 0);
+        Array.prototype.splice = originalSplice;
+        expect(typeof res).toBe(&quot;string&quot;);
+
+        const owner2 = new Model({schemas: [{
+            $id: &quot;root#&quot;,
+            type: &quot;array&quot;,
+            minItems: 1,
+            items: {type: &quot;string&quot;},
+        }]});
+        owner2.model = [&quot;a&quot;];
+        const res2 = owner2.model.$model.handler.deleteProperty(owner2.model, 0);
+        expect(typeof res2).toBe(&quot;string&quot;);
+    });
+
+    it(&quot;covers ItemsModel set trap when writable&quot;, () =&gt; {
+        const owner = new Model({schemas: [{
+            $id: &quot;root#&quot;,
+            type: &quot;array&quot;,
+            items: {type: &quot;string&quot;},
+        }]});
+        owner.model = [&quot;a&quot;];
+        const res = owner.model.$model.handler.set(owner.model, 0, &quot;b&quot;);
+        expect(res).toBe(true);
+    });
+
+    it(&quot;covers ItemsModel delete trap with delegate set&quot;, () =&gt; {
+        const owner = new Model({schemas: [{
+            $id: &quot;root#&quot;,
+            type: &quot;array&quot;,
+            minItems: 1,
+            items: {type: &quot;string&quot;},
+        }]});
+        const badArray = [&quot;a&quot;];
+        badArray.forEach = () =&gt; { throw new Error(&quot;boom&quot;); };
+        const setter = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(owner.model.$model), &quot;model&quot;).set;
+        const setResult = setter.call(owner.model.$model, badArray);
+        expect(typeof setResult).toBe(&quot;string&quot;);
+
+        const res = owner.model.$model.handler.deleteProperty(owner.model, 0);
+        expect(typeof res).toBe(&quot;string&quot;);
+    });
+
+    it(&quot;covers PropertiesModel set handler edge cases&quot;, () =&gt; {
+        const owner = new Model({schemas: [schemaRoot]});
+        owner.model = {name: &quot;ok&quot;, data: {flag: true}, list: [&quot;a&quot;]};
+        const props = owner.model.$model;
+
+        props.model = 1;
+        expect(props.model.name).toBe(&quot;ok&quot;);
+        props.model = {data: {flag: true}, list: [&quot;a&quot;]};
+        expect(props.model.name).toBe(&quot;ok&quot;);
+        props.freeze();
+        props.model = {name: &quot;x&quot;};
+        expect(props.model.name).toBe(&quot;ok&quot;);
+
+        const obj = new Model({schemas: [schemaRoot]});
+        obj.model = {name: &quot;ok&quot;, data: {flag: true}, list: [&quot;a&quot;]};
+        const handler = obj.model.$model.handler;
+        expect(handler.set({}, &quot;toString&quot;, &quot;x&quot;)).toBe(true);
+        obj.model.$model.freeze();
+        expect(() =&gt; handler.set({}, &quot;name&quot;, &quot;x&quot;)).toThrow(&quot;non-configurable and non-writable&quot;);
+
+        const dirtyOwner = new Model({schemas: [schemaRoot]});
+        dirtyOwner.model = {name: &quot;ok&quot;, data: {flag: true}, list: [&quot;a&quot;]};
+        const dirtyProps = dirtyOwner.model.$model;
+        makeDirty(dirtyProps);
+        expect(dirtyProps.set(&quot;count&quot;, 1)).toBe(dirtyProps);
+        dirtyProps.freeze();
+        expect(() =&gt; dirtyProps.handler.set(dirtyProps.model, &quot;name&quot;, &quot;x&quot;))
+            .toThrow(&quot;non-configurable and non-writable&quot;);
+
+        const noisy = new Model({schemas: [schemaRoot]});
+        noisy.model = {name: &quot;ok&quot;, data: {flag: true}, list: [&quot;a&quot;]};
+        const noisyHandler = noisy.model.$model.handler;
+        expect(typeof noisyHandler.set({}, {a: &quot;b&quot;}, &quot;x&quot;)).toBe(&quot;string&quot;);
+
+        const helper = {setObject: () =&gt; &quot;bad&quot;, setChildObject: () =&gt; &quot;bad&quot;};
+        _schemaHelpers.set(noisy.model.$model, helper);
+        expect(noisyHandler.set(noisy.model, &quot;data&quot;, {flag: false})).toContain(&quot;unable to create child object&quot;);
+    });
+
+    it(&quot;covers delete traps and nested array updates&quot;, () =&gt; {
+        const owner = new Model({schemas: [{
+            $id: &quot;root#&quot;,
+            type: &quot;array&quot;,
+            minItems: 1,
+            items: {type: &quot;string&quot;},
+        }]});
+        owner.model = [&quot;a&quot;];
+        const handler = owner.model.$model.handler;
+        const originalSplice = Array.prototype.splice;
+        Array.prototype.splice = () =&gt; { throw new Error(&quot;boom&quot;); };
+        const res = handler.deleteProperty([&quot;a&quot;], 0);
+        Array.prototype.splice = originalSplice;
+        expect(typeof res).toBe(&quot;string&quot;);
+
+        const owner2 = new Model({schemas: [{
+            $id: &quot;root#&quot;,
+            type: &quot;array&quot;,
+            minItems: 1,
+            items: {type: &quot;string&quot;},
+        }]});
+        owner2.model = [&quot;a&quot;];
+        const res2 = owner2.model.$model.handler.deleteProperty([&quot;a&quot;], 0);
+        expect(typeof res2).toBe(&quot;string&quot;);
+
+        const nestedSchema = {
+            $id: &quot;root#&quot;,
+            type: &quot;object&quot;,
+            properties: {
+                list: {type: &quot;array&quot;, items: {type: &quot;string&quot;}},
+            },
+        };
+        const nested = new Model({schemas: [nestedSchema]});
+        nested.model = {list: [&quot;a&quot;]};
+        nested.model.list.push(&quot;b&quot;);
+        expect(nested.model.list.length).toBe(2);
+    });
+
+    it(&quot;covers ItemsModel frozen set trap and invalid assignment&quot;, () =&gt; {
+        const owner = new Model({schemas: [{
+            $id: &quot;root#&quot;,
+            type: &quot;array&quot;,
+            items: {type: &quot;string&quot;},
+        }]});
+        owner.model = [&quot;a&quot;];
+        owner.model.$model.freeze();
+        expect(() =&gt; { owner.model[0] = &quot;b&quot;; }).toThrow(&quot;non-configurable and non-writable&quot;);
+        expect(() =&gt; owner.model.$model.handler.set(owner.model, 0, &quot;b&quot;))
+            .toThrow(&quot;non-configurable and non-writable&quot;);
+    });
+
+    it(&quot;covers ItemsModel setter error paths&quot;, () =&gt; {
+        const owner = new Model({schemas: [{
+            $id: &quot;root#&quot;,
+            type: &quot;array&quot;,
+            items: {
+                type: &quot;object&quot;,
+                properties: {name: {type: &quot;string&quot;}},
+                required: [&quot;name&quot;],
+            },
+        }]});
+        const items = owner.model.$model;
+        const helper = {setChildObject: () =&gt; { throw new Error(&quot;boom&quot;); }};
+        _schemaHelpers.set(items, helper);
+        const setter = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(items), &quot;model&quot;).set;
+        expect(typeof setter.call(items, [{name: &quot;x&quot;}])).toBe(&quot;string&quot;);
+        expect(typeof setter.call(items, [1])).toBe(&quot;string&quot;);
+
+        owner.model = [{name: &quot;ok&quot;}];
+        owner.model.push = () =&gt; {};
+        owner.model[0] = 1;
+
+        const delSchema = new Model({schemas: [{
+            $id: &quot;root#&quot;,
+            type: &quot;array&quot;,
+            minItems: 1,
+            items: {type: &quot;string&quot;},
+        }]});
+        delSchema.model = [&quot;a&quot;];
+        const delRes = delSchema.model.$model.handler.deleteProperty([&quot;a&quot;], 0);
+        expect(typeof delRes).toBe(&quot;string&quot;);
+    });
+
+    it(&quot;covers PropertiesModel delete and set failures&quot;, () =&gt; {
+        const owner = new Model({schemas: [schemaRoot]});
+        owner.model = {name: &quot;ok&quot;, data: {flag: true}, list: [&quot;a&quot;]};
+        const res = owner.model.$model.handler.deleteProperty(owner.model, &quot;name&quot;);
+        expect(res).not.toBe(true);
+
+        const owner2 = new Model({schemas: [schemaRoot]});
+        owner2.model = {name: &quot;ok&quot;, data: {flag: true}, list: [&quot;a&quot;]};
+        expect(owner2.model.$model.set(&quot;count&quot;, &quot;bad&quot;)).toBe(owner2.model.$model);
+    });
+
+    it(&quot;covers PropertiesModel handler error paths&quot;, () =&gt; {
+        const originalHandler = Object.getOwnPropertyDescriptor(PropertiesModel.prototype, &quot;handler&quot;);
+        Object.defineProperty(PropertiesModel.prototype, &quot;handler&quot;, {
+            get: function () {
+                return {
+                    get: (t, key) =&gt; t[key],
+                    set: () =&gt; { throw new Error(&quot;boom&quot;); },
+                    deleteProperty: () =&gt; true,
+                };
+            },
+        });
+        const owner = new Model({schemas: [schemaRoot]});
+        const props = owner.model.$model;
+        const setter = Object.getOwnPropertyDescriptor(Object.getPrototypeOf(props), &quot;model&quot;).set;
+        setter.call(props, {name: &quot;ok&quot;});
+        Object.defineProperty(PropertiesModel.prototype, &quot;handler&quot;, originalHandler);
+
+        props.model = {name: &quot;ok&quot;, data: {flag: true}, list: [&quot;a&quot;]};
+        expect(props.get(&quot;name&quot;)).toBe(&quot;ok&quot;);
+
+        _schemaHelpers.set(props, {setObject: () =&gt; &quot;bad&quot;, setChildObject: () =&gt; &quot;bad&quot;});
+        expect(typeof props.handler.set(props.model, {a: 1}, &quot;x&quot;)).toBe(&quot;boolean&quot;);
+        expect(props.handler.set(props.model, &quot;data&quot;, {flag: false}))
+            .toContain(&quot;unable to create child object&quot;);
+
+        _schemaHelpers.set(props, {setObject: () =&gt; ({}), setChildObject: () =&gt; ({})});
+        expect(props.handler.set(props.model, {a: 1}, &quot;x&quot;)).toBe(true);
+
+        const originalValidator = _validators.get(owner);
+        _validators.set(owner, {exec: () =&gt; false, $ajv: {errorsText: () =&gt; &quot;&quot;}});
+        expect(props.set(&quot;count&quot;, 1)).toBe(false);
+        _validators.set(owner, originalValidator);
+    });
+});
+
+describe(&quot;Model AjvWrapper edge cases&quot;, () =&gt; {
+    it(&quot;handles constructor guards and schema processing&quot;, () =&gt; {
+        const owner = new Model({schemas: [schemaRoot]});
+        expect(() =&gt; new AjvWrapper(null, {schemas: [schemaRoot]}))
+            .toThrow(&quot;Model is required at arguments[0]&quot;);
+
+        const wrapper = new AjvWrapper(owner, {schemas: [schemaRoot]});
+        expect(wrapper.options).toBeDefined();
+        expect(AjvWrapper.resolvePath()).toBe(&quot;not yet implemented&quot;);
+    });
+
+    it(&quot;handles string schema entries and exec error paths&quot;, () =&gt; {
+        const owner = new Model({schemas: [schemaRoot]});
+        try {
+            new AjvWrapper(owner, {schemas: &quot;bad&quot;, schema: {id: &quot;bad#&quot;}});
+        } catch (e) {
+            expect(e).toBeDefined();
+        }
+
+        const arrayWrapper = new AjvWrapper(owner, [{$id: &quot;one#&quot;}, {$id: &quot;two#&quot;}]);
+        expect(arrayWrapper.$ajv).toBeDefined();
+
+        const wrapper = new AjvWrapper(owner, {schemas: [schemaRoot]});
+        const originalValidate = wrapper.$ajv.validate;
+        const originalGetPath = owner.getPath;
+        wrapper.$ajv.validate = () =&gt; { throw new Error(&quot;boom&quot;); };
+        owner.getPath = () =&gt; { throw new Error(&quot;nope&quot;); };
+        expect(() =&gt; wrapper.exec(&quot;root#/properties/items&quot;, {})).toThrow(&quot;nope&quot;);
+        wrapper.$ajv.validate = originalValidate;
+        owner.getPath = originalGetPath;
+
+        const pathObj = {
+            indexOf: () =&gt; 0,
+            replace: () =&gt; ({split: () =&gt; []}),
+        };
+        wrapper.$ajv.validate = () =&gt; { throw new Error(&quot;boom&quot;); };
+        expect(() =&gt; wrapper.exec(pathObj, {})).toThrow(&quot;boom&quot;);
+        wrapper.$ajv.validate = originalValidate;
+    });
+});
+</code></pre>
+
+</div>
+
+<footer class="footer">
+  Generated by <a href="https://esdoc.org">ESDoc<span data-ice="esdocVersion">(1.1.0)</span><img src="./image/esdoc-logo-mini-black.png"></a>
+</footer>
+
+<script src="script/search_index.js"></script>
+<script src="script/search.js"></script>
+<script src="script/pretty-print.js"></script>
+<script src="script/inherited-summary.js"></script>
+<script src="script/test-summary.js"></script>
+<script src="script/inner-link.js"></script>
+<script src="script/patch-for-local.js"></script>
+</body>
+</html>

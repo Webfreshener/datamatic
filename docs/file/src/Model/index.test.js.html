@@ -29,8 +29,7 @@
 <nav class="navigation" data-ice="nav"><div>
   <ul>
     
-  <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
-<li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#model">Model</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
+  <li data-ice="doc"><a data-ice="dirPath" class="nav-dir-path" href="identifiers.html#model">Model</a><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_ajvWrapper.js~AjvWrapper.html">AjvWrapper</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_branchNotifier.js~Notifiers.html">Notifiers</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_metaData.js~MetaData.html">MetaData</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Model/_observerBuilder.js~ObserverBuilder.html">ObserverBuilder</a></span></span></li>
@@ -48,6 +47,8 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-refValidation">refValidation</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-validate">validate</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-walkObject">walkObject</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_CompleteNotification">_CompleteNotification</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ErrorNotification">_ErrorNotification</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_ajvRef">_ajvRef</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_dirtyModels">_dirtyModels</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_mdRef">_mdRef</a></span></span></li>
@@ -69,9 +70,9 @@
 <li data-ice="doc"><span data-ice="kind" class="kind-class">C</span><span data-ice="name"><span><a href="class/src/Pipeline/vxBehaviorSubject.js~VxBehaviorSubject.html">VxBehaviorSubject</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-castToExec">castToExec</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-fill">fill</a></span></span></li>
-<li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-handleAsync">handleAsync</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-mapArgs">mapArgs</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-function">F</span><span data-ice="name"><span><a href="function/index.html#static-function-wrapCallback">wrapCallback</a></span></span></li>
+<li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_defaultPipeForTests">_defaultPipeForTests</a></span></span></li>
 <li data-ice="doc"><span data-ice="kind" class="kind-variable">V</span><span data-ice="name"><span><a href="variable/index.html#static-variable-_observers">_observers</a></span></span></li>
 </ul>
 </div>
@@ -79,6 +80,8 @@
 
 <div class="content" data-ice="content"><h1 data-ice="title">src/Model/index.test.js</h1>
 <pre class="source-code line-number raw-source-code"><code class="prettyprint linenums" data-ice="content">import {Model} from &quot;./index&quot;
+import {ItemsModel} from &quot;./itemsModel&quot;;
+import {_schemaSignatures} from &quot;./_references&quot;;
 import {basicModel} from &quot;../../fixtures/PropertiesModel.schemas&quot;;
 import {default as basicRefs} from &quot;../../fixtures/basic-refs.schema&quot;;
 import {default as refsData} from &quot;../../fixtures/basic-refs.data&quot;;
@@ -112,13 +115,12 @@ describe(&quot;Model Instance Test&quot;, () =&gt; {
 
     it(&quot;runs schema validator&quot;, () =&gt; {
         const _owner = new Model({
-            properties:
-                {
-                    id: {type: &apos;integer&apos;},
-                    name: {type: &apos;string&apos;},
-                    value: {type: &apos;integer&apos;},
-                    createdOn: {type: &apos;string&apos;}
-                },
+            properties: {
+                id: {type: &quot;integer&quot;},
+                name: {type: &quot;string&quot;},
+                value: {type: &quot;integer&quot;},
+                createdOn: {type: &quot;string&quot;}
+            },
         });
 
         expect(_owner.errors).toBe(null);
@@ -136,6 +138,49 @@ describe(&quot;Model Instance Test&quot;, () =&gt; {
             expect(_owner.errors).toBe(null);
             expect(_owner.model).toEqual(refsData);
         });
+    });
+
+    it(&quot;throws when AjvWrapper reports invalid schema&quot;, () =&gt; {
+        jest.isolateModules(() =&gt; {
+            jest.doMock(&quot;./_ajvWrapper&quot;, () =&gt; ({
+                AjvWrapper: class AjvWrapper {
+                    constructor() {
+                        this.$ajv = {
+                            validateSchema: () =&gt; false,
+                            errors: [&quot;bad schema&quot;],
+                        };
+                    }
+                },
+            }));
+            const {Model: MockedModel} = require(&quot;./index&quot;);
+            expect(() =&gt; new MockedModel({schemas: [basicModel]})).toThrow();
+        });
+    });
+
+    it(&quot;selects ItemsModel and supports legacy schema ids&quot;, () =&gt; {
+        const arrayOwner = new Model({schemas: [{
+            $id: &quot;root#&quot;,
+            type: &quot;array&quot;,
+            items: {type: &quot;string&quot;},
+        }]});
+        expect(arrayOwner.model.$model).toBeInstanceOf(ItemsModel);
+
+        const tupleOwner = new Model({schemas: [{
+            $id: &quot;tuple#&quot;,
+            items: [{type: &quot;string&quot;}],
+        }]});
+        expect(tupleOwner.model.$model).toBeInstanceOf(ItemsModel);
+
+        const legacyOwner = new Model({schemas: [{
+            id: &quot;legacy#&quot;,
+            type: &quot;object&quot;,
+        }]});
+        _schemaSignatures.set(legacyOwner, {schemas: [{id: &quot;legacy#&quot;}]});
+        expect(legacyOwner.getSchemaForKey(&quot;legacy#&quot;).id).toBe(&quot;legacy#&quot;);
+
+        const legacyOnly = Object.create(Model.prototype);
+        _schemaSignatures.set(legacyOnly, {schemas: [{id: &quot;only#&quot;}]});
+        expect(legacyOnly.getSchemaForKey(&quot;only#&quot;).id).toBe(&quot;only#&quot;);
     });
 });
 </code></pre>
