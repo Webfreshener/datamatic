@@ -34,30 +34,61 @@ jobs:
       - name: Verify Coverage Artifact
         run: test -s coverage/lcov.info
 
-      - name: Upload Coverage to Codacy (API Token)
-        id: upload_api
-        if: ${{ env.CODACY_API_TOKEN != '' }}
-        continue-on-error: true
-        uses: codacy/codacy-coverage-reporter-action@89d6c85cfafaec52c72b6c5e8b2878d33104c699 # v1
-        with:
-          api-token: ${{ env.CODACY_API_TOKEN }}
-          coverage-reports: coverage/lcov.info
-          language: JavaScript
-          force-coverage-parser: lcov
-
-      - name: Upload Coverage to Codacy (Project Token)
-        id: upload_project
-        if: ${{ env.CODACY_PROJECT_TOKEN != '' && (env.CODACY_API_TOKEN == '' || steps.upload_api.outcome != 'success') }}
-        uses: codacy/codacy-coverage-reporter-action@89d6c85cfafaec52c72b6c5e8b2878d33104c699 # v1
-        with:
-          project-token: ${{ env.CODACY_PROJECT_TOKEN }}
-          coverage-reports: coverage/lcov.info
-          language: JavaScript
-          force-coverage-parser: lcov
-
-      - name: Fail if Codacy upload did not succeed
-        if: ${{ (env.CODACY_API_TOKEN != '' || env.CODACY_PROJECT_TOKEN != '') && steps.upload_api.outcome != 'success' && steps.upload_project.outcome != 'success' }}
+      - name: Upload Coverage to Codacy
+        env:
+          CODACY_API_BASE_URL: https://app.codacy.com
         run: |
-          echo "Codacy coverage upload failed for both token modes."
-          echo "Check that CODACY_API_TOKEN (account token) and/or CODACY_PROJECT_TOKEN (repository token) belong to this exact Codacy repository."
+          set -euo pipefail
+          OWNER="${GITHUB_REPOSITORY%/*}"
+          PROJECT="${GITHUB_REPOSITORY#*/}"
+          OWNER_LOWER="$(echo "$OWNER" | tr '[:upper:]' '[:lower:]')"
+
+          try_api_upload() {
+            local username="$1"
+            echo "Trying Codacy upload with API token for username: ${username}"
+            bash <(curl -Ls https://coverage.codacy.com/get.sh) report \
+              --api-token "${CODACY_API_TOKEN}" \
+              --organization-provider gh \
+              --username "${username}" \
+              --project-name "${PROJECT}" \
+              --language JavaScript \
+              --force-coverage-parser lcov \
+              -r coverage/lcov.info
+            bash <(curl -Ls https://coverage.codacy.com/get.sh) final \
+              --api-token "${CODACY_API_TOKEN}" \
+              --organization-provider gh \
+              --username "${username}" \
+              --project-name "${PROJECT}"
+          }
+
+          if [[ -n "${CODACY_API_TOKEN:-}" ]]; then
+            if try_api_upload "${OWNER}"; then
+              echo "Codacy upload succeeded with API token using owner '${OWNER}'."
+              exit 0
+            fi
+
+            if [[ "${OWNER_LOWER}" != "${OWNER}" ]] && try_api_upload "${OWNER_LOWER}"; then
+              echo "Codacy upload succeeded with API token using owner '${OWNER_LOWER}'."
+              exit 0
+            fi
+
+            echo "Codacy API token uploads failed for both owner variants."
+          fi
+
+          if [[ -n "${CODACY_PROJECT_TOKEN:-}" ]]; then
+            echo "Trying Codacy upload with project token."
+            bash <(curl -Ls https://coverage.codacy.com/get.sh) report \
+              --project-token "${CODACY_PROJECT_TOKEN}" \
+              --language JavaScript \
+              --force-coverage-parser lcov \
+              -r coverage/lcov.info
+            bash <(curl -Ls https://coverage.codacy.com/get.sh) final \
+              --project-token "${CODACY_PROJECT_TOKEN}"
+            echo "Codacy upload succeeded with project token."
+            exit 0
+          fi
+
+          echo "Codacy coverage upload failed."
+          echo "Set CODACY_API_TOKEN and/or CODACY_PROJECT_TOKEN for repository '${GITHUB_REPOSITORY}'."
+          echo "If tokens already exist, verify they were generated from the same Codacy organization/repository."
           exit 1
