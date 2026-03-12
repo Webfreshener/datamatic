@@ -31,9 +31,21 @@ jobs:
       - name: Verify Coverage Artifact
         run: test -s coverage/lcov.info
 
-      - name: Upload Coverage to Codacy
-        if: ${{ env.CODACY_PROJECT_TOKEN != '' }}
+      - name: Upload Coverage to Codacy (API Token)
+        if: ${{ env.CODACY_API_TOKEN != '' }}
         env:
+          CODACY_API_TOKEN: ${{ secrets.CODACY_API_TOKEN }}
+        uses: codacy/codacy-coverage-reporter-action@89d6c85cfafaec52c72b6c5e8b2878d33104c699 # v1
+        with:
+          api-token: ${{ env.CODACY_API_TOKEN }}
+          coverage-reports: coverage/lcov.info
+          language: JavaScript
+          force-coverage-parser: lcov
+
+      - name: Upload Coverage to Codacy (Project Token)
+        if: ${{ env.CODACY_API_TOKEN == '' && env.CODACY_PROJECT_TOKEN != '' }}
+        env:
+          CODACY_API_TOKEN: ${{ secrets.CODACY_API_TOKEN }}
           CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
         uses: codacy/codacy-coverage-reporter-action@89d6c85cfafaec52c72b6c5e8b2878d33104c699 # v1
         with:
