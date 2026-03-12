@@ -35,8 +35,6 @@ jobs:
         run: test -s coverage/lcov.info
 
       - name: Upload Coverage to Codacy
-        env:
-          CODACY_API_BASE_URL: https://app.codacy.com
         run: |
           set -euo pipefail
           OWNER="${GITHUB_REPOSITORY%/*}"
@@ -46,22 +44,16 @@ jobs:
           try_api_upload() {
             local username="$1"
             echo "Trying Codacy upload with API token for username: ${username}"
+            export CODACY_ORGANIZATION_PROVIDER="gh"
+            export CODACY_USERNAME="${username}"
+            export CODACY_PROJECT_NAME="${PROJECT}"
             bash <(curl -Ls https://coverage.codacy.com/get.sh) report \
-              --api-token "${CODACY_API_TOKEN}" \
-              --organization-provider gh \
-              --username "${username}" \
-              --project-name "${PROJECT}" \
-              --language JavaScript \
-              --force-coverage-parser lcov \
               -r coverage/lcov.info
-            bash <(curl -Ls https://coverage.codacy.com/get.sh) final \
-              --api-token "${CODACY_API_TOKEN}" \
-              --organization-provider gh \
-              --username "${username}" \
-              --project-name "${PROJECT}"
+            bash <(curl -Ls https://coverage.codacy.com/get.sh) final
           }
 
           if [[ -n "${CODACY_API_TOKEN:-}" ]]; then
+            export CODACY_API_TOKEN
             if try_api_upload "${OWNER}"; then
               echo "Codacy upload succeeded with API token using owner '${OWNER}'."
               exit 0
@@ -77,13 +69,10 @@ jobs:
 
           if [[ -n "${CODACY_PROJECT_TOKEN:-}" ]]; then
             echo "Trying Codacy upload with project token."
+            export CODACY_PROJECT_TOKEN
             bash <(curl -Ls https://coverage.codacy.com/get.sh) report \
-              --project-token "${CODACY_PROJECT_TOKEN}" \
-              --language JavaScript \
-              --force-coverage-parser lcov \
               -r coverage/lcov.info
-            bash <(curl -Ls https://coverage.codacy.com/get.sh) final \
-              --project-token "${CODACY_PROJECT_TOKEN}"
+            bash <(curl -Ls https://coverage.codacy.com/get.sh) final
             echo "Codacy upload succeeded with project token."
             exit 0
           fi
