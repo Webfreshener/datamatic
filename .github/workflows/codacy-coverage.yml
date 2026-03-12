@@ -9,6 +9,9 @@ on:
 jobs:
   coverage:
     runs-on: ubuntu-latest
+    env:
+      CODACY_API_TOKEN: ${{ secrets.CODACY_API_TOKEN }}
+      CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4
@@ -32,9 +35,9 @@ jobs:
         run: test -s coverage/lcov.info
 
       - name: Upload Coverage to Codacy (API Token)
+        id: upload_api
         if: ${{ env.CODACY_API_TOKEN != '' }}
-        env:
-          CODACY_API_TOKEN: ${{ secrets.CODACY_API_TOKEN }}
+        continue-on-error: true
         uses: codacy/codacy-coverage-reporter-action@89d6c85cfafaec52c72b6c5e8b2878d33104c699 # v1
         with:
           api-token: ${{ env.CODACY_API_TOKEN }}
@@ -43,13 +46,18 @@ jobs:
           force-coverage-parser: lcov
 
       - name: Upload Coverage to Codacy (Project Token)
-        if: ${{ env.CODACY_API_TOKEN == '' && env.CODACY_PROJECT_TOKEN != '' }}
-        env:
-          CODACY_API_TOKEN: ${{ secrets.CODACY_API_TOKEN }}
-          CODACY_PROJECT_TOKEN: ${{ secrets.CODACY_PROJECT_TOKEN }}
+        id: upload_project
+        if: ${{ env.CODACY_PROJECT_TOKEN != '' && (env.CODACY_API_TOKEN == '' || steps.upload_api.outcome != 'success') }}
         uses: codacy/codacy-coverage-reporter-action@89d6c85cfafaec52c72b6c5e8b2878d33104c699 # v1
         with:
           project-token: ${{ env.CODACY_PROJECT_TOKEN }}
           coverage-reports: coverage/lcov.info
           language: JavaScript
           force-coverage-parser: lcov
+
+      - name: Fail if Codacy upload did not succeed
+        if: ${{ (env.CODACY_API_TOKEN != '' || env.CODACY_PROJECT_TOKEN != '') && steps.upload_api.outcome != 'success' && steps.upload_project.outcome != 'success' }}
+        run: |
+          echo "Codacy coverage upload failed for both token modes."
+          echo "Check that CODACY_API_TOKEN (account token) and/or CODACY_PROJECT_TOKEN (repository token) belong to this exact Codacy repository."
+          exit 1
