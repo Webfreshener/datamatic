@@ -26,92 +26,17 @@ SOFTWARE.
 /**
  * @private
  */
-
-import Ajv from "ajv";
 import {default as ajvOptions} from "../ajv-options";
+import {
+    createAjvCore,
+    getAjvDraftState,
+    normalizeSchemaIds,
+    DRAFT_04_META_ID,
+} from "../shared/ajv";
 
 const _validators = new WeakMap();
 const _ajvRef = new WeakMap();
 const _idRef = new WeakMap();
-const DRAFT_04_META_ID = "http://json-schema.org/draft-04/schema#";
-const DRAFT_04_META_ID_NOHASH = "http://json-schema.org/draft-04/schema";
-const DRAFT_07_META_ID = "http://json-schema.org/draft-07/schema";
-const DRAFT_07_META_ID_HASH = "http://json-schema.org/draft-07/schema#";
-let _ajvDraft04 = null;
-
-const loadAjvDraft04 = () => {
-    if (_ajvDraft04 !== null) {
-        return _ajvDraft04 || null;
-    }
-    try {
-        // Lazy-load to avoid hard dependency for non-draft-04 users.
-        // eslint-disable-next-line global-require
-        const mod = require("ajv-draft-04");
-        _ajvDraft04 = mod && mod.default ? mod.default : mod;
-    } catch (e) {
-        _ajvDraft04 = false;
-    }
-    return _ajvDraft04 || null;
-};
-
-const isDraft04Meta = (meta) => {
-    if (!meta || typeof meta !== "object") {
-        return false;
-    }
-    return meta.$id === DRAFT_04_META_ID
-        || meta.id === DRAFT_04_META_ID
-        || meta.$id === DRAFT_04_META_ID_NOHASH
-        || meta.id === DRAFT_04_META_ID_NOHASH;
-};
-
-const isDraft04Schema = (schema) => {
-    if (!schema || typeof schema !== "object") {
-        return false;
-    }
-    return schema.$schema === DRAFT_04_META_ID || schema.$schema === DRAFT_04_META_ID_NOHASH;
-};
-
-const isDraft07Schema = (schema) => {
-    if (!schema || typeof schema !== "object") {
-        return false;
-    }
-    return schema.$schema === DRAFT_07_META_ID || schema.$schema === DRAFT_07_META_ID_HASH;
-};
-
-const usesDraft04 = (schemas) => {
-    if (!schemas || typeof schemas !== "object") {
-        return false;
-    }
-    const list = schemas.schemas ? schemas.schemas : schemas;
-    const arr = Array.isArray(list) ? list : [list];
-    return arr.some(isDraft04Schema);
-};
-
-const usesDraft07 = (schemas) => {
-    if (!schemas || typeof schemas !== "object") {
-        return false;
-    }
-    const list = schemas.schemas ? schemas.schemas : schemas;
-    const arr = Array.isArray(list) ? list : [list];
-    return arr.some(isDraft07Schema);
-};
-
-const wantsDraft04 = (schemas, opts) => {
-    if (opts && opts.draft04 === true) {
-        return true;
-    }
-    return Boolean(schemas && Array.isArray(schemas.meta) && schemas.meta.some(isDraft04Meta));
-};
-
-const addMetaSchemaLenient = (_ajv, meta) => {
-    const original = _ajv.opts.validateSchema;
-    _ajv.opts.validateSchema = false;
-    try {
-        _ajv.addMetaSchema(meta);
-    } finally {
-        _ajv.opts.validateSchema = original;
-    }
-};
 /**
  *
  * @param $ajv
@@ -133,10 +58,6 @@ const addSchema = ($ajv, schema, schemaId) => {
     // } catch (e) {
     //    return
     // }
-};
-
-const addMetaSchema = ($ajv, schema) => {
-    $ajv.addMetaSchema(schema);
 };
 
 /**
@@ -166,41 +87,11 @@ export class AjvWrapper {
         // declares default path of root# for validation queries
         this.path = "root#";
 
-        const useDraft04 = wantsDraft04(schemas, opts);
-
-        // appends trailing "#" to end of "id" string if missing
-        const _procID = (id) => id.match(/#+$/) === null ? `${id}#` : id;
-
-        // processes schema "id" for JSON-schemas =< v04 and >= v06
-        const _procSchema = (_s) => {
-            const _key = ["$id", "id"].find((k) => _s.hasOwnProperty(`${k}`));
-            if (_key) {
-                const _id = _procID(_s[_key]);
-                _s["$id"] = _id;
-                if (useDraft04 && !_s.hasOwnProperty("id")) {
-                    _s["id"] = _id;
-                }
-            }
-            return _s;
-        };
-
-        // evaluates contents of schemas to normalize "id" attributes to have trailing "#"
-        if ((typeof schemas) === "object") {
-            if (schemas.hasOwnProperty("schemas")) {
-                if (Array.isArray(schemas.schemas)) {
-                    schemas.schemas = schemas.schemas.map(_procSchema);
-                } else {
-                    schemas.schemas = _procSchema(schemas.schemas);
-
-                }
-            } else {
-                if (Array.isArray(schemas)) {
-                    schemas = schemas.map(_procSchema);
-                } else {
-                    schemas = _procSchema(schemas);
-                }
-            }
-        }
+        const {useDraft04} = getAjvDraftState(schemas, opts);
+        schemas = normalizeSchemaIds(schemas, {
+            useDraft04,
+            mirrorLegacyIdToDollarId: true,
+        });
 
         // initializes Ajv instance for this Doc and stores it to WeakMap
         _ajvRef.set(this, createAJV(schemas, opts));
@@ -274,56 +165,10 @@ export class AjvWrapper {
  * @param _s
  * @private
  */
-const _metaTest = ($ajv, _s, skipDraft04 = false) => {
-    if (_s.hasOwnProperty("meta")) {
-        if (Array.isArray(_s.meta)) {
-            _s.meta.forEach((meta) => {
-                if (skipDraft04 && isDraft04Meta(meta)) {
-                    return;
-                }
-                if (!skipDraft04 && isDraft04Meta(meta)) {
-                    addMetaSchemaLenient($ajv, meta);
-                    return;
-                }
-                addMetaSchema($ajv, meta);
-            });
-        }
-    }
-};
-
-/**
- *
- * @param schemas
- * @param opts
- * @returns {ajv | ajv.Ajv}
- */
 const createAJV = (schemas, opts) => {
-    const draft04Requested = wantsDraft04(schemas, opts);
-    const hasDraft04Schemas = usesDraft04(schemas);
-    const hasDraft07Schemas = usesDraft07(schemas);
-    if (hasDraft04Schemas && !draft04Requested) {
-        throw new Error("Draft-04 schema detected but draft-04 support is not enabled.");
-    }
-    const useDraft04 = draft04Requested && hasDraft04Schemas && !hasDraft07Schemas;
-    let AjvCtor = Ajv;
-    const ajvOpts = (useDraft04 && !opts.schemaId) ? Object.assign({}, opts, {schemaId: "id"}) : opts;
-    if (useDraft04) {
-        const Draft04 = loadAjvDraft04();
-        if (!Draft04) {
-            throw new Error("Draft-04 requested but ajv-draft-04 is not installed.");
-        }
-        AjvCtor = Draft04;
-    }
-    const _ajv = new AjvCtor(ajvOpts);
+    const {$ajv: _ajv} = createAjvCore(schemas, opts);
     _idRef.set(_ajv, []);
     if (schemas) {
-        _metaTest(_ajv, schemas, useDraft04);
-        if (!useDraft04 && hasDraft07Schemas) {
-            if (!_ajv.getSchema(DRAFT_07_META_ID) && !_ajv.getSchema(DRAFT_07_META_ID_HASH)) {
-                // eslint-disable-next-line global-require
-                _ajv.addMetaSchema(require("ajv/dist/refs/json-schema-draft-07.json"));
-            }
-        }
         // todo: review performance of addSchema
         schemas = schemas["schemas"] ? schemas.schemas : schemas;
         if (Array.isArray(schemas)) {
@@ -333,7 +178,6 @@ const createAJV = (schemas, opts) => {
             });
         } else {
             if ((typeof schemas).match(/^(object|boolean)$/)) {
-                _metaTest(_ajv, schemas);
                 addSchema(_ajv, schemas);
             }
         }

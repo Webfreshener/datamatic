@@ -27,6 +27,7 @@ import {Executor} from "./Executor";
 import {Validator} from "./Validator";
 import {default as DefaultVOSchema} from "../schemas/default-pipe-vo.schema";
 import {PipeListener} from "./Pipeline";
+import {derivePipeSchemas} from "./Utils";
 
 const defaultPipe = {
     schema: [DefaultVOSchema, DefaultVOSchema],
@@ -40,38 +41,14 @@ export const _defaultPipeForTests = defaultPipe;
  */
 export class Properties {
     static init(pipe, properties) {
-        const {callbacks, pipesOrVOsOrSchemas, pipes} = properties;
+        const {callbacks, execBridge, pipesOrVOsOrSchemas, pipes} = properties;
         const _txP = {};
-
-        const _inPipe = (
-            Array.isArray(pipesOrVOsOrSchemas) && pipesOrVOsOrSchemas.length
-        ) ? pipesOrVOsOrSchemas[0] : pipesOrVOsOrSchemas.length ?
-            pipesOrVOsOrSchemas : defaultPipe;
-
-        const _pSchemas = [...pipesOrVOsOrSchemas]
-            .filter((_p) => {
-                // filters array for validators and valid schemas
-                return (
-                    // returns true if TxValidator
-                    (_p instanceof Validator) ||
-                    // returns true if has `schema` attribute and is a valid `json-schema`
-                    _p["schema"] && Validator.validateSchemas(_p.schema)
-                );
-            }).map(_ => _.schema);
-
-        const _getInSchema = () => {
-            if (_pSchemas.length) {
-                return _pSchemas[0];
-            }
-            return DefaultVOSchema;
-        };
-
-        const _inSchema = _getInSchema();
-        const _outSchema = _pSchemas.length > 1 ? _pSchemas[_pSchemas.length - 1] : _inSchema;
-
-        if (!_pSchemas.length) {
-            _pSchemas.splice(0, 0, {schemas: [DefaultVOSchema]}, {schemas: [DefaultVOSchema]});
-        }
+        const {
+            inPipe: _inPipe,
+            inSchema: _inSchema,
+            outSchema: _outSchema,
+            schemas: _pSchemas,
+        } = derivePipeSchemas(pipesOrVOsOrSchemas);
 
         const _vo = (_inPipe instanceof Validator) ? _inPipe : new Validator(_inSchema);
 
@@ -79,6 +56,11 @@ export class Properties {
             callbacks: {
                 value: callbacks,
                 enumerable: true,
+                configurable: false,
+            },
+            execBridge: {
+                value: execBridge,
+                enumerable: false,
                 configurable: false,
             },
             rate: {
@@ -94,7 +76,7 @@ export class Properties {
             exec: {
                 value: (data) => {
                     try {
-                        return Executor.exec(callbacks, data);
+                        return execBridge ? execBridge.exec(data) : Executor.exec(callbacks, data);
                     } catch (e) {
                         throw {
                             error: e,

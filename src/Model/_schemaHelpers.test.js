@@ -34,6 +34,17 @@ describe("SchemaHelpers Class Tests", () => {
                 expect((typeof _sC) === "string").toBe(false);
                 expect(_sC instanceof PropertiesModel).toBe(true);
             });
+
+            it("should create Child ItemsModel for array values", () => {
+                let _sC = _sH.createSchemaChild("foo", [], _mdRef.get(_schema));
+                expect((typeof _sC) === "string").toBe(false);
+                expect(_sC.constructor.name).toBe("ItemsModel");
+            });
+
+            it("should reject scalar child values", () => {
+                let _sC = _sH.createSchemaChild("foo", 123, _mdRef.get(_schema));
+                expect(_sC).toBe("'foo' was invalid");
+            });
         });
         describe("ItemsModel Values", () => {
             it("should set Value Object on Child PropertiesModel", () => {

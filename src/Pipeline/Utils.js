@@ -37,6 +37,13 @@ const DefaultPipeTx = {
     exec: (d) => d,
 };
 
+const defaultPipeState = {
+    inPipe: DefaultPipeTx,
+    inSchema: DefaultVOSchema,
+    outSchema: DefaultVOSchema,
+    schemas: [{schemas: [DefaultVOSchema]}, {schemas: [DefaultVOSchema]}],
+};
+
 /**
  * Fills array to enforce 2 callback minimum
  * @param arr
@@ -164,4 +171,30 @@ export const mapArgs = (...args) => {
 
     // normalizes args list and wraps in pipeline Protocol
     return [...args].map(castToExec);
+};
+
+export const derivePipeSchemas = (pipesOrVOsOrSchemas = []) => {
+    if (!Array.isArray(pipesOrVOsOrSchemas) || !pipesOrVOsOrSchemas.length) {
+        return Object.assign({}, defaultPipeState, {
+            schemas: [...defaultPipeState.schemas],
+        });
+    }
+
+    const inPipe = pipesOrVOsOrSchemas[0];
+    const schemas = pipesOrVOsOrSchemas
+        .filter((_p) => (
+            (_p instanceof Validator) ||
+            (_p["schema"] && Validator.validateSchemas(_p.schema))
+        ))
+        .map((_) => _.schema);
+
+    const inSchema = schemas.length ? schemas[0] : DefaultVOSchema;
+    const outSchema = schemas.length > 1 ? schemas[schemas.length - 1] : inSchema;
+
+    return {
+        inPipe,
+        inSchema,
+        outSchema,
+        schemas: schemas.length ? schemas : [...defaultPipeState.schemas],
+    };
 };

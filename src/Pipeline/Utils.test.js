@@ -1,6 +1,7 @@
-import {fill, castToExec} from "./Utils";
+import {fill, castToExec, derivePipeSchemas} from "./Utils";
 import {Pipeline} from "./Pipeline";
 import {Validator} from "./Validator";
+import defaultPipeVo from "../schemas/default-pipe-vo.schema";
 const _schema = {
     "$id": "root#",
     "$schema": "http://json-schema.org/draft-07/schema#",
@@ -83,6 +84,33 @@ describe("TxUtils Tests", () => {
             expect(_.length).toEqual(2);
             expect(_[0]({ok: false}).ok).toBe(true);
             expect(_[1]({ok: false}).ok).toBe(false);
+        });
+    });
+
+    describe("derivePipeSchemas tests", () => {
+        it("should derive default schemas for empty input", () => {
+            const res = derivePipeSchemas([]);
+            expect(res.inSchema).toEqual(defaultPipeVo);
+            expect(res.outSchema).toEqual(defaultPipeVo);
+            expect(res.schemas).toHaveLength(2);
+        });
+
+        it("should derive schemas from normalized pipeline inputs", () => {
+            const input = castToExec(_schema);
+            const output = castToExec({type: "string"});
+            const res = derivePipeSchemas([input, output]);
+            expect(res.inPipe).toBe(input);
+            expect(res.inSchema).toEqual(input.schema);
+            expect(res.outSchema).toEqual(output.schema);
+            expect(res.schemas).toHaveLength(2);
+        });
+
+        it("should preserve validator input as the input pipe", () => {
+            const validator = new Validator(_schema);
+            const res = derivePipeSchemas([validator]);
+            expect(res.inPipe).toBe(validator);
+            expect(res.inSchema).toEqual(validator.schema);
+            expect(res.outSchema).toEqual(validator.schema);
         });
     });
 });

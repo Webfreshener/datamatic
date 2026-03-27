@@ -28,6 +28,26 @@ import {MetaData} from "./_metaData";
 import {PropertiesModel} from "./propertiesModel";
 import {ItemsModel} from "./itemsModel";
 
+const isObjectLike = (value) => value && typeof value === "object";
+
+const createChildPath = (ref, key) => (
+    !Array.isArray(ref.model) ?
+        `${ref.path}/properties/${key}` :
+        `${ref.path}/items`
+);
+
+const createChildMeta = (ref, key, metaData) => {
+    const childData = Object.assign({
+        _path: createChildPath(ref, key),
+        _parent: ref,
+        _root: ref.root,
+        _owner: ref.owner,
+    }, metaData || {});
+    return new MetaData(ref, childData);
+};
+
+const getChildModelCtor = (value) => (!Array.isArray(value) ? PropertiesModel : ItemsModel);
+
 /**
  * @private
  */
@@ -53,13 +73,7 @@ export class SchemaHelpers {
         if (typeof obj === "string") {
             return obj;
         }
-        // calls set with nested key value pair
-        Object.keys(obj).forEach((k) => {
-            let eMsg = this._ref.set(k, obj[k]);
-            if (typeof eMsg === "string") {
-                throw new Error(eMsg);
-            }
-        });
+        this._setObjectEntries(obj);
         return this._ref;
     }
 
@@ -70,8 +84,8 @@ export class SchemaHelpers {
      * @returns {*}
      */
     setChildObject(key, value) {
-        let _mdData = _mdRef.get(this._ref);
-        let _s = this.createSchemaChild(key, value, _mdData);
+        const _mdData = _mdRef.get(this._ref);
+        const _s = this.createSchemaChild(key, value, _mdData);
         // creates Observables for new Child Model
         _oBuilders.get(this._ref.owner).create(_s);
 
@@ -85,6 +99,15 @@ export class SchemaHelpers {
         return _s.model;
     }
 
+    _setObjectEntries(obj) {
+        Object.keys(obj).forEach((k) => {
+            const eMsg = this._ref.set(k, obj[k]);
+            if (typeof eMsg === "string") {
+                throw new Error(eMsg);
+            }
+        });
+    }
+
     /**
      * Creates Child Model
      * @param {string} key
@@ -93,20 +116,12 @@ export class SchemaHelpers {
      * @returns {BaseModel|string} - PropertiesModel, ItemsModel or error string
      */
     createSchemaChild(key, value, metaData) {
-        let path = !Array.isArray(this._ref.model) ?
-            `${this._ref.path}/properties/${key}` : `${this._ref.path}/items`;
-        // populates MetaData config object
-        let _d = Object.assign({
-            _path: path,
-            _parent: this._ref,
-            _root: this._ref.root,
-            _owner: this._ref.owner,
-        }, metaData || {});
+        if (!isObjectLike(value)) {
+            return `'${key}' was invalid`;
+        }
 
-        // constructs new MetaData object with owner as reference point for chaining
-        let _md = new MetaData(this._ref, _d);
-
-        // returns new child Model
-        return new ((!Array.isArray(value)) ? PropertiesModel : ItemsModel)(_md);
+        const _md = createChildMeta(this._ref, key, metaData);
+        const ChildModel = getChildModelCtor(value);
+        return new ChildModel(_md);
     }
 }
