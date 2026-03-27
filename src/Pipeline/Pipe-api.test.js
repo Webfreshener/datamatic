@@ -146,6 +146,13 @@ describe("Pipeline API Tests", () => {
                 expect(e.error[0].message).toEqual("must be array");
             }
         });
+
+        it("should preserve legacy direct exec for normalized iterator-backed stages", () => {
+            const res = new Pipeline(..._pipesOrSchemas).exec(data);
+            expect(Array.isArray(res)).toBe(true);
+            expect(res.length).toEqual(3);
+            expect(res.every((item) => item.active)).toBe(true);
+        });
     });
 
     it("should send error notification if a pipeline returns false", (done) => {

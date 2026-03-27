@@ -10,6 +10,10 @@ export class Iterator {
         _iterators.set(this, [...pipesOrSchemas]);
     }
 
+    get stages() {
+        return [..._iterators.get(this)];
+    }
+
     get schema() {
         return _pipes.get(this).schema;
     }

@@ -25,19 +25,28 @@ SOFTWARE.
 ############################################################################ */
 import {_observers, Validator} from "./Validator";
 import {fill, mapArgs} from "./Utils";
-import {Executor} from "./Executor";
 import {default as DefaultVOSchema} from "../schemas/default-pipe-vo.schema";
 import {Properties} from "./Properties";
+import {createLegacyExecPipelineV2} from "./v2/exec";
+import {cloneLegacyPipeline} from "./v2/clone";
+import {
+    linkLegacyPipeline,
+    mergeLegacyPipelines,
+    pipeLegacyPipeline,
+    splitLegacyPipeline,
+    unlinkLegacyPipeline,
+} from "./v2/orchestration";
+import {promiseLegacyPipelineObserve} from "./v2/promise";
+import {
+    sampleLegacyPipeline,
+    throttleLegacyPipeline,
+    unthrottleLegacyPipeline,
+} from "./v2/rate";
+import {execLegacyPipelineWrite} from "./v2/write";
+import {yieldLegacyPipeline} from "./v2/yield";
 
 const _pipes = new WeakMap();
 const _cache = new WeakMap();
-
-const clearPipeInterval = (pipe) => {
-    const _ivl = _pipes.get(pipe).tO;
-    if (_ivl) {
-        clearInterval(_ivl);
-    }
-}
 
 /**
  * Pipeline Class
@@ -77,6 +86,7 @@ export class Pipeline {
         _pipes.set(this,
             Properties.init(this, {
                 callbacks: fill(Pipeline.getExecs(...pipesOrVOsOrSchemas)),
+                execBridge: createLegacyExecPipelineV2(...pipesOrVOsOrSchemas),
                 pipesOrVOsOrSchemas: pipesOrVOsOrSchemas,
                 pipes: _pipes,
             })
@@ -84,9 +94,8 @@ export class Pipeline {
 
         // define exec in constructor to ensure method visibility
         Object.defineProperty(this, "exec", {
-            // value: (data) => pipes.get(this).exec(data),
             value: (data) => {
-                return _pipes.get(this).exec(data);
+                return _pipes.get(this).execBridge.exec(data);
             },
             enumerable: true,
             configurable: false,
@@ -99,13 +108,11 @@ export class Pipeline {
      * @returns {Pipeline}
      */
     pipe(...pipesOrSchemas) {
-        const __ = new Pipeline(...pipesOrSchemas);
-        this.subscribe({
-            next: (d) => {
-                __.write(d);
-            }
+        return pipeLegacyPipeline({
+            source: this,
+            PipelineClass: Pipeline,
+            pipesOrSchemas,
         });
-        return __;
     }
 
     /**
@@ -126,36 +133,13 @@ export class Pipeline {
      * @returns {Pipeline}
      */
     link(target, ...callbacks) {
-        if (!(target instanceof Pipeline)) {
-            throw `item for "target" was not a Pipe`;
-        }
-
-        // allow for array literal in place of inline assignment
-        if (Array.isArray(callbacks[0])) {
-            callbacks = callbacks[0];
-        }
-
-        callbacks = fill(callbacks);
-
-        // creates observer and stores it to links map for `pipeline`
-        const _sub = this.subscribe({
-            next: (data) => {
-                const _res = Executor.exec(callbacks, data.toJSON ? data.toJSON() : data);
-                if (_res instanceof Promise) {
-                    return _res.then((_) => target.write(_));
-                }
-
-                target.write(_res);
-            },
-            error: (e) => {
-                console.error(e);
-            },
-            // handles unlink & cleanup on complete
-            complete: () => this.unlink(target)
+        return linkLegacyPipeline({
+            source: this,
+            target,
+            callbacks,
+            PipelineClass: Pipeline,
+            links: _pipes.get(this).links,
         });
-
-        _pipes.get(this).links.set(target, _sub);
-        return this;
     }
 
     /**
@@ -164,17 +148,11 @@ export class Pipeline {
      * @returns {Pipeline}
      */
     unlink(target) {
-        if (!(target instanceof Pipeline)) {
-            throw `item for "target" was not a Pipe`;
-        }
-
-        const _sub = _pipes.get(this).links.get(target);
-
-        if (_sub) {
-            _sub.unsubscribe();
-            _pipes.get(this).links.delete(target);
-        }
-
+        unlinkLegacyPipeline({
+            target,
+            PipelineClass: Pipeline,
+            links: _pipes.get(this).links,
+        });
         return this;
     }
 
@@ -200,7 +178,11 @@ export class Pipeline {
      * @returns {*}
      */
     split(schemasOrPipes) {
-        return schemasOrPipes.map((_) => this.pipe(_));
+        return splitLegacyPipeline({
+            source: this,
+            schemasOrPipes,
+            PipelineClass: Pipeline,
+        });
     }
 
     /**
@@ -209,25 +191,12 @@ export class Pipeline {
      * @returns {generator}
      */
     yield(data) {
-        let _fill = _pipes.get(this).pOS.map((_) => _.exec || ((_) => _));
-
-        if (!_fill.length) {
-            _fill[0] = (d) => d;
-        }
-
-        const _f = new Function("$scope", "$cb",
-            [
-                "return (function* (data) { ",
-                "try {",
-                Object.keys(_fill)
-                    .map((_) => `yield data=($cb[${_}].bind($scope))(data)`)
-                    .join("; "),
-                "} catch (e) { $scope.error(e); }",
-                "}).bind($scope);",
-            ].join(" ")
-        );
-
-        return _f(this, _fill)(data);
+        return yieldLegacyPipeline({
+            scope: this,
+            pipesOrSchemas: _pipes.get(this).pOS,
+            input: data,
+            emitError: (error) => this.error(error),
+        });
     }
 
     /**
@@ -237,22 +206,15 @@ export class Pipeline {
      * @returns {Pipeline}
      */
     merge(pipeOrPipes, pipeOrSchema = {schemas: [DefaultVOSchema]}) {
-        const _out = new Pipeline(pipeOrSchema);
-        _pipes.get(this).listeners = [
-            ..._pipes.get(this).listeners,
-            // -- feeds output of map to listeners array
-            ...(Array.isArray(pipeOrPipes) ? pipeOrPipes : [pipeOrPipes])
-                .filter((_p) => ((typeof _p.subscribe) === "function"))
-                .map((_p) => {
-                    _p.subscribe((d) => {
-                        // -- all pipes now write to output tx
-                        _out.write(d.toJSON ? d.toJSON() : d);
-                    });
-                    return _p;
-                })
-        ];
-        // -- returns output tx for observation
-        return _out;
+        const merged = mergeLegacyPipelines({
+            listeners: _pipes.get(this).listeners,
+            pipeOrPipes,
+            pipeOrSchema,
+            PipelineClass: Pipeline,
+        });
+
+        _pipes.get(this).listeners = merged.listeners;
+        return merged.output;
     }
 
     /**
@@ -270,15 +232,11 @@ export class Pipeline {
      * @returns {Pipeline}
      */
     clone() {
-        const $ref = _pipes.get(this);
-        const _cz = class extends Pipeline {
-            constructor() {
-                super();
-                _pipes.set(this, $ref);
-                _pipes.get(this).listeners = [...$ref.listeners];
-            }
-        };
-        return new _cz();
+        return cloneLegacyPipeline({
+            source: this,
+            PipelineClass: Pipeline,
+            pipes: _pipes,
+        });
     }
 
     /**
@@ -304,28 +262,14 @@ export class Pipeline {
      * @returns {Pipeline}
      */
     throttle(rate) {
-        if (rate > 0) {
-            clearPipeInterval(this);
-            const __ = setInterval(
-                () => {
-                    if (_cache.get(this).length) {
-                        const _func = _cache.get(this).splice(0, 1);
-                        if ((typeof _func[0]) === "function") {
-                            const _res = _func[0]();
-                            _pipes.get(this).out.model = _res;
-                        }
-                    }
-                }, parseInt(rate, 10)
-            );
-
-            Object.assign(_pipes.get(this), {tO: __});
-        } else if (rate === -1) {
-            this.unthrottle(true);
-        } else {
-            this.unthrottle();
-        }
-
-        return this;
+        return throttleLegacyPipeline({
+            pipe: this,
+            rate,
+            props: _pipes.get(this),
+            cache: _cache.get(this),
+            out: _pipes.get(this).out,
+            unthrottle: (discardCacheQueue) => this.unthrottle(discardCacheQueue),
+        });
     }
 
     /**
@@ -333,18 +277,12 @@ export class Pipeline {
      * @param discardCacheQueue
      */
     unthrottle(discardCacheQueue=false) {
-        clearPipeInterval(this);
-        if (!discardCacheQueue) {
-            _cache.get(this).forEach(() => {
-                const _func = _cache.get(this).splice(0, 1);
-                if ((typeof _func[0]) === "function") {
-                    _pipes.get(this).out.model = _func[0]();
-                }
-            });
-        } else {
-            const _c = _cache.get(this);
-            _c.splice(0, _c.length);
-        }
+        unthrottleLegacyPipeline({
+            props: _pipes.get(this),
+            cache: _cache.get(this),
+            out: _pipes.get(this).out,
+            discardCacheQueue,
+        });
     }
 
     /**
@@ -353,8 +291,11 @@ export class Pipeline {
      * @returns {Pipeline}
      */
     sample(nth) {
-        _pipes.get(this).ivl = nth;
-        return this;
+        return sampleLegacyPipeline({
+            pipe: this,
+            props: _pipes.get(this),
+            nth,
+        });
     }
 
     /**
@@ -386,17 +327,7 @@ export class Pipeline {
      * @returns {Promise<Pipeline>}
      */
     async promise(data) {
-        return await new Promise((resolve, reject) => {
-            this.subscribe({
-                next: (d) => {
-                    resolve(d);
-                },
-                error: (e) => {
-                    reject(e);
-                }
-            });
-            this.write(data);
-        });
+        return await promiseLegacyPipelineObserve(this, data);
     }
 
     /**
@@ -517,60 +448,13 @@ export class PipeListener {
             }
         }
 
-        let _t, _type;
-        const _out = (_) => {
-            // else we set the model for validation
-            try {
-                this.out.model = _.toJSON ? _.toJSON() : _;
-            } catch (e) {
-                _observers.get(this.out).error({
-                    error: e,
-                    data: data,
-                });
-            }
-        };
-
-        // capture output of callback
-        try {
-            _t = _pipes.get(this).exec(data); //_pipes.get(_pipes.get(this)).exec(data);
-            _type = typeof _t;
-        } catch (e) {
-            return _observers.get(this.out).error({
-                error: e,
-                data: data,
-            });
-        }
-
-        // tests if object and if object is writable
-        if ((_t instanceof Promise) || ((_type === "function") || (_type === "object")) && _target.writable) {
-            if (_t instanceof Promise) {
-                return _t.then((_) => {
-                    _out(_)
-                })
-                    .catch((e) => {
-                        _observers.get(this.out).error({
-                            error: e,
-                            data: data,
-                        });
-                    });
-            }
-
-            if (_type === "function") {
-                const __ = _t();
-                if (__ instanceof Promise) {
-                    return __.then((_) => {
-                        _out(_)
-                    }).catch((e) => {
-                        _observers.get(this.out).error({
-                            error: e,
-                            data: data,
-                        });
-                    });
-                }
-            }
-        }
-
-        _out(_t);
+        return execLegacyPipelineWrite({
+            exec: (value) => _pipes.get(this).exec(value),
+            data,
+            out: this.out,
+            writable: _target.writable,
+            emitError: (error) => _observers.get(this.out).error(error),
+        });
     }
 
     subscribe(handler) {

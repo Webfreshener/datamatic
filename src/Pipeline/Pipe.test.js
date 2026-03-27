@@ -67,6 +67,29 @@ describe("Pipeline Tests", () => {
         }, done).catch(done);
     });
 
+    it("should preserve write-driven state updates through the promise compat seam", async () => {
+        const _p = new Pipeline(..._pipesOrSchemas);
+        const result = await _p.promise(data);
+
+        expect(result.length).toEqual(3);
+        expect(_p.tap()).toEqual(result);
+    });
+
+    it("should preserve write-driven output after the V2 exec delegation seam", (done) => {
+        const _p = new Pipeline(..._pipesOrSchemas);
+
+        _p.subscribe({
+            next: (res) => {
+                expect(res.length).toEqual(3);
+                expect(_p.tap().length).toEqual(3);
+                done();
+            },
+            error: done,
+        });
+
+        _p.write(data);
+    });
+
     it("async pipeline should work as observable", (done) => {
         const _tx = new Pipeline(
             async () => {
