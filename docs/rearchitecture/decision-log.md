@@ -66,8 +66,8 @@ Observed baseline after the first Phase 2 implementation cut:
 
 Observed baseline after the current Phase 3 implementation cut:
 
-- Jest: `45` suites passing
-- Jest: `358` tests passing
+- Jest: `46` suites passing
+- Jest: `360` tests passing
 - Build outputs: `datamatic.node.js`, `datamatic.umd.js`, and `datamatic.window.js`
 
 ### OF-0002: Current repo tracking conventions started minimal
@@ -196,3 +196,11 @@ Phase 3 may route public root replacement and `Model.freeze()` through explicit 
 ### PC-0022: JSON bootstrap parsing is a shared compat concern
 
 Phase 3 may centralize `fromJSON(...)` parsing into a V2-owned helper so public `Model.fromJSON(...)` and adapter/bootstrap code stop duplicating the same string/object gate and legacy error wording. This does not, by itself, change the public return types or authorize broader public V2 exposure.
+
+### PC-0023: Remaining Phase 3 model decisions use a compat-first evaluation loop
+
+After the initial root-owned helper delegation, the remaining Phase 3 decisions must be screened explicitly before implementation. A seam should move only when it preserves public legacy behavior, keeps proxy/observe concerns out of `DataModel` core, reduces compat complexity instead of relocating it, and can be proven with focused tests plus the full repo baseline. If that evidence is not available, the seam is deferred to Phase 4 observe work or Phase 5 compat work.
+
+### PC-0024: The model-to-pipeline bridge may move only as a narrow compat helper seam in Phase 3
+
+Phase 3 may extract `BaseModel.pipeline(...)` wiring into an explicit compat helper when the move is narrowly isolated and preserves the current behavior exactly: model emissions still write into the created pipeline, model completion still closes that pipeline, and no observe or proxy semantics are moved into `DataModel` core. Broader bridge redesign remains deferred.

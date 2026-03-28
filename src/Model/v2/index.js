@@ -5,6 +5,7 @@ export {
     replaceLegacyModelRoot,
     resetLegacyModelRoot,
 } from "./compat";
+export {createLegacyModelPipeline} from "./bridge";
 export {
     LegacyModelAdapter,
     createLegacyModelAdapter,

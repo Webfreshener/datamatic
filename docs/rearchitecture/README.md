@@ -34,7 +34,7 @@ Current verified baseline after the current Phase 2 cut:
 
 Current verified baseline after the current Phase 3 cut:
 
-- Jest: `45` suites passing, `358` tests passing
+- Jest: `46` suites passing, `360` tests passing
 - Build: `datamatic.node.js`, `datamatic.umd.js`, and `datamatic.window.js` build successfully
 - Existing root exports remain `Model`, `Pipeline`, and `TxValidator`
 
@@ -60,6 +60,8 @@ Current verified baseline after the current Phase 3 cut:
   Delivered Phase 2 changes, preserved constraints, and verified post-implementation baseline.
 - [model-v2-requirements.md](/Users/vanschroeder/Workspace/datamatic/docs/rearchitecture/model-v2-requirements.md)
   Explicit lifecycle, mutation, and parity requirements for the Phase 3 model redesign.
+- [phase-3-evaluation-strategy.md](/Users/vanschroeder/Workspace/datamatic/docs/rearchitecture/phase-3-evaluation-strategy.md)
+  Compat-first decision framework and evidence standard for remaining Phase 3 model cuts.
 - [phase-3-progress.md](/Users/vanschroeder/Workspace/datamatic/docs/rearchitecture/phase-3-progress.md)
   Current Phase 3 implementation state for the internal `DataModel` core, compat seams, and selective legacy-model delegation.
 - [observe-v2-requirements.md](/Users/vanschroeder/Workspace/datamatic/docs/rearchitecture/observe-v2-requirements.md)

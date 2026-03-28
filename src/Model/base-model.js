@@ -29,7 +29,7 @@ import {
 import {Model} from "./index";
 import {MetaData} from "./_metaData";
 import {makeClean, makeDirty, validate} from "./utils";
-import {Pipeline} from "../Pipeline";
+import {createLegacyModelPipeline} from "./v2/bridge";
 /**
  *
  * @param ref
@@ -390,16 +390,6 @@ export class BaseModel {
      * @returns {Pipeline}
      */
     pipeline(...pipesOrSchemas) {
-        const _p = new Pipeline(...pipesOrSchemas);
-        const _sub = this.subscribe({
-            next: (d) => {
-                _p.write(d);
-            },
-            complete: () => {
-                _sub.unsubscribe();
-                _p.close();
-            }
-        });
-        return _p;
+        return createLegacyModelPipeline(this, ...pipesOrSchemas);
     }
 }

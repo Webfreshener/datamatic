@@ -3,6 +3,7 @@
 Phase 3 began with the first clean internal model seam defined by:
 
 - [model-v2-requirements.md](/Users/vanschroeder/Workspace/datamatic/docs/rearchitecture/model-v2-requirements.md)
+- [phase-3-evaluation-strategy.md](/Users/vanschroeder/Workspace/datamatic/docs/rearchitecture/phase-3-evaluation-strategy.md)
 
 ## Current Cut
 
@@ -11,6 +12,7 @@ Implemented:
 - [src/Model/v2/DataModel.js](/Users/vanschroeder/Workspace/datamatic/src/Model/v2/DataModel.js)
 - [src/Model/v2/compat.js](/Users/vanschroeder/Workspace/datamatic/src/Model/v2/compat.js)
 - [src/Model/v2/errors.js](/Users/vanschroeder/Workspace/datamatic/src/Model/v2/errors.js)
+- [src/Model/v2/bridge.js](/Users/vanschroeder/Workspace/datamatic/src/Model/v2/bridge.js)
 - [src/Model/v2/json.js](/Users/vanschroeder/Workspace/datamatic/src/Model/v2/json.js)
 - [src/Model/v2/path.js](/Users/vanschroeder/Workspace/datamatic/src/Model/v2/path.js)
 - [src/Model/v2/schema.js](/Users/vanschroeder/Workspace/datamatic/src/Model/v2/schema.js)
@@ -19,6 +21,7 @@ Implemented:
 - [src/Model/v2/legacy.js](/Users/vanschroeder/Workspace/datamatic/src/Model/v2/legacy.js)
 - [src/Model/v2/DataModel.test.js](/Users/vanschroeder/Workspace/datamatic/src/Model/v2/DataModel.test.js)
 - [src/Model/v2/compat.test.js](/Users/vanschroeder/Workspace/datamatic/src/Model/v2/compat.test.js)
+- [src/Model/v2/bridge.test.js](/Users/vanschroeder/Workspace/datamatic/src/Model/v2/bridge.test.js)
 - [src/Model/v2/json.test.js](/Users/vanschroeder/Workspace/datamatic/src/Model/v2/json.test.js)
 - [src/Model/v2/parity.test.js](/Users/vanschroeder/Workspace/datamatic/src/Model/v2/parity.test.js)
 - [src/Model/v2/legacy.test.js](/Users/vanschroeder/Workspace/datamatic/src/Model/v2/legacy.test.js)
@@ -53,6 +56,8 @@ Delivered seam:
 - selective internal call-site migration of public `Model` root replacement and `freeze()` through those compat helpers, while preserving legacy non-throwing invalid-root behavior
 - explicit compat bootstrap support for invalid legacy initial state through `DataModel`'s opt-in `validateInitial: false` mode
 - shared `parseModelJSON(...)` bootstrap helper so public `Model.fromJSON(...)` and `LegacyModelAdapter.fromJSON(...)` stop carrying duplicated JSON-input parsing logic
+- narrow extraction of the model-to-pipeline bridge into an explicit compat helper so `BaseModel.pipeline(...)` no longer owns inline pipeline wiring
+- focused bridge coverage proving that pipeline creation still follows model emissions and that model completion still closes bridged pipelines
 - no proxy, RxJS, or legacy `Model` wiring in the V2 core
 
 ## Intentionally Deferred
@@ -64,7 +69,7 @@ Still deferred to later Phase 3 / Phase 4 / Phase 5 work:
 - proxy compatibility behavior and `$model` navigation
 - root and path-scoped observation
 - broader public legacy `Model` delegation onto the V2 core beyond root-owned helper seams
-- model-to-pipeline bridge migration
+- broader model-to-pipeline bridge migration beyond the narrow compat helper extraction
 - nested proxy-owned mutation delegation onto V2-aware compat seams
 
 ## Preserved Constraints
@@ -79,6 +84,27 @@ This cut intentionally preserves:
 - public invalid root replacement remains non-throwing even though V2 preflight exists for adapter-owned paths
 - legacy `fromJSON(...)` error wording remains unchanged
 
+## Evaluation Loop
+
+Phase 3 decisions now use the explicit `compat-first` strategy defined in:
+
+- [phase-3-evaluation-strategy.md](/Users/vanschroeder/Workspace/datamatic/docs/rearchitecture/phase-3-evaluation-strategy.md)
+
+Current recorded classifications:
+
+- root-owned helper migration: `Compat-safe`
+- narrow model-to-pipeline bridge extraction: `Compat-safe`
+- nested proxy-owned mutation: `Defer`
+- broader model-to-pipeline bridge migration: `Defer unless narrowly isolated`
+- observation-related behavior: `Observe-owned`
+
+Current accepted evidence standard:
+
+- short decision note in this document
+- focused behavior-pin tests
+- parity extension only when migration-critical
+- full baseline verification via `npm test -- --runInBand` and `npm run build`
+
 ## Verification
 
 Verified locally after the first Phase 3 cut:
@@ -89,8 +115,8 @@ Verified locally after the first Phase 3 cut:
 
 Observed green baseline after the current Phase 3 cut:
 
-- Jest: `45` suites passing
-- Jest: `358` tests passing
+- Jest: `46` suites passing
+- Jest: `360` tests passing
 - Build outputs produced:
   - `dist/datamatic.node.js`
   - `dist/datamatic.umd.js`
@@ -100,5 +126,5 @@ Observed green baseline after the current Phase 3 cut:
 
 The next logical Phase 3 cut is:
 
-- decide whether nested proxy-owned mutation should stay fully legacy-owned until Phase 5 compat, or
-- start the first selective extraction of nested/root mutation call sites into explicit V2-aware compat helpers without remapping public proxy behavior wholesale
+- keep nested proxy-owned mutation deferred until a candidate seam can preserve proxy and observer behavior with explicit evidence, or
+- identify another narrow bridge-owned or root-owned seam that passes the evaluation strategy without pulling proxy semantics into `DataModel`
