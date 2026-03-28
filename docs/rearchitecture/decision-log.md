@@ -64,6 +64,12 @@ Observed baseline after the first Phase 2 implementation cut:
 - Jest: `320` tests passing
 - Build outputs: `datamatic.node.js`, `datamatic.umd.js`, and `datamatic.window.js`
 
+Observed baseline after the current Phase 3 implementation cut:
+
+- Jest: `45` suites passing
+- Jest: `358` tests passing
+- Build outputs: `datamatic.node.js`, `datamatic.umd.js`, and `datamatic.window.js`
+
 ### OF-0002: Current repo tracking conventions started minimal
 
 The repo started this program with:
@@ -162,3 +168,31 @@ Phase 2 may keep the legacy generator surface reachable, but it should do so thr
 ### PC-0015: Legacy `clone()` semantics are compat-owned shared-state behavior
 
 Phase 2 may extract `clone()` into an explicit compat helper, but it must preserve the current semantics: the clone aliases the same underlying pipeline state and writable/closed state as the source, and clone creation replaces the shared listeners array with a shallow copy on the shared pipeline props object.
+
+### PC-0016: DataModel starts as an explicit lifecycle core, not a proxy replacement
+
+The first Phase 3 implementation cut may introduce `DataModel` under `src/Model/v2/`, but it must begin as an explicit state engine with lifecycle methods and validation-before-commit semantics. Proxy traps, path-scoped observation, `$model` navigation, and legacy `Model` delegation remain outside this first seam.
+
+### PC-0017: DataModel path operations validate whole-candidate state and keep delete policy explicit
+
+As Phase 3 expands beyond lifecycle, `DataModel` path operations may add `get`, `set`, `update`, `delete`, and `validateAt`, but nested mutations must still validate the full candidate root before commit. Required-vs-optional deletion is not inferred implicitly inside the core; it remains an explicit policy hook until schema-aware compat or path-policy work binds that decision to legacy behavior.
+
+### PC-0018: Phase 3 parity covers core-preserved behavior first, not compat-owned surfaces by implication
+
+The initial Phase 3 parity suite may prove root replacement, nested mutation, invalid-write protection, freeze, reset, and explicit delete-policy behavior against the legacy runtime, but schema lookup helpers, `fromJSON(...)`, path-scoped observation, and model-to-pipeline bridging remain outside parity scope until the relevant compat or observe seams exist.
+
+### PC-0019: Schema-aware path policy belongs in the V2 model seam before compat
+
+Phase 3 may teach `DataModel` how to resolve schemas at explicit paths and derive a default delete policy from those schemas, including required-field and `minItems` behavior. This belongs in the V2 model seam so later compat work does not need to hardcode required-vs-optional path policy outside the model boundary.
+
+### PC-0020: Legacy root-model delegation starts as an internal adapter seam, not a public remap
+
+Phase 3 may introduce an internal `LegacyModelAdapter` that validates root replacement, reset, and freeze through `DataModel` and then applies those operations to the current legacy runtime. This seam is allowed to support later migration work, but it does not by itself authorize remapping the public `Model` API or proxy behavior onto the V2 core.
+
+### PC-0021: Public root-owned model helpers may delegate through V2 compat seams before proxy migration
+
+Phase 3 may route public root replacement and `Model.freeze()` through explicit V2 compat helpers, as long as the current legacy surface still behaves the same from the caller's point of view. In particular, invalid public root replacement must remain non-throwing even if adapter-owned paths use stricter V2 preflight semantics.
+
+### PC-0022: JSON bootstrap parsing is a shared compat concern
+
+Phase 3 may centralize `fromJSON(...)` parsing into a V2-owned helper so public `Model.fromJSON(...)` and adapter/bootstrap code stop duplicating the same string/object gate and legacy error wording. This does not, by itself, change the public return types or authorize broader public V2 exposure.

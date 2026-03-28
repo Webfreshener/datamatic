@@ -32,6 +32,15 @@ describe("Model Instance Test", () => {
         expect(`${_owner.model.name}`).toEqual("test");
     });
 
+    it("preserves invalid root replacement behavior through the compat seam", () => {
+        _owner.model = {name: "test"};
+
+        expect(() => {
+            _owner.model = {name: 1};
+        }).not.toThrow();
+        expect(_owner.toJSON()).toEqual({name: "test"});
+    });
+
     it("runs schema validator", () => {
         const _owner = new Model({
             properties: {

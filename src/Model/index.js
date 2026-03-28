@@ -32,6 +32,11 @@ import {ItemsModel} from "./itemsModel";
 import {AjvWrapper} from "./_ajvWrapper";
 import Notifiers from "./_branchNotifier";
 import {walkObject} from "./utils";
+import {
+    freezeLegacyModelRoot,
+    replaceLegacyModelRoot,
+} from "./v2/compat";
+import {parseModelJSON} from "./v2/json";
 
 const _documents = new WeakMap();
 /**
@@ -129,7 +134,7 @@ export class Model {
      * @param {object|array} value
      */
     set model(value) {
-        _documents.get(this).model = value;
+        replaceLegacyModelRoot(this, value);
     }
 
     /**
@@ -146,7 +151,7 @@ export class Model {
      * @returns {Model}
      */
     freeze() {
-        _documents.get(this).freeze();
+        freezeLegacyModelRoot(this);
         return this;
     }
 
@@ -305,16 +310,6 @@ export class Model {
      * @returns {Model}
      */
     static fromJSON(json, options) {
-        // quick peek at json param to ensure it looks ok
-        const __ = (typeof json).match(/^(string|object)+$/);
-
-        if (__) {
-            // attempts to create Model from JSON or JSON string
-            return new Model((__[1] === "string") ?
-                JSON.parse(json) : json, options);
-        }
-
-        // throws error if something didn't look right with the json param
-        throw new Error("json must be either JSON formatted string or object");
+        return new Model(parseModelJSON(json), options);
     }
 }
