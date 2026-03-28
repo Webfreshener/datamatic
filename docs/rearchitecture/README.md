@@ -10,7 +10,7 @@ This directory is the canonical workspace for the Datamatic rearchitecture progr
 - Phase 0 is complete.
 - Phase 1 validation-foundation work is complete and verified green.
 - Phase 2 pipeline work is complete and verified green.
-- Phase 3 model work is in progress.
+- Phase 3 model work is complete and verified green.
 
 ## Baseline
 
@@ -32,9 +32,9 @@ Current verified baseline after the current Phase 2 cut:
 - Build: `datamatic.node.js`, `datamatic.umd.js`, and `datamatic.window.js` build successfully
 - Existing root exports remain `Model`, `Pipeline`, and `TxValidator`
 
-Current verified baseline after the current Phase 3 cut:
+Current verified baseline after Phase 3 closeout:
 
-- Jest: `46` suites passing, `360` tests passing
+- Jest: `47` suites passing, `363` tests passing
 - Build: `datamatic.node.js`, `datamatic.umd.js`, and `datamatic.window.js` build successfully
 - Existing root exports remain `Model`, `Pipeline`, and `TxValidator`
 
@@ -64,6 +64,8 @@ Current verified baseline after the current Phase 3 cut:
   Compat-first decision framework and evidence standard for remaining Phase 3 model cuts.
 - [phase-3-progress.md](/Users/vanschroeder/Workspace/datamatic/docs/rearchitecture/phase-3-progress.md)
   Current Phase 3 implementation state for the internal `DataModel` core, compat seams, and selective legacy-model delegation.
+- [phase-3-closeout.md](/Users/vanschroeder/Workspace/datamatic/docs/rearchitecture/phase-3-closeout.md)
+  Delivered Phase 3 model seams, preserved constraints, explicit deferrals, and verified post-implementation baseline.
 - [observe-v2-requirements.md](/Users/vanschroeder/Workspace/datamatic/docs/rearchitecture/observe-v2-requirements.md)
   Explicit subscription, event-channel, and parity requirements for the Phase 4 observation redesign.
 - [compat-v2-requirements.md](/Users/vanschroeder/Workspace/datamatic/docs/rearchitecture/compat-v2-requirements.md)

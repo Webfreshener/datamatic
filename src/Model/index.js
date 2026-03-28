@@ -31,12 +31,16 @@ import {PropertiesModel} from "./propertiesModel";
 import {ItemsModel} from "./itemsModel";
 import {AjvWrapper} from "./_ajvWrapper";
 import Notifiers from "./_branchNotifier";
-import {walkObject} from "./utils";
 import {
     freezeLegacyModelRoot,
     replaceLegacyModelRoot,
 } from "./v2/compat";
 import {parseModelJSON} from "./v2/json";
+import {
+    getLegacyModelPathValue,
+    getLegacyModelSchemaForKey,
+    getLegacyModelSchemaForPath,
+} from "./v2/read";
 
 const _documents = new WeakMap();
 /**
@@ -143,7 +147,7 @@ export class Model {
      */
     get schema() {
         const _id = _validators.get(this).path;
-        return this.getSchemaForKey(_id);
+        return getLegacyModelSchemaForKey(this, _id);
     }
 
     /**
@@ -169,18 +173,7 @@ export class Model {
      * @returns {*}
      */
     getSchemaForKey(id) {
-        let _schema = null;
-        const _schemas = _schemaSignatures.get(this);
-        _schemas.schemas.some((schema) => {
-            const schemaId = (schema.hasOwnProperty("$id") && schema.$id) ||
-                (schema.hasOwnProperty("id") && schema.id);
-            if (schemaId === id) {
-                _schema = schema;
-                return true;
-            }
-            return false;
-        });
-        return _schema;
+        return getLegacyModelSchemaForKey(this, id);
     }
 
     /**
@@ -189,18 +182,7 @@ export class Model {
      * @returns {any}
      */
     getSchemaForPath(path) {
-        let _id;
-        if (path.indexOf("#") > -1) {
-            const _sp = path.split("#");
-            _id = _sp[0];
-            path = _sp[1];
-        } else {
-            _id = _validators.get(this).path;
-        }
-
-        const _schema = this.getSchemaForKey(_id);
-
-        return walkObject(path, _schema);
+        return getLegacyModelSchemaForPath(this, path);
     }
 
     /**
@@ -227,15 +209,7 @@ export class Model {
      * @returns {Object|Array}
      */
     getPath(to) {
-        let _ref = this.model;
-        to = to.replace(/\/?(properties|items)+\//g, ".").replace(/^\./, "");
-        (to.split(".")).forEach((step) => {
-            if (_ref && Object.prototype.hasOwnProperty.call(_ref, step)) {
-                _ref = _ref[step];
-            }
-        });
-
-        return _ref;
+        return getLegacyModelPathValue(this, to);
     }
 
     /**

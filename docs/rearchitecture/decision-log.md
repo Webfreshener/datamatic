@@ -64,10 +64,10 @@ Observed baseline after the first Phase 2 implementation cut:
 - Jest: `320` tests passing
 - Build outputs: `datamatic.node.js`, `datamatic.umd.js`, and `datamatic.window.js`
 
-Observed baseline after the current Phase 3 implementation cut:
+Observed baseline after Phase 3 closeout:
 
-- Jest: `46` suites passing
-- Jest: `360` tests passing
+- Jest: `47` suites passing
+- Jest: `363` tests passing
 - Build outputs: `datamatic.node.js`, `datamatic.umd.js`, and `datamatic.window.js`
 
 ### OF-0002: Current repo tracking conventions started minimal
@@ -204,3 +204,11 @@ After the initial root-owned helper delegation, the remaining Phase 3 decisions 
 ### PC-0024: The model-to-pipeline bridge may move only as a narrow compat helper seam in Phase 3
 
 Phase 3 may extract `BaseModel.pipeline(...)` wiring into an explicit compat helper when the move is narrowly isolated and preserves the current behavior exactly: model emissions still write into the created pipeline, model completion still closes that pipeline, and no observe or proxy semantics are moved into `DataModel` core. Broader bridge redesign remains deferred.
+
+### PC-0025: Root-owned schema/path reads may move as explicit compat helpers in Phase 3
+
+Phase 3 may extract read-only root helpers such as schema lookup by key, schema lookup by path, and `getPath(...)` into explicit compat helpers when the move is behavior-preserving and does not alter observer fanout. `getModelsInPath(...)` is not covered by this allowance because it is still part of notifier dispatch behavior.
+
+### PC-0026: Phase 3 ends at explicit compat foundations, not proxy or observe remapping
+
+Phase 3 is considered complete once lifecycle, path, parity, root-owned compat helpers, and narrowly isolated bridge/read seams are implemented and verified green. Remaining proxy-owned mutation extraction and observation behavior are explicit deferrals, not Phase 3 omissions.

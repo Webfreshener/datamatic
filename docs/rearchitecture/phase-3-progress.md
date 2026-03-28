@@ -15,6 +15,7 @@ Implemented:
 - [src/Model/v2/bridge.js](/Users/vanschroeder/Workspace/datamatic/src/Model/v2/bridge.js)
 - [src/Model/v2/json.js](/Users/vanschroeder/Workspace/datamatic/src/Model/v2/json.js)
 - [src/Model/v2/path.js](/Users/vanschroeder/Workspace/datamatic/src/Model/v2/path.js)
+- [src/Model/v2/read.js](/Users/vanschroeder/Workspace/datamatic/src/Model/v2/read.js)
 - [src/Model/v2/schema.js](/Users/vanschroeder/Workspace/datamatic/src/Model/v2/schema.js)
 - [src/Model/v2/value.js](/Users/vanschroeder/Workspace/datamatic/src/Model/v2/value.js)
 - [src/Model/v2/index.js](/Users/vanschroeder/Workspace/datamatic/src/Model/v2/index.js)
@@ -25,6 +26,7 @@ Implemented:
 - [src/Model/v2/json.test.js](/Users/vanschroeder/Workspace/datamatic/src/Model/v2/json.test.js)
 - [src/Model/v2/parity.test.js](/Users/vanschroeder/Workspace/datamatic/src/Model/v2/parity.test.js)
 - [src/Model/v2/legacy.test.js](/Users/vanschroeder/Workspace/datamatic/src/Model/v2/legacy.test.js)
+- [src/Model/v2/read.test.js](/Users/vanschroeder/Workspace/datamatic/src/Model/v2/read.test.js)
 - [src/Model/index.js](/Users/vanschroeder/Workspace/datamatic/src/Model/index.js)
 - [src/Model/index.test.js](/Users/vanschroeder/Workspace/datamatic/src/Model/index.test.js)
 
@@ -58,6 +60,8 @@ Delivered seam:
 - shared `parseModelJSON(...)` bootstrap helper so public `Model.fromJSON(...)` and `LegacyModelAdapter.fromJSON(...)` stop carrying duplicated JSON-input parsing logic
 - narrow extraction of the model-to-pipeline bridge into an explicit compat helper so `BaseModel.pipeline(...)` no longer owns inline pipeline wiring
 - focused bridge coverage proving that pipeline creation still follows model emissions and that model completion still closes bridged pipelines
+- narrow extraction of root-owned schema and path read helpers into an explicit compat helper so `Model` no longer owns inline schema-id/path read logic
+- focused read-helper coverage proving that schema lookup by key, schema lookup by path, legacy `id` fallback, and `getPath(...)` behavior remain stable
 - no proxy, RxJS, or legacy `Model` wiring in the V2 core
 
 ## Intentionally Deferred
@@ -93,6 +97,7 @@ Phase 3 decisions now use the explicit `compat-first` strategy defined in:
 Current recorded classifications:
 
 - root-owned helper migration: `Compat-safe`
+- root-owned read helper extraction: `Compat-safe`
 - narrow model-to-pipeline bridge extraction: `Compat-safe`
 - nested proxy-owned mutation: `Defer`
 - broader model-to-pipeline bridge migration: `Defer unless narrowly isolated`
@@ -115,16 +120,17 @@ Verified locally after the first Phase 3 cut:
 
 Observed green baseline after the current Phase 3 cut:
 
-- Jest: `46` suites passing
-- Jest: `360` tests passing
+- Jest: `47` suites passing
+- Jest: `363` tests passing
 - Build outputs produced:
   - `dist/datamatic.node.js`
   - `dist/datamatic.umd.js`
   - `dist/datamatic.window.js`
 
-## Next Move
+## Closeout Status
 
-The next logical Phase 3 cut is:
+Phase 3 is formally closed. Remaining obvious seams are deferred intentionally by the evaluation strategy rather than left open accidentally.
 
-- keep nested proxy-owned mutation deferred until a candidate seam can preserve proxy and observer behavior with explicit evidence, or
-- identify another narrow bridge-owned or root-owned seam that passes the evaluation strategy without pulling proxy semantics into `DataModel`
+Next implementation phase:
+
+- [observe-v2-requirements.md](/Users/vanschroeder/Workspace/datamatic/docs/rearchitecture/observe-v2-requirements.md)

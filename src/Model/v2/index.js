@@ -19,4 +19,9 @@ export {
 export {deleteAtPath, getAtPath, normalizePath, pathToString, setAtPath} from "./path";
 export {createSchemaDeletePolicy, getSchemaAtPath} from "./schema";
 export {parseModelJSON} from "./json";
+export {
+    getLegacyModelPathValue,
+    getLegacyModelSchemaForKey,
+    getLegacyModelSchemaForPath,
+} from "./read";
 export {cloneValue, inferEmptyValue, serializeValue} from "./value";

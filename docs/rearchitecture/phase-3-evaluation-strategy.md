@@ -107,11 +107,11 @@ Do not move this seam in Phase 3 unless the change is limited to hook-shaping wi
 Current evaluated Phase 3 seam positions:
 
 - Root-owned helper migration: `Compat-safe`, accepted
-  - already applied to root replacement, `freeze()`, and shared `fromJSON(...)` parsing
+  - already applied to root replacement, `freeze()`, shared `fromJSON(...)` parsing, and read-only schema/path helpers
 - Nested proxy-owned mutation: `Defer`
   - still too coupled to proxy behavior, dirty/clean tracking, and observer effects
 - Model-to-pipeline bridge: `Defer unless narrowly isolated`
-  - only current freeze-driven pipeline closure remains in scope as a preserved side effect
+  - only the accepted narrow compat bridge seam moved in Phase 3; broader redesign remains deferred
 - Observation-related behavior: `Observe-owned`
   - deferred to Phase 4 by default
 
